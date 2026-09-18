@@ -1,0 +1,469 @@
+const fs = require('fs');
+const path = require('path');
+const root = process.cwd();
+const read = (name) => fs.readFileSync(path.join(root, name), 'utf8');
+const write = (name, data) => fs.writeFileSync(path.join(root, name), data);
+const ensureDir = (name) => fs.mkdirSync(path.join(root, name), { recursive: true });
+
+let index = read('index.html');
+if (!index.includes('config.js')) {
+  index = index.replace('<link rel="stylesheet" href="styles.css">', '<link rel="stylesheet" href="styles.css">\n    <script src="config.js"></script>');
+}
+if (!index.includes('id="menuToggle"')) {
+  index = index.replace('        <div class="nav-actions">', `        <button class="menu-toggle" id="menuToggle" type="button" aria-controls="primaryNavigation" aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span class="sr-only">Open navigation menu</span>
+        </button>
+        <div class="nav-actions" id="primaryNavigation">`);
+}
+if (!index.includes('id="filterToggle"')) {
+  index = index.replace('        <div class="filters" aria-label="Resource filters">', `        <button class="filter-toggle" id="filterToggle" type="button" aria-controls="resourceFilters" aria-expanded="false">Filter Resources</button>
+        <div class="filters" id="resourceFilters" aria-label="Resource filters">`);
+}
+index = index.replace(/https:\/\/example\.com\//g, '/');
+write('index.html', index);
+
+let app = read('app.js');
+const start = app.indexOf('// Security: Encryption utilities for sensitive data');
+const end = app.indexOf('const STORAGE_KEY = "cbeResources";');
+if (start !== -1 && end !== -1) {
+  app = `const runtimeConfig = window.CBE_CONFIG || {};
+
+function configuredValue(name, fallback = "") {
+  const value = runtimeConfig[name];
+  return typeof value === "string" && value.trim() ? value.trim() : fallback;
+}
+
+const PUBLIC_CONTACT_EMAIL = configuredValue("PUBLIC_CONTACT_EMAIL", "cbenexus@gmail.com");
+const PUBLIC_SITE_URL = configuredValue("PUBLIC_SITE_URL", window.location.origin);
+const MAX_UPLOAD_BYTES = Number(runtimeConfig.MAX_UPLOAD_BYTES || 25 * 1024 * 1024);
+const ALLOWED_UPLOAD_EXTENSIONS = ["pdf", "doc", "docx", "ppt", "pptx", "xls", "xlsx", "csv", "txt", "png", "jpg", "jpeg", "webp"];
+const ALLOWED_UPLOAD_MIME_PREFIXES = ["application/", "image/", "text/csv", "text/plain"];
+const DANGEROUS_UPLOAD_EXTENSIONS = ["exe", "bat", "cmd", "com", "js", "mjs", "vbs", "ps1", "scr", "msi", "jar", "php", "html", "svg", "zip"];
+const MPESA_PHONE = configuredValue("MPESA_PHONE", "07XXXXXXXX");
+const WHATSAPP_PHONE = configuredValue("WHATSAPP_PHONE", "254700000000");
+const MPESA_ENDPOINT = configuredValue("MPESA_ENDPOINT", "/api/mpesa/stk-push");
+const ADMIN_USERNAME = configuredValue("ADMIN_USERNAME");
+const ADMIN_PASSWORD = configuredValue("ADMIN_PASSWORD");
+const ADMIN_EMAIL = configuredValue("ADMIN_EMAIL");
+const API_ENDPOINTS = {
+  projects: "/api/projects",
+  tuition: "/api/tuition",
+  quizzes: "/api/quizzes",
+  homework: "/api/homework-helper"
+};
+
+` + app.slice(end);
+}
+if (!app.includes('function validateUploadFile(file)')) {
+  app = app.replace(`function readUploadedFile(file) {
+  return new Promise((resolve, reject) => {`, `function validateUploadFile(file) {
+  if (!file) return null;
+  const name = file.name || "";
+  const extension = name.includes(".") ? name.split(".").pop().toLowerCase() : "";
+  if (!extension || DANGEROUS_UPLOAD_EXTENSIONS.includes(extension) || !ALLOWED_UPLOAD_EXTENSIONS.includes(extension)) {
+    return "Unsupported file type. Upload PDF, Word, PowerPoint, Excel, CSV, text, or common image files only.";
+  }
+  if (file.size > MAX_UPLOAD_BYTES) {
+    return \`File is too large. Maximum allowed size is \${formatBytes(MAX_UPLOAD_BYTES)}.\`;
+  }
+  if (/[\\/:*?"<>|]/.test(name) || name.length > 140) {
+    return "Filename is invalid. Rename the file using letters, numbers, spaces, dashes, or underscores.";
+  }
+  if (file.type && !ALLOWED_UPLOAD_MIME_PREFIXES.some((prefix) => file.type.startsWith(prefix))) {
+    return "This file type is not allowed for educational resource uploads.";
+  }
+  return null;
+}
+
+function setSubmitting(button, isSubmitting, busyText) {
+  if (!button) return;
+  if (isSubmitting) {
+    button.dataset.originalText = button.textContent;
+    button.textContent = busyText;
+    button.disabled = true;
+    button.setAttribute("aria-busy", "true");
+  } else {
+    button.textContent = button.dataset.originalText || button.textContent;
+    button.disabled = false;
+    button.removeAttribute("aria-busy");
+  }
+}
+
+function readUploadedFile(file) {
+  return new Promise((resolve, reject) => {`);
+}
+app = app.replace(`async function handleProjectUpload(event) {
+  event.preventDefault();`, `async function handleProjectUpload(event) {
+  event.preventDefault();
+  const submitButton = event.submitter;
+  const uploadError = validateUploadFile(elements.projectFile.files[0]);
+  if (uploadError) {
+    elements.projectStatus.textContent = uploadError;
+    showToast(uploadError);
+    return;
+  }
+  setSubmitting(submitButton, true, "Submitting...");`);
+app = app.replace(`  elements.projectStatus.textContent = "CBC project submitted successfully for review.";
+  showToast("Project submitted for review.");
+}`, `  elements.projectStatus.textContent = "CBC project submitted successfully for review.";
+  showToast("Project submitted for review.");
+  setSubmitting(submitButton, false);
+}`);
+app = app.replace(`async function handleSellerSubmit(event) {
+  event.preventDefault();`, `async function handleSellerSubmit(event) {
+  event.preventDefault();
+  const submitButton = event.submitter;
+  const uploadError = validateUploadFile(elements.sellerFile.files[0]);
+  if (uploadError) {
+    elements.sellerStatus.textContent = uploadError;
+    showToast(uploadError);
+    return;
+  }
+  setSubmitting(submitButton, true, "Submitting...");`);
+app = app.replace(`  renderSellerResources();
+  renderAdminApprovals();
+}`, `  renderSellerResources();
+  renderAdminApprovals();
+  setSubmitting(submitButton, false);
+}`);
+app = app.replace(`async function handleFormSubmit(event) {
+  event.preventDefault();
+  const uploadedFile = elements.fileInput.files[0];`, `async function handleFormSubmit(event) {
+  event.preventDefault();
+  const submitButton = event.submitter;
+  const uploadedFile = elements.fileInput.files[0];
+  const uploadError = validateUploadFile(uploadedFile);
+  if (uploadError) {
+    elements.formStatus.textContent = uploadError;
+    showToast(uploadError);
+    return;
+  }
+  setSubmitting(submitButton, true, "Publishing...");`);
+app = app.replace(`  elements.formStatus.textContent = "Resource published successfully and added to the library.";
+  showToast("Resource published successfully.");
+  renderResources();
+}`, `  elements.formStatus.textContent = "Resource published successfully and added to the library.";
+  showToast("Resource published successfully.");
+  setSubmitting(submitButton, false);
+  renderResources();
+}`);
+app = app.replace(`function unlockAdmin(event) {
+  event.preventDefault();`, `function unlockAdmin(event) {
+  event.preventDefault();
+  if (!ADMIN_USERNAME || !ADMIN_PASSWORD || !ADMIN_EMAIL) {
+    elements.adminLoginStatus.textContent = "Admin credentials are not configured. Add them in runtime configuration before production use.";
+    showToast("Admin credentials are not configured.");
+    return;
+  }`);
+if (!app.includes('function setupResponsiveNavigation()')) {
+  app = app.replace(`function injectContactInfo() {`, `function setupResponsiveNavigation() {
+  const menuToggle = document.querySelector("#menuToggle");
+  const nav = document.querySelector("#primaryNavigation");
+  const filterToggle = document.querySelector("#filterToggle");
+  const filters = document.querySelector("#resourceFilters");
+  if (menuToggle && nav) {
+    menuToggle.addEventListener("click", () => {
+      const isOpen = nav.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+    nav.addEventListener("click", (event) => {
+      if (event.target.closest("a") && window.matchMedia("(max-width: 760px)").matches) {
+        nav.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+  if (filterToggle && filters) {
+    filterToggle.addEventListener("click", () => {
+      const isOpen = filters.classList.toggle("open");
+      filterToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+  }
+}
+
+function injectContactInfo() {`);
+}
+app = app.replace(`  const adminEmail = ADMIN_EMAIL;`, `  const adminEmail = ADMIN_EMAIL || PUBLIC_CONTACT_EMAIL;`);
+app = app.replace(`  document.querySelectorAll('[placeholder*="gmail"]').forEach((elem) => {
+    elem.placeholder = adminEmail;
+  });`, `  document.querySelectorAll('[placeholder*="gmail"]').forEach((elem) => {
+    elem.placeholder = adminEmail;
+  });
+  document.querySelectorAll('a[href^="mailto:"]').forEach((link) => {
+    link.href = \`mailto:\${PUBLIC_CONTACT_EMAIL}\`;
+    link.textContent = PUBLIC_CONTACT_EMAIL;
+  });`);
+if (!app.includes('setupResponsiveNavigation();')) {
+  app = app.replace('bindEvents();\ninjectContactInfo();', 'bindEvents();\nsetupResponsiveNavigation();\ninjectContactInfo();');
+}
+write('app.js', app);
+let css = read('styles.css');
+if (!css.includes('.sr-only')) {
+  css += `
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.menu-toggle,
+.filter-toggle {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .top-strip {
+    display: none;
+  }
+
+  .main-nav {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 44px;
+    align-items: center;
+  }
+
+  .brand {
+    min-width: 0;
+  }
+
+  .brand strong,
+  .brand small {
+    white-space: normal;
+  }
+
+  .menu-toggle {
+    display: inline-grid;
+    place-items: center;
+    gap: 4px;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+  }
+
+  .menu-toggle span[aria-hidden="true"] {
+    width: 20px;
+    height: 2px;
+    background: var(--navy);
+    border-radius: 999px;
+  }
+
+  .nav-actions {
+    grid-column: 1 / -1;
+    display: none;
+    max-height: calc(100vh - 86px);
+    overflow: auto;
+    padding: 8px 0 2px;
+  }
+
+  .nav-actions.open {
+    display: grid;
+  }
+
+  .filter-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    margin-bottom: 12px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--navy);
+    color: white;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .filters {
+    display: none;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: white;
+  }
+
+  .filters.open {
+    display: grid;
+  }
+
+  .admin-approval-panel,
+  .records-panel {
+    margin-left: 12px;
+    margin-right: 12px;
+    padding: 14px;
+    overflow-x: auto;
+  }
+
+  .approval-item,
+  .record-item,
+  .cart-item {
+    min-width: 0;
+  }
+
+  .price-row,
+  .cart-header,
+  .cart-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .cart-drawer {
+    width: 100vw;
+    padding: 14px;
+  }
+
+  .seller-layout,
+  .admin-layout,
+  .payment-layout {
+    gap: 14px;
+  }
+
+  .submit-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 380px) {
+  .main-nav,
+  .dashboard-shell,
+  .content-band,
+  .admin-band,
+  .site-footer,
+  .info-band {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .brand small {
+    display: none;
+  }
+
+  .primary-button,
+  .ghost-button,
+  .download-button,
+  .secondary-button,
+  .whatsapp-button,
+  .mpesa-header-button,
+  .cart-button,
+  .danger-blink-button,
+  .contact-link {
+    min-height: 40px;
+    font-size: 12px;
+  }
+}
+`;
+}
+write('styles.css', css);
+
+write('config.js', `window.CBE_CONFIG = {
+  PUBLIC_SITE_URL: window.location.origin,
+  PUBLIC_CONTACT_EMAIL: "cbenexus@gmail.com",
+  MPESA_PHONE: "07XXXXXXXX",
+  WHATSAPP_PHONE: "254700000000",
+  MPESA_ENDPOINT: "/api/mpesa/stk-push",
+  MAX_UPLOAD_BYTES: 26214400
+};
+`);
+
+write('.env.example', `# Public/runtime settings
+PUBLIC_SITE_URL=https://your-domain.example
+PUBLIC_CONTACT_EMAIL=cbenexus@gmail.com
+MPESA_PHONE=07XXXXXXXX
+WHATSAPP_PHONE=254700000000
+MAX_UPLOAD_BYTES=26214400
+
+# Admin credentials must be server-side in production.
+ADMIN_USERNAME=change-me
+ADMIN_PASSWORD=change-me
+ADMIN_EMAIL=admin@example.com
+
+# M-Pesa Daraja backend
+MPESA_CONSUMER_KEY=
+MPESA_CONSUMER_SECRET=
+MPESA_PASSKEY=
+MPESA_SHORTCODE=
+MPESA_CALLBACK_URL=
+PORT=8000
+`);
+
+ensureDir('assets');
+ensureDir('resources');
+write(path.join('assets','cbe-classroom.svg'), `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">CBE classroom learning scene</title>
+  <desc id="desc">A classroom-inspired illustration with books, board, and learning cards.</desc>
+  <rect width="1200" height="760" fill="#123447"/>
+  <path d="M0 550 C220 490 360 610 550 540 C745 468 910 500 1200 418 L1200 760 L0 760 Z" fill="#177e89" opacity="0.95"/>
+  <path d="M0 610 C240 560 400 695 650 620 C830 566 1000 610 1200 550 L1200 760 L0 760 Z" fill="#2f7d57" opacity="0.92"/>
+  <rect x="104" y="86" width="430" height="260" rx="18" fill="#f4f8f9" opacity="0.95"/>
+  <rect x="138" y="124" width="362" height="28" rx="8" fill="#177e89"/>
+  <rect x="138" y="178" width="280" height="18" rx="6" fill="#c27a1a"/>
+  <rect x="138" y="218" width="330" height="18" rx="6" fill="#d9e2e6"/>
+  <rect x="138" y="258" width="230" height="18" rx="6" fill="#d9e2e6"/>
+  <rect x="650" y="116" width="150" height="210" rx="14" fill="#ffffff" opacity="0.92"/>
+  <rect x="674" y="148" width="102" height="16" rx="5" fill="#b84a4a"/>
+  <rect x="674" y="188" width="78" height="16" rx="5" fill="#177e89"/>
+  <rect x="674" y="228" width="94" height="16" rx="5" fill="#2f7d57"/>
+  <rect x="850" y="164" width="210" height="150" rx="16" fill="#fff7e8" opacity="0.95"/>
+  <circle cx="902" cy="219" r="28" fill="#c27a1a"/>
+  <rect x="942" y="206" width="84" height="14" rx="5" fill="#123447"/>
+  <rect x="884" y="268" width="142" height="12" rx="5" fill="#177e89"/>
+</svg>
+`);
+const resourceFiles = {
+ 'grade-1-mathematics-notes.txt': 'Grade 1 Mathematics Number Work Notes\n\nPractice counting, grouping, comparing numbers, and explaining number patterns with simple learner activities.\n',
+ 'grade-4-science-scheme.txt': 'Grade 4 Science and Technology Scheme of Work\n\nIncludes term planning prompts, strands, sub-strands, learning experiences, and assessment notes.\n',
+ 'grade-7-mathematics-topical-questions.txt': 'Grade 7 Mathematics Topical Questions\n\nUse these topical questions for strand-by-strand revision and learner practice.\n',
+ 'grade-8-english-lesson-plan.txt': 'Grade 8 English Lesson Plan\n\nA lesson-planning starter with objectives, activities, assessment, and reflection prompts.\n',
+ 'grade-10-biology-assessment.txt': 'Grade 10 Biology Assessment Test\n\nSample assessment prompts for senior school biology revision.\n',
+ 'grade-12-business-holiday-workbook.txt': 'Grade 12 Business Studies Holiday Workbook\n\nHoliday workbook starter with case questions and practice tasks.\n'
+};
+for (const [name, body] of Object.entries(resourceFiles)) write(path.join('resources', name), body);
+write('progress.html', `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Progress Reports | CBE E-Learning Resources</title>
+    <meta name="description" content="Open CBC learner quiz progress reports and revision history from the CBE E-Learning Resources platform.">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="info-band">
+      <p class="eyebrow">Page 7</p>
+      <h1>Progress Reports</h1>
+      <p>Review learner quiz scores and progress summaries saved in the main learning dashboard.</p>
+      <a class="primary-button" href="index.html#quizCentre">Open Progress Report</a>
+    </main>
+  </body>
+</html>
+`);
+for (const page of ['contact.html','free-resources.html','homework-helper.html','projects.html','quizzes.html','resources.html','tuition.html','upload.html']) {
+  let html = read(page);
+  if (!html.includes('meta name="description"')) {
+    const titleMatch = html.match(/<title>([^<]+)<\/title>/);
+    const desc = titleMatch ? `${titleMatch[1]} for CBC and CBE learners, teachers, and parents.` : 'CBC and CBE learning resources.';
+    html = html.replace('</title>', `</title>\n    <meta name="description" content="${desc}">`);
+  }
+  html = html.replace(/0798462815/g, '07XXXXXXXX').replace(/254798462815/g, '254700000000');
+  write(page, html);
+}
+write('robots.txt', read('robots.txt').replace('https://example.com/sitemap.xml', '/sitemap.xml'));
+write('sitemap.xml', read('sitemap.xml').replace(/https:\/\/example\.com\//g, '/'));
