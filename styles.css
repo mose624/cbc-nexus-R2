@@ -3304,3 +3304,35 @@ img, svg, video, iframe {
     min-height: 23px;
   }
 }
+
+
+/* Phone quick-access buttons: touching grid with softly curved outer corners */
+@media (max-width: 760px) {
+  .top-strip {
+    gap: 0;
+    border-radius: 7px;
+    overflow: hidden;
+  }
+
+  .top-strip > a {
+    border-radius: 0;
+    margin: 0;
+    border-width: 1px;
+  }
+
+  .top-strip > a:nth-child(1) { border-top-left-radius: 7px; }
+  .top-strip > a:nth-child(7) { border-top-right-radius: 7px; }
+  .top-strip > a:nth-child(8) { border-bottom-left-radius: 7px; }
+  .top-strip > a:nth-child(14) { border-bottom-right-radius: 7px; }
+}
+
+@media (max-width: 420px) {
+  .top-strip {
+    border-radius: 6px;
+  }
+
+  .top-strip > a:nth-child(1) { border-top-left-radius: 6px; }
+  .top-strip > a:nth-child(7) { border-top-right-radius: 6px; }
+  .top-strip > a:nth-child(8) { border-bottom-left-radius: 6px; }
+  .top-strip > a:nth-child(14) { border-bottom-right-radius: 6px; }
+}
