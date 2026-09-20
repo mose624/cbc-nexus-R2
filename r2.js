@@ -75,7 +75,7 @@ async function createPdfPreview(key, pages = 3) {
   const copied = await preview.copyPages(source, Array.from({ length: count }, (_, i) => i));
   copied.forEach((page) => preview.addPage(page));
   const previewBytes = await preview.save();
-  const previewKey = key.replace(/^resources\\//, "previews/").replace(/\\.[^/.]+$/, "") + "-preview.pdf";
+  const previewKey = key.replace(/^resources\//, "previews/").replace(/\.[^/.]+$/, "") + "-preview.pdf";
   await client.send(new PutObjectCommand({
     Bucket: cfg.bucket,
     Key: previewKey,
