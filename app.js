@@ -1419,17 +1419,28 @@ function bindEvents() {
     const chip = event.target.closest("[data-subject]");
 
     if (toggle) {
+      event.preventDefault();
+
       const card = toggle.closest(".grade-card");
       const grade = toggle.dataset.gradeToggle;
-      const isOpen = card.classList.toggle("open");
-      toggle.setAttribute("aria-expanded", String(isOpen));
 
-      // The grade button itself is also a working grade filter.
+      // Clicking a grade always gives an immediate response:
+      // open its subjects, highlight the selected grade, and filter the library.
+      document.querySelectorAll(".grade-card").forEach((item) => {
+        if (item !== card) item.classList.remove("open");
+      });
+      document.querySelectorAll(".grade-toggle").forEach((button) => {
+        button.classList.remove("active");
+        button.setAttribute("aria-expanded", "false");
+      });
+
+      if (card) card.classList.add("open");
+      toggle.classList.add("active");
+      toggle.setAttribute("aria-expanded", "true");
+
       if (grade) {
         setGradeSubject(grade, "All Subjects");
-        document.querySelectorAll(".grade-toggle").forEach((button) => button.classList.remove("active"));
-        toggle.classList.add("active");
-        showToast(grade + " selected.");
+        showToast(grade + " selected — subjects opened.");
       }
     }
 
