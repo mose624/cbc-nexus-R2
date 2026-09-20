@@ -473,35 +473,75 @@
         <div class="section-heading">
           <div>
             <p class="eyebrow">Automated assessment</p>
-            <h2>Marked Quizzes and Progress Report</h2>
-            <p>Complete the quiz, get instant marking, and view learner progress below.</p>
+            <h2>Automated Marked Quizzes &amp; Learner Progress</h2>
+            <p>Choose a grade and subject, take a randomized quiz, receive instant marking, and build a learner progress history.</p>
           </div>
+          <div class="price-pill">Instant marking <strong>100%</strong></div>
         </div>
+
         <form id="quizForm" class="quiz-panel">
-          <label>
-            Learner Name
-            <input id="quizLearnerInput" required placeholder="Learner name">
-          </label>
-          <fieldset>
-            <legend>1. Which learning design does CBC emphasize?</legend>
-            <label><input type="radio" name="q1" value="competency" required> Competency and skill development</label>
-            <label><input type="radio" name="q1" value="memorization"> Memorization only</label>
-          </fieldset>
-          <fieldset>
-            <legend>2. A project rubric is mainly used to:</legend>
-            <label><input type="radio" name="q2" value="assessment" required> Assess performance against clear criteria</label>
-            <label><input type="radio" name="q2" value="decoration"> Decorate the learner workbook</label>
-          </fieldset>
-          <fieldset>
-            <legend>3. Topical questions help learners revise:</legend>
-            <label><input type="radio" name="q3" value="specific" required> Specific strands and sub-strands</label>
-            <label><input type="radio" name="q3" value="random"> Unrelated content only</label>
-          </fieldset>
-          <button class="primary-button" type="submit">Mark Quiz</button>
+          <div class="form-row">
+            <label>
+              Learner Name
+              <input id="quizLearnerInput" required placeholder="Learner name">
+            </label>
+            <label>
+              Grade
+              <select id="quizGradeInput" required></select>
+            </label>
+            <label>
+              Subject
+              <select id="quizSubjectInput" required>
+                <option value="Mathematics">Mathematics</option>
+                <option value="Science">Science</option>
+                <option value="English">English</option>
+                <option value="Integrated Science">Integrated Science</option>
+                <option value="CBC">CBC Skills</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="quiz-toolbar">
+            <label>
+              Number of Questions
+              <select id="quizLengthInput">
+                <option value="5">5 Questions</option>
+                <option value="10" selected>10 Questions</option>
+              </select>
+            </label>
+            <label>
+              Quiz Mode
+              <select id="quizModeInput">
+                <option value="practice" selected>Practice</option>
+                <option value="assessment">Assessment</option>
+              </select>
+            </label>
+            <button class="secondary-button" id="startQuizButton" type="button">Start / Restart Quiz</button>
+          </div>
+
+          <div id="quizInstructions" class="quiz-instructions">
+            Select the learner, grade and subject, then click <strong>Start / Restart Quiz</strong>.
+          </div>
+          <div id="quizTimer" class="quiz-timer" aria-live="polite">Time: 00:00</div>
+          <div id="quizQuestions" class="quiz-questions"></div>
+
+          <div class="quiz-actions">
+            <button class="primary-button" id="submitQuizButton" type="submit" disabled>Submit &amp; Mark Quiz</button>
+            <button class="ghost-button" id="clearQuizButton" type="button">Clear Answers</button>
+          </div>
           <p id="quizStatus" class="form-status" aria-live="polite"></p>
         </form>
+
+        <div id="quizResultPanel" class="quiz-result-panel hidden-section" aria-live="polite"></div>
+
         <div class="progress-panel">
-          <h3>Progress Report</h3>
+          <div class="progress-panel-heading">
+            <div>
+              <h3>Learner Progress</h3>
+              <p>Scores are stored in this browser and can later be connected to the CBE Nexus learner account database.</p>
+            </div>
+            <button class="secondary-button" id="clearQuizProgressButton" type="button">Clear My Progress</button>
+          </div>
           <div id="progressReport"></div>
         </div>
       </section>
