@@ -554,6 +554,57 @@ function renderGradeDashboard() {
       </article>
     `)
     .join("");
+
+  // Bind grade controls immediately after rendering so they work
+  // even if another optional page control fails to initialize.
+  elements.gradeList.querySelectorAll("[data-grade-toggle]").forEach((toggle) => {
+    toggle.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      const card = toggle.closest(".grade-card");
+      const grade = toggle.dataset.gradeToggle;
+
+      elements.gradeList.querySelectorAll(".grade-card").forEach((item) => {
+        if (item !== card) item.classList.remove("open");
+      });
+      elements.gradeList.querySelectorAll(".grade-toggle").forEach((button) => {
+        button.classList.remove("active");
+        button.setAttribute("aria-expanded", "false");
+      });
+
+      card.classList.add("open");
+      toggle.classList.add("active");
+      toggle.setAttribute("aria-expanded", "true");
+
+      state.grade = grade;
+      state.subject = "All Subjects";
+      elements.gradeFilter.value = grade;
+      refreshSubjectFilters();
+      elements.subjectFilter.value = "All Subjects";
+      renderResources();
+
+      showToast(grade + " selected — subjects opened.");
+      document.querySelector("#resources")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+
+  elements.gradeList.querySelectorAll("[data-subject]").forEach((chip) => {
+    chip.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      state.grade = chip.dataset.grade;
+      state.subject = chip.dataset.subject;
+      elements.gradeFilter.value = state.grade;
+      refreshSubjectFilters();
+      elements.subjectFilter.value = state.subject;
+      renderResources();
+
+      showToast(state.grade + " — " + state.subject + " selected.");
+      document.querySelector("#resources")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
 }
 
 function refreshSubjectFilters() {
