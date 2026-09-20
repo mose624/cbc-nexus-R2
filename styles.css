@@ -1291,7 +1291,7 @@ textarea {
   gap: 16px;
   padding-top: 22px;
   padding-bottom: 22px;
-  background: var(--navy);
+  background: #c62828;
   color: white;
 }
 
