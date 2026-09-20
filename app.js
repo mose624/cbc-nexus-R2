@@ -317,6 +317,9 @@ const elements = {
   openSellerDashboard: document.querySelector("#openSellerDashboardButton"),
   openSellerDashboardSecondary: document.querySelector("#openSellerDashboardButtonSecondary"),
   openSellerDashboardNav: document.querySelector("#openSellerDashboardNavButton"),
+  openSellerDashboard: document.querySelector("#openSellerDashboardButton"),
+  downloadApprovalList: document.querySelector("#downloadApprovalList"),
+  headerMpesaButton: document.querySelector("#headerMpesaButton"),
   adminAreaButton: document.querySelector("#adminAreaButton"),
   sellerAccountForm: document.querySelector("#sellerAccountForm"),
   sellerAccountName: document.querySelector("#sellerAccountNameInput"),
@@ -1394,6 +1397,19 @@ function bindEvents() {
   elements.openSellerDashboard.addEventListener("click", openSellerDashboard);
   elements.openSellerDashboardSecondary.addEventListener("click", openSellerDashboard);
   if (elements.openSellerDashboardNav) elements.openSellerDashboardNav.addEventListener("click", openSellerDashboard);
+  if (elements.openSellerDashboard) elements.openSellerDashboard.addEventListener("click", openSellerDashboard);
+  if (elements.downloadApprovalList) elements.downloadApprovalList.addEventListener("click", () => {
+    const approvals = JSON.parse(localStorage.getItem("cbe_nexus_approvals") || "[]");
+    const blob = new Blob([JSON.stringify(approvals, null, 2)], {type: "application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "cbe-nexus-approvals.json"; a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
+  if (elements.headerMpesaButton) elements.headerMpesaButton.addEventListener("click", () => {
+    const target = document.querySelector("#payments");
+    if (target) target.scrollIntoView({behavior: "smooth"});
+  });
   if (elements.adminAreaButton) {
     elements.adminAreaButton.addEventListener("click", openAdminLogin);
   }
