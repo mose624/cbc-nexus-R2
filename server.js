@@ -1,6 +1,7 @@
 const http = require("http");
 const fs = require("fs/promises");
 const path = require("path");
+const { createUploadUrl, createDownloadUrl } = require("./r2");
 
 const PORT = Number(process.env.PORT || 8000);
 const ROOT = __dirname;
@@ -92,6 +93,36 @@ function homeworkResponse(payload) {
 }
 
 async function handleApi(req, res, url) {
+  if (req.method === "POST" && url.pathname === "/api/r2/upload-url") {
+    const payload = JSON.parse((await readBody(req)) || "{}");
+    const result = await createUploadUrl(payload);
+    sendJson(res, 200, { ok: true, ...result });
+    return true;
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/r2/download-url") {
+    const key = url.searchParams.get("key");
+    if (!key || key.includes("..")) {
+      sendJson(res, 400, { ok: false, error: "A valid R2 object key is required." });
+      return true;
+    }
+    const downloadUrl = await createDownloadUrl(key);
+    sendJson(res, 200, { ok: true, downloadUrl, expiresIn: 300 });
+    return true;
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/r2/file") {
+    const key = url.searchParams.get("key");
+    if (!key || key.includes("..")) {
+      sendJson(res, 400, { ok: false, error: "A valid R2 object key is required." });
+      return true;
+    }
+    const downloadUrl = await createDownloadUrl(key);
+    res.writeHead(302, { Location: downloadUrl, "Cache-Control": "private, no-store" });
+    res.end();
+    return true;
+  }
+
   if (req.method === "GET" && stores[url.pathname]) {
     sendJson(res, 200, await readJsonStore(stores[url.pathname]));
     return true;
@@ -153,6 +184,6 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-server.listen(PORT, "127.0.0.1", () => {
-  console.log(`CBE website backend running at http://127.0.0.1:${PORT}/`);
+server.listen(PORT, "0.0.0.0", () => {
+  console.log(`CBE website backend running on port ${PORT}`);
 });
