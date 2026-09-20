@@ -87,13 +87,30 @@
   const status = document.getElementById("quizStatus");
   const progressBox = document.getElementById("progressReport");
 
+  // Populate the assessment Grade dropdown with Grade 1–12.
+  // Clear existing options first so this remains safe if the page already has options.
+  grade.innerHTML = "";
   grades.forEach((g) => {
     const option = document.createElement("option");
     option.value = g;
     option.textContent = g;
     grade.appendChild(option);
   });
-  grade.value = "Grade 7";
+  grade.value = grade.querySelector('option[value="Grade 7"]') ? "Grade 7" : grades[0];
+
+  // Keep the selected grade visible and usable whenever the learner changes it.
+  grade.addEventListener("change", () => {
+    if (instructions) {
+      instructions.textContent = grade.value + " " + subject.value + " selected. Click Start / Restart Quiz.";
+    }
+  });
+  if (subject) {
+    subject.addEventListener("change", () => {
+      if (instructions) {
+        instructions.textContent = grade.value + " " + subject.value + " selected. Click Start / Restart Quiz.";
+      }
+    });
+  }
 
   let active = [];
   let startedAt = 0;
