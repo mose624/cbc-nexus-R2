@@ -158,6 +158,90 @@ async function generateAIHomeworkAnswer(payload) {
 }
 
 async function handleApi(req, res, url) {
+  if (req.method === "GET" && url.pathname === "/api/admin/dashboard") {
+    if (!verifyAdminSession(req)) { sendJson(res, 401, { ok: false, error: "Admin login required." }); return true; }
+    const [resources, sellerAccounts, payments, mpesaRequests, tuition, users] = await Promise.all([
+      readJsonStore("resources.json"), readJsonStore("seller-accounts.json"),
+      readJsonStore("payments.json"), readJsonStore("mpesa-requests.json"),
+      readJsonStore("tuition-registrations.json"), readJsonStore("admin-users.json")
+    ]);
+    const userMap = new Map();
+    [...users].forEach((u) => userMap.set(u.phone || u.username || u.id, u));
+    [...payments, ...mpesaRequests, ...tuition].forEach((item) => {
+      const phone = item.customerPhone || item.phone;
+      if (phone && !userMap.has(phone)) userMap.set(phone, {
+        id: "user-" + phone, name: item.learner || item.name || "Customer",
+        phone, status: "active", source: "transaction"
+      });
+    });
+    const allUsers = [...userMap.values()];
+    const sales = payments.filter((p) => ["paid","completed","success"].includes(String(p.status || "").toLowerCase()));
+    sendJson(res, 200, {
+      ok: true,
+      stats: {
+        sellers: sellerAccounts.length,
+        pendingSellers: sellerAccounts.filter((x) => x.status === "pending").length,
+        resources: resources.length,
+        pendingResources: resources.filter((x) => x.status === "pending").length,
+        users: allUsers.length,
+        sales: sales.length,
+        revenue: sales.reduce((sum, x) => sum + Number(x.amount || 0), 0)
+      },
+      sellers: sellerAccounts,
+      resources,
+      users: allUsers,
+      sales,
+      payments: [...payments, ...mpesaRequests].slice(0, 100)
+    });
+    return true;
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/admin/resource") {
+    if (!verifyAdminSession(req)) { sendJson(res, 401, { ok: false, error: "Admin login required." }); return true; }
+    const payload = JSON.parse((await readBody(req)) || "{}");
+    const resources = await readJsonStore("resources.json");
+    const item = { ...payload, status: payload.status || "approved", updatedAt: new Date().toISOString() };
+    const next = [item, ...resources.filter((x) => x.id !== item.id)];
+    await fs.writeFile(path.join(DATA_DIR, "resources.json"), JSON.stringify(next, null, 2));
+    sendJson(res, 200, { ok: true, resource: item });
+    return true;
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/admin/resource-status") {
+    if (!verifyAdminSession(req)) { sendJson(res, 401, { ok: false, error: "Admin login required." }); return true; }
+    const p = JSON.parse((await readBody(req)) || "{}");
+    const resources = await readJsonStore("resources.json");
+    const next = resources.map((x) => x.id === p.resourceId ? { ...x, status: String(p.status || "pending"), reviewedAt: new Date().toISOString() } : x);
+    await fs.writeFile(path.join(DATA_DIR, "resources.json"), JSON.stringify(next, null, 2));
+    sendJson(res, 200, { ok: true });
+    return true;
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/admin/resource-price") {
+    if (!verifyAdminSession(req)) { sendJson(res, 401, { ok: false, error: "Admin login required." }); return true; }
+    const p = JSON.parse((await readBody(req)) || "{}");
+    const resources = await readJsonStore("resources.json");
+    const next = resources.map((x) => x.id === p.resourceId ? {
+      ...x, price: Math.max(0, Number(p.price || 0)), discount: Math.min(100, Math.max(0, Number(p.discount || 0))),
+      updatedAt: new Date().toISOString()
+    } : x);
+    await fs.writeFile(path.join(DATA_DIR, "resources.json"), JSON.stringify(next, null, 2));
+    sendJson(res, 200, { ok: true });
+    return true;
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/admin/user-status") {
+    if (!verifyAdminSession(req)) { sendJson(res, 401, { ok: false, error: "Admin login required." }); return true; }
+    const p = JSON.parse((await readBody(req)) || "{}");
+    const users = await readJsonStore("admin-users.json");
+    const existing = users.find((x) => x.id === p.userId || x.phone === p.phone);
+    const item = { ...(existing || {}), id: p.userId || existing?.id || "user-" + Date.now(), phone: p.phone || existing?.phone || "", name: p.name || existing?.name || "Customer", status: String(p.status || "active"), updatedAt: new Date().toISOString() };
+    const next = [item, ...users.filter((x) => x.id !== item.id && x.phone !== item.phone)];
+    await fs.writeFile(path.join(DATA_DIR, "admin-users.json"), JSON.stringify(next, null, 2));
+    sendJson(res, 200, { ok: true, user: item });
+    return true;
+  }
+
   if (req.method === "POST" && url.pathname === "/api/admin/login") {
     const config = getAdminConfig();
     if (!config.username || !config.email || !config.passwordHash || !config.sessionSecret) {
@@ -198,6 +282,7 @@ async function handleApi(req, res, url) {
 
   if(req.method==="POST"&&url.pathname==="/api/seller/account"){const p=JSON.parse((await readBody(req))||"{}"),u=String(p.username||"").trim().toLowerCase(),pw=String(p.password||""),name=String(p.name||"").trim(),phone=String(p.phone||"").trim();if(!u||pw.length<8||!name||!phone){sendJson(res,400,{ok:false,error:"Name, phone, username and a password of at least 8 characters are required."});return true;}const ac=await readJsonStore("seller-accounts.json");if(ac.some(x=>x.username===u)){sendJson(res,409,{ok:false,error:"This seller username is already registered."});return true;}const a={id:"seller-account-"+Date.now(),name,phone,username:u,passwordHash:await hashPassword(pw),status:"pending",createdAt:new Date().toISOString()};await appendJsonStore("seller-accounts.json",a);sendJson(res,201,{ok:true,account:{id:a.id,name,phone,username:u,status:"pending"}});return true;}
   if(req.method==="POST"&&url.pathname==="/api/seller/login"){const p=JSON.parse((await readBody(req))||"{}"),u=String(p.username||"").trim().toLowerCase(),ac=await readJsonStore("seller-accounts.json"),a=ac.find(x=>x.username===u);if(!a||!(await verifyPassword(String(p.password||""),a.passwordHash))){sendJson(res,401,{ok:false,error:"Invalid seller username or password."});return true;}if(a.status!=="approved"){sendJson(res,403,{ok:false,error:"Seller account is pending admin approval."});return true;}res.setHeader("Set-Cookie",sellerCookie(createSellerSession(u)));sendJson(res,200,{ok:true,account:{id:a.id,name:a.name,phone:a.phone,username:a.username,status:a.status}});return true;}
+  if(req.method==="POST"&&url.pathname==="/api/admin/seller-resource-status"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const p=JSON.parse((await readBody(req))||"{}"),items=await readJsonStore("resources.json"),next=items.map(x=>x.id===p.resourceId?{...x,status:String(p.status||"pending"),reviewedAt:new Date().toISOString()}:x);await fs.writeFile(path.join(DATA_DIR,"resources.json"),JSON.stringify(next,null,2));sendJson(res,200,{ok:true});return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/seller-account-status"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const p=JSON.parse((await readBody(req))||"{}"),ac=await readJsonStore("seller-accounts.json"),up=ac.map(x=>x.id===p.accountId?{...x,status:String(p.status||"pending"),reviewedAt:new Date().toISOString()}:x);await fs.writeFile(path.join(DATA_DIR,"seller-accounts.json"),JSON.stringify(up,null,2));sendJson(res,200,{ok:true});return true;}
 
   if(req.method==="POST"&&url.pathname==="/api/r2/upload-url"){const p=JSON.parse((await readBody(req))||"{}"),admin=verifyAdminSession(req),seller=verifySellerSession(req);if(p.role==="admin"&&!admin){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}if(p.role==="seller"&&!seller){sendJson(res,401,{ok:false,error:"Approved seller login required."});return true;}if(!["admin","seller"].includes(p.role)){sendJson(res,400,{ok:false,error:"Upload role is required."});return true;}sendJson(res,200,{ok:true,...await createUploadUrl(p)});return true;}
