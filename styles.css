@@ -3587,3 +3587,189 @@ img, svg, video, iframe {
 .admin-price-row button{padding:8px 10px}
 @media(max-width:900px){.admin-stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-management-grid{grid-template-columns:1fr}}
 @media(max-width:600px){.admin-stats-grid{grid-template-columns:1fr 1fr}.admin-record{align-items:stretch;flex-direction:column}.admin-record-actions{justify-content:flex-start!important}.admin-price-row{grid-template-columns:1fr 1fr}.admin-price-row>div{grid-column:1/-1}.admin-price-row button{width:100%}}
+
+/* Admin Control Centre - professional operations UI */
+.admin-control-panel{
+  margin-top:24px;
+  padding:24px;
+  border:1px solid #dbe4ee;
+  border-radius:18px;
+  background:linear-gradient(180deg,#f8fafc 0%,#ffffff 100%);
+  box-shadow:0 12px 30px rgba(15,23,42,.08);
+}
+.admin-control-topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:20px;
+  padding-bottom:18px;
+  border-bottom:1px solid #e2e8f0;
+}
+.admin-control-topbar h2{margin:3px 0 6px;font-size:1.55rem;color:#0f172a}
+.admin-control-topbar p:last-child{margin:0;color:#64748b}
+.admin-toolbar-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.admin-last-updated{font-size:.78rem;color:#64748b;background:#f1f5f9;padding:8px 10px;border-radius:8px}
+.admin-kpi-grid{
+  display:grid;
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:12px;
+  margin:18px 0;
+}
+.admin-stat-card{
+  width:100%;
+  text-align:left;
+  border:1px solid #e2e8f0;
+  border-radius:12px;
+  padding:15px;
+  background:#fff;
+  box-shadow:0 3px 10px rgba(15,23,42,.04);
+  cursor:pointer;
+  transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;
+}
+.admin-stat-card:hover,.admin-stat-card:focus-visible{
+  transform:translateY(-2px);
+  border-color:#0645ad;
+  box-shadow:0 8px 18px rgba(6,69,173,.12);
+}
+.admin-stat-card strong{display:block;font-size:1.35rem;color:#0645ad;line-height:1.2}
+.admin-stat-card span{display:block;margin-top:6px;font-weight:800;color:#0f172a}
+.admin-stat-card small{display:block;margin-top:3px;color:#64748b;font-size:.72rem}
+.admin-command-bar{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 180px;
+  gap:12px;
+  padding:12px;
+  margin-bottom:14px;
+  border:1px solid #e2e8f0;
+  border-radius:12px;
+  background:#f8fafc;
+}
+.admin-search,.admin-filter{display:grid;gap:5px}
+.admin-search span,.admin-filter span{font-size:.72rem;font-weight:800;color:#475569;text-transform:uppercase;letter-spacing:.04em}
+.admin-search input,.admin-filter select{
+  width:100%;
+  min-height:40px;
+  border:1px solid #cbd5e1;
+  border-radius:8px;
+  background:#fff;
+  padding:8px 10px;
+}
+.admin-module-tabs{
+  display:flex;
+  gap:6px;
+  overflow-x:auto;
+  padding:3px;
+  margin-bottom:12px;
+  scrollbar-width:thin;
+}
+.admin-module-tab{
+  flex:0 0 auto;
+  border:1px solid #dbe4ee;
+  background:#fff;
+  color:#334155;
+  border-radius:9px;
+  padding:9px 12px;
+  font-weight:800;
+  cursor:pointer;
+}
+.admin-module-tab span{
+  display:inline-flex;
+  min-width:19px;
+  height:19px;
+  align-items:center;
+  justify-content:center;
+  margin-left:4px;
+  border-radius:999px;
+  background:#e2e8f0;
+  font-size:.68rem;
+}
+.admin-module-tab.active{
+  background:#0645ad;
+  border-color:#0645ad;
+  color:#fff;
+}
+.admin-module-tab.active span{background:#fff;color:#0645ad}
+.admin-module-panel{
+  display:none;
+  background:#fff;
+  border:1px solid #e2e8f0;
+  border-radius:14px;
+  padding:16px;
+}
+.admin-module-panel.active{display:block}
+.admin-module-heading{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:12px;
+}
+.admin-module-heading h3{margin:0;color:#0f172a}
+.admin-module-heading span{font-size:.8rem;color:#64748b}
+.admin-module-summary{
+  padding:6px 9px;
+  border-radius:999px;
+  background:#eef2ff;
+  color:#0645ad !important;
+  font-weight:800;
+  white-space:nowrap;
+}
+.admin-module-panel .admin-management-list{
+  max-height:520px;
+  overflow:auto;
+  display:grid;
+  gap:8px;
+  padding-right:2px;
+}
+.admin-record{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto auto;
+  align-items:center;
+  gap:12px;
+  padding:11px 12px;
+  border:1px solid #e5eaf0;
+  border-radius:10px;
+  background:#fff;
+}
+.admin-record:hover{background:#f8fafc;border-color:#cbd5e1}
+.admin-record-main{min-width:0;display:grid;gap:3px}
+.admin-record-main strong{color:#0f172a;overflow-wrap:anywhere}
+.admin-record-main span{font-size:.78rem;color:#64748b;overflow-wrap:anywhere}
+.admin-amount{white-space:nowrap;color:#0f172a}
+.admin-record-actions{display:flex!important;flex-direction:row!important;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.admin-record-actions button{padding:7px 10px;font-size:.76rem}
+.admin-price-row{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 120px 120px auto;
+  gap:9px;
+  align-items:end;
+  padding:12px;
+  border:1px solid #e5eaf0;
+  border-radius:10px;
+}
+.admin-price-row>div{min-width:0;display:grid;gap:3px}
+.admin-price-row>div span{font-size:.76rem;color:#64748b}
+.admin-price-row label{display:grid;gap:4px}
+.admin-price-row label span{font-size:.68rem;font-weight:800;color:#64748b;text-transform:uppercase}
+.admin-price-row input{width:100%;padding:8px;border:1px solid #cbd5e1;border-radius:7px}
+.admin-price-row button{padding:9px 12px}
+.admin-control-panel.is-loading{opacity:.72;pointer-events:none}
+@media(max-width:1100px){
+  .admin-kpi-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:760px){
+  .admin-control-panel{padding:14px;border-radius:12px}
+  .admin-control-topbar{flex-direction:column}
+  .admin-toolbar-actions{width:100%;justify-content:space-between}
+  .admin-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+  .admin-stat-card{padding:11px}
+  .admin-stat-card strong{font-size:1.05rem}
+  .admin-command-bar{grid-template-columns:1fr}
+  .admin-module-tabs{margin-left:-2px;margin-right:-2px}
+  .admin-module-tab{padding:8px 9px;font-size:.78rem}
+  .admin-record{grid-template-columns:1fr;gap:8px}
+  .admin-record-actions{justify-content:flex-start}
+  .admin-price-row{grid-template-columns:1fr 1fr}
+  .admin-price-row>div{grid-column:1/-1}
+  .admin-price-row button{width:100%}
+}
