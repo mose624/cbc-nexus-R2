@@ -104,7 +104,7 @@
         const grade = document.querySelector("#sellerGradeInput").value;
         const subject = document.querySelector("#sellerSubjectInput").value;
         const type = document.querySelector("#sellerTypeInput").value;
-        const result = await upload(file, { grade, subject, type, resourceId: id });
+        const result = await upload(file, { grade, subject, type, resourceId: id, role: "seller" });
         const item = {
           id,
           sellerName: document.querySelector("#sellerNameInput").value.trim(),
