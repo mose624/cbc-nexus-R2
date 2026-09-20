@@ -975,7 +975,7 @@ async function handleQuizSubmit(event) {
   showToast("Quiz marked and progress report updated.");
 }
 
-async function handleHomeworkHelper(event) {
+async async function handleHomeworkHelper(event) {
   event.preventDefault();
   const payload = {
     grade: elements.homeworkGrade.value,
@@ -984,7 +984,8 @@ async function handleHomeworkHelper(event) {
   };
   elements.homeworkAnswer.textContent = "Preparing a guided homework response...";
   const backend = await postToBackend(API_ENDPOINTS.homework, payload);
-  const answer = backend && backend.answer
+  if (!backend || !backend.ok) { elements.homeworkAnswer.innerHTML = `<strong>AI Homework Helper</strong><p>${escapeHtml((backend && backend.error) || "The AI Homework Helper is temporarily unavailable.")}</p>`; showToast("AI Homework Helper needs configuration."); return; }
+  const answer = backend.answer
     ? backend.answer
     : `Guided help for ${payload.grade} ${payload.subject}: Start by identifying what the question is asking, list the known facts, solve one step at a time, then check whether your answer fits the question. For this question, write the key idea in your own words first: "${payload.question}"`;
   elements.homeworkAnswer.innerHTML = `<strong>AI Homework Helper</strong><p>${escapeHtml(answer)}</p>`;
