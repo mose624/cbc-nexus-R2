@@ -1095,7 +1095,17 @@
         <a id="cartWhatsappButton" class="whatsapp-button" href="https://wa.me/254xxx" target="_blank" rel="noopener">Send WhatsApp Order</a>
       </div>
     </aside>
-    <script src="app.js?v=20260921-5"></script>
+    <div id="resourcePreviewModal" class="resource-preview-modal" aria-hidden="true">
+      <div class="resource-preview-dialog" role="dialog" aria-modal="true" aria-labelledby="resourcePreviewTitle">
+        <div class="resource-preview-header">
+          <div><p class="eyebrow">Resource Preview</p><h2 id="resourcePreviewTitle">Preview</h2></div>
+          <button id="closeResourcePreview" class="secondary-button" type="button">Close</button>
+        </div>
+        <p id="resourcePreviewInfo" class="resource-preview-info">Previewing the first pages only. The full file remains protected until payment.</p>
+        <iframe id="resourcePreviewFrame" title="Resource preview" loading="lazy"></iframe>
+      </div>
+    </div>
+    <script src="app.js?v=20260921-6"></script>
     <script src="r2-browser.js"></script>
     <script src="assessment-cbc-banks.js?v=20260921"></script>\n    <script src="assessment.js?v=20260921-2"></script>
   </body>
