@@ -975,7 +975,7 @@ async function handleQuizSubmit(event) {
   showToast("Quiz marked and progress report updated.");
 }
 
-async async function handleHomeworkHelper(event) {
+async function handleHomeworkHelper(event) {
   event.preventDefault();
   const payload = {
     grade: elements.homeworkGrade.value,
