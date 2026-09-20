@@ -1,4 +1,5 @@
 const { S3Client, PutObjectCommand, GetObjectCommand } = require("@aws-sdk/client-s3");
+const { PDFDocument } = require("pdf-lib");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
 function getR2Config() {
@@ -64,6 +65,27 @@ async function createUploadUrl(input) {
   return { uploadUrl, key, expiresIn: 900 };
 }
 
+async function createPdfPreview(key, pages = 3) {
+  const { cfg, client } = getClient();
+  const object = await client.send(new GetObjectCommand({ Bucket: cfg.bucket, Key: key }));
+  const bytes = await object.Body.transformToByteArray();
+  const source = await PDFDocument.load(bytes);
+  const preview = await PDFDocument.create();
+  const count = Math.min(Math.max(1, Number(pages) || 3), source.getPageCount());
+  const copied = await preview.copyPages(source, Array.from({ length: count }, (_, i) => i));
+  copied.forEach((page) => preview.addPage(page));
+  const previewBytes = await preview.save();
+  const previewKey = key.replace(/^resources\\//, "previews/").replace(/\\.[^/.]+$/, "") + "-preview.pdf";
+  await client.send(new PutObjectCommand({
+    Bucket: cfg.bucket,
+    Key: previewKey,
+    Body: Buffer.from(previewBytes),
+    ContentType: "application/pdf",
+    CacheControl: "private, max-age=300"
+  }));
+  return { previewKey, pages: count };
+}
+
 async function createDownloadUrl(key) {
   const { cfg, client } = getClient();
   const command = new GetObjectCommand({
@@ -73,4 +95,4 @@ async function createDownloadUrl(key) {
   return getSignedUrl(client, command, { expiresIn: 300 });
 }
 
-module.exports = { createUploadUrl, createDownloadUrl };
+module.exports = { createUploadUrl, createDownloadUrl, createPdfPreview };
