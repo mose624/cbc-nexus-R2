@@ -162,4 +162,18 @@
       }
     }, true);
   }
+
+  // Independent admin-button fallback. This runs even if an optional
+  // dashboard control in app.js is missing, so the Admin Area always opens.
+  const adminButton = document.querySelector("#adminAreaButton");
+  if (adminButton) {
+    adminButton.addEventListener("click", function (event) {
+      event.preventDefault();
+      const login = document.querySelector("#adminLogin");
+      if (!login) return;
+      login.classList.add("open");
+      login.setAttribute("aria-hidden", "false");
+      login.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, true);
+  }
 })();
