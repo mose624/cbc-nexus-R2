@@ -2850,3 +2850,90 @@ img, svg, video, iframe {
     background: #ffffff !important;
   }
 }
+
+
+/* Compact blue grade buttons matching Quick Resources */
+.portal-sidebar .grade-list .grade-card {
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  margin: 1px 0;
+}
+
+.portal-sidebar .grade-list .grade-toggle {
+  min-height: 30px;
+  padding: 5px 7px;
+  border: 1px solid #d7e4f5;
+  border-radius: 4px;
+  background: #f4f8ff;
+  color: #0645ad;
+  font-size: 11px;
+  line-height: 1.1;
+  text-align: left;
+}
+
+.portal-sidebar .grade-list .grade-toggle:hover,
+.portal-sidebar .grade-list .grade-toggle.active,
+.portal-sidebar .grade-list .grade-card.open .grade-toggle {
+  background: #0645ad;
+  color: #ffffff;
+  border-color: #0645ad;
+}
+
+.portal-sidebar .grade-list .subject-menu {
+  gap: 3px;
+  padding: 3px 4px 4px;
+}
+
+.portal-sidebar .grade-list .subject-chip {
+  padding: 4px 6px;
+  border-radius: 4px;
+  border: 1px solid #c9d9ee;
+  background: #ffffff;
+  color: #0645ad;
+  font-size: 10px;
+  line-height: 1.1;
+}
+
+.portal-sidebar .grade-list .subject-chip:hover,
+.portal-sidebar .grade-list .subject-chip:focus-visible {
+  background: #eaf2ff;
+  color: #c62828;
+  border-color: #0645ad;
+}
+
+@media (max-width: 760px) {
+  .portal-sidebar .grade-list {
+    gap: 3px;
+    margin-top: 7px;
+  }
+
+  .portal-sidebar .grade-list .grade-toggle {
+    min-height: 24px;
+    padding: 4px 4px;
+    font-size: 7px;
+  }
+
+  .portal-sidebar .grade-list .subject-menu {
+    gap: 2px;
+    padding: 2px 2px 3px;
+  }
+
+  .portal-sidebar .grade-list .subject-chip {
+    padding: 3px 4px;
+    font-size: 6.5px;
+  }
+}
+
+@media (max-width: 420px) {
+  .portal-sidebar .grade-list .grade-toggle {
+    min-height: 22px;
+    padding: 3px 3px;
+    font-size: 6.5px;
+  }
+
+  .portal-sidebar .grade-list .subject-chip {
+    font-size: 6px;
+    padding: 2px 3px;
+  }
+}
