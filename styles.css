@@ -3451,3 +3451,17 @@ img, svg, video, iframe {
   background: #053b91 !important;
   color: #ffffff !important;
 }
+
+
+/* Upper header quick-access buttons: unified green */
+.top-strip > a {
+  background: #0b8750 !important;
+  color: #ffffff !important;
+  border-color: rgba(255,255,255,.7) !important;
+}
+
+.top-strip > a:hover,
+.top-strip > a:focus-visible {
+  background: #086b40 !important;
+  color: #ffffff !important;
+}
