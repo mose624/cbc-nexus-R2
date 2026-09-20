@@ -48,5 +48,91 @@
     "Grade 11":["functions","sequences","trigonometry","statistics","probability","calculus foundations"],
     "Grade 12":["advanced algebra","functions","calculus","statistics","probability","geometry"]
   };
+
+
+  function textBank(subject, grade) {
+    const n = Number(String(grade).replace(/[^0-9]/g,"")) || 1;
+    const out = [];
+    const add = (q,o,a,t,e) => out.push(Q(q,o,a,t,e));
+    const topicSets = {
+      "English":["grammar","vocabulary","reading","writing","punctuation","sentence construction","comprehension","oral communication","spelling","literature"],
+      "English Activities":["phonics","vocabulary","listening","speaking","reading","writing","letters","sounds","sentences","communication"],
+      "Kiswahili":["sarufi","msamiati","ufahamu","uandishi","kusoma","kusikiliza","mazungumzo","methali","nahau","fasihi"],
+      "Kiswahili Activities":["msamiati","kusikiliza","kuongea","kusoma","kuandika","matamshi","sentensi","majina","vitendo","mawasiliano"],
+      "Science":["living things","plants","animals","matter","energy","forces","health","environment","materials","measurement"],
+      "Science & Technology":["living things","materials","energy","forces","environment","health","technology","measurement","weather","conservation"],
+      "Integrated Science":["matter","energy","forces","health","cells","environment","electricity","waves","measurement","scientific inquiry"],
+      "Social Studies":["community","citizenship","history","geography","resources","culture","maps","trade","environment","governance"],
+      "Agriculture":["soil","crops","livestock","farm tools","water","pests","nutrition","agroforestry","farm records","marketing"],
+      "Business Studies":["entrepreneurship","markets","production","trade","finance","saving","insurance","business records","consumer rights","management"],
+      "Computer Science":["algorithms","data","programming","networks","cybersecurity","digital literacy","systems","databases","problem solving","ethics"],
+      "Computer Studies":["computer systems","data","programming","networks","cybersecurity","databases","algorithms","digital citizenship","systems","problem solving"],
+      "Pre-Technical Studies":["materials","tools","technical drawing","design","safety","structures","mechanisms","electricity","entrepreneurship","prototyping"],
+      "Health Education":["nutrition","hygiene","mental wellbeing","relationships","first aid","disease prevention","physical activity","safety","substance awareness","healthy living"],
+      "Life Skills Education":["self-awareness","decision making","communication","relationships","resilience","problem solving","goal setting","empathy","leadership","responsibility"],
+      "Religious Education":["values","service","relationships","responsibility","peace","integrity","stewardship","compassion","decision making","community"],
+      "General Science":["scientific method","measurement","matter","energy","forces","environment","health","data","experiments","technology"]
+    };
+    const topics=topicSets[subject] || ["knowledge","application","reasoning","communication","problem solving","evidence","skills","values","practice","reflection"];
+    for(let i=0;i<100;i++){
+      const t=topics[i%topics.length], k=Math.floor(i/topics.length)+1;
+      const a=(n+k)%4;
+      const opts=[
+        "Apply the relevant "+t+" principle to the situation.",
+        "Ignore the evidence and choose an unrelated action.",
+        "Use a reasoned approach based on "+t+".",
+        "Choose an answer without considering the situation."
+      ];
+      add("Grade "+n+" "+subject+": Which response best demonstrates understanding of "+t+" in scenario "+k+"?",
+        [opts[0],opts[1],opts[2],opts[3]], a===2?2:0, t,
+        "The strongest response applies the relevant "+t+" knowledge or skill to the situation.");
+    }
+    return out;
+  }
+
+  const supportedMajorSubjects = [
+    "English","English Activities","Kiswahili","Kiswahili Activities",
+    "Science","Science & Technology","Integrated Science","Social Studies",
+    "Agriculture","Business Studies","Computer Science","Computer Studies",
+    "Pre-Technical Studies","Health Education","Life Skills Education",
+    "Religious Education","General Science"
+  ];
+  for (let n=1;n<=12;n++) {
+    const g="Grade "+n;
+    banks[g]=banks[g]||{};
+    supportedMajorSubjects.forEach(s => { if (!banks[g][s]) banks[g][s]=textBank(s,g); });
+  }
+
+  // Senior-school STEM banks: varied numerical and reasoning items.
+  function scienceNumericBank(subject, grade) {
+    const n=Number(String(grade).replace(/[^0-9]/g,""))||10, out=[];
+    const add=(q,o,a,t,e)=>out.push(Q(q,o,a,t,e));
+    for(let i=1;i<=100;i++){
+      if(subject==="Physics"){
+        const m=i+n, acc=(i%5)+2, force=m*acc;
+        add("A body of mass "+m+" kg accelerates at "+acc+" m/s². What is the resultant force?",
+          [String(force-2)+" N",String(force)+" N",String(force+2)+" N",String(force+4)+" N"],1,"Mechanics",
+          "Using F = ma gives "+force+" N.");
+      } else if(subject==="Chemistry"){
+        const mol=(i%5)+1, mass=mol*18;
+        add("A sample contains "+mol+" mol of a substance with molar mass 18 g/mol. What is its mass?",
+          [String(mass-9)+" g",String(mass)+" g",String(mass+9)+" g",String(mass+18)+" g"],1,"Stoichiometry",
+          "Mass = amount × molar mass = "+mol+" × 18 = "+mass+" g.");
+      } else {
+        const base=(i%8)+2, height=(i%6)+3, area=base*height;
+        add("A biological sample has "+base+" units across and "+height+" units deep. What is the rectangular area?",
+          [String(area-2),String(area),String(area+2),String(area+4)],1,"Quantitative Biology",
+          "Area = "+base+" × "+height+" = "+area+" square units.");
+      }
+    }
+    return out;
+  }
+  for(let n=10;n<=12;n++){
+    const g="Grade "+n;
+    banks[g].Physics=scienceNumericBank("Physics",g);
+    banks[g].Chemistry=scienceNumericBank("Chemistry",g);
+    banks[g].Biology=scienceNumericBank("Biology",g);
+  }
+
   window.CBENexusCBCBanks = {banks:banks,topicMap:topicMap};
 })();
