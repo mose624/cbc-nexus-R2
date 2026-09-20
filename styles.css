@@ -3336,3 +3336,72 @@ img, svg, video, iframe {
   .top-strip > a:nth-child(8) { border-bottom-left-radius: 6px; }
   .top-strip > a:nth-child(14) { border-bottom-right-radius: 6px; }
 }
+
+
+/* FINAL MOBILE HEADER SHAPE: compact touching buttons with rounded individual edges */
+@media (max-width: 760px) {
+  .top-strip {
+    display: grid !important;
+    grid-template-columns: repeat(7, 1fr) !important;
+    grid-template-rows: repeat(2, auto) !important;
+    gap: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    border-radius: 8px !important;
+  }
+
+  .top-strip > a {
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 3px 2px !important;
+    border: 1px solid rgba(255,255,255,.75) !important;
+    border-radius: 6px !important;
+    font-size: 6px !important;
+    line-height: 1 !important;
+    text-align: center !important;
+    white-space: normal !important;
+    overflow: hidden !important;
+    text-overflow: clip !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* The buttons remain touching because their boxes have zero grid gap. */
+  .top-strip > a:nth-child(1),
+  .top-strip > a:nth-child(2),
+  .top-strip > a:nth-child(3),
+  .top-strip > a:nth-child(4),
+  .top-strip > a:nth-child(5),
+  .top-strip > a:nth-child(6),
+  .top-strip > a:nth-child(7) {
+    border-bottom-left-radius: 6px !important;
+    border-bottom-right-radius: 6px !important;
+  }
+
+  .top-strip > a:nth-child(8),
+  .top-strip > a:nth-child(9),
+  .top-strip > a:nth-child(10),
+  .top-strip > a:nth-child(11),
+  .top-strip > a:nth-child(12),
+  .top-strip > a:nth-child(13),
+  .top-strip > a:nth-child(14) {
+    border-top-left-radius: 6px !important;
+    border-top-right-radius: 6px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .top-strip {
+    border-radius: 7px !important;
+  }
+
+  .top-strip > a {
+    padding: 2px 1px !important;
+    font-size: 5px !important;
+    min-height: 22px !important;
+    border-radius: 5px !important;
+  }
+}
