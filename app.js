@@ -316,6 +316,7 @@ const elements = {
   sellerDashboard: document.querySelector("#sellerDashboard"),
   openSellerDashboard: document.querySelector("#openSellerDashboardButton"),
   openSellerDashboardSecondary: document.querySelector("#openSellerDashboardButtonSecondary"),
+  openSellerDashboardNav: document.querySelector("#openSellerDashboardNavButton"),
   adminAreaButton: document.querySelector("#adminAreaButton"),
   sellerAccountForm: document.querySelector("#sellerAccountForm"),
   sellerAccountName: document.querySelector("#sellerAccountNameInput"),
@@ -1392,6 +1393,7 @@ function bindEvents() {
 
   elements.openSellerDashboard.addEventListener("click", openSellerDashboard);
   elements.openSellerDashboardSecondary.addEventListener("click", openSellerDashboard);
+  if (elements.openSellerDashboardNav) elements.openSellerDashboardNav.addEventListener("click", openSellerDashboard);
   if (elements.adminAreaButton) {
     elements.adminAreaButton.addEventListener("click", openAdminLogin);
   }
