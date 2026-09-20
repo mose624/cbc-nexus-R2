@@ -894,47 +894,94 @@
         </div>
 
         <div id="adminControlPanel" class="admin-control-panel">
-          <div class="section-heading admin-control-heading">
+          <div class="admin-control-topbar">
             <div>
               <p class="eyebrow">Central management</p>
               <h2>Admin Control Centre</h2>
-              <p>Manage sellers, resources, users, sales, payments and prices from one secure dashboard.</p>
+              <p>One place to review activity, approve content, manage customers and control marketplace pricing.</p>
             </div>
-            <button class="secondary-button" id="refreshAdminDashboardButton" type="button">Refresh Dashboard</button>
+            <div class="admin-toolbar-actions">
+              <span id="adminLastUpdated" class="admin-last-updated">Not loaded</span>
+              <button class="secondary-button" id="refreshAdminDashboardButton" type="button">↻ Refresh</button>
+            </div>
           </div>
 
-          <div id="adminStatsGrid" class="admin-stats-grid"></div>
+          <div class="admin-kpi-grid" id="adminStatsGrid" aria-label="Marketplace overview"></div>
 
-          <div class="admin-management-grid">
-            <section class="admin-management-card">
-              <div class="admin-card-heading"><h3>Approve Sellers</h3><span>Seller accounts</span></div>
-              <div id="adminSellerManagement" class="admin-management-list"></div>
-            </section>
+          <div class="admin-command-bar">
+            <label class="admin-search">
+              <span>Search dashboard</span>
+              <input id="adminDashboardSearch" type="search" placeholder="Search sellers, resources, users or payments...">
+            </label>
+            <label class="admin-filter">
+              <span>Status</span>
+              <select id="adminStatusFilter">
+                <option value="all">All statuses</option>
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="paid">Paid</option>
+                <option value="active">Active</option>
+                <option value="blocked">Blocked</option>
+                <option value="rejected">Rejected</option>
+              </select>
+            </label>
+          </div>
 
-            <section class="admin-management-card">
-              <div class="admin-card-heading"><h3>Manage Resources</h3><span>Approve, reject and price</span></div>
-              <div id="adminResourceManagement" class="admin-management-list"></div>
-            </section>
+          <div class="admin-module-tabs" role="tablist" aria-label="Admin management modules">
+            <button class="admin-module-tab active" type="button" role="tab" aria-selected="true" data-admin-module="sellers">Sellers <span id="adminSellerBadge">0</span></button>
+            <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="resources">Resources <span id="adminResourceBadge">0</span></button>
+            <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="users">Users <span id="adminUserBadge">0</span></button>
+            <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="sales">Sales <span id="adminSalesBadge">0</span></button>
+            <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="payments">Payments <span id="adminPaymentBadge">0</span></button>
+            <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="prices">Prices</button>
+          </div>
 
-            <section class="admin-management-card">
-              <div class="admin-card-heading"><h3>Manage Users</h3><span>Customer access</span></div>
-              <div id="adminUserManagement" class="admin-management-list"></div>
-            </section>
+          <div class="admin-module-panel active" data-admin-module-panel="sellers">
+            <div class="admin-module-heading">
+              <div><h3>Seller management</h3><span>Approve or reject seller accounts.</span></div>
+              <span id="adminSellerSummary" class="admin-module-summary"></span>
+            </div>
+            <div id="adminSellerManagement" class="admin-management-list"></div>
+          </div>
 
-            <section class="admin-management-card">
-              <div class="admin-card-heading"><h3>View Sales</h3><span>Completed payments</span></div>
-              <div id="adminSalesManagement" class="admin-management-list"></div>
-            </section>
+          <div class="admin-module-panel" data-admin-module-panel="resources">
+            <div class="admin-module-heading">
+              <div><h3>Resource management</h3><span>Review marketplace content before publication.</span></div>
+              <span id="adminResourceSummary" class="admin-module-summary"></span>
+            </div>
+            <div id="adminResourceManagement" class="admin-management-list"></div>
+          </div>
 
-            <section class="admin-management-card">
-              <div class="admin-card-heading"><h3>View Payments</h3><span>Payment requests</span></div>
-              <div id="adminPaymentManagement" class="admin-management-list"></div>
-            </section>
+          <div class="admin-module-panel" data-admin-module-panel="users">
+            <div class="admin-module-heading">
+              <div><h3>User management</h3><span>Control customer account access.</span></div>
+              <span id="adminUserSummary" class="admin-module-summary"></span>
+            </div>
+            <div id="adminUserManagement" class="admin-management-list"></div>
+          </div>
 
-            <section class="admin-management-card">
-              <div class="admin-card-heading"><h3>Manage Prices</h3><span>Quick price control</span></div>
-              <div id="adminPriceManagement" class="admin-management-list"></div>
-            </section>
+          <div class="admin-module-panel" data-admin-module-panel="sales">
+            <div class="admin-module-heading">
+              <div><h3>Sales overview</h3><span>Completed marketplace transactions.</span></div>
+              <span id="adminSalesSummary" class="admin-module-summary"></span>
+            </div>
+            <div id="adminSalesManagement" class="admin-management-list"></div>
+          </div>
+
+          <div class="admin-module-panel" data-admin-module-panel="payments">
+            <div class="admin-module-heading">
+              <div><h3>Payment monitoring</h3><span>Track M-Pesa payment requests and outcomes.</span></div>
+              <span id="adminPaymentSummary" class="admin-module-summary"></span>
+            </div>
+            <div id="adminPaymentManagement" class="admin-management-list"></div>
+          </div>
+
+          <div class="admin-module-panel" data-admin-module-panel="prices">
+            <div class="admin-module-heading">
+              <div><h3>Price management</h3><span>Update price and discount without leaving the dashboard.</span></div>
+              <span class="admin-module-summary">KES</span>
+            </div>
+            <div id="adminPriceManagement" class="admin-management-list"></div>
           </div>
         </div>
       </section>
