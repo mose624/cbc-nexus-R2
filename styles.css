@@ -3789,3 +3789,5 @@ img, svg, video, iframe {
 .resource-preview-info{margin:0;padding:9px 18px;background:#fff8db;color:#6b5a00;font-size:.82rem;border-bottom:1px solid #eadb8b}
 #resourcePreviewFrame{flex:1;width:100%;border:0;background:#e5e7eb}
 @media(max-width:640px){.resource-preview-modal{padding:7px}.resource-preview-dialog{width:100%;height:94vh;border-radius:10px}.resource-preview-header{padding:10px 12px}.resource-preview-info{padding:8px 12px;font-size:.74rem}}
+
+.resource-activity{display:flex;gap:12px;flex-wrap:wrap;margin:8px 0;color:#64748b;font-size:.76rem;font-weight:700}
