@@ -1442,7 +1442,13 @@ async function requestMpesaPayment(event) {
       throw new Error("M-Pesa backend is not active yet.");
     }
 
-    elements.paymentStatus.textContent = "M-Pesa request sent. Check the customer's phone to complete payment.";
+    const result = await response.json();
+    if (!result.ok || !result.CheckoutRequestID) throw new Error(result.error || "M-Pesa request was not accepted.");
+    const updatedRecords = readPaymentRecords().map((item) =>
+      item.id === record.id ? { ...item, checkoutRequestID: result.CheckoutRequestID } : item
+    );
+    localStorage.setItem(PAYMENT_RECORDS_KEY, JSON.stringify(updatedRecords));
+    elements.paymentStatus.textContent = "M-Pesa request sent. Complete payment on the phone. The download unlocks after confirmation.";
     showToast("M-Pesa request sent successfully.");
   } catch {
     elements.paymentStatus.textContent = `M-Pesa API backend is not connected yet. Pay manually to ${MPESA_PHONE}, then confirm on WhatsApp.`;
