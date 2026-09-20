@@ -794,6 +794,7 @@ function updateSellerAccountStatus(accountId, status) {
     };
   });
   localStorage.setItem(SELLER_ACCOUNTS_KEY, JSON.stringify(updated));
+  fetch("/api/admin/seller-account-status",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({accountId,status})}).catch(()=>{});
   renderSellerAccountApprovals();
   showToast(`Seller account ${status}.`);
 }
@@ -1092,50 +1093,8 @@ function openSellerDashboard() {
   showToast("Seller dashboard opened.");
 }
 
-function createSellerAccount(event) {
-  event.preventDefault();
-  const username = elements.sellerAccountUsername.value.trim().toLowerCase();
-  const existing = readSellerAccounts().some((account) => account.username.toLowerCase() === username);
-  if (existing) {
-    elements.sellerAccountStatus.textContent = "This seller username is already registered.";
-    return;
-  }
-  const account = {
-    id: `seller-account-${Date.now()}`,
-    name: elements.sellerAccountName.value.trim(),
-    phone: elements.sellerAccountPhone.value.trim(),
-    username: elements.sellerAccountUsername.value.trim(),
-    password: elements.sellerAccountPassword.value,
-    status: "pending",
-    approvalNote: "Admin will approve within 24 hours.",
-    createdAt: new Date().toISOString()
-  };
-  localStorage.setItem(SELLER_ACCOUNTS_KEY, JSON.stringify([...readSellerAccounts(), account]));
-  elements.sellerAccountForm.reset();
-  elements.sellerAccountStatus.textContent = "Seller account created. Admin will approve within 24 hours.";
-  renderSellerAccountApprovals();
-  showToast("Seller account submitted for approval.");
-}
-
-function loginSeller(event) {
-  event.preventDefault();
-  const username = elements.sellerLoginUsername.value.trim().toLowerCase();
-  const password = elements.sellerLoginPassword.value;
-  const account = readSellerAccounts().find((item) => item.username.toLowerCase() === username && item.password === password);
-  if (!account) {
-    elements.sellerLoginStatus.textContent = "Invalid seller username or password.";
-    return;
-  }
-  if (account.status !== "approved") {
-    elements.sellerLoginStatus.textContent = "Seller account is pending admin approval within 24 hours.";
-    return;
-  }
-  sessionStorage.setItem("activeSellerAccount", JSON.stringify(account));
-  elements.sellerLoginForm.reset();
-  elements.sellerLoginStatus.textContent = "Seller login successful.";
-  openSellerDashboard();
-}
-
+async function createSellerAccount(event){event.preventDefault();const p={name:elements.sellerAccountName.value.trim(),phone:elements.sellerAccountPhone.value.trim(),username:elements.sellerAccountUsername.value.trim().toLowerCase(),password:elements.sellerAccountPassword.value};try{const r=await fetch("/api/seller/account",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(p)}),d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||"Seller account could not be created.");localStorage.setItem(SELLER_ACCOUNTS_KEY,JSON.stringify([{...d.account,password:p.password},...readSellerAccounts().filter(x=>x.username!==d.account.username)]));elements.sellerAccountForm.reset();elements.sellerAccountStatus.textContent="Seller account created. Admin approval is required before login.";renderSellerAccountApprovals();showToast("Seller account submitted for approval.");}catch(e){elements.sellerAccountStatus.textContent=e.message;}}
+async function loginSeller(event){event.preventDefault();const username=elements.sellerLoginUsername.value.trim().toLowerCase(),password=elements.sellerLoginPassword.value;try{const r=await fetch("/api/seller/login",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({username,password})}),d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||"Invalid seller username or password.");localStorage.setItem(SELLER_ACCOUNTS_KEY,JSON.stringify([d.account,...readSellerAccounts().filter(x=>x.username!==d.account.username)]));sessionStorage.setItem("activeSellerAccount",JSON.stringify(d.account));elements.sellerLoginForm.reset();elements.sellerLoginStatus.textContent="Seller login successful.";openSellerDashboard();}catch(e){elements.sellerLoginStatus.textContent=e.message;}}
 async function unlockAdmin(event) {
   event.preventDefault();
   const username = elements.adminUsername.value.trim();
