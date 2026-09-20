@@ -333,6 +333,23 @@ async function handleApi(req, res, url) {
 
   if(req.method==="POST"&&url.pathname==="/api/mpesa/stk-push"){const p=JSON.parse((await readBody(req))||"{}"),phone=normalizeMpesaPhone(p.customerPhone),amount=Math.round(Number(p.amount||0)),sc=String(process.env.MPESA_SHORTCODE||""),pk=String(process.env.MPESA_PASSKEY||""),cb=String(process.env.MPESA_CALLBACK_URL||"");if(!phone||amount<1||!sc||!pk||!cb){sendJson(res,503,{ok:false,error:"M-Pesa STK Push is not fully configured. Add MPESA_SHORTCODE, MPESA_PASSKEY and MPESA_CALLBACK_URL in Render."});return true;}try{const token=await getMpesaAccessToken(),ts=new Date().toISOString().replace(/[-:TZ.]/g,"").slice(0,14),pwd=Buffer.from(sc+pk+ts).toString("base64"),out=await darajaPost("/mpesa/stkpush/v1/processrequest",{BusinessShortCode:sc,Password:pwd,Timestamp:ts,TransactionType:process.env.MPESA_TRANSACTION_TYPE||"CustomerPayBillOnline",Amount:amount,PartyA:phone,PartyB:sc,PhoneNumber:phone,CallBackURL:cb,AccountReference:String(p.resource||"CBE Nexus").slice(0,12),TransactionDesc:"CBE Nexus resource payment"},token);const saved=await appendJsonStore("mpesa-requests.json",{...p,daraja:out.data});sendJson(res,out.status>=200&&out.status<300?200:502,{ok:out.status>=200&&out.status<300,saved,...out.data});}catch(e){sendJson(res,502,{ok:false,error:e.message});}return true;}
   if(req.method==="POST"&&url.pathname==="/api/mpesa/callback"){const p=JSON.parse((await readBody(req))||"{}");await appendJsonStore("mpesa-callbacks.json",p);sendJson(res,200,{ResultCode:0,ResultDesc:"Accepted"});return true;}
+  if (req.method === "POST" && url.pathname === "/api/resources") {
+    const payload = JSON.parse((await readBody(req)) || "{}");
+    const isAdmin = verifyAdminSession(req);
+    const isSeller = Boolean(verifySellerSession(req));
+    if ((payload.role === "admin" && !isAdmin) || (payload.role === "seller" && !isSeller)) {
+      sendJson(res, 401, { ok: false, error: "Authorized account required." });
+      return true;
+    }
+    if (!["admin", "seller"].includes(payload.role)) {
+      sendJson(res, 400, { ok: false, error: "Resource role is required." });
+      return true;
+    }
+    const saved = await appendJsonStore("resources.json", payload);
+    sendJson(res, 201, { ok: true, saved });
+    return true;
+  }
+
   if (req.method === "POST" && stores[url.pathname]) {
     const payload = JSON.parse((await readBody(req)) || "{}");
     const saved = await appendJsonStore(stores[url.pathname], payload);
