@@ -3555,3 +3555,35 @@ img, svg, video, iframe {
   .learning-gap-card{align-items:stretch;flex-direction:column}
   .remedial-button{width:100%}
 }
+
+
+/* Admin Control Centre */
+.admin-control-panel{margin-top:24px;padding:22px;border:1px solid #d9e2ec;border-radius:16px;background:#f8fafc}
+.admin-control-heading{align-items:center}
+.admin-stats-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:18px 0}
+.admin-stat-card{padding:16px;border-radius:12px;background:#fff;border:1px solid #d9e2ec;display:flex;flex-direction:column;gap:4px}
+.admin-stat-card strong{font-size:1.35rem;color:#0645ad}
+.admin-stat-card span{font-weight:700}
+.admin-stat-card small{color:#64748b}
+.admin-management-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.admin-management-card{background:#fff;border:1px solid #d9e2ec;border-radius:14px;padding:16px;min-width:0}
+.admin-card-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.admin-card-heading h3{margin:0}
+.admin-card-heading span{font-size:.82rem;color:#64748b}
+.admin-management-list{display:flex;flex-direction:column;gap:10px;max-height:360px;overflow:auto}
+.admin-record{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px;border:1px solid #e2e8f0;border-radius:10px;background:#fff}
+.admin-record>div{display:flex;flex-direction:column;gap:3px;min-width:0}
+.admin-record>div span{font-size:.8rem;color:#64748b;overflow-wrap:anywhere}
+.admin-record-actions{display:flex!important;flex-direction:row!important;flex-wrap:wrap;justify-content:flex-end;gap:6px}
+.admin-record-actions button{padding:7px 10px;font-size:.78rem}
+.status-pill{display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;font-size:.75rem;font-weight:700;text-transform:capitalize;white-space:nowrap;background:#e2e8f0;color:#334155}
+.status-pill.approved,.status-pill.active,.status-pill.paid{background:#dcfce7;color:#166534}
+.status-pill.pending{background:#fef3c7;color:#92400e}
+.status-pill.rejected,.status-pill.blocked{background:#fee2e2;color:#991b1b}
+.admin-price-row{display:grid;grid-template-columns:minmax(0,1fr) 90px 90px auto;gap:7px;align-items:center;padding:10px;border:1px solid #e2e8f0;border-radius:10px}
+.admin-price-row>div{display:flex;flex-direction:column;gap:3px;min-width:0}
+.admin-price-row>div span{font-size:.78rem;color:#64748b}
+.admin-price-row input{width:100%;padding:8px;border:1px solid #cbd5e1;border-radius:7px}
+.admin-price-row button{padding:8px 10px}
+@media(max-width:900px){.admin-stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-management-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.admin-stats-grid{grid-template-columns:1fr 1fr}.admin-record{align-items:stretch;flex-direction:column}.admin-record-actions{justify-content:flex-start!important}.admin-price-row{grid-template-columns:1fr 1fr}.admin-price-row>div{grid-column:1/-1}.admin-price-row button{width:100%}}
