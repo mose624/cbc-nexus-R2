@@ -713,6 +713,7 @@ function renderResources() {
       </div>
       <h3>${escapeHtml(resource.title)}</h3>
       <p>${escapeHtml(resource.description)}</p>
+      <div class="resource-activity"><span>📥 ${Number(resource.downloads || 0)} downloads</span><span>🛒 ${Number(resource.purchases || 0)} purchases</span></div>
       <div class="price-row">
         <div>
           <strong>${money(discountedPrice(resource))}</strong>
