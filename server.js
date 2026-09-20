@@ -93,6 +93,22 @@ function homeworkResponse(payload) {
 }
 
 async function handleApi(req, res, url) {
+  if (req.method === "GET" && url.pathname === "/api/r2/status") {
+    const required = [
+      "R2_ACCOUNT_ID",
+      "R2_ACCESS_KEY_ID",
+      "R2_SECRET_ACCESS_KEY",
+      "R2_BUCKET_NAME"
+    ];
+    const missing = required.filter((name) => !process.env[name]);
+    sendJson(res, 200, {
+      ok: missing.length === 0,
+      r2Configured: missing.length === 0,
+      missing
+    });
+    return true;
+  }
+
   if (req.method === "POST" && url.pathname === "/api/r2/upload-url") {
     const payload = JSON.parse((await readBody(req)) || "{}");
     const result = await createUploadUrl(payload);
