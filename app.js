@@ -5,9 +5,6 @@ const SecurityUtils = {
   get MPESA_PHONE() { return this.decode("MDc5ODQ2MjgxNQ=="); },
   get WHATSAPP_PHONE() { return this.decode("MjU0Nzk4NDYyODE1"); },
   get MPESA_ENDPOINT() { return this.decode("L2FwaS9tcGVzYS9zdGstcHVzaA=="); },
-  get ADMIN_USERNAME() { return this.decode("SVNBQUMh"); },
-  get ADMIN_PASSWORD() { return this.decode("bW9zZTIz"); },
-  get ADMIN_EMAIL() { return this.decode("bW9zZWlzYWFjNUBnbWFpbC5jb20="); },
   get API_ENDPOINTS() {
     return {
       projects: this.decode("L2FwaS9wcm9qZWN0cw=="),
@@ -35,10 +32,7 @@ const MPESA_PHONE = SecurityUtils.MPESA_PHONE;
 const WHATSAPP_PHONE = SecurityUtils.WHATSAPP_PHONE;
 const MPESA_ENDPOINT = SecurityUtils.MPESA_ENDPOINT;
 const API_ENDPOINTS = SecurityUtils.API_ENDPOINTS;
-const ADMIN_USERNAME = SecurityUtils.ADMIN_USERNAME;
-const ADMIN_PASSWORD = SecurityUtils.ADMIN_PASSWORD;
-const ADMIN_EMAIL = SecurityUtils.ADMIN_EMAIL;
-
+const ADMIN_EMAIL = ""; // Admin identity is verified securely by the backend.\n
 const materialTypes = [
   "Notes",
   "Schemes of Work",
@@ -1084,36 +1078,56 @@ function loginSeller(event) {
   openSellerDashboard();
 }
 
-function unlockAdmin(event) {
+async function unlockAdmin(event) {
   event.preventDefault();
-  const username = elements.adminUsername.value.trim().toUpperCase();
+  const username = elements.adminUsername.value.trim();
   const password = elements.adminPassword.value;
-  const email = elements.adminEmail.value.trim().toLowerCase();
+  const email = elements.adminEmail.value.trim();
 
-  if (username !== ADMIN_USERNAME || password !== ADMIN_PASSWORD || email !== ADMIN_EMAIL) {
-    elements.adminLoginStatus.textContent = "Invalid username, password, or email. Please use the official admin credentials.";
-    showToast("Admin login failed.");
-    return;
-  }
-
-  sessionStorage.setItem("cbeAdminUnlocked", "true");
-  const adminLoginSection = document.querySelector("#adminLogin");
-  if (adminLoginSection) {
-    adminLoginSection.classList.remove("open");
-    adminLoginSection.setAttribute("aria-hidden", "true");
-  }
-  elements.adminSection.classList.add("open");
-  elements.adminSection.setAttribute("aria-hidden", "false");
-  elements.adminLoginForm.reset();
-  elements.adminLoginStatus.textContent = "Admin dashboard unlocked.";
-  elements.adminSection.scrollIntoView({ behavior: "smooth", block: "start" });
-  showToast("Admin dashboard unlocked.");
-}
-
-function restoreAdminAccess() {
-  if (sessionStorage.getItem("cbeAdminUnlocked") === "true") {
+  elements.adminLoginStatus.textContent = "Checking admin credentials...";
+  try {
+    const response = await fetch("/api/admin/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "same-origin",
+      body: JSON.stringify({ username, password, email })
+    });
+    const data = await response.json();
+    if (!response.ok || !data.ok) {
+      elements.adminLoginStatus.textContent = data.error || "Invalid admin username, password, or email.";
+      showToast("Admin login failed.");
+      return;
+    }
+    sessionStorage.setItem("cbeAdminUnlocked", "true");
+    const adminLoginSection = document.querySelector("#adminLogin");
+    if (adminLoginSection) {
+      adminLoginSection.classList.remove("open");
+      adminLoginSection.setAttribute("aria-hidden", "true");
+    }
     elements.adminSection.classList.add("open");
     elements.adminSection.setAttribute("aria-hidden", "false");
+    elements.adminLoginForm.reset();
+    elements.adminLoginStatus.textContent = "Admin dashboard unlocked securely.";
+    elements.adminSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    showToast("Admin dashboard unlocked.");
+  } catch {
+    elements.adminLoginStatus.textContent = "Could not connect to the admin server.";
+    showToast("Admin login failed.");
+  }
+}
+
+async function restoreAdminAccess() {
+  try {
+    const response = await fetch("/api/admin/me", { credentials: "same-origin" });
+    if (response.ok) {
+      sessionStorage.setItem("cbeAdminUnlocked", "true");
+      elements.adminSection.classList.add("open");
+      elements.adminSection.setAttribute("aria-hidden", "false");
+    } else {
+      sessionStorage.removeItem("cbeAdminUnlocked");
+    }
+  } catch {
+    sessionStorage.removeItem("cbeAdminUnlocked");
   }
 }
 
@@ -1584,7 +1598,7 @@ function injectContactInfo() {
   // Decrypt and inject contact information throughout the page
   const mpesaPhone = MPESA_PHONE;
   const whatsappPhone = WHATSAPP_PHONE;
-  const adminEmail = ADMIN_EMAIL;
+  const adminEmail = "";
   
   // Update all WhatsApp links with placeholder URLs
   document.querySelectorAll('[href*="wa.me/254xxx"]').forEach((link) => {
