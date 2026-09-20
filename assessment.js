@@ -256,11 +256,45 @@
   };
 
   // Subjects offered by grade band. The list changes automatically when the learner changes Grade.
+  // Kenya CBC/CBE subject map based on the current KICD curriculum-design
+  // structure. Optional languages/religious options are kept as separate choices.
   const gradeSubjects = {
-    lower: ["Mathematics","English","Kiswahili","Environmental Activities","Creative Activities","Religious Education","CBC Skills"],
-    upper: ["Mathematics","English","Kiswahili","Science","Social Studies","Agriculture","Creative Arts","Religious Education","CBC Skills"],
-    junior: ["Mathematics","English","Kiswahili","Integrated Science","Social Studies","Agriculture","Pre-Technical Studies","Business Studies","Computer Science","Creative Arts & Sports","Religious Education","Life Skills","CBC Skills"],
-    senior: ["Mathematics","English","Kiswahili","Physics","Chemistry","Biology","Computer Science","Business Studies","Geography","History & Government","Agriculture","General Science","Religious Education","Physical Education","Art & Design","Music","CBC Skills"]
+    lower: [
+      "Mathematics","English Activities","Kiswahili",
+      "Environmental Activities","Creative Activities",
+      "Christian Religious Education","Islamic Religious Education",
+      "Hindu Religious Education"
+    ],
+    upper: [
+      "Mathematics","English","Kiswahili","Science & Technology",
+      "Social Studies","Agriculture","Creative Arts",
+      "Christian Religious Education","Islamic Religious Education",
+      "Hindu Religious Education","Arabic","French","German",
+      "Mandarin","Indigenous Language"
+    ],
+    junior: [
+      "English","Kiswahili","Mathematics","Integrated Science",
+      "Health Education","Pre-Technical Studies","Social Studies",
+      "Religious Education","Business Studies","Agriculture",
+      "Life Skills Education","Sports & Physical Education",
+      "Visual Arts","Performing Arts","Home Science","Computer Science",
+      "French","German","Mandarin","Arabic","Kenyan Sign Language",
+      "Indigenous Languages"
+    ],
+    senior: [
+      "English","Kiswahili","Core Mathematics","Essential Mathematics",
+      "Community Service Learning","Biology","Chemistry","Physics",
+      "General Science","Agriculture","Computer Studies","Home Science",
+      "Aviation","Building Construction","Electricity","Metalwork",
+      "Power Mechanics","Wood Technology","Media Technology",
+      "Marine & Fisheries Technology","Business Studies",
+      "History & Citizenship","Geography","Literature in English",
+      "Indigenous Languages","Fasihi ya Kiswahili","Sign Language",
+      "Arabic","French","German","Mandarin Chinese",
+      "Christian Religious Education","Islamic Religious Education",
+      "Hindu Religious Education","Sports & Recreation",
+      "Music & Dance","Theatre & Film","Fine Arts"
+    ]
   };
 
   const additionalQuestions = {
