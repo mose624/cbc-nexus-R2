@@ -313,8 +313,24 @@ async function handleApi(req, res, url) {
 
   if (req.method === "GET" && url.pathname === "/api/r2/download-url") {
     const key = url.searchParams.get("key");
+    const checkoutRequestID = url.searchParams.get("checkoutRequestID");
     if (!key || key.includes("..")) {
       sendJson(res, 400, { ok: false, error: "A valid R2 object key is required." });
+      return true;
+    }
+    const resources = await readJsonStore("resources.json");
+    const resource = resources.find((item) => item.r2Key === key);
+    const admin = verifyAdminSession(req);
+    const seller = verifySellerSession(req);
+    let entitled = Boolean(admin || seller);
+    if (!entitled && resource?.isFreeSample && url.searchParams.get("free") === "1") entitled = true;
+    if (!entitled && checkoutRequestID) {
+      const payments = await readJsonStore("payments.json");
+      const payment = payments.find((item) => item.checkoutRequestID === checkoutRequestID);
+      entitled = Boolean(payment?.status === "paid" && String(payment.resource || "").trim().toLowerCase() === String(resource?.title || "").trim().toLowerCase());
+    }
+    if (!entitled) {
+      sendJson(res, 402, { ok: false, error: "Payment is required before the full resource can be downloaded." });
       return true;
     }
     const downloadUrl = await createDownloadUrl(key);
