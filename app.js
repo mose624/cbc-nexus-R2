@@ -720,15 +720,12 @@ function renderResources() {
           <span>${Number(resource.discount) || 0}% discount from ${money(resource.price)}</span>
         </div>
       </div>
-      <div class="card-actions">
-        <button class="primary-button" type="button" data-pay="${escapeHtml(resource.id)}">Pay M-Pesa</button>
-        <button class="secondary-button" type="button" data-cart="${escapeHtml(resource.id)}">Add to Cart</button>
-        <a class="whatsapp-button" href="${escapeHtml(whatsappLink(resource, discountedPrice(resource)))}" target="_blank" rel="noopener">WhatsApp</a>
-        ${resource.previewKey ? `<button class="secondary-button" type="button" data-preview-resource="${escapeHtml(resource.id)}">👁 Preview Pages</button>` : ""}
-        ${resource.isFreeSample ? `<a class="secondary-button" href="${escapeHtml(resource.file)}&free=1" download="${escapeHtml(resource.fileName || "")}">Preview Sample</a>` : ""}
-        ${localStorage.getItem(REFERRAL_KEY) ? `<a class="secondary-button" href="${escapeHtml(resource.file)}&free=1" download="${escapeHtml(resource.fileName || "")}" data-free-resource="${escapeHtml(resource.id)}">Free Referral Paper</a>` : ""}
-        <button class="secondary-button" type="button" data-download-resource="${escapeHtml(resource.id)}" title="Available after payment confirmation by admin">📥 Download</button>
-        <a class="download-button" href="${escapeHtml(paidResourceHelpLink(resource, discountedPrice(resource)))}" target="_blank" rel="noopener" data-download="${escapeHtml(resource.id)}">Get CBE Resource</a>
+      <div class="card-actions resource-library-actions">
+        <button class="primary-button resource-action-button" type="button" data-pay="${escapeHtml(resource.id)}">Pay M-Pesa</button>
+        <button class="secondary-button resource-action-button" type="button" data-preview-resource="${escapeHtml(resource.id)}">👁 Preview</button>
+        ${resource.isFreeSample ? `<a class="secondary-button resource-action-button" href="${escapeHtml(resource.file)}&free=1" download="${escapeHtml(resource.fileName || "")}">Preview Sample</a>` : ""}
+        ${localStorage.getItem(REFERRAL_KEY) ? `<a class="secondary-button resource-action-button" href="${escapeHtml(resource.file)}&free=1" download="${escapeHtml(resource.fileName || "")}" data-free-resource="${escapeHtml(resource.id)}">Free Referral Paper</a>` : ""}
+        <button class="secondary-button resource-action-button resource-download-button" type="button" data-download-resource="${escapeHtml(resource.id)}" title="Available after payment confirmation by admin">📥 Download</button>
       </div>
     </article>
   `).join("");
