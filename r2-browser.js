@@ -162,35 +162,4 @@
       }
     }, true);
   }
-
-  /* Admin focus mode: once the admin dashboard is unlocked, keep only the
-     admin workspace visible so the dashboard is not overcrowded. */
-  const adminStyle = document.createElement("style");
-  adminStyle.textContent = `
-    body:has(#admin.open) .site-header,
-    body:has(#admin.open) .site-footer,
-    body:has(#admin.open) main > section:not(#admin) {
-      display: none !important;
-    }
-    body:has(#admin.open) #admin {
-      display: block !important;
-      min-height: 100vh;
-      padding-top: 24px;
-      padding-bottom: 40px;
-    }
-    body:has(#admin.open) .admin-layout,
-    body:has(#admin.open) .admin-approval-panel {
-      max-width: 1400px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    body:has(#admin.open) .admin-form {
-      box-shadow: none;
-    }
-    body:has(#admin.open) .admin-note {
-      margin-top: 8px;
-      padding: 9px 11px;
-    }
-  `;
-  document.head.appendChild(adminStyle);
 })();
