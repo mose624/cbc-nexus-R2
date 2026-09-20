@@ -124,6 +124,54 @@ async function appendJsonStore(fileName, item) {
   return saved;
 }
 
+function resourceRowFromPayload(payload, sellerId = null) {
+  return {
+    title: String(payload.title || "").trim(),
+    grade: String(payload.grade || "").trim(),
+    subject: String(payload.subject || "").trim(),
+    type: String(payload.type || "").trim(),
+    description: String(payload.description || "").trim(),
+    price: Math.max(0, Number(payload.price || 0)),
+    discount: Math.min(100, Math.max(0, Number(payload.discount || 0))),
+    term: String(payload.term || "").trim(),
+    is_free_sample: Boolean(payload.isFreeSample),
+    popularity: Number(payload.popularity || 0),
+    file_name: String(payload.fileName || "").trim(),
+    r2_key: String(payload.r2Key || "").trim(),
+    preview_key: String(payload.previewKey || "").trim(),
+    status: String(payload.status || "pending"),
+    seller_id: sellerId,
+    downloads: Number(payload.downloads || 0),
+    purchases: Number(payload.purchases || 0)
+  };
+}
+
+function resourcePayloadFromRow(row) {
+  return {
+    id: row.id,
+    title: row.title,
+    grade: row.grade,
+    subject: row.subject,
+    type: row.type,
+    description: row.description || "",
+    price: Number(row.price || 0),
+    discount: Number(row.discount || 0),
+    term: row.term || "",
+    isFreeSample: Boolean(row.is_free_sample),
+    popularity: Number(row.popularity || 0),
+    fileName: row.file_name || "",
+    r2Key: row.r2_key || "",
+    previewKey: row.preview_key || "",
+    file: row.r2_key ? "/api/r2/file?key=" + encodeURIComponent(row.r2_key) : "",
+    status: row.status || "pending",
+    downloads: Number(row.downloads || 0),
+    purchases: Number(row.purchases || 0),
+    sellerId: row.seller_id || null,
+    createdAt: row.created_at || null,
+    updatedAt: row.updated_at || null
+  };
+}
+
 function sendJson(res, status, data) {
   res.writeHead(status, { "Content-Type": "application/json; charset=utf-8" });
   res.end(JSON.stringify(data));
@@ -522,6 +570,23 @@ async function handleApi(req, res, url) {
     return true;
   }
 
+  if (req.method === "GET" && url.pathname === "/api/resources") {
+    if (supabaseConfigured) {
+      try {
+        const { data, error } = await supabase.from("resources").select("*").order("created_at", { ascending: false });
+        if (error) throw error;
+        sendJson(res, 200, { ok: true, resources: (data || []).map(resourcePayloadFromRow), storage: "supabase" });
+        return true;
+      } catch (error) {
+        console.error("Supabase resource lookup error:", error);
+        sendJson(res, 500, { ok: false, error: "Resources could not be loaded from Supabase." });
+        return true;
+      }
+    }
+    sendJson(res, 200, { ok: true, resources: await readJsonStore("resources.json"), storage: "local" });
+    return true;
+  }
+
   if (req.method === "GET" && stores[url.pathname]) {
     sendJson(res, 200, await readJsonStore(stores[url.pathname]));
     return true;
@@ -557,7 +622,9 @@ async function handleApi(req, res, url) {
   if (req.method === "POST" && url.pathname === "/api/resources") {
     const payload = JSON.parse((await readBody(req)) || "{}");
     const isAdmin = verifyAdminSession(req);
-    const isSeller = Boolean(verifySellerSession(req));
+    const sellerUsername = String(payload.sellerUsername || "").trim().toLowerCase();
+    const authenticatedSeller = verifySellerSession(req);
+    const isSeller = Boolean(authenticatedSeller);
     if ((payload.role === "admin" && !isAdmin) || (payload.role === "seller" && !isSeller)) {
       sendJson(res, 401, { ok: false, error: "Authorized account required." });
       return true;
@@ -566,8 +633,43 @@ async function handleApi(req, res, url) {
       sendJson(res, 400, { ok: false, error: "Resource role is required." });
       return true;
     }
+
+    if (supabaseConfigured) {
+      try {
+        let sellerId = null;
+        if (payload.role === "seller") {
+          const username = authenticatedSeller || sellerUsername;
+          const { data: seller, error: sellerError } = await supabase
+            .from("sellers")
+            .select("id")
+            .eq("username", username)
+            .maybeSingle();
+          if (sellerError) throw sellerError;
+          if (!seller) {
+            sendJson(res, 403, { ok: false, error: "Approved seller account was not found in Supabase." });
+            return true;
+          }
+          sellerId = seller.id;
+        }
+        const row = resourceRowFromPayload(payload, sellerId);
+        if (!row.title || !row.grade || !row.subject || !row.type || !row.r2_key) {
+          sendJson(res, 400, { ok: false, error: "Resource title, grade, subject, type and R2 file are required." });
+          return true;
+        }
+        const { data, error } = await supabase.from("resources").insert(row).select("*").single();
+        if (error) throw error;
+        const saved = resourcePayloadFromRow(data);
+        sendJson(res, 201, { ok: true, saved, storage: "supabase" });
+        return true;
+      } catch (error) {
+        console.error("Supabase resource save error:", error);
+        sendJson(res, 500, { ok: false, error: "Resource could not be saved to Supabase." });
+        return true;
+      }
+    }
+
     const saved = await appendJsonStore("resources.json", payload);
-    sendJson(res, 201, { ok: true, saved });
+    sendJson(res, 201, { ok: true, saved, storage: "local" });
     return true;
   }
 
