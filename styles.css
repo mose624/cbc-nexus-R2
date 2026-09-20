@@ -3773,3 +3773,10 @@ img, svg, video, iframe {
   .admin-price-row>div{grid-column:1/-1}
   .admin-price-row button{width:100%}
 }
+
+.admin-popular-card{margin:0 0 14px;padding:16px;border:1px solid #e2e8f0;border-radius:14px;background:#fff}
+.admin-popular-list{display:grid;gap:7px;max-height:360px;overflow:auto}
+.admin-popular-row{display:grid;grid-template-columns:32px minmax(0,1fr) auto;align-items:center;gap:10px;padding:10px;border:1px solid #e5eaf0;border-radius:9px}
+.admin-rank{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#0645ad;color:#fff;font-weight:900;font-size:.78rem}
+.admin-popular-metric{font-size:.76rem;font-weight:800;color:#475569;white-space:nowrap}
+@media(max-width:760px){.admin-popular-row{grid-template-columns:30px 1fr}.admin-popular-metric{grid-column:2;white-space:normal}}
