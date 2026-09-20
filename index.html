@@ -70,20 +70,56 @@
         <a class="brand" href="#dashboard" aria-label="CBE E-Learning home">
           <span class="brand-mark">CBE</span>
           <span>
-            <strong>E-Learning Resources</strong>
-            <small>Professional teaching and learning materials</small>
+            <strong>CBE Nexus</strong>
+            <small>Connecting learners to excellence</small>
           </span>
         </a>
+
+        <div class="nav-menu">
+          <a class="nav-link" href="#dashboard">Home</a>
+
+          <details class="nav-dropdown">
+            <summary>Resources <span>⌄</span></summary>
+            <div class="dropdown-panel">
+              <a href="#resources">Resource Library</a>
+              <a href="#resources" data-material-link="Notes">Notes</a>
+              <a href="#resources" data-material-link="Schemes of Work">Schemes of Work</a>
+              <a href="#resources" data-material-link="Lesson Plan">Lesson Plans</a>
+              <a href="#resources" data-material-link="Assessment Test">Assessment Tests</a>
+              <a href="#resources" data-material-link="Past Papers">Past Papers</a>
+              <a href="#freeCbcResources">Free CBC Resources</a>
+            </div>
+          </details>
+
+          <details class="nav-dropdown">
+            <summary>Learning <span>⌄</span></summary>
+            <div class="dropdown-panel">
+              <a href="#quizCentre">Quizzes &amp; Progress</a>
+              <a href="#aiHomework">AI Homework Helper</a>
+              <a href="#holidayTuition">Holiday Tuition</a>
+              <a href="#cbcProjects">CBC Projects</a>
+              <a href="#referFriend">Refer a Friend</a>
+            </div>
+          </details>
+
+          <details class="nav-dropdown">
+            <summary>Sell &amp; Earn <span>⌄</span></summary>
+            <div class="dropdown-panel">
+              <a href="#sellEarn">Sell Resources &amp; Earn 50%</a>
+              <a href="#sellerAccount">Seller Account</a>
+              <button type="button" id="openSellerDashboardNavButton">Seller Dashboard</button>
+            </div>
+          </details>
+
+          <a class="nav-link" href="#payments">Payments</a>
+          <a class="nav-link" href="#about">About</a>
+          <a class="nav-link" href="#contact">Contact</a>
+        </div>
+
         <div class="nav-actions">
-          <a class="mpesa-header-button" href="#payments" id="headerMpesaButton">M-Pesa ***</a>
-          <a class="whatsapp-button" href="https://wa.me/254xxx" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="whatsapp-button nav-utility" href="https://wa.me/254xxx" target="_blank" rel="noopener">WhatsApp</a>
           <button class="cart-button" id="cartButton" type="button">Cart <span id="cartCount">0</span></button>
-          <a class="danger-blink-button" href="#holidayTuition">Book Holiday Tuition</a>
-          <a class="ghost-button" href="#cbcProjects">CBC Projects</a>
-          <a class="ghost-button" href="#freeCbcResources">Free CBC</a>
-          <a class="ghost-button" href="#aiHomework">AI Helper</a>
-          <a class="ghost-button" href="#payments">Payments</a>
-          <a class="primary-button" href="#resources">Browse Resources</a>
+          <a class="primary-button nav-cta" href="#resources">Browse</a>
         </div>
       </nav>
     </header>
