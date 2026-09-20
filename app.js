@@ -358,6 +358,11 @@ const elements = {
   adminSalesBadge: document.querySelector("#adminSalesBadge"),
   adminPaymentBadge: document.querySelector("#adminPaymentBadge"),
   adminPopularResources: document.querySelector("#adminPopularResources"),
+  resourcePreviewModal: document.querySelector("#resourcePreviewModal"),
+  resourcePreviewTitle: document.querySelector("#resourcePreviewTitle"),
+  resourcePreviewInfo: document.querySelector("#resourcePreviewInfo"),
+  resourcePreviewFrame: document.querySelector("#resourcePreviewFrame"),
+  closeResourcePreview: document.querySelector("#closeResourcePreview"),
   adminSection: document.querySelector("#admin"),
   adminLoginForm: document.querySelector("#adminLoginForm"),
   adminUsername: document.querySelector("#adminUsernameInput"),
@@ -718,8 +723,9 @@ function renderResources() {
         <button class="primary-button" type="button" data-pay="${escapeHtml(resource.id)}">Pay M-Pesa</button>
         <button class="secondary-button" type="button" data-cart="${escapeHtml(resource.id)}">Add to Cart</button>
         <a class="whatsapp-button" href="${escapeHtml(whatsappLink(resource, discountedPrice(resource)))}" target="_blank" rel="noopener">WhatsApp</a>
-        ${resource.isFreeSample ? `<a class="secondary-button" href="${escapeHtml(resource.file)}" download="${escapeHtml(resource.fileName || "")}">Preview Sample</a>` : ""}
-        ${localStorage.getItem(REFERRAL_KEY) ? `<a class="secondary-button" href="${escapeHtml(resource.file)}" download="${escapeHtml(resource.fileName || "")}" data-free-resource="${escapeHtml(resource.id)}">Free Referral Paper</a>` : ""}
+        ${resource.previewKey ? `<button class="secondary-button" type="button" data-preview-resource="${escapeHtml(resource.id)}">👁 Preview Pages</button>` : ""}
+        ${resource.isFreeSample ? `<a class="secondary-button" href="${escapeHtml(resource.file)}&free=1" download="${escapeHtml(resource.fileName || "")}">Preview Sample</a>` : ""}
+        ${localStorage.getItem(REFERRAL_KEY) ? `<a class="secondary-button" href="${escapeHtml(resource.file)}&free=1" download="${escapeHtml(resource.fileName || "")}" data-free-resource="${escapeHtml(resource.id)}">Free Referral Paper</a>` : ""}
         <button class="secondary-button" type="button" data-download-resource="${escapeHtml(resource.id)}" title="Available after payment confirmation by admin">📥 Download</button>
         <a class="download-button" href="${escapeHtml(paidResourceHelpLink(resource, discountedPrice(resource)))}" target="_blank" rel="noopener" data-download="${escapeHtml(resource.id)}">Get CBE Resource</a>
       </div>
@@ -1607,6 +1613,7 @@ function bindEvents() {
     elements.cartDrawer.setAttribute("aria-hidden", "false");
   });
 
+  safeOn(elements.closeResourcePreview, "click", closeResourcePreview);
   safeOn(elements.closeCartButton, "click", () => {
     elements.cartDrawer.classList.remove("open");
     elements.cartDrawer.setAttribute("aria-hidden", "true");
@@ -1699,11 +1706,13 @@ function bindEvents() {
   safeOn(elements.resourceGrid, "click", (event) => {
     const payButton = event.target.closest("[data-pay]");
     const cartButton = event.target.closest("[data-cart]");
+    const previewButton = event.target.closest("[data-preview-resource]");
     const downloadButton = event.target.closest("[data-download]");
     const freeButton = event.target.closest("[data-free-resource]");
     if (payButton) {
       selectResourceForPayment(payButton.dataset.pay);
     }
+    if (previewButton) openResourcePreview(previewButton.dataset.previewResource);
     if (cartButton) {
       addToCart(cartButton.dataset.cart);
     }
@@ -1804,27 +1813,44 @@ function bindEvents() {
   });
 }
 
-function handleDownloadRequest(event) {
+async function openResourcePreview(resourceId) {
+  const resource = getAllResources().find((r) => r.id === resourceId);
+  if (!resource?.previewKey) { showToast("A page preview is not available for this resource yet."); return; }
+  try {
+    const response = await fetch("/api/r2/preview?key=" + encodeURIComponent(resource.previewKey), { credentials: "same-origin" });
+    const data = await response.json();
+    if (!response.ok || !data.ok) throw new Error(data.error || "Preview could not be opened.");
+    elements.resourcePreviewTitle.textContent = resource.title;
+    elements.resourcePreviewInfo.textContent = "Showing the first 3 pages only. The full file is protected until payment.";
+    elements.resourcePreviewFrame.src = data.previewUrl;
+    elements.resourcePreviewModal.classList.add("open");
+    elements.resourcePreviewModal.setAttribute("aria-hidden", "false");
+  } catch (error) { showToast(error.message || "Preview could not be opened."); }
+}
+
+function closeResourcePreview() {
+  if (!elements.resourcePreviewModal) return;
+  elements.resourcePreviewModal.classList.remove("open");
+  elements.resourcePreviewModal.setAttribute("aria-hidden", "true");
+  elements.resourcePreviewFrame.src = "about:blank";
+}
+
+async function handleDownloadRequest(event) {
   event.preventDefault();
   const resourceId = event.target.dataset.downloadResource;
-  const phone = prompt("Enter your phone number to check download status:");
-  
+  const resource = getAllResources().find((r) => r.id === resourceId);
+  if (!resource || !resource.r2Key) { showToast("This resource does not have a protected file."); return; }
+  const phone = prompt("Enter the phone number used for M-Pesa payment:");
   if (!phone) return;
-  
-  if (hasAccessToDownload(resourceId, phone)) {
-    const resource = getAllResources().find((r) => r.id === resourceId);
-    if (resource && resource.file) {
-      const link = document.createElement("a");
-      link.href = resource.file;
-      link.download = resource.fileName || "resource";
-      link.click();
-      showToast(`${resource.title} downloaded successfully.`);
-    }
-  } else if (isResourcePaid(resourceId, phone)) {
-    showToast("Payment confirmed! Admin will activate your download soon. Please check back in a few minutes.");
-  } else {
-    showToast("You haven't paid for this resource yet. Please complete payment first.");
-  }
+  const normalize = (value) => String(value || "").replace(/\D/g, "");
+  const paid = readPaymentRecords().find((item) => normalize(item.customerPhone) === normalize(phone) && item.status === "paid" && item.checkoutRequestID && String(item.resource || "").trim().toLowerCase() === String(resource.title || "").trim().toLowerCase());
+  if (!paid) { showToast("Payment has not been confirmed for this resource yet."); return; }
+  try {
+    const response = await fetch("/api/r2/file?key=" + encodeURIComponent(resource.r2Key) + "&checkoutRequestID=" + encodeURIComponent(paid.checkoutRequestID), { credentials: "same-origin" });
+    if (!response.ok) { const data = await response.json().catch(() => ({})); throw new Error(data.error || "Download is not available."); }
+    window.location.href = response.url;
+    showToast("Secure temporary download link generated.");
+  } catch (error) { showToast(error.message || "Download could not be started."); }
 }
 
 function approveDownloadRequest(paymentRecordId) {
