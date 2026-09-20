@@ -2,7 +2,7 @@ const http = require("http");
 const fs = require("fs/promises");
 const path = require("path");
 const crypto = require("crypto");
-const { createUploadUrl, createDownloadUrl } = require("./r2");
+const { createUploadUrl, createDownloadUrl, createPdfPreview } = require("./r2");
 const OpenAI = require("openai");
 
 const PORT = Number(process.env.PORT || 8000);
@@ -322,22 +322,74 @@ async function handleApi(req, res, url) {
     return true;
   }
 
+  if (req.method === "POST" && url.pathname === "/api/r2/prepare-preview") {
+    const p = JSON.parse((await readBody(req)) || "{}");
+    const admin = verifyAdminSession(req);
+    const seller = verifySellerSession(req);
+    if (!admin && !seller) {
+      sendJson(res, 401, { ok: false, error: "Authorized uploader required." });
+      return true;
+    }
+    if (!p.key || p.key.includes("..")) {
+      sendJson(res, 400, { ok: false, error: "A valid R2 object key is required." });
+      return true;
+    }
+    if (!/\.pdf$/i.test(String(p.key))) {
+      sendJson(res, 200, { ok: true, supported: false, message: "PDF previews are available for PDF resources." });
+      return true;
+    }
+    try {
+      const preview = await createPdfPreview(p.key, 3);
+      sendJson(res, 200, { ok: true, supported: true, ...preview });
+    } catch (error) {
+      sendJson(res, 422, { ok: false, error: "Could not generate the PDF preview. Please verify that the uploaded file is a valid PDF." });
+    }
+    return true;
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/r2/preview") {
+    const key = url.searchParams.get("key");
+    if (!key || key.includes("..")) {
+      sendJson(res, 400, { ok: false, error: "A valid preview key is required." });
+      return true;
+    }
+    const previewUrl = await createDownloadUrl(key);
+    sendJson(res, 200, { ok: true, previewUrl, expiresIn: 300 });
+    return true;
+  }
+
   if (req.method === "GET" && url.pathname === "/api/r2/file") {
     const key = url.searchParams.get("key");
+    const checkoutRequestID = url.searchParams.get("checkoutRequestID");
+    const free = url.searchParams.get("free") === "1";
     if (!key || key.includes("..")) {
       sendJson(res, 400, { ok: false, error: "A valid R2 object key is required." });
       return true;
     }
+    const resources = await readJsonStore("resources.json");
+    const resource = resources.find((item) => item.r2Key === key);
+    const admin = verifyAdminSession(req);
+    const seller = verifySellerSession(req);
+    let entitled = Boolean(admin || seller || (resource && resource.isFreeSample && free));
+    if (!entitled && checkoutRequestID) {
+      const payments = await readJsonStore("payments.json");
+      const payment = payments.find((item) => item.checkoutRequestID === checkoutRequestID);
+      entitled = Boolean(payment && payment.status === "paid" && String(payment.resource || "").trim().toLowerCase() === String(resource?.title || "").trim().toLowerCase());
+    }
+    if (!entitled) {
+      sendJson(res, 402, { ok: false, error: "Payment is required before the full resource can be downloaded." });
+      return true;
+    }
+    if (!resource && !admin && !seller) {
+      sendJson(res, 404, { ok: false, error: "Resource not found." });
+      return true;
+    }
     try {
-      const resources = await readJsonStore("resources.json");
-      const index = resources.findIndex((item) => item.r2Key === key);
-      if (index >= 0) {
-        resources[index] = {
-          ...resources[index],
-          downloads: Number(resources[index].downloads || 0) + 1,
-          lastDownloadedAt: new Date().toISOString()
-        };
-        await fs.writeFile(path.join(DATA_DIR, "resources.json"), JSON.stringify(resources, null, 2));
+      if (resource) {
+        resource.downloads = Number(resource.downloads || 0) + 1;
+        resource.lastDownloadedAt = new Date().toISOString();
+        const nextResources = resources.map((item) => item.id === resource.id ? resource : item);
+        await fs.writeFile(path.join(DATA_DIR, "resources.json"), JSON.stringify(nextResources, null, 2));
       }
     } catch (error) {
       console.error("Download statistics error:", error.message);
@@ -354,6 +406,31 @@ async function handleApi(req, res, url) {
   }
 
   if(req.method==="POST"&&url.pathname==="/api/mpesa/stk-push"){const p=JSON.parse((await readBody(req))||"{}"),phone=normalizeMpesaPhone(p.customerPhone),amount=Math.round(Number(p.amount||0)),sc=String(process.env.MPESA_SHORTCODE||""),pk=String(process.env.MPESA_PASSKEY||""),cb=String(process.env.MPESA_CALLBACK_URL||"");if(!phone||amount<1||!sc||!pk||!cb){sendJson(res,503,{ok:false,error:"M-Pesa STK Push is not fully configured. Add MPESA_SHORTCODE, MPESA_PASSKEY and MPESA_CALLBACK_URL in Render."});return true;}try{const token=await getMpesaAccessToken(),ts=new Date().toISOString().replace(/[-:TZ.]/g,"").slice(0,14),pwd=Buffer.from(sc+pk+ts).toString("base64"),out=await darajaPost("/mpesa/stkpush/v1/processrequest",{BusinessShortCode:sc,Password:pwd,Timestamp:ts,TransactionType:process.env.MPESA_TRANSACTION_TYPE||"CustomerPayBillOnline",Amount:amount,PartyA:phone,PartyB:sc,PhoneNumber:phone,CallBackURL:cb,AccountReference:String(p.resource||"CBE Nexus").slice(0,12),TransactionDesc:"CBE Nexus resource payment"},token);const saved=await appendJsonStore("mpesa-requests.json",{...p,daraja:out.data});if(out.status>=200&&out.status<300&&out.data&&out.data.CheckoutRequestID){await appendJsonStore("payments.json",{id:"pay-"+Date.now(),customerPhone:phone,amount,resource:p.resource||"CBE resource",status:"pending confirmation",checkoutRequestID:out.data.CheckoutRequestID,merchantRequestID:out.data.MerchantRequestID||"",createdAt:new Date().toISOString()});}sendJson(res,out.status>=200&&out.status<300?200:502,{ok:out.status>=200&&out.status<300,saved,...out.data});}catch(e){sendJson(res,502,{ok:false,error:e.message});}return true;}
+  if (req.method === "GET" && url.pathname === "/api/mpesa/status") {
+    const checkoutRequestID = url.searchParams.get("checkoutRequestID");
+    if (!checkoutRequestID) {
+      sendJson(res, 400, { ok: false, error: "Checkout request ID is required." });
+      return true;
+    }
+    const payments = await readJsonStore("payments.json");
+    const payment = payments.find((item) => item.checkoutRequestID === checkoutRequestID);
+    if (!payment) {
+      sendJson(res, 404, { ok: false, error: "Payment record not found." });
+      return true;
+    }
+    if (payment.status === "paid") {
+      const resources = await readJsonStore("resources.json");
+      const resource = resources.find((item) => String(item.title || "").trim().toLowerCase() === String(payment.resource || "").trim().toLowerCase());
+      if (resource?.r2Key) {
+        const downloadUrl = await createDownloadUrl(resource.r2Key);
+        sendJson(res, 200, { ok: true, status: "paid", resourceId: resource.id, resource: resource.title, downloadUrl, expiresIn: 300 });
+        return true;
+      }
+    }
+    sendJson(res, 200, { ok: true, status: payment.status, resource: payment.resource, message: payment.status === "failed" ? "Payment failed." : "Payment is still awaiting confirmation." });
+    return true;
+  }
+
   if(req.method==="POST"&&url.pathname==="/api/mpesa/callback"){const p=JSON.parse((await readBody(req))||"{}");await appendJsonStore("mpesa-callbacks.json",p);const cb=p?.Body?.stkCallback;if(cb?.CheckoutRequestID){const resultCode=Number(cb.ResultCode);const items=Array.isArray(cb.CallbackMetadata?.Item)?cb.CallbackMetadata.Item:[];const meta=Object.fromEntries(items.map(x=>[x.Name,x.Value]));const payments=await readJsonStore("payments.json");const next=payments.map(x=>x.checkoutRequestID===cb.CheckoutRequestID?{...x,status:resultCode===0?"paid":"failed",resultCode,resultDescription:cb.ResultDesc||"",receipt:meta.MpesaReceiptNumber||"",confirmedAt:new Date().toISOString()}:x);await fs.writeFile(path.join(DATA_DIR,"payments.json"),JSON.stringify(next,null,2));if(resultCode===0){const paid=payments.find(x=>x.checkoutRequestID===cb.CheckoutRequestID);if(paid?.resource){const resources=await readJsonStore("resources.json");const normalized=String(paid.resource).trim().toLowerCase();const nextResources=resources.map(r=>String(r.title||"").trim().toLowerCase()===normalized?{...r,purchases:Number(r.purchases||0)+1}:r);await fs.writeFile(path.join(DATA_DIR,"resources.json"),JSON.stringify(nextResources,null,2));}}}sendJson(res,200,{ResultCode:0,ResultDesc:"Accepted"});return true;}
   if (req.method === "POST" && url.pathname === "/api/resources") {
     const payload = JSON.parse((await readBody(req)) || "{}");
