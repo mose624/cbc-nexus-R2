@@ -1588,3 +1588,286 @@ textarea {
     font-size: 12px;
   }
 }
+
+
+/* Compact responsive layout: phone-first, including narrow desktop-mode viewports */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img, svg, video, iframe {
+  max-width: 100%;
+}
+
+@media (max-width: 760px) {
+  .top-strip {
+    flex-wrap: wrap;
+    overflow-x: visible;
+    white-space: normal;
+    gap: 5px;
+    padding: 6px 10px;
+  }
+
+  .top-strip a {
+    padding: 4px 7px;
+    font-size: 10px;
+    line-height: 1.2;
+  }
+
+  .main-nav {
+    gap: 8px;
+  }
+
+  .nav-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .nav-actions > a,
+  .nav-actions > button {
+    width: 100%;
+    min-width: 0;
+    min-height: 34px;
+    padding: 7px 8px;
+    font-size: 11px;
+    line-height: 1.2;
+  }
+
+  .brand {
+    min-width: 0;
+  }
+
+  .brand > span:last-child {
+    min-width: 0;
+  }
+
+  .brand strong,
+  .brand small {
+    overflow-wrap: anywhere;
+  }
+
+  .brand-mark {
+    flex: 0 0 38px;
+  }
+
+  .dashboard-shell,
+  .content-band,
+  .admin-band,
+  .site-footer,
+  .info-band {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .hero-resource-buttons {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .hero-resource-buttons a,
+  .hero-resource-buttons button {
+    width: 100%;
+    min-width: 0;
+    min-height: 34px;
+    padding: 7px 8px;
+    font-size: 11px;
+    line-height: 1.2;
+  }
+
+  .summary-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .summary-grid div {
+    padding: 9px 6px;
+    min-width: 0;
+  }
+
+  .summary-grid strong {
+    font-size: 16px;
+  }
+
+  .summary-grid span {
+    font-size: 10px;
+  }
+
+  .section-heading {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .filters {
+    gap: 8px;
+  }
+
+  .filters label {
+    gap: 4px;
+  }
+
+  input,
+  select,
+  textarea {
+    min-width: 0;
+    padding: 8px 9px;
+    font-size: 12px;
+  }
+
+  .resource-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .resource-card {
+    padding: 12px;
+    gap: 8px;
+    min-height: 0;
+  }
+
+  .resource-card h3 {
+    font-size: 16px;
+  }
+
+  .resource-card p {
+    font-size: 12px;
+  }
+
+  .resource-meta {
+    gap: 5px;
+  }
+
+  .price-row {
+    gap: 8px;
+    padding-top: 9px;
+  }
+
+  .price-row strong {
+    font-size: 17px;
+  }
+
+  .card-actions,
+  .payment-actions,
+  .approval-actions {
+    gap: 6px;
+  }
+
+  .card-actions > *,
+  .payment-actions > *,
+  .approval-actions > * {
+    min-height: 34px;
+    padding: 7px 9px;
+    font-size: 11px;
+  }
+
+  .admin-login-card,
+  .admin-form,
+  .payment-form,
+  .payment-card,
+  .info-card {
+    padding: 12px;
+  }
+
+  .form-row {
+    gap: 8px;
+  }
+
+  .submit-button {
+    width: 100%;
+  }
+
+  .landing-grid,
+  .download-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .landing-grid button,
+  .download-tile {
+    min-height: 34px;
+    padding: 7px 8px;
+    font-size: 11px;
+  }
+
+  .contact-actions {
+    gap: 7px;
+  }
+
+  .contact-link {
+    min-height: 34px;
+    padding: 7px 9px;
+    font-size: 11px;
+  }
+
+  .site-footer {
+    gap: 10px;
+  }
+
+  .footer-links {
+    gap: 5px;
+  }
+
+  .footer-links a {
+    padding: 5px 7px;
+    font-size: 10px;
+  }
+
+  .cart-drawer {
+    width: 100vw;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .top-strip a {
+    font-size: 9px;
+    padding: 3px 6px;
+  }
+
+  .nav-actions {
+    gap: 5px;
+  }
+
+  .nav-actions > a,
+  .nav-actions > button {
+    min-height: 32px;
+    padding: 6px 6px;
+    font-size: 10px;
+  }
+
+  .brand strong {
+    font-size: 13px;
+  }
+
+  .brand small {
+    font-size: 10px;
+  }
+
+  .brand-mark {
+    flex-basis: 34px;
+    width: 34px;
+    height: 34px;
+    font-size: 11px;
+  }
+
+  .hero-resource-buttons a,
+  .hero-resource-buttons button {
+    min-height: 32px;
+    padding: 6px;
+    font-size: 10px;
+  }
+
+  .summary-grid strong {
+    font-size: 14px;
+  }
+
+  .summary-grid span {
+    font-size: 9px;
+  }
+
+  .panel-heading h2,
+  .section-heading h2,
+  .admin-copy h2,
+  .info-layout h2 {
+    font-size: 19px;
+  }
+}
