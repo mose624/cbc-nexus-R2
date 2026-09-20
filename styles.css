@@ -2315,3 +2315,254 @@ img, svg, video, iframe {
     grid-column: auto;
   }
 }
+
+
+/* Balanced portal layout on phones: preserves the desktop-style three-panel structure */
+.portal-sidebar-title,
+.portal-card-heading {
+  background: linear-gradient(135deg, #087f47, #12a05a);
+}
+
+.portal-sidebar {
+  border-top: 3px solid #0b8750;
+}
+
+.portal-card {
+  border-top: 3px solid #0b8750;
+}
+
+.portal-category-grid a:nth-child(3n+2) {
+  background: #f5f8fc;
+}
+
+.portal-category-grid a:nth-child(3n+3) {
+  background: #fffaf0;
+}
+
+.portal-category-grid a:hover {
+  background: #eef8f2;
+}
+
+.portal-search-shortcut .primary-button,
+.portal-help-card .primary-button {
+  background: #0b8750;
+}
+
+.portal-search-shortcut .ghost-button {
+  border-color: #1b668f;
+  color: #1b668f;
+}
+
+/* Keep the three-column portal visible on narrow phones */
+@media (max-width: 760px) {
+  .portal-dashboard {
+    width: calc(100% - 8px);
+    grid-template-columns: minmax(0, 27%) minmax(0, 46%) minmax(0, 27%);
+    gap: 4px;
+    margin: 5px auto;
+    align-items: stretch;
+  }
+
+  .portal-sidebar,
+  .portal-main,
+  .portal-rightbar {
+    min-width: 0;
+  }
+
+  .portal-sidebar-title,
+  .portal-card-heading {
+    padding: 7px 5px;
+  }
+
+  .portal-sidebar-title h2 {
+    font-size: 11px;
+    line-height: 1.15;
+  }
+
+  .portal-sidebar-title .eyebrow {
+    font-size: 7px;
+  }
+
+  .portal-menu-group {
+    padding: 5px 3px;
+  }
+
+  .portal-menu-group > strong {
+    font-size: 8px;
+    margin-bottom: 3px;
+  }
+
+  .portal-menu-group > a {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 5px 3px;
+    border: 0;
+    border-bottom: 1px solid #dce7df;
+    font-size: 8px;
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+  }
+
+  .portal-main {
+    order: 2;
+    gap: 4px;
+  }
+
+  .portal-sidebar {
+    order: 1;
+  }
+
+  .portal-rightbar {
+    order: 3;
+    display: block;
+  }
+
+  .portal-welcome {
+    padding: 8px 6px;
+  }
+
+  .portal-welcome h1 {
+    font-size: 15px;
+    line-height: 1.15;
+    margin: 3px 0 5px;
+  }
+
+  .portal-welcome p {
+    font-size: 8px;
+    line-height: 1.35;
+    margin: 0;
+  }
+
+  .portal-search-shortcut {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3px;
+    margin-top: 6px;
+  }
+
+  .portal-search-shortcut a {
+    min-height: 26px;
+    padding: 5px 3px;
+    font-size: 8px;
+    text-align: center;
+  }
+
+  .portal-category-grid {
+    grid-template-columns: 1fr;
+    gap: 1px;
+  }
+
+  .portal-category-grid a {
+    min-height: 48px;
+    padding: 6px 5px;
+  }
+
+  .portal-category-grid strong {
+    font-size: 9px;
+    line-height: 1.15;
+  }
+
+  .portal-category-grid span {
+    font-size: 7px;
+    line-height: 1.15;
+  }
+
+  .summary-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2px;
+  }
+
+  .summary-grid div {
+    padding: 5px 2px;
+  }
+
+  .summary-grid strong {
+    font-size: 10px;
+  }
+
+  .summary-grid span {
+    font-size: 7px;
+  }
+
+  .portal-announcement {
+    padding: 6px 5px;
+    display: block;
+    font-size: 8px;
+    line-height: 1.3;
+  }
+
+  .portal-announcement span {
+    display: block;
+    margin-top: 3px;
+  }
+
+  .portal-card {
+    margin-bottom: 4px;
+  }
+
+  .portal-card-heading {
+    font-size: 8px;
+    line-height: 1.15;
+  }
+
+  .portal-card > strong,
+  .portal-card > p,
+  .portal-card > .portal-side-link {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .portal-card > strong {
+    margin-top: 6px;
+    font-size: 8px;
+    line-height: 1.2;
+  }
+
+  .portal-card > p {
+    font-size: 7px;
+    line-height: 1.3;
+  }
+
+  .portal-side-link {
+    padding: 5px 0;
+    font-size: 7px;
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+  }
+
+  .portal-help-card .primary-button {
+    margin: 5px;
+    min-height: 25px;
+    padding: 5px 2px;
+    font-size: 7px;
+  }
+}
+
+@media (max-width: 420px) {
+  .portal-dashboard {
+    grid-template-columns: minmax(0, 27%) minmax(0, 46%) minmax(0, 27%);
+    gap: 3px;
+  }
+
+  .portal-welcome h1 {
+    font-size: 14px;
+  }
+
+  .portal-menu-group > a {
+    font-size: 7px;
+  }
+
+  .portal-category-grid a {
+    min-height: 44px;
+  }
+
+  .portal-category-grid strong {
+    font-size: 8px;
+  }
+
+  .portal-card-heading,
+  .portal-menu-group > strong {
+    font-size: 7px;
+  }
+}
