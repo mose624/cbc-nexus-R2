@@ -3173,3 +3173,19 @@ img, svg, video, iframe {
     font-size: 6px;
   }
 }
+
+
+/* Footer resource links: blue from Notes through Study Guides */
+.site-footer .footer-resource-link {
+  color: #0645ad !important;
+  font-weight: 800;
+}
+
+.site-footer .footer-resource-link:hover,
+.site-footer .footer-resource-link:focus-visible {
+  color: #ffffff !important;
+  background: #0645ad;
+  border-radius: 3px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
