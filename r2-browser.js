@@ -16,7 +16,7 @@
   async function upload(file, meta) {
     const ext = "." + (file.name.split(".").pop() || "").toLowerCase();
     if (!allowed.includes(ext)) throw new Error("Unsupported file type.");
-    const response = await fetch("/api/r2/upload-url", {
+    const response = await fetch("/api/r2/upload-url", { credentials: "same-origin",
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
