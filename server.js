@@ -3,6 +3,7 @@ const fs = require("fs/promises");
 const path = require("path");
 const crypto = require("crypto");
 const { createUploadUrl, createDownloadUrl } = require("./r2");
+const OpenAI = require("openai");
 
 const PORT = Number(process.env.PORT || 8000);
 const ROOT = __dirname;
@@ -137,18 +138,15 @@ function readBody(req) {
   });
 }
 
-function homeworkResponse(payload) {
-  const grade = payload.grade || "CBC";
-  const subject = payload.subject || "the subject";
-  const question = payload.question || "the homework question";
-  return [
-    `For ${grade} ${subject}, start by restating the task in simple words.`,
-    `Question: ${question}`,
-    "Step 1: Identify the key terms and write what each one means.",
-    "Step 2: List the facts, formula, passage details, or examples given in the question.",
-    "Step 3: Solve one small part at a time and show your working.",
-    "Step 4: Check your final answer against the question before submitting."
-  ].join(" ");
+async function generateAIHomeworkAnswer(payload) {
+  if (!process.env.OPENAI_API_KEY) return null;
+  const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  const response = await client.responses.create({
+    model: process.env.OPENAI_HOMEWORK_MODEL || "gpt-5.6-luna",
+    instructions: "You are the CBE Nexus AI Homework Helper. Help learners understand and solve homework rather than giving unexplained answers. Use clear age-appropriate language, show steps and working for Mathematics and Science, explain reasoning for other subjects, do not invent facts, and ask for clarification when a question is unclear.",
+    input: "Grade: " + String(payload.grade || "CBC") + "\nSubject: " + String(payload.subject || "General") + "\nHomework question: " + String(payload.question || "")
+  });
+  return response.output_text || null;
 }
 
 async function handleApi(req, res, url) {
@@ -253,11 +251,22 @@ async function handleApi(req, res, url) {
 
   if (req.method === "POST" && url.pathname === "/api/homework-helper") {
     const payload = JSON.parse((await readBody(req)) || "{}");
-    const saved = await appendJsonStore("homework-helper.json", {
-      ...payload,
-      answer: homeworkResponse(payload)
-    });
-    sendJson(res, 200, { ok: true, answer: saved.answer, saved });
+    if (!String(payload.question || "").trim()) {
+      sendJson(res, 400, { ok: false, error: "Homework question is required." });
+      return true;
+    }
+    try {
+      const answer = await generateAIHomeworkAnswer(payload);
+      if (!answer) {
+        sendJson(res, 503, { ok: false, configured: false, error: "AI Homework Helper is not configured yet. Add OPENAI_API_KEY to Render." });
+        return true;
+      }
+      await appendJsonStore("homework-helper.json", { grade: payload.grade, subject: payload.subject, question: payload.question, answer });
+      sendJson(res, 200, { ok: true, configured: true, answer });
+    } catch (error) {
+      console.error("AI Homework Helper error:", error);
+      sendJson(res, 502, { ok: false, error: "The AI Homework Helper could not generate a response right now." });
+    }
     return true;
   }
 
