@@ -519,6 +519,7 @@ function renderQuickTypes() {
 }
 
 function renderTrending() {
+  if (!elements.trendingList) return;
   const resources = getAllResources().slice(0, 6);
   elements.trendingList.innerHTML = resources.map((resource, index) => `
     <button class="trending-item" type="button" data-trending="${escapeHtml(resource.id)}">
@@ -842,6 +843,7 @@ function renderSellerStorageInfo() {
 }
 
 function renderPaymentRecords() {
+  if (!elements.paymentRecordsList) return;
   const records = readPaymentRecords();
   if (!records.length) {
     elements.paymentRecordsList.innerHTML = `<div class="empty-state">No payment records yet.</div>`;
@@ -1393,7 +1395,7 @@ function bindEvents() {
     document.querySelector("#resources").scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
-  elements.trendingList.addEventListener("click", (event) => {
+  if (elements.trendingList) elements.trendingList.addEventListener("click", (event) => {
     const button = event.target.closest("[data-trending]");
     if (button) {
       selectResourceForPayment(button.dataset.trending);
@@ -1444,8 +1446,8 @@ function bindEvents() {
 
   // headerMpesaButton is optional because the current header does not include it.
   // The guarded handler below is used when that button exists.
-  elements.openSellerDashboard.addEventListener("click", openSellerDashboard);
-  elements.openSellerDashboardSecondary.addEventListener("click", openSellerDashboard);
+  if (elements.openSellerDashboard) elements.openSellerDashboard.addEventListener("click", openSellerDashboard);
+  if (elements.openSellerDashboardSecondary) elements.openSellerDashboardSecondary.addEventListener("click", openSellerDashboard);
   if (elements.openSellerDashboardNav) elements.openSellerDashboardNav.addEventListener("click", openSellerDashboard);
   if (elements.openSellerDashboard) elements.openSellerDashboard.addEventListener("click", openSellerDashboard);
   if (elements.downloadApprovalList) elements.downloadApprovalList.addEventListener("click", () => {
