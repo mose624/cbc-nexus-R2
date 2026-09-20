@@ -37,7 +37,20 @@
       body: file
     });
     if (!put.ok) throw new Error("Cloudflare R2 upload failed.");
-    return { key: data.key, fileName: file.name };
+    let previewKey = "";
+    if (ext === ".pdf") {
+      try {
+        const previewResponse = await fetch("/api/r2/prepare-preview", {
+          method: "POST",
+          credentials: "same-origin",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ key: data.key })
+        });
+        const previewData = await previewResponse.json();
+        if (previewResponse.ok && previewData.ok && previewData.previewKey) previewKey = previewData.previewKey;
+      } catch {}
+    }
+    return { key: data.key, previewKey, fileName: file.name };
   }
 
   function stop(event) {
@@ -78,6 +91,7 @@
           popularity: 1,
           fileName: result.fileName,
           r2Key: result.key,
+          previewKey: result.previewKey,
           file: "/api/r2/file?key=" + encodeURIComponent(result.key)
         };
         const existing = json("cbeResources");
@@ -118,6 +132,7 @@
           fileName: result.fileName,
           fileSize: file.size,
           r2Key: result.key,
+          previewKey: result.previewKey,
           file: "/api/r2/file?key=" + encodeURIComponent(result.key),
           status: "pending",
           createdAt: new Date().toISOString()
