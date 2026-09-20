@@ -1188,6 +1188,18 @@ async function loadAdminDashboard() {
   } catch {}
 }
 
+function setAdminModule(module) {
+  activeAdminModule = module;
+  document.querySelectorAll("[data-admin-module]").forEach((button) => {
+    const active = button.dataset.adminModule === module;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-selected", String(active));
+  });
+  document.querySelectorAll("[data-admin-module-panel]").forEach((panel) => {
+    panel.classList.toggle("active", panel.dataset.adminModulePanel === module);
+  });
+}
+
 function renderAdminControlCentre(data) {
   const stats = data.stats || {};
   const sellers = data.sellers || [];
