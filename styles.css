@@ -2937,3 +2937,94 @@ img, svg, video, iframe {
     padding: 2px 3px;
   }
 }
+
+
+/* Mobile-only: tightly pack portal buttons to reduce space */
+@media (max-width: 760px) {
+  .portal-sidebar .grade-list {
+    gap: 0;
+    margin-top: 4px;
+  }
+
+  .portal-sidebar .grade-list .grade-card {
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .portal-sidebar .grade-list .grade-toggle {
+    min-height: 20px;
+    padding: 2px 3px;
+    border-radius: 2px;
+    font-size: 6.5px;
+    line-height: 1;
+  }
+
+  .portal-sidebar .grade-list .subject-menu {
+    gap: 0;
+    padding: 0;
+  }
+
+  .portal-sidebar .grade-list .subject-chip {
+    margin: 0;
+    padding: 2px 3px;
+    border-radius: 2px;
+    font-size: 6px;
+    line-height: 1;
+  }
+
+  .portal-menu-group > a {
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .portal-search-shortcut {
+    gap: 1px;
+  }
+
+  .portal-search-shortcut a {
+    min-height: 20px;
+    padding: 3px 2px;
+    border-radius: 2px;
+  }
+
+  .portal-category-grid {
+    gap: 0;
+  }
+
+  .portal-category-grid a {
+    min-height: 40px;
+    padding: 4px 3px;
+  }
+
+  .portal-rightbar {
+    gap: 2px;
+  }
+
+  .portal-card {
+    margin-bottom: 2px;
+  }
+
+  .portal-side-link {
+    padding: 3px 0;
+  }
+
+  .portal-help-card .primary-button {
+    margin: 3px;
+    min-height: 20px;
+    padding: 3px 2px;
+    border-radius: 2px;
+  }
+}
+
+@media (max-width: 420px) {
+  .portal-sidebar .grade-list .grade-toggle {
+    min-height: 18px;
+    padding: 2px;
+    font-size: 6px;
+  }
+
+  .portal-sidebar .grade-list .subject-chip {
+    padding: 2px;
+    font-size: 5.5px;
+  }
+}
