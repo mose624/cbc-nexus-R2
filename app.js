@@ -349,6 +349,14 @@ const elements = {
   adminPaymentManagement: document.querySelector("#adminPaymentManagement"),
   adminPriceManagement: document.querySelector("#adminPriceManagement"),
   refreshAdminDashboardButton: document.querySelector("#refreshAdminDashboardButton"),
+  adminDashboardSearch: document.querySelector("#adminDashboardSearch"),
+  adminStatusFilter: document.querySelector("#adminStatusFilter"),
+  adminLastUpdated: document.querySelector("#adminLastUpdated"),
+  adminSellerBadge: document.querySelector("#adminSellerBadge"),
+  adminResourceBadge: document.querySelector("#adminResourceBadge"),
+  adminUserBadge: document.querySelector("#adminUserBadge"),
+  adminSalesBadge: document.querySelector("#adminSalesBadge"),
+  adminPaymentBadge: document.querySelector("#adminPaymentBadge"),
   adminSection: document.querySelector("#admin"),
   adminLoginForm: document.querySelector("#adminLoginForm"),
   adminUsername: document.querySelector("#adminUsernameInput"),
@@ -1182,65 +1190,124 @@ async function loadAdminDashboard() {
 
 function renderAdminControlCentre(data) {
   const stats = data.stats || {};
-  elements.adminStatsGrid.innerHTML = [
-    ["Sellers", stats.sellers || 0, (stats.pendingSellers || 0) + " pending"],
-    ["Resources", stats.resources || 0, (stats.pendingResources || 0) + " pending"],
-    ["Users", stats.users || 0, "registered/identified"],
-    ["Sales", stats.sales || 0, "completed"],
-    ["Revenue", money(stats.revenue || 0), "recorded sales"]
-  ].map(([label, value, note]) => `<div class="admin-stat-card"><strong>\${escapeHtml(value)}</strong><span>\${escapeHtml(label)}</span><small>\${escapeHtml(note)}</small></div>`).join("");
-
   const sellers = data.sellers || [];
-  elements.adminSellerManagement.innerHTML = sellers.length ? sellers.slice(0, 20).map((s) => `
-    <div class="admin-record">
-      <div><strong>\${escapeHtml(s.name || s.username)}</strong><span>\${escapeHtml(s.username)} | \${escapeHtml(s.phone || "")}</span></div>
-      <span class="status-pill \${escapeHtml(s.status || "pending")}">\${escapeHtml(s.status || "pending")}</span>
-      <div class="admin-record-actions">
-        <button class="primary-button" type="button" data-admin-seller-id="\${escapeHtml(s.id)}" data-admin-seller-status="approved">Approve</button>
-        <button class="secondary-button" type="button" data-admin-seller-id="\${escapeHtml(s.id)}" data-admin-seller-status="rejected">Reject</button>
-      </div>
-    </div>`).join("") : `<div class="empty-state">No seller accounts yet.</div>`;
-
   const resources = data.resources || [];
-  elements.adminResourceManagement.innerHTML = resources.length ? resources.slice(0, 30).map((r) => `
-    <div class="admin-record">
-      <div><strong>\${escapeHtml(r.title || "Untitled resource")}</strong><span>\${escapeHtml(r.grade || "")} | \${escapeHtml(r.subject || "")} | \${escapeHtml(r.sellerUsername ? "Seller: " + r.sellerUsername : "Admin resource")}</span></div>
-      <span class="status-pill \${escapeHtml(r.status || "approved")}">\${escapeHtml(r.status || "approved")}</span>
-      <div class="admin-record-actions">
-        <button class="primary-button" type="button" data-admin-resource-id="\${escapeHtml(r.id)}" data-admin-resource-status="approved">Approve</button>
-        <button class="secondary-button" type="button" data-admin-resource-id="\${escapeHtml(r.id)}" data-admin-resource-status="rejected">Reject</button>
-      </div>
-    </div>`).join("") : `<div class="empty-state">No resource records yet.</div>`;
-
   const users = data.users || [];
-  elements.adminUserManagement.innerHTML = users.length ? users.slice(0, 30).map((u) => `
-    <div class="admin-record">
-      <div><strong>\${escapeHtml(u.name || "Customer")}</strong><span>\${escapeHtml(u.phone || "")}</span></div>
-      <span class="status-pill \${escapeHtml(u.status || "active")}">\${escapeHtml(u.status || "active")}</span>
-      <div class="admin-record-actions">
-        <button class="primary-button" type="button" data-admin-user-id="\${escapeHtml(u.id)}" data-admin-user-status="active">Activate</button>
-        <button class="secondary-button" type="button" data-admin-user-id="\${escapeHtml(u.id)}" data-admin-user-status="blocked">Block</button>
-      </div>
-    </div>`).join("") : `<div class="empty-state">No users identified yet.</div>`;
-
   const sales = data.sales || [];
-  elements.adminSalesManagement.innerHTML = sales.length ? sales.slice(0, 20).map((s) =>
-    `<div class="admin-record"><div><strong>\${escapeHtml(s.resource || "Resource sale")}</strong><span>\${escapeHtml(s.customerPhone || s.phone || "")}</span></div><strong>\${money(s.amount || 0)}</strong><span class="status-pill paid">\${escapeHtml(s.status || "paid")}</span></div>`
-  ).join("") : `<div class="empty-state">No completed sales recorded yet. Successful Daraja callbacks will appear here.</div>`;
-
   const payments = data.payments || [];
-  elements.adminPaymentManagement.innerHTML = payments.length ? payments.slice(0, 30).map((p) =>
-    `<div class="admin-record"><div><strong>\${escapeHtml(p.resource || "Payment request")}</strong><span>\${escapeHtml(p.customerPhone || p.phone || "")}</span></div><strong>\${money(p.amount || 0)}</strong><span class="status-pill \${escapeHtml(p.status || "pending")}">\${escapeHtml(p.status || "pending")}</span></div>`
-  ).join("") : `<div class="empty-state">No payment requests yet.</div>`;
+  const pendingPayments = payments.filter((item) => String(item.status || "").toLowerCase().includes("pending")).length;
 
-  elements.adminPriceManagement.innerHTML = resources.length ? resources.slice(0, 30).map((r) => `
-    <div class="admin-price-row">
-      <div><strong>\${escapeHtml(r.title || "Untitled resource")}</strong><span>\${escapeHtml(r.grade || "")} | \${escapeHtml(r.subject || "")}</span></div>
-      <input type="number" min="0" value="\${Number(r.price || 0)}" data-admin-price="\${escapeHtml(r.id)}" aria-label="Price">
-      <input type="number" min="0" max="100" value="\${Number(r.discount || 0)}" data-admin-discount="\${escapeHtml(r.id)}" aria-label="Discount">
-      <button class="primary-button" type="button" data-admin-save-price="\${escapeHtml(r.id)}">Save</button>
-    </div>`).join("") : `<div class="empty-state">No resources available for price management.</div>`;
+  elements.adminStatsGrid.innerHTML = [
+    ["Sellers", stats.sellers || 0, (stats.pendingSellers || 0) + " pending", "sellers"],
+    ["Resources", stats.resources || 0, (stats.pendingResources || 0) + " pending", "resources"],
+    ["Users", stats.users || 0, "customer accounts", "users"],
+    ["Sales", stats.sales || 0, "completed transactions", "sales"],
+    ["Revenue", money(stats.revenue || 0), "recorded sales value", "sales"],
+    ["Payments", payments.length || 0, pendingPayments + " pending", "payments"]
+  ].map(([label, value, note, module]) =>
+    "<button class=\"admin-stat-card\" type=\"button\" data-admin-kpi-module=\"" + escapeHtml(module) + "\"><strong>" +
+    escapeHtml(value) + "</strong><span>" + escapeHtml(label) + "</span><small>" + escapeHtml(note) + "</small></button>"
+  ).join("");
+
+  if (elements.adminSellerBadge) elements.adminSellerBadge.textContent = stats.pendingSellers || 0;
+  if (elements.adminResourceBadge) elements.adminResourceBadge.textContent = stats.pendingResources || 0;
+  if (elements.adminUserBadge) elements.adminUserBadge.textContent = users.length;
+  if (elements.adminSalesBadge) elements.adminSalesBadge.textContent = sales.length;
+  if (elements.adminPaymentBadge) elements.adminPaymentBadge.textContent = pendingPayments;
+
+  const query = String(elements.adminDashboardSearch?.value || "").trim().toLowerCase();
+  const status = String(elements.adminStatusFilter?.value || "all").toLowerCase();
+  const matches = (record, values) => {
+    const haystack = values.map((value) => String(value ?? "")).join(" ").toLowerCase();
+    const recordStatus = String(record.status || "").toLowerCase();
+    return (!query || haystack.includes(query)) && (status === "all" || recordStatus === status);
+  };
+
+  const visibleSellers = sellers.filter((s) => matches(s, [s.name, s.username, s.phone, s.status])).slice(0, 50);
+  elements.adminSellerManagement.innerHTML = visibleSellers.length
+    ? visibleSellers.map((s) =>
+      "<div class=\"admin-record\"><div class=\"admin-record-main\"><strong>" + escapeHtml(s.name || s.username || "Seller") +
+      "</strong><span>@" + escapeHtml(s.username || "") + " · " + escapeHtml(s.phone || "") +
+      "</span></div><span class=\"status-pill " + escapeHtml(s.status || "pending") + "\">" + escapeHtml(s.status || "pending") +
+      "</span><div class=\"admin-record-actions\"><button class=\"primary-button\" type=\"button\" data-admin-seller-id=\"" +
+      escapeHtml(s.id) + "\" data-admin-seller-status=\"approved\">Approve</button><button class=\"secondary-button\" type=\"button\" data-admin-seller-id=\"" +
+      escapeHtml(s.id) + "\" data-admin-seller-status=\"rejected\">Reject</button></div></div>"
+    ).join("")
+    : "<div class=\"empty-state\">No sellers match the current filters.</div>";
+
+  const visibleResources = resources.filter((r) => matches(r, [r.title, r.grade, r.subject, r.type, r.sellerUsername, r.status])).slice(0, 50);
+  elements.adminResourceManagement.innerHTML = visibleResources.length
+    ? visibleResources.map((r) =>
+      "<div class=\"admin-record\"><div class=\"admin-record-main\"><strong>" + escapeHtml(r.title || "Untitled resource") +
+      "</strong><span>" + escapeHtml(r.grade || "") + " · " + escapeHtml(r.subject || "") + " · " + escapeHtml(r.type || "Resource") +
+      "</span></div><span class=\"status-pill " + escapeHtml(r.status || "approved") + "\">" + escapeHtml(r.status || "approved") +
+      "</span><div class=\"admin-record-actions\"><button class=\"primary-button\" type=\"button\" data-admin-resource-id=\"" +
+      escapeHtml(r.id) + "\" data-admin-resource-status=\"approved\">Approve</button><button class=\"secondary-button\" type=\"button\" data-admin-resource-id=\"" +
+      escapeHtml(r.id) + "\" data-admin-resource-status=\"rejected\">Reject</button></div></div>"
+    ).join("")
+    : "<div class=\"empty-state\">No resources match the current filters.</div>";
+
+  const visibleUsers = users.filter((u) => matches(u, [u.name, u.phone, u.status, u.source])).slice(0, 50);
+  elements.adminUserManagement.innerHTML = visibleUsers.length
+    ? visibleUsers.map((u) =>
+      "<div class=\"admin-record\" data-user-phone=\"" + escapeHtml(u.phone || "") + "\"><div class=\"admin-record-main\"><strong>" +
+      escapeHtml(u.name || "Customer") + "</strong><span>" + escapeHtml(u.phone || "") + " · " + escapeHtml(u.source || "account") +
+      "</span></div><span class=\"status-pill " + escapeHtml(u.status || "active") + "\">" + escapeHtml(u.status || "active") +
+      "</span><div class=\"admin-record-actions\"><button class=\"primary-button\" type=\"button\" data-admin-user-id=\"" +
+      escapeHtml(u.id) + "\" data-admin-user-status=\"active\">Activate</button><button class=\"secondary-button\" type=\"button\" data-admin-user-id=\"" +
+      escapeHtml(u.id) + "\" data-admin-user-status=\"blocked\">Block</button></div></div>"
+    ).join("")
+    : "<div class=\"empty-state\">No users match the current filters.</div>";
+
+  const visibleSales = sales.filter((s) => matches(s, [s.resource, s.customerPhone, s.phone, s.amount, s.status])).slice(0, 50);
+  elements.adminSalesManagement.innerHTML = visibleSales.length
+    ? visibleSales.map((s) =>
+      "<div class=\"admin-record\"><div class=\"admin-record-main\"><strong>" + escapeHtml(s.resource || "Resource sale") +
+      "</strong><span>" + escapeHtml(s.customerPhone || s.phone || "Customer") + " · " +
+      new Date(s.createdAt || s.confirmedAt || Date.now()).toLocaleString() +
+      "</span></div><strong class=\"admin-amount\">" + money(s.amount || 0) +
+      "</strong><span class=\"status-pill paid\">" + escapeHtml(s.status || "paid") + "</span></div>"
+    ).join("")
+    : "<div class=\"empty-state\">No completed sales match the current filters.</div>";
+
+  const visiblePayments = payments.filter((p) => matches(p, [p.resource, p.customerPhone, p.phone, p.amount, p.status, p.checkoutRequestID])).slice(0, 50);
+  elements.adminPaymentManagement.innerHTML = visiblePayments.length
+    ? visiblePayments.map((p) =>
+      "<div class=\"admin-record\"><div class=\"admin-record-main\"><strong>" + escapeHtml(p.resource || "Payment request") +
+      "</strong><span>" + escapeHtml(p.customerPhone || p.phone || "Customer") + " · " +
+      new Date(p.createdAt || p.receivedAt || Date.now()).toLocaleString() +
+      "</span></div><strong class=\"admin-amount\">" + money(p.amount || 0) +
+      "</strong><span class=\"status-pill " + escapeHtml(p.status || "pending") + "\">" +
+      escapeHtml(p.status || "pending") + "</span></div>"
+    ).join("")
+    : "<div class=\"empty-state\">No payments match the current filters.</div>";
+
+  const visiblePrices = resources.filter((r) => matches(r, [r.title, r.grade, r.subject, r.type, r.price, r.discount])).slice(0, 50);
+  elements.adminPriceManagement.innerHTML = visiblePrices.length
+    ? visiblePrices.map((r) =>
+      "<div class=\"admin-price-row\"><div><strong>" + escapeHtml(r.title || "Untitled resource") +
+      "</strong><span>" + escapeHtml(r.grade || "") + " · " + escapeHtml(r.subject || "") +
+      "</span></div><label><span>Price</span><input type=\"number\" min=\"0\" value=\"" + Number(r.price || 0) +
+      "\" data-admin-price=\"" + escapeHtml(r.id) + "\"></label><label><span>Discount %</span><input type=\"number\" min=\"0\" max=\"100\" value=\"" +
+      Number(r.discount || 0) + "\" data-admin-discount=\"" + escapeHtml(r.id) + "\"></label><button class=\"primary-button\" type=\"button\" data-admin-save-price=\"" +
+      escapeHtml(r.id) + "\">Save</button></div>"
+    ).join("")
+    : "<div class=\"empty-state\">No resources match the current filters.</div>";
+
+  const summaries = {
+    adminSellerSummary: (sellers.filter((s) => s.status === "pending").length) + " awaiting review",
+    adminResourceSummary: (stats.pendingResources || 0) + " awaiting review",
+    adminUserSummary: users.length + " identified",
+    adminSalesSummary: sales.length + " completed",
+    adminPaymentSummary: pendingPayments + " pending"
+  };
+  Object.keys(summaries).forEach((id) => {
+    const node = document.getElementById(id);
+    if (node) node.textContent = summaries[id];
+  });
+  setAdminModule(activeAdminModule);
 }
+
 
 async function adminPost(path, payload) {
   const response = await fetch(path, { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
@@ -1570,6 +1637,9 @@ function bindEvents() {
   }
   safeOn(elements.refreshAdminDashboardButton, "click", loadAdminDashboard);
   safeOn(elements.adminControlPanel, "click", handleAdminControlClick);
+  safeOn(elements.adminDashboardSearch, "input", () => renderAdminControlCentre(adminDashboardData || {}));
+  safeOn(elements.adminStatusFilter, "change", () => renderAdminControlCentre(adminDashboardData || {}));
+  document.querySelectorAll("[data-admin-module]").forEach((button) => safeOn(button, "click", () => setAdminModule(button.dataset.adminModule)));
 
   safeOn(elements.gradeList, "click", (event) => {
     const toggle = event.target.closest("[data-grade-toggle]");
