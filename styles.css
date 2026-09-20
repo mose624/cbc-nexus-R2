@@ -3465,3 +3465,30 @@ img, svg, video, iframe {
   background: #086b40 !important;
   color: #ffffff !important;
 }
+
+
+/* Footer action links moved from the main navigation */
+.site-footer .footer-action-link {
+  color: #0645ad !important;
+  font-weight: 900;
+  background: rgba(6,69,173,.08);
+  border: 1px solid rgba(6,69,173,.25);
+  border-radius: 6px;
+  padding: 5px 8px;
+  text-decoration: none;
+}
+
+.site-footer .footer-action-link:hover,
+.site-footer .footer-action-link:focus-visible {
+  color: #ffffff !important;
+  background: #0645ad !important;
+  border-color: #0645ad;
+}
+
+@media (max-width: 760px) {
+  .site-footer .footer-action-link {
+    padding: 4px 5px;
+    font-size: 7px;
+    border-radius: 4px;
+  }
+}
