@@ -357,6 +357,7 @@ const elements = {
   adminUserBadge: document.querySelector("#adminUserBadge"),
   adminSalesBadge: document.querySelector("#adminSalesBadge"),
   adminPaymentBadge: document.querySelector("#adminPaymentBadge"),
+  adminPopularResources: document.querySelector("#adminPopularResources"),
   adminSection: document.querySelector("#admin"),
   adminLoginForm: document.querySelector("#adminLoginForm"),
   adminUsername: document.querySelector("#adminUsernameInput"),
@@ -1210,12 +1211,12 @@ function renderAdminControlCentre(data) {
   const pendingPayments = payments.filter((item) => String(item.status || "").toLowerCase().includes("pending")).length;
 
   elements.adminStatsGrid.innerHTML = [
-    ["Sellers", stats.sellers || 0, (stats.pendingSellers || 0) + " pending", "sellers"],
-    ["Resources", stats.resources || 0, (stats.pendingResources || 0) + " pending", "resources"],
-    ["Users", stats.users || 0, "customer accounts", "users"],
-    ["Sales", stats.sales || 0, "completed transactions", "sales"],
+    ["Total sellers", stats.sellers || 0, (stats.pendingSellers || 0) + " pending", "sellers"],
+    ["Total resources", stats.resources || 0, (stats.pendingResources || 0) + " pending", "resources"],
+    ["Total purchases", stats.purchases || stats.sales || 0, "completed purchases", "sales"],
+    ["Popular resources", (data.popularResources || []).length, "top resources", "resources"],
     ["Revenue", money(stats.revenue || 0), "recorded sales value", "sales"],
-    ["Payments", payments.length || 0, pendingPayments + " pending", "payments"]
+    ["Downloads", stats.downloads || 0, "R2 downloads", "resources"]
   ].map(([label, value, note, module]) =>
     "<button class=\"admin-stat-card\" type=\"button\" data-admin-kpi-module=\"" + escapeHtml(module) + "\"><strong>" +
     escapeHtml(value) + "</strong><span>" + escapeHtml(label) + "</span><small>" + escapeHtml(note) + "</small></button>"
@@ -1226,6 +1227,12 @@ function renderAdminControlCentre(data) {
   if (elements.adminUserBadge) elements.adminUserBadge.textContent = users.length;
   if (elements.adminSalesBadge) elements.adminSalesBadge.textContent = sales.length;
   if (elements.adminPaymentBadge) elements.adminPaymentBadge.textContent = pendingPayments;
+  if (elements.adminPopularResources) {
+    const popular = data.popularResources || [];
+    elements.adminPopularResources.innerHTML = popular.length ? popular.map((r, index) =>
+      "<div class=\"admin-popular-row\"><span class=\"admin-rank\">" + (index + 1) + "</span><div class=\"admin-record-main\"><strong>" + escapeHtml(r.title || "Untitled resource") + "</strong><span>" + escapeHtml(r.grade || "") + " · " + escapeHtml(r.subject || "") + "</span></div><span class=\"admin-popular-metric\">" + Number(r.purchases || 0) + " purchases · " + Number(r.downloads || 0) + " downloads</span></div>"
+    ).join("") : "<div class=\"empty-state\">No resource activity has been recorded yet.</div>";
+  }
 
   const query = String(elements.adminDashboardSearch?.value || "").trim().toLowerCase();
   const status = String(elements.adminStatusFilter?.value || "all").toLowerCase();
