@@ -3261,3 +3261,46 @@ img, svg, video, iframe {
     font-size: 6px;
   }
 }
+
+
+/* Phone quick-access header: compact two-row button grid */
+@media (max-width: 760px) {
+  .top-strip {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    grid-template-rows: repeat(2, auto);
+    gap: 0;
+    padding: 0;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .top-strip > a {
+    min-width: 0;
+    width: 100%;
+    margin: 0;
+    padding: 3px 2px;
+    border-width: 1px;
+    border-radius: 0;
+    font-size: 6.5px;
+    line-height: 1.05;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 420px) {
+  .top-strip {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+
+  .top-strip > a {
+    padding: 2px 1px;
+    font-size: 5.5px;
+    min-height: 23px;
+  }
+}
