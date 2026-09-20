@@ -67,6 +67,11 @@ function verifyAdminSession(req) {
 function adminCookie(token) {
   return `cbe_admin_session=${encodeURIComponent(token)}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=28800`;
 }
+const SELLER_SESSION_TTL_MS=8*60*60*1000;
+async function hashPassword(password){const salt=crypto.randomBytes(16).toString("hex");const key=await new Promise((res,rej)=>crypto.scrypt(String(password),salt,64,{N:16384,r:8,p:1},(e,k)=>e?rej(e):res(k.toString("hex"))));return salt+":"+key;}
+function createSellerSession(username){const payload=Buffer.from(JSON.stringify({u:username,exp:Date.now()+SELLER_SESSION_TTL_MS})).toString("base64url");const sig=crypto.createHmac("sha256",String(process.env.ADMIN_SESSION_SECRET||"")).update("seller:"+payload).digest("base64url");return payload+"."+sig;}
+function verifySellerSession(req){const secret=String(process.env.ADMIN_SESSION_SECRET||"");if(!secret)return null;const m=String(req.headers.cookie||"").match(/(?:^|;\s*)cbe_seller_session=([^;]+)/);if(!m)return null;const [p,sig]=decodeURIComponent(m[1]).split(".");const exp=crypto.createHmac("sha256",secret).update("seller:"+p).digest("base64url");if(!p||!sig||!safeEqual(sig,exp))return null;try{const d=JSON.parse(Buffer.from(p,"base64url").toString("utf8"));return Number(d.exp)>Date.now()?d.u:null;}catch{return null;}}
+function sellerCookie(token){return `cbe_seller_session=${encodeURIComponent(token)}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=28800`;}
 
 const mimeTypes = {
   ".html": "text/html; charset=utf-8",
@@ -138,6 +143,9 @@ function readBody(req) {
   });
 }
 
+async function getMpesaAccessToken(){const k=String(process.env.MPESA_CONSUMER_KEY||""),sec=String(process.env.MPESA_CONSUMER_SECRET||"");if(!k||!sec)throw new Error("M-Pesa consumer credentials are not configured.");const base=String(process.env.MPESA_ENVIRONMENT||"sandbox").toLowerCase()==="production"?"https://api.safaricom.co.ke":"https://sandbox.safaricom.co.ke";return await new Promise((res,rej)=>{const https=require("https"),q=https.request(base+"/oauth/v1/generate?grant_type=client_credentials",{headers:{Authorization:"Basic "+Buffer.from(k+":"+sec).toString("base64")}},r=>{let d="";r.on("data",c=>d+=c);r.on("end",()=>{try{const x=JSON.parse(d);x.access_token?res(x.access_token):rej(new Error("Daraja authorization failed."));}catch{rej(new Error("Invalid Daraja authorization response."));}})});q.on("error",rej);q.end();});}
+function normalizeMpesaPhone(p){p=String(p||"").replace(/\s+/g,"");if(/^0[17]\d{8}$/.test(p))return"254"+p.slice(1);if(/^254[17]\d{8}$/.test(p))return p;return"";}
+async function darajaPost(pathname,body,token){const https=require("https"),base=String(process.env.MPESA_ENVIRONMENT||"sandbox").toLowerCase()==="production"?"https://api.safaricom.co.ke":"https://sandbox.safaricom.co.ke";return await new Promise((res,rej)=>{const q=https.request(base+pathname,{method:"POST",headers:{Authorization:"Bearer "+token,"Content-Type":"application/json"}},r=>{let d="";r.on("data",c=>d+=c);r.on("end",()=>{try{res({status:r.statusCode||500,data:JSON.parse(d)});}catch{res({status:r.statusCode||500,data:{raw:d}});}})});q.on("error",rej);q.write(JSON.stringify(body));q.end();});}
 async function generateAIHomeworkAnswer(payload) {
   if (!process.env.OPENAI_API_KEY) return null;
   const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -188,16 +196,12 @@ async function handleApi(req, res, url) {
     return true;
   }
 
-  if (req.method === "POST" && url.pathname === "/api/r2/upload-url") {
-    if (!verifyAdminSession(req)) {
-      sendJson(res, 401, { ok: false, error: "Admin login required for resource uploads." });
-      return true;
-    }
-    const payload = JSON.parse((await readBody(req)) || "{}");
-    const result = await createUploadUrl(payload);
-    sendJson(res, 200, { ok: true, ...result });
-    return true;
-  }
+  if(req.method==="POST"&&url.pathname==="/api/seller/account"){const p=JSON.parse((await readBody(req))||"{}"),u=String(p.username||"").trim().toLowerCase(),pw=String(p.password||""),name=String(p.name||"").trim(),phone=String(p.phone||"").trim();if(!u||pw.length<8||!name||!phone){sendJson(res,400,{ok:false,error:"Name, phone, username and a password of at least 8 characters are required."});return true;}const ac=await readJsonStore("seller-accounts.json");if(ac.some(x=>x.username===u)){sendJson(res,409,{ok:false,error:"This seller username is already registered."});return true;}const a={id:"seller-account-"+Date.now(),name,phone,username:u,passwordHash:await hashPassword(pw),status:"pending",createdAt:new Date().toISOString()};await appendJsonStore("seller-accounts.json",a);sendJson(res,201,{ok:true,account:{id:a.id,name,phone,username:u,status:"pending"}});return true;}
+  if(req.method==="POST"&&url.pathname==="/api/seller/login"){const p=JSON.parse((await readBody(req))||"{}"),u=String(p.username||"").trim().toLowerCase(),ac=await readJsonStore("seller-accounts.json"),a=ac.find(x=>x.username===u);if(!a||!(await verifyPassword(String(p.password||""),a.passwordHash))){sendJson(res,401,{ok:false,error:"Invalid seller username or password."});return true;}if(a.status!=="approved"){sendJson(res,403,{ok:false,error:"Seller account is pending admin approval."});return true;}res.setHeader("Set-Cookie",sellerCookie(createSellerSession(u)));sendJson(res,200,{ok:true,account:{id:a.id,name:a.name,phone:a.phone,username:a.username,status:a.status}});return true;}
+  if(req.method==="POST"&&url.pathname==="/api/admin/seller-account-status"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const p=JSON.parse((await readBody(req))||"{}"),ac=await readJsonStore("seller-accounts.json"),up=ac.map(x=>x.id===p.accountId?{...x,status:String(p.status||"pending"),reviewedAt:new Date().toISOString()}:x);await fs.writeFile(path.join(DATA_DIR,"seller-accounts.json"),JSON.stringify(up,null,2));sendJson(res,200,{ok:true});return true;}
+
+  if(req.method==="POST"&&url.pathname==="/api/r2/upload-url"){const p=JSON.parse((await readBody(req))||"{}"),admin=verifyAdminSession(req),seller=verifySellerSession(req);if(p.role==="admin"&&!admin){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}if(p.role==="seller"&&!seller){sendJson(res,401,{ok:false,error:"Approved seller login required."});return true;}if(!["admin","seller"].includes(p.role)){sendJson(res,400,{ok:false,error:"Upload role is required."});return true;}sendJson(res,200,{ok:true,...await createUploadUrl(p)});return true;}
+  if(req.method==="POST"&&url.pathname==="/api/r2/project-upload-url"){const p=JSON.parse((await readBody(req))||"{}");if(!p.grade||!p.subject){sendJson(res,400,{ok:false,error:"Project grade and subject are required."});return true;}sendJson(res,200,{ok:true,...await createUploadUrl({...p,type:"CBC Projects"})});return true;}
   if (req.method === "GET" && url.pathname === "/api/r2/status") {
     const required = [
       "R2_ACCOUNT_ID",
@@ -242,6 +246,8 @@ async function handleApi(req, res, url) {
     return true;
   }
 
+  if(req.method==="POST"&&url.pathname==="/api/mpesa/stk-push"){const p=JSON.parse((await readBody(req))||"{}"),phone=normalizeMpesaPhone(p.customerPhone),amount=Math.round(Number(p.amount||0)),sc=String(process.env.MPESA_SHORTCODE||""),pk=String(process.env.MPESA_PASSKEY||""),cb=String(process.env.MPESA_CALLBACK_URL||"");if(!phone||amount<1||!sc||!pk||!cb){sendJson(res,503,{ok:false,error:"M-Pesa STK Push is not fully configured. Add MPESA_SHORTCODE, MPESA_PASSKEY and MPESA_CALLBACK_URL in Render."});return true;}try{const token=await getMpesaAccessToken(),ts=new Date().toISOString().replace(/[-:TZ.]/g,"").slice(0,14),pwd=Buffer.from(sc+pk+ts).toString("base64"),out=await darajaPost("/mpesa/stkpush/v1/processrequest",{BusinessShortCode:sc,Password:pwd,Timestamp:ts,TransactionType:process.env.MPESA_TRANSACTION_TYPE||"CustomerPayBillOnline",Amount:amount,PartyA:phone,PartyB:sc,PhoneNumber:phone,CallBackURL:cb,AccountReference:String(p.resource||"CBE Nexus").slice(0,12),TransactionDesc:"CBE Nexus resource payment"},token);const saved=await appendJsonStore("mpesa-requests.json",{...p,daraja:out.data});sendJson(res,out.status>=200&&out.status<300?200:502,{ok:out.status>=200&&out.status<300,saved,...out.data});}catch(e){sendJson(res,502,{ok:false,error:e.message});}return true;}
+  if(req.method==="POST"&&url.pathname==="/api/mpesa/callback"){const p=JSON.parse((await readBody(req))||"{}");await appendJsonStore("mpesa-callbacks.json",p);sendJson(res,200,{ResultCode:0,ResultDesc:"Accepted"});return true;}
   if (req.method === "POST" && stores[url.pathname]) {
     const payload = JSON.parse((await readBody(req)) || "{}");
     const saved = await appendJsonStore(stores[url.pathname], payload);
