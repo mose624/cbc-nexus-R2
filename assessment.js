@@ -411,7 +411,11 @@
 
   function getGradeQuestionBank(selectedGrade, selectedSubject) {
     const n = Number(String(selectedGrade).replace(/[^0-9]/g, "")) || 7;
-    const base = bank[selectedSubject] || additionalQuestions[selectedSubject] || bank["CBC Skills"];
+    const cbcBank = window.CBENexusCBCBanks &&
+      window.CBENexusCBCBanks.banks &&
+      window.CBENexusCBCBanks.banks[selectedGrade] &&
+      window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject];
+    const base = cbcBank || bank[selectedSubject] || additionalQuestions[selectedSubject] || bank["CBC Skills"];
     let extra = additionalQuestions[selectedSubject] ? additionalQuestions[selectedSubject].slice() : [];
     if (n <= 3) {
       extra = gradePools["Grade 1"][selectedSubject] || [];
