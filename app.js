@@ -542,72 +542,82 @@ function paidResourceHelpLink(resource, amount) {
 }
 
 function renderGradeDashboard() {
+  if (!elements.gradeList) return;
+
   elements.gradeList.innerHTML = Object.entries(gradeSubjects)
     .map(([grade, subjects], index) => `
       <article class="grade-card ${index === 0 ? "open" : ""}">
-        <button class="grade-toggle" type="button" data-grade-toggle="${grade}" aria-expanded="${index === 0}">
-        <span>${escapeHtml(grade)}</span>
-        <span>Subjects</span>
-      </button>
-      <div class="subject-menu">
-          ${subjects.map((subject) => `<button class="subject-chip" type="button" data-grade="${escapeHtml(grade)}" data-subject="${escapeHtml(subject)}">${escapeHtml(subject)}</button>`).join("")}
+        <button class="grade-toggle" type="button" data-grade-toggle="${escapeHtml(grade)}" aria-expanded="${index === 0}">
+          <span>${escapeHtml(grade)}</span>
+          <span>Subjects</span>
+        </button>
+        <div class="subject-menu">
+          ${subjects.map((subject) => `
+            <button class="subject-chip" type="button" data-grade="${escapeHtml(grade)}" data-subject="${escapeHtml(subject)}">
+              ${escapeHtml(subject)}
+            </button>`).join("")}
         </div>
-      </article>
-    `)
-    .join("");
+      </article>`).join("");
 
-  // Bind grade controls immediately after rendering so they work
-  // even if another optional page control fails to initialize.
-  elements.gradeList.querySelectorAll("[data-grade-toggle]").forEach((toggle) => {
-    toggle.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
+  // Use one delegated click handler on the grade list. This guarantees
+  // dynamically-rendered subject buttons remain clickable.
+  if (!elements.gradeList.dataset.bound) {
+    elements.gradeList.addEventListener("click", (event) => {
+      const subjectButton = event.target.closest("[data-subject]");
+      const gradeButton = event.target.closest("[data-grade-toggle]");
 
-      const card = toggle.closest(".grade-card");
-      const grade = toggle.dataset.gradeToggle;
+      if (subjectButton) {
+        event.preventDefault();
+        event.stopPropagation();
 
-      elements.gradeList.querySelectorAll(".grade-card").forEach((item) => {
-        if (item !== card) item.classList.remove("open");
-      });
-      elements.gradeList.querySelectorAll(".grade-toggle").forEach((button) => {
-        button.classList.remove("active");
-        button.setAttribute("aria-expanded", "false");
-      });
+        const selectedGrade = subjectButton.dataset.grade;
+        const selectedSubject = subjectButton.dataset.subject;
 
-      card.classList.add("open");
-      toggle.classList.add("active");
-      toggle.setAttribute("aria-expanded", "true");
+        state.grade = selectedGrade;
+        state.subject = selectedSubject;
 
-      state.grade = grade;
-      state.subject = "All Subjects";
-      elements.gradeFilter.value = grade;
-      refreshSubjectFilters();
-      elements.subjectFilter.value = "All Subjects";
-      renderResources();
+        if (elements.gradeFilter) elements.gradeFilter.value = selectedGrade;
+        refreshSubjectFilters();
+        if (elements.subjectFilter) elements.subjectFilter.value = selectedSubject;
 
-      showToast(grade + " selected — subjects opened.");
-      document.querySelector("#resources")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        elements.gradeList.querySelectorAll(".grade-card").forEach((card) => {
+          card.classList.toggle("open", card.querySelector("[data-grade-toggle]")?.dataset.gradeToggle === selectedGrade);
+        });
+
+        renderResources();
+        showToast(selectedGrade + " — " + selectedSubject + " selected.");
+        document.querySelector("#resources")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+
+      if (gradeButton) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const selectedGrade = gradeButton.dataset.gradeToggle;
+        const card = gradeButton.closest(".grade-card");
+
+        elements.gradeList.querySelectorAll(".grade-card").forEach((item) => {
+          if (item !== card) item.classList.remove("open");
+        });
+
+        card.classList.toggle("open");
+        gradeButton.setAttribute("aria-expanded", card.classList.contains("open") ? "true" : "false");
+
+        state.grade = selectedGrade;
+        state.subject = "All Subjects";
+
+        if (elements.gradeFilter) elements.gradeFilter.value = selectedGrade;
+        refreshSubjectFilters();
+        if (elements.subjectFilter) elements.subjectFilter.value = "All Subjects";
+
+        renderResources();
+        showToast(selectedGrade + " selected — subjects opened.");
+      }
     });
-  });
-
-  elements.gradeList.querySelectorAll("[data-subject]").forEach((chip) => {
-    chip.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-
-      state.grade = chip.dataset.grade;
-      state.subject = chip.dataset.subject;
-      elements.gradeFilter.value = state.grade;
-      refreshSubjectFilters();
-      elements.subjectFilter.value = state.subject;
-      renderResources();
-
-      showToast(state.grade + " — " + state.subject + " selected.");
-      document.querySelector("#resources")?.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-  });
+    elements.gradeList.dataset.bound = "true";
+  }
 }
-
 function refreshSubjectFilters() {
   const subjects = state.grade === "All Grades"
     ? Array.from(new Set(Object.values(gradeSubjects).flat())).sort()
