@@ -3791,3 +3791,31 @@ img, svg, video, iframe {
 @media(max-width:640px){.resource-preview-modal{padding:7px}.resource-preview-dialog{width:100%;height:94vh;border-radius:10px}.resource-preview-header{padding:10px 12px}.resource-preview-info{padding:8px 12px;font-size:.74rem}}
 
 .resource-activity{display:flex;gap:12px;flex-wrap:wrap;margin:8px 0;color:#64748b;font-size:.76rem;font-weight:700}
+
+/* Resource Library: compact, moderate action buttons */
+.resource-library-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.resource-library-actions .resource-action-button {
+  min-height: 36px;
+  padding: 7px 12px;
+  font-size: 13px;
+  line-height: 1.2;
+  border-radius: 5px;
+}
+
+.resource-library-actions .resource-download-button {
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .resource-library-actions .resource-action-button {
+    min-height: 34px;
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+}
