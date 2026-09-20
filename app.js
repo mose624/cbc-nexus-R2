@@ -1441,10 +1441,8 @@ function bindEvents() {
     if (reject) updateSellerAccountStatus(reject.dataset.rejectSellerAccount, "rejected");
   });
 
-  document.querySelector("#headerMpesaButton").addEventListener("click", () => {
-    showToast(`M-Pesa payment number: ${MPESA_PHONE}`);
-  });
-
+  // headerMpesaButton is optional because the current header does not include it.
+  // The guarded handler below is used when that button exists.
   elements.openSellerDashboard.addEventListener("click", openSellerDashboard);
   elements.openSellerDashboardSecondary.addEventListener("click", openSellerDashboard);
   if (elements.openSellerDashboardNav) elements.openSellerDashboardNav.addEventListener("click", openSellerDashboard);
