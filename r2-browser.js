@@ -16,7 +16,7 @@
   async function upload(file, meta) {
     const ext = "." + (file.name.split(".").pop() || "").toLowerCase();
     if (!allowed.includes(ext)) throw new Error("Unsupported file type.");
-    const response = await fetch("/api/r2/upload-url", { credentials: "same-origin",
+    const response = await fetch(meta.role === "project" ? "/api/r2/project-upload-url" : "/api/r2/upload-url", { credentials: "same-origin",
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -25,6 +25,7 @@
         type: meta.type,
         fileName: safeFileName(file.name),
         resourceId: meta.resourceId,
+        role: meta.role || "admin",
         contentType: file.type || "application/octet-stream"
       })
     });
@@ -61,7 +62,7 @@
         const grade = document.querySelector("#adminGradeInput").value;
         const subject = document.querySelector("#adminSubjectInput").value;
         const type = document.querySelector("#adminTypeInput").value;
-        const result = await upload(file, { grade, subject, type, resourceId: id });
+        const result = await upload(file, { grade, subject, type, resourceId: id, role: "admin" });
         const resource = {
           id,
           title: document.querySelector("#titleInput").value.trim(),
@@ -142,7 +143,7 @@
       try {
         const grade = document.querySelector("#projectGradeInput").value;
         const subject = document.querySelector("#projectSubjectInput").value.trim();
-        const result = await upload(file, { grade, subject, type: "CBC Projects", resourceId: id });
+        const result = await upload(file, { grade, subject, type: "CBC Projects", resourceId: id, role: "project" });
         const project = {
           id,
           title: document.querySelector("#projectTitleInput").value.trim(),
