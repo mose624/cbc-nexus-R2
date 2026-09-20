@@ -125,44 +125,80 @@
     </header>
 
     <main>
-      <section id="dashboard" class="dashboard-shell">
-        <div class="intro-panel">
-          <p class="eyebrow">Competency Based Education library</p>
-          <div class="hero-resource-buttons" aria-label="CBE resource categories">
-            <a href="#resources" data-hero-resource="Holiday Classes">Holiday Classes</a>
-            <a href="#resources" data-hero-resource="Assignments">Assignments</a>
-            <a href="#resources" data-hero-resource="KNEC Rubrics">KNEC Rubrics</a>
-            <a href="#resources" data-hero-resource="Novels">Novels</a>
-            <a href="#resources" data-hero-resource="Motivational Books">Motivational Books</a>
-            <a href="#resources" data-hero-resource="Business Books">Business Books</a>
-            <a href="#resources" data-hero-resource="Bookshop">Bookshop</a>
-            <a href="#cbcProjects" class="promo-button">CBC Projects Upload</a>
-            <a href="#freeCbcResources" class="promo-button">Get Free CBC Resources</a>
-            <button class="promo-button" id="openSellerDashboardButton" type="button">Sell and Earn 50%</button>
-            <a class="promo-button" href="#referFriend">Refer a Friend</a>
+      <section id="dashboard" class="portal-dashboard">
+        <aside class="portal-sidebar" aria-label="CBE Nexus resource categories">
+          <div class="portal-sidebar-title">
+            <p class="eyebrow">CBE NEXUS</p>
+            <h2>Resource Centre</h2>
           </div>
-        <div class="summary-grid" aria-label="Library statistics">
-            <div>
-              <strong id="statResources">0</strong>
-              <span>Resources</span>
-            </div>
-            <div>
-              <strong>12</strong>
-              <span>Grades</span>
-            </div>
-            <div>
-              <strong>KES 150</strong>
-              <span>Uniform Price</span>
-            </div>
+          <div class="portal-menu-group">
+            <strong>GRADES</strong>
+            <div id="gradeList" class="grade-list"></div>
           </div>
-        </div>
+          <div class="portal-menu-group">
+            <strong>QUICK RESOURCES</strong>
+            <a href="#resources" data-material-link="Notes">Notes</a>
+            <a href="#resources" data-material-link="Schemes of Work">Schemes of Work</a>
+            <a href="#resources" data-material-link="Lesson Plan">Lesson Plans</a>
+            <a href="#resources" data-material-link="Past Papers">Past Papers</a>
+            <a href="#resources" data-material-link="Assessment Test">Assessment Tests</a>
+            <a href="#freeCbcResources">Free CBC Resources</a>
+          </div>
+        </aside>
 
-        <aside class="grade-panel" aria-label="Grade and subject selector">
-          <div class="panel-heading">
-            <p class="eyebrow">Main dashboard</p>
-            <h2>Grades 1-12</h2>
+        <section class="portal-main">
+          <div class="portal-welcome">
+            <p class="eyebrow">Competency Based Education Library</p>
+            <h1>Teaching &amp; Learning Resources</h1>
+            <p>Find notes, schemes, lesson plans, assessments, past papers and other resources by grade, subject and resource type.</p>
+            <div class="portal-search-shortcut">
+              <a class="primary-button" href="#resources">Browse Resource Library</a>
+              <a class="ghost-button" href="#freeCbcResources">Free Resources</a>
+            </div>
           </div>
-          <div id="gradeList" class="grade-list"></div>
+
+          <div class="portal-category-grid" aria-label="Popular resource categories">
+            <a href="#resources" data-hero-resource="Holiday Classes"><strong>Holiday Classes</strong><span>Revision &amp; tuition</span></a>
+            <a href="#resources" data-hero-resource="Assignments"><strong>Assignments</strong><span>Practice materials</span></a>
+            <a href="#resources" data-hero-resource="KNEC Rubrics"><strong>KNEC Rubrics</strong><span>Assessment support</span></a>
+            <a href="#resources" data-hero-resource="Novels"><strong>Novels &amp; Setbooks</strong><span>Guides &amp; analysis</span></a>
+            <a href="#resources" data-hero-resource="Revision Booklets"><strong>Revision Booklets</strong><span>Exam preparation</span></a>
+            <a href="#resources" data-hero-resource="Bookshop"><strong>Bookshop</strong><span>Books &amp; learning items</span></a>
+          </div>
+
+          <div class="summary-grid" aria-label="Library statistics">
+            <div><strong id="statResources">0</strong><span>Resources</span></div>
+            <div><strong>12</strong><span>Grades</span></div>
+            <div><strong>KES 150</strong><span>Uniform Price</span></div>
+          </div>
+
+          <div class="portal-announcement">
+            <strong>Welcome to CBE Nexus</strong>
+            <span>Search the library, preview selected materials and order resources securely.</span>
+          </div>
+        </section>
+
+        <aside class="portal-rightbar" aria-label="Account and quick links">
+          <div class="portal-card account-card">
+            <div class="portal-card-heading"><span>ACCOUNT</span></div>
+            <strong>Welcome to CBE Nexus</strong>
+            <p>Access your learning resources and account tools.</p>
+            <a class="portal-side-link" href="#payments">Payments</a>
+            <a class="portal-side-link" href="#sellerAccount">Seller Account</a>
+            <a class="portal-side-link" href="#holidayTuition">Holiday Tuition</a>
+          </div>
+          <div class="portal-card">
+            <div class="portal-card-heading"><span>LEARNING TOOLS</span></div>
+            <a class="portal-side-link" href="#quizCentre">Quizzes &amp; Progress</a>
+            <a class="portal-side-link" href="#aiHomework">AI Homework Helper</a>
+            <a class="portal-side-link" href="#cbcProjects">CBC Projects</a>
+            <a class="portal-side-link" href="#referFriend">Refer a Friend</a>
+          </div>
+          <div class="portal-card portal-help-card">
+            <div class="portal-card-heading"><span>NEED HELP?</span></div>
+            <p>For orders, corrections and general support, contact CBE Nexus.</p>
+            <a class="primary-button" href="#contact">Contact Support</a>
+          </div>
         </aside>
       </section>
 
