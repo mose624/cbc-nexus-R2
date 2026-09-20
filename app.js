@@ -1320,6 +1320,12 @@ async function handleFormSubmit(event) {
   renderResources();
 }
 
+function safeOn(element, eventName, handler, options) {
+  if (element && typeof element.addEventListener === "function") {
+    element.addEventListener(eventName, handler, options);
+  }
+}
+
 function bindEvents() {
   document.querySelectorAll("[data-material-link]").forEach((link) => {
     link.addEventListener("click", (event) => {
@@ -1344,7 +1350,7 @@ function bindEvents() {
     });
   });
 
-  elements.quickTypes.addEventListener("click", (event) => {
+  safeOn(elements.quickTypes, "click", (event) => {
     const button = event.target.closest("[data-quick-type]");
     if (!button) return;
     state.type = button.dataset.quickType;
@@ -1354,7 +1360,7 @@ function bindEvents() {
     document.querySelector("#resources").scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
-  if (elements.trendingList) elements.trendingList.addEventListener("click", (event) => {
+  if (elements.trendingList) safeOn(elements.trendingList, "click", (event) => {
     const button = event.target.closest("[data-trending]");
     if (button) {
       selectResourceForPayment(button.dataset.trending);
@@ -1371,32 +1377,32 @@ function bindEvents() {
     });
   });
 
-  elements.cartButton.addEventListener("click", () => {
+  safeOn(elements.cartButton, "click", () => {
     renderCart();
     elements.cartDrawer.classList.add("open");
     elements.cartDrawer.setAttribute("aria-hidden", "false");
   });
 
-  elements.closeCartButton.addEventListener("click", () => {
+  safeOn(elements.closeCartButton, "click", () => {
     elements.cartDrawer.classList.remove("open");
     elements.cartDrawer.setAttribute("aria-hidden", "true");
   });
 
-  elements.cartItems.addEventListener("click", (event) => {
+  safeOn(elements.cartItems, "click", (event) => {
     const button = event.target.closest("[data-remove-cart]");
     if (button) {
       removeFromCart(button.dataset.removeCart);
     }
   });
 
-  elements.adminApprovalList.addEventListener("click", (event) => {
+  safeOn(elements.adminApprovalList, "click", (event) => {
     const approve = event.target.closest("[data-approve-seller]");
     const reject = event.target.closest("[data-reject-seller]");
     if (approve) updateSellerStatus(approve.dataset.approveSeller, "approved");
     if (reject) updateSellerStatus(reject.dataset.rejectSeller, "rejected");
   });
 
-  elements.sellerAccountApprovalList.addEventListener("click", (event) => {
+  safeOn(elements.sellerAccountApprovalList, "click", (event) => {
     const approve = event.target.closest("[data-approve-seller-account]");
     const reject = event.target.closest("[data-reject-seller-account]");
     if (approve) updateSellerAccountStatus(approve.dataset.approveSellerAccount, "approved");
@@ -1405,11 +1411,11 @@ function bindEvents() {
 
   // headerMpesaButton is optional because the current header does not include it.
   // The guarded handler below is used when that button exists.
-  if (elements.openSellerDashboard) elements.openSellerDashboard.addEventListener("click", openSellerDashboard);
-  if (elements.openSellerDashboardSecondary) elements.openSellerDashboardSecondary.addEventListener("click", openSellerDashboard);
-  if (elements.openSellerDashboardNav) elements.openSellerDashboardNav.addEventListener("click", openSellerDashboard);
-  if (elements.openSellerDashboard) elements.openSellerDashboard.addEventListener("click", openSellerDashboard);
-  if (elements.downloadApprovalList) elements.downloadApprovalList.addEventListener("click", () => {
+  if (elements.openSellerDashboard) safeOn(elements.openSellerDashboard, "click", openSellerDashboard);
+  if (elements.openSellerDashboardSecondary) safeOn(elements.openSellerDashboardSecondary, "click", openSellerDashboard);
+  if (elements.openSellerDashboardNav) safeOn(elements.openSellerDashboardNav, "click", openSellerDashboard);
+  if (elements.openSellerDashboard) safeOn(elements.openSellerDashboard, "click", openSellerDashboard);
+  if (elements.downloadApprovalList) safeOn(elements.downloadApprovalList, "click", () => {
     const approvals = JSON.parse(localStorage.getItem("cbe_nexus_approvals") || "[]");
     const blob = new Blob([JSON.stringify(approvals, null, 2)], {type: "application/json"});
     const url = URL.createObjectURL(blob);
@@ -1417,15 +1423,15 @@ function bindEvents() {
     a.href = url; a.download = "cbe-nexus-approvals.json"; a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   });
-  if (elements.headerMpesaButton) elements.headerMpesaButton.addEventListener("click", () => {
+  if (elements.headerMpesaButton) safeOn(elements.headerMpesaButton, "click", () => {
     const target = document.querySelector("#payments");
     if (target) target.scrollIntoView({behavior: "smooth"});
   });
   if (elements.adminAreaButton) {
-    elements.adminAreaButton.addEventListener("click", openAdminLogin);
+    safeOn(elements.adminAreaButton, "click", openAdminLogin);
   }
 
-  elements.gradeList.addEventListener("click", (event) => {
+  safeOn(elements.gradeList, "click", (event) => {
     const toggle = event.target.closest("[data-grade-toggle]");
     const chip = event.target.closest("[data-subject]");
 
@@ -1461,7 +1467,7 @@ function bindEvents() {
     }
   });
 
-  elements.resourceGrid.addEventListener("click", (event) => {
+  safeOn(elements.resourceGrid, "click", (event) => {
     const payButton = event.target.closest("[data-pay]");
     const cartButton = event.target.closest("[data-cart]");
     const downloadButton = event.target.closest("[data-download]");
@@ -1482,54 +1488,54 @@ function bindEvents() {
     }
   });
 
-  elements.gradeFilter.addEventListener("change", (event) => {
+  safeOn(elements.gradeFilter, "change", (event) => {
     state.grade = event.target.value;
     refreshSubjectFilters();
     renderResources();
   });
 
-  elements.subjectFilter.addEventListener("change", (event) => {
+  safeOn(elements.subjectFilter, "change", (event) => {
     state.subject = event.target.value;
     renderResources();
   });
 
-  elements.typeFilter.addEventListener("change", (event) => {
+  safeOn(elements.typeFilter, "change", (event) => {
     state.type = event.target.value;
     renderResources();
     showToast(`${state.type} selected.`);
   });
 
-  elements.termFilter.addEventListener("change", (event) => {
+  safeOn(elements.termFilter, "change", (event) => {
     state.term = event.target.value;
     renderResources();
   });
 
-  elements.accessFilter.addEventListener("change", (event) => {
+  safeOn(elements.accessFilter, "change", (event) => {
     state.access = event.target.value;
     renderResources();
   });
 
-  elements.sortFilter.addEventListener("change", (event) => {
+  safeOn(elements.sortFilter, "change", (event) => {
     state.sort = event.target.value;
     renderResources();
   });
 
-  elements.searchFilter.addEventListener("input", (event) => {
+  safeOn(elements.searchFilter, "input", (event) => {
     state.search = event.target.value;
     renderResources();
   });
 
-  elements.adminGrade.addEventListener("change", (event) => {
+  safeOn(elements.adminGrade, "change", (event) => {
     const subjects = gradeSubjects[event.target.value];
     optionList(elements.adminSubject, subjects, subjects[0]);
   });
 
-  elements.sellerGrade.addEventListener("change", (event) => {
+  safeOn(elements.sellerGrade, "change", (event) => {
     const subjects = gradeSubjects[event.target.value];
     optionList(elements.sellerSubject, subjects, subjects[0]);
   });
 
-  elements.fileInput.addEventListener("change", () => {
+  safeOn(elements.fileInput, "change", () => {
     const file = elements.fileInput.files[0];
     if (!file) {
       elements.fileHelp.textContent = "Choose a PDF, Word document, PowerPoint, Excel file, text file, or ZIP.";
@@ -1540,18 +1546,18 @@ function bindEvents() {
     showToast(`${file.name} ready to publish.`);
   });
 
-  elements.form.addEventListener("submit", handleFormSubmit);
-  elements.sellerAccountForm.addEventListener("submit", createSellerAccount);
-  elements.sellerLoginForm.addEventListener("submit", loginSeller);
-  elements.adminLoginForm.addEventListener("submit", unlockAdmin);
-  elements.sellerForm.addEventListener("submit", handleSellerSubmit);
-  elements.withdrawForm.addEventListener("submit", requestWithdrawal);
-  elements.referForm.addEventListener("submit", unlockFreeReferral);
-  elements.paymentForm.addEventListener("submit", requestMpesaPayment);
-  elements.projectForm.addEventListener("submit", handleProjectUpload);
-  elements.tuitionForm.addEventListener("submit", handleTuitionRegistration);
-  elements.quizForm.addEventListener("submit", handleQuizSubmit);
-  elements.homeworkForm.addEventListener("submit", handleHomeworkHelper);
+  safeOn(elements.form, "submit", handleFormSubmit);
+  safeOn(elements.sellerAccountForm, "submit", createSellerAccount);
+  safeOn(elements.sellerLoginForm, "submit", loginSeller);
+  safeOn(elements.adminLoginForm, "submit", unlockAdmin);
+  safeOn(elements.sellerForm, "submit", handleSellerSubmit);
+  safeOn(elements.withdrawForm, "submit", requestWithdrawal);
+  safeOn(elements.referForm, "submit", unlockFreeReferral);
+  safeOn(elements.paymentForm, "submit", requestMpesaPayment);
+  safeOn(elements.projectForm, "submit", handleProjectUpload);
+  safeOn(elements.tuitionForm, "submit", handleTuitionRegistration);
+  safeOn(elements.quizForm, "submit", handleQuizSubmit);
+  safeOn(elements.homeworkForm, "submit", handleHomeworkHelper);
 
   document.addEventListener("click", (event) => {
     if (event.target.dataset.downloadResource) {
