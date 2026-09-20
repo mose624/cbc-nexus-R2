@@ -1,12 +1,71 @@
 const http = require("http");
 const fs = require("fs/promises");
 const path = require("path");
+const crypto = require("crypto");
 const { createUploadUrl, createDownloadUrl } = require("./r2");
 
 const PORT = Number(process.env.PORT || 8000);
 const ROOT = __dirname;
 const DATA_DIR = path.join(ROOT, "backend-data");
 const MAX_BODY_SIZE = 12 * 1024 * 1024;
+const ADMIN_SESSION_TTL_MS = 8 * 60 * 60 * 1000;
+
+function getAdminConfig() {
+  return {
+    username: String(process.env.ADMIN_USERNAME || "").trim(),
+    email: String(process.env.ADMIN_EMAIL || "").trim().toLowerCase(),
+    passwordHash: String(process.env.ADMIN_PASSWORD_HASH || ""),
+    sessionSecret: String(process.env.ADMIN_SESSION_SECRET || "")
+  };
+}
+
+function safeEqual(a, b) {
+  const left = Buffer.from(String(a));
+  const right = Buffer.from(String(b));
+  return left.length === right.length && crypto.timingSafeEqual(left, right);
+}
+
+function verifyPassword(password, storedHash) {
+  return new Promise((resolve, reject) => {
+    const [salt, key] = String(storedHash).split(":");
+    if (!salt || !key) return resolve(false);
+    crypto.scrypt(String(password), salt, 64, { N: 16384, r: 8, p: 1 }, (error, derivedKey) => {
+      if (error) return reject(error);
+      resolve(safeEqual(derivedKey.toString("hex"), key));
+    });
+  });
+}
+
+function createAdminSession() {
+  const config = getAdminConfig();
+  const expiresAt = Date.now() + ADMIN_SESSION_TTL_MS;
+  const payload = Buffer.from(JSON.stringify({ u: config.username, exp: expiresAt })).toString("base64url");
+  const signature = crypto.createHmac("sha256", config.sessionSecret).update(payload).digest("base64url");
+  return payload + "." + signature;
+}
+
+function verifyAdminSession(req) {
+  const config = getAdminConfig();
+  if (!config.sessionSecret) return false;
+  const header = String(req.headers.cookie || "");
+  const match = header.match(/(?:^|;\\s*)cbe_admin_session=([^;]+)/);
+  if (!match) return false;
+  const token = decodeURIComponent(match[1]);
+  const [payload, signature] = token.split(".");
+  if (!payload || !signature) return false;
+  const expected = crypto.createHmac("sha256", config.sessionSecret).update(payload).digest("base64url");
+  if (!safeEqual(signature, expected)) return false;
+  try {
+    const data = JSON.parse(Buffer.from(payload, "base64url").toString("utf8"));
+    return data.u === config.username && Number(data.exp) > Date.now();
+  } catch {
+    return false;
+  }
+}
+
+function adminCookie(token) {
+  return `cbe_admin_session=${encodeURIComponent(token)}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=28800`;
+}
 
 const mimeTypes = {
   ".html": "text/html; charset=utf-8",
@@ -93,6 +152,54 @@ function homeworkResponse(payload) {
 }
 
 async function handleApi(req, res, url) {
+  if (req.method === "POST" && url.pathname === "/api/admin/login") {
+    const config = getAdminConfig();
+    if (!config.username || !config.email || !config.passwordHash || !config.sessionSecret) {
+      sendJson(res, 503, { ok: false, error: "Admin authentication is not configured on the server." });
+      return true;
+    }
+    const payload = JSON.parse((await readBody(req)) || "{}");
+    const username = String(payload.username || "").trim();
+    const email = String(payload.email || "").trim().toLowerCase();
+    const password = String(payload.password || "");
+    const validIdentity = safeEqual(username.toUpperCase(), config.username.toUpperCase()) && safeEqual(email, config.email);
+    const validPassword = validIdentity ? await verifyPassword(password, config.passwordHash) : false;
+    if (!validIdentity || !validPassword) {
+      sendJson(res, 401, { ok: false, error: "Invalid admin username, password, or email." });
+      return true;
+    }
+    res.setHeader("Set-Cookie", adminCookie(createAdminSession()));
+    sendJson(res, 200, { ok: true, user: { username: config.username, email: config.email } });
+    return true;
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/admin/me") {
+    const authenticated = verifyAdminSession(req);
+    if (!authenticated) {
+      sendJson(res, 401, { ok: false, authenticated: false });
+      return true;
+    }
+    const config = getAdminConfig();
+    sendJson(res, 200, { ok: true, authenticated: true, user: { username: config.username, email: config.email } });
+    return true;
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/admin/logout") {
+    res.setHeader("Set-Cookie", "cbe_admin_session=; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=0");
+    sendJson(res, 200, { ok: true });
+    return true;
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/r2/upload-url") {
+    if (!verifyAdminSession(req)) {
+      sendJson(res, 401, { ok: false, error: "Admin login required for resource uploads." });
+      return true;
+    }
+    const payload = JSON.parse((await readBody(req)) || "{}");
+    const result = await createUploadUrl(payload);
+    sendJson(res, 200, { ok: true, ...result });
+    return true;
+  }
   if (req.method === "GET" && url.pathname === "/api/r2/status") {
     const required = [
       "R2_ACCOUNT_ID",
@@ -106,13 +213,6 @@ async function handleApi(req, res, url) {
       r2Configured: missing.length === 0,
       missing
     });
-    return true;
-  }
-
-  if (req.method === "POST" && url.pathname === "/api/r2/upload-url") {
-    const payload = JSON.parse((await readBody(req)) || "{}");
-    const result = await createUploadUrl(payload);
-    sendJson(res, 200, { ok: true, ...result });
     return true;
   }
 
