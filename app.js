@@ -1420,8 +1420,17 @@ function bindEvents() {
 
     if (toggle) {
       const card = toggle.closest(".grade-card");
+      const grade = toggle.dataset.gradeToggle;
       const isOpen = card.classList.toggle("open");
       toggle.setAttribute("aria-expanded", String(isOpen));
+
+      // The grade button itself is also a working grade filter.
+      if (grade) {
+        setGradeSubject(grade, "All Subjects");
+        document.querySelectorAll(".grade-toggle").forEach((button) => button.classList.remove("active"));
+        toggle.classList.add("active");
+        showToast(grade + " selected.");
+      }
     }
 
     if (chip) {
