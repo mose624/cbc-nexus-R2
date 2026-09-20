@@ -95,9 +95,12 @@
           file: "/api/r2/file?key=" + encodeURIComponent(result.key)
         };
         const existing = json("cbeResources");
-        save("cbeResources", [...existing, resource]);
-        await fetch("/api/resources", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...resource, role: "admin", status: "approved" }) });
-        status.textContent = "Resource uploaded to Cloudflare R2 and published successfully.";
+        const saveResponse = await fetch("/api/resources", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...resource, role: "admin", status: "approved" }) });
+        const saveData = await saveResponse.json();
+        if (!saveResponse.ok || !saveData.ok) throw new Error(saveData.error || "Resource database save failed.");
+        const savedResource = saveData.saved || resource;
+        save("cbeResources", [...existing.filter((item) => item.id !== savedResource.id), savedResource]);
+        status.textContent = "Resource uploaded to Cloudflare R2 and saved to Supabase successfully.";
         resourceForm.reset();
       } catch (error) {
         status.textContent = error.message || "R2 upload failed.";
@@ -137,10 +140,13 @@
           status: "pending",
           createdAt: new Date().toISOString()
         };
-        save("cbeSellerResources", [item, ...json("cbeSellerResources")]);
         const activeSeller = JSON.parse(sessionStorage.getItem("activeSellerAccount") || "null");
-        await fetch("/api/resources", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...item, role: "seller", sellerUsername: activeSeller?.username || "", status: "pending" }) });
-        status.textContent = "Seller resource uploaded to R2 and submitted for admin approval.";
+        const saveResponse = await fetch("/api/resources", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...item, role: "seller", sellerUsername: activeSeller?.username || "", status: "pending" }) });
+        const saveData = await saveResponse.json();
+        if (!saveResponse.ok || !saveData.ok) throw new Error(saveData.error || "Seller resource database save failed.");
+        const savedItem = saveData.saved || item;
+        save("cbeSellerResources", [savedItem, ...json("cbeSellerResources").filter((entry) => entry.id !== savedItem.id)]);
+        status.textContent = "Seller resource uploaded to R2 and saved to Supabase for approval.";
         sellerForm.reset();
       } catch (error) {
         status.textContent = error.message || "R2 upload failed.";
