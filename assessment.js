@@ -97,9 +97,11 @@
     grade.appendChild(option);
   });
   grade.value = grade.querySelector('option[value="Grade 7"]') ? "Grade 7" : grades[0];
+  refreshSubjectOptions();
 
   // Keep the selected grade visible and usable whenever the learner changes it.
   grade.addEventListener("change", () => {
+    refreshSubjectOptions();
     if (instructions) {
       instructions.textContent = grade.value + " " + subject.value + " selected. Click Start / Restart Quiz.";
     }
@@ -253,10 +255,130 @@
     }
   };
 
+  // Subjects offered by grade band. The list changes automatically when the learner changes Grade.
+  const gradeSubjects = {
+    lower: ["Mathematics","English","Kiswahili","Environmental Activities","Creative Activities","Religious Education","CBC Skills"],
+    upper: ["Mathematics","English","Kiswahili","Science","Social Studies","Agriculture","Creative Arts","Religious Education","CBC Skills"],
+    junior: ["Mathematics","English","Kiswahili","Integrated Science","Social Studies","Agriculture","Pre-Technical Studies","Business Studies","Computer Science","Creative Arts & Sports","Religious Education","Life Skills","CBC Skills"],
+    senior: ["Mathematics","English","Kiswahili","Physics","Chemistry","Biology","Computer Science","Business Studies","Geography","History & Government","Agriculture","General Science","Religious Education","Physical Education","Art & Design","Music","CBC Skills"]
+  };
+
+  const additionalQuestions = {
+    "Kiswahili": [
+      ["Chagua sentensi iliyo sahihi.",["Wanafunzi anasoma.","Wanafunzi wanasoma.","Wanafunzi unasoma.","Wanafunzi akisoma."],1,"Sarufi","Kiima cha wingi 'wanafunzi' huchukua kitenzi 'wanasoma'."],
+      ["Neno 'haraka' lina maana gani katika sentensi: 'Alikimbia haraka'?",["Polepole","Kwa kasi","Kimya","Mbali"],1,"Msamiati","Haraka humaanisha kwa kasi."],
+      ["Ni ipi dhamira kuu ya methali?",["Kuburudisha pekee","Kutoa funzo au hekima","Kuchora picha","Kutoa hesabu"],1,"Fasihi","Methali hubeba hekima au funzo la maisha."]
+    ],
+    "Environmental Activities": [
+      ["Kwa nini mimea ni muhimu katika mazingira?",["Hutoa oksijeni na kusaidia mifumo ya ikolojia","Hutoa plastiki","Huzuia mvua yote","Huharibu udongo"],0,"Mazingira","Mimea huchangia oksijeni, chakula na makazi."],
+      ["Ni hatua ipi husaidia kupunguza uchafuzi wa mazingira?",["Kutupa taka mtoni","Kutenganisha na kurejeleza taka","Kuchoma plastiki kila mahali","Kumwaga mafuta ardhini"],1,"Usafi","Kutenganisha na kurejeleza taka hupunguza taka na uchafuzi."],
+      ["Kwa nini tunapaswa kuhifadhi maji?",["Maji ni rasilimali muhimu yenye matumizi mengi","Maji hayana matumizi","Maji hayawezi kuisha","Maji ni hatari kila wakati"],0,"Rasilimali","Maji ni muhimu kwa maisha, kilimo na shughuli za kila siku."]
+    ],
+    "Creative Activities": [
+      ["Ni hatua ipi huonyesha ubunifu?",["Kufuata wazo moja bila kubadilisha","Kutengeneza suluhisho jipya la tatizo","Kukataa mawazo yote","Kunakili kila kitu"],1,"Ubunifu","Ubunifu huhusisha kuzalisha mawazo au suluhisho mpya zenye manufaa."],
+      ["Kwa nini msanii huchagua rangi tofauti katika kazi?",["Kuonyesha hisia, msisitizo au ujumbe","Kuzuia ubunifu","Kuficha kazi","Kufanya kazi iwe nzito"],0,"Sanaa","Rangi zinaweza kubeba hisia, maana na msisitizo."],
+      ["Kazi ya sanaa inaweza kusaidia jamii kwa:",["Kuwasilisha ujumbe kuhusu suala la jamii","Kuzuia mawasiliano","Kuondoa mawazo","Kuzuia ubunifu"],0,"Sanaa na Jamii","Sanaa inaweza kuwa njia ya mawasiliano na uhamasishaji."]
+    ],
+    "Social Studies": [
+      ["Kwa nini jamii huweka sheria?",["Kusaidia kudumisha utaratibu na kulinda haki","Kuzuia kila shughuli","Kuwazuia watu wote kusafiri","Kuondoa majukumu"],0,"Uraia","Sheria husaidia kuweka utaratibu na kulinda haki na wajibu."],
+      ["Ni ushahidi gani unaweza kusaidia mtafiti kuelewa historia ya eneo?",["Vyanzo vya kihistoria vinavyoweza kuthibitishwa","Uvumi pekee","Hadithi isiyojulikana","Makisio bila ushahidi"],0,"Historia","Vyanzo kama nyaraka na ushahidi wa akiolojia vinaweza kusaidia utafiti."],
+      ["Kwa nini ramani hutumia alama?",["Kuwakilisha vipengele kwa njia rahisi kueleweka","Kupamba karatasi pekee","Kuficha maeneo","Kuondoa vipimo"],0,"Jiografia","Alama hurahisisha kuwakilisha vipengele vya eneo."]
+    ],
+    "Agriculture": [
+      ["Kwa nini mkulima huzungusha mazao?",["Kuboresha rutuba na kupunguza mkusanyiko wa baadhi ya wadudu na magonjwa","Kuondoa mazao yote","Kupunguza mvua","Kuzuia ukuaji"],0,"Kilimo","Mzunguko wa mazao unaweza kusaidia rutuba na usimamizi wa wadudu na magonjwa."],
+      ["Ni jambo gani muhimu wakati wa kuchagua mbegu?",["Ubora na kufaa kwa mazingira","Rangi ya kifurushi pekee","Ukubwa wa gunia pekee","Bei pekee"],0,"Uzalishaji","Mbegu bora zinazofaa mazingira husaidia uzalishaji."],
+      ["Kwa nini udongo wenye rutuba ni muhimu?",["Hutoa virutubisho vinavyohitajika na mimea","Huzuia mizizi yote","Huondoa maji yote","Huzuia mwanga"],0,"Udongo","Mimea huhitaji virutubisho vya udongo kwa ukuaji."]
+    ],
+    "Pre-Technical Studies": [
+      ["Kwa nini mchoro wa kiufundi hutumia vipimo?",["Ili sehemu itengenezwe kwa ukubwa unaokusudiwa","Ili kuchora bila mpangilio","Ili kuondoa usahihi","Ili kupunguza matumizi ya zana"],0,"Technical Drawing","Vipimo huonyesha ukubwa na uhusiano wa sehemu kwa usahihi."],
+      ["Ni hatua ipi ni muhimu kabla ya kutumia mashine?",["Kusoma maelekezo na kuangalia usalama","Kuanzisha bila ukaguzi","Kuondoa kinga","Kupuuza hatari"],0,"Usalama","Maelekezo na ukaguzi wa usalama hupunguza hatari."],
+      ["Mwanafunzi anachagua nyenzo kwa bidhaa. Ni kigezo gani cha juu?",["Sifa za nyenzo, matumizi na usalama","Rangi pekee","Jina la bidhaa pekee","Ukubwa wa duka"],0,"Materials","Nyenzo huchaguliwa kwa kuzingatia sifa, matumizi na usalama."]
+    ],
+    "Business Studies": [
+      ["Kwa nini biashara hufanya utafiti wa soko kabla ya kuzindua bidhaa?",["Kuelewa mahitaji ya wateja na ushindani","Kuepuka wateja","Kuongeza gharama bila sababu","Kuondoa ubunifu"],0,"Entrepreneurship","Utafiti wa soko husaidia kuelewa wateja na mazingira ya ushindani."],
+      ["Biashara ina mauzo mengi lakini faida ndogo. Ni jambo gani linapaswa kuchunguzwa kwanza?",["Gharama na bei ya bidhaa","Rangi ya nembo pekee","Jina la mfanyakazi","Ukubwa wa bango"],0,"Finance","Faida inategemea mapato na gharama."],
+      ["Ni ipi inaonyesha ujasiriamali?",["Kutambua tatizo na kutengeneza suluhisho lenye thamani","Kusubiri bila kupanga","Kukataa maoni ya wateja","Kunakili bila kuboresha"],0,"Entrepreneurship","Ujasiriamali huhusisha kutambua fursa na kuunda thamani."]
+    ],
+    "Computer Science": [
+      ["Kwa nini algorithm nzuri huvunja tatizo kubwa katika hatua?",["Ili tatizo liwe rahisi kueleweka na kutekelezwa","Ili kuongeza makosa","Ili kuondoa mantiki","Ili kuficha matokeo"],0,"Algorithms","Kugawanya tatizo husaidia kupanga na kutatua hatua kwa hatua."],
+      ["Programu inatoa matokeo yasiyotarajiwa. Hatua gani ni muhimu?",["Kuchunguza mantiki, data na makosa ya programu","Kubadilisha kila kitu bila sababu","Kupuuza matokeo","Kufuta kompyuta"],0,"Debugging","Debugging hutafuta chanzo cha kosa kwa utaratibu."],
+      ["Kwa nini nenosiri imara ni muhimu?",["Kupunguza uwezekano wa akaunti kufikiwa bila ruhusa","Kufanya kompyuta iwe haraka","Kuongeza ukubwa wa skrini","Kuzuia kila tovuti"],0,"Cybersecurity","Nenosiri imara husaidia kulinda akaunti."]
+    ],
+    "Religious Education": [
+      ["Kwa nini maadili ni muhimu katika jamii?",["Husaidia watu kufanya maamuzi yenye kuwajibika","Huondoa majukumu","Huzuia huruma","Huondoa ushirikiano"],0,"Ethics","Maadili husaidia kuongoza tabia na maamuzi."],
+      ["Mtu anapokutana na mgogoro, hatua ipi inaonyesha maadili?",["Kusikiliza pande zote na kutafuta suluhisho la amani","Kukataa kusikiliza","Kueneza uvumi","Kuongeza ugomvi"],0,"Peace","Kusikiliza na kutafuta suluhisho la amani husaidia kutatua migogoro."],
+      ["Kwa nini kuheshimu watu wenye mitazamo tofauti ni muhimu?",["Hujenga maelewano na ushirikiano","Huondoa mazungumzo","Huzuia kujifunza","Huongeza ubaguzi"],0,"Values","Heshima huwezesha mazungumzo na kuishi pamoja kwa amani."]
+    ],
+    "Physics": [
+      ["Gari linaongeza kasi kutoka 10 m/s hadi 25 m/s ndani ya sekunde 5. Kasi ya kuongeza ni ipi?",["2 m/s²","3 m/s²","5 m/s²","7 m/s²"],1,"Mechanics","a = (25−10)/5 = 3 m/s²."],
+      ["Kwa nini voltmeter huunganishwa sambamba na sehemu inayopimwa?",["Ili kupima tofauti ya potential kwenye sehemu hiyo","Ili kuongeza current bila kikomo","Ili kuzuia voltage","Ili kupima mass"],0,"Electricity","Voltmeter hupima potential difference across a component."],
+      ["Mwanafunzi anaona matokeo ya jaribio yakitofautiana. Hatua bora ni ipi?",["Kurudia vipimo na kuchunguza vyanzo vya makosa","Kuchagua matokeo anayopenda","Kubadilisha data","Kupuuza tofauti"],0,"Experimental Skills","Kurudia vipimo na kuchanganua makosa huongeza uaminifu wa hitimisho."]
+    ],
+    "Chemistry": [
+      ["Kwa nini ongezeko la joto linaweza kuongeza kasi ya reaction?",["Chembe hugongana mara nyingi zaidi na kwa nishati inayofaa","Chembe hutoweka","Misa huisha","Reaction husimama"],0,"Kinetics","Joto huongeza nishati ya kinetic na collisions zenye ufanisi."],
+      ["Kwa nini catalyst huongeza kasi ya reaction?",["Hutoa njia yenye activation energy ndogo","Huongeza bidhaa moja kwa moja","Huondoa reactants","Hubadilisha equilibrium kila wakati"],0,"Kinetics","Catalyst hutoa alternative pathway yenye activation energy ndogo."],
+      ["Mwanafunzi anapata pH 2.5. Hii inaonyesha nini?",["Suluhisho ni tindikali","Suluhisho ni neutral","Suluhisho ni alkali","Hakuna ions"],0,"Acids and Bases","pH chini ya 7 huonyesha mazingira ya tindikali."]
+    ],
+    "Biology": [
+      ["Kwa nini enzyme activity hupungua sana zaidi ya optimum temperature?",["Muundo wa enzyme unaweza kubadilika na active site kupoteza umbo","Substrate huongezeka bila kikomo","Maji hugeuka kuwa DNA","Oxygen hupotea kila wakati"],0,"Enzymes","Joto kubwa linaweza denature enzyme na kubadilisha active site."],
+      ["Kwa nini variation ni muhimu kwa evolution?",["Hutoa tofauti zinazoweza kuchaguliwa na mazingira","Huondoa urithi","Huzuia reproduction","Hufanya viumbe wote wafanane"],0,"Evolution","Variation hutoa tofauti zinazoweza kuathiri survival and reproduction."],
+      ["Kwa nini alveoli zinafaa kwa gas exchange?",["Zina surface area kubwa na kuta nyembamba zenye supply nzuri ya damu","Zina kuta nene sana","Hazina capillaries","Hazina unyevu"],0,"Gas Exchange","Large surface area and thin moist walls support diffusion."]
+    ],
+    "Geography": [
+      ["Kwa nini miji karibu na mito mikubwa inaweza kukua haraka lakini ikawa katika hatari ya mafuriko?",["Mito hutoa rasilimali na usafiri lakini floodplains zinaweza kufurika","Mito huzuia shughuli zote","Miji haihitaji maji","Mafuriko hayawezi kutokea"],0,"Settlement","Mito can support settlement while floodplains present flood risk."],
+      ["Mabadiliko ya matumizi ya ardhi yanaweza kuathiri mzunguko wa maji vipi?",["Uondoaji wa mimea unaweza kuongeza runoff na kupunguza infiltration","Huongeza infiltration kila wakati","Hauna athari","Huondoa mvua kabisa"],0,"Physical Geography","Vegetation affects interception, infiltration and runoff."],
+      ["Kwa nini data za GIS zinaweza kusaidia mipango ya miji?",["Zinaunganisha taarifa na maeneo ili kusaidia maamuzi","Ni ramani za mapambo pekee","Haziwezi kuchanganua data","Huondoa hitaji la ushahidi"],0,"GIS","GIS links spatial and attribute data for analysis."]
+    ],
+    "History & Government": [
+      ["Kwa nini mwanahistoria anapaswa kulinganisha vyanzo tofauti?",["Ili kutathmini ushahidi na kupunguza upendeleo wa chanzo kimoja","Ili kubadilisha historia","Ili kuepuka ushahidi","Ili kuchagua hadithi rahisi"],0,"Historical Inquiry","Cross-checking sources helps evaluate reliability and bias."],
+      ["Kwa nini mgawanyo wa madaraka ni muhimu katika utawala?",["Husaidia kuweka checks and balances","Huondoa uwajibikaji","Huipa taasisi moja mamlaka yote","Huzuia sheria"],0,"Government","Separation and checks can limit concentration of power."],
+      ["Ni kwa nini katiba ni muhimu kwa nchi?",["Huweka misingi ya utawala, haki na taasisi","Ni kitabu cha historia pekee","Huondoa sheria","Huzuia uraia"],0,"Civics","A constitution establishes foundational rules and institutions."]
+    ],
+    "General Science": [
+      ["Kwa nini control variables ni muhimu katika experiment?",["Husaidia kutenga athari ya variable inayochunguzwa","Huondoa data","Hakikisha hypothesis ni kweli","Huzuia measurement"],0,"Scientific Method","Keeping relevant variables controlled improves the validity of comparisons."],
+      ["Mwanafunzi anapata result isiyolingana na hypothesis. Afanye nini?",["Atathmini data na hypothesis bila kubadilisha ushahidi","Afute result","Aunde data mpya","Aamue hypothesis ni kweli"],0,"Scientific Reasoning","Evidence should be evaluated honestly even when unexpected."],
+      ["Kwa nini correlation haimaanishi causation moja kwa moja?",["Variables mbili zinaweza kuhusiana bila moja kusababisha nyingine","Correlation ni kosa kila wakati","Causation haiwezi kupimwa","Data haina maana"],0,"Data Analysis","An observed association alone does not establish cause."]
+    ],
+    "Art & Design": [
+      ["Msanii anatumia contrast kali. Anaweza kuwa analenga nini?",["Kuvuta attention na kuonyesha tofauti","Kuficha subject","Kuondoa balance","Kupunguza ujumbe"],0,"Design Principles","Contrast creates visual distinction and emphasis."],
+      ["Kwa nini prototype ni muhimu katika design?",["Huruhusu mawazo kujaribiwa na kuboreshwa kabla ya final product","Huzuia feedback","Huondoa testing","Hakikisha first idea ni perfect"],0,"Design Process","Prototypes allow testing, feedback and iteration."],
+      ["Design yenye mtumiaji katikati inapaswa kuzingatia nini?",["Mahitaji na mazingira ya mtumiaji","Rangi pekee","Gharama pekee","Mapambo pekee"],0,"User-Centred Design","Good design considers user needs, context and constraints."]
+    ],
+    "Music": [
+      ["Kwa nini dynamics hubadilisha nguvu ya muziki?",["Huongeza expression na kuonyesha tofauti za intensity","Huondoa rhythm","Huondoa melody","Huzuia tempo"],0,"Musical Expression","Dynamics control changes in loudness and expression."],
+      ["Mwanamuziki anafanya rehearsal mara kwa mara kwa nini?",["Kuboresha accuracy, coordination na interpretation","Kuondoa creativity","Kuzuia performance","Kupunguza listening"],0,"Performance","Practice improves technical and expressive performance."],
+      ["Kwa nini rhythm ni muhimu katika ensemble?",["Husaidia performers kudumisha timing ya pamoja","Huondoa harmony","Huzuia communication","Hubadilisha instruments"],0,"Rhythm","Shared rhythm supports coordinated performance."]
+    ],
+    "Physical Education": [
+      ["Kwa nini warm-up hufanywa kabla ya mazoezi makali?",["Kuandaa mwili kwa shughuli na kupunguza hatari ya strain","Kuongeza uchovu kabla ya kuanza","Kuzuia circulation","Kuondoa flexibility"],0,"Fitness","A warm-up prepares muscles and cardiovascular system for activity."],
+      ["Ni kwa nini hydration ni muhimu wakati wa mazoezi?",["Husaidia kudumisha fluid balance na utendaji wa mwili","Huongeza dehydration","Huzuia sweating","Huondoa oxygen"],0,"Health","Fluid balance is important for temperature regulation and performance."],
+      ["Mwanafunzi anataka kuboresha endurance. Ni mpango gani unaofaa?",["Mazoezi ya aerobic yaliyopangwa na kuongezwa hatua kwa hatua","Kukaa bila mazoezi","Mazoezi makali mara moja tu","Kulala pekee"],0,"Training","Progressive aerobic training can improve endurance."]
+    ]
+  };
+
+  function subjectsForGrade(gradeValue) {
+    const n = Number(String(gradeValue).replace(/[^0-9]/g, "")) || 7;
+    return n <= 3 ? gradeSubjects.lower : n <= 6 ? gradeSubjects.upper : n <= 9 ? gradeSubjects.junior : gradeSubjects.senior;
+  }
+
+  function refreshSubjectOptions() {
+    if (!subject) return;
+    const current = subject.value;
+    const list = subjectsForGrade(grade.value);
+    subject.innerHTML = "";
+    list.forEach((name) => {
+      const option = document.createElement("option");
+      option.value = name;
+      option.textContent = name;
+      subject.appendChild(option);
+    });
+    subject.value = list.includes(current) ? current : list[0];
+  }
+
   function getGradeQuestionBank(selectedGrade, selectedSubject) {
     const n = Number(String(selectedGrade).replace(/[^0-9]/g, "")) || 7;
-    const base = bank[selectedSubject] || bank["CBC Skills"];
-    let extra = [];
+    const base = bank[selectedSubject] || additionalQuestions[selectedSubject] || bank["CBC Skills"];
+    let extra = additionalQuestions[selectedSubject] ? additionalQuestions[selectedSubject].slice() : [];
     if (n <= 3) {
       extra = gradePools["Grade 1"][selectedSubject] || [];
     } else if (n <= 6) {
