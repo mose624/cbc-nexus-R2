@@ -2746,3 +2746,107 @@ img, svg, video, iframe {
     font-size: 7px;
   }
 }
+
+
+/* Header navigation visibility: high-contrast buttons on red header */
+.site-header,
+.top-strip,
+.main-nav {
+  background: #c62828 !important;
+}
+
+.main-nav {
+  color: #ffffff !important;
+}
+
+.nav-menu .nav-link,
+.nav-menu .nav-dropdown summary {
+  color: #ffffff !important;
+  background: transparent !important;
+  border: 1px solid rgba(255,255,255,.35);
+}
+
+.nav-menu .nav-link:hover,
+.nav-menu .nav-dropdown summary:hover,
+.nav-menu .nav-dropdown[open] summary {
+  color: #c62828 !important;
+  background: #ffffff !important;
+  border-color: #ffffff;
+}
+
+.nav-actions .nav-utility {
+  background: #0645ad !important;
+  color: #ffffff !important;
+  border: 1px solid #ffffff;
+}
+
+.nav-actions .nav-cta {
+  background: #0b8750 !important;
+  color: #ffffff !important;
+  border: 1px solid #ffffff;
+}
+
+.nav-actions .whatsapp-button {
+  background: #0b8750 !important;
+  color: #ffffff !important;
+  border: 1px solid #ffffff;
+}
+
+.nav-actions .cart-button {
+  background: #0645ad !important;
+  color: #ffffff !important;
+  border: 1px solid #ffffff;
+}
+
+.nav-actions .mpesa-header-button {
+  background: #f2c200 !important;
+  color: #111111 !important;
+  border: 1px solid #ffffff;
+}
+
+.nav-actions .danger-blink-button {
+  color: #ffffff !important;
+  border: 1px solid #ffffff;
+}
+
+.nav-actions > a:hover,
+.nav-actions > button:hover {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+}
+
+.brand strong {
+  color: #ffffff !important;
+}
+
+.dropdown-panel {
+  background: #ffffff !important;
+  border: 2px solid #c62828;
+}
+
+.dropdown-panel a,
+.dropdown-panel button {
+  color: #123447 !important;
+  background: #ffffff !important;
+}
+
+.dropdown-panel a:hover,
+.dropdown-panel button:hover {
+  color: #ffffff !important;
+  background: #0645ad !important;
+}
+
+@media (max-width: 760px) {
+  .nav-menu .nav-link,
+  .nav-menu .nav-dropdown summary {
+    color: #ffffff !important;
+    background: #c62828 !important;
+  }
+
+  .nav-menu .nav-link:hover,
+  .nav-menu .nav-dropdown summary:hover,
+  .nav-menu .nav-dropdown[open] summary {
+    color: #c62828 !important;
+    background: #ffffff !important;
+  }
+}
