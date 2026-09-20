@@ -82,6 +82,7 @@
         };
         const existing = json("cbeResources");
         save("cbeResources", [...existing, resource]);
+        await fetch("/api/resources", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...resource, role: "admin", status: "approved" }) });
         status.textContent = "Resource uploaded to Cloudflare R2 and published successfully.";
         resourceForm.reset();
       } catch (error) {
@@ -122,6 +123,8 @@
           createdAt: new Date().toISOString()
         };
         save("cbeSellerResources", [item, ...json("cbeSellerResources")]);
+        const activeSeller = JSON.parse(sessionStorage.getItem("activeSellerAccount") || "null");
+        await fetch("/api/resources", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...item, role: "seller", sellerUsername: activeSeller?.username || "", status: "pending" }) });
         status.textContent = "Seller resource uploaded to R2 and submitted for admin approval.";
         sellerForm.reset();
       } catch (error) {
