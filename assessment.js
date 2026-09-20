@@ -74,6 +74,7 @@
   const learner = document.getElementById("quizLearnerInput");
   const grade = document.getElementById("quizGradeInput");
   const subject = document.getElementById("quizSubjectInput");
+  const strand = document.getElementById("quizStrandInput");
   const length = document.getElementById("quizLengthInput");
   const mode = document.getElementById("quizModeInput");
   const startButton = document.getElementById("startQuizButton");
@@ -102,14 +103,23 @@
   // Keep the selected grade visible and usable whenever the learner changes it.
   grade.addEventListener("change", () => {
     refreshSubjectOptions();
+    refreshStrandOptions();
     if (instructions) {
-      instructions.textContent = grade.value + " " + subject.value + " selected. Click Start / Restart Quiz.";
+      instructions.textContent = grade.value + " " + subject.value + " selected. Choose a strand/topic or All Topics, then click Start / Restart Quiz.";
     }
   });
   if (subject) {
     subject.addEventListener("change", () => {
+      refreshStrandOptions();
       if (instructions) {
-        instructions.textContent = grade.value + " " + subject.value + " selected. Click Start / Restart Quiz.";
+        instructions.textContent = grade.value + " " + subject.value + " selected. Choose a strand/topic or All Topics, then click Start / Restart Quiz.";
+      }
+    });
+  }
+  if (strand) {
+    strand.addEventListener("change", () => {
+      if (instructions) {
+        instructions.textContent = grade.value + " " + subject.value + " — " + strand.value + " selected. Click Start / Restart Quiz.";
       }
     });
   }
@@ -395,6 +405,40 @@
     return n <= 3 ? gradeSubjects.lower : n <= 6 ? gradeSubjects.upper : n <= 9 ? gradeSubjects.junior : gradeSubjects.senior;
   }
 
+  function getAvailableQuestions(selectedGrade, selectedSubject) {
+    const cbc = window.CBENexusCBCBanks &&
+      window.CBENexusCBCBanks.banks &&
+      window.CBENexusCBCBanks.banks[selectedGrade] &&
+      window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject];
+    const base = cbc || bank[selectedSubject] || additionalQuestions[selectedSubject] || [];
+    let extra = [];
+    const n = Number(String(selectedGrade).replace(/[^0-9]/g, "")) || 7;
+    if (n <= 3) extra = gradePools["Grade 1"][selectedSubject] || [];
+    else if (n <= 6) extra = bandQuestions.primaryUpper[selectedSubject] || [];
+    else if (n <= 9) extra = bandQuestions.junior[selectedSubject] || [];
+    else extra = bandQuestions.senior[selectedSubject] || [];
+    return base.concat(extra);
+  }
+
+  function refreshStrandOptions() {
+    if (!strand) return;
+    const current = strand.value || "All Topics";
+    const questions = getAvailableQuestions(grade.value, subject.value);
+    const topics = Array.from(new Set(questions.map((item) => item[3]).filter(Boolean))).sort();
+    strand.innerHTML = "";
+    const all = document.createElement("option");
+    all.value = "All Topics";
+    all.textContent = "All Topics";
+    strand.appendChild(all);
+    topics.forEach((topic) => {
+      const option = document.createElement("option");
+      option.value = topic;
+      option.textContent = topic;
+      strand.appendChild(option);
+    });
+    strand.value = topics.includes(current) ? current : "All Topics";
+  }
+
   function refreshSubjectOptions() {
     if (!subject) return;
     const current = subject.value;
@@ -407,6 +451,7 @@
       subject.appendChild(option);
     });
     subject.value = list.includes(current) ? current : list[0];
+    refreshStrandOptions();
   }
 
   function getGradeQuestionBank(selectedGrade, selectedSubject) {
@@ -428,8 +473,15 @@
     }
 
     // Rotate by grade so adjacent grades do not receive the same first questions.
-    const combined = base.concat(extra).slice();
-    const rotation = (n - 1) % combined.length;
+    let combined = base.concat(extra).slice();
+    const selectedStrand = strand ? strand.value : "All Topics";
+    if (selectedStrand && selectedStrand !== "All Topics") {
+      combined = combined.filter((item) => item[3] === selectedStrand);
+    }
+    if (!combined.length) {
+      combined = base.concat(extra).slice();
+    }
+    const rotation = combined.length ? (n - 1) % combined.length : 0;
     return combined.slice(rotation).concat(combined.slice(0, rotation));
   };
 
@@ -494,7 +546,7 @@
 
       return "<article class=\"learner-progress-card\">" +
         "<div class=\"learner-progress-header\"><div><strong>" + escapeHtml(name) + "</strong><span>" +
-        list.length + " quiz attempt" + (list.length === 1 ? "" : "s") + " | Latest: " + escapeHtml(latest.grade || "") + " " + escapeHtml(latest.subject || "") +
+        list.length + " quiz attempt" + (list.length === 1 ? "" : "s") + " | Latest: " + escapeHtml(latest.grade || "") + " " + escapeHtml(latest.subject || "") + " | " + escapeHtml(latest.strand || "All Topics") +
         "</span></div><div class=\"progress-score\">" + average + "%<small>average</small></div></div>" +
         "<div class=\"progress-stats\"><div><strong>" + best + "%</strong><span>Best Score</span></div><div><strong>" + list.length +
         "</strong><span>Quizzes</span></div><div><strong>" + latest.score + "%</strong><span>Latest</span></div></div>" +
@@ -559,7 +611,7 @@
     submitButton.disabled = false;
     resultBox.classList.add("hidden-section");
     resultBox.innerHTML = "";
-    instructions.innerHTML = "<strong>" + escapeHtml(grade.value + " " + subject.value) + "</strong> — " + active.length + " randomized questions.";
+    instructions.innerHTML = "<strong>" + escapeHtml(grade.value + " " + subject.value) + "</strong> — " + escapeHtml(strand ? strand.value : "All Topics") + " — " + active.length + " randomized questions.";
     status.textContent = "Quiz started. Answer every question and submit when ready.";
     updateTimer();
     if (mode.value === "assessment") timerId = setInterval(updateTimer, 1000);
@@ -597,6 +649,7 @@
       learner: learner.value.trim(),
       grade: grade.value,
       subject: subject.value,
+      strand: strand ? strand.value : "All Topics",
       mode: mode.value,
       total: total,
       answered: answered,
