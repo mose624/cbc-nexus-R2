@@ -1259,7 +1259,12 @@ async function handleAdminControlClick(event) {
       await adminPost("/api/admin/seller-account-status", { accountId: sellerButton.dataset.adminSellerId, status: sellerButton.dataset.adminSellerStatus });
       renderSellerAccountApprovals();
     } else if (resourceButton) {
-      await adminPost("/api/admin/resource-status", { resourceId: resourceButton.dataset.adminResourceId, status: resourceButton.dataset.adminResourceStatus });
+      const resourceId = resourceButton.dataset.adminResourceId;
+      const resourceStatus = resourceButton.dataset.adminResourceStatus;
+      await adminPost("/api/admin/resource-status", { resourceId, status: resourceStatus });
+      localStorage.setItem(SELLER_STORAGE_KEY, JSON.stringify(readSellerResources().map((r) => r.id === resourceId ? { ...r, status: resourceStatus, reviewedAt: new Date().toISOString() } : r)));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(readSavedResources().map((r) => r.id === resourceId ? { ...r, status: resourceStatus } : r)));
+      renderSellerResources(); renderAdminApprovals(); renderResources();
     } else if (userButton) {
       const row = userButton.closest(".admin-record");
       const phone = row?.querySelector("span")?.textContent?.trim() || "";
@@ -1269,6 +1274,10 @@ async function handleAdminControlClick(event) {
       const price = elements.adminPriceManagement.querySelector(`[data-admin-price="\${CSS.escape(id)}"]`)?.value;
       const discount = elements.adminPriceManagement.querySelector(`[data-admin-discount="\${CSS.escape(id)}"]`)?.value;
       await adminPost("/api/admin/resource-price", { resourceId: id, price, discount });
+      const updatePrice = (r) => r.id === id ? { ...r, price: Number(price), discount: Number(discount) } : r;
+      localStorage.setItem(SELLER_STORAGE_KEY, JSON.stringify(readSellerResources().map(updatePrice)));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(readSavedResources().map(updatePrice)));
+      renderSellerResources(); renderResources();
     } else return;
     await loadAdminDashboard();
     showToast("Admin change saved.");
