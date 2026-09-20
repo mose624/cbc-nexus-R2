@@ -3028,3 +3028,148 @@ img, svg, video, iframe {
     font-size: 5.5px;
   }
 }
+
+
+/* Mobile-only: compact header navigation to save screen space */
+@media (max-width: 760px) {
+  .top-strip {
+    gap: 1px;
+    padding: 3px 4px;
+  }
+
+  .top-strip a {
+    padding: 3px 4px;
+    font-size: 8px;
+    border-radius: 2px;
+  }
+
+  .main-nav {
+    min-height: 42px;
+    gap: 3px;
+    padding-left: 4px;
+    padding-right: 4px;
+    align-items: center;
+  }
+
+  .brand {
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .brand-mark {
+    width: 28px;
+    height: 28px;
+    font-size: 9px;
+  }
+
+  .brand strong {
+    font-size: 10px;
+  }
+
+  .brand small {
+    font-size: 7px;
+  }
+
+  .nav-menu {
+    gap: 1px;
+  }
+
+  .nav-link,
+  .nav-dropdown summary {
+    min-height: 25px;
+    padding: 3px 3px;
+    border-radius: 2px;
+    font-size: 7px;
+    line-height: 1;
+  }
+
+  .nav-actions {
+    gap: 1px;
+  }
+
+  .nav-actions > a,
+  .nav-actions > button {
+    min-height: 25px;
+    padding: 3px 4px;
+    border-radius: 2px;
+    font-size: 7px;
+    line-height: 1;
+  }
+
+  .nav-actions .cart-button span {
+    min-width: 14px;
+    height: 14px;
+    font-size: 7px;
+  }
+
+  .dropdown-panel {
+    left: 4px;
+    right: 4px;
+    max-height: 60vh;
+  }
+
+  .dropdown-panel a,
+  .dropdown-panel button {
+    padding: 5px;
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 420px) {
+  .top-strip {
+    gap: 0;
+    padding: 2px;
+  }
+
+  .top-strip a {
+    padding: 2px 3px;
+    font-size: 7px;
+  }
+
+  .main-nav {
+    min-height: 36px;
+    gap: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+
+  .brand {
+    gap: 2px;
+  }
+
+  .brand-mark {
+    width: 24px;
+    height: 24px;
+    font-size: 8px;
+  }
+
+  .brand strong {
+    font-size: 8px;
+  }
+
+  .brand small {
+    font-size: 6px;
+  }
+
+  .nav-menu {
+    gap: 0;
+  }
+
+  .nav-link,
+  .nav-dropdown summary {
+    min-height: 22px;
+    padding: 2px;
+    font-size: 6px;
+  }
+
+  .nav-actions {
+    gap: 0;
+  }
+
+  .nav-actions > a,
+  .nav-actions > button {
+    min-height: 22px;
+    padding: 2px 3px;
+    font-size: 6px;
+  }
+}
