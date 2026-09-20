@@ -340,6 +340,15 @@ const elements = {
   adminApprovalList: document.querySelector("#adminApprovalList"),
   downloadApprovalList: document.querySelector("#downloadApprovalList"),
   sellerAccountApprovalList: document.querySelector("#sellerAccountApprovalList"),
+  adminControlPanel: document.querySelector("#adminControlPanel"),
+  adminStatsGrid: document.querySelector("#adminStatsGrid"),
+  adminSellerManagement: document.querySelector("#adminSellerManagement"),
+  adminResourceManagement: document.querySelector("#adminResourceManagement"),
+  adminUserManagement: document.querySelector("#adminUserManagement"),
+  adminSalesManagement: document.querySelector("#adminSalesManagement"),
+  adminPaymentManagement: document.querySelector("#adminPaymentManagement"),
+  adminPriceManagement: document.querySelector("#adminPriceManagement"),
+  refreshAdminDashboardButton: document.querySelector("#refreshAdminDashboardButton"),
   adminSection: document.querySelector("#admin"),
   adminLoginForm: document.querySelector("#adminLoginForm"),
   adminUsername: document.querySelector("#adminUsernameInput"),
@@ -1137,6 +1146,7 @@ async function unlockAdmin(event) {
     elements.adminLoginStatus.textContent = "Admin dashboard unlocked securely.";
     elements.adminSection.scrollIntoView({ behavior: "smooth", block: "start" });
     showToast("Admin dashboard unlocked.");
+    loadAdminDashboard();
   } catch {
     elements.adminLoginStatus.textContent = "Could not connect to the admin server.";
     showToast("Admin login failed.");
@@ -1150,11 +1160,120 @@ async function restoreAdminAccess() {
       sessionStorage.setItem("cbeAdminUnlocked", "true");
       elements.adminSection.classList.add("open");
       elements.adminSection.setAttribute("aria-hidden", "false");
+      loadAdminDashboard();
     } else {
       sessionStorage.removeItem("cbeAdminUnlocked");
     }
   } catch {
     sessionStorage.removeItem("cbeAdminUnlocked");
+  }
+}
+
+async function loadAdminDashboard() {
+  if (!elements.adminControlPanel) return;
+  try {
+    const response = await fetch("/api/admin/dashboard", { credentials: "same-origin" });
+    if (!response.ok) return;
+    const data = await response.json();
+    if (!data.ok) return;
+    renderAdminControlCentre(data);
+  } catch {}
+}
+
+function renderAdminControlCentre(data) {
+  const stats = data.stats || {};
+  elements.adminStatsGrid.innerHTML = [
+    ["Sellers", stats.sellers || 0, (stats.pendingSellers || 0) + " pending"],
+    ["Resources", stats.resources || 0, (stats.pendingResources || 0) + " pending"],
+    ["Users", stats.users || 0, "registered/identified"],
+    ["Sales", stats.sales || 0, "completed"],
+    ["Revenue", money(stats.revenue || 0), "recorded sales"]
+  ].map(([label, value, note]) => `<div class="admin-stat-card"><strong>\${escapeHtml(value)}</strong><span>\${escapeHtml(label)}</span><small>\${escapeHtml(note)}</small></div>`).join("");
+
+  const sellers = data.sellers || [];
+  elements.adminSellerManagement.innerHTML = sellers.length ? sellers.slice(0, 20).map((s) => `
+    <div class="admin-record">
+      <div><strong>\${escapeHtml(s.name || s.username)}</strong><span>\${escapeHtml(s.username)} | \${escapeHtml(s.phone || "")}</span></div>
+      <span class="status-pill \${escapeHtml(s.status || "pending")}">\${escapeHtml(s.status || "pending")}</span>
+      <div class="admin-record-actions">
+        <button class="primary-button" type="button" data-admin-seller-id="\${escapeHtml(s.id)}" data-admin-seller-status="approved">Approve</button>
+        <button class="secondary-button" type="button" data-admin-seller-id="\${escapeHtml(s.id)}" data-admin-seller-status="rejected">Reject</button>
+      </div>
+    </div>`).join("") : `<div class="empty-state">No seller accounts yet.</div>`;
+
+  const resources = data.resources || [];
+  elements.adminResourceManagement.innerHTML = resources.length ? resources.slice(0, 30).map((r) => `
+    <div class="admin-record">
+      <div><strong>\${escapeHtml(r.title || "Untitled resource")}</strong><span>\${escapeHtml(r.grade || "")} | \${escapeHtml(r.subject || "")} | \${escapeHtml(r.sellerUsername ? "Seller: " + r.sellerUsername : "Admin resource")}</span></div>
+      <span class="status-pill \${escapeHtml(r.status || "approved")}">\${escapeHtml(r.status || "approved")}</span>
+      <div class="admin-record-actions">
+        <button class="primary-button" type="button" data-admin-resource-id="\${escapeHtml(r.id)}" data-admin-resource-status="approved">Approve</button>
+        <button class="secondary-button" type="button" data-admin-resource-id="\${escapeHtml(r.id)}" data-admin-resource-status="rejected">Reject</button>
+      </div>
+    </div>`).join("") : `<div class="empty-state">No resource records yet.</div>`;
+
+  const users = data.users || [];
+  elements.adminUserManagement.innerHTML = users.length ? users.slice(0, 30).map((u) => `
+    <div class="admin-record">
+      <div><strong>\${escapeHtml(u.name || "Customer")}</strong><span>\${escapeHtml(u.phone || "")}</span></div>
+      <span class="status-pill \${escapeHtml(u.status || "active")}">\${escapeHtml(u.status || "active")}</span>
+      <div class="admin-record-actions">
+        <button class="primary-button" type="button" data-admin-user-id="\${escapeHtml(u.id)}" data-admin-user-status="active">Activate</button>
+        <button class="secondary-button" type="button" data-admin-user-id="\${escapeHtml(u.id)}" data-admin-user-status="blocked">Block</button>
+      </div>
+    </div>`).join("") : `<div class="empty-state">No users identified yet.</div>`;
+
+  const sales = data.sales || [];
+  elements.adminSalesManagement.innerHTML = sales.length ? sales.slice(0, 20).map((s) =>
+    `<div class="admin-record"><div><strong>\${escapeHtml(s.resource || "Resource sale")}</strong><span>\${escapeHtml(s.customerPhone || s.phone || "")}</span></div><strong>\${money(s.amount || 0)}</strong><span class="status-pill paid">\${escapeHtml(s.status || "paid")}</span></div>`
+  ).join("") : `<div class="empty-state">No completed sales recorded yet. Successful Daraja callbacks will appear here.</div>`;
+
+  const payments = data.payments || [];
+  elements.adminPaymentManagement.innerHTML = payments.length ? payments.slice(0, 30).map((p) =>
+    `<div class="admin-record"><div><strong>\${escapeHtml(p.resource || "Payment request")}</strong><span>\${escapeHtml(p.customerPhone || p.phone || "")}</span></div><strong>\${money(p.amount || 0)}</strong><span class="status-pill \${escapeHtml(p.status || "pending")}">\${escapeHtml(p.status || "pending")}</span></div>`
+  ).join("") : `<div class="empty-state">No payment requests yet.</div>`;
+
+  elements.adminPriceManagement.innerHTML = resources.length ? resources.slice(0, 30).map((r) => `
+    <div class="admin-price-row">
+      <div><strong>\${escapeHtml(r.title || "Untitled resource")}</strong><span>\${escapeHtml(r.grade || "")} | \${escapeHtml(r.subject || "")}</span></div>
+      <input type="number" min="0" value="\${Number(r.price || 0)}" data-admin-price="\${escapeHtml(r.id)}" aria-label="Price">
+      <input type="number" min="0" max="100" value="\${Number(r.discount || 0)}" data-admin-discount="\${escapeHtml(r.id)}" aria-label="Discount">
+      <button class="primary-button" type="button" data-admin-save-price="\${escapeHtml(r.id)}">Save</button>
+    </div>`).join("") : `<div class="empty-state">No resources available for price management.</div>`;
+}
+
+async function adminPost(path, payload) {
+  const response = await fetch(path, { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok || !data.ok) throw new Error(data.error || "Admin action failed.");
+  return data;
+}
+
+async function handleAdminControlClick(event) {
+  const sellerButton = event.target.closest("[data-admin-seller-id]");
+  const resourceButton = event.target.closest("[data-admin-resource-id]");
+  const userButton = event.target.closest("[data-admin-user-id]");
+  const priceButton = event.target.closest("[data-admin-save-price]");
+  try {
+    if (sellerButton) {
+      await adminPost("/api/admin/seller-account-status", { accountId: sellerButton.dataset.adminSellerId, status: sellerButton.dataset.adminSellerStatus });
+      renderSellerAccountApprovals();
+    } else if (resourceButton) {
+      await adminPost("/api/admin/resource-status", { resourceId: resourceButton.dataset.adminResourceId, status: resourceButton.dataset.adminResourceStatus });
+    } else if (userButton) {
+      const row = userButton.closest(".admin-record");
+      const phone = row?.querySelector("span")?.textContent?.trim() || "";
+      await adminPost("/api/admin/user-status", { userId: userButton.dataset.adminUserId, phone, status: userButton.dataset.adminUserStatus });
+    } else if (priceButton) {
+      const id = priceButton.dataset.adminSavePrice;
+      const price = elements.adminPriceManagement.querySelector(`[data-admin-price="\${CSS.escape(id)}"]`)?.value;
+      const discount = elements.adminPriceManagement.querySelector(`[data-admin-discount="\${CSS.escape(id)}"]`)?.value;
+      await adminPost("/api/admin/resource-price", { resourceId: id, price, discount });
+    } else return;
+    await loadAdminDashboard();
+    showToast("Admin change saved.");
+  } catch (error) {
+    showToast(error.message || "Admin action failed.");
   }
 }
 
@@ -1440,6 +1559,8 @@ function bindEvents() {
   if (elements.adminAreaButton) {
     safeOn(elements.adminAreaButton, "click", openAdminLogin);
   }
+  safeOn(elements.refreshAdminDashboardButton, "click", loadAdminDashboard);
+  safeOn(elements.adminControlPanel, "click", handleAdminControlClick);
 
   safeOn(elements.gradeList, "click", (event) => {
     const toggle = event.target.closest("[data-grade-toggle]");
