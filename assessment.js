@@ -556,6 +556,80 @@
     }).join("");
   }
 
+  function renderLearningGaps() {
+    const gapBox = document.getElementById("learningGapsReport");
+    if (!gapBox) return;
+
+    const attempts = readProgress();
+    if (!attempts.length) {
+      gapBox.innerHTML = "<div class=\"empty-state\">Complete an assessment to identify learning gaps and receive targeted remediation.</div>";
+      return;
+    }
+
+    const gaps = {};
+    attempts.forEach((attempt) => {
+      (attempt.results || []).forEach((r) => {
+        if (!r.isCorrect) {
+          const key = [attempt.learner, attempt.grade, attempt.subject, r.topic || "General"].join("|");
+          if (!gaps[key]) {
+            gaps[key] = {
+              learner: attempt.learner,
+              grade: attempt.grade,
+              subject: attempt.subject,
+              topic: r.topic || "General",
+              missed: 0,
+              questions: []
+            };
+          }
+          gaps[key].missed++;
+          gaps[key].questions.push(r.question);
+        }
+      });
+    });
+
+    const list = Object.values(gaps)
+      .sort((a,b) => b.missed - a.missed)
+      .slice(0, 20);
+
+    if (!list.length) {
+      gapBox.innerHTML = "<div class=\"gap-success\"><strong>No identified gaps yet.</strong><span>The learner has answered all recorded questions correctly.</span></div>";
+      return;
+    }
+
+    gapBox.innerHTML = "<div class=\"gap-intro\"><strong>Targeted remediation</strong><span>Gaps are identified from incorrect answers by grade, subject and strand/topic. Start a focused practice quiz instead of repeating the whole assessment.</span></div>" +
+      list.map((gap) => {
+        const safeTopic = escapeHtml(gap.topic);
+        return "<article class=\"learning-gap-card\">" +
+          "<div><strong>" + escapeHtml(gap.subject) + " — " + safeTopic + "</strong><span>" + escapeHtml(gap.grade) + " | " + gap.missed + " missed question" + (gap.missed === 1 ? "" : "s") + "</span></div>" +
+          "<button type=\"button\" class=\"primary-button remedial-button\" data-remedial-grade=\"" + escapeHtml(gap.grade) + "\" data-remedial-subject=\"" + escapeHtml(gap.subject) + "\" data-remedial-topic=\"" + safeTopic + "\">Remediate This Gap</button>" +
+          "</article>";
+      }).join("");
+
+    gapBox.querySelectorAll(".remedial-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        const targetGrade = button.dataset.remedialGrade;
+        const targetSubject = button.dataset.remedialSubject;
+        const targetTopic = button.dataset.remedialTopic;
+
+        grade.value = targetGrade;
+        refreshSubjectOptions();
+        subject.value = targetSubject;
+        refreshStrandOptions();
+        strand.value = targetTopic;
+
+        mode.value = "practice";
+        length.value = "10";
+        if (instructions) {
+          instructions.innerHTML = "<strong>Remedial Practice</strong> — " +
+            escapeHtml(targetGrade + " " + targetSubject + " — " + targetTopic) +
+            ". Questions will focus on this identified gap.";
+        }
+        if (status) status.textContent = "Remedial quiz selected. Click Start / Restart Quiz.";
+        document.getElementById("quizCentre")?.scrollIntoView({behavior:"smooth", block:"start"});
+      });
+    });
+  }
+
   function updateTimer() {
     if (!startedAt) {
       timer.textContent = "Time: 00:00";
@@ -699,7 +773,8 @@
       "<h3>" + escapeHtml(attempt.remark) + "</h3>" + review;
 
     renderProgress();
-    if (typeof showToast === "function") showToast("Quiz marked and learner progress updated.");
+    renderLearningGaps();
+    if (typeof showToast === "function") showToast("Quiz marked. Learning gaps identified and remediation updated.");
   }
 
   form.addEventListener("submit", function(event) {
@@ -721,5 +796,6 @@
   });
 
   renderProgress();
-  window.CBENexusQuiz = { startQuiz: startQuiz, markQuiz: markQuiz, renderProgress: renderProgress };
+  renderLearningGaps();
+  window.CBENexusQuiz = { startQuiz: startQuiz, markQuiz: markQuiz, renderProgress: renderProgress, renderLearningGaps: renderLearningGaps };
 })();
