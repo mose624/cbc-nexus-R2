@@ -59,9 +59,14 @@ a {
   gap: 8px;
   overflow-x: auto;
   padding: 10px clamp(16px, 4vw, 48px);
-  background: var(--navy);
-  color: #f7fbfc;
+  background: #c62828;
+  color: #ffffff;
   white-space: nowrap;
+}
+
+.main-nav {
+  background: #c62828;
+  color: #ffffff;
 }
 
 .top-strip a {
@@ -119,7 +124,7 @@ a {
 }
 
 .brand small {
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.85);
   font-size: 13px;
 }
 
