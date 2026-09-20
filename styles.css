@@ -3435,18 +3435,3 @@ img, svg, video, iframe {
   color: #ffffff !important;
 }
 
-
-/* Main header navigation buttons: unified green */
-.main-nav .nav-menu > .nav-link,
-.main-nav .nav-menu > .nav-dropdown > summary {
-  background: #0b8750 !important;
-  color: #ffffff !important;
-  border: 1px solid rgba(255,255,255,.7) !important;
-}
-
-.main-nav .nav-menu > .nav-link:hover,
-.main-nav .nav-menu > .nav-dropdown > summary:hover,
-.main-nav .nav-menu > .nav-dropdown[open] > summary {
-  background: #086b40 !important;
-  color: #ffffff !important;
-}
