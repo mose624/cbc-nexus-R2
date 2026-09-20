@@ -3406,30 +3406,3 @@ img, svg, video, iframe {
   }
 }
 
-
-/* Unified green header quick-access buttons */
-.top-strip > a {
-  background: #0b8750 !important;
-  color: #ffffff !important;
-  border-color: rgba(255,255,255,.7) !important;
-}
-
-/* Blue buttons in the CBE Nexus dashboard beneath the header */
-.portal-dashboard .portal-sidebar a,
-.portal-dashboard .portal-category-grid a,
-.portal-dashboard .portal-search-shortcut .primary-button,
-.portal-dashboard .portal-search-shortcut .ghost-button,
-.portal-dashboard .portal-side-link {
-  background: #0645ad !important;
-  color: #ffffff !important;
-  border-color: #0645ad !important;
-}
-
-.portal-dashboard .portal-sidebar a:hover,
-.portal-dashboard .portal-category-grid a:hover,
-.portal-dashboard .portal-search-shortcut .primary-button:hover,
-.portal-dashboard .portal-search-shortcut .ghost-button:hover,
-.portal-dashboard .portal-side-link:hover {
-  background: #053b91 !important;
-  color: #ffffff !important;
-}
