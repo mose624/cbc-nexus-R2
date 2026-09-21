@@ -4133,3 +4133,193 @@ button, a, input, select, textarea { touch-action: manipulation; }
     min-width: 0 !important;
   }
 }
+
+
+/* Phone-only CBE Nexus Resource Centre layout
+   Desktop/tablet layouts remain unchanged. Header and footer are untouched. */
+@media (max-width: 640px) {
+  main {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  #dashboard.portal-dashboard {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    grid-template-areas:
+      "resource-centre"
+      "library"
+      "account-tools" !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 12px !important;
+    gap: 12px !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-sidebar {
+    grid-area: resource-centre !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-main {
+    grid-area: library !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-rightbar {
+    grid-area: account-tools !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  /* Resource Centre: compact enough to scroll comfortably on a phone. */
+  .portal-sidebar {
+    padding: 14px !important;
+    border-radius: 12px !important;
+  }
+
+  .portal-sidebar-title h2 {
+    font-size: 22px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .portal-menu-group {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .portal-menu-group + .portal-menu-group {
+    margin-top: 12px !important;
+  }
+
+  /* Keep all twelve grades visible without creating a horizontal scroll. */
+  .portal-sidebar .grade-list {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 7px !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .portal-sidebar .grade-card {
+    min-width: 0 !important;
+  }
+
+  .portal-sidebar .grade-toggle {
+    min-height: 42px !important;
+    padding: 9px 8px !important;
+    font-size: 13px !important;
+  }
+
+  .portal-sidebar .subject-menu {
+    grid-template-columns: 1fr !important;
+    gap: 5px !important;
+    padding: 0 7px 8px !important;
+  }
+
+  .portal-sidebar .subject-chip {
+    min-height: 38px !important;
+    padding: 7px 8px !important;
+    font-size: 12px !important;
+    text-align: left !important;
+  }
+
+  .portal-menu-group > a {
+    display: block !important;
+    width: 100% !important;
+    min-height: 40px !important;
+    padding: 9px 10px !important;
+    border-radius: 7px !important;
+  }
+
+  /* Centre library: readable text and no squeezed desktop columns. */
+  .portal-main {
+    padding: 0 !important;
+  }
+
+  .portal-welcome,
+  .portal-announcement,
+  .portal-category-grid,
+  .portal-main .summary-grid {
+    width: 100% !important;
+  }
+
+  .portal-welcome {
+    padding: 18px !important;
+    border-radius: 12px !important;
+  }
+
+  .portal-welcome h1 {
+    font-size: 25px !important;
+    line-height: 1.18 !important;
+  }
+
+  .portal-welcome p {
+    font-size: 14px !important;
+  }
+
+  .portal-category-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+
+  .portal-category-grid > * {
+    min-width: 0 !important;
+    padding: 11px !important;
+  }
+
+  .portal-category-grid strong,
+  .portal-category-grid span {
+    overflow-wrap: anywhere !important;
+  }
+
+  .portal-main .summary-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 7px !important;
+  }
+
+  .portal-main .summary-grid div {
+    padding: 11px 7px !important;
+    text-align: center !important;
+  }
+
+  .portal-main .summary-grid strong {
+    font-size: 18px !important;
+  }
+
+  .portal-main .summary-grid span {
+    font-size: 11px !important;
+  }
+
+  .portal-announcement {
+    padding: 13px !important;
+  }
+
+  /* Right side: account, learning tools and help remain clearly separated. */
+  .portal-rightbar {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .portal-rightbar .portal-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 15px !important;
+    border-radius: 12px !important;
+  }
+
+  .portal-rightbar .portal-side-link {
+    display: block !important;
+    width: 100% !important;
+    min-height: 42px !important;
+    padding: 10px 11px !important;
+  }
+}
