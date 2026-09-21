@@ -442,6 +442,45 @@ textarea:focus-visible {
   padding: 0 14px 14px;
 }
 
+.subject-dropdown-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.subject-dropdown {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #fff;
+  color: var(--navy);
+  padding: 9px 36px 9px 11px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+}
+
+.subject-dropdown:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, .14);
+}
+
+.grade-chevron {
+  font-size: 16px;
+  transition: transform 160ms ease;
+}
+
+.grade-card.open .grade-chevron {
+  transform: rotate(180deg);
+}
+
 .grade-card.open .subject-menu {
   display: flex;
 }
