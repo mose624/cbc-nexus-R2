@@ -4941,3 +4941,32 @@ body.admin-unlocked .admin-only-link {
 #dashboard.portal-dashboard > .portal-sidebar .subject-dropdown-label{font-size:8px!important}
 #dashboard.portal-dashboard > .portal-sidebar .subject-dropdown{min-height:31px!important;padding:5px 6px!important;font-size:9px!important}
 }
+
+
+/* Grade 1-12 dropdown reliability layer */
+#gradeList.grade-list > .grade-card {
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  width:100%!important;
+}
+#gradeList.grade-list > .grade-card .subject-menu {
+  display:none!important;
+}
+#gradeList.grade-list > .grade-card.open .subject-menu {
+  display:block!important;
+}
+#gradeList.grade-list > .grade-card.open .grade-toggle {
+  background:#0b5f3d!important;
+  color:#fff!important;
+}
+#gradeList.grade-list > .grade-card.open .grade-chevron {
+  transform:rotate(180deg)!important;
+}
+#gradeList.grade-list .subject-dropdown {
+  appearance:auto!important;
+  -webkit-appearance:auto!important;
+  pointer-events:auto!important;
+  position:relative!important;
+  z-index:5!important;
+}
