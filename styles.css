@@ -4970,3 +4970,23 @@ body.admin-unlocked .admin-only-link {
   position:relative!important;
   z-index:5!important;
 }
+
+
+/* SHOW A SUBJECT DROPDOWN FOR EVERY GRADE */
+#gradeList.grade-list > .grade-card .subject-menu,
+#gradeList.grade-list > .grade-card.open .subject-menu {
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+#gradeList.grade-list > .grade-card .subject-dropdown {
+  display:block!important;
+  width:100%!important;
+  min-height:40px!important;
+  visibility:visible!important;
+  opacity:1!important;
+  pointer-events:auto!important;
+}
+#gradeList.grade-list > .grade-card {
+  margin-bottom:8px!important;
+}
