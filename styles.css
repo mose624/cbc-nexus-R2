@@ -3861,3 +3861,275 @@ button, a, input, select, textarea { touch-action: manipulation; }
   .card-actions > *, .payment-actions > *, .approval-actions > * { width: 100%; }
   .portal-category-grid, .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+
+/* Mobile usability fix - CBE Nexus */
+/* Keep header and footer unchanged. On phones, body sections stack cleanly
+   in the same logical order: left panel -> centre content -> right panel. */
+@media (max-width: 640px) {
+  html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* Main body layouts */
+  .dashboard-shell,
+  .seller-layout,
+  .payment-layout,
+  .admin-login-card,
+  .promo-layout,
+  .refer-form,
+  .portal-dashboard {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 14px !important;
+  }
+
+  /* Preserve the 30/40/30 meaning on mobile through clear ordered blocks */
+  .portal-dashboard > *,
+  .dashboard-shell > *,
+  .seller-layout > *,
+  .payment-layout > *,
+  .admin-login-card > *,
+  .promo-layout > *,
+  .refer-form > * {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  /* Three main portal areas */
+  .portal-sidebar { order: 1 !important; }
+  .portal-main { order: 2 !important; }
+  .portal-rightbar { order: 3 !important; }
+
+  /* Make every content band use the full phone width */
+  .content-band,
+  .admin-band,
+  .trust-band,
+  .promo-band,
+  .seller-band,
+  .urgent-band,
+  .competitive-band,
+  .seo-band,
+  .landing-band,
+  .payment-band,
+  .admin-login-band,
+  .info-band {
+    width: 100%;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    overflow: visible;
+  }
+
+  /* Resource library */
+  .filters {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 9px !important;
+  }
+
+  .resource-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .resource-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 14px !important;
+    min-height: 0 !important;
+  }
+
+  .resource-card h3 {
+    font-size: 18px !important;
+    line-height: 1.3;
+  }
+
+  .resource-activity {
+    gap: 7px;
+    font-size: 12px;
+  }
+
+  .resource-library-actions,
+  .card-actions,
+  .payment-actions,
+  .approval-actions,
+  .hero-resource-buttons {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+
+  .resource-library-actions > *,
+  .card-actions > *,
+  .payment-actions > *,
+  .approval-actions > *,
+  .hero-resource-buttons > * {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .resource-library-actions .resource-action-button {
+    min-height: 40px !important;
+    padding: 8px 7px !important;
+    font-size: 12px !important;
+  }
+
+  /* Forms and controls */
+  input, select, textarea {
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  button,
+  .primary-button,
+  .ghost-button,
+  .download-button,
+  .secondary-button,
+  .whatsapp-button,
+  .mpesa-header-button,
+  .cart-button {
+    min-height: 42px;
+  }
+
+  /* Grades and subject menus */
+  .grade-panel,
+  .seller-panel,
+  .payment-form,
+  .payment-card,
+  .quiz-panel,
+  .progress-panel,
+  .ai-answer,
+  .admin-form {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .grade-panel {
+    padding: 14px !important;
+  }
+
+  .grade-list {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .subject-menu {
+    display: none;
+    width: 100%;
+  }
+
+  .grade-card.open .subject-menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .subject-chip {
+    min-height: 42px;
+    padding: 9px 7px;
+    font-size: 13px;
+  }
+
+  /* Smaller grids */
+  .summary-grid,
+  .trust-grid,
+  .feature-grid,
+  .download-grid,
+  .landing-grid,
+  .quiz-result-summary,
+  .progress-stats,
+  .admin-stats-grid,
+  .admin-kpi-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* Text and headings */
+  .section-heading {
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  .section-heading h2,
+  .panel-heading h2,
+  .admin-copy h2 {
+    font-size: 24px !important;
+    line-height: 1.2;
+  }
+
+  .intro-panel {
+    min-height: 430px;
+    padding: 22px !important;
+  }
+
+  .intro-panel h1 {
+    font-size: clamp(30px, 10vw, 46px);
+  }
+
+  /* Admin */
+  .admin-management-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .admin-command-bar {
+    grid-template-columns: 1fr !important;
+  }
+
+  .admin-record {
+    grid-template-columns: 1fr !important;
+  }
+
+  .admin-price-row {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* Prevent long tables/cards from breaking the viewport */
+  .admin-management-list,
+  .admin-module-panel .admin-management-list,
+  .approval-list,
+  .records-list,
+  .seller-resource-list,
+  .cart-items {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .progress-subject {
+    grid-template-columns: 1fr 50px !important;
+  }
+
+  .progress-subject .progress-meter {
+    grid-column: 1 / -1;
+  }
+
+  .learning-gap-card {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .remedial-button {
+    width: 100% !important;
+  }
+
+  /* Hide decorative overflow, never actual content */
+  .trending-item {
+    min-width: 0 !important;
+    width: 100%;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 980px) {
+  /* Tablet: keep three logical areas visible without crushing them. */
+  .portal-dashboard {
+    display: grid !important;
+    grid-template-columns: 30% 40% 30% !important;
+    gap: 10px !important;
+  }
+
+  .portal-dashboard > * {
+    min-width: 0 !important;
+  }
+}
