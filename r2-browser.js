@@ -72,13 +72,17 @@
       const id = "admin-" + Date.now();
       status.textContent = "Uploading resource to Cloudflare R2...";
       try {
-        const grade = document.querySelector("#adminGradeInput").value;
-        const subject = document.querySelector("#adminSubjectInput").value;
-        const type = document.querySelector("#adminTypeInput").value;
+        const grade = document.querySelector("#adminGradeInput").value.trim();
+        const subject = document.querySelector("#adminSubjectInput").value.trim();
+        const type = document.querySelector("#adminTypeInput").value.trim();
+        const title = document.querySelector("#titleInput").value.trim() || file.name.replace(/\\.[^.]+$/, "");
+        if (!grade || !subject || !type) {
+          throw new Error("Please select Grade, Subject, and Material Type before publishing.");
+        }
         const result = await upload(file, { grade, subject, type, resourceId: id, role: "admin" });
         const resource = {
           id,
-          title: document.querySelector("#titleInput").value.trim(),
+          title,
           grade,
           subject,
           type,
