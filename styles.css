@@ -4761,3 +4761,24 @@ button, a, input, select, textarea { touch-action: manipulation; }
   .mobile-dashboard-table td.mobile-green { width: 40%; }
   .mobile-dashboard-table td.mobile-yellow { width: 30%; }
 }
+
+
+/* Administrator-only management areas. Hidden until verified admin login. */
+.admin-only-section,
+.admin-only-link {
+  display: none !important;
+}
+
+body.admin-unlocked .admin-only-section {
+  display: block !important;
+}
+
+body.admin-unlocked .admin-only-link {
+  display: inline-flex !important;
+}
+
+@media (max-width: 640px) {
+  body.admin-unlocked .admin-only-link {
+    display: flex !important;
+  }
+}
