@@ -4913,3 +4913,31 @@ body.admin-unlocked .admin-only-link {
     overflow: hidden;
   }
 }
+
+
+/* FINAL GRADE 1-12 SUBJECT DROPDOWN FIX — CBE NEXUS */
+#dashboard.portal-dashboard > .portal-sidebar .grade-list{display:grid!important;gap:8px!important;max-height:560px!important;overflow-y:auto!important;overflow-x:hidden!important;padding-right:3px!important}
+#dashboard.portal-dashboard > .portal-sidebar .grade-card{display:block!important;visibility:visible!important;opacity:1!important;width:100%!important;border:1px solid #0b5f3d!important;border-radius:8px!important;background:#0f7a4f!important;overflow:hidden!important}
+#dashboard.portal-dashboard > .portal-sidebar .grade-toggle{display:flex!important;align-items:center!important;justify-content:space-between!important;width:100%!important;min-height:42px!important;padding:9px 11px!important;border:0!important;background:#0f7a4f!important;color:#fff!important;font-size:13px!important;font-weight:900!important;cursor:pointer!important}
+#dashboard.portal-dashboard > .portal-sidebar .grade-toggle:hover,
+#dashboard.portal-dashboard > .portal-sidebar .grade-toggle:focus-visible,
+#dashboard.portal-dashboard > .portal-sidebar .grade-card.open .grade-toggle{background:#0b5f3d!important;color:#fff!important}
+#dashboard.portal-dashboard > .portal-sidebar .grade-chevron{margin-left:6px!important;font-size:14px!important;transition:transform .2s ease!important}
+#dashboard.portal-dashboard > .portal-sidebar .grade-card.open .grade-chevron{transform:rotate(180deg)!important}
+#dashboard.portal-dashboard > .portal-sidebar .subject-menu{display:none!important;width:100%!important;padding:8px!important;background:#f3fbf7!important}
+#dashboard.portal-dashboard > .portal-sidebar .grade-card.open .subject-menu{display:block!important}
+#dashboard.portal-dashboard > .portal-sidebar .subject-dropdown-label{display:block!important;margin:0 0 5px!important;color:#0b5f3d!important;font-size:10px!important;font-weight:900!important}
+#dashboard.portal-dashboard > .portal-sidebar .subject-dropdown{display:block!important;width:100%!important;min-height:40px!important;padding:8px 34px 8px 10px!important;border:2px solid #0f7a4f!important;border-radius:7px!important;background:#fff!important;color:#123447!important;font-size:13px!important;font-weight:700!important;cursor:pointer!important;outline:none!important}
+#dashboard.portal-dashboard > .portal-sidebar .subject-dropdown:focus{border-color:#0b5f3d!important;box-shadow:0 0 0 3px rgba(15,122,79,.14)!important}
+@media(max-width:1050px){
+#dashboard.portal-dashboard > .portal-sidebar .grade-list{max-height:520px!important;gap:6px!important}
+#dashboard.portal-dashboard > .portal-sidebar .grade-toggle{min-height:39px!important;padding:8px 9px!important;font-size:12px!important}
+#dashboard.portal-dashboard > .portal-sidebar .subject-dropdown{min-height:36px!important;font-size:11px!important}
+}
+@media(max-width:640px){
+#dashboard.portal-dashboard > .portal-sidebar .grade-list{grid-template-columns:1fr!important;max-height:none!important;overflow:visible!important;gap:4px!important}
+#dashboard.portal-dashboard > .portal-sidebar .grade-toggle{min-height:32px!important;padding:6px 7px!important;font-size:10px!important}
+#dashboard.portal-dashboard > .portal-sidebar .subject-menu{padding:5px!important}
+#dashboard.portal-dashboard > .portal-sidebar .subject-dropdown-label{font-size:8px!important}
+#dashboard.portal-dashboard > .portal-sidebar .subject-dropdown{min-height:31px!important;padding:5px 6px!important;font-size:9px!important}
+}
