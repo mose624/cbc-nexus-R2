@@ -421,17 +421,38 @@ textarea:focus-visible {
   background: #fbfdfd;
 }
 
+/* Grade navigation: red for quick visibility while keeping grades in the left dashboard panel. */
+.grade-card {
+  background: #c62828;
+  border-color: #a91f1f;
+}
+
+.grade-toggle {
+  background: #c62828;
+  color: #ffffff;
+}
+
+.grade-card.open .grade-toggle {
+  background: #b71c1c;
+  color: #ffffff;
+}
+
+.grade-toggle:hover {
+  background: #a91515;
+  color: #ffffff;
+}
+
 .grade-toggle {
   width: 100%;
   min-height: 48px;
   border: 0;
-  background: transparent;
+  background: #c62828;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 12px 14px;
   font-weight: 800;
-  color: var(--navy);
+  color: #ffffff;
   cursor: pointer;
 }
 
