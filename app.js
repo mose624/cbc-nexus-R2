@@ -575,7 +575,7 @@ function renderGradeDashboard() {
 
   elements.gradeList.innerHTML = Object.entries(gradeSubjects)
     .map(([grade, subjects], index) => `
-      <article class="grade-card ${index === 0 ? "open" : ""}">
+      <article class="grade-card ${index === 0 ? "open" : ""}" data-grade-card="${escapeHtml(grade)}">
         <button class="grade-toggle" type="button" data-grade-toggle="${escapeHtml(grade)}" aria-expanded="${index === 0}">
           <span>${escapeHtml(grade)}</span>
           <span class="grade-chevron" aria-hidden="true">▾</span>
@@ -583,7 +583,7 @@ function renderGradeDashboard() {
         <div class="subject-menu">
           <label class="subject-dropdown-label" for="subject-${index}">Select Subject</label>
           <select class="subject-dropdown" id="subject-${index}" data-grade-subject-select data-grade="${escapeHtml(grade)}" aria-label="${escapeHtml(grade)} subjects">
-            <option value="All Subjects">Select a subject</option>
+            <option value="All Subjects">Select subject</option>
             ${subjects.map((subject) => `<option value="${escapeHtml(subject)}">${escapeHtml(subject)}</option>`).join("")}
           </select>
         </div>
