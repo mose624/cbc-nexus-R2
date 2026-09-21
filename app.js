@@ -1735,6 +1735,16 @@ function bindEvents() {
     showToast(`${file.name} ready to publish.`);
   });
 
+  safeOn(document.querySelector("#startGradeOneUploadButton"), "click", () => {
+    if (elements.adminGrade) elements.adminGrade.value = "Grade 1";
+    const subjects = gradeSubjects["Grade 1"] || [];
+    if (elements.adminSubject) optionList(elements.adminSubject, subjects, subjects[0] || "All Subjects");
+    if (elements.formStatus) elements.formStatus.textContent = "Grade 1 selected. Choose the subject, material type and file, then publish.";
+    const subjectField = elements.adminSubject?.closest("label");
+    subjectField?.scrollIntoView({ behavior: "smooth", block: "center" });
+    showToast("Grade 1 upload mode selected.");
+  });
+
   safeOn(elements.form, "submit", handleFormSubmit);
   safeOn(elements.sellerAccountForm, "submit", createSellerAccount);
   safeOn(elements.sellerLoginForm, "submit", loginSeller);
