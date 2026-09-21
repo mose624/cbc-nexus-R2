@@ -4323,3 +4323,381 @@ button, a, input, select, textarea { touch-action: manipulation; }
     padding: 10px 11px !important;
   }
 }
+
+/* Mobile dashboard system — phone only.
+   Header and footer are intentionally excluded. Desktop/tablet remain unchanged. */
+.mobile-dashboard-stack {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  /* The first dashboard is the main three-column mobile dashboard. */
+  #dashboard.portal-dashboard {
+    display: grid !important;
+    grid-template-columns: 30% 40% 30% !important;
+    grid-template-areas: "resource-centre library account-tools" !important;
+    align-items: stretch !important;
+    min-height: 620px !important;
+    height: auto !important;
+    padding: 10px !important;
+    gap: 7px !important;
+    background: #f7f9fb !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-sidebar,
+  #dashboard.portal-dashboard > .portal-main,
+  #dashboard.portal-dashboard > .portal-rightbar {
+    height: 100% !important;
+    min-height: 600px !important;
+    overflow: hidden !important;
+    border-radius: 9px !important;
+  }
+
+  /* LEFT — BLUE: compact navigation and small readable fonts. */
+  #dashboard.portal-dashboard > .portal-sidebar {
+    grid-area: resource-centre !important;
+    background: #0645ad !important;
+    color: #fff !important;
+    padding: 9px 6px !important;
+    border: 1px solid #043781 !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-sidebar .eyebrow,
+  #dashboard.portal-dashboard > .portal-sidebar h2,
+  #dashboard.portal-dashboard > .portal-sidebar strong,
+  #dashboard.portal-dashboard > .portal-sidebar a {
+    color: #fff !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-sidebar .portal-sidebar-title h2 {
+    font-size: 15px !important;
+    line-height: 1.1 !important;
+    margin: 2px 0 8px !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-sidebar .portal-menu-group > strong {
+    display: block !important;
+    font-size: 9px !important;
+    letter-spacing: .04em !important;
+    margin-bottom: 5px !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-sidebar .grade-list {
+    grid-template-columns: 1fr !important;
+    gap: 4px !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-sidebar .grade-card {
+    background: rgba(255,255,255,.10) !important;
+    border-color: rgba(255,255,255,.18) !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-sidebar .grade-toggle {
+    min-height: 31px !important;
+    padding: 5px 5px !important;
+    font-size: 10px !important;
+    line-height: 1.05 !important;
+    color: #fff !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-sidebar .subject-menu {
+    grid-template-columns: 1fr !important;
+    gap: 3px !important;
+    padding: 0 4px 5px !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-sidebar .subject-chip {
+    min-height: 28px !important;
+    padding: 4px 5px !important;
+    font-size: 9px !important;
+    line-height: 1.1 !important;
+    background: #fff !important;
+    color: #0645ad !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-sidebar .portal-menu-group > a {
+    min-height: 30px !important;
+    padding: 6px 5px !important;
+    margin-top: 3px !important;
+    background: rgba(255,255,255,.10) !important;
+    border: 1px solid rgba(255,255,255,.16) !important;
+    font-size: 9px !important;
+    line-height: 1.1 !important;
+  }
+
+  /* CENTRE — GREEN: the main, largest dashboard area. */
+  #dashboard.portal-dashboard > .portal-main {
+    grid-area: library !important;
+    background: #2f7d57 !important;
+    color: #fff !important;
+    padding: 9px !important;
+    border: 1px solid #256645 !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-main .portal-welcome {
+    min-height: 300px !important;
+    padding: 15px 11px !important;
+    border-radius: 8px !important;
+    background: rgba(255,255,255,.12) !important;
+    border: 1px solid rgba(255,255,255,.18) !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-main .portal-welcome .eyebrow {
+    color: #eafff1 !important;
+    font-size: 9px !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-main .portal-welcome h1 {
+    color: #fff !important;
+    font-size: 22px !important;
+    line-height: 1.12 !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-main .portal-welcome p {
+    color: #effff4 !important;
+    font-size: 11px !important;
+    line-height: 1.35 !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-main .portal-search-shortcut {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 5px !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-main .portal-search-shortcut > * {
+    min-height: 34px !important;
+    padding: 6px 5px !important;
+    font-size: 9px !important;
+    border-radius: 5px !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-main .portal-category-grid {
+    grid-template-columns: 1fr !important;
+    gap: 5px !important;
+    margin-top: 8px !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-main .portal-category-grid > * {
+    padding: 7px !important;
+    min-height: 44px !important;
+    background: #fff !important;
+    color: #17613f !important;
+    border-radius: 6px !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-main .portal-category-grid strong {
+    display: block !important;
+    font-size: 10px !important;
+    line-height: 1.1 !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-main .portal-category-grid span {
+    display: block !important;
+    font-size: 8px !important;
+    color: #4b6658 !important;
+    line-height: 1.1 !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-main .summary-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 4px !important;
+    margin-top: 7px !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-main .summary-grid div {
+    padding: 7px 2px !important;
+    background: rgba(255,255,255,.14) !important;
+    border: 1px solid rgba(255,255,255,.18) !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-main .summary-grid strong {
+    color: #fff !important;
+    font-size: 12px !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-main .summary-grid span {
+    color: #eafff1 !important;
+    font-size: 7px !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-main .portal-announcement {
+    padding: 8px !important;
+    margin-top: 7px !important;
+    font-size: 8px !important;
+    background: rgba(255,255,255,.10) !important;
+    border-radius: 6px !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-main .portal-announcement strong,
+  #dashboard.portal-dashboard > .portal-main .portal-announcement span {
+    display: block !important;
+    color: #fff !important;
+  }
+
+  /* RIGHT — YELLOW: compact account and action buttons. */
+  #dashboard.portal-dashboard > .portal-rightbar {
+    grid-area: account-tools !important;
+    background: #f4c542 !important;
+    color: #2b2500 !important;
+    padding: 9px 6px !important;
+    border: 1px solid #d6a900 !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-rightbar .portal-card {
+    padding: 9px 6px !important;
+    border-radius: 7px !important;
+    background: rgba(255,255,255,.42) !important;
+    border: 1px solid rgba(80,60,0,.16) !important;
+    box-shadow: none !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-rightbar .portal-card-heading span {
+    font-size: 9px !important;
+    font-weight: 900 !important;
+    color: #594900 !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-rightbar .portal-card > strong {
+    display: block !important;
+    font-size: 10px !important;
+    line-height: 1.15 !important;
+    color: #302800 !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-rightbar .portal-card p {
+    font-size: 8px !important;
+    line-height: 1.2 !important;
+    color: #514700 !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-rightbar .portal-side-link,
+  #dashboard.portal-dashboard > .portal-rightbar .primary-button {
+    min-height: 32px !important;
+    margin-top: 4px !important;
+    padding: 6px 5px !important;
+    font-size: 8px !important;
+    line-height: 1.1 !important;
+    text-align: center !important;
+    border-radius: 5px !important;
+    background: #fff8d8 !important;
+    color: #4d3e00 !important;
+    border: 1px solid #d9bd55 !important;
+  }
+
+  /* Additional mobile dashboards: cover the rest of the body without touching
+     the existing desktop layout, header, or footer. */
+  .mobile-dashboard-stack {
+    display: grid !important;
+    gap: 10px !important;
+    padding: 8px 10px 18px !important;
+    background: #f1f4f6 !important;
+  }
+
+  .mobile-dashboard {
+    display: grid !important;
+    grid-template-columns: 30% 40% 30% !important;
+    grid-template-rows: auto 1fr !important;
+    min-height: 300px !important;
+    border: 1px solid #d7dee4 !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    box-shadow: 0 5px 14px rgba(18,52,71,.08) !important;
+    background: #fff !important;
+  }
+
+  .mobile-dashboard-title {
+    grid-column: 1 / -1 !important;
+    padding: 8px 7px !important;
+    background: #17202a !important;
+    color: #fff !important;
+    font-size: 9px !important;
+    font-weight: 900 !important;
+    letter-spacing: .04em !important;
+  }
+
+  .mobile-dashboard-panel {
+    min-width: 0 !important;
+    padding: 9px 5px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 5px !important;
+  }
+
+  .mobile-dashboard-panel strong {
+    display: block !important;
+    margin-bottom: 2px !important;
+    font-size: 9px !important;
+    line-height: 1.1 !important;
+  }
+
+  .mobile-dashboard-panel a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 32px !important;
+    padding: 5px 4px !important;
+    border-radius: 5px !important;
+    font-size: 8px !important;
+    line-height: 1.12 !important;
+    font-weight: 800 !important;
+    text-align: center !important;
+    overflow-wrap: anywhere !important;
+    border: 1px solid rgba(255,255,255,.35) !important;
+    background: rgba(255,255,255,.15) !important;
+  }
+
+  .mobile-blue {
+    background: #0645ad !important;
+    color: #fff !important;
+  }
+
+  .mobile-blue a {
+    color: #fff !important;
+    background: rgba(255,255,255,.12) !important;
+  }
+
+  .mobile-green {
+    background: #2f7d57 !important;
+    color: #fff !important;
+  }
+
+  .mobile-green a {
+    color: #fff !important;
+    background: rgba(255,255,255,.12) !important;
+  }
+
+  .mobile-yellow {
+    background: #f4c542 !important;
+    color: #2b2500 !important;
+  }
+
+  .mobile-yellow a {
+    color: #4d3e00 !important;
+    background: #fff8d8 !important;
+    border-color: #d9bd55 !important;
+  }
+
+  /* Make the remaining website sections feel like sizeable dashboard cards. */
+  main > section:not(#dashboard):not(.mobile-dashboard-stack) {
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+  }
+
+  .trust-band,
+  .promo-band,
+  .seller-band,
+  .urgent-band,
+  .competitive-band,
+  .seo-band,
+  .landing-band,
+  .payment-band,
+  .admin-login-band,
+  .admin-band,
+  .info-band {
+    border-top: 1px solid rgba(18,52,71,.12) !important;
+    border-bottom: 1px solid rgba(18,52,71,.12) !important;
+  }
+}
