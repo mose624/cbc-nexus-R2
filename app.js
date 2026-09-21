@@ -100,8 +100,8 @@ const lowerPrimarySubjects = [
   "Environmental Activities",
   "Hindu Religious Education (HRE)",
   "Islamic Religious Education (IRE)",
-  "Kiswahili",
-  "Mathematics"
+  "Kiswahili Activities",
+  "Mathematics Activities"
 ];
 
 const upperPrimarySubjects = [
@@ -573,7 +573,8 @@ function paidResourceHelpLink(resource, amount) {
 function renderGradeDashboard() {
   if (!elements.gradeList) return;
 
-  elements.gradeList.innerHTML = Object.entries(gradeSubjects)
+  const grades = Object.entries(gradeSubjects);
+  elements.gradeList.innerHTML = grades
     .map(([grade, subjects], index) => `
       <article class="grade-card ${index === 0 ? "open" : ""}" data-grade-card="${escapeHtml(grade)}">
         <button class="grade-toggle" type="button" data-grade-toggle="${escapeHtml(grade)}" aria-expanded="${index === 0}">
@@ -581,8 +582,8 @@ function renderGradeDashboard() {
           <span class="grade-chevron" aria-hidden="true">▾</span>
         </button>
         <div class="subject-menu">
-          <label class="subject-dropdown-label" for="subject-${index}">Select Subject</label>
-          <select class="subject-dropdown" id="subject-${index}" data-grade-subject-select data-grade="${escapeHtml(grade)}" aria-label="${escapeHtml(grade)} subjects">
+          <label class="subject-dropdown-label" for="subject-${index}">Choose a subject</label>
+          <select class="subject-dropdown" id="subject-${index}" data-grade-subject-select data-grade="${escapeHtml(grade)}" aria-label="Choose a subject for ${escapeHtml(grade)}">
             <option value="All Subjects">Select subject</option>
             ${subjects.map((subject) => `<option value="${escapeHtml(subject)}">${escapeHtml(subject)}</option>`).join("")}
           </select>
