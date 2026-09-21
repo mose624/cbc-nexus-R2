@@ -4782,3 +4782,60 @@ body.admin-unlocked .admin-only-link {
     display: flex !important;
   }
 }
+
+
+/* Grade visibility: keep Grades on the left and use a clear red treatment. */
+.grade-card {
+  border-color: #c62828 !important;
+}
+
+.grade-toggle {
+  background: #c62828 !important;
+  color: #ffffff !important;
+}
+
+.grade-toggle:hover,
+.grade-toggle:focus-visible {
+  background: #a91f1f !important;
+  color: #ffffff !important;
+}
+
+.grade-card.open .grade-toggle {
+  background: #b71c1c !important;
+  color: #ffffff !important;
+}
+
+.subject-menu {
+  background: #fff5f5 !important;
+}
+
+.subject-dropdown {
+  border-color: #c62828 !important;
+}
+
+.subject-dropdown:focus {
+  border-color: #8e1616 !important;
+  box-shadow: 0 0 0 3px rgba(198, 40, 40, .14) !important;
+}
+
+@media (max-width: 640px) {
+  #dashboard.portal-dashboard > .portal-sidebar .grade-toggle {
+    background: #c62828 !important;
+    color: #ffffff !important;
+    border-color: #a91f1f !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-sidebar .grade-card.open .grade-toggle {
+    background: #b71c1c !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-sidebar .subject-menu {
+    background: #fff5f5 !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-sidebar .subject-dropdown {
+    border-color: #c62828 !important;
+    background: #ffffff !important;
+    color: #8e1616 !important;
+  }
+}
