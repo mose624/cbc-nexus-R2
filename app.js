@@ -1620,6 +1620,7 @@ function bindEvents() {
   safeOn(elements.adminStatusFilter, "change", () => renderAdminControlCentre(adminDashboardData || {}));
   document.querySelectorAll("[data-admin-module]").forEach((button) => safeOn(button, "click", () => setAdminModule(button.dataset.adminModule)));
 
+  // Grade 1-12 navigation: every grade opens its own subject dropdown.
   safeOn(elements.gradeList, "click", (event) => {
     const toggle = event.target.closest("[data-grade-toggle]");
     if (!toggle) return;
@@ -1627,22 +1628,23 @@ function bindEvents() {
     event.preventDefault();
     const card = toggle.closest(".grade-card");
     const grade = toggle.dataset.gradeToggle;
+    if (!card || !grade) return;
 
-    document.querySelectorAll(".grade-card").forEach((item) => {
-      if (item !== card) item.classList.remove("open");
-    });
-    document.querySelectorAll(".grade-toggle").forEach((button) => {
+    const wasOpen = card.classList.contains("open");
+
+    elements.gradeList.querySelectorAll(".grade-card").forEach((item) => item.classList.remove("open"));
+    elements.gradeList.querySelectorAll(".grade-toggle").forEach((button) => {
       button.classList.remove("active");
       button.setAttribute("aria-expanded", "false");
     });
 
-    if (card) card.classList.add("open");
-    toggle.classList.add("active");
-    toggle.setAttribute("aria-expanded", "true");
-
-    if (grade) {
+    // Keep the selected grade open, exactly like Grade 1.
+    if (!wasOpen) {
+      card.classList.add("open");
+      toggle.classList.add("active");
+      toggle.setAttribute("aria-expanded", "true");
       setGradeSubject(grade, "All Subjects");
-      showToast(grade + " selected — choose a subject.");
+      showToast(`${grade} selected — choose a subject.`);
     }
   });
 
@@ -1651,14 +1653,22 @@ function bindEvents() {
     if (!select) return;
 
     const grade = select.dataset.grade;
-    const subject = select.value;
-    if (!grade || subject === "All Subjects") {
-      setGradeSubject(grade, "All Subjects");
-      return;
-    }
+    const subject = select.value || "All Subjects";
+    if (!grade) return;
+
+    const card = select.closest(".grade-card");
+    const toggle = card?.querySelector("[data-grade-toggle]");
+    elements.gradeList.querySelectorAll(".grade-card").forEach((item) => item.classList.remove("open"));
+    elements.gradeList.querySelectorAll(".grade-toggle").forEach((button) => {
+      button.classList.remove("active");
+      button.setAttribute("aria-expanded", "false");
+    });
+    card?.classList.add("open");
+    toggle?.classList.add("active");
+    toggle?.setAttribute("aria-expanded", "true");
 
     setGradeSubject(grade, subject);
-    showToast(`${grade} — ${subject} selected.`);
+    if (subject !== "All Subjects") showToast(`${grade} — ${subject} selected.`);
   });
 
   safeOn(elements.resourceGrid, "click", (event) => {
