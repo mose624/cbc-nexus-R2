@@ -60,7 +60,7 @@
         <a href="#resources" data-material-link="Past Papers">Past Papers</a>
         <a href="#resources" data-material-link="Marking Schemes">Marking Schemes</a>
         <a href="#resources" data-material-link="Quizzes">Quizzes</a>
-        <a href="#cbcProjects">CBC Projects</a>
+        <a class="admin-only-link" href="#cbcProjects">CBC Projects</a>
         <a href="#holidayTuition">Holiday Tuition</a>
         <a href="#aiHomework">AI Homework Helper</a>
         <a href="#resources" data-material-link="Study Guides">Study Guides</a>
@@ -96,14 +96,14 @@
               <a href="#quizCentre">Quizzes &amp; Progress</a>
               <a href="#aiHomework">AI Homework Helper</a>
               <a href="#holidayTuition">Holiday Tuition</a>
-              <a href="#cbcProjects">CBC Projects</a>
+              <a class="admin-only-link" href="#cbcProjects">CBC Projects</a>
             </div>
           </details>
 
           <details class="nav-dropdown">
             <summary>Sell &amp; Earn <span>⌄</span></summary>
             <div class="dropdown-panel">
-              <a href="#sellerAccount">Seller Account</a>
+              <a class="admin-only-link" href="#sellerAccount">Seller Account</a>
               <button type="button" id="openSellerDashboardNavButton">Seller Dashboard</button>
             </div>
           </details>
@@ -220,7 +220,7 @@
                   <strong>LEARNING</strong>
                   <a href="#quizCentre">Quizzes &amp; Progress</a>
                   <a href="#aiHomework">AI Homework Helper</a>
-                  <a href="#cbcProjects">CBC Projects</a>
+                  <a class="admin-only-link" href="#cbcProjects">CBC Projects</a>
                   <a href="#resources" data-material-link="Study Guides">Study Guides</a>
                   <a href="#resources" data-material-link="Topical Questions">Topical Questions</a>
                 </td>
@@ -245,11 +245,11 @@
               <tr>
                 <td class="mobile-blue">
                   <strong>ACCOUNT &amp; SELL</strong>
-                  <a href="#sellerAccount">Seller Account</a>
+                  <a class="admin-only-link" href="#sellerAccount">Seller Account</a>
                   <a href="#referFriend">Refer a Friend</a>
-                  <a href="#sellEarn">Sell CBE Resources &amp; Earn 50%</a>
-                  <a href="#sellerAccount">Create Seller Account</a>
-                  <a href="#sellerDashboard">Seller Dashboard</a>
+                  <a class="admin-only-link" href="#sellEarn">Sell CBE Resources &amp; Earn 50%</a>
+                  <a class="admin-only-link" href="#sellerAccount">Create Seller Account</a>
+                  <a class="admin-only-link" href="#sellerDashboard">Seller Dashboard</a>
                 </td>
                 <td class="mobile-green">
                   <strong>PAYMENTS &amp; ORDERS</strong>
@@ -295,7 +295,7 @@
         </div>
       </section>
 
-      <section id="sellEarn" class="promo-band">
+      <section id="sellEarn" class="promo-band admin-only-section" aria-hidden="true">
         <div class="promo-layout">
           <div>
             <p class="eyebrow">Creator program</p>
@@ -306,7 +306,7 @@
         </div>
       </section>
 
-      <section id="sellerAccount" class="seller-band hidden-section">
+      <section id="sellerAccount" class="seller-band hidden-section admin-only-section" aria-hidden="true">
         <div class="section-heading">
           <div>
             <p class="eyebrow">Seller account</p>
@@ -355,7 +355,7 @@
         </div>
       </section>
 
-      <section id="sellerDashboard" class="seller-band hidden-section">
+      <section id="sellerDashboard" class="seller-band hidden-section admin-only-section" aria-hidden="true">
         <div class="section-heading">
           <div>
             <p class="eyebrow">Third-party seller dashboard</p>
@@ -505,7 +505,7 @@
         </div>
       </section>
 
-      <section id="cbcProjects" class="content-band">
+      <section id="cbcProjects" class="content-band admin-only-section" aria-hidden="true">
         <div class="section-heading">
           <div>
             <p class="eyebrow">CBC project centre</p>
@@ -863,7 +863,7 @@
         </div>
       </section>
 
-      <section id="admin" class="admin-band hidden-section" aria-hidden="true">
+      <section id="admin" class="admin-band hidden-section admin-only-section" aria-hidden="true">
         <div class="admin-layout">
           <div class="admin-copy">
             <p class="eyebrow">Admin dashboard</p>
