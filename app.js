@@ -1558,6 +1558,10 @@ function safeOn(element, eventName, handler, options) {
 }
 
 function bindEvents() {
+  window.addEventListener("hashchange", () => {
+    applyGradeSubjectFromLink(true);
+  });
+
   document.querySelectorAll("[data-material-link]").forEach((link) => {
     link.addEventListener("click", (event) => {
       event.preventDefault();
