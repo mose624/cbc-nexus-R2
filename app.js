@@ -1408,14 +1408,58 @@ async function requestMpesaPayment(event) {
   }
 }
 
-function setGradeSubject(grade, subject) {
+function syncGradeSubjectLink() {
+  const params = new URLSearchParams();
+  if (state.grade && state.grade !== "All Grades") params.set("grade", state.grade);
+  if (state.subject && state.subject !== "All Subjects") params.set("subject", state.subject);
+  const hash = params.toString() ? "#resources?" + params.toString() : "#resources";
+  if (window.location.hash !== hash) {
+    window.history.replaceState(null, "", hash);
+  }
+}
+
+function applyGradeSubjectFromLink(scroll = false) {
+  const raw = window.location.hash || "";
+  if (!raw.startsWith("#resources")) return false;
+  const query = raw.includes("?") ? raw.slice(raw.indexOf("?") + 1) : "";
+  const params = new URLSearchParams(query);
+  const grade = params.get("grade");
+  const subject = params.get("subject");
+
+  if (grade && gradeSubjects[grade]) {
+    state.grade = grade;
+    state.subject = subject && gradeSubjects[grade].includes(subject) ? subject : "All Subjects";
+    if (elements.gradeFilter) elements.gradeFilter.value = state.grade;
+    refreshSubjectFilters();
+    if (elements.subjectFilter) elements.subjectFilter.value = state.subject;
+
+    document.querySelectorAll("#gradeList .grade-card").forEach((card) => {
+      const active = card.dataset.gradeCard === grade;
+      card.classList.toggle("open", active);
+      const toggle = card.querySelector("[data-grade-toggle]");
+      toggle?.classList.toggle("active", active);
+      toggle?.setAttribute("aria-expanded", String(active));
+      const select = card.querySelector("[data-grade-subject-select]");
+      if (select) select.value = active ? state.subject : "All Subjects";
+    });
+
+    renderResources();
+    if (scroll) document.querySelector("#resources")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    return true;
+  }
+
+  return false;
+}
+
+function setGradeSubject(grade, subject, updateLink = true) {
   state.grade = grade;
   state.subject = subject;
-  elements.gradeFilter.value = grade;
+  if (elements.gradeFilter) elements.gradeFilter.value = grade;
   refreshSubjectFilters();
-  elements.subjectFilter.value = subject;
+  if (elements.subjectFilter) elements.subjectFilter.value = subject;
+  if (updateLink) syncGradeSubjectLink();
   renderResources();
-  document.querySelector("#resources").scrollIntoView({ behavior: "smooth", block: "start" });
+  document.querySelector("#resources")?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function createDownloadFile(resource) {
@@ -1930,6 +1974,7 @@ function injectContactInfo() {
 
 renderGradeDashboard();
 setupFilters();
+applyGradeSubjectFromLink(false);
 renderQuickTypes();
 restoreAdminAccess();
 bindEvents();
