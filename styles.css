@@ -4616,66 +4616,94 @@ button, a, input, select, textarea { touch-action: manipulation; }
     letter-spacing: .04em !important;
   }
 
-  .mobile-dashboard-panel {
+  .mobile-dashboard-table {
+    width: 100% !important;
+    height: 100% !important;
+    table-layout: fixed !important;
+    border-collapse: separate !important;
+    border-spacing: 3px !important;
+    background: #e8edf3 !important;
+  }
+
+  .mobile-dashboard-table td {
+    vertical-align: top !important;
     min-width: 0 !important;
     padding: 9px 5px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 5px !important;
+    border-radius: 7px !important;
   }
 
-  .mobile-dashboard-panel strong {
+  .mobile-dashboard-table td strong {
     display: block !important;
-    margin-bottom: 2px !important;
+    margin-bottom: 7px !important;
     font-size: 9px !important;
     line-height: 1.1 !important;
+    letter-spacing: .03em !important;
   }
 
-  .mobile-dashboard-panel a {
+  .mobile-dashboard-table td a {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    min-height: 32px !important;
-    padding: 5px 4px !important;
+    width: 100% !important;
+    min-height: 34px !important;
+    margin: 5px 0 !important;
+    padding: 5px 3px !important;
     border-radius: 5px !important;
     font-size: 8px !important;
     line-height: 1.12 !important;
     font-weight: 800 !important;
     text-align: center !important;
     overflow-wrap: anywhere !important;
-    border: 1px solid rgba(255,255,255,.35) !important;
-    background: rgba(255,255,255,.15) !important;
+    text-decoration: none !important;
+    border: 1px solid #b9cbe5 !important;
+    background: #f7fbff !important;
+    color: #0645ad !important;
+    box-shadow: 0 1px 2px rgba(18,52,71,.08) !important;
   }
 
-  .mobile-blue {
+  .mobile-dashboard-table td a:hover,
+  .mobile-dashboard-table td a:focus {
+    background: #0645ad !important;
+    color: #fff !important;
+    border-color: #043781 !important;
+  }
+
+  /* Blue button treatment across all three columns. */
+  .mobile-dashboard-table .mobile-green a,
+  .mobile-dashboard-table .mobile-yellow a {
+    color: #0645ad !important;
+    background: #f7fbff !important;
+    border-color: #9eb8dc !important;
+  }
+
+  .mobile-dashboard-table .mobile-green a:hover,
+  .mobile-dashboard-table .mobile-green a:focus,
+  .mobile-dashboard-table .mobile-yellow a:hover,
+  .mobile-dashboard-table .mobile-yellow a:focus {
+    color: #fff !important;
+    background: #0645ad !important;
+    border-color: #043781 !important;
+  }
+
+  .mobile-dashboard-table .mobile-blue {
     background: #0645ad !important;
     color: #fff !important;
   }
 
-  .mobile-blue a {
-    color: #fff !important;
-    background: rgba(255,255,255,.12) !important;
-  }
-
-  .mobile-green {
+  .mobile-dashboard-table .mobile-green {
     background: #2f7d57 !important;
     color: #fff !important;
   }
 
-  .mobile-green a {
-    color: #fff !important;
-    background: rgba(255,255,255,.12) !important;
-  }
-
-  .mobile-yellow {
+  .mobile-dashboard-table .mobile-yellow {
     background: #f4c542 !important;
     color: #2b2500 !important;
   }
 
-  .mobile-yellow a {
-    color: #4d3e00 !important;
-    background: #fff8d8 !important;
-    border-color: #d9bd55 !important;
+  .mobile-dashboard-table .mobile-blue strong,
+  .mobile-dashboard-table .mobile-green strong,
+  .mobile-dashboard-table .mobile-yellow strong {
+    color: inherit !important;
   }
 
   /* Make the remaining website sections feel like sizeable dashboard cards. */
