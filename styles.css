@@ -4667,16 +4667,16 @@ button, a, input, select, textarea { touch-action: manipulation; }
   .mobile-dashboard-table td {
     vertical-align: top !important;
     min-width: 0 !important;
-    padding: 9px 5px !important;
+    padding: 7px 4px !important;
     border-radius: 7px !important;
   }
 
   .mobile-dashboard-table td strong {
     display: block !important;
     margin-bottom: 7px !important;
-    font-size: 9px !important;
-    line-height: 1.1 !important;
-    letter-spacing: .03em !important;
+    font-size: 8px !important;
+    line-height: 1.05 !important;
+    letter-spacing: .02em !important;
   }
 
   .mobile-dashboard-table td a {
@@ -4684,12 +4684,12 @@ button, a, input, select, textarea { touch-action: manipulation; }
     align-items: center !important;
     justify-content: center !important;
     width: 100% !important;
-    min-height: 34px !important;
-    margin: 5px 0 !important;
-    padding: 5px 3px !important;
-    border-radius: 5px !important;
-    font-size: 8px !important;
-    line-height: 1.12 !important;
+    min-height: 29px !important;
+    margin: 4px 0 !important;
+    padding: 4px 2px !important;
+    border-radius: 4px !important;
+    font-size: 7px !important;
+    line-height: 1.08 !important;
     font-weight: 800 !important;
     text-align: center !important;
     overflow-wrap: anywhere !important;
