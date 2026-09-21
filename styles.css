@@ -4875,3 +4875,41 @@ body.admin-unlocked .admin-only-link {
 #dashboard.portal-dashboard > .portal-sidebar .grade-toggle{min-height:36px!important;padding:7px 6px!important;font-size:11px!important}
 #dashboard.portal-dashboard > .portal-sidebar .subject-dropdown{min-height:34px!important;font-size:10px!important}
 }
+
+/* FINAL MAIN DASHBOARD 30/40/30 LAYOUT */
+#dashboard.portal-dashboard {
+  width: min(1440px, calc(100% - 24px));
+  grid-template-columns: minmax(0, 30%) minmax(0, 40%) minmax(0, 30%);
+  gap: 12px;
+  align-items: start;
+}
+
+#dashboard.portal-dashboard > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (max-width: 1050px) {
+  #dashboard.portal-dashboard {
+    grid-template-columns: minmax(0, 30%) minmax(0, 40%) minmax(0, 30%);
+    gap: 8px;
+  }
+}
+
+@media (max-width: 760px) {
+  #dashboard.portal-dashboard {
+    width: calc(100% - 8px);
+    grid-template-columns: minmax(0, 30%) minmax(0, 40%) minmax(0, 30%);
+    gap: 4px;
+    margin: 5px auto;
+    align-items: stretch;
+  }
+
+  #dashboard.portal-dashboard > .portal-sidebar,
+  #dashboard.portal-dashboard > .portal-main,
+  #dashboard.portal-dashboard > .portal-rightbar {
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+  }
+}
