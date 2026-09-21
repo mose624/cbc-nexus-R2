@@ -32,7 +32,8 @@ const MPESA_PHONE = SecurityUtils.MPESA_PHONE;
 const WHATSAPP_PHONE = SecurityUtils.WHATSAPP_PHONE;
 const MPESA_ENDPOINT = SecurityUtils.MPESA_ENDPOINT;
 const API_ENDPOINTS = SecurityUtils.API_ENDPOINTS;
-const ADMIN_EMAIL = ""; // Admin identity is verified securely by the backend.\n
+const ADMIN_EMAIL = ""; // Admin identity is verified securely by the backend.
+
 const materialTypes = [
   "Notes",
   "Schemes of Work",
@@ -387,7 +388,9 @@ const elements = {
   toast: document.querySelector("#toast")
 };
 
-let toastTimer;\n\nfunction isAdminUnlocked(){ return document.body.classList.contains("admin-unlocked"); }
+let toastTimer;
+
+function isAdminUnlocked(){ return document.body.classList.contains("admin-unlocked"); }
 
 function setAdminOnlyVisibility(unlocked){
   document.body.classList.toggle("admin-unlocked", Boolean(unlocked));
@@ -1096,7 +1099,8 @@ async function unlockAdmin(event) {
       showToast("Admin login failed.");
       return;
     }
-    sessionStorage.setItem("cbeAdminUnlocked", "true");\n    setAdminOnlyVisibility(true);
+    sessionStorage.setItem("cbeAdminUnlocked", "true");
+    setAdminOnlyVisibility(true);
     const adminLoginSection = document.querySelector("#adminLogin");
     if (adminLoginSection) {
       adminLoginSection.classList.remove("open");
