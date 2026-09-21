@@ -83,22 +83,6 @@ a {
   border-color: rgba(255, 255, 255, 0.62);
 }
 
-/* Consistent light-green colour for upper-header quick-access buttons. */
-.top-strip a,
-.top-strip a.active {
-  background: #b7e4c7;
-  border-color: #8fc9a6;
-  color: #123447;
-}
-
-.top-strip a:hover,
-.top-strip a:focus-visible,
-.top-strip a.active {
-  background: #a3d9b6;
-  border-color: #78bb91;
-  color: #123447;
-}
-
 .main-nav,
 .dashboard-shell,
 .content-band,
