@@ -4749,3 +4749,15 @@ button, a, input, select, textarea { touch-action: manipulation; }
     overflow: hidden !important;
   }
 }
+
+
+/* Mobile dashboard columns: 30% blue, 40% green, 30% yellow. */
+@media (max-width: 768px) {
+  .mobile-dashboard-table {
+    width: 100%;
+    table-layout: fixed;
+  }
+  .mobile-dashboard-table td.mobile-blue { width: 30%; }
+  .mobile-dashboard-table td.mobile-green { width: 40%; }
+  .mobile-dashboard-table td.mobile-yellow { width: 30%; }
+}
