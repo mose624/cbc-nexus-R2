@@ -421,24 +421,24 @@ textarea:focus-visible {
   background: #fbfdfd;
 }
 
-/* Grade navigation: red for quick visibility while keeping grades in the left dashboard panel. */
+/* Grade navigation: green CBE Nexus theme. */
 .grade-card {
-  background: #c62828;
-  border-color: #a91f1f;
+  background: #0f7a4f;
+  border-color: #0b5f3d;
 }
 
 .grade-toggle {
-  background: #c62828;
+  background: #0f7a4f;
   color: #ffffff;
 }
 
 .grade-card.open .grade-toggle {
-  background: #b71c1c;
+  background: #0b5f3d;
   color: #ffffff;
 }
 
 .grade-toggle:hover {
-  background: #a91515;
+  background: #096b45;
   color: #ffffff;
 }
 
