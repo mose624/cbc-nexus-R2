@@ -1106,6 +1106,11 @@
       </div>
     </div>
     <script src="app.js?v=20260921-8"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => navigator.serviceWorker.register("/sw.js").catch(() => {}));
+      }
+    </script>
     <script src="r2-browser.js"></script>
     <script src="assessment-cbc-banks.js?v=20260921"></script>\n    <script src="assessment.js?v=20260921-2"></script>
   </body>
