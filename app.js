@@ -395,7 +395,21 @@ const elements = {
   toast: document.querySelector("#toast")
 };
 
-let toastTimer;
+let toastTimer;\n\nfunction isAdminUnlocked(){ return document.body.classList.contains("admin-unlocked"); }
+
+function setAdminOnlyVisibility(unlocked){
+  document.body.classList.toggle("admin-unlocked", Boolean(unlocked));
+  document.querySelectorAll(".admin-only-section").forEach((section) => {
+    const visible = Boolean(unlocked);
+    section.setAttribute("aria-hidden", String(!visible));
+  });
+  document.querySelectorAll(".admin-only-link").forEach((link) => {
+    link.setAttribute("aria-hidden", String(!unlocked));
+    link.tabIndex = unlocked ? 0 : -1;
+  });
+}
+
+
 
 function readSavedResources() {
   try {
@@ -1089,7 +1103,7 @@ async function unlockAdmin(event) {
       showToast("Admin login failed.");
       return;
     }
-    sessionStorage.setItem("cbeAdminUnlocked", "true");
+    sessionStorage.setItem("cbeAdminUnlocked", "true");\n    setAdminOnlyVisibility(true);
     const adminLoginSection = document.querySelector("#adminLogin");
     if (adminLoginSection) {
       adminLoginSection.classList.remove("open");
