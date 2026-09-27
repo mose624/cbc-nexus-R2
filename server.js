@@ -2,7 +2,7 @@ const http = require("http");
 const fs = require("fs/promises");
 const path = require("path");
 const crypto = require("crypto");
-const { createUploadUrl, createDownloadUrl, createPdfPreview, uploadObject } = require("./r2");
+const { createUploadUrl, createDownloadUrl, createPdfPreview, uploadObject, verifyR2Connection } = require("./r2");
 const OpenAI = require("openai");
 const { supabase, supabaseConfigured } = require("./supabase");
 
@@ -80,6 +80,16 @@ async function handleApi(req,res,url){
   if(req.method==="POST"&&url.pathname==="/api/r2/upload-url"){const p=JSON.parse((await readBody(req))||"{}"),admin=verifyAdminSession(req),seller=verifySellerSession(req);if(p.role==="admin"&&!admin){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}if(p.role==="seller"&&!seller){sendJson(res,401,{ok:false,error:"Approved seller login required."});return true;}if(!["admin","seller"].includes(p.role)){sendJson(res,400,{ok:false,error:"Upload role is required."});return true;}sendJson(res,200,{ok:true,...await createUploadUrl(p)});return true;}
   if(req.method==="POST"&&url.pathname==="/api/r2/project-upload-url"){const p=JSON.parse((await readBody(req))||"{}");if(!p.grade||!p.subject){sendJson(res,400,{ok:false,error:"Project grade and subject are required."});return true;}sendJson(res,200,{ok:true,...await createUploadUrl({...p,type:"CBC Projects"})});return true;}
   if(req.method==="GET"&&url.pathname==="/api/supabase/status"){sendJson(res,200,{ok:supabaseConfigured,supabaseConfigured,message:supabaseConfigured?"Supabase connection is configured.":"Add SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY to the Render environment."});return true;}
+  if(req.method==="GET"&&url.pathname==="/api/r2/verify"){
+    try{
+      const result=await verifyR2Connection();
+      sendJson(res,result.ok?200:502,{...result,r2Verified:result.ok});
+    }catch(error){
+      console.error("R2 verification error:",error);
+      sendJson(res,500,{ok:false,r2Verified:false,error:"Cloudflare R2 verification failed."});
+    }
+    return true;
+  }
   if(req.method==="GET"&&url.pathname==="/api/r2/status"){const required=["R2_ACCOUNT_ID","R2_ACCESS_KEY_ID","R2_SECRET_ACCESS_KEY","R2_BUCKET_NAME"],missing=required.filter(n=>!process.env[n]);sendJson(res,200,{ok:missing.length===0,r2Configured:missing.length===0,missing});return true;}
   if(req.method==="GET"&&url.pathname==="/api/resources"){if(supabaseConfigured){try{const {data,error}=await supabase.from("resources").select("*").order("created_at",{ascending:false});if(error)throw error;sendJson(res,200,{ok:true,resources:(data||[]).map(resourcePayloadFromRow),storage:"supabase"});return true;}catch(error){console.error("Supabase resource lookup error:",error);sendJson(res,500,{ok:false,error:"Resources could not be loaded from Supabase."});return true;}}sendJson(res,200,{ok:true,resources:await readJsonStore("resources.json"),storage:"local"});return true;}
   if(req.method==="POST"&&url.pathname==="/api/resources"){const payload=JSON.parse((await readBody(req))||"{}"),isAdmin=verifyAdminSession(req),sellerUsername=String(payload.sellerUsername||"").trim().toLowerCase(),authenticatedSeller=verifySellerSession(req),isSeller=Boolean(authenticatedSeller);if((payload.role==="admin"&&!isAdmin)||(payload.role==="seller"&&!isSeller)){sendJson(res,401,{ok:false,error:"Authorized account required."});return true;}if(!["admin","seller"].includes(payload.role)){sendJson(res,400,{ok:false,error:"Resource role is required."});return true;}if(supabaseConfigured){try{let sellerId=null;if(payload.role==="seller"){const username=authenticatedSeller||sellerUsername,{data:seller,error:sellerError}=await supabase.from("sellers").select("id").eq("username",username).maybeSingle();if(sellerError)throw sellerError;if(!seller){sendJson(res,403,{ok:false,error:"Approved seller account was not found in Supabase."});return true;}sellerId=seller.id;}const row=resourceRowFromPayload(payload,sellerId);if(!row.title||!row.grade||!row.subject||!row.resource_type||!row.r2_key){sendJson(res,400,{ok:false,error:"Resource title, grade, subject, type and R2 file are required."});return true;}const {data,error}=await supabase.from("resources").insert(row).select("*").single();if(error)throw error;sendJson(res,201,{ok:true,saved:resourcePayloadFromRow(data),storage:"supabase"});return true;}catch(error){console.error("Supabase resource save error:",error);sendJson(res,500,{ok:false,error:"Resource could not be saved to Supabase."});return true;}}const saved=await appendJsonStore("resources.json",payload);sendJson(res,201,{ok:true,saved,storage:"local"});return true;}
