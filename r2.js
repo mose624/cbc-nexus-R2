@@ -1,4 +1,4 @@
-const { S3Client, PutObjectCommand, GetObjectCommand } = require("@aws-sdk/client-s3");
+const { S3Client, PutObjectCommand, GetObjectCommand, HeadBucketCommand } = require("@aws-sdk/client-s3");
 const { PDFDocument } = require("pdf-lib");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
@@ -52,6 +52,20 @@ function buildKey({ grade, subject, type, fileName, resourceId }) {
     safePart(type),
     `${Date.now()}-${safePart(resourceId || "resource")}-${cleanName}${ext}`
   ].join("/");
+}
+
+async function verifyR2Connection() {
+  const { cfg, client } = getClient();
+  try {
+    await client.send(new HeadBucketCommand({ Bucket: cfg.bucket }));
+    return { ok: true, bucket: cfg.bucket };
+  } catch (error) {
+    const status = error?.$metadata?.httpStatusCode || null;
+    const code = error?.Code || error?.name || "R2_ERROR";
+    const message = String(error?.message || "Cloudflare R2 verification failed.")
+      .replace(/(access key|secret access key|authorization|signature)[^,.;]*/gi, "$1 [redacted]");
+    return { ok: false, bucket: cfg.bucket, status, code, message };
+  }
 }
 
 async function uploadObject(input, body) {
@@ -110,4 +124,4 @@ async function createDownloadUrl(key) {
   return getSignedUrl(client, command, { expiresIn: 300 });
 }
 
-module.exports = { createUploadUrl, createDownloadUrl, createPdfPreview, uploadObject };
+module.exports = { createUploadUrl, createDownloadUrl, createPdfPreview, uploadObject, verifyR2Connection };
