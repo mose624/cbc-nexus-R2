@@ -98,7 +98,7 @@
     grade.appendChild(option);
   });
   grade.value = grade.querySelector('option[value="Grade 7"]') ? "Grade 7" : grades[0];
-  refreshSubjectOptions();
+  // Subject options are initialized after gradeSubjects is declared below.
 
   // Keep the selected grade visible and usable whenever the learner changes it.
   grade.addEventListener("change", () => {
@@ -306,6 +306,9 @@
       "Music & Dance","Theatre & Film","Fine Arts"
     ]
   };
+
+  // Initialize subject options only after gradeSubjects has been created.
+  refreshSubjectOptions();
 
   const additionalQuestions = {
     "Kiswahili": [
