@@ -16,27 +16,25 @@
   async function upload(file, meta) {
     const ext = "." + (file.name.split(".").pop() || "").toLowerCase();
     if (!allowed.includes(ext)) throw new Error("Unsupported file type.");
-    const response = await fetch(meta.role === "project" ? "/api/r2/project-upload-url" : "/api/r2/upload-url", { credentials: "same-origin",
+
+    const role = meta.role || "admin";
+    const response = await fetch("/api/r2/upload", {
+      credentials: "same-origin",
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        grade: meta.grade,
-        subject: meta.subject,
-        type: meta.type,
-        fileName: safeFileName(file.name),
-        resourceId: meta.resourceId,
-        role: meta.role || "admin",
-        contentType: file.type || "application/octet-stream"
-      })
-    });
-    const data = await response.json();
-    if (!response.ok || !data.ok) throw new Error(data.error || "Could not create R2 upload URL.");
-    const put = await fetch(data.uploadUrl, {
-      method: "PUT",
-      headers: { "Content-Type": file.type || "application/octet-stream" },
+      headers: {
+        "Content-Type": file.type || "application/octet-stream",
+        "X-CBE-Grade": String(meta.grade || ""),
+        "X-CBE-Subject": String(meta.subject || ""),
+        "X-CBE-Type": String(meta.type || ""),
+        "X-CBE-Filename": safeFileName(file.name),
+        "X-CBE-Resource-Id": String(meta.resourceId || "resource"),
+        "X-CBE-Role": role
+      },
       body: file
     });
-    if (!put.ok) throw new Error("Cloudflare R2 upload failed.");
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || !data.ok) throw new Error(data.error || "Could not upload the resource to Cloudflare R2.");
+
     let previewKey = "";
     if (ext === ".pdf") {
       try {
