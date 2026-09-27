@@ -54,6 +54,19 @@ function buildKey({ grade, subject, type, fileName, resourceId }) {
   ].join("/");
 }
 
+async function uploadObject(input, body) {
+  const { cfg, client } = getClient();
+  const key = buildKey(input);
+  const contentType = input.contentType || "application/octet-stream";
+  await client.send(new PutObjectCommand({
+    Bucket: cfg.bucket,
+    Key: key,
+    Body: body,
+    ContentType: contentType
+  }));
+  return { key, fileName: input.fileName || "resource.bin" };
+}
+
 async function createUploadUrl(input) {
   const { cfg, client } = getClient();
   const key = buildKey(input);
@@ -97,4 +110,4 @@ async function createDownloadUrl(key) {
   return getSignedUrl(client, command, { expiresIn: 300 });
 }
 
-module.exports = { createUploadUrl, createDownloadUrl, createPdfPreview };
+module.exports = { createUploadUrl, createDownloadUrl, createPdfPreview, uploadObject };
