@@ -2,7 +2,7 @@ const http = require("http");
 const fs = require("fs/promises");
 const path = require("path");
 const crypto = require("crypto");
-const { createUploadUrl, createDownloadUrl, createPdfPreview } = require("./r2");
+const { createUploadUrl, createDownloadUrl, createPdfPreview, uploadObject } = require("./r2");
 const OpenAI = require("openai");
 const { supabase, supabaseConfigured } = require("./supabase");
 
@@ -35,6 +35,7 @@ function resourceRowFromPayload(p,sellerId=null){return {seller_id:sellerId,titl
 function resourcePayloadFromRow(r){return {id:r.id,title:r.title,grade:r.grade,subject:r.subject,type:r.resource_type||"",description:r.description||"",price:Number(r.price||0),discount:Number(r.discount_price||0),term:"",isFreeSample:false,popularity:0,fileName:r.filename||"",r2Key:r.r2_key||"",previewKey:"",previewText:"",file:r.r2_key?"/api/r2/file?key="+encodeURIComponent(r.r2_key):"",status:r.status||"pending",downloads:0,purchases:0,sellerId:r.seller_id||null,createdAt:r.created_at||null,updatedAt:r.updated_at||null};}
 function sendJson(res,status,data){res.writeHead(status,{"Content-Type":"application/json; charset=utf-8"});res.end(JSON.stringify(data));}
 function readBody(req){return new Promise((resolve,reject)=>{let b="";req.on("data",c=>{b+=c;if(b.length>MAX_BODY_SIZE){reject(new Error("Request body too large."));req.destroy();}});req.on("end",()=>resolve(b));req.on("error",reject);});}
+function readBinaryBody(req,maxSize=50*1024*1024){return new Promise((resolve,reject)=>{const chunks=[];let total=0;let settled=false;const fail=(e)=>{if(settled)return;settled=true;reject(e);try{req.destroy();}catch{}};req.on("data",c=>{if(settled)return;total+=c.length;if(total>maxSize){fail(new Error("Upload is too large. Maximum file size is 50 MB."));return;}chunks.push(c);});req.on("end",()=>{if(!settled){settled=true;resolve(Buffer.concat(chunks));}});req.on("error",fail);});}
 async function getMpesaAccessToken(){const k=String(process.env.MPESA_CONSUMER_KEY||""),s=String(process.env.MPESA_CONSUMER_SECRET||"");if(!k||!s)throw new Error("M-Pesa consumer credentials are not configured.");const base=String(process.env.MPESA_ENVIRONMENT||"sandbox").toLowerCase()==="production"?"https://api.safaricom.co.ke":"https://sandbox.safaricom.co.ke";return await new Promise((res,rej)=>{const https=require("https"),q=https.request(base+"/oauth/v1/generate?grant_type=client_credentials",{headers:{Authorization:"Basic "+Buffer.from(k+":"+s).toString("base64")}},r=>{let d="";r.on("data",c=>d+=c);r.on("end",()=>{try{const x=JSON.parse(d);x.access_token?res(x.access_token):rej(new Error("Daraja authorization failed."));}catch{rej(new Error("Invalid Daraja authorization response."));}})});q.on("error",rej);q.end();});}
 function normalizeMpesaPhone(p){p=String(p||"").replace(/\s+/g,"");if(/^0[17]\d{8}$/.test(p))return"254"+p.slice(1);if(/^254[17]\d{8}$/.test(p))return p;return"";}
 async function darajaPost(pathname,body,token){const https=require("https"),base=String(process.env.MPESA_ENVIRONMENT||"sandbox").toLowerCase()==="production"?"https://api.safaricom.co.ke":"https://sandbox.safaricom.co.ke";return await new Promise((res,rej)=>{const q=https.request(base+pathname,{method:"POST",headers:{Authorization:"Bearer "+token,"Content-Type":"application/json"}},r=>{let d="";r.on("data",c=>d+=c);r.on("end",()=>{try{res({status:r.statusCode||500,data:JSON.parse(d)});}catch{res({status:r.statusCode||500,data:{raw:d}});}})});q.on("error",rej);q.write(JSON.stringify(body));q.end();});}
@@ -53,6 +54,29 @@ async function handleApi(req,res,url){
   if(req.method==="POST"&&url.pathname==="/api/seller/login"){const p=JSON.parse((await readBody(req))||"{}"),u=String(p.username||"").trim().toLowerCase();let a=null;if(supabaseConfigured){try{const {data,error}=await supabase.from("sellers").select("id,user_id,phone,username,password_hash,status").eq("username",u).maybeSingle();if(error)throw error;a=data;}catch(error){console.error("Supabase seller login lookup error:",error);sendJson(res,500,{ok:false,error:"Seller account could not be checked in Supabase."});return true;}}else{const ac=await readJsonStore("seller-accounts.json");a=ac.find(x=>x.username===u);}if(!a||!(await verifyPassword(String(p.password||""),a.password_hash||a.passwordHash||""))){sendJson(res,401,{ok:false,error:"Invalid seller username or password."});return true;}if(a.status!=="approved"){sendJson(res,403,{ok:false,error:"Seller account is pending admin approval."});return true;}res.setHeader("Set-Cookie",sellerCookie(createSellerSession(u)));sendJson(res,200,{ok:true,account:{id:a.id,name:a.name||"Seller",phone:a.phone,username:a.username,status:a.status},storage:supabaseConfigured?"supabase":"local"});return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/seller-resource-status"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const p=JSON.parse((await readBody(req))||"{}"),items=await readJsonStore("resources.json"),next=items.map(x=>x.id===p.resourceId?{...x,status:String(p.status||"pending"),reviewedAt:new Date().toISOString()}:x);await fs.writeFile(path.join(DATA_DIR,"resources.json"),JSON.stringify(next,null,2));sendJson(res,200,{ok:true});return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/seller-account-status"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const p=JSON.parse((await readBody(req))||"{}"),status=String(p.status||"pending");if(supabaseConfigured){try{const {data,error}=await supabase.from("sellers").update({status}).eq("id",p.accountId).select("id,phone,username,status").single();if(error)throw error;sendJson(res,200,{ok:true,account:data,storage:"supabase"});return true;}catch(error){console.error("Supabase seller approval error:",error);sendJson(res,500,{ok:false,error:"Seller status could not be updated in Supabase."});return true;}}const ac=await readJsonStore("seller-accounts.json"),up=ac.map(x=>x.id===p.accountId?{...x,status,reviewedAt:new Date().toISOString()}:x);await fs.writeFile(path.join(DATA_DIR,"seller-accounts.json"),JSON.stringify(up,null,2));sendJson(res,200,{ok:true,storage:"local"});return true;}
+  if(req.method==="POST"&&url.pathname==="/api/r2/upload"){
+    const role=String(req.headers["x-cbe-role"]||"").trim().toLowerCase();
+    const admin=verifyAdminSession(req),seller=verifySellerSession(req);
+    if(role==="admin"&&!admin){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    if(role==="seller"&&!seller){sendJson(res,401,{ok:false,error:"Approved seller login required."});return true;}
+    if(!["admin","seller","project"].includes(role)){sendJson(res,400,{ok:false,error:"Upload role is required."});return true;}
+    const grade=String(req.headers["x-cbe-grade"]||"").trim();
+    const subject=String(req.headers["x-cbe-subject"]||"").trim();
+    const type=String(req.headers["x-cbe-type"]||"").trim();
+    const fileName=String(req.headers["x-cbe-filename"]||"resource.bin").trim();
+    const resourceId=String(req.headers["x-cbe-resource-id"]||"resource").trim();
+    const contentType=String(req.headers["content-type"]||"application/octet-stream").trim()||"application/octet-stream";
+    if(!grade||!subject||!type){sendJson(res,400,{ok:false,error:"Grade, subject and material type are required."});return true;}
+    try{
+      const body=await readBinaryBody(req);
+      const uploaded=await uploadObject({grade,subject,type,fileName,resourceId,contentType},body);
+      sendJson(res,200,{ok:true,...uploaded});
+    }catch(error){
+      console.error("R2 backend upload error:",error);
+      sendJson(res,500,{ok:false,error:error.message||"Cloudflare R2 upload failed."});
+    }
+    return true;
+  }
   if(req.method==="POST"&&url.pathname==="/api/r2/upload-url"){const p=JSON.parse((await readBody(req))||"{}"),admin=verifyAdminSession(req),seller=verifySellerSession(req);if(p.role==="admin"&&!admin){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}if(p.role==="seller"&&!seller){sendJson(res,401,{ok:false,error:"Approved seller login required."});return true;}if(!["admin","seller"].includes(p.role)){sendJson(res,400,{ok:false,error:"Upload role is required."});return true;}sendJson(res,200,{ok:true,...await createUploadUrl(p)});return true;}
   if(req.method==="POST"&&url.pathname==="/api/r2/project-upload-url"){const p=JSON.parse((await readBody(req))||"{}");if(!p.grade||!p.subject){sendJson(res,400,{ok:false,error:"Project grade and subject are required."});return true;}sendJson(res,200,{ok:true,...await createUploadUrl({...p,type:"CBC Projects"})});return true;}
   if(req.method==="GET"&&url.pathname==="/api/supabase/status"){sendJson(res,200,{ok:supabaseConfigured,supabaseConfigured,message:supabaseConfigured?"Supabase connection is configured.":"Add SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY to the Render environment."});return true;}
