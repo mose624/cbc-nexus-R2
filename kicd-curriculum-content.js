@@ -378,7 +378,7 @@
   root.curriculum["Grade 7"] = root.curriculum["Grade 7"] || {};
   root.banks["Grade 7"] = root.banks["Grade 7"] || {};
 
-  const curriculum = [{
+  const englishCurriculum = [{
     id:"G7-ENG-READING2", label:"Reading 2",
     subStrands:[
       {id:"G7-ENG-1.4.1",label:"1.4.1 Intensive Reading – Trickster Narrative",content:["Trickster narratives","Character actions and consequences"],learningOutcomes:["Identify features of a trickster narrative","Relate character actions to consequences"]},
@@ -417,7 +417,7 @@
     ["A poem repeatedly describes a small act of kindness that changes a lonely learner's day. Which theme is most clearly developed?",["Kindness can positively affect other people.","People should avoid helping others.","Loneliness is always permanent.","Small actions have no meaning."],0,0,1,"G7-ENG-READING2","G7-ENG-15.4.1"]
   ];
 
-  const byId = Object.fromEntries(curriculum[0].subStrands.map(x => [x.id,x]));
+  const byId = Object.fromEntries(englishCurriculum[0].subStrands.map(x => [x.id,x]));
   q.forEach(item => {
     const sub = byId[item[7]];
     item[7] = item[7];
@@ -425,6 +425,6 @@
     item[9] = sub.content[item[4]] || sub.content[0];
   });
 
-  root.curriculum["Grade 7"]["English"] = curriculum;
+  root.curriculum["Grade 7"]["English"] = englishCurriculum;
   root.banks["Grade 7"]["English"] = q.map(item => [item[0], item[1], item[2], "Literature and Reading", "KICD Grade 7 English", "G7-ENG-READING2", item[7], item[8], item[9]]);
 })();
