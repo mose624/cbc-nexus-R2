@@ -91,6 +91,21 @@
   const status = document.getElementById("quizStatus");
   const progressBox = document.getElementById("progressReport");
 
+  const questionSetter = document.getElementById("questionSetter");
+  const toggleQuestionSetterButton = document.getElementById("toggleQuestionSetterButton");
+  const setQuestionText = document.getElementById("setQuestionText");
+  const setOptionA = document.getElementById("setOptionA");
+  const setOptionB = document.getElementById("setOptionB");
+  const setOptionC = document.getElementById("setOptionC");
+  const setOptionD = document.getElementById("setOptionD");
+  const setCorrectAnswer = document.getElementById("setCorrectAnswer");
+  const setContentCovered = document.getElementById("setContentCovered");
+  const setExplanation = document.getElementById("setExplanation");
+  const saveSetQuestionButton = document.getElementById("saveSetQuestionButton");
+  const clearSetQuestionButton = document.getElementById("clearSetQuestionButton");
+  const questionSetterStatus = document.getElementById("questionSetterStatus");
+  const setQuestionsList = document.getElementById("setQuestionsList");
+
   // Populate the assessment Grade dropdown with Grade 1–12.
   // Clear existing options first so this remains safe if the page already has options.
   grade.innerHTML = "";
@@ -107,6 +122,7 @@
   grade.addEventListener("change", () => {
     refreshSubjectOptions();
     refreshStrandOptions();
+    renderSetQuestions();
     if (instructions) {
       instructions.textContent = grade.value + " " + subject.value + " selected. Choose a strand/topic or All Topics, then click Start / Restart Quiz.";
     }
@@ -114,6 +130,7 @@
   if (subject) {
     subject.addEventListener("change", () => {
       refreshStrandOptions();
+      renderSetQuestions();
       if (instructions) {
         instructions.textContent = grade.value + " " + subject.value + " selected. Choose a strand/topic or All Topics, then click Start / Restart Quiz.";
       }
@@ -562,6 +579,21 @@
     refreshStrandOptions();
   }
 
+  const CUSTOM_QUESTIONS_KEY = "cbeNexusCustomQuestions";
+
+  function readCustomQuestions() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(CUSTOM_QUESTIONS_KEY) || "[]");
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function saveCustomQuestions(items) {
+    localStorage.setItem(CUSTOM_QUESTIONS_KEY, JSON.stringify(items.slice(0, 500)));
+  }
+
   function getGradeQuestionBank(selectedGrade, selectedSubject) {
     const n = Number(String(selectedGrade).replace(/[^0-9]/g, "")) || 7;
     const gradeBank = window.CBENexusCBCBanks &&
@@ -569,7 +601,21 @@
       window.CBENexusCBCBanks.banks[selectedGrade] &&
       window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject];
 
-    let combined = Array.isArray(gradeBank) ? gradeBank.slice() : [];
+    const customBank = readCustomQuestions()
+      .filter((item) => item.grade === selectedGrade && item.subject === selectedSubject)
+      .map((item) => [
+        item.question,
+        item.options,
+        Number(item.correctIndex),
+        item.strand || "All Topics",
+        item.explanation || "",
+        item.strand || "All Topics",
+        item.subStrand || "All Sub-Strands",
+        item.learningOutcome || "All Outcomes",
+        item.contentCovered || ""
+      ]);
+
+    let combined = (Array.isArray(gradeBank) ? gradeBank.slice() : []).concat(customBank);
     const selectedStrand = strand ? strand.value : "All Topics";
 
     if (selectedStrand && selectedStrand !== "All Topics") {
@@ -591,6 +637,74 @@
     const rotation = combined.length ? (n - 1) % combined.length : 0;
     return combined.slice(rotation).concat(combined.slice(0, rotation));
   };
+
+  function clearQuestionSetterForm() {
+    [setQuestionText, setOptionA, setOptionB, setOptionC, setOptionD, setContentCovered, setExplanation]
+      .forEach((el) => { if (el) el.value = ""; });
+    if (setCorrectAnswer) setCorrectAnswer.value = "0";
+  }
+
+  function renderSetQuestions() {
+    if (!setQuestionsList) return;
+    const items = readCustomQuestions()
+      .filter((item) => item.grade === grade.value && item.subject === subject.value);
+
+    if (!items.length) {
+      setQuestionsList.innerHTML = "<p>No custom questions have been set for this grade and subject yet.</p>";
+      return;
+    }
+
+    setQuestionsList.innerHTML = items.map((item) =>
+      "<article><strong>" + escapeHtml(item.question) + "</strong>" +
+      "<span>" + escapeHtml(item.grade + " — " + item.subject + " — " + (item.strand || "All Topics")) + "</span>" +
+      "<span>Correct answer: " + escapeHtml(item.options[item.correctIndex]) + "</span>" +
+      "<button type='button' class='ghost-button delete-set-question' data-question-id='" + escapeHtml(item.id) + "'>Delete</button></article>"
+    ).join("");
+
+    setQuestionsList.querySelectorAll(".delete-set-question").forEach((button) => {
+      button.addEventListener("click", () => {
+        saveCustomQuestions(readCustomQuestions().filter((item) => item.id !== button.dataset.questionId));
+        renderSetQuestions();
+        if (questionSetterStatus) questionSetterStatus.textContent = "Question deleted.";
+      });
+    });
+  }
+
+  function saveSetQuestion() {
+    const question = String(setQuestionText && setQuestionText.value || "").trim();
+    const options = [
+      String(setOptionA && setOptionA.value || "").trim(),
+      String(setOptionB && setOptionB.value || "").trim(),
+      String(setOptionC && setOptionC.value || "").trim(),
+      String(setOptionD && setOptionD.value || "").trim()
+    ];
+    const correctIndex = Number(setCorrectAnswer && setCorrectAnswer.value || 0);
+
+    if (!question || options.some((value) => !value)) {
+      if (questionSetterStatus) questionSetterStatus.textContent = "Enter the question and all four answer options.";
+      return;
+    }
+
+    const items = readCustomQuestions();
+    items.unshift({
+      id: "custom-" + Date.now(),
+      grade: grade.value,
+      subject: subject.value,
+      strand: strand ? strand.value : "All Topics",
+      subStrand: subStrand ? subStrand.value : "All Sub-Strands",
+      learningOutcome: outcome ? outcome.value : "All Outcomes",
+      contentCovered: String(setContentCovered && setContentCovered.value || "").trim(),
+      question,
+      options,
+      correctIndex,
+      explanation: String(setExplanation && setExplanation.value || "").trim() || "Review the curriculum content and reasoning behind the correct answer.",
+      createdAt: new Date().toISOString()
+    });
+    saveCustomQuestions(items);
+    renderSetQuestions();
+    clearQuestionSetterForm();
+    if (questionSetterStatus) questionSetterStatus.textContent = "Question saved. It will be included in the next quiz for this selection.";
+  }
 
   let active = [];
   let startedAt = 0;
@@ -902,6 +1016,19 @@
     event.preventDefault();
     markQuiz(false);
   });
+
+  if (toggleQuestionSetterButton && questionSetter) {
+    toggleQuestionSetterButton.addEventListener("click", () => {
+      questionSetter.classList.toggle("hidden-section");
+      toggleQuestionSetterButton.textContent = questionSetter.classList.contains("hidden-section")
+        ? "Open Question Setter"
+        : "Close Question Setter";
+      renderSetQuestions();
+    });
+  }
+
+  if (saveSetQuestionButton) saveSetQuestionButton.addEventListener("click", saveSetQuestion);
+  if (clearSetQuestionButton) clearSetQuestionButton.addEventListener("click", clearQuestionSetterForm);
 
   startButton.addEventListener("click", startQuiz);
   clearButton.addEventListener("click", function() {
