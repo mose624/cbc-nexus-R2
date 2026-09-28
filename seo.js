@@ -1,4 +1,6 @@
 const { supabase, supabaseConfigured } = require("./supabase");
+const fs = require("fs/promises");
+const path = require("path");
 const GRADES=["7","8","9","10","11","12"];
 const SUBJECTS={
 "7":["Mathematics","Integrated Science","English","Kiswahili","Social Studies","Agriculture","Creative Arts","Pre-Technical Studies"],
@@ -27,11 +29,20 @@ function gradePage(req,g,sub){
  return page(req,"Grade "+g+" CBC Resources Kenya | CBE Nexus","Grade "+g+" CBC/CBE notes, exams, revision questions, marking schemes and teacher resources for Kenya.","/grade-"+g,"Grade "+g+" CBC Resources Kenya","Browse Grade "+g+" subjects and discover CBC/CBE notes, exams, revision questions, marking schemes and teacher resources.",links);
 }
 async function resourcePage(req,id){
- if(!supabaseConfigured)return null;
  try{
-  const {data:r,error}=await supabase.from("resources").select("id,title,description,grade,subject,resource_type,price,discount_price,status,created_at,updated_at,filename").eq("id",id).eq("status","approved").maybeSingle();
-  if(error)throw error;
-  if(!r)return null;
+  let r=null;
+  if(supabaseConfigured){
+   const {data,error}=await supabase.from("resources").select("id,title,description,grade,subject,resource_type,price,discount_price,status,created_at,updated_at,filename").eq("id",id).eq("status","approved").maybeSingle();
+   if(error)throw error;
+   r=data||null;
+  }
+  if(!r){
+   try{
+    const local=JSON.parse(await fs.readFile(path.join(__dirname,"backend-data","resources.json"),"utf8"));
+    r=(Array.isArray(local)?local:[]).find(x=>String(x.id)===String(id)&&String(x.status||"approved").toLowerCase()==="approved")||null;
+   }catch{}
+  }
+  if(!r)return page(req,"Resource Not Found | CBE Nexus","The requested CBE Nexus resource could not be found or is not currently approved.","/resource/"+encodeURIComponent(String(id)),"Resource not found","This resource is unavailable or has not been approved for publication yet.",[{url:"/",label:"CBE Nexus Home"},{url:"/cbc-notes-kenya",label:"CBC Notes Kenya"},{url:"/cbc-exams-kenya",label:"CBC Exams Kenya"}]);
   const type=r.resource_type||"Learning Resource", grade=r.grade||"CBC", subject=r.subject||"General";
   const title=String(r.title||"").trim()||type+" for Grade "+grade+" "+subject;
   const pageTitle=title+" | Grade "+grade+" "+subject+" | CBE Nexus Kenya";
