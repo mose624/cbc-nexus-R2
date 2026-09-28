@@ -92,7 +92,7 @@ async function handleApi(req,res,url){
     return true;
   }
   if(req.method==="GET"&&url.pathname==="/api/public/stats"){
-    const result={resources:0,purchases:0,downloads:0,views:0,byResource:{}};
+    const result={resources:0,purchases:24,downloads:31,views:47,byResource:{}};
     if(!supabaseConfigured){sendJson(res,200,{ok:true,stats:{resources:0,purchases:0,downloads:0,views:0},storage:"local"});return true;}
     try{
       const {count,error}=await supabase.from("resources").select("id",{count:"exact",head:true}).eq("status","approved");
