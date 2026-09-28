@@ -419,22 +419,31 @@
     return Array.isArray(gradeBank) ? gradeBank.slice() : [];
   }
 
+  function getCurriculumItems(selectedGrade, selectedSubject) {
+    const map = window.CBENexusCBCBanks &&
+      window.CBENexusCBCBanks.curriculum &&
+      window.CBENexusCBCBanks.curriculum[selectedGrade] &&
+      window.CBENexusCBCBanks.curriculum[selectedGrade][selectedSubject];
+
+    if (!Array.isArray(map)) return [];
+
+    return map.map((item) => {
+      if (typeof item === "string") return { id: item, label: item, subStrands: [] };
+      return {
+        id: String(item.id || item.label || ""),
+        label: String(item.label || item.id || ""),
+        subStrands: Array.isArray(item.subStrands) ? item.subStrands : []
+      };
+    }).filter((item) => item.id && item.label);
+  }
+
   function refreshStrandOptions() {
     if (!strand) return;
     const current = strand.value || "All Topics";
-    const curriculumMap = window.CBENexusCBCBanks &&
-      window.CBENexusCBCBanks.curriculum &&
-      window.CBENexusCBCBanks.curriculum[grade.value] &&
-      window.CBENexusCBCBanks.curriculum[grade.value][subject.value];
-
+    const curriculumItems = getCurriculumItems(grade.value, subject.value);
     const questions = getAvailableQuestions(grade.value, subject.value);
-    const questionTopics = Array.from(new Set(
-      questions.map((item) => item[3]).filter(Boolean)
-    ));
-
-    const topics = Array.isArray(curriculumMap) && curriculumMap.length
-      ? curriculumMap
-      : questionTopics;
+    const questionTopics = Array.from(new Set(questions.map((item) => item[3]).filter(Boolean)));
+    const topics = curriculumItems.length ? curriculumItems.map((item) => item.id) : questionTopics;
 
     strand.innerHTML = "";
     const all = document.createElement("option");
@@ -442,10 +451,11 @@
     all.textContent = "All Topics";
     strand.appendChild(all);
 
-    topics.forEach((topic) => {
+    topics.forEach((topicId) => {
+      const item = curriculumItems.find((entry) => entry.id === topicId);
       const option = document.createElement("option");
-      option.value = topic;
-      option.textContent = topic;
+      option.value = topicId;
+      option.textContent = item ? item.label : topicId;
       strand.appendChild(option);
     });
 
@@ -474,16 +484,15 @@
       window.CBENexusCBCBanks.banks[selectedGrade] &&
       window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject];
 
-    // Assessment questions must come from the selected Grade + Subject bank.
-    // Do not silently fall back to another grade or a generic subject bank.
     let combined = Array.isArray(gradeBank) ? gradeBank.slice() : [];
-
     const selectedStrand = strand ? strand.value : "All Topics";
+
     if (selectedStrand && selectedStrand !== "All Topics") {
-      combined = combined.filter((item) => String(item[3]) === String(selectedStrand));
+      combined = combined.filter((item) =>
+        String(item[5] || item[3] || "") === String(selectedStrand)
+      );
     }
 
-    // Rotate the selected grade bank so repeated attempts vary.
     const rotation = combined.length ? (n - 1) % combined.length : 0;
     return combined.slice(rotation).concat(combined.slice(0, rotation));
   };
