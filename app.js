@@ -710,6 +710,7 @@ function renderResources() {
       </div>
       <div class="card-actions resource-library-actions">
         <button class="primary-button resource-action-button" type="button" data-pay="${escapeHtml(resource.id)}">Pay M-Pesa</button>
+        <a class="secondary-button resource-action-button whatsapp-buy-button" href="${whatsappLink(resource, discountedPrice(resource))}" target="_blank" rel="noopener" data-whatsapp-buy="${escapeHtml(resource.id)}">💬 Buy via WhatsApp</a>
         <button class="secondary-button resource-action-button" type="button" data-preview-resource="${escapeHtml(resource.id)}">👁 Preview</button>
         ${resource.isFreeSample ? `<a class="secondary-button resource-action-button" href="${escapeHtml(resource.file)}&free=1" download="${escapeHtml(resource.fileName || "")}">Preview Sample</a>` : ""}
         ${localStorage.getItem(REFERRAL_KEY) ? `<a class="secondary-button resource-action-button" href="${escapeHtml(resource.file)}&free=1" download="${escapeHtml(resource.fileName || "")}" data-free-resource="${escapeHtml(resource.id)}">Free Referral Paper</a>` : ""}
