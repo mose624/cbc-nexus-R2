@@ -75,6 +75,8 @@
   const grade = document.getElementById("quizGradeInput");
   const subject = document.getElementById("quizSubjectInput");
   const strand = document.getElementById("quizStrandInput");
+  const subStrand = document.getElementById("quizSubStrandInput");
+  const contentCovered = document.getElementById("quizContentCovered");
   const outcome = document.getElementById("quizOutcomeInput");
   const length = document.getElementById("quizLengthInput");
   const mode = document.getElementById("quizModeInput");
@@ -122,6 +124,15 @@
       refreshOutcomeOptions();
       if (instructions) {
         instructions.textContent = grade.value + " " + subject.value + " — " + strand.value + " selected. Choose a specific learning outcome or All Learning Outcomes, then click Start / Restart Quiz.";
+      }
+    });
+  }
+  if (subStrand) {
+    subStrand.addEventListener("change", () => {
+      updateCurriculumContent();
+      refreshOutcomeOptions();
+      if (instructions) {
+        instructions.textContent = grade.value + " " + subject.value + " — " + strand.value + " — " + subStrand.value + " selected. Choose a specific learning outcome or All Learning Outcomes, then click Start / Restart Quiz.";
       }
     });
   }
@@ -451,12 +462,47 @@
     return items.find((item) => item.id === strand.value) || null;
   }
 
+  function getSelectedSubStrand() {
+    const item = getSelectedCurriculumItem();
+    if (!item || !Array.isArray(item.subStrands)) return null;
+    return item.subStrands.find((entry) => String(entry.id || entry.label) === String(subStrand ? subStrand.value : "")) || null;
+  }
+
+  function refreshSubStrandOptions() {
+    if (!subStrand) return;
+    const item = getSelectedCurriculumItem();
+    const list = item && Array.isArray(item.subStrands) ? item.subStrands : [];
+    subStrand.innerHTML = "";
+    const all = document.createElement("option");
+    all.value = "All Sub-Strands";
+    all.textContent = "All Sub-Strands";
+    subStrand.appendChild(all);
+    list.forEach((entry) => {
+      const option = document.createElement("option");
+      option.value = String(entry.id || entry.label || "");
+      option.textContent = String(entry.label || entry.id || "");
+      subStrand.appendChild(option);
+    });
+    updateCurriculumContent();
+  }
+
+  function updateCurriculumContent() {
+    const selected = getSelectedSubStrand();
+    if (!contentCovered) return;
+    const content = selected && Array.isArray(selected.content) ? selected.content : [];
+    contentCovered.innerHTML = content.length
+      ? "<strong>Content Covered:</strong> " + content.map((item) => escapeHtml(String(item))).join(" • ")
+      : "Select a strand and sub-strand to view content covered.";
+  }
+
   function refreshOutcomeOptions() {
     if (!outcome) return;
     const current = outcome.value || "All Outcomes";
+    const selectedSub = getSelectedSubStrand();
     const item = getSelectedCurriculumItem();
-    const outcomes = item
-      ? item.subStrands.flatMap((sub) => Array.isArray(sub.learningOutcomes) ? sub.learningOutcomes : [])
+    const outcomes = selectedSub
+      ? (Array.isArray(selectedSub.learningOutcomes) ? selectedSub.learningOutcomes : [])
+      : (item ? item.subStrands.flatMap((sub) => Array.isArray(sub.learningOutcomes) ? sub.learningOutcomes : []) : [])
       : [];
 
     outcome.innerHTML = "";
@@ -498,6 +544,7 @@
     });
 
     strand.value = topics.includes(current) ? current : "All Topics";
+    refreshSubStrandOptions();
     refreshOutcomeOptions();
   }
 
@@ -530,6 +577,11 @@
       combined = combined.filter((item) =>
         String(item[5] || item[3] || "") === String(selectedStrand)
       );
+    }
+
+    const selectedSub = subStrand ? subStrand.value : "All Sub-Strands";
+    if (selectedSub && selectedSub !== "All Sub-Strands") {
+      combined = combined.filter((item) => String(item[6] || item[3] || "") === String(selectedSub) || String(item[7] || "") === String(selectedSub));
     }
 
     const selectedOutcome = outcome ? outcome.value : "All Outcomes";
@@ -728,7 +780,12 @@
       legend.textContent = (index + 1) + ". " + item[0];
       fieldset.appendChild(legend);
 
-      item[1].forEach((optionText, optionIndex) => {
+      const optionOrder = item[1].map((optionText, optionIndex) => ({
+        text: optionText,
+        originalIndex: optionIndex
+      }));
+      shuffle(optionOrder);
+      optionOrder.forEach(({text: optionText, originalIndex: optionIndex}) => {
         const label = document.createElement("label");
         label.className = "quiz-option";
         const input = document.createElement("input");
@@ -788,6 +845,7 @@
       subject: subject.value,
       strand: strand ? strand.value : "All Topics",
       learningOutcome: outcome ? outcome.value : "All Outcomes",
+      subStrand: subStrand ? subStrand.value : "All Sub-Strands",
       mode: mode.value,
       total: total,
       answered: answered,
