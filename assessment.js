@@ -459,31 +459,21 @@
 
   function getGradeQuestionBank(selectedGrade, selectedSubject) {
     const n = Number(String(selectedGrade).replace(/[^0-9]/g, "")) || 7;
-    const cbcBank = window.CBENexusCBCBanks &&
+    const gradeBank = window.CBENexusCBCBanks &&
       window.CBENexusCBCBanks.banks &&
       window.CBENexusCBCBanks.banks[selectedGrade] &&
       window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject];
-    const base = cbcBank || bank[selectedSubject] || additionalQuestions[selectedSubject] || bank["CBC Skills"];
-    let extra = additionalQuestions[selectedSubject] ? additionalQuestions[selectedSubject].slice() : [];
-    if (n <= 3) {
-      extra = gradePools["Grade 1"][selectedSubject] || [];
-    } else if (n <= 6) {
-      extra = bandQuestions.primaryUpper[selectedSubject] || [];
-    } else if (n <= 9) {
-      extra = bandQuestions.junior[selectedSubject] || [];
-    } else {
-      extra = bandQuestions.senior[selectedSubject] || [];
-    }
 
-    // Rotate by grade so adjacent grades do not receive the same first questions.
-    let combined = base.concat(extra).slice();
+    // Assessment questions must come from the selected Grade + Subject bank.
+    // Do not silently fall back to another grade or a generic subject bank.
+    let combined = Array.isArray(gradeBank) ? gradeBank.slice() : [];
+
     const selectedStrand = strand ? strand.value : "All Topics";
     if (selectedStrand && selectedStrand !== "All Topics") {
-      combined = combined.filter((item) => item[3] === selectedStrand);
+      combined = combined.filter((item) => String(item[3]) === String(selectedStrand));
     }
-    if (!combined.length) {
-      combined = base.concat(extra).slice();
-    }
+
+    // Rotate the selected grade bank so repeated attempts vary.
     const rotation = combined.length ? (n - 1) % combined.length : 0;
     return combined.slice(rotation).concat(combined.slice(0, rotation));
   };
@@ -655,7 +645,14 @@
     }
 
     const selectedBank = getGradeQuestionBank(grade.value, subject.value);
-    active = shuffle(selectedBank).slice(0, Math.min(Number(length.value || 10), selectedBank.length));
+    if (!selectedBank.length) {
+      status.textContent = "No question bank is available for " + grade.value + " — " + subject.value + (strand && strand.value !== "All Topics" ? " — " + strand.value : "") + ". Please choose another topic or subject.";
+      questionsBox.innerHTML = "";
+      submitButton.disabled = true;
+      return;
+    }
+    const requested = Number(length.value || 10);
+    active = shuffle(selectedBank).slice(0, Math.min(requested, selectedBank.length));
     startedAt = Date.now();
     submitted = false;
     clearInterval(timerId);
