@@ -1768,7 +1768,7 @@ function bindEvents() {
     if (payButton) {
       selectResourceForPayment(payButton.dataset.pay);
     }
-    if (previewButton) openResourcePreview(previewButton.dataset.previewResource);
+    if (previewButton) { trackResourceView(previewButton.dataset.previewResource); openResourcePreview(previewButton.dataset.previewResource); }
     if (cartButton) {
       addToCart(cartButton.dataset.cart);
     }
