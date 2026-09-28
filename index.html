@@ -609,6 +609,58 @@
             <button class="secondary-button" id="startQuizButton" type="button">Start / Restart Quiz</button>
           </div>
 
+          <div class="quiz-setter-panel">
+            <div class="progress-panel-heading">
+              <div>
+                <h3>Set Questions</h3>
+                <p>Create your own curriculum-linked multiple-choice questions. Saved questions are available when you start quizzes on this browser.</p>
+              </div>
+              <button class="secondary-button" id="toggleQuestionSetterButton" type="button">Open Question Setter</button>
+            </div>
+
+            <div id="questionSetter" class="hidden-section">
+              <div class="form-row">
+                <label>
+                  Question
+                  <textarea id="setQuestionText" rows="3" placeholder="e.g. What is the place value of 8 in 48,305?"></textarea>
+                </label>
+              </div>
+              <div class="form-row">
+                <label>Option A<input id="setOptionA" placeholder="First option"></label>
+                <label>Option B<input id="setOptionB" placeholder="Second option"></label>
+                <label>Option C<input id="setOptionC" placeholder="Third option"></label>
+                <label>Option D<input id="setOptionD" placeholder="Fourth option"></label>
+              </div>
+              <div class="form-row">
+                <label>
+                  Correct Answer
+                  <select id="setCorrectAnswer">
+                    <option value="0">A</option>
+                    <option value="1">B</option>
+                    <option value="2">C</option>
+                    <option value="3">D</option>
+                  </select>
+                </label>
+                <label>
+                  Content Covered
+                  <input id="setContentCovered" placeholder="Specific content assessed">
+                </label>
+              </div>
+              <div class="form-row">
+                <label>
+                  Explanation
+                  <textarea id="setExplanation" rows="2" placeholder="Explain why the correct answer is correct."></textarea>
+                </label>
+              </div>
+              <div class="quiz-actions">
+                <button class="primary-button" id="saveSetQuestionButton" type="button">Save Question</button>
+                <button class="ghost-button" id="clearSetQuestionButton" type="button">Clear Form</button>
+              </div>
+              <p id="questionSetterStatus" class="form-status" aria-live="polite"></p>
+              <div id="setQuestionsList" class="quiz-review"></div>
+            </div>
+          </div>
+
           <div id="quizInstructions" class="quiz-instructions">
             Select the learner, grade and subject, then click <strong>Start / Restart Quiz</strong>.
           </div>
