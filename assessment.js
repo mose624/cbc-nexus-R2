@@ -75,6 +75,7 @@
   const grade = document.getElementById("quizGradeInput");
   const subject = document.getElementById("quizSubjectInput");
   const strand = document.getElementById("quizStrandInput");
+  const outcome = document.getElementById("quizOutcomeInput");
   const length = document.getElementById("quizLengthInput");
   const mode = document.getElementById("quizModeInput");
   const startButton = document.getElementById("startQuizButton");
@@ -118,8 +119,16 @@
   }
   if (strand) {
     strand.addEventListener("change", () => {
+      refreshOutcomeOptions();
       if (instructions) {
-        instructions.textContent = grade.value + " " + subject.value + " — " + strand.value + " selected. Click Start / Restart Quiz.";
+        instructions.textContent = grade.value + " " + subject.value + " — " + strand.value + " selected. Choose a specific learning outcome or All Learning Outcomes, then click Start / Restart Quiz.";
+      }
+    });
+  }
+  if (outcome) {
+    outcome.addEventListener("change", () => {
+      if (instructions) {
+        instructions.textContent = grade.value + " " + subject.value + " — " + strand.value + " — " + outcome.value + " selected. Click Start / Restart Quiz.";
       }
     });
   }
@@ -437,6 +446,35 @@
     }).filter((item) => item.id && item.label);
   }
 
+  function getSelectedCurriculumItem() {
+    const items = getCurriculumItems(grade.value, subject.value);
+    return items.find((item) => item.id === strand.value) || null;
+  }
+
+  function refreshOutcomeOptions() {
+    if (!outcome) return;
+    const current = outcome.value || "All Outcomes";
+    const item = getSelectedCurriculumItem();
+    const outcomes = item
+      ? item.subStrands.flatMap((sub) => Array.isArray(sub.learningOutcomes) ? sub.learningOutcomes : [])
+      : [];
+
+    outcome.innerHTML = "";
+    const all = document.createElement("option");
+    all.value = "All Outcomes";
+    all.textContent = "All Learning Outcomes";
+    outcome.appendChild(all);
+
+    [...new Set(outcomes.map((value) => String(value).trim()).filter(Boolean))].forEach((value) => {
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = value;
+      outcome.appendChild(option);
+    });
+
+    outcome.value = outcomes.includes(current) ? current : "All Outcomes";
+  }
+
   function refreshStrandOptions() {
     if (!strand) return;
     const current = strand.value || "All Topics";
@@ -460,6 +498,7 @@
     });
 
     strand.value = topics.includes(current) ? current : "All Topics";
+    refreshOutcomeOptions();
   }
 
   function refreshSubjectOptions() {
@@ -491,6 +530,11 @@
       combined = combined.filter((item) =>
         String(item[5] || item[3] || "") === String(selectedStrand)
       );
+    }
+
+    const selectedOutcome = outcome ? outcome.value : "All Outcomes";
+    if (selectedOutcome && selectedOutcome !== "All Outcomes") {
+      combined = combined.filter((item) => String(item[6] || "") === String(selectedOutcome));
     }
 
     const rotation = combined.length ? (n - 1) % combined.length : 0;
@@ -743,6 +787,7 @@
       grade: grade.value,
       subject: subject.value,
       strand: strand ? strand.value : "All Topics",
+      learningOutcome: outcome ? outcome.value : "All Outcomes",
       mode: mode.value,
       total: total,
       answered: answered,
