@@ -5041,3 +5041,16 @@ body.admin-unlocked .admin-only-link {
     max-height: 65vh;
   }
 }
+
+
+/* CEO SEO Center */
+.admin-seo-badge{font-size:.72rem;padding:.2rem .5rem;border-radius:999px;background:rgba(24,119,242,.12);color:inherit;font-weight:700}
+.admin-seo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-top:1rem}
+.admin-seo-card{padding:1.2rem;border:1px solid rgba(0,0,0,.08);border-radius:16px;background:var(--card-bg,#fff);box-shadow:0 8px 24px rgba(0,0,0,.05)}
+.admin-seo-card h4{margin:.35rem 0 .55rem;font-size:1.08rem}
+.admin-seo-card p{line-height:1.6;margin:0 0 1rem}
+.admin-seo-card .primary-button,.admin-seo-card .secondary-button{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;margin-top:.25rem}
+.admin-seo-keywords{display:flex;flex-wrap:wrap;gap:.45rem;margin:.8rem 0 1rem}
+.admin-seo-keywords span{padding:.42rem .65rem;border-radius:999px;background:rgba(0,0,0,.055);font-size:.82rem}
+.admin-seo-note{margin-top:1rem;padding:1rem;border-left:4px solid currentColor;border-radius:10px;background:rgba(0,0,0,.035);line-height:1.55}
+@media (max-width:760px){.admin-seo-grid{grid-template-columns:1fr}}
