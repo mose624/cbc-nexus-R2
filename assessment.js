@@ -502,8 +502,7 @@
     const item = getSelectedCurriculumItem();
     const outcomes = selectedSub
       ? (Array.isArray(selectedSub.learningOutcomes) ? selectedSub.learningOutcomes : [])
-      : (item ? item.subStrands.flatMap((sub) => Array.isArray(sub.learningOutcomes) ? sub.learningOutcomes : []) : [])
-      : [];
+      : (item ? item.subStrands.flatMap((sub) => Array.isArray(sub.learningOutcomes) ? sub.learningOutcomes : []) : []);
 
     outcome.innerHTML = "";
     const all = document.createElement("option");
