@@ -580,12 +580,12 @@
 
     const selectedSub = subStrand ? subStrand.value : "All Sub-Strands";
     if (selectedSub && selectedSub !== "All Sub-Strands") {
-      combined = combined.filter((item) => String(item[6] || item[3] || "") === String(selectedSub) || String(item[7] || "") === String(selectedSub));
+      combined = combined.filter((item) => String(item[6] || "") === String(selectedSub));
     }
 
     const selectedOutcome = outcome ? outcome.value : "All Outcomes";
     if (selectedOutcome && selectedOutcome !== "All Outcomes") {
-      combined = combined.filter((item) => String(item[6] || "") === String(selectedOutcome));
+      combined = combined.filter((item) => String(item[7] || "") === String(selectedOutcome));
     }
 
     const rotation = combined.length ? (n - 1) % combined.length : 0;
