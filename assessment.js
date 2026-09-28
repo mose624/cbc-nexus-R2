@@ -409,36 +409,46 @@
   }
 
   function getAvailableQuestions(selectedGrade, selectedSubject) {
-    const cbc = window.CBENexusCBCBanks &&
+    const gradeBank = window.CBENexusCBCBanks &&
       window.CBENexusCBCBanks.banks &&
       window.CBENexusCBCBanks.banks[selectedGrade] &&
       window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject];
-    const base = cbc || bank[selectedSubject] || additionalQuestions[selectedSubject] || [];
-    let extra = [];
-    const n = Number(String(selectedGrade).replace(/[^0-9]/g, "")) || 7;
-    if (n <= 3) extra = gradePools["Grade 1"][selectedSubject] || [];
-    else if (n <= 6) extra = bandQuestions.primaryUpper[selectedSubject] || [];
-    else if (n <= 9) extra = bandQuestions.junior[selectedSubject] || [];
-    else extra = bandQuestions.senior[selectedSubject] || [];
-    return base.concat(extra);
+
+    // Use only the selected Grade + Subject bank. KICD strand/sub-strand
+    // options are supplied by the curriculum map in assessment-cbc-banks.js.
+    return Array.isArray(gradeBank) ? gradeBank.slice() : [];
   }
 
   function refreshStrandOptions() {
     if (!strand) return;
     const current = strand.value || "All Topics";
+    const curriculumMap = window.CBENexusCBCBanks &&
+      window.CBENexusCBCBanks.curriculum &&
+      window.CBENexusCBCBanks.curriculum[grade.value] &&
+      window.CBENexusCBCBanks.curriculum[grade.value][subject.value];
+
     const questions = getAvailableQuestions(grade.value, subject.value);
-    const topics = Array.from(new Set(questions.map((item) => item[3]).filter(Boolean))).sort();
+    const questionTopics = Array.from(new Set(
+      questions.map((item) => item[3]).filter(Boolean)
+    ));
+
+    const topics = Array.isArray(curriculumMap) && curriculumMap.length
+      ? curriculumMap
+      : questionTopics;
+
     strand.innerHTML = "";
     const all = document.createElement("option");
     all.value = "All Topics";
     all.textContent = "All Topics";
     strand.appendChild(all);
+
     topics.forEach((topic) => {
       const option = document.createElement("option");
       option.value = topic;
       option.textContent = topic;
       strand.appendChild(option);
     });
+
     strand.value = topics.includes(current) ? current : "All Topics";
   }
 
