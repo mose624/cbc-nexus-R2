@@ -530,6 +530,7 @@
     if (!subStrand) return;
     const item = getSelectedCurriculumItem();
     const list = item && Array.isArray(item.subStrands) ? item.subStrands : [];
+    const current = subStrand.value || "All Sub-Strands";
     subStrand.innerHTML = "";
     const all = document.createElement("option");
     all.value = "All Sub-Strands";
@@ -541,6 +542,9 @@
       option.textContent = String(entry.label || entry.id || "");
       subStrand.appendChild(option);
     });
+    subStrand.value = list.some((entry) => String(entry.id || entry.label || "") === current)
+      ? current
+      : "All Sub-Strands";
     updateCurriculumContent();
   }
 
