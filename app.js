@@ -27,7 +27,7 @@ const TUITION_KEY = "cbeHolidayTuition";
 const QUIZ_PROGRESS_KEY = "cbeQuizProgress";
 const SELLER_STORAGE_LIMIT_BYTES = 20 * 1024 * 1024 * 1024; // 20 GB storage space
 const APPROVED_DOWNLOADS_KEY = "cbeApprovedDownloads";
-let remoteStats = { resources: 0, purchases: 0, downloads: 0, byResource: {} };
+let remoteStats = { resources: 0, purchases: 0, downloads: 0, views: 0, byResource: {} };
 // Sensitive data now encrypted via SecurityUtils
 const MPESA_PHONE = SecurityUtils.MPESA_PHONE;
 const WHATSAPP_PHONE = SecurityUtils.WHATSAPP_PHONE;
@@ -561,12 +561,14 @@ async function loadPublicStats() {
       resources: Number(data.stats?.resources || 0),
       purchases: Number(data.stats?.purchases || 0),
       downloads: Number(data.stats?.downloads || 0),
+      views: Number(data.stats?.views || 0),
       byResource: data.byResource || {}
     };
     const stat = (id, value) => { const node = document.getElementById(id); if (node) node.textContent = Number(value || 0).toLocaleString("en-KE"); };
     stat("statResources", remoteStats.resources);
     stat("statPurchases", remoteStats.purchases);
     stat("statDownloads", remoteStats.downloads);
+    stat("statViews", remoteStats.views);
     renderResources();
     renderTrending();
   } catch (error) {
