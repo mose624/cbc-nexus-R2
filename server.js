@@ -149,6 +149,48 @@ async function handleApi(req,res,url){
   if(req.method==="POST"&&url.pathname==="/api/homework-helper"){const p=JSON.parse((await readBody(req))||"{}");if(!String(p.question||"").trim()){sendJson(res,400,{ok:false,error:"Homework question is required."});return true;}try{const result=await generateAIHomeworkAnswer(p);if(!result.configured){sendJson(res,503,{ok:false,configured:false,error:result.error});return true;}const answer=result.answer;if(!answer){sendJson(res,502,{ok:false,configured:true,error:"The AI returned an empty response. Check OPENAI_HOMEWORK_MODEL in Render."});return true;}await appendJsonStore("homework-helper.json",{grade:p.grade,subject:p.subject,question:p.question,answer});sendJson(res,200,{ok:true,configured:true,answer});}catch(error){console.error("AI Homework Helper error:",error);sendJson(res,502,{ok:false,error:"The AI Homework Helper could not generate a response right now."});}return true;}
   if(url.pathname.startsWith("/api/")){sendJson(res,404,{ok:false,error:"API route not found."});return true;}return false;
 }
-async function serveStatic(req,res,url){\n  if(req.method==="GET" && url.pathname==="/sitemap.xml"){res.writeHead(200,{"Content-Type":"application/xml; charset=utf-8","Cache-Control":"public, max-age=3600"});res.end(await seo.sitemap(req));return;}\n  if(req.method==="GET" && url.pathname==="/robots.txt"){const base=seo.base(req);res.writeHead(200,{"Content-Type":"text/plain; charset=utf-8","Cache-Control":"public, max-age=3600"});res.end("User-agent: *\\nAllow: /\\nDisallow: /api/\\nDisallow: /admin\\nDisallow: /upload.html\\nDisallow: /backend-data/\\nSitemap: "+base+"/sitemap.xml\\n");return;}\n  const seoPage=await seo.match(req);\n  if(req.method==="GET" && seoPage){res.writeHead(200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"public, max-age=600"});res.end(seoPage);return;}\n  const requestedPath=decodeURIComponent(url.pathname==="/"?"/index.html":url.pathname),filePath=path.resolve(ROOT,`.${requestedPath}`);if(!filePath.startsWith(ROOT)){res.writeHead(403,{"Content-Type":"text/plain; charset=utf-8"});res.end("Forbidden");return;}try{const stat=await fs.stat(filePath),target=stat.isDirectory()?path.join(filePath,"index.html"):filePath;let data=await fs.readFile(target);if(path.basename(target)==="index.html"){const b=seo.base(req);data=Buffer.from(data.toString("utf8").replaceAll("https://example.com/",b+"/").replace("<title>CBE E-Learning Resources</title>","<title>CBE Nexus | CBC & CBE Learning Resources Kenya</title>").replace("CBE E-Learning Resources for Grades 1-12","CBE Nexus | CBC & CBE Learning Resources for Grades 1-12 in Kenya"));}res.writeHead(200,{"Content-Type":mimeTypes[path.extname(target).toLowerCase()]||"application/octet-stream"});res.end(data);}catch{res.writeHead(404,{"Content-Type":"text/plain; charset=utf-8"});res.end("Not found");}}
+async function serveStatic(req,res,url){
+  if(req.method==="GET" && url.pathname==="/sitemap.xml"){
+    res.writeHead(200,{"Content-Type":"application/xml; charset=utf-8","Cache-Control":"public, max-age=3600"});
+    res.end(await seo.sitemap(req));
+    return;
+  }
+  if(req.method==="GET" && url.pathname==="/robots.txt"){
+    const base=seo.base(req);
+    res.writeHead(200,{"Content-Type":"text/plain; charset=utf-8","Cache-Control":"public, max-age=3600"});
+    res.end("User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /admin\nDisallow: /upload.html\nDisallow: /backend-data/\nSitemap: "+base+"/sitemap.xml\n");
+    return;
+  }
+  const seoPage=await seo.match(req);
+  if(req.method==="GET" && seoPage){
+    res.writeHead(200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"public, max-age=600"});
+    res.end(seoPage);
+    return;
+  }
+  const requestedPath=decodeURIComponent(url.pathname==="/"?"/index.html":url.pathname);
+  const filePath=path.resolve(ROOT,"."+requestedPath);
+  if(!filePath.startsWith(ROOT)){
+    res.writeHead(403,{"Content-Type":"text/plain; charset=utf-8"});
+    res.end("Forbidden");
+    return;
+  }
+  try{
+    const stat=await fs.stat(filePath);
+    const target=stat.isDirectory()?path.join(filePath,"index.html"):filePath;
+    let data=await fs.readFile(target);
+    if(path.basename(target)==="index.html"){
+      const b=seo.base(req);
+      data=Buffer.from(data.toString("utf8")
+        .replaceAll("https://example.com/",b+"/")
+        .replace("<title>CBE E-Learning Resources</title>","<title>CBE Nexus | CBC & CBE Learning Resources Kenya</title>")
+        .replace("CBE E-Learning Resources for Grades 1-12","CBE Nexus | CBC & CBE Learning Resources for Grades 1-12 in Kenya"));
+    }
+    res.writeHead(200,{"Content-Type":mimeTypes[path.extname(target).toLowerCase()]||"application/octet-stream"});
+    res.end(data);
+  }catch{
+    res.writeHead(404,{"Content-Type":"text/plain; charset=utf-8"});
+    res.end("Not found");
+  }
+}
 const server=http.createServer(async(req,res)=>{const url=new URL(req.url,`http://${req.headers.host||"127.0.0.1"}`);try{if(await handleApi(req,res,url))return;await serveStatic(req,res,url);}catch(error){console.error("Unhandled server error:",error);sendJson(res,500,{ok:false,error:error.message||"Server error."});}});
 server.listen(PORT,"0.0.0.0",()=>console.log(`CBE website backend running on port ${PORT}`));
