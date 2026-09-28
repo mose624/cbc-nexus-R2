@@ -462,16 +462,57 @@
       window.CBENexusCBCBanks.curriculum[selectedGrade] &&
       window.CBENexusCBCBanks.curriculum[selectedGrade][selectedSubject];
 
-    if (!Array.isArray(map)) return [];
+    if (Array.isArray(map) && map.length) {
+      return map.map((item) => {
+        if (typeof item === "string") return { id: item, label: item, subStrands: [] };
+        return {
+          id: String(item.id || item.label || ""),
+          label: String(item.label || item.id || ""),
+          subStrands: Array.isArray(item.subStrands) ? item.subStrands : []
+        };
+      }).filter((item) => item.id && item.label);
+    }
 
-    return map.map((item) => {
-      if (typeof item === "string") return { id: item, label: item, subStrands: [] };
-      return {
-        id: String(item.id || item.label || ""),
-        label: String(item.label || item.id || ""),
-        subStrands: Array.isArray(item.subStrands) ? item.subStrands : []
-      };
-    }).filter((item) => item.id && item.label);
+    // Fallback for subjects whose full KICD hierarchy has not yet been loaded.
+    // Build a working hierarchy from the question metadata instead of leaving
+    // Sub-Strand and Learning Outcome empty.
+    const questions = getAvailableQuestions(selectedGrade, selectedSubject);
+    const groups = new Map();
+
+    questions.forEach((item) => {
+      const strandId = String(item[5] || item[3] || "").trim();
+      const strandLabel = String(item[3] || strandId || "").trim();
+      const subId = String(item[6] || "").trim();
+      const subLabel = subId || String(item[3] || "").trim();
+      const learningOutcome = String(item[7] || "").trim();
+      const content = String(item[8] || "").trim();
+
+      if (!strandId) return;
+      if (!groups.has(strandId)) {
+        groups.set(strandId, {
+          id: strandId,
+          label: strandLabel || strandId,
+          subStrands: []
+        });
+      }
+
+      const strandEntry = groups.get(strandId);
+      if (subId) {
+        let sub = strandEntry.subStrands.find((entry) => entry.id === subId);
+        if (!sub) {
+          sub = { id: subId, label: subLabel, content: [], learningOutcomes: [] };
+          strandEntry.subStrands.push(sub);
+        }
+        if (learningOutcome && !sub.learningOutcomes.includes(learningOutcome)) {
+          sub.learningOutcomes.push(learningOutcome);
+        }
+        if (content && !sub.content.includes(content)) {
+          sub.content.push(content);
+        }
+      }
+    });
+
+    return Array.from(groups.values());
   }
 
   function getSelectedCurriculumItem() {
