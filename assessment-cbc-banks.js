@@ -143,5 +143,87 @@
     banks[g].Biology=scienceNumericBank("Biology",g);
   }
 
-  window.CBENexusCBCBanks = {banks:banks,topicMap:topicMap};
+  // KICD Social Studies curriculum map for Junior School.
+  // These are curriculum strand/sub-strand labels, not official exam questions.
+  const kicdSocialStudiesCurriculum = {
+    "Grade 7": [
+      "1.0 Social Studies and Personal Development — 1.1 Self-Exploration",
+      "1.0 Social Studies and Personal Development — 1.2 Social Entrepreneurial Opportunities",
+      "2.0 People and Relationships — 2.1 Human Origin",
+      "2.0 People and Relationships — 2.2 Early Civilisation",
+      "2.0 People and Relationships — 2.3 Slavery and Servitude",
+      "2.0 People and Relationships — 2.4 Developments in Medium of Trade",
+      "2.0 People and Relationships — 2.5 Diversity and Interpersonal Relationships",
+      "2.0 People and Relationships — 2.6 Peaceful Coexistence",
+      "3.0 Community Service-Learning — 3.1 Community Service-Learning Project",
+      "4.0 Natural and Historic Built Environments — 4.1 Historical Information",
+      "4.0 Natural and Historic Built Environments — 4.2 Historical Development of Agriculture",
+      "4.0 Natural and Historic Built Environments — 4.3 Maps and Map Work",
+      "4.0 Natural and Historic Built Environments — 4.4 Earth and the Solar System",
+      "4.0 Natural and Historic Built Environments — 4.5 Weather",
+      "4.0 Natural and Historic Built Environments — 4.6 Fieldwork",
+      "5.0 Political Development and Governance — 5.1 Political Development in Africa",
+      "5.0 Political Development and Governance — 5.2 The Constitution of Kenya",
+      "5.0 Political Development and Governance — 5.3 Human Rights",
+      "5.0 Political Development and Governance — 5.4 African Diasporas",
+      "5.0 Political Development and Governance — 5.5 Citizenship"
+    ],
+    "Grade 8": [
+      "1.0 Social Studies and Personal Management — 1.1 Self-Improvement",
+      "1.0 Social Studies and Personal Management — 1.2 Self-Esteem Assessment",
+      "2.0 Community Service Learning — 2.1 Community Service-Learning Project",
+      "3.0 People and Relationships — 3.1 Scientific Theory about Human Origin",
+      "3.0 People and Relationships — 3.2 Early Civilisations",
+      "3.0 People and Relationships — 3.3 Trans-Saharan Slave Trade",
+      "3.0 People and Relationships — 3.4 Population Growth in Africa",
+      "3.0 People and Relationships — 3.5 Diversity and Interpersonal Skills",
+      "3.0 People and Relationships — 3.6 Peaceful Conflict Resolutions",
+      "4.0 Natural and Historic Built Environments — 4.1 Map Reading and Interpretation",
+      "4.0 Natural and Historic Built Environments — 4.2 Weather and Climate",
+      "4.0 Natural and Historic Built Environments — 4.3 Vegetation in Africa",
+      "4.0 Natural and Historic Built Environments — 4.4 Historical Sites and Monuments in Africa",
+      "5.0 Political Developments and Governance — 5.1 The Constitution of Kenya",
+      "5.0 Political Developments and Governance — 5.2 Human Rights",
+      "5.0 Political Developments and Governance — 5.3 Citizenship"
+    ],
+    "Grade 9": [
+      "1.0 Social Studies and Career Development — 1.1 Pathway Choices",
+      "1.0 Social Studies and Career Development — 1.2 Pre-career Choices",
+      "2.0 Community Service-Learning — 2.1 Community Service-Learning Project",
+      "3.0 People and Relationships — 3.1 Socio-Economic Practices of Early Humans",
+      "3.0 People and Relationships — 3.2 Indigenous Knowledge Systems in African Societies",
+      "3.0 People and Relationships — 3.3 Poverty Reduction",
+      "3.0 People and Relationships — 3.4 Population Structure",
+      "3.0 People and Relationships — 3.5 Peace and Non-violent Conflict Resolution",
+      "3.0 People and Relationships — 3.6 Healthy Relationships",
+      "4.0 Natural and Historic Built Environments — 4.1 Topographical Maps",
+      "4.0 Natural and Historic Built Environments — 4.2 Internal Land Forming Processes",
+      "4.0 Natural and Historic Built Environments — 4.3 Multipurpose River Projects in Africa",
+      "4.0 Natural and Historic Built Environments — 4.4 Management and Conservation of the Environment",
+      "4.0 Natural and Historic Built Environments — 4.5 World Heritage Sites in Africa",
+      "5.0 Political Developments and Governance — 5.1 The Constitution of Kenya",
+      "5.0 Political Developments and Governance — 5.2 Civic Engagement in Governance",
+      "5.0 Political Developments and Governance — 5.3 Kenya's Bill of Rights",
+      "5.0 Political Developments and Governance — 5.4 Cultural Globalization"
+    ]
+  };
+
+  Object.keys(kicdSocialStudiesCurriculum).forEach((g) => {
+    const questions = Array.isArray(banks[g] && banks[g]["Social Studies"])
+      ? banks[g]["Social Studies"]
+      : [];
+    const labels = kicdSocialStudiesCurriculum[g];
+    if (questions.length && labels.length) {
+      questions.forEach((item, index) => {
+        item[3] = labels[index % labels.length];
+      });
+    }
+  });
+
+  const curriculum = {};
+  Object.keys(kicdSocialStudiesCurriculum).forEach((g) => {
+    curriculum[g] = {"Social Studies": kicdSocialStudiesCurriculum[g]};
+  });
+
+  window.CBENexusCBCBanks = {banks:banks,topicMap:topicMap,curriculum:curriculum};
 })();
