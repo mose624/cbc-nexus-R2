@@ -53,10 +53,11 @@
   function textBank(subject, grade) {
     const n = Number(String(grade).replace(/[^0-9]/g,"")) || 1;
     const out = [];
-    const add = (q,o,a,t,e) => out.push(Q(q,o,a,t,e));
+    const add = (q,o,a,t,e) => out.push(Q(q,o,a,a === 0 ? t : t,e));
+
     const topicSets = {
       "English":["grammar","vocabulary","reading","writing","punctuation","sentence construction","comprehension","oral communication","spelling","literature"],
-      "English Activities":["phonics","vocabulary","listening","speaking","reading","writing","letters","sounds","sentences","communication"],
+      "English Activities":["phonics","vocabulary","listening","speaking","reading","writing","sounds","sentences","communication","storytelling"],
       "Kiswahili":["sarufi","msamiati","ufahamu","uandishi","kusoma","kusikiliza","mazungumzo","methali","nahau","fasihi"],
       "Kiswahili Activities":["msamiati","kusikiliza","kuongea","kusoma","kuandika","matamshi","sentensi","majina","vitendo","mawasiliano"],
       "Science":["living things","plants","animals","matter","energy","forces","health","environment","materials","measurement"],
@@ -71,21 +72,126 @@
       "Health Education":["nutrition","hygiene","mental wellbeing","relationships","first aid","disease prevention","physical activity","safety","substance awareness","healthy living"],
       "Life Skills Education":["self-awareness","decision making","communication","relationships","resilience","problem solving","goal setting","empathy","leadership","responsibility"],
       "Religious Education":["values","service","relationships","responsibility","peace","integrity","stewardship","compassion","decision making","community"],
+      "Creative Arts":["drawing","painting","colour","pattern","design","craft","music","performance","art appreciation","cultural heritage"],
+      "Performing Arts":["melody","rhythm","storytelling","animation","folk songs","performance","drama","audience","voice","movement"],
+      "Visual Arts":["drawing","painting","colour","texture","pattern","composition","design","craft","art appreciation","cultural heritage"],
+      "Music & Dance":["rhythm","melody","folk song","dance","performance","notation","movement","tempo","dynamics","cultural heritage"],
+      "Theatre & Film":["acting","storytelling","character","dialogue","stagecraft","film language","camera","sound","audience","production"],
+      "Fine Arts":["drawing","painting","sculpture","colour","texture","composition","design","craft","art appreciation","visual communication"],
+      "Sports & Physical Education":["fitness","athletics","games","coordination","teamwork","safety","nutrition","fair play","skills","wellbeing"],
+      "Sports & Recreation":["fitness","games","athletics","teamwork","safety","fair play","coordination","endurance","strength","wellbeing"],
+      "Home Science":["nutrition","food preparation","hygiene","clothing","consumer education","home management","child care","safety","textiles","resource management"],
+      "French":["vocabulary","greetings","grammar","reading","writing","listening","speaking","numbers","descriptions","daily routines"],
+      "German":["vocabulary","greetings","grammar","reading","writing","listening","speaking","numbers","descriptions","daily routines"],
+      "Mandarin":["vocabulary","greetings","characters","reading","writing","listening","speaking","numbers","descriptions","daily routines"],
+      "Mandarin Chinese":["vocabulary","greetings","characters","reading","writing","listening","speaking","numbers","descriptions","daily routines"],
+      "Arabic":["vocabulary","greetings","grammar","reading","writing","listening","speaking","numbers","descriptions","daily routines"],
+      "Kenyan Sign Language":["sign vocabulary","fingerspelling","greetings","family signs","school signs","numbers","directions","sentences","facial expression","communication"],
+      "History & Citizenship":["history","citizenship","governance","human rights","constitution","culture","heritage","leadership","community","national values"],
+      "Geography":["maps","weather","climate","landforms","population","resources","settlement","transport","environment","fieldwork"],
+      "Community Service Learning":["community needs","project planning","teamwork","service","reflection","leadership","problem solving","resources","communication","impact"],
+      "Biology":["cells","nutrition","transport","respiration","reproduction","ecology","classification","health","experiments","genetics"],
+      "Chemistry":["matter","atomic structure","bonding","acids and bases","salts","separation","stoichiometry","energy","rates","laboratory safety"],
+      "Physics":["measurement","motion","forces","energy","pressure","electricity","waves","light","heat","magnetism"],
       "General Science":["scientific method","measurement","matter","energy","forces","environment","health","data","experiments","technology"]
     };
-    const topics=topicSets[subject] || ["knowledge","application","reasoning","communication","problem solving","evidence","skills","values","practice","reflection"];
-    for(let i=0;i<100;i++){
-      const t=topics[i%topics.length], k=Math.floor(i/topics.length)+1;
-      const a=(n+k)%4;
-      const opts=[
-        "Apply the relevant "+t+" principle to the situation.",
-        "Ignore the evidence and choose an unrelated action.",
-        "Use a reasoned approach based on "+t+".",
-        "Choose an answer without considering the situation."
-      ];
-      add("Grade "+n+" "+subject+": Which response best demonstrates understanding of "+t+" in scenario "+k+"?",
-        [opts[0],opts[1],opts[2],opts[3]], a===2?2:0, t,
-        "The strongest response applies the relevant "+t+" knowledge or skill to the situation.");
+
+    const topics = topicSets[subject] || ["knowledge","application","reasoning","communication","problem solving","evidence","skills","values","practice","reflection"];
+
+    function makeQuestion(topic, i) {
+      const seed = n * 31 + i;
+      const mode = seed % 5;
+      const clean = topic.charAt(0).toUpperCase() + topic.slice(1);
+      if (subject === "English") {
+        if (topic === "punctuation") return ["Which sentence uses punctuation correctly?",["After the lesson, the learners went home.","After the lesson the learners, went home.","After, the lesson the learners went home","After the lesson the learners went, home."],0,clean,"A comma correctly separates the introductory phrase from the main clause."];
+        if (topic === "grammar") return ["Which word is the verb in the sentence 'The learners discussed the poem'?",["learners","discussed","poem","the"],1,clean,"'Discussed' is the action word in the sentence."];
+        if (topic === "vocabulary") return ["Which word is closest in meaning to 'rapid'?",["slow","quick","weak","quiet"],1,clean,"'Quick' has a similar meaning to 'rapid'."];
+        if (topic === "spelling") return ["Choose the correctly spelt word.",["necessary","neccessary","necesary","necessery"],0,clean,"The correct spelling is 'necessary'."];
+        if (topic === "sentence construction") return ["Which is a complete sentence?",["Because the rain fell.","The learners completed the task.","When the teacher arrived.","Although they were ready."],1,clean,"'The learners completed the task' contains a complete thought."];
+        if (topic === "reading") return ["What is the main purpose of reading a passage carefully?",["To identify and understand information and ideas","To skip unfamiliar words","To memorise every line","To ignore the writer's message"],0,clean,"Careful reading helps a learner identify and understand ideas and information."];
+        if (topic === "comprehension") return ["When answering a comprehension question, what should a learner use first?",["Evidence from the passage","An unrelated personal story","A guess without reading","Only the title"],0,clean,"Comprehension answers should be supported by information in the passage."];
+        if (topic === "writing") return ["Which feature improves a well-organised paragraph?",["A clear main idea supported by relevant details","Unrelated sentences","Repeated words only","No punctuation"],0,clean,"A paragraph is clearer when one main idea is developed with relevant details."];
+        if (topic === "oral communication") return ["Which behaviour shows active listening?",["Maintaining attention and responding appropriately","Interrupting constantly","Looking away throughout","Ignoring the speaker"],0,clean,"Active listening involves attention and appropriate responses."];
+        return ["Which statement best describes the value of literature?",["It develops imagination, language and understanding of human experiences","It is only useful for spelling tests","It has no connection with life","It should never be discussed"],0,clean,"Literature can develop language, imagination and understanding of human experiences."];
+      }
+      if (subject === "Kiswahili" || subject === "Kiswahili Activities") {
+        if (topic === "sarufi") return ["Neno lipi ni kitenzi katika sentensi 'Wanafunzi wanasoma vitabu'?",["wanafunzi","wanasoma","vitabu","soma"],1,clean,"'Wanasoma' ni kitenzi kinachoonyesha kitendo."];
+        if (topic === "msamiati") return ["Neno lenye maana sawa na 'furaha' ni lipi?",["huzuni","shangwe","hasira","uchovu"],1,clean,"'Shangwe' lina maana inayokaribiana na furaha."];
+        if (topic === "methali") return ["Methali 'Haraka haraka haina baraka' inasisitiza nini?",["Kufanya mambo kwa pupa kunaweza kuleta hasara","Kila jambo lifanywe kwa haraka","Hakuna haja ya kupanga","Kuchelewa ni lazima"],0,clean,"Methali hiyo inashauri mtu kutofanya mambo kwa pupa."];
+        return ["Kusoma kifungu kwa makini humsaidia mwanafunzi kufanya nini?",["Kuelewa ujumbe na mawazo yaliyomo","Kupuuza maelezo","Kukisia bila kusoma","Kukumbuka kichwa pekee"],0,clean,"Kusoma kwa makini husaidia kuelewa ujumbe na mawazo ya kifungu."];
+      }
+      if (subject === "Mathematics") {
+        const a = (seed % 20) + n + 5, b = (seed % 9) + 2;
+        if (mode === 0) return ["What is "+a+" + "+b+"?",[String(a+b),String(a+b+1),String(a+b-1),String(a+b+2)],0,clean,a+" + "+b+" = "+(a+b)+"."];
+        if (mode === 1) return ["What is "+a+" − "+b+"?",[String(a-b+1),String(a-b),String(a-b-1),String(a+b)],1,clean,a+" − "+b+" = "+(a-b)+"."];
+        if (mode === 2) return ["What is "+a+" × "+b+"?",[String(a*b),String(a*b+1),String(a*b-1),String(a+b)],0,clean,a+" × "+b+" = "+(a*b)+"."];
+        return ["Which statement is true about "+clean.toLowerCase()+"?",["It should be solved using the relevant mathematical rule.","It never requires reasoning.","It has no practical use.","It cannot be represented numerically."],0,clean,"The relevant mathematical rule should be applied to solve the problem."];
+      }
+      if (subject === "Science" || subject === "Science & Technology" || subject === "Integrated Science" || subject === "General Science") {
+        const science = {
+          "living things":["Which characteristic is shared by living things?",["They carry out life processes","They never change","They cannot reproduce","They do not respond to stimuli"],0],
+          "plants":["Which process enables green plants to make food?",["Photosynthesis","Digestion","Respiration only","Excretion"],0],
+          "matter":["Which state of matter has a fixed volume but takes the shape of its container?",["Solid","Liquid","Gas","Plasma only"],1],
+          "energy":["Which form of energy is associated with a moving object?",["Kinetic energy","Chemical energy","Sound only","Potential energy only"],0],
+          "forces":["What can a force do to an object?",["Change its motion or shape","Remove all mass","Create matter from nothing","Stop all energy"],0],
+          "environment":["Which action helps conserve the environment?",["Planting and caring for trees","Burning waste in open areas","Dumping waste in rivers","Destroying vegetation"],0],
+          "health":["Which practice helps prevent the spread of infectious diseases?",["Regular handwashing","Sharing personal towels","Ignoring hygiene","Drinking untreated water"],0]
+        };
+        const s = science[topic];
+        if (s) return [s[0],s[1],s[2],clean,"The correct response applies a basic "+topic+" principle."];
+      }
+      if (subject === "Social Studies" || subject === "History & Citizenship" || subject === "Geography") {
+        if (topic === "maps") return ["What is the main purpose of a map scale?",["To show the relationship between map distance and actual distance","To show rainfall only","To identify political leaders","To measure temperature"],0,clean,"A map scale relates distance on the map to distance on the ground."];
+        if (topic === "citizenship") return ["Which action demonstrates responsible citizenship?",["Respecting laws and participating positively in the community","Destroying public property","Ignoring community needs","Discriminating against others"],0,clean,"Responsible citizenship includes respect for laws and constructive community participation."];
+        if (topic === "human rights") return ["Why are human rights important?",["They protect the dignity and freedoms of people","They apply only to leaders","They remove all responsibilities","They are limited to one community"],0,clean,"Human rights protect the dignity and fundamental freedoms of people."];
+        if (topic === "weather") return ["Which instrument is used to measure rainfall?",["Rain gauge","Thermometer","Wind vane","Barometer"],0,clean,"A rain gauge measures the amount of rainfall received."];
+      }
+      if (subject === "Agriculture") {
+        if (topic === "soil") return ["Which practice helps maintain soil fertility?",["Applying appropriate organic manure","Removing all crop residues","Planting continuously without care","Leaving soil bare on steep slopes"],0,clean,"Appropriate organic manure can improve soil fertility."];
+        if (topic === "crops") return ["Why is seed selection important before planting?",["It helps farmers choose healthy and suitable planting material","It prevents all crop diseases permanently","It removes the need for soil preparation","It guarantees rainfall"],0,clean,"Healthy, suitable seed supports good crop establishment."];
+        if (topic === "livestock") return ["Why should livestock be provided with clean drinking water?",["For proper health and normal body functions","To replace all feed","To prevent every disease","To increase soil fertility directly"],0,clean,"Clean water is essential for livestock health and normal body functions."];
+      }
+      if (subject === "Business Studies") {
+        if (topic === "saving") return ["Why is saving money important?",["It helps meet future needs and planned goals","It guarantees unlimited income","It removes all business risks","It means money cannot be used"],0,clean,"Saving helps a person prepare for future needs and goals."];
+        if (topic === "entrepreneurship") return ["Which quality is useful to an entrepreneur?",["Creativity and willingness to solve problems","Avoiding customers","Refusing to plan","Ignoring feedback"],0,clean,"Entrepreneurs need creativity and problem-solving skills."];
+        if (topic === "markets") return ["What is a market?",["A place or system where buyers and sellers exchange goods or services","A place where only producers work","A record book only","A transport route"],0,clean,"A market facilitates exchange between buyers and sellers."];
+      }
+      if (subject === "Computer Studies" || subject === "Computer Science") {
+        if (topic === "algorithms") return ["What is an algorithm?",["A step-by-step procedure for solving a problem","A computer monitor","A storage device","A type of printer"],0,clean,"An algorithm is a sequence of steps used to solve a problem or complete a task."];
+        if (topic === "cybersecurity") return ["Which practice improves account security?",["Using a strong unique password and keeping it private","Sharing passwords publicly","Opening unknown attachments","Disabling all updates"],0,clean,"Strong, private passwords improve account security."];
+        if (topic === "programming") return ["What is a variable commonly used for in a program?",["Storing a value that can change","Printing paper","Cleaning a screen","Connecting a keyboard physically"],0,clean,"A variable stores data that a program can use and change."];
+      }
+      if (subject === "Health Education" || subject === "Life Skills Education") {
+        if (topic === "nutrition" || topic === "healthy living") return ["Which choice supports a healthy lifestyle?",["Eating a balanced diet and being physically active","Skipping meals regularly","Avoiding water","Never exercising"],0,clean,"A balanced diet and physical activity support healthy living."];
+        if (topic === "decision making") return ["What is a useful first step when making an important decision?",["Identify the problem and consider available options","Act without thinking","Ignore consequences","Let others decide every time"],0,clean,"Identifying the problem and considering options supports sound decision making."];
+        if (topic === "communication") return ["Which behaviour supports effective communication?",["Listening carefully and expressing ideas clearly","Interrupting continuously","Ignoring the speaker","Using insults"],0,clean,"Effective communication requires listening and clear expression."];
+      }
+      if (subject === "Religious Education" || subject === "Christian Religious Education" || subject === "Islamic Religious Education" || subject === "Hindu Religious Education") {
+        if (topic === "integrity") return ["Which action demonstrates integrity?",["Doing what is right even when no one is watching","Cheating when possible","Changing facts for personal gain","Blaming others for one's actions"],0,clean,"Integrity involves honesty and doing what is right."];
+        if (topic === "peace") return ["Which action promotes peaceful coexistence?",["Listening to others and resolving disagreements respectfully","Using violence to settle disputes","Spreading rumours","Refusing dialogue"],0,clean,"Respectful dialogue and listening support peaceful coexistence."];
+        if (topic === "compassion") return ["Which action demonstrates compassion?",["Helping a person who is in need","Ignoring someone in difficulty","Mocking another person","Taking advantage of weakness"],0,clean,"Compassion involves concern for others and helpful action."];
+      }
+      if (subject === "Physics") {
+        const mass=(seed%12)+2, acc=(seed%5)+2, force=mass*acc;
+        return ["A body of mass "+mass+" kg accelerates at "+acc+" m/s². What is the resultant force?",[String(force)+" N",String(force+2)+" N",String(force-2)+" N",String(mass+acc)+" N"],0,clean,"Using F = ma, the force is "+mass+" × "+acc+" = "+force+" N."];
+      }
+      if (subject === "Chemistry") {
+        const amount=(seed%5)+1, molar=18, mass=amount*molar;
+        return ["A sample contains "+amount+" mol of a substance with molar mass 18 g/mol. What is its mass?",[String(mass)+" g",String(mass+9)+" g",String(mass-9)+" g",String(mass+18)+" g"],0,clean,"Mass = amount × molar mass = "+amount+" × 18 = "+mass+" g."];
+      }
+      if (subject === "Biology") {
+        return ["Which statement best describes "+clean.toLowerCase()+"?",["It should be explained using evidence and relevant biological principles","It has no connection with living systems","It can be understood without observation","It never involves investigation"],0,clean,"Biology uses observation, evidence and relevant biological principles to explain living systems."];
+      }
+      if (subject === "French" || subject === "German" || subject === "Mandarin" || subject === "Mandarin Chinese" || subject === "Arabic") {
+        return ["Which skill is most directly developed through regular "+topic+" practice?",["Accurate communication in the target language","Avoiding communication","Ignoring vocabulary","Replacing language practice with unrelated activities"],0,clean,"Regular practice develops communication skills in the target language."];
+      }
+      return ["Which statement best applies the idea of "+topic+"?",["Use the relevant knowledge or skill to solve the task correctly","Ignore the information provided","Choose an unrelated action","Avoid applying the concept"],0,clean,"The correct response applies the relevant "+topic+" knowledge or skill."];
+    }
+
+    for (let i=0;i<100;i++) {
+      const topic = topics[i % topics.length];
+      const item = makeQuestion(topic, i);
+      add(item[0], item[1], item[2], item[3], item[4]);
     }
     return out;
   }
