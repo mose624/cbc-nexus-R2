@@ -462,57 +462,104 @@
       window.CBENexusCBCBanks.curriculum[selectedGrade] &&
       window.CBENexusCBCBanks.curriculum[selectedGrade][selectedSubject];
 
+    const normalizeQuestionMetadata = () => {
+      const questions = getAvailableQuestions(selectedGrade, selectedSubject);
+      const groups = new Map();
+
+      questions.forEach((item) => {
+        const strandId = String(item[5] || item[3] || "").trim();
+        const strandLabel = String(item[3] || strandId || "").trim();
+        const subId = String(item[6] || "").trim();
+        const learningOutcome = String(item[7] || "").trim();
+        const content = String(item[8] || "").trim();
+        if (!strandId) return;
+
+        if (!groups.has(strandId)) {
+          groups.set(strandId, {
+            id: strandId,
+            label: strandLabel || strandId,
+            subStrands: []
+          });
+        }
+
+        if (subId) {
+          const parent = groups.get(strandId);
+          let sub = parent.subStrands.find((entry) => entry.id === subId);
+          if (!sub) {
+            sub = { id: subId, label: subId, content: [], learningOutcomes: [] };
+            parent.subStrands.push(sub);
+          }
+          if (learningOutcome && !sub.learningOutcomes.includes(learningOutcome)) sub.learningOutcomes.push(learningOutcome);
+          if (content && !sub.content.includes(content)) sub.content.push(content);
+        }
+      });
+
+      return Array.from(groups.values());
+    };
+
     if (Array.isArray(map) && map.length) {
-      return map.map((item) => {
-        if (typeof item === "string") return { id: item, label: item, subStrands: [] };
+      const raw = map.map((item) => {
+        if (typeof item === "string") {
+          return { id: item, label: item, subStrands: [] };
+        }
         return {
           id: String(item.id || item.label || ""),
           label: String(item.label || item.id || ""),
+          strand: String(item.strand || "").trim(),
+          content: Array.isArray(item.content) ? item.content : [],
+          learningOutcomes: Array.isArray(item.learningOutcomes) ? item.learningOutcomes : [],
           subStrands: Array.isArray(item.subStrands) ? item.subStrands : []
         };
       }).filter((item) => item.id && item.label);
+
+      // Some KICD curriculum data is stored as individual sub-strands with a
+      // shared strand field. Convert that flat structure into a hierarchy:
+      // Strand -> Sub-Strands -> Learning Outcomes / Content.
+      const flatWithStrands = raw.filter((item) => item.strand && !item.subStrands.length);
+      if (flatWithStrands.length) {
+        const grouped = new Map();
+
+        raw.filter((item) => !item.strand || item.subStrands.length).forEach((item) => {
+          if (item.subStrands.length) {
+            grouped.set(item.id, {
+              id: item.id,
+              label: item.label,
+              subStrands: item.subStrands
+            });
+          }
+        });
+
+        flatWithStrands.forEach((item) => {
+          const strandId = item.strand;
+          if (!grouped.has(strandId)) {
+            grouped.set(strandId, {
+              id: strandId,
+              label: strandId,
+              subStrands: []
+            });
+          }
+          grouped.get(strandId).subStrands.push({
+            id: item.id,
+            label: item.label,
+            content: item.content,
+            learningOutcomes: item.learningOutcomes
+          });
+        });
+
+        const normalized = Array.from(grouped.values());
+        if (normalized.some((item) => item.subStrands.length)) return normalized;
+      }
+
+      if (raw.some((item) => item.subStrands.length)) {
+        return raw.map((item) => ({
+          id: item.id,
+          label: item.label,
+          subStrands: item.subStrands
+        }));
+      }
     }
 
-    // Fallback for subjects whose full KICD hierarchy has not yet been loaded.
-    // Build a working hierarchy from the question metadata instead of leaving
-    // Sub-Strand and Learning Outcome empty.
-    const questions = getAvailableQuestions(selectedGrade, selectedSubject);
-    const groups = new Map();
-
-    questions.forEach((item) => {
-      const strandId = String(item[5] || item[3] || "").trim();
-      const strandLabel = String(item[3] || strandId || "").trim();
-      const subId = String(item[6] || "").trim();
-      const subLabel = subId || String(item[3] || "").trim();
-      const learningOutcome = String(item[7] || "").trim();
-      const content = String(item[8] || "").trim();
-
-      if (!strandId) return;
-      if (!groups.has(strandId)) {
-        groups.set(strandId, {
-          id: strandId,
-          label: strandLabel || strandId,
-          subStrands: []
-        });
-      }
-
-      const strandEntry = groups.get(strandId);
-      if (subId) {
-        let sub = strandEntry.subStrands.find((entry) => entry.id === subId);
-        if (!sub) {
-          sub = { id: subId, label: subLabel, content: [], learningOutcomes: [] };
-          strandEntry.subStrands.push(sub);
-        }
-        if (learningOutcome && !sub.learningOutcomes.includes(learningOutcome)) {
-          sub.learningOutcomes.push(learningOutcome);
-        }
-        if (content && !sub.content.includes(content)) {
-          sub.content.push(content);
-        }
-      }
-    });
-
-    return Array.from(groups.values());
+    return normalizeQuestionMetadata();
   }
 
   function getSelectedCurriculumItem() {
@@ -664,9 +711,18 @@
     const selectedStrand = strand ? strand.value : "All Topics";
 
     if (selectedStrand && selectedStrand !== "All Topics") {
-      combined = combined.filter((item) =>
-        String(item[5] || item[3] || "") === String(selectedStrand)
-      );
+      const selectedCurriculum = getCurriculumItems(grade.value, subject.value)
+        .find((item) => String(item.id) === String(selectedStrand));
+
+      const allowedSubStrands = selectedCurriculum && Array.isArray(selectedCurriculum.subStrands)
+        ? new Set(selectedCurriculum.subStrands.map((entry) => String(entry.id || entry.label || "")))
+        : null;
+
+      combined = combined.filter((item) => {
+        const itemStrand = String(item[5] || item[3] || "");
+        return itemStrand === String(selectedStrand) ||
+          Boolean(allowedSubStrands && allowedSubStrands.has(itemStrand));
+      });
     }
 
     const selectedSub = subStrand ? subStrand.value : "All Sub-Strands";
