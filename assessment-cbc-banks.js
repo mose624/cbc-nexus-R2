@@ -91,11 +91,20 @@
   }
 
   const supportedMajorSubjects = [
-    "English","English Activities","Kiswahili","Kiswahili Activities",
-    "Science","Science & Technology","Integrated Science","Social Studies",
-    "Agriculture","Business Studies","Computer Science","Computer Studies",
-    "Pre-Technical Studies","Health Education","Life Skills Education",
-    "Religious Education","General Science"
+    "Mathematics","English","English Activities","Kiswahili","Kiswahili Activities",
+    "Environmental Activities","Creative Activities","Creative Arts",
+    "Christian Religious Education","Islamic Religious Education","Hindu Religious Education",
+    "Science","Science & Technology","Integrated Science","Social Studies","Agriculture",
+    "Business Studies","Computer Science","Computer Studies","Pre-Technical Studies",
+    "Health Education","Life Skills Education","Religious Education",
+    "Sports & Physical Education","Visual Arts","Performing Arts","Home Science",
+    "French","German","Mandarin","Mandarin Chinese","Arabic","Kenyan Sign Language",
+    "Indigenous Language","Indigenous Languages","Core Mathematics","Essential Mathematics",
+    "Community Service Learning","Biology","Chemistry","Physics","Aviation",
+    "Building Construction","Electricity","Metalwork","Power Mechanics","Wood Technology",
+    "Media Technology","Marine & Fisheries Technology","History & Citizenship","Geography",
+    "Literature in English","Fasihi ya Kiswahili","Sign Language","Sports & Recreation",
+    "Music & Dance","Theatre & Film","Fine Arts"
   ];
   for (let n=1;n<=12;n++) {
     const g="Grade "+n;
