@@ -576,6 +576,16 @@ async function loadPublicStats() {
   }
 }
 
+
+async function trackResourceView(resourceId) {
+  try {
+    const key = `cbeViewed:${resourceId}`;
+    if (sessionStorage.getItem(key)) return;
+    sessionStorage.setItem(key, "1");
+    await fetch("/api/public/view", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ resourceId }) });
+  } catch {}
+}
+
 function renderTrending() {
   if (!elements.trendingList) return;
   const resources = getAllResources().slice(0, 6);
