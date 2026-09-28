@@ -26,8 +26,32 @@ function gradePage(req,g,sub){
  if(sub){const name=sub.replace(/-/g," ").replace(/\b\w/g,c=>c.toUpperCase());return page(req,name+" Grade "+g+" Resources Kenya | CBE Nexus","Find "+name+" Grade "+g+" CBC/CBE notes, exams, revision questions and marking schemes for Kenyan learners and teachers.","/grade-"+g+"/"+sub,"Grade "+g+" "+name+" Resources","Explore "+name+" learning and revision resources for Grade "+g+" in Kenya, including notes, practice questions, exams and marking schemes.",links);}
  return page(req,"Grade "+g+" CBC Resources Kenya | CBE Nexus","Grade "+g+" CBC/CBE notes, exams, revision questions, marking schemes and teacher resources for Kenya.","/grade-"+g,"Grade "+g+" CBC Resources Kenya","Browse Grade "+g+" subjects and discover CBC/CBE notes, exams, revision questions, marking schemes and teacher resources.",links);
 }
-function match(req){
+async function resourcePage(req,id){
+ if(!supabaseConfigured)return null;
+ try{
+  const {data:r,error}=await supabase.from("resources").select("id,title,description,grade,subject,resource_type,price,discount_price,status,created_at,updated_at,filename").eq("id",id).eq("status","approved").maybeSingle();
+  if(error)throw error;
+  if(!r)return null;
+  const type=r.resource_type||"Learning Resource", grade=r.grade||"CBC", subject=r.subject||"General";
+  const title=String(r.title||"").trim()||type+" for Grade "+grade+" "+subject;
+  const pageTitle=title+" | Grade "+grade+" "+subject+" | CBE Nexus Kenya";
+  const description=(String(r.description||"").trim()||"CBC/CBE learning resource for Kenyan learners and teachers.").slice(0,155);
+  const canonical="/resource/"+encodeURIComponent(String(r.id));
+  const b=base(req);
+  const json=JSON.stringify({"@context":"https://schema.org","@type":"LearningResource","name":title,"description":description,"url":b+canonical,"learningResourceType":type,"educationalLevel":grade,"inLanguage":"en","publisher":{"@type":"EducationalOrganization","name":"CBE Nexus","url":b},"about":{"@type":"Thing","name":subject}});
+  let related=[];
+  const q=await supabase.from("resources").select("id,title,grade,subject,resource_type").eq("status","approved").eq("grade",grade).eq("subject",subject).neq("id",r.id).order("created_at",{ascending:false}).limit(8);
+  if(!q.error)related=q.data||[];
+  const relatedHtml=related.map(x=>'<li><a href="/resource/'+encodeURIComponent(String(x.id))+'">'+esc(String(x.title||"Resource"))+'</a> — '+esc(String(x.resource_type||"Learning Resource"))+'</li>').join("")||"<li>No related resources yet.</li>";
+  const gradeUrl="/grade-"+slug(grade);
+  const subjectUrl=gradeUrl+"/"+slug(subject);
+  return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(pageTitle)+'</title><meta name="description" content="'+esc(description)+'"><meta name="robots" content="index,follow"><link rel="canonical" href="'+esc(b+canonical)+'"><meta property="og:type" content="article"><meta property="og:title" content="'+esc(pageTitle)+'"><meta property="og:description" content="'+esc(description)+'"><meta property="og:url" content="'+esc(b+canonical)+'"><script type="application/ld+json">'+json+'</script><style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;max-width:1000px;margin:auto;padding:24px;line-height:1.6;color:#172033}a{color:#075985}.crumbs{font-size:.95rem;color:#52606d}.hero{padding:30px 0}.card{border:1px solid #ddd;border-radius:12px;padding:20px;margin:18px 0}.cta{display:inline-block;background:#075985;color:white;padding:12px 18px;border-radius:8px;text-decoration:none;margin:6px 6px 6px 0}</style></head><body><header><strong>CBE Nexus</strong> — Connecting learners to excellence | Kenya</header><main><p class="crumbs"><a href="/">CBE Nexus</a> / <a href="'+esc(gradeUrl)+'">Grade '+esc(grade)+'</a> / <a href="'+esc(subjectUrl)+'">'+esc(subject)+'</a> / Resource</p><section class="hero"><p>Kenyan CBC/CBE learning resource</p><h1>'+esc(title)+'</h1><p>'+esc(description)+'</p><div class="card"><strong>Grade:</strong> '+esc(grade)+'<br><strong>Subject:</strong> '+esc(subject)+'<br><strong>Resource type:</strong> '+esc(type)+'</div><a class="cta" href="'+esc(subjectUrl)+'">More Grade '+esc(grade)+' '+esc(subject)+' Resources</a><a class="cta" href="/cbc-exam-generator">Free CBC Exam Generator</a></section><section><h2>About this resource</h2><p>'+esc(String(r.description||"Explore this CBC/CBE resource on CBE Nexus for learning, revision and teaching support in Kenya."))+'</p></section><section><h2>Related '+esc(subject)+' resources</h2><ul>'+relatedHtml+'</ul></section></main></body></html>';
+ }catch(e){console.warn("SEO resource page lookup failed:",e.message||e);return null;}
+}
+async function match(req){
  const p=new URL(req.url,"http://localhost").pathname.replace(/\/$/,"")||"/";
+ const rm=p.match(/^\/resource\/([^/]+)$/);
+ if(rm){return await resourcePage(req,decodeURIComponent(rm[1]));}
  if(LANDINGS[p]){const x=LANDINGS[p];const links=GRADES.map(g=>({url:"/grade-"+g,label:"Grade "+g+" CBC Resources"}));return page(req,x[0],x[1],p,x[0],x[1],links);}
  const m=p.match(/^\/grade-(7|8|9|10|11|12)(?:\/([^/]+))?$/);return m?gradePage(req,m[1],m[2]):null;
 }
