@@ -146,6 +146,27 @@
   // KICD Social Studies curriculum map for Junior School.
   // These are curriculum strand/sub-strand labels, not official exam questions.
   const kicdSocialStudiesCurriculum = {
+    "Grade 4": [
+      "1.0 Natural and Built Environments",
+      "2.0 People and Population",
+      "3.0 Social Organisations",
+      "4.0 Resources and Economic Activities",
+      "5.0 Citizenship and Governance in Kenya"
+    ],
+    "Grade 5": [
+      "1.0 Natural and Historic Built Environments",
+      "2.0 People and Social Organisations",
+      "3.0 Resources and Economic Activities",
+      "4.0 Political Systems",
+      "5.0 Governance"
+    ],
+    "Grade 6": [
+      "1.0 Natural and the Built Environments",
+      "2.0 People and Social Organisations",
+      "3.0 Resources and Economic Activities",
+      "4.0 Political Systems",
+      "5.0 Governance"
+    ],
     "Grade 7": [
       "1.0 Social Studies and Personal Development — 1.1 Self-Exploration",
       "1.0 Social Studies and Personal Development — 1.2 Social Entrepreneurial Opportunities",
