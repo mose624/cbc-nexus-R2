@@ -341,6 +341,16 @@ const elements = {
   adminSalesManagement: document.querySelector("#adminSalesManagement"),
   adminPaymentManagement: document.querySelector("#adminPaymentManagement"),
   adminPriceManagement: document.querySelector("#adminPriceManagement"),
+  facebookMarketingPanel: document.querySelector("#facebookMarketingPanel"),
+  facebookAdvertTitle: document.querySelector("#facebookAdvertTitle"),
+  facebookAdvertText: document.querySelector("#facebookAdvertText"),
+  facebookAdvertLink: document.querySelector("#facebookAdvertLink"),
+  facebookAdvertImage: document.querySelector("#facebookAdvertImage"),
+  facebookImagePreview: document.querySelector("#facebookImagePreview"),
+  facebookPreview: document.querySelector("#facebookPreview"),
+  facebookPublishButton: document.querySelector("#facebookPublishButton"),
+  facebookStatus: document.querySelector("#facebookStatus"),
+  facebookPageStatus: document.querySelector("#facebookPageStatus"),
   refreshAdminDashboardButton: document.querySelector("#refreshAdminDashboardButton"),
   adminDashboardSearch: document.querySelector("#adminDashboardSearch"),
   adminStatusFilter: document.querySelector("#adminStatusFilter"),
@@ -1143,7 +1153,119 @@ async function loadAdminDashboard() {
     const data = await response.json();
     if (!data.ok) return;
     renderAdminControlCentre(data);
+    checkFacebookStatus();
+    renderFacebookPreview();
   } catch {}
+}
+
+
+async function checkFacebookStatus() {
+  if (!elements.facebookPageStatus) return;
+  elements.facebookPageStatus.textContent = "Checking Facebook connection...";
+  try {
+    const response = await fetch("/api/facebook/status", { credentials: "same-origin", cache: "no-store" });
+    const data = await response.json();
+    if (response.ok && data.ok) {
+      elements.facebookPageStatus.textContent = "✓ Facebook Page publishing is configured.";
+      elements.facebookPageStatus.className = "facebook-status connected";
+    } else {
+      elements.facebookPageStatus.textContent = data.error || "Facebook publishing is not configured yet.";
+      elements.facebookPageStatus.className = "facebook-status";
+    }
+  } catch {
+    elements.facebookPageStatus.textContent = "Facebook connection could not be checked.";
+    elements.facebookPageStatus.className = "facebook-status";
+  }
+}
+
+function renderFacebookPreview() {
+  if (!elements.facebookPreview) return;
+  const title = String(elements.facebookAdvertTitle?.value || "Your advert title").trim();
+  const text = String(elements.facebookAdvertText?.value || "Write your Facebook advert here.").trim();
+  const link = String(elements.facebookAdvertLink?.value || "").trim();
+  const image = elements.facebookImagePreview?.src || "";
+  elements.facebookPreview.innerHTML =
+    (image ? '<img src="' + escapeHtml(image) + '" alt="Advert preview">' : '<div class="facebook-preview-placeholder">📷 Add an advert image</div>') +
+    '<div class="facebook-preview-copy"><strong>' + escapeHtml(title) + '</strong><p>' +
+    escapeHtml(text) + '</p>' + (link ? '<a href="' + escapeHtml(link) + '" target="_blank" rel="noopener">' + escapeHtml(link) + '</a>' : '') + '</div>';
+}
+
+async function publishFacebookAdvert() {
+  if (!elements.facebookPublishButton) return;
+  const title = String(elements.facebookAdvertTitle?.value || "").trim();
+  const message = String(elements.facebookAdvertText?.value || "").trim();
+  const link = String(elements.facebookAdvertLink?.value || "").trim();
+  const file = elements.facebookAdvertImage?.files?.[0];
+
+  if (!message) {
+    showToast("Write the Facebook advert text first.");
+    elements.facebookAdvertText?.focus();
+    return;
+  }
+  if (link && !/^https?:\\/\\//i.test(link)) {
+    showToast("Website link must start with https://");
+    return;
+  }
+
+  elements.facebookPublishButton.disabled = true;
+  if (elements.facebookStatus) elements.facebookStatus.textContent = "Preparing your Facebook advert...";
+  try {
+    let imageKey = "";
+    if (file) {
+      if (!/^image\\/(jpeg|png|webp|gif)$/i.test(file.type)) {
+        throw new Error("Please choose a JPG, PNG, WEBP or GIF image.");
+      }
+      if (file.size > 8 * 1024 * 1024) {
+        throw new Error("Facebook advert images must be 8 MB or smaller.");
+      }
+
+      const uploadResponse = await fetch("/api/r2/upload", {
+        method: "POST",
+        headers: {
+          "Content-Type": file.type || "application/octet-stream",
+          "X-CBE-Role": "admin",
+          "X-CBE-Grade": "Marketing",
+          "X-CBE-Subject": "Facebook Ads",
+          "X-CBE-Type": "Marketing Images",
+          "X-CBE-Filename": file.name,
+          "X-CBE-Resource-Id": "facebook-" + Date.now()
+        },
+        body: file
+      });
+      const uploadData = await uploadResponse.json();
+      if (!uploadResponse.ok || !uploadData.ok) throw new Error(uploadData.error || "Advert image upload failed.");
+      imageKey = uploadData.key;
+      if (elements.facebookStatus) elements.facebookStatus.textContent = "Image uploaded. Publishing to Facebook...";
+    } else if (elements.facebookStatus) {
+      elements.facebookStatus.textContent = "Publishing to Facebook...";
+    }
+
+    const response = await fetch("/api/facebook/publish", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title, message, link, imageKey })
+    });
+    const data = await response.json();
+    if (!response.ok || !data.ok) throw new Error(data.error || "Facebook publishing failed.");
+
+    if (elements.facebookStatus) elements.facebookStatus.textContent = "✓ Published successfully to your Facebook Page.";
+    showToast("Advert published to Facebook Page.");
+    if (elements.facebookAdvertTitle) elements.facebookAdvertTitle.value = "";
+    if (elements.facebookAdvertText) elements.facebookAdvertText.value = "";
+    if (elements.facebookAdvertLink) elements.facebookAdvertLink.value = "";
+    if (elements.facebookAdvertImage) elements.facebookAdvertImage.value = "";
+    if (elements.facebookImagePreview) {
+      elements.facebookImagePreview.removeAttribute("src");
+      elements.facebookImagePreview.classList.remove("show");
+    }
+    renderFacebookPreview();
+  } catch (error) {
+    if (elements.facebookStatus) elements.facebookStatus.textContent = error.message || "Facebook publishing failed.";
+    showToast(error.message || "Facebook publishing failed.");
+  } finally {
+    elements.facebookPublishButton.disabled = false;
+  }
 }
 
 function setAdminModule(module) {
