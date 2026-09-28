@@ -368,3 +368,63 @@
     }));
   });
 })();
+
+/* Grade 7 English — verified from the revised 2024 KICD English design. */
+(function addGrade7English() {
+  const root = window.CBENexusCBCBanks || (window.CBENexusCBCBanks = {banks:{}, topicMap:{}});
+  root.curriculum = root.curriculum || {};
+  root.banks = root.banks || {};
+  root.kicdQuestionMetadata = root.kicdQuestionMetadata || {};
+  root.curriculum["Grade 7"] = root.curriculum["Grade 7"] || {};
+  root.banks["Grade 7"] = root.banks["Grade 7"] || {};
+
+  const curriculum = [{
+    id:"G7-ENG-READING2", label:"Reading 2",
+    subStrands:[
+      {id:"G7-ENG-1.4.1",label:"1.4.1 Intensive Reading – Trickster Narrative",content:["Trickster narratives","Character actions and consequences"],learningOutcomes:["Identify features of a trickster narrative","Relate character actions to consequences"]},
+      {id:"G7-ENG-2.4.1",label:"2.4.1 Class Reader – Previewing a Text",content:["Cover page","Title, blurb, author and setting"],learningOutcomes:["Explain the different parts that aid in previewing a book","Describe the author and setting in terms of time and place"]},
+      {id:"G7-ENG-3.4.1",label:"3.4.1 Reading Poetry",content:["Simple poems","Meaning and message in poetry"],learningOutcomes:["Identify the message in a simple poem","Relate a poem's message to real-life experiences"]},
+      {id:"G7-ENG-4.4.1",label:"4.4.1 Class Reader – Main Characters",content:["Main characters","Character roles in a narrative"],learningOutcomes:["Identify main characters in a class reader","Describe the role of a main character"]},
+      {id:"G7-ENG-5.4.1",label:"5.4.1 Intensive Reading – Oral Narratives",content:["Oral narratives","Events and lessons"],learningOutcomes:["Identify key events in an oral narrative","Explain the lesson learnt from an oral narrative"]},
+      {id:"G7-ENG-6.4.1",label:"6.4.1 Oral Literature – Songs",content:["Oral literature songs","Purpose and message of songs"],learningOutcomes:["Identify the message of an oral literature song","Explain the purpose of an oral literature song"]},
+      {id:"G7-ENG-7.4.1",label:"7.4.1 Class Reader – Characters",content:["Character traits","Evidence from a narrative"],learningOutcomes:["Identify character traits from a text","Support a description of a character with evidence"]},
+      {id:"G7-ENG-8.4.1",label:"8.4.1 Intensive Reading – Poetry",content:["Poetic meaning","Ideas expressed in a poem"],learningOutcomes:["Interpret ideas expressed in a poem","Relate poetic ideas to real-life situations"]},
+      {id:"G7-ENG-9.4.1",label:"9.4.1 Class Reader – Sequence of Events",content:["Sequence of events","Beginning, middle and end"],learningOutcomes:["Arrange events in the correct sequence","Explain how events contribute to a narrative"]},
+      {id:"G7-ENG-10.4.1",label:"10.4.1 Character Traits – Monster Narratives",content:["Monster narratives","Character traits and actions"],learningOutcomes:["Identify character traits in a monster narrative","Use actions in a narrative to infer character traits"]},
+      {id:"G7-ENG-11.4.1",label:"11.4.1 Intensive Reading – Dilemma Narratives",content:["Dilemma narratives","Choices and consequences"],learningOutcomes:["Identify a dilemma in a narrative","Explain consequences of choices made by characters"]},
+      {id:"G7-ENG-12.4.1",label:"12.4.1 Reading for Main Idea",content:["Main idea","Supporting details"],learningOutcomes:["Identify the main idea of a text","Distinguish the main idea from supporting details"]},
+      {id:"G7-ENG-13.4.1",label:"13.4.1 Praise Songs – Purpose and Occasion",content:["Praise songs","Purpose and occasions for praise songs"],learningOutcomes:["Identify the purpose of a praise song","Explain an occasion when a praise song is performed"]},
+      {id:"G7-ENG-14.4.1",label:"14.4.1 Features of Style – Identification and Use",content:["Features of style","Use of stylistic features in texts"],learningOutcomes:["Identify stylistic features in a text","Explain the effect of a stylistic feature"]},
+      {id:"G7-ENG-15.4.1",label:"15.4.1 Poetry",content:["Poetic language","Theme and message"],learningOutcomes:["Identify a theme in a poem","Explain how a poem communicates its message"]}
+    ]
+  }];
+
+  const q = [
+    ["A trickster in a narrative persuades other animals to give him their food and then keeps it for himself. What does this action mainly show about the character?",["He is generous.","He is clever but dishonest.","He is shy.","He is unable to make decisions."],1,0,1,"G7-ENG-READING2","G7-ENG-1.4.1"],
+    ["Before reading a new class reader, a learner studies the cover, reads the blurb and finds out who wrote the book. What is the learner doing?",["Predicting the examination questions.","Previewing the text.","Writing the conclusion.","Memorising the whole story."],1,0,0,"G7-ENG-READING2","G7-ENG-2.4.1"],
+    ["A poem describes a learner who keeps practising after failing several times and finally succeeds. Which message is most appropriate?",["Success can come through persistence.","Failure means a person should stop trying.","Practice is unnecessary.","Only talented people can succeed."],0,0,1,"G7-ENG-READING2","G7-ENG-3.4.1"],
+    ["In a class reader, Amina makes the major decisions that move the story forward while other characters react to her actions. What is Amina most likely to be?",["A minor character.","The main character.","The setting.","The narrator's audience."],1,0,1,"G7-ENG-READING2","G7-ENG-4.4.1"],
+    ["In an oral narrative, a farmer ignores advice, loses his harvest and later changes his behaviour. What lesson can the listener reasonably draw?",["Advice should always be ignored.","Actions can have consequences and people can learn from mistakes.","Harvests never depend on behaviour.","Mistakes cannot be corrected."],1,0,1,"G7-ENG-READING2","G7-ENG-5.4.1"],
+    ["A community song celebrates people who work together to protect a water source. What is the main purpose of the song?",["To encourage and praise community cooperation.","To describe the weather only.","To teach mathematical operations.","To announce a school timetable."],0,1,1,"G7-ENG-READING2","G7-ENG-6.4.1"],
+    ["A character returns a lost wallet even though nobody would know if he kept it. Which trait is best supported by this action?",["Dishonesty.","Integrity.","Laziness.","Fear."],1,1,1,"G7-ENG-READING2","G7-ENG-7.4.1"],
+    ["A poem compares a hopeful learner to a rising sun after a difficult period. What idea is the comparison most likely communicating?",["Hope can follow difficult experiences.","The learner wants to become a scientist.","The poem is about weather forecasting.","The sun is the main character."],0,0,0,"G7-ENG-READING2","G7-ENG-8.4.1"],
+    ["Which sequence best describes a simple narrative structure?",["Conclusion, beginning, middle.","Middle, conclusion, beginning.","Beginning, middle, ending.","Ending, middle, beginning."],2,0,1,"G7-ENG-READING2","G7-ENG-9.4.1"],
+    ["In a monster narrative, a character protects younger children despite being frightened. What trait is demonstrated?",["Courage.","Carelessness.","Dishonesty.","Selfishness."],0,1,1,"G7-ENG-READING2","G7-ENG-10.4.1"],
+    ["A learner in a story discovers that either choice she makes may disappoint someone. What feature of the narrative is she facing?",["A dilemma.","A setting.","A title.","A rhyme."],0,0,0,"G7-ENG-READING2","G7-ENG-11.4.1"],
+    ["Read this short passage: 'The school planted trees, protected the seedlings and organised a watering rota. As the months passed, the compound became greener.' What is the main idea?",["The school is improving its environment through tree planting and care.","Learners dislike trees.","The compound is always dry.","Watering trees is impossible."],0,0,0,"G7-ENG-READING2","G7-ENG-12.4.1"],
+    ["A praise song is performed during a community ceremony to honour a respected leader. Why is the song being performed?",["To praise and honour the person on the occasion.","To provide instructions for cooking.","To report examination results.","To describe a road map."],0,1,1,"G7-ENG-READING2","G7-ENG-13.4.1"],
+    ["A writer describes a busy market as 'a river of people flowing between the stalls.' What feature of style is being used?",["A comparison that creates an image.","A timetable.","A definition of a market.","A factual measurement."],0,1,1,"G7-ENG-READING2","G7-ENG-14.4.1"],
+    ["A poem repeatedly describes a small act of kindness that changes a lonely learner's day. Which theme is most clearly developed?",["Kindness can positively affect other people.","People should avoid helping others.","Loneliness is always permanent.","Small actions have no meaning."],0,0,1,"G7-ENG-READING2","G7-ENG-15.4.1"]
+  ];
+
+  const byId = Object.fromEntries(curriculum[0].subStrands.map(x => [x.id,x]));
+  q.forEach(item => {
+    const sub = byId[item[7]];
+    item[7] = item[7];
+    item[8] = sub.learningOutcomes[item[3]] || sub.learningOutcomes[0];
+    item[9] = sub.content[item[4]] || sub.content[0];
+  });
+
+  root.curriculum["Grade 7"]["English"] = curriculum;
+  root.banks["Grade 7"]["English"] = q.map(item => item.slice(0,3).concat([item[6],item[3] === 0 ? "Literature and Reading" : "Literature and Reading",item[6],item[7],item[8],item[9]]));
+})();
