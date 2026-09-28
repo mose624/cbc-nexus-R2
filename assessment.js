@@ -466,13 +466,23 @@
       const questions = getAvailableQuestions(selectedGrade, selectedSubject);
       const groups = new Map();
 
+      // Generic assessment banks do not always have a full KICD hierarchy.
+      // In that case expose their subject topics as usable sub-strands under
+      // one parent topic group so every subject still has working filters.
+      const hasExplicitSubStrandMetadata = questions.some((item) =>
+        String(item[6] || "").trim()
+      );
+
       questions.forEach((item) => {
-        const strandId = String(item[5] || item[3] || "").trim();
-        const strandLabel = String(item[3] || strandId || "").trim();
-        const subId = String(item[6] || "").trim();
-        const learningOutcome = String(item[7] || "").trim();
-        const content = String(item[8] || "").trim();
-        if (!strandId) return;
+        const topic = String(item[3] || "").trim();
+        if (!topic) return;
+
+        const strandId = hasExplicitSubStrandMetadata
+          ? String(item[5] || topic).trim()
+          : "TOPICS";
+        const strandLabel = hasExplicitSubStrandMetadata
+          ? String(item[3] || strandId).trim()
+          : String(selectedSubject || "Subject Topics").trim();
 
         if (!groups.has(strandId)) {
           groups.set(strandId, {
@@ -482,15 +492,33 @@
           });
         }
 
-        if (subId) {
-          const parent = groups.get(strandId);
-          let sub = parent.subStrands.find((entry) => entry.id === subId);
-          if (!sub) {
-            sub = { id: subId, label: subId, content: [], learningOutcomes: [] };
-            parent.subStrands.push(sub);
-          }
-          if (learningOutcome && !sub.learningOutcomes.includes(learningOutcome)) sub.learningOutcomes.push(learningOutcome);
-          if (content && !sub.content.includes(content)) sub.content.push(content);
+        const parent = groups.get(strandId);
+        const subId = String(item[6] || topic).trim();
+        const subLabel = hasExplicitSubStrandMetadata
+          ? subId
+          : topic.charAt(0).toUpperCase() + topic.slice(1);
+
+        let sub = parent.subStrands.find((entry) => entry.id === subId);
+        if (!sub) {
+          sub = {
+            id: subId,
+            label: subLabel,
+            content: [],
+            learningOutcomes: []
+          };
+          parent.subStrands.push(sub);
+        }
+
+        const learningOutcome = String(item[7] || "").trim() ||
+          "Demonstrate understanding and application of " + topic + ".";
+        const content = String(item[8] || "").trim() ||
+          "Key concepts and practical application of " + topic + ".";
+
+        if (!sub.learningOutcomes.includes(learningOutcome)) {
+          sub.learningOutcomes.push(learningOutcome);
+        }
+        if (!sub.content.includes(content)) {
+          sub.content.push(content);
         }
       });
 
