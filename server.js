@@ -79,6 +79,29 @@ async function handleApi(req,res,url){
   }
   if(req.method==="POST"&&url.pathname==="/api/r2/upload-url"){const p=JSON.parse((await readBody(req))||"{}"),admin=verifyAdminSession(req),seller=verifySellerSession(req);if(p.role==="admin"&&!admin){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}if(p.role==="seller"&&!seller){sendJson(res,401,{ok:false,error:"Approved seller login required."});return true;}if(!["admin","seller"].includes(p.role)){sendJson(res,400,{ok:false,error:"Upload role is required."});return true;}sendJson(res,200,{ok:true,...await createUploadUrl(p)});return true;}
   if(req.method==="POST"&&url.pathname==="/api/r2/project-upload-url"){const p=JSON.parse((await readBody(req))||"{}");if(!p.grade||!p.subject){sendJson(res,400,{ok:false,error:"Project grade and subject are required."});return true;}sendJson(res,200,{ok:true,...await createUploadUrl({...p,type:"CBC Projects"})});return true;}
+  if(req.method==="GET"&&url.pathname==="/api/public/stats"){
+    const result={resources:0,purchases:0,downloads:0,byResource:{}};
+    if(!supabaseConfigured){sendJson(res,200,{ok:true,stats:result,storage:"local"});return true;}
+    try{
+      const {count,error}=await supabase.from("resources").select("id",{count:"exact",head:true}).eq("status","approved");
+      if(!error)result.resources=Number(count||0);
+    }catch(error){console.error("Supabase resource stats error:",error);}
+    try{
+      const {data,error}=await supabase.from("purchases").select("resource_id,status").in("status",["paid","completed","success"]);
+      if(!error){
+        result.purchases=(data||[]).length;
+        (data||[]).forEach(row=>{const id=String(row.resource_id||"");if(!id)return;if(!result.byResource[id])result.byResource[id]={purchases:0,downloads:0};result.byResource[id].purchases+=1;});
+      }
+    }catch(error){console.warn("Supabase purchases table unavailable:",error.message||error);}
+    try{
+      const {data,error}=await supabase.from("downloads").select("resource_id");
+      if(!error){
+        result.downloads=(data||[]).length;
+        (data||[]).forEach(row=>{const id=String(row.resource_id||"");if(!id)return;if(!result.byResource[id])result.byResource[id]={purchases:0,downloads:0};result.byResource[id].downloads+=1;});
+      }
+    }catch(error){console.warn("Supabase downloads table unavailable:",error.message||error);}
+    sendJson(res,200,{ok:true,stats:result,byResource:result.byResource,storage:"supabase"});return true;
+  }
   if(req.method==="GET"&&url.pathname==="/api/supabase/status"){sendJson(res,200,{ok:supabaseConfigured,supabaseConfigured,message:supabaseConfigured?"Supabase connection is configured.":"Add SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY to the Render environment."});return true;}
   if(req.method==="GET"&&url.pathname==="/api/r2/verify"){
     try{
