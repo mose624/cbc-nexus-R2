@@ -146,6 +146,39 @@
     ]
   };
 
+  // Attach every verified question to a specific sub-strand, learning outcome and
+  // content item. This prevents a strand-level question from being shown as if it
+  // assessed every learning outcome.
+  const outcomeMap = {
+    "G7-CAS-2.4": [0, 0, 1, 1, 2, 0],
+    "G7-CAS-2.6": [0, 1, 2, 0, 3, 1],
+    "G7-CAS-2.7": [0, 0, 2, 1, 3, 4],
+    "G7-CAS-2.9": [0, 0, 3, 2, 3, 2]
+  };
+  const contentMap = {
+    "G7-CAS-2.4": [0, 2, 1, 1, 2, 3],
+    "G7-CAS-2.6": [0, 4, 5, 6, 7, 0],
+    "G7-CAS-2.7": [5, 0, 6, 7, 3, 8],
+    "G7-CAS-2.9": [1, 2, 3, 3, 0, 1]
+  };
+
+  Object.entries(questions).forEach(([curriculumId, bank]) => {
+    const sub = curriculum["Grade 7"]["Performing Arts"]
+      .find((entry) => entry.id === curriculumId);
+    const subStrand = sub && sub.subStrands && sub.subStrands[0];
+    bank.forEach((item, index) => {
+      const outcomeIndex = (outcomeMap[curriculumId] || [0])[index] ?? 0;
+      const contentIndex = (contentMap[curriculumId] || [0])[index] ?? 0;
+      item[6] = subStrand ? subStrand.id : curriculumId;
+      item[7] = subStrand && subStrand.learningOutcomes
+        ? subStrand.learningOutcomes[outcomeIndex] || ""
+        : "";
+      item[8] = subStrand && subStrand.content
+        ? subStrand.content[contentIndex] || ""
+        : "";
+    });
+  });
+
   const root = window.CBENexusCBCBanks || (window.CBENexusCBCBanks = {banks:{}, topicMap:{}});
   root.curriculum = root.curriculum || {};
   root.curriculum["Grade 7"] = root.curriculum["Grade 7"] || {};
@@ -163,7 +196,10 @@
       answer: item[2],
       content: item[3],
       explanation: item[4],
-      curriculumId: item[5]
+      curriculumId: item[5],
+      subStrandId: item[6],
+      learningOutcome: item[7],
+      contentCovered: item[8]
     }));
   });
 })();
