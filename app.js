@@ -668,7 +668,7 @@ function sortResources(resources) {
 function renderResources() {
   const resources = getAllResources();
   const filtered = sortResources(resources.filter(resourceMatches));
-  elements.statResources.textContent = resources.length;
+  elements.statResources.textContent = Number(remoteStats.resources || resources.length).toLocaleString("en-KE");
   elements.activeContext.textContent = `${filtered.length} material(s) showing for ${state.grade}, ${state.subject}, ${state.type}`;
   setActiveMaterialLink();
 
@@ -2009,6 +2009,7 @@ bindEvents();
 injectContactInfo();
 renderResources();
 renderTrending();
+loadPublicStats();
 renderCart();
 renderSellerResources();
 renderSellerAccountApprovals();
