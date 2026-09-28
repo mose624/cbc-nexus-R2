@@ -426,5 +426,5 @@
   });
 
   root.curriculum["Grade 7"]["English"] = curriculum;
-  root.banks["Grade 7"]["English"] = q.map(item => item.slice(0,3).concat([item[6],item[3] === 0 ? "Literature and Reading" : "Literature and Reading",item[6],item[7],item[8],item[9]]));
+  root.banks["Grade 7"]["English"] = q.map(item => [item[0], item[1], item[2], "Literature and Reading", "KICD Grade 7 English", "G7-ENG-READING2", item[7], item[8], item[9]]);
 })();
