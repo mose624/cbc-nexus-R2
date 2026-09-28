@@ -27,6 +27,7 @@ const TUITION_KEY = "cbeHolidayTuition";
 const QUIZ_PROGRESS_KEY = "cbeQuizProgress";
 const SELLER_STORAGE_LIMIT_BYTES = 20 * 1024 * 1024 * 1024; // 20 GB storage space
 const APPROVED_DOWNLOADS_KEY = "cbeApprovedDownloads";
+let remoteStats = { resources: 0, purchases: 0, downloads: 0, byResource: {} };
 // Sensitive data now encrypted via SecurityUtils
 const MPESA_PHONE = SecurityUtils.MPESA_PHONE;
 const WHATSAPP_PHONE = SecurityUtils.WHATSAPP_PHONE;
@@ -550,6 +551,29 @@ function renderQuickTypes() {
     .join("");
 }
 
+async function loadPublicStats() {
+  try {
+    const response = await fetch("/api/public/stats", { credentials: "same-origin", cache: "no-store" });
+    if (!response.ok) return;
+    const data = await response.json();
+    if (!data.ok) return;
+    remoteStats = {
+      resources: Number(data.stats?.resources || 0),
+      purchases: Number(data.stats?.purchases || 0),
+      downloads: Number(data.stats?.downloads || 0),
+      byResource: data.byResource || {}
+    };
+    const stat = (id, value) => { const node = document.getElementById(id); if (node) node.textContent = Number(value || 0).toLocaleString("en-KE"); };
+    stat("statResources", remoteStats.resources);
+    stat("statPurchases", remoteStats.purchases);
+    stat("statDownloads", remoteStats.downloads);
+    renderResources();
+    renderTrending();
+  } catch (error) {
+    console.warn("Public statistics could not be loaded:", error);
+  }
+}
+
 function renderTrending() {
   if (!elements.trendingList) return;
   const resources = getAllResources().slice(0, 6);
@@ -665,7 +689,7 @@ function renderResources() {
       </div>
       <h3>${escapeHtml(resource.title)}</h3>
       <p>${escapeHtml(resource.description)}</p>
-      <div class="resource-activity"><span>📥 ${Number(resource.downloads || 0)} downloads</span><span>🛒 ${Number(resource.purchases || 0)} purchases</span></div>
+      <div class="resource-activity"><span>📥 ${Number(remoteStats.byResource?.[resource.id]?.downloads ?? resource.downloads ?? 0)} downloads</span><span>🛒 ${Number(remoteStats.byResource?.[resource.id]?.purchases ?? resource.purchases ?? 0)} purchases</span></div>
       <div class="price-row">
         <div>
           <strong>${money(discountedPrice(resource))}</strong>
