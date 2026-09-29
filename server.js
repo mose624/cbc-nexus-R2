@@ -341,7 +341,20 @@ async function serveStatic(req,res,url){
         .replace("<title>CBE E-Learning Resources</title>","<title>CBE Nexus | CBC & CBE Learning Resources Kenya</title>")
         .replace("CBE E-Learning Resources for Grades 1-12","CBE Nexus | CBC & CBE Learning Resources for Grades 1-12 in Kenya"));
     }
-    res.writeHead(200,{"Content-Type":mimeTypes[path.extname(target).toLowerCase()]||"application/octet-stream"});
+    const ext=path.extname(target).toLowerCase();
+    const isHtml=ext===".html";
+    const isVersionedAsset=/[?&]v=|-[0-9]{8,}/.test(url.search||"") && [".css",".js"].includes(ext);
+    const cacheControl=isHtml
+      ? "public, max-age=300, must-revalidate"
+      : isVersionedAsset
+        ? "public, max-age=31536000, immutable"
+        : [".svg",".png",".jpg",".jpeg",".webp",".ico",".woff",".woff2"].includes(ext)
+          ? "public, max-age=604800"
+          : "public, max-age=3600";
+    res.writeHead(200,{
+      "Content-Type":mimeTypes[ext]||"application/octet-stream",
+      "Cache-Control":cacheControl
+    });
     res.end(data);
   }catch{
     try{const notFound=await fs.readFile(path.join(ROOT,"404.html"),"utf8");res.writeHead(404,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"public, max-age=300"});res.end(notFound);}
