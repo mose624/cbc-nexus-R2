@@ -13,6 +13,51 @@ const DATA_DIR = path.join(ROOT, "backend-data");
 const MAX_BODY_SIZE = 12 * 1024 * 1024;
 const ADMIN_SESSION_TTL_MS = 8 * 60 * 60 * 1000;
 
+// Basic server-side abuse protection.
+const RATE_WINDOW_MS = 60 * 1000;
+const RATE_LIMITS = { general: 120, auth: 10, upload: 12 };
+const rateBuckets = new Map();
+
+function clientIp(req) {
+  const forwarded = String(req.headers["x-forwarded-for"] || "").split(",")[0].trim();
+  return forwarded || String(req.socket?.remoteAddress || "unknown");
+}
+function rateLimitKey(req, url) {
+  const p = url.pathname || "/";
+  const group = /\/login$|\/account$/.test(p) ? "auth" : /\/r2\/upload(?:-url)?$|\/project-upload-url$/.test(p) ? "upload" : "general";
+  return group + ":" + clientIp(req);
+}
+function allowRequest(req, url) {
+  const now = Date.now();
+  const key = rateLimitKey(req, url);
+  const group = key.split(":")[0];
+  const limit = RATE_LIMITS[group] || RATE_LIMITS.general;
+  const bucket = rateBuckets.get(key);
+  if (!bucket || now - bucket.startedAt >= RATE_WINDOW_MS) {
+    rateBuckets.set(key, { startedAt: now, count: 1 });
+    return { allowed: true, remaining: limit - 1 };
+  }
+  bucket.count += 1;
+  if (bucket.count > limit) return { allowed: false, remaining: 0 };
+  return { allowed: true, remaining: limit - bucket.count };
+}
+function setSecurityHeaders(res) {
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-Frame-Options", "SAMEORIGIN");
+  res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  res.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
+  res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+  if (String(process.env.NODE_ENV || "").toLowerCase() === "production") {
+    res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+  }
+}
+setInterval(() => {
+  const cutoff = Date.now() - RATE_WINDOW_MS * 2;
+  for (const [key, bucket] of rateBuckets) {
+    if (bucket.startedAt < cutoff) rateBuckets.delete(key);
+  }
+}, RATE_WINDOW_MS).unref();
+
 function getAdminConfig() {
   return { username:String(process.env.ADMIN_USERNAME||"").trim(), email:String(process.env.ADMIN_EMAIL||"").trim().toLowerCase(), passwordHash:String(process.env.ADMIN_PASSWORD_HASH||""), sessionSecret:String(process.env.ADMIN_SESSION_SECRET||"") };
 }
@@ -34,7 +79,7 @@ async function appendJsonStore(f,item){const c=await readJsonStore(f),s={id:item
 // Matches the actual Supabase resources table. preview_text is intentionally omitted because it is not present in the live schema.
 function resourceRowFromPayload(p,sellerId=null,previewKey=""){return {seller_id:sellerId,title:String(p.title||"").trim(),description:String(p.description||"").trim(),grade:String(p.grade||"").trim(),subject:String(p.subject||"").trim(),resource_type:String(p.type||"").trim(),filename:String(p.fileName||"").trim(),r2_key:String(p.r2Key||"").trim(),preview_key:String(previewKey||p.previewKey||"").trim(),price:Math.max(0,Number(p.price||0)),discount_price:Math.max(0,Number(p.discountPrice||0)),status:String(p.status||"pending")};}
 function resourcePayloadFromRow(r){return {id:r.id,title:r.title,grade:r.grade,subject:r.subject,type:r.resource_type||"",description:r.description||"",price:Number(r.price||0),discount:Number(r.discount_price||0),term:"",isFreeSample:false,popularity:0,fileName:r.filename||"",r2Key:r.r2_key||"",previewKey:r.preview_key||"",previewText:"",file:r.r2_key?"/api/r2/file?key="+encodeURIComponent(r.r2_key):"",status:r.status||"pending",downloads:0,purchases:0,sellerId:r.seller_id||null,createdAt:r.created_at||null,updatedAt:r.updated_at||null};}
-function sendJson(res,status,data){res.writeHead(status,{"Content-Type":"application/json; charset=utf-8"});res.end(JSON.stringify(data));}
+function sendJson(res,status,data){res.setHeader("Cache-Control","no-store");res.writeHead(status,{"Content-Type":"application/json; charset=utf-8"});res.end(JSON.stringify(data));}
 function readBody(req){return new Promise((resolve,reject)=>{let b="";req.on("data",c=>{b+=c;if(b.length>MAX_BODY_SIZE){reject(new Error("Request body too large."));req.destroy();}});req.on("end",()=>resolve(b));req.on("error",reject);});}
 function readBinaryBody(req,maxSize=50*1024*1024){return new Promise((resolve,reject)=>{const chunks=[];let total=0;let settled=false;const fail=(e)=>{if(settled)return;settled=true;reject(e);try{req.destroy();}catch{}};req.on("data",c=>{if(settled)return;total+=c.length;if(total>maxSize){fail(new Error("Upload is too large. Maximum file size is 50 MB."));return;}chunks.push(c);});req.on("end",()=>{if(!settled){settled=true;resolve(Buffer.concat(chunks));}});req.on("error",fail);});}
 async function getMpesaAccessToken(){const k=String(process.env.MPESA_CONSUMER_KEY||""),s=String(process.env.MPESA_CONSUMER_SECRET||"");if(!k||!s)throw new Error("M-Pesa consumer credentials are not configured.");const base=String(process.env.MPESA_ENVIRONMENT||"sandbox").toLowerCase()==="production"?"https://api.safaricom.co.ke":"https://sandbox.safaricom.co.ke";return await new Promise((res,rej)=>{const https=require("https"),q=https.request(base+"/oauth/v1/generate?grant_type=client_credentials",{headers:{Authorization:"Basic "+Buffer.from(k+":"+s).toString("base64")}},r=>{let d="";r.on("data",c=>d+=c);r.on("end",()=>{try{const x=JSON.parse(d);x.access_token?res(x.access_token):rej(new Error("Daraja authorization failed."));}catch{rej(new Error("Invalid Daraja authorization response."));}})});q.on("error",rej);q.end();});}
@@ -79,6 +124,10 @@ async function handleApi(req,res,url){
     const resourceId=String(req.headers["x-cbe-resource-id"]||"resource").trim();
     const contentType=String(req.headers["content-type"]||"application/octet-stream").trim()||"application/octet-stream";
     if(!grade||!subject||!type){sendJson(res,400,{ok:false,error:"Grade, subject and material type are required."});return true;}
+    const allowedExtensions=[".pdf",".doc",".docx",".ppt",".pptx",".xls",".xlsx",".txt",".zip"];
+    const extension=path.extname(fileName.toLowerCase());
+    if(!allowedExtensions.includes(extension)){sendJson(res,400,{ok:false,error:"Unsupported file type."});return true;}
+    if(Number(req.headers["content-length"]||0)>50*1024*1024){sendJson(res,413,{ok:false,error:"Upload is too large. Maximum file size is 50 MB."});return true;}
     try{
       const body=await readBinaryBody(req);
       const uploaded=await uploadObject({grade,subject,type,fileName,resourceId,contentType},body);
@@ -192,5 +241,5 @@ async function serveStatic(req,res,url){
     res.end("Not found");
   }
 }
-const server=http.createServer(async(req,res)=>{const url=new URL(req.url,`http://${req.headers.host||"127.0.0.1"}`);try{if(await handleApi(req,res,url))return;await serveStatic(req,res,url);}catch(error){console.error("Unhandled server error:",error);sendJson(res,500,{ok:false,error:error.message||"Server error."});}});
+const server=http.createServer(async(req,res)=>{const url=new URL(req.url,`http://${req.headers.host||"127.0.0.1"}`);setSecurityHeaders(res);const limit=allowRequest(req,url);res.setHeader("X-RateLimit-Remaining",String(Math.max(0,limit.remaining)));if(!limit.allowed){res.setHeader("Retry-After","60");sendJson(res,429,{ok:false,error:"Too many requests. Please try again shortly."});return;}try{if(await handleApi(req,res,url))return;await serveStatic(req,res,url);}catch(error){console.error("Unhandled server error:",error);sendJson(res,500,{ok:false,error:"Server error."});}});
 server.listen(PORT,"0.0.0.0",()=>console.log(`CBE website backend running on port ${PORT}`));
