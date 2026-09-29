@@ -5331,3 +5331,70 @@ body.admin-unlocked .admin-only-link {
     max-width: calc(100vw - 12px) !important;
   }
 }
+
+
+/* Compact Why CBC NEXUS block in About Us */
+.why-cbe-nexus {
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+
+.why-cbe-nexus h4 {
+  margin: 0 0 3px;
+  color: var(--navy);
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.why-cbe-nexus p {
+  margin: 0 0 5px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.25;
+}
+
+.why-cbe-nexus ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.why-cbe-nexus li {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.why-cbe-nexus li::before {
+  content: "• ";
+  color: var(--teal);
+  font-weight: 800;
+}
+
+@media (max-width: 640px) {
+  .why-cbe-nexus {
+    margin-top: 9px;
+    padding-top: 7px;
+  }
+
+  .why-cbe-nexus h4 {
+    font-size: 12px;
+  }
+
+  .why-cbe-nexus p {
+    font-size: 9px;
+  }
+
+  .why-cbe-nexus ul {
+    gap: 3px 7px;
+  }
+
+  .why-cbe-nexus li {
+    font-size: 8px;
+  }
+}
