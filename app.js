@@ -1402,6 +1402,7 @@ function selectResourceForPayment(resourceId) {
 
   const amount = discountedPrice(resource);
   elements.selectedResource.value = resource.title;
+  elements.selectedResource.dataset.resourceId = String(resource.id);
   elements.amount.value = amount;
   elements.paymentStatus.textContent = `Ready to request M-Pesa payment of ${money(amount)} to ${MPESA_PHONE}.`;
   elements.whatsappOrder.href = whatsappLink(resource, amount);
@@ -1411,49 +1412,51 @@ function selectResourceForPayment(resourceId) {
 
 async function requestMpesaPayment(event) {
   event.preventDefault();
+  const resourceId = String(elements.selectedResource.dataset.resourceId || "").trim();
+  const phone = elements.customerPhone.value.trim();
+  if (!resourceId) { showToast("Please select a resource before starting payment."); return; }
+  if (!phone) { showToast("Enter the Safaricom number that should receive the payment prompt."); return; }
 
-  const payload = {
-    customerPhone: elements.customerPhone.value.trim(),
-    businessPhone: MPESA_PHONE,
-    amount: Number(elements.amount.value),
-    resource: elements.selectedResource.value.trim()
-  };
-
+  const payload = { customerPhone: phone, resourceId };
   elements.paymentStatus.textContent = "Sending M-Pesa payment request...";
   showToast("Processing M-Pesa request...");
-  const record = {
-    id: `pay-${Date.now()}`,
-    ...payload,
-    status: "pending confirmation",
-    createdAt: new Date().toISOString()
-  };
-  localStorage.setItem(PAYMENT_RECORDS_KEY, JSON.stringify([record, ...readPaymentRecords()]));
-  renderPaymentRecords();
-
   try {
     const response = await fetch(MPESA_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
-
-    if (!response.ok) {
-      throw new Error("M-Pesa backend is not active yet.");
-    }
-
-    const result = await response.json();
-    if (!result.ok || !result.CheckoutRequestID) throw new Error(result.error || "M-Pesa request was not accepted.");
-    const updatedRecords = readPaymentRecords().map((item) =>
-      item.id === record.id ? { ...item, checkoutRequestID: result.CheckoutRequestID } : item
-    );
-    localStorage.setItem(PAYMENT_RECORDS_KEY, JSON.stringify(updatedRecords));
-    elements.paymentStatus.textContent = "M-Pesa request sent. Complete payment on the phone. The download unlocks after confirmation.";
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || !result.ok || !result.CheckoutRequestID) throw new Error(result.error || "M-Pesa request was not accepted.");
+    const record = { id: `pay-${Date.now()}`, customerPhone: phone, amount: result.amount, resource: elements.selectedResource.value.trim(), resourceId, checkoutRequestID: result.CheckoutRequestID, status: "pending confirmation", createdAt: new Date().toISOString() };
+    localStorage.setItem(PAYMENT_RECORDS_KEY, JSON.stringify([record, ...readPaymentRecords()]));
+    renderPaymentRecords();
+    elements.paymentStatus.textContent = "M-Pesa request sent. Complete the payment prompt on your phone. Payment will be verified automatically.";
     showToast("M-Pesa request sent successfully.");
-  } catch {
-    elements.paymentStatus.textContent = `M-Pesa API backend is not connected yet. Pay manually to ${MPESA_PHONE}, then confirm on WhatsApp.`;
-    elements.whatsappOrder.href = whatsappLink(null, payload.amount);
-    showToast("M-Pesa backend is not active yet. Use WhatsApp confirmation.");
+    pollMpesaPayment(result.CheckoutRequestID, phone, resourceId);
+  } catch (error) {
+    elements.paymentStatus.textContent = error.message || "M-Pesa payment could not be started.";
+    showToast(error.message || "M-Pesa payment could not be started.");
   }
+}
+
+async function pollMpesaPayment(checkoutRequestID, phone, resourceId) {
+  let attempts = 0;
+  const timer = setInterval(async () => {
+    attempts += 1;
+    try {
+      const response = await fetch("/api/mpesa/status?checkoutRequestID=" + encodeURIComponent(checkoutRequestID) + "&phone=" + encodeURIComponent(phone), { credentials: "same-origin" });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data.ok) throw new Error(data.error || "Payment status could not be checked.");
+      const status = String(data.status || "unknown").toLowerCase();
+      const records = readPaymentRecords().map(item => item.checkoutRequestID === checkoutRequestID ? {...item, status: status === "paid" ? "paid" : status === "failed" ? "failed" : "pending confirmation", mpesaReceipt: data.payment?.receipt || null} : item);
+      localStorage.setItem(PAYMENT_RECORDS_KEY, JSON.stringify(records));
+      renderPaymentRecords();
+      if (status === "paid") { clearInterval(timer); elements.paymentStatus.textContent = "Payment verified. You can now request the download for admin approval."; showToast("M-Pesa payment verified."); }
+      else if (status === "failed") { clearInterval(timer); elements.paymentStatus.textContent = "M-Pesa payment was not completed."; showToast("M-Pesa payment was not completed."); }
+    } catch {}
+    if (attempts >= 12) clearInterval(timer);
+  }, 5000);
 }
 
 function syncGradeSubjectLink() {
@@ -1937,7 +1940,7 @@ async function handleDownloadRequest(event) {
       window.location.href = result.downloadUrl;
       return;
     }
-    showToast("Payment received. Your download request has been sent to admin for approval.");
+    showToast(data.payment?.status === "paid" ? "Verified payment received. Your download request has been sent to admin for approval." : "Your download request has been sent to admin for approval.");
   } catch (error) {
     showToast(error.message || "Download request could not be completed.");
   }
