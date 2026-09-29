@@ -6278,3 +6278,6 @@ body.admin-unlocked .admin-only-link {
   #faq summary { font-size: 10px; }
   #faq details p { font-size: 9px; }
 }
+
+/* SEO FAQ */
+#faq details{border-top:1px solid var(--line);padding:8px 0}#faq details:first-child{border-top:0}#faq summary{cursor:pointer;font-weight:700;font-size:12px}#faq details p{margin:5px 0 0;font-size:11px;line-height:1.4;color:var(--muted)}#faq .info-card{padding:11px 13px;border-radius:7px}@media(max-width:640px){#faq summary{font-size:10px}#faq details p{font-size:9px}}
