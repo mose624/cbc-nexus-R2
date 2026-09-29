@@ -570,21 +570,60 @@ async function loadPublicStats() {
     stat("statDownloads", remoteStats.downloads);
     stat("statViews", remoteStats.views);
     renderResources();
-    const AFFILIATE_PRODUCTS = [
-  {title:"Laptops & Tablets",category:"Study Technology",description:"Explore devices suitable for learners, teachers and digital learning.",merchant:"Jumia",url:"",label:"Shop devices"},
-  {title:"Educational Books",category:"Books",description:"Find books and learning materials from online partner sellers.",merchant:"Jumia",url:"",label:"Shop books"},
-  {title:"Computer Accessories",category:"Learning Tools",description:"Discover keyboards, mice, headphones and other study accessories.",merchant:"Jumia",url:"",label:"Shop accessories"},
-  {title:"School & Office Essentials",category:"School Supplies",description:"Browse useful stationery and study equipment from partner marketplaces.",merchant:"Partner Seller",url:"",label:"View products"}
-];
+    let AFFILIATE_PRODUCTS = [];
+
+async function loadAffiliateProducts(){
+  try{
+    const response=await fetch("/api/affiliate-products",{credentials:"same-origin"});
+    const data=await response.json();
+    if(response.ok&&data.ok) AFFILIATE_PRODUCTS=Array.isArray(data.products)?data.products:[];
+  }catch(error){console.warn("Affiliate products could not be loaded:",error);}
+  renderAffiliateMarketplace();
+}
 
 function renderAffiliateMarketplace(){
   const grid=document.getElementById("affiliateProductGrid");
   if(!grid)return;
-  grid.innerHTML=AFFILIATE_PRODUCTS.map((p)=>`<article class="affiliate-card"><span class="affiliate-category">${escapeHtml(p.category)}</span><h3>${escapeHtml(p.title)}</h3><p>${escapeHtml(p.description)}</p><small>Partner: ${escapeHtml(p.merchant)}</small>${p.url?`<a class="primary-button" href="${escapeHtml(p.url)}" target="_blank" rel="sponsored noopener nofollow">${escapeHtml(p.label)}</a>`:"<button class=\"secondary-button affiliate-coming-soon\" type=\"button\">Partner link coming soon</button>"}</article>`).join("");
+  grid.innerHTML=AFFILIATE_PRODUCTS.length?AFFILIATE_PRODUCTS.map((p)=>`<article class="affiliate-card">${p.image?`<img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.title)}" loading="lazy">`:""}<span class="affiliate-category">${escapeHtml(p.category||"Other")}</span><h3>${escapeHtml(p.title)}</h3><p>${escapeHtml(p.description||"")}</p><small>Partner: ${escapeHtml(p.merchant||"Partner")}${p.price?" · "+escapeHtml(p.price):""}</small><a class="primary-button" href="${escapeHtml(p.url)}" target="_blank" rel="sponsored noopener nofollow">${escapeHtml(p.label||"Shop now")}</a></article>`).join(""):"<div class=\"empty-state\">Affiliate products will appear here soon.</div>";
 }
-renderAffiliateMarketplace();
+
+async function loadAffiliateAdmin(){
+  try{
+    const response=await fetch("/api/admin/affiliate-products",{credentials:"same-origin"});
+    if(!response.ok)return;
+    const data=await response.json(), list=Array.isArray(data.products)?data.products:[];
+    const node=document.getElementById("affiliateAdminList");
+    const badge=document.getElementById("adminAffiliateBadge"), summary=document.getElementById("adminAffiliateSummary");
+    if(badge)badge.textContent=list.length;
+    if(summary)summary.textContent=list.length+" products";
+    if(node)node.innerHTML=list.length?list.map(p=>`<div class="admin-record"><div class="admin-record-main"><strong>${escapeHtml(p.title)}</strong><span>${escapeHtml(p.category||"Other")} · ${escapeHtml(p.merchant||"Partner")} · ${p.active!==false?"Active":"Hidden"}</span></div><div class="admin-record-actions"><button class="secondary-button" type="button" data-affiliate-edit="${escapeHtml(p.id)}">Edit</button><button class="secondary-button" type="button" data-affiliate-delete="${escapeHtml(p.id)}">Delete</button></div></div>`).join(""):"<div class=\"empty-state\">No affiliate products added yet.</div>";
+    window.__affiliateAdminProducts=list;
+  }catch(error){console.warn("Affiliate admin could not load:",error);}
+}
+
+function clearAffiliateAdminForm(){
+  ["affiliateAdminId","affiliateAdminTitle","affiliateAdminCategory","affiliateAdminMerchant","affiliateAdminUrl","affiliateAdminImage","affiliateAdminPrice","affiliateAdminCommission","affiliateAdminDescription"].forEach(id=>{const n=document.getElementById(id);if(n)n.value="";});
+  const label=document.getElementById("affiliateAdminLabel"); if(label)label.value="Shop now";
+  const active=document.getElementById("affiliateAdminActive"); if(active)active.checked=true;
+}
+
+async function saveAffiliateAdminProduct(event){
+  event.preventDefault();
+  const payload={id:document.getElementById("affiliateAdminId")?.value,title:document.getElementById("affiliateAdminTitle")?.value,category:document.getElementById("affiliateAdminCategory")?.value,merchant:document.getElementById("affiliateAdminMerchant")?.value,url:document.getElementById("affiliateAdminUrl")?.value,image:document.getElementById("affiliateAdminImage")?.value,price:document.getElementById("affiliateAdminPrice")?.value,commission:document.getElementById("affiliateAdminCommission")?.value,label:document.getElementById("affiliateAdminLabel")?.value,description:document.getElementById("affiliateAdminDescription")?.value,active:document.getElementById("affiliateAdminActive")?.checked};
+  try{await adminPost("/api/admin/affiliate-product",payload);clearAffiliateAdminForm();await loadAffiliateAdmin();await loadAffiliateProducts();showToast("Affiliate product saved.");}catch(error){showToast(error.message||"Affiliate product could not be saved.");}
+}
+
+async function handleAffiliateAdminClick(event){
+  const edit=event.target.closest("[data-affiliate-edit]"), del=event.target.closest("[data-affiliate-delete]");
+  const list=window.__affiliateAdminProducts||[];
+  if(edit){const p=list.find(x=>String(x.id)===String(edit.dataset.affiliateEdit));if(!p)return;Object.entries({affiliateAdminId:p.id,affiliateAdminTitle:p.title,affiliateAdminCategory:p.category,affiliateAdminMerchant:p.merchant,affiliateAdminUrl:p.url,affiliateAdminImage:p.image,affiliateAdminPrice:p.price,affiliateAdminCommission:p.commission,affiliateAdminLabel:p.label,affiliateAdminDescription:p.description}).forEach(([id,v])=>{const n=document.getElementById(id);if(n)n.value=v||"";});const a=document.getElementById("affiliateAdminActive");if(a)a.checked=p.active!==false;}
+  if(del){if(!confirm("Delete this affiliate product?"))return;try{await adminPost("/api/admin/affiliate-product-delete",{id:del.dataset.affiliateDelete});await loadAffiliateAdmin();await loadAffiliateProducts();showToast("Affiliate product deleted.");}catch(error){showToast(error.message||"Delete failed.");}}
+}
+
 
 renderTrending();
+loadAffiliateProducts();
+
   } catch (error) {
     console.warn("Public statistics could not be loaded:", error);
   }
@@ -1158,6 +1197,7 @@ async function unlockAdmin(event) {
     elements.adminSection.scrollIntoView({ behavior: "smooth", block: "start" });
     showToast("Admin dashboard unlocked.");
     loadAdminDashboard();
+loadAffiliateAdmin();
   } catch {
     elements.adminLoginStatus.textContent = "Could not connect to the admin server.";
     showToast("Admin login failed.");
@@ -1771,6 +1811,10 @@ function bindEvents() {
   }
   safeOn(elements.refreshAdminDashboardButton, "click", loadAdminDashboard);
   safeOn(elements.adminControlPanel, "click", handleAdminControlClick);
+safeOn(document.getElementById("affiliateAdminForm"), "submit", saveAffiliateAdminProduct);
+safeOn(document.getElementById("affiliateAdminClear"), "click", clearAffiliateAdminForm);
+safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAdminClick);
+
   safeOn(elements.adminDashboardSearch, "input", () => renderAdminControlCentre(adminDashboardData || {}));
   safeOn(elements.adminStatusFilter, "change", () => renderAdminControlCentre(adminDashboardData || {}));
   document.querySelectorAll("[data-admin-module]").forEach((button) => safeOn(button, "click", () => setAdminModule(button.dataset.adminModule)));
