@@ -6388,3 +6388,23 @@ body.admin-unlocked .admin-only-link {
     font-size: 10px !important;
   }
 }
+
+
+/* Reserved AdSense boundary spaces around the quiz/progress dashboards. */
+.dashboard-ad-slot { display:flex; flex-direction:column; align-items:center; justify-content:flex-start; min-width:0; min-height:90px; padding:8px 4px; box-sizing:border-box; font-size:9px; line-height:1.2; color:var(--muted); }
+.adsense-placeholder { width:100%; min-height:90px; }
+@media (min-width:1200px) {
+  #quizCentre { grid-template-columns:minmax(120px,160px) minmax(0,1fr) minmax(0,1fr) minmax(120px,160px) !important; column-gap:12px !important; }
+  #quizCentre > .section-heading, #quizCentre > #quizResultPanel { grid-column:2 / 4 !important; }
+  #quizCentre > .dashboard-ad-left { grid-column:1; grid-row:2 / span 2; }
+  #quizCentre > .quiz-panel { grid-column:2; grid-row:2 / span 2; }
+  #quizCentre > .progress-panel { grid-column:3; grid-row:2 / span 2; }
+  #quizCentre > .dashboard-ad-right { grid-column:4; grid-row:2 / span 2; }
+}
+@media (min-width:901px) and (max-width:1199px) {
+  #quizCentre > .dashboard-ad-slot { display:none; }
+  #quizCentre { grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important; }
+}
+@media (max-width:900px) {
+  #quizCentre > .dashboard-ad-slot { display:none; }
+}
