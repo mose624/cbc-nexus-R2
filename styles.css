@@ -6414,3 +6414,7 @@ body.admin-unlocked .admin-only-link {
 .admin-analytics-empty{margin:8px 0 0;font-size:.72rem;color:#64748b}
 @media(max-width:900px){.admin-analytics-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.admin-analytics-grid{grid-template-columns:1fr}.admin-analytics-card{padding:11px}}
+
+.admin-analytics-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.admin-analytics-actions .secondary-button{min-height:32px;padding:6px 9px;font-size:.72rem}
+@media(max-width:600px){.admin-analytics-actions{width:100%}.admin-analytics-actions .secondary-button{flex:1}}
