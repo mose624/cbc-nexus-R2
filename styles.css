@@ -6291,3 +6291,100 @@ body.admin-unlocked .admin-only-link {
   background: rgba(255, 255, 245, 0.82) !important;
   border-color: #f2e7a6 !important;
 }
+
+
+/* Automated Quizzes + Learner Progress: 50/50 dashboard layout. */
+@media (min-width: 901px) {
+  #quizCentre > .quiz-panel,
+  #quizCentre > .progress-panel {
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  #quizCentre {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    gap: 16px !important;
+    align-items: start !important;
+  }
+
+  #quizCentre > .section-heading,
+  #quizCentre > #quizResultPanel {
+    grid-column: 1 / -1 !important;
+  }
+}
+
+/* Medium typography and compact spacing for both dashboards. */
+#quizCentre > .quiz-panel,
+#quizCentre > .progress-panel {
+  font-size: 13px !important;
+}
+#quizCentre > .quiz-panel h3,
+#quizCentre > .progress-panel h3 {
+  font-size: 17px !important;
+  line-height: 1.2 !important;
+}
+#quizCentre > .quiz-panel p,
+#quizCentre > .progress-panel p,
+#quizCentre > .quiz-panel label,
+#quizCentre > .progress-panel label {
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+}
+#quizCentre > .quiz-panel input,
+#quizCentre > .quiz-panel select,
+#quizCentre > .quiz-panel textarea,
+#quizCentre > .progress-panel input,
+#quizCentre > .progress-panel select {
+  font-size: 12px !important;
+  padding: 8px 9px !important;
+  min-height: 36px !important;
+}
+#quizCentre > .quiz-panel .primary-button,
+#quizCentre > .quiz-panel .secondary-button,
+#quizCentre > .quiz-panel .ghost-button,
+#quizCentre > .progress-panel .secondary-button {
+  min-height: 36px !important;
+  padding: 8px 10px !important;
+  font-size: 12px !important;
+}
+#quizCentre > .quiz-panel .form-row {
+  gap: 8px !important;
+}
+#quizCentre > .quiz-panel .quiz-toolbar {
+  gap: 8px !important;
+}
+#quizCentre > .progress-panel {
+  padding: 14px !important;
+}
+
+@media (max-width: 900px) {
+  #quizCentre > .quiz-panel,
+  #quizCentre > .progress-panel {
+    width: 100% !important;
+    max-width: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  #quizCentre > .quiz-panel,
+  #quizCentre > .progress-panel {
+    font-size: 11px !important;
+  }
+  #quizCentre > .quiz-panel h3,
+  #quizCentre > .progress-panel h3 {
+    font-size: 15px !important;
+  }
+  #quizCentre > .quiz-panel p,
+  #quizCentre > .progress-panel p,
+  #quizCentre > .quiz-panel label,
+  #quizCentre > .progress-panel label,
+  #quizCentre > .quiz-panel input,
+  #quizCentre > .quiz-panel select,
+  #quizCentre > .quiz-panel textarea {
+    font-size: 10px !important;
+  }
+}
