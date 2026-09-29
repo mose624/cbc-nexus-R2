@@ -1,0 +1,17 @@
+# Local secrets and environment files
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Runtime/local data
+backend-data/
+*.log
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
