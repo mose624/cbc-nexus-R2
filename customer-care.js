@@ -5,11 +5,6 @@
   const WA = "254798462815";
   const WA_URL = "https://wa.me/" + WA;
 
-  const style = document.createElement("link");
-  style.rel = "stylesheet";
-  style.href = "customer-care.css?v=20260929-3";
-  document.head.appendChild(style);
-
   const root = document.createElement("div");
   root.id = "cbe-customer-care";
   root.innerHTML = `
