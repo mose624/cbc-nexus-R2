@@ -221,7 +221,7 @@ async function handleApi(req,res,url){
       if(!payment){sendJson(res,402,{ok:false,error:"No verified M-Pesa payment was found for this resource and phone number."});return true;}
       if(String(payment.status).toLowerCase()==="pending"){try{payment=await verifyMpesaPaymentByQuery(payment.checkout_request_id)||payment;}catch{}}
       if(!["paid","completed","success"].includes(String(payment.status||"").toLowerCase())){sendJson(res,402,{ok:false,error:"Your M-Pesa payment has not been verified yet."});return true;}
-      const item={id:"approval-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),resourceId,customerPhone:phone,paymentReference:String(payment.mpesa_receipt||payment.checkout_request_id||requestedReference||""),status:"pending",createdAt:new Date().toISOString()};
+      const item={id:"approval-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),resourceId,customerPhone:phone,paymentReference:String(payment.mpesa_receipt||payment.checkout_request_id||requestedReference||""),purchase_id:payment.id,status:"pending",createdAt:new Date().toISOString()};
       const {data,error}=await supabase.from("download_approvals").insert(item).select("*").single();if(error)throw error;
       sendJson(res,201,{ok:true,approval:data,payment:{status:"paid",receipt:payment.mpesa_receipt||null},storage:"supabase"});return true;
     }catch(error){console.error("Download approval request error:",error);sendJson(res,500,{ok:false,error:"Download request could not be recorded securely."});return true;}
@@ -241,46 +241,6 @@ async function handleApi(req,res,url){
     if(supabaseConfigured){try{const {data,error}=await supabase.from("download_approvals").select("*").order("created_at",{ascending:false}).limit(100);if(error)throw error;sendJson(res,200,{ok:true,approvals:data||[],storage:"supabase"});return true;}catch(error){console.error("Download approvals lookup error:",error);sendJson(res,500,{ok:false,error:"Download approvals could not be loaded."});return true;}}
     sendJson(res,200,{ok:true,approvals:(await readJsonStore("download-approvals.json")).slice(0,100),storage:"local"});return true;
   }
-  if(req.method==="POST"&&url.pathname==="/api/download-approval/request"){
-    const p=JSON.parse((await readBody(req))||"{}");
-    const resourceId=String(p.resourceId||"").trim(),phone=normalizeMpesaPhone(p.customerPhone||"");
-    if(!resourceId||!phone){sendJson(res,400,{ok:false,error:"Resource and valid M-Pesa phone are required."});return true;}
-    const paymentReference=String(p.paymentReference||p.checkoutRequestID||"").trim();
-    if(supabaseConfigured){
-      try{
-        const {data:existing}=await supabase.from("download_approvals").select("id,status").eq("resource_id",resourceId).eq("customer_phone",phone).in("status",["pending","approved"]).limit(1).maybeSingle();
-        if(existing){sendJson(res,200,{ok:true,approval:existing,message:existing.status==="approved"?"Download already approved.":"Your download request is already awaiting admin approval."});return true;}
-        const item={id:"approval-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),resource_id:resourceId,customer_phone:phone,payment_reference:paymentReference,status:"pending"};
-        const {data,error}=await supabase.from("download_approvals").insert(item).select("*").single();
-        if(error)throw error;
-        sendJson(res,201,{ok:true,approval:data,message:"Download request sent to admin for approval."});return true;
-      }catch(error){console.error("Download approval request error:",error);sendJson(res,500,{ok:false,error:"Download request could not be recorded."});return true;}
-    }
-    const approvals=await readJsonStore("download-approvals.json"),existing=approvals.find(a=>a.resourceId===resourceId&&a.customerPhone===phone&&["pending","approved"].includes(a.status));
-    if(existing){sendJson(res,200,{ok:true,approval:existing,message:existing.status==="approved"?"Download already approved.":"Your download request is already awaiting admin approval."});return true;}
-    const item={id:"approval-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),resourceId,customerPhone:phone,paymentReference,status:"pending",createdAt:new Date().toISOString()};
-    sendJson(res,201,{ok:true,approval:await appendJsonStore("download-approvals.json",item),message:"Download request sent to admin for approval."});return true;
-  }
-  if(req.method==="POST"&&url.pathname==="/api/admin/download-approval"){
-    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
-    const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"").trim(),status=String(p.status||"").trim().toLowerCase();
-    if(!id||!["approved","rejected"].includes(status)){sendJson(res,400,{ok:false,error:"Approval ID and status are required."});return true;}
-    if(supabaseConfigured){
-      try{const {data,error}=await supabase.from("download_approvals").update({status,approved_at:status==="approved"?new Date().toISOString():null}).eq("id",id).select("*").single();if(error)throw error;sendJson(res,200,{ok:true,approval:data});return true;}
-      catch(error){console.error("Download approval update error:",error);sendJson(res,500,{ok:false,error:"Download approval could not be updated."});return true;}
-    }
-    const items=await readJsonStore("download-approvals.json"),next=items.map(a=>a.id===id?{...a,status,approvedAt:status==="approved"?new Date().toISOString():null}:a);
-    await fs.writeFile(path.join(DATA_DIR,"download-approvals.json"),JSON.stringify(next,null,2));
-    sendJson(res,200,{ok:true,approval:next.find(a=>a.id===id)});return true;
-  }
-  if(req.method==="GET"&&url.pathname==="/api/admin/download-approvals"){
-    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
-    if(supabaseConfigured){
-      try{const {data,error}=await supabase.from("download_approvals").select("*").order("created_at",{ascending:false}).limit(100);if(error)throw error;sendJson(res,200,{ok:true,approvals:data||[]});return true;}
-      catch(error){console.error("Download approvals lookup error:",error);sendJson(res,500,{ok:false,error:"Download approvals could not be loaded."});return true;}
-    }
-    sendJson(res,200,{ok:true,approvals:(await readJsonStore("download-approvals.json")).slice(0,100)});return true;
-  }
   if(req.method==="GET"&&url.pathname==="/api/r2/file"){
     const key=String(url.searchParams.get("key")||"").trim(),resourceId=String(url.searchParams.get("resourceId")||"").trim(),phone=normalizeMpesaPhone(url.searchParams.get("phone")||"");
     if(!key||!resourceId||!phone){sendJson(res,400,{ok:false,error:"Resource, phone and protected file are required."});return true;}
@@ -290,11 +250,16 @@ async function handleApi(req,res,url){
       else {resource=(await readJsonStore("resources.json")).find(x=>String(x.id)===resourceId);}
       if(!resource||String(resource.r2_key||"")!==key||String(resource.status||"approved").toLowerCase()!=="approved"){sendJson(res,403,{ok:false,error:"This protected resource is not available."});return true;}
       let approval=null;
-      if(supabaseConfigured){const {data,error}=await supabase.from("download_approvals").select("*").eq("resource_id",resourceId).eq("customer_phone",phone).eq("status","approved").order("approved_at",{ascending:false}).limit(1).maybeSingle();if(error)throw error;approval=data;}
+       if(supabaseConfigured){
+         const {data:payments,error:paymentError}=await supabase.from("purchases").select("id").eq("resource_id",resourceId).eq("customer_phone",phone).in("status",["paid","completed","success"]).order("created_at",{ascending:false}).limit(20);
+         if(paymentError)throw paymentError;
+         const purchaseIds=(payments||[]).map(p=>p.id);
+         if(purchaseIds.length){const {data,error}=await supabase.from("download_approvals").select("*").in("purchase_id",purchaseIds).eq("resource_id",resourceId).eq("customer_phone",phone).eq("status","approved").order("approved_at",{ascending:false}).limit(1).maybeSingle();if(error)throw error;approval=data;}
+       } else approval=(await readJsonStore("download-approvals.json")).find(a=>a.resourceId===resourceId&&a.customerPhone===phone&&a.status==="approved");
       else approval=(await readJsonStore("download-approvals.json")).find(a=>a.resourceId===resourceId&&a.customerPhone===phone&&a.status==="approved");
       if(!approval){sendJson(res,403,{ok:false,error:"Admin has not approved this download yet."});return true;}
       const downloadUrl=await createDownloadUrl(key);
-      if(supabaseConfigured){const {error}=await supabase.from("downloads").insert({resource_id:resourceId,customer_phone:phone,purchase_id:null});if(error)console.error("Download log error:",error);}
+      if(supabaseConfigured){const {error}=await supabase.from("downloads").insert({resource_id:resourceId,customer_phone:phone,purchase_id:approval.purchase_id||null});if(error)console.error("Download log error:",error);}
       sendJson(res,200,{ok:true,downloadUrl,expiresIn:300});return true;
     }catch(error){console.error("Protected download error:",error);sendJson(res,500,{ok:false,error:"Secure download could not be created."});return true;}
   }
