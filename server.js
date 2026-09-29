@@ -116,6 +116,7 @@ async function handleApi(req,res,url){
     const admin=verifyAdminSession(req),seller=verifySellerSession(req);
     if(role==="admin"&&!admin){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
     if(role==="seller"&&!seller){sendJson(res,401,{ok:false,error:"Approved seller login required."});return true;}
+    if(role==="project"&&!admin){sendJson(res,401,{ok:false,error:"Admin login required for project uploads."});return true;}
     if(!["admin","seller","project"].includes(role)){sendJson(res,400,{ok:false,error:"Upload role is required."});return true;}
     const grade=String(req.headers["x-cbe-grade"]||"").trim();
     const subject=String(req.headers["x-cbe-subject"]||"").trim();
