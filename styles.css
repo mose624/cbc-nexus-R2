@@ -5110,3 +5110,68 @@ body.admin-unlocked .admin-only-link {
     border-radius: 3px !important;
   }
 }
+
+
+/* PHONE-ONLY HEADER COMPACT LAYOUT
+   Keeps the desktop/tablet header unchanged. */
+@media (max-width: 640px) {
+  header, .site-header, .main-header, .top-header {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  header nav, .site-header nav, .main-header nav, .top-header nav,
+  header .nav, .site-header .nav, .main-header .nav, .top-header .nav {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    gap: 3px !important;
+    row-gap: 3px !important;
+    overflow: visible !important;
+  }
+
+  header nav a, header nav button,
+  .site-header nav a, .site-header nav button,
+  .main-header nav a, .main-header nav button,
+  .top-header nav a, .top-header nav button,
+  header .nav a, header .nav button,
+  .site-header .nav a, .site-header .nav button,
+  .main-header .nav a, .main-header .nav button,
+  .top-header .nav a, .top-header .nav button {
+    flex: 0 1 auto !important;
+    min-width: 0 !important;
+    width: auto !important;
+    max-width: 100% !important;
+    min-height: 28px !important;
+    padding: 5px 7px !important;
+    font-size: 10px !important;
+    line-height: 1.1 !important;
+    white-space: normal !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+  }
+
+  header .logo, header .brand,
+  .site-header .logo, .site-header .brand,
+  .main-header .logo, .main-header .brand,
+  .top-header .logo, .top-header .brand {
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  header .header-actions, header .nav-actions,
+  .site-header .header-actions, .site-header .nav-actions,
+  .main-header .header-actions, .main-header .nav-actions,
+  .top-header .header-actions, .top-header .nav-actions {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    max-width: 100% !important;
+  }
+}
