@@ -2,13 +2,12 @@
   "use strict";
 
   // CBE Nexus Customer Care — isolated floating assistant.
-  // This script only creates its own elements and does not modify existing page structure/styles.
   const WA = "254798462815";
   const WA_URL = "https://wa.me/" + WA;
 
   const style = document.createElement("link");
   style.rel = "stylesheet";
-  style.href = "customer-care.css?v=20260929-1";
+  style.href = "customer-care.css?v=20260929-2";
   document.head.appendChild(style);
 
   const root = document.createElement("div");
@@ -36,6 +35,21 @@
       </form>
     </section>`;
   document.body.appendChild(root);
+
+  // Replace only the dashboard statistics strip requested by the site owner.
+  // All other dashboard sections and functionality remain untouched.
+  const summaryGrid = document.querySelector(".summary-grid");
+  if (summaryGrid) {
+    summaryGrid.innerHTML = `
+      <a class="holiday-program-card" href="#holidayTuition" aria-label="Book Holiday Tuition">
+        <span class="holiday-program-icon">📚</span>
+        <span class="holiday-program-copy">
+          <strong>Learners Holiday Program</strong>
+          <small>Book Holiday Tuition</small>
+        </span>
+        <span class="holiday-program-arrow">→</span>
+      </a>`;
+  }
 
   const launcher = root.querySelector(".cc-launcher");
   const panel = root.querySelector(".cc-panel");
