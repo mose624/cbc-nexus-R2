@@ -5900,3 +5900,74 @@ body.admin-unlocked .admin-only-link {
     padding: 10px !important;
   }
 }
+
+
+/* Compact Pay and confirm your resource order section only. */
+#payments {
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+}
+#payments .section-heading {
+  margin-bottom: 10px !important;
+}
+#payments .section-heading h2 {
+  font-size: 20px !important;
+  line-height: 1.2 !important;
+}
+#payments .eyebrow {
+  font-size: 10px !important;
+}
+#payments .price-pill {
+  padding: 5px 8px !important;
+  font-size: 10px !important;
+}
+#payments .payment-layout {
+  gap: 10px !important;
+}
+#payments .payment-form,
+#payments .payment-card {
+  padding: 10px !important;
+}
+#payments label,
+#payments .payment-card p {
+  font-size: 11px !important;
+}
+#payments input,
+#payments .payment-actions button,
+#payments .payment-actions a {
+  font-size: 11px !important;
+  padding: 7px 9px !important;
+}
+#payments .payment-card h3 {
+  font-size: 13px !important;
+  margin-bottom: 6px !important;
+}
+#payments .payment-card code,
+#payments #paymentStatus {
+  font-size: 10px !important;
+}
+
+@media (max-width: 640px) {
+  #payments {
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+  }
+  #payments .section-heading h2 {
+    font-size: 16px !important;
+  }
+  #payments .eyebrow,
+  #payments .price-pill {
+    font-size: 9px !important;
+  }
+  #payments .payment-form,
+  #payments .payment-card {
+    padding: 8px !important;
+  }
+  #payments label,
+  #payments .payment-card p,
+  #payments input,
+  #payments .payment-actions button,
+  #payments .payment-actions a {
+    font-size: 10px !important;
+  }
+}
