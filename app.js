@@ -882,27 +882,38 @@ function renderPaymentRecords() {
   `).join("");
 }
 
-function renderDownloadApprovals() {
+async function renderDownloadApprovals() {
   if (!elements.downloadApprovalList) return;
-  const approvedDownloads = readApprovedDownloads();
-  const pending = approvedDownloads.filter((download) => download.status === "pending");
-  
-  if (!pending.length) {
-    elements.downloadApprovalList.innerHTML = `<div class="empty-state">No pending download requests.</div>`;
-    return;
+  try {
+    const response = await fetch("/api/admin/download-approvals", { credentials: "same-origin" });
+    if (!response.ok) throw new Error("Admin login required.");
+    const data = await response.json();
+    const approvals = data.approvals || [];
+    const pending = approvals.filter((a) => a.status === "pending");
+    if (!pending.length) {
+      elements.downloadApprovalList.innerHTML = '<div class="empty-state">No pending download requests.</div>';
+      return;
+    }
+    elements.downloadApprovalList.innerHTML = pending.map((a) => {
+      const resource = getAllResources().find((r) => String(r.id) === String(a.resource_id || a.resourceId));
+      const name = resource?.title || a.resource_id || a.resourceId;
+      const phone = a.customer_phone || a.customerPhone || "";
+      const ref = a.payment_reference || a.paymentReference || "";
+      return `
+        <div class="approval-item">
+          <strong>${escapeHtml(name)}</strong>
+          <span>Customer: ${escapeHtml(phone)}</span>
+          ${ref ? `<span>Payment reference: ${escapeHtml(ref)}</span>` : ""}
+          <span>Status: Waiting for admin approval</span>
+          <div class="approval-actions">
+            <button class="primary-button" type="button" data-confirm-download="${escapeHtml(a.id)}">Approve Download</button>
+            <button class="secondary-button" type="button" data-reject-download="${escapeHtml(a.id)}">Reject</button>
+          </div>
+        </div>`;
+    }).join("");
+  } catch (error) {
+    elements.downloadApprovalList.innerHTML = '<div class="empty-state">Sign in as admin to manage download approvals.</div>';
   }
-
-  elements.downloadApprovalList.innerHTML = pending.map((download) => `
-    <div class="approval-item">
-      <strong>${escapeHtml(download.resourceName)}</strong>
-      <span>Customer: ${escapeHtml(download.customerPhone)} | Amount: ${money(download.amount)}</span>
-      <span>Status: Pending activation</span>
-      <div class="approval-actions">
-        <button class="primary-button" type="button" data-confirm-download="${escapeHtml(download.id)}">Approve Download</button>
-        <button class="secondary-button" type="button" data-reject-download="${escapeHtml(download.id)}">Reject</button>
-      </div>
-    </div>
-  `).join("");
 }
 
 async function handleProjectUpload(event) {
@@ -1905,19 +1916,31 @@ function closeResourcePreview() {
 async function handleDownloadRequest(event) {
   event.preventDefault();
   const resourceId = event.target.dataset.downloadResource;
-  const resource = getAllResources().find((r) => r.id === resourceId);
+  const resource = getAllResources().find((r) => String(r.id) === String(resourceId));
   if (!resource || !resource.r2Key) { showToast("This resource does not have a protected file."); return; }
   const phone = prompt("Enter the phone number used for M-Pesa payment:");
   if (!phone) return;
-  const normalize = (value) => String(value || "").replace(/\D/g, "");
-  const paid = readPaymentRecords().find((item) => normalize(item.customerPhone) === normalize(phone) && item.status === "paid" && item.checkoutRequestID && String(item.resource || "").trim().toLowerCase() === String(resource.title || "").trim().toLowerCase());
-  if (!paid) { showToast("Payment has not been confirmed for this resource yet."); return; }
+  const paymentReference = prompt("Enter your M-Pesa confirmation/reference (optional):") || "";
   try {
-    const response = await fetch("/api/r2/file?key=" + encodeURIComponent(resource.r2Key) + "&checkoutRequestID=" + encodeURIComponent(paid.checkoutRequestID), { credentials: "same-origin" });
-    if (!response.ok) { const data = await response.json().catch(() => ({})); throw new Error(data.error || "Download is not available."); }
-    window.location.href = response.url;
-    showToast("Secure temporary download link generated.");
-  } catch (error) { showToast(error.message || "Download could not be started."); }
+    const request = await fetch("/api/download-approval/request", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({resourceId: resource.id, customerPhone: phone, paymentReference})
+    });
+    const data = await request.json().catch(() => ({}));
+    if (!request.ok || !data.ok) throw new Error(data.error || "Download request could not be sent.");
+    if (data.approval?.status === "approved") {
+      const download = await fetch("/api/r2/file?key=" + encodeURIComponent(resource.r2Key) + "&resourceId=" + encodeURIComponent(resource.id) + "&phone=" + encodeURIComponent(phone), {credentials:"same-origin"});
+      const result = await download.json().catch(() => ({}));
+      if (!download.ok || !result.ok) throw new Error(result.error || "Download is not available.");
+      window.location.href = result.downloadUrl;
+      return;
+    }
+    showToast("Payment received. Your download request has been sent to admin for approval.");
+  } catch (error) {
+    showToast(error.message || "Download request could not be completed.");
+  }
 }
 
 function approveDownloadRequest(paymentRecordId) {
@@ -1952,23 +1975,34 @@ function approveDownloadRequest(paymentRecordId) {
   showToast("Download activation pending admin approval.");
 }
 
-function confirmDownloadApproval(downloadId) {
-  const updated = readApprovedDownloads().map((dl) => {
-    if (dl.id === downloadId) {
-      return { ...dl, status: "approved", approvedAt: new Date().toISOString() };
-    }
-    return dl;
-  });
-  localStorage.setItem(APPROVED_DOWNLOADS_KEY, JSON.stringify(updated));
-  renderDownloadApprovals();
-  showToast("Download approved for customer.");
+async function confirmDownloadApproval(downloadId) {
+  try {
+    const response = await fetch("/api/admin/download-approval", {
+      method:"POST",
+      credentials:"same-origin",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({id:downloadId,status:"approved"})
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || !data.ok) throw new Error(data.error || "Approval failed.");
+    await renderDownloadApprovals();
+    showToast("Download approved for customer.");
+  } catch (error) { showToast(error.message || "Approval failed."); }
 }
 
-function rejectDownloadRequest(downloadId) {
-  const updated = readApprovedDownloads().filter((dl) => dl.id !== downloadId);
-  localStorage.setItem(APPROVED_DOWNLOADS_KEY, JSON.stringify(updated));
-  renderDownloadApprovals();
-  showToast("Download request rejected.");
+async function rejectDownloadRequest(downloadId) {
+  try {
+    const response = await fetch("/api/admin/download-approval", {
+      method:"POST",
+      credentials:"same-origin",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({id:downloadId,status:"rejected"})
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || !data.ok) throw new Error(data.error || "Rejection failed.");
+    await renderDownloadApprovals();
+    showToast("Download request rejected.");
+  } catch (error) { showToast(error.message || "Rejection failed."); }
 }
 
 function injectContactInfo() {
