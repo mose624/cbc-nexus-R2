@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
 
+# Keep private/admin and API endpoints out of search results.
+Disallow: /api/
+Disallow: /admin
+Disallow: /upload.html
+
 Sitemap: https://example.com/sitemap.xml
