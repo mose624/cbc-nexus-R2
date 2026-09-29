@@ -6089,3 +6089,60 @@ body.admin-unlocked .admin-only-link {
     font-size: 10px !important;
   }
 }
+
+
+/* Final exact About Us sizing for SEO and Popular searches only. */
+.seo-band,
+.landing-band {
+  padding-top: 18px !important;
+  padding-bottom: 18px !important;
+}
+.seo-band h2,
+.landing-band .section-heading h2 {
+  font-size: 24px !important;
+  line-height: 1.15 !important;
+}
+.seo-band p {
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+}
+.seo-band .section-heading,
+.landing-band .section-heading {
+  margin-bottom: 10px !important;
+}
+.landing-band .eyebrow {
+  font-size: 10px !important;
+  margin-bottom: 4px !important;
+}
+.landing-band .landing-grid {
+  gap: 8px !important;
+}
+.landing-band .landing-grid button {
+  min-height: 46px !important;
+  padding: 9px 11px !important;
+  font-size: 12px !important;
+}
+
+@media (max-width: 640px) {
+  .seo-band,
+  .landing-band {
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+  }
+  .seo-band h2,
+  .landing-band .section-heading h2 {
+    font-size: 18px !important;
+  }
+  .seo-band p {
+    font-size: 10px !important;
+    line-height: 1.3 !important;
+  }
+  .landing-band .eyebrow {
+    font-size: 9px !important;
+  }
+  .landing-band .landing-grid button {
+    min-height: 40px !important;
+    padding: 7px 9px !important;
+    font-size: 10px !important;
+  }
+}
