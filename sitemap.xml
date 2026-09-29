@@ -7,7 +7,7 @@
   <url><loc>https://example.com/free-resources.html</loc><priority>0.8</priority></url>
   <url><loc>https://example.com/quizzes.html</loc><priority>0.8</priority></url>
   <url><loc>https://example.com/progress.html</loc><priority>0.8</priority></url>
-  <url><loc>https://example.com/homework-helper.html</loc><priority>0.8</priority></url>
+
   <url><loc>https://example.com/upload.html</loc><priority>0.8</priority></url>
   <url><loc>https://example.com/contact.html</loc><priority>0.7</priority></url>
 </urlset>
