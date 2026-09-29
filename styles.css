@@ -5398,3 +5398,118 @@ body.admin-unlocked .admin-only-link {
     font-size: 8px;
   }
 }
+
+
+/* COMPACT ABOUT US — reduce vertical space and box size without changing other sections */
+#about.info-band {
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+
+#about .info-layout {
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 0.42fr);
+  gap: 12px;
+  align-items: center;
+}
+
+#about .eyebrow {
+  margin-bottom: 4px;
+  font-size: 10px;
+}
+
+#about h2 {
+  margin-bottom: 7px;
+  font-size: 24px;
+  line-height: 1.15;
+}
+
+#about .info-layout > div:first-child > p:not(.eyebrow) {
+  margin-bottom: 7px;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+#about .info-card {
+  width: min(100%, 330px);
+  justify-self: end;
+  padding: 11px 13px;
+  border-radius: 7px;
+  box-shadow: 0 6px 18px rgba(18, 52, 71, 0.08);
+}
+
+#about .info-card h3 {
+  margin-bottom: 5px;
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+#about .info-card > p {
+  margin-bottom: 6px;
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+#about .why-cbe-nexus {
+  margin-top: 7px;
+  padding-top: 6px;
+}
+
+#about .why-cbe-nexus h4 {
+  font-size: 12px;
+  margin-bottom: 2px;
+}
+
+#about .why-cbe-nexus p {
+  font-size: 9px;
+  margin-bottom: 3px;
+}
+
+#about .why-cbe-nexus ul {
+  gap: 3px 7px;
+}
+
+#about .why-cbe-nexus li {
+  font-size: 9px;
+  line-height: 1.15;
+}
+
+@media (max-width: 980px) {
+  #about .info-layout {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  #about .info-card {
+    width: min(100%, 420px);
+    justify-self: start;
+  }
+}
+
+@media (max-width: 640px) {
+  #about.info-band {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  #about h2 {
+    font-size: 18px;
+  }
+
+  #about .info-layout > div:first-child > p:not(.eyebrow) {
+    font-size: 10px;
+    line-height: 1.3;
+  }
+
+  #about .info-card {
+    padding: 8px 10px;
+    width: 100%;
+  }
+
+  #about .info-card h3 {
+    font-size: 12px;
+  }
+
+  #about .info-card > p {
+    font-size: 9px;
+  }
+}
