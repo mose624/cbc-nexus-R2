@@ -56,3 +56,7 @@ alter table public.purchases add column if not exists transaction_time text;
 alter table public.purchases add column if not exists verified_at timestamptz;
 create unique index if not exists purchases_checkout_request_id_uidx on public.purchases(checkout_request_id) where checkout_request_id is not null;
 create index if not exists purchases_customer_phone_idx on public.purchases(customer_phone);
+
+-- Tie each admin download approval to the exact verified M-Pesa purchase.
+alter table public.download_approvals add column if not exists purchase_id uuid references public.purchases(id) on delete set null;
+create index if not exists download_approvals_purchase_idx on public.download_approvals(purchase_id);
