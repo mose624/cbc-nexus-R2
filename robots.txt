@@ -6,4 +6,4 @@ Disallow: /api/
 Disallow: /admin
 Disallow: /upload.html
 
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://cbenexus.co.ke/sitemap.xml
