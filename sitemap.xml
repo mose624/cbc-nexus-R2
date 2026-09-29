@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Replace example.com with the live CBE Nexus domain before submitting this file. -->
-  <url><loc>https://example.com/</loc></url>
-  <url><loc>https://example.com/resources.html</loc></url>
-  <url><loc>https://example.com/free-resources.html</loc></url>
-  <url><loc>https://example.com/quizzes.html</loc></url>
-  <url><loc>https://example.com/progress.html</loc></url>
-  <url><loc>https://example.com/cbc-notes-kenya</loc></url>
-  <url><loc>https://example.com/cbc-exams-kenya</loc></url>
-  <url><loc>https://example.com/kjsea-revision</loc></url>
-  <url><loc>https://example.com/cbc-exam-generator</loc></url>
-  <url><loc>https://example.com/about</loc></url>
-  <url><loc>https://example.com/contact</loc></url>
-  <url><loc>https://example.com/privacy-policy.html</loc></url>
-  <url><loc>https://example.com/terms-and-conditions.html</loc></url>
-  <url><loc>https://example.com/copyright.html</loc></url>
+  <url><loc>https://cbenexus.co.ke/</loc></url>
+  <url><loc>https://cbenexus.co.ke/resources.html</loc></url>
+  <url><loc>https://cbenexus.co.ke/free-resources.html</loc></url>
+  <url><loc>https://cbenexus.co.ke/quizzes.html</loc></url>
+  <url><loc>https://cbenexus.co.ke/progress.html</loc></url>
+  <url><loc>https://cbenexus.co.ke/cbc-notes-kenya</loc></url>
+  <url><loc>https://cbenexus.co.ke/cbc-exams-kenya</loc></url>
+  <url><loc>https://cbenexus.co.ke/kjsea-revision</loc></url>
+  <url><loc>https://cbenexus.co.ke/cbc-exam-generator</loc></url>
+  <url><loc>https://cbenexus.co.ke/about</loc></url>
+  <url><loc>https://cbenexus.co.ke/contact</loc></url>
+  <url><loc>https://cbenexus.co.ke/privacy-policy.html</loc></url>
+  <url><loc>https://cbenexus.co.ke/terms-and-conditions.html</loc></url>
+  <url><loc>https://cbenexus.co.ke/copyright.html</loc></url>
 </urlset>
