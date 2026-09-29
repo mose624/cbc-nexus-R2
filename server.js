@@ -84,7 +84,17 @@ function readBody(req){return new Promise((resolve,reject)=>{let b="";req.on("da
 function readBinaryBody(req,maxSize=50*1024*1024){return new Promise((resolve,reject)=>{const chunks=[];let total=0;let settled=false;const fail=(e)=>{if(settled)return;settled=true;reject(e);try{req.destroy();}catch{}};req.on("data",c=>{if(settled)return;total+=c.length;if(total>maxSize){fail(new Error("Upload is too large. Maximum file size is 50 MB."));return;}chunks.push(c);});req.on("end",()=>{if(!settled){settled=true;resolve(Buffer.concat(chunks));}});req.on("error",fail);});}
 async function getMpesaAccessToken(){const k=String(process.env.MPESA_CONSUMER_KEY||""),s=String(process.env.MPESA_CONSUMER_SECRET||"");if(!k||!s)throw new Error("M-Pesa consumer credentials are not configured.");const base=String(process.env.MPESA_ENVIRONMENT||"sandbox").toLowerCase()==="production"?"https://api.safaricom.co.ke":"https://sandbox.safaricom.co.ke";return await new Promise((res,rej)=>{const https=require("https"),q=https.request(base+"/oauth/v1/generate?grant_type=client_credentials",{headers:{Authorization:"Basic "+Buffer.from(k+":"+s).toString("base64")}},r=>{let d="";r.on("data",c=>d+=c);r.on("end",()=>{try{const x=JSON.parse(d);x.access_token?res(x.access_token):rej(new Error("Daraja authorization failed."));}catch{rej(new Error("Invalid Daraja authorization response."));}})});q.on("error",rej);q.end();});}
 function normalizeMpesaPhone(p){p=String(p||"").replace(/\s+/g,"");if(/^0[17]\d{8}$/.test(p))return"254"+p.slice(1);if(/^254[17]\d{8}$/.test(p))return p;return"";}
-async function darajaPost(pathname,body,token){const https=require("https"),base=String(process.env.MPESA_ENVIRONMENT||"sandbox").toLowerCase()==="production"?"https://api.safaricom.co.ke":"https://sandbox.safaricom.co.ke";return await new Promise((res,rej)=>{const q=https.request(base+pathname,{method:"POST",headers:{Authorization:"Bearer "+token,"Content-Type":"application/json"}},r=>{let d="";r.on("data",c=>d+=c);r.on("end",()=>{try{res({status:r.statusCode||500,data:JSON.parse(d)});}catch{res({status:r.statusCode||500,data:{raw:d}});}})});q.on("error",rej);q.write(JSON.stringify(body));q.end();});}
+function mpesaBase(){return String(process.env.MPESA_ENVIRONMENT||"sandbox").toLowerCase()==="production"?"https://api.safaricom.co.ke":"https://sandbox.safaricom.co.ke";}
+function mpesaTimestamp(){const d=new Date();return d.getFullYear().toString()+String(d.getMonth()+1).padStart(2,"0")+String(d.getDate()).padStart(2,"0")+String(d.getHours()).padStart(2,"0")+String(d.getMinutes()).padStart(2,"0")+String(d.getSeconds()).padStart(2,"0");}
+function mpesaPassword(shortCode,passkey,timestamp){return Buffer.from(String(shortCode)+String(passkey)+String(timestamp)).toString("base64");}
+async function darajaPost(pathname,body,token){const https=require("https"),base=mpesaBase();return await new Promise((res,rej)=>{const q=https.request(base+pathname,{method:"POST",headers:{Authorization:"Bearer "+token,"Content-Type":"application/json"}},r=>{let d="";r.on("data",c=>d+=c);r.on("end",()=>{try{res({status:r.statusCode||500,data:JSON.parse(d)});}catch{res({status:r.statusCode||500,data:{raw:d}});}})});q.on("error",rej);q.write(JSON.stringify(body));q.end();});}
+function getMpesaConfig(){return {shortCode:String(process.env.MPESA_SHORTCODE||"").trim(),passkey:String(process.env.MPESA_PASSKEY||"").trim(),callbackUrl:String(process.env.MPESA_CALLBACK_URL||"").trim(),environment:String(process.env.MPESA_ENVIRONMENT||"sandbox").trim().toLowerCase()};}
+async function findResourceForPayment(resourceId){if(!resourceId)return null;if(supabaseConfigured){const {data,error}=await supabase.from("resources").select("id,title,price,discount_price,status,r2_key").eq("id",resourceId).maybeSingle();if(error)throw error;return data;}const rows=await readJsonStore("resources.json");return rows.find(r=>String(r.id)===String(resourceId))||null;}
+function resourcePrice(row){const price=Number(row?.price||0),discount=Number(row?.discount_price??row?.discount??0);return Math.max(0,Math.round(price*(1-Math.max(0,Math.min(100,discount))/100)));}
+async function savePayment(row){if(!supabaseConfigured)throw new Error("Supabase is required for server-side M-Pesa verification.");const {data,error}=await supabase.from("purchases").upsert(row,{onConflict:"checkout_request_id"}).select("*").single();if(error)throw error;return data;}
+async function updatePaymentByCheckout(checkoutRequestId,patch){if(!supabaseConfigured)throw new Error("Supabase is required for server-side M-Pesa verification.");const {data,error}=await supabase.from("purchases").update(patch).eq("checkout_request_id",checkoutRequestId).select("*").single();if(error)throw error;return data;}
+function callbackMetadataToObject(items){const out={};for(const item of Array.isArray(items)?items:[]){if(item?.Name)out[item.Name]=item.Value??null;}return out;}
+async function verifyMpesaPaymentByQuery(checkoutRequestId){const c=getMpesaConfig();if(!checkoutRequestId||!c.shortCode||!c.passkey)return null;const token=await getMpesaAccessToken(),timestamp=mpesaTimestamp(),response=await darajaPost("/mpesa/stkpushquery/v1/query",{BusinessShortCode:c.shortCode,Password:mpesaPassword(c.shortCode,c.passkey,timestamp),Timestamp:timestamp,CheckoutRequestID:checkoutRequestId},token);const d=response.data||{};if(Number(d.ResponseCode)===0&&String(d.ResultCode)==="0"){return updatePaymentByCheckout(checkoutRequestId,{status:"paid",result_code:0,result_desc:String(d.ResultDesc||"Success"),verified_at:new Date().toISOString()});}if(d.ResultCode!==undefined){return updatePaymentByCheckout(checkoutRequestId,{status:"failed",result_code:Number(d.ResultCode),result_desc:String(d.ResultDesc||"Payment failed"),verified_at:new Date().toISOString()});}return null;}
 async function generateAIHomeworkAnswer(p){
   const apiKey=String(process.env.OPENAI_API_KEY||"").trim();
   if(!apiKey) return {answer:null,configured:false,error:"AI Homework Helper is not configured on the server. Add OPENAI_API_KEY in Render Environment."};
@@ -111,6 +121,52 @@ async function handleApi(req,res,url){
   if(req.method==="POST"&&url.pathname==="/api/seller/login"){const p=JSON.parse((await readBody(req))||"{}"),u=String(p.username||"").trim().toLowerCase();let a=null;if(supabaseConfigured){try{const {data,error}=await supabase.from("sellers").select("id,user_id,phone,username,password_hash,status").eq("username",u).maybeSingle();if(error)throw error;a=data;}catch(error){console.error("Supabase seller login lookup error:",error);sendJson(res,500,{ok:false,error:"Seller account could not be checked in Supabase."});return true;}}else{const ac=await readJsonStore("seller-accounts.json");a=ac.find(x=>x.username===u);}if(!a||!(await verifyPassword(String(p.password||""),a.password_hash||a.passwordHash||""))){sendJson(res,401,{ok:false,error:"Invalid seller username or password."});return true;}if(a.status!=="approved"){sendJson(res,403,{ok:false,error:"Seller account is pending admin approval."});return true;}res.setHeader("Set-Cookie",sellerCookie(createSellerSession(u)));sendJson(res,200,{ok:true,account:{id:a.id,name:a.name||"Seller",phone:a.phone,username:a.username,status:a.status},storage:supabaseConfigured?"supabase":"local"});return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/seller-resource-status"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const p=JSON.parse((await readBody(req))||"{}"),items=await readJsonStore("resources.json"),next=items.map(x=>x.id===p.resourceId?{...x,status:String(p.status||"pending"),reviewedAt:new Date().toISOString()}:x);await fs.writeFile(path.join(DATA_DIR,"resources.json"),JSON.stringify(next,null,2));sendJson(res,200,{ok:true});return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/seller-account-status"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const p=JSON.parse((await readBody(req))||"{}"),status=String(p.status||"pending");if(supabaseConfigured){try{const {data,error}=await supabase.from("sellers").update({status}).eq("id",p.accountId).select("id,phone,username,status").single();if(error)throw error;sendJson(res,200,{ok:true,account:data,storage:"supabase"});return true;}catch(error){console.error("Supabase seller approval error:",error);sendJson(res,500,{ok:false,error:"Seller status could not be updated in Supabase."});return true;}}const ac=await readJsonStore("seller-accounts.json"),up=ac.map(x=>x.id===p.accountId?{...x,status,reviewedAt:new Date().toISOString()}:x);await fs.writeFile(path.join(DATA_DIR,"seller-accounts.json"),JSON.stringify(up,null,2));sendJson(res,200,{ok:true,storage:"local"});return true;}
+  if(req.method==="POST"&&url.pathname==="/api/mpesa/stk-push"){
+    const p=JSON.parse((await readBody(req))||"{}");
+    const phone=normalizeMpesaPhone(p.customerPhone||p.phone||"");
+    const resourceId=String(p.resourceId||"").trim();
+    if(!phone||!resourceId){sendJson(res,400,{ok:false,error:"A valid M-Pesa phone number and resource are required."});return true;}
+    if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Supabase must be configured before M-Pesa payments can be verified securely."});return true;}
+    const c=getMpesaConfig();
+    if(!c.shortCode||!c.passkey||!c.callbackUrl){sendJson(res,503,{ok:false,error:"M-Pesa STK Push is not fully configured on the server."});return true;}
+    try{
+      const resource=await findResourceForPayment(resourceId);
+      if(!resource||String(resource.status||"approved").toLowerCase()!=="approved"){sendJson(res,404,{ok:false,error:"The selected resource is not available for purchase."});return true;}
+      const amount=resourcePrice(resource);
+      if(amount<1){sendJson(res,400,{ok:false,error:"This resource does not require an M-Pesa payment."});return true;}
+      const token=await getMpesaAccessToken(),timestamp=mpesaTimestamp();
+      const stk=await darajaPost("/mpesa/stkpush/v1/processrequest",{BusinessShortCode:c.shortCode,Password:mpesaPassword(c.shortCode,c.passkey,timestamp),Timestamp:timestamp,TransactionType:"CustomerPayBillOnline",Amount:amount,PartyA:phone,PartyB:c.shortCode,PhoneNumber:phone,CallBackURL:c.callbackUrl,AccountReference:String(resource.title||"CBE Nexus").slice(0,12),TransactionDesc:"CBE Nexus resource"},token);
+      const d=stk.data||{};
+      if(stk.status<200||stk.status>=300||!d.CheckoutRequestID){sendJson(res,502,{ok:false,error:String(d.errorMessage||d.ResponseDescription||"M-Pesa payment request was not accepted.")});return true;}
+      const saved=await savePayment({resource_id:resourceId,customer_phone:phone,amount,status:"pending",payment_reference:String(d.CheckoutRequestID),checkout_request_id:String(d.CheckoutRequestID),merchant_request_id:String(d.MerchantRequestID||""),result_code:null,result_desc:String(d.ResponseDescription||"STK Push sent"),mpesa_receipt:null,transaction_time:null});
+      sendJson(res,200,{ok:true,CheckoutRequestID:d.CheckoutRequestID,MerchantRequestID:d.MerchantRequestID,amount,resourceId:resourceId,paymentId:saved.id,status:saved.status});
+    }catch(error){console.error("M-Pesa STK Push error:",error);sendJson(res,500,{ok:false,error:"M-Pesa payment request could not be started securely."});}
+    return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/mpesa/callback"){
+    try{
+      const p=JSON.parse((await readBody(req))||"{}"),stk=p?.Body?.stkCallback,checkoutRequestId=String(stk?.CheckoutRequestID||"").trim();
+      if(!checkoutRequestId){sendJson(res,400,{ResultCode:1,ResultDesc:"Invalid callback."});return true;}
+      const resultCode=Number(stk?.ResultCode),meta=callbackMetadataToObject(stk?.CallbackMetadata?.Item);
+      const patch={result_code:Number.isFinite(resultCode)?resultCode:null,result_desc:String(stk?.ResultDesc||""),verified_at:new Date().toISOString()};
+      if(resultCode===0){patch.status="paid";patch.mpesa_receipt=String(meta.MpesaReceiptNumber||"");patch.transaction_time=String(meta.TransactionDate||"");patch.customer_phone=normalizeMpesaPhone(String(meta.PhoneNumber||""))||undefined;patch.amount=Number(meta.Amount||0)||undefined;}else patch.status="failed";
+      await updatePaymentByCheckout(checkoutRequestId,patch);
+      sendJson(res,200,{ResultCode:0,ResultDesc:"Accepted"});
+    }catch(error){console.error("M-Pesa callback processing error:",error);sendJson(res,200,{ResultCode:0,ResultDesc:"Accepted"});}
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/mpesa/status"){
+    const checkoutRequestId=String(url.searchParams.get("checkoutRequestID")||"").trim(),phone=normalizeMpesaPhone(url.searchParams.get("phone")||"");
+    if(!checkoutRequestId||!phone||!supabaseConfigured){sendJson(res,400,{ok:false,error:"Checkout request ID and valid phone are required."});return true;}
+    try{
+      const {data,error}=await supabase.from("purchases").select("*").eq("checkout_request_id",checkoutRequestId).eq("customer_phone",phone).maybeSingle();
+      if(error)throw error;
+      let payment=data;
+      if(payment?.status==="pending"){try{payment=await verifyMpesaPaymentByQuery(checkoutRequestId)||payment;}catch(error){console.warn("M-Pesa status query fallback failed:",error.message||error);}}
+      sendJson(res,200,{ok:true,status:String(payment?.status||"unknown"),payment:payment?{id:payment.id,resourceId:payment.resource_id,amount:payment.amount,status:payment.status,receipt:payment.mpesa_receipt||null,verifiedAt:payment.verified_at||null}:null});
+    }catch(error){console.error("M-Pesa status lookup error:",error);sendJson(res,500,{ok:false,error:"Payment status could not be checked securely."});}
+    return true;
+  }
   if(req.method==="POST"&&url.pathname==="/api/r2/upload"){
     const role=String(req.headers["x-cbe-role"]||"").trim().toLowerCase();
     const admin=verifyAdminSession(req),seller=verifySellerSession(req);
@@ -145,8 +201,21 @@ async function handleApi(req,res,url){
     const p=JSON.parse((await readBody(req))||"{}");
     const resourceId=String(p.resourceId||"").trim(), phone=normalizeMpesaPhone(p.customerPhone||p.phone||"");
     if(!resourceId||!phone){sendJson(res,400,{ok:false,error:"Resource and valid customer phone are required."});return true;}
-    const item={id:"approval-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),resourceId,customerPhone:phone,paymentReference:String(p.paymentReference||p.checkoutRequestID||"").trim(),status:"pending",createdAt:new Date().toISOString()};
-    if(supabaseConfigured){try{const {data,error}=await supabase.from("download_approvals").insert(item).select("*").single();if(error)throw error;sendJson(res,201,{ok:true,approval:data,storage:"supabase"});return true;}catch(error){console.error("Download approval request error:",error);sendJson(res,500,{ok:false,error:"Download request could not be recorded."});return true;}}
+    if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure download approvals require Supabase payment verification."});return true;}
+    try{
+      const requestedReference=String(p.paymentReference||p.checkoutRequestID||"").trim();
+      let payment=null;
+      const {data:payments,error:paymentError}=await supabase.from("purchases").select("*").eq("resource_id",resourceId).eq("customer_phone",phone).in("status",["paid","completed","success"]).order("created_at",{ascending:false}).limit(1);
+      if(paymentError)throw paymentError;
+      payment=payments?.[0]||null;
+      if(!payment&&requestedReference){const {data:byRef,error:refError}=await supabase.from("purchases").select("*").eq("checkout_request_id",requestedReference).eq("resource_id",resourceId).eq("customer_phone",phone).maybeSingle();if(refError)throw refError;payment=byRef;}
+      if(!payment){sendJson(res,402,{ok:false,error:"No verified M-Pesa payment was found for this resource and phone number."});return true;}
+      if(String(payment.status).toLowerCase()==="pending"){try{payment=await verifyMpesaPaymentByQuery(payment.checkout_request_id)||payment;}catch{}}
+      if(!["paid","completed","success"].includes(String(payment.status||"").toLowerCase())){sendJson(res,402,{ok:false,error:"Your M-Pesa payment has not been verified yet."});return true;}
+      const item={id:"approval-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),resourceId,customerPhone:phone,paymentReference:String(payment.mpesa_receipt||payment.checkout_request_id||requestedReference||""),status:"pending",createdAt:new Date().toISOString()};
+      const {data,error}=await supabase.from("download_approvals").insert(item).select("*").single();if(error)throw error;
+      sendJson(res,201,{ok:true,approval:data,payment:{status:"paid",receipt:payment.mpesa_receipt||null},storage:"supabase"});return true;
+    }catch(error){console.error("Download approval request error:",error);sendJson(res,500,{ok:false,error:"Download request could not be recorded securely."});return true;}
     sendJson(res,201,{ok:true,approval:await appendJsonStore("download-approvals.json",item),storage:"local"});return true;
   }
   if(req.method==="POST"&&url.pathname==="/api/admin/download-approval"){
