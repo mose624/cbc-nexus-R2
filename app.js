@@ -1250,7 +1250,7 @@ function renderAdminControlCentre(data) {
       "</span></div><span class=\"status-pill " + escapeHtml(r.status || "approved") + "\">" + escapeHtml(r.status || "approved") +
       "</span><div class=\"admin-record-actions\"><button class=\"primary-button\" type=\"button\" data-admin-resource-id=\"" +
       escapeHtml(r.id) + "\" data-admin-resource-status=\"approved\">Approve</button><button class=\"secondary-button\" type=\"button\" data-admin-resource-id=\"" +
-      escapeHtml(r.id) + "\" data-admin-resource-status=\"rejected\">Reject</button></div></div>"
+      escapeHtml(r.id) + "\" data-admin-resource-status=\"rejected\">Reject</button><button class=\"secondary-button admin-delete-resource\" type=\"button\" data-admin-resource-delete=\"" + escapeHtml(r.id) + "\" aria-label=\"Delete resource\">Delete</button></div></div>"
     ).join("")
     : "<div class=\"empty-state\">No resources match the current filters.</div>";
 
@@ -1326,10 +1326,20 @@ async function adminPost(path, payload) {
 async function handleAdminControlClick(event) {
   const sellerButton = event.target.closest("[data-admin-seller-id]");
   const resourceButton = event.target.closest("[data-admin-resource-id]");
+  const deleteResourceButton = event.target.closest("[data-admin-resource-delete]");
   const userButton = event.target.closest("[data-admin-user-id]");
   const priceButton = event.target.closest("[data-admin-save-price]");
   try {
-    if (sellerButton) {
+    if (deleteResourceButton) {
+      const resourceId = deleteResourceButton.dataset.adminResourceDelete;
+      const resource = getAllResources().find((r) => String(r.id) === String(resourceId));
+      const title = resource?.title || "this resource";
+      if (!window.confirm(`Delete "${title}" permanently? This removes the marketplace record and its R2 file/preview.`)) return;
+      await adminPost("/api/admin/resource-delete", { resourceId });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(readSavedResources().filter((r) => String(r.id) !== String(resourceId))));
+      localStorage.setItem(SELLER_STORAGE_KEY, JSON.stringify(readSellerResources().filter((r) => String(r.id) !== String(resourceId))));
+      renderSellerResources(); renderAdminApprovals(); renderResources(); renderTrending();
+    } else if (sellerButton) {
       await adminPost("/api/admin/seller-account-status", { accountId: sellerButton.dataset.adminSellerId, status: sellerButton.dataset.adminSellerStatus });
       renderSellerAccountApprovals();
     } else if (resourceButton) {
