@@ -75,7 +75,7 @@
     launcher.setAttribute("aria-expanded", "true");
     if (!messages.children.length) {
       addMessage("Hello! 👋 Welcome to CBE Nexus Customer Care. How can I help you today?", "bot");
-      reply("You can ask about payment, purchasing resources, downloads, or WhatsApp support. M-Pesa payment number: 0798462815.");
+      reply("You can ask about payment, purchasing resources, downloads, or WhatsApp support. Paid resources use M-Pesa STK Push.");
     }
     input.focus();
   }
@@ -92,7 +92,7 @@
       return "Hello! 👋 Welcome to CBE Nexus. How may I assist you?";
     }
     if (q.includes("payment") || q.includes("mpesa") || q.includes("m-pesa") || q.includes("pay")) {
-      return "For a paid resource, select the resource and follow the payment prompt. Payment method: pay through M-Pesa to 0798462815. After payment, keep your M-Pesa confirmation message and follow the download instructions. If you need help, contact Customer Care on WhatsApp: 0798462815.";
+      return "For a paid resource, select the resource and follow the M-Pesa STK Push prompt. Enter your M-Pesa number when requested and approve the prompt on your phone. After payment, keep the confirmation message. For help, use WhatsApp Support.";
     }
     if (q.includes("buy") || q.includes("purchase") || q.includes("order")) {
       return "To purchase a resource: choose your Grade and Subject, open the resource, review its details/preview, then proceed with the payment prompt. After successful payment, continue to the download.";
@@ -120,7 +120,7 @@
       if (action === "purchase") addMessage("How do I purchase a resource?", "user");
       if (action === "download-help") {
         addMessage("I paid but I can’t download my resource.", "user");
-        reply("No problem. Please send Customer Care the resource title, your M-Pesa confirmation code, and the phone number used for payment. Our team can then help you check the payment and download. M-Pesa payment number: 0798462815.");
+        reply("No problem. Please send Customer Care the resource title, your M-Pesa confirmation code, and the phone number used for payment. Our team can then help you check the payment and download. M-Pesa STK Push is used for paid resources.");
         return;
       }
       if (action === "whatsapp") {
