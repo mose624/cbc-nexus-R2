@@ -5513,3 +5513,84 @@ body.admin-unlocked .admin-only-link {
     font-size: 9px;
   }
 }
+
+
+/* COMPACT 10-PAGE WEBSITE DIRECTORY — reduce space without changing other sections */
+.page-directory {
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+}
+
+.page-directory .section-heading {
+  margin-bottom: 8px !important;
+}
+
+.page-directory .eyebrow {
+  margin-bottom: 2px !important;
+  font-size: 9px !important;
+  line-height: 1.1 !important;
+}
+
+.page-directory h2 {
+  margin: 0 !important;
+  font-size: 18px !important;
+  line-height: 1.15 !important;
+}
+
+.page-directory .download-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 6px !important;
+  margin-top: 0 !important;
+}
+
+.page-directory .download-tile {
+  min-height: 0 !important;
+  padding: 7px 6px !important;
+  border-radius: 6px !important;
+  font-size: 10px !important;
+  line-height: 1.15 !important;
+  text-align: center !important;
+  white-space: normal !important;
+}
+
+@media (max-width: 900px) {
+  .page-directory .download-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 5px !important;
+  }
+
+  .page-directory .download-tile {
+    padding: 6px 4px !important;
+    font-size: 9px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-directory {
+    padding: 9px 8px !important;
+  }
+
+  .page-directory .section-heading {
+    margin-bottom: 5px !important;
+  }
+
+  .page-directory h2 {
+    font-size: 15px !important;
+  }
+
+  .page-directory .eyebrow {
+    font-size: 7px !important;
+  }
+
+  .page-directory .download-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 4px !important;
+  }
+
+  .page-directory .download-tile {
+    padding: 5px 4px !important;
+    font-size: 8px !important;
+    line-height: 1.1 !important;
+    border-radius: 4px !important;
+  }
+}
