@@ -1885,6 +1885,16 @@ img, svg, video, iframe {
     gap: 10px;
   }
 
+  .footer-office-image-wrap {
+    flex-basis: 160px;
+    width: 160px;
+    max-width: 35%;
+  }
+
+  .footer-office-image {
+    height: 90px;
+  }
+
   .footer-links {
     gap: 5px;
   }
