@@ -3,7 +3,6 @@ const fs = require("fs/promises");
 const path = require("path");
 const crypto = require("crypto");
 const { createUploadUrl, createDownloadUrl, createPdfPreview, uploadObject, verifyR2Connection } = require("./r2");
-const OpenAI = require("openai");
 const { supabase, supabaseConfigured } = require("./supabase");
 const seo = require("./seo");
 
