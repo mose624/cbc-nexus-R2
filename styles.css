@@ -5054,3 +5054,59 @@ body.admin-unlocked .admin-only-link {
 .admin-seo-keywords span{padding:.42rem .65rem;border-radius:999px;background:rgba(0,0,0,.055);font-size:.82rem}
 .admin-seo-note{margin-top:1rem;padding:1rem;border-left:4px solid currentColor;border-radius:10px;background:rgba(0,0,0,.035);line-height:1.55}
 @media (max-width:760px){.admin-seo-grid{grid-template-columns:1fr}}
+
+
+/* PHONE-ONLY COMPACT DASHBOARD OVERRIDE
+   Desktop/tablet dashboard remains unchanged.
+   On phones, show only the dedicated mobile dashboard to save vertical space. */
+@media (max-width: 640px) {
+  #dashboard.portal-dashboard {
+    display: none !important;
+  }
+
+  .mobile-dashboard-stack {
+    display: grid !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    gap: 5px !important;
+    padding: 4px !important;
+    margin: 0 !important;
+  }
+
+  .mobile-dashboard {
+    grid-template-columns: 30% 40% 30% !important;
+    grid-template-rows: 20px auto !important;
+    border-radius: 5px !important;
+    box-shadow: none !important;
+  }
+
+  .mobile-dashboard-title {
+    padding: 4px 2px !important;
+    font-size: 6.5px !important;
+    line-height: 1 !important;
+  }
+
+  .mobile-dashboard-table {
+    border-spacing: 1px !important;
+  }
+
+  .mobile-dashboard-table td {
+    padding: 4px 2px !important;
+  }
+
+  .mobile-dashboard-table td strong {
+    margin-bottom: 2px !important;
+    font-size: 6px !important;
+    line-height: 1 !important;
+  }
+
+  .mobile-dashboard-table td a {
+    min-height: 21px !important;
+    margin: 1px 0 !important;
+    padding: 3px 1px !important;
+    font-size: 6px !important;
+    line-height: 1 !important;
+    border-radius: 3px !important;
+  }
+}
