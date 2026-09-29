@@ -2,7 +2,7 @@ const http = require("http");
 const fs = require("fs/promises");
 const path = require("path");
 const crypto = require("crypto");
-const { createUploadUrl, createDownloadUrl, createPdfPreview, uploadObject, verifyR2Connection } = require("./r2");
+const { createUploadUrl, createDownloadUrl, createPdfPreview, uploadObject, deleteObject, verifyR2Connection } = require("./r2");
 const { supabase, supabaseConfigured } = require("./supabase");
 const seo = require("./seo");
 
@@ -97,6 +97,32 @@ async function verifyMpesaPaymentByQuery(checkoutRequestId){const c=getMpesaConf
 async function handleApi(req,res,url){
   if(req.method==="GET"&&url.pathname==="/api/admin/dashboard"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const [resources,localSellerAccounts,payments,mpesaRequests,tuition,localUsers]=await Promise.all([readJsonStore("resources.json"),readJsonStore("seller-accounts.json"),readJsonStore("payments.json"),readJsonStore("mpesa-requests.json"),readJsonStore("tuition-registrations.json"),readJsonStore("admin-users.json")]);let sellerAccounts=localSellerAccounts,users=localUsers,verifiedPurchases=[];if(supabaseConfigured){try{const {data,error}=await supabase.from("purchases").select("*").order("created_at",{ascending:false}).limit(100);if(error)throw error;verifiedPurchases=(data||[]).map(p=>({...p,id:p.id,resource:p.resource_id,resourceId:p.resource_id,customerPhone:p.customer_phone,checkoutRequestID:p.checkout_request_id,merchantRequestID:p.merchant_request_id,mpesaReceipt:p.mpesa_receipt,createdAt:p.created_at}));}catch(error){console.error("Supabase payment dashboard lookup error:",error);}}if(supabaseConfigured){try{const [{data:sellersData,error:sellersError},{data:usersData,error:usersError}]=await Promise.all([supabase.from("sellers").select("id,user_id,phone,username,status,created_at"),supabase.from("users").select("id,name,phone,role,status,created_at")]);if(sellersError)throw sellersError;if(usersError)throw usersError;sellerAccounts=sellersData||[];users=usersData||[];}catch(error){console.error("Supabase admin dashboard lookup error:",error);}}const userMap=new Map();[...users].forEach(u=>userMap.set(u.phone||u.username||u.id,u));[...payments,...mpesaRequests,...tuition].forEach(item=>{const phone=item.customerPhone||item.phone;if(phone&&!userMap.has(phone))userMap.set(phone,{id:"user-"+phone,name:item.learner||item.name||"Customer",phone,status:"active",source:"transaction"});});const allUsers=[...userMap.values()],sales=payments.filter(p=>["paid","completed","success"].includes(String(p.status||"").toLowerCase())),totalDownloads=resources.reduce((s,r)=>s+Number(r.downloads||0),0),popularResources=[...resources].map(r=>({...r,downloads:Number(r.downloads||0),purchases:Number(r.purchases||0)})).sort((a,b)=>(b.downloads+b.purchases*3)-(a.downloads+a.purchases*3)).slice(0,10);const dashboardPayments=[...payments,...mpesaRequests,...verifiedPurchases];const dashboardSales=[...payments,...verifiedPurchases].filter(p=>["paid","completed","success"].includes(String(p.status||"").toLowerCase()));sendJson(res,200,{ok:true,stats:{sellers:sellerAccounts.length,pendingSellers:sellerAccounts.filter(x=>x.status==="pending").length,resources:resources.length,pendingResources:resources.filter(x=>x.status==="pending").length,users:allUsers.length,sales:dashboardSales.length,purchases:dashboardSales.length,revenue:dashboardSales.reduce((s,x)=>s+Number(x.amount||0),0),downloads:totalDownloads},popularResources,sellers:sellerAccounts,resources,users:allUsers,sales:dashboardSales,payments:dashboardPayments.slice(0,100)});return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/resource"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const p=JSON.parse((await readBody(req))||"{}"),items=await readJsonStore("resources.json"),item={...p,status:p.status||"approved",updatedAt:new Date().toISOString()};await fs.writeFile(path.join(DATA_DIR,"resources.json"),JSON.stringify([item,...items.filter(x=>x.id!==item.id)],null,2));sendJson(res,200,{ok:true,resource:item});return true;}
+  if(req.method==="POST"&&url.pathname==="/api/admin/resource-delete"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    const p=JSON.parse((await readBody(req))||"{}"),resourceId=String(p.resourceId||"").trim();
+    if(!resourceId){sendJson(res,400,{ok:false,error:"Resource ID is required."});return true;}
+    try{
+      let resource=null;
+      if(supabaseConfigured){
+        const {data,error}=await supabase.from("resources").select("id,r2_key,preview_key").eq("id",resourceId).maybeSingle();
+        if(error)throw error;
+        resource=data;
+        if(resource){
+          const {error:deleteError}=await supabase.from("resources").delete().eq("id",resourceId);
+          if(deleteError)throw deleteError;
+        }
+      } else {
+        const items=await readJsonStore("resources.json");
+        resource=items.find(x=>String(x.id)===resourceId)||null;
+        if(resource){await fs.writeFile(path.join(DATA_DIR,"resources.json"),JSON.stringify(items.filter(x=>String(x.id)!==resourceId),null,2));}
+      }
+      if(!resource){sendJson(res,404,{ok:false,error:"Resource not found."});return true;}
+      const keys=[resource.r2_key,resource.preview_key].filter(Boolean);
+      for(const key of keys){try{await deleteObject(key);}catch(error){console.warn("R2 resource cleanup failed:",key,error.message||error);}}
+      sendJson(res,200,{ok:true,deletedId:resourceId});
+    }catch(error){console.error("Admin resource deletion error:",error);sendJson(res,500,{ok:false,error:"Resource could not be deleted."});}
+    return true;
+  }
   if(req.method==="POST"&&url.pathname==="/api/admin/resource-status"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const p=JSON.parse((await readBody(req))||"{}"),items=await readJsonStore("resources.json"),next=items.map(x=>x.id===p.resourceId?{...x,status:String(p.status||"pending"),reviewedAt:new Date().toISOString()}:x);await fs.writeFile(path.join(DATA_DIR,"resources.json"),JSON.stringify(next,null,2));sendJson(res,200,{ok:true});return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/resource-price"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const p=JSON.parse((await readBody(req))||"{}"),items=await readJsonStore("resources.json"),next=items.map(x=>x.id===p.resourceId?{...x,price:Math.max(0,Number(p.price||0)),discount:Math.min(100,Math.max(0,Number(p.discount||0))),updatedAt:new Date().toISOString()}:x);await fs.writeFile(path.join(DATA_DIR,"resources.json"),JSON.stringify(next,null,2));sendJson(res,200,{ok:true});return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/user-status"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const p=JSON.parse((await readBody(req))||"{}"),status=String(p.status||"active");if(supabaseConfigured){try{let q=supabase.from("users").update({status}).select("id,name,phone,role,status").limit(1);if(p.userId)q=q.eq("id",p.userId);else if(p.phone)q=q.eq("phone",p.phone);else{sendJson(res,400,{ok:false,error:"User ID or phone is required."});return true;}const {data,error}=await q.single();if(error)throw error;sendJson(res,200,{ok:true,user:data,storage:"supabase"});return true;}catch(error){console.error("Supabase user status error:",error);sendJson(res,500,{ok:false,error:"User status could not be updated in Supabase."});return true;}}const users=await readJsonStore("admin-users.json"),existing=users.find(x=>x.id===p.userId||x.phone===p.phone),item={...(existing||{}),id:p.userId||existing?.id||"user-"+Date.now(),phone:p.phone||existing?.phone||"",name:p.name||existing?.name||"Customer",status,updatedAt:new Date().toISOString()};await fs.writeFile(path.join(DATA_DIR,"admin-users.json"),JSON.stringify([item,...users.filter(x=>x.id!==item.id&&x.phone!==item.phone)],null,2));sendJson(res,200,{ok:true,user:item,storage:"local"});return true;}
