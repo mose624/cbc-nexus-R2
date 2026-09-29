@@ -27,6 +27,7 @@
         <button type="button" data-action="payment">💳 Payment help</button>
         <button type="button" data-action="purchase">📚 How to purchase</button>
         <button type="button" data-action="whatsapp">💬 WhatsApp support</button>
+        <button type="button" data-action="download-help">📥 I paid — help me download</button>
       </div>
       <form class="cc-form">
         <input class="cc-input" type="text" maxlength="300" autocomplete="off" placeholder="Type your question…">
@@ -81,7 +82,7 @@
     if (q.includes("buy") || q.includes("purchase") || q.includes("order")) {
       return "To purchase a resource: choose your Grade and Subject, open the resource, review its details/preview, then proceed with the payment prompt. After successful payment, continue to the download.";
     }
-    if (q.includes("download") || q.includes("file")) {
+    if (q.includes("download") || q.includes("file") || q.includes("paid") || q.includes("payment completed")) {
       return "After a successful payment, return to the resource and use the download option. If the download does not unlock, contact us on WhatsApp and include the resource title.";
     }
     if (q.includes("whatsapp") || q.includes("support") || q.includes("agent") || q.includes("human")) {
@@ -102,6 +103,11 @@
       const action = btn.dataset.action;
       if (action === "payment") addMessage("How do I pay?", "user");
       if (action === "purchase") addMessage("How do I purchase a resource?", "user");
+      if (action === "download-help") {
+        addMessage("I paid but I can’t download my resource.", "user");
+        reply("No problem. Please send Customer Care the resource title, your M-Pesa confirmation code, and the phone number used for payment. Our team can then help you check the payment and download. M-Pesa payment number: 0798462815.");
+        return;
+      }
       if (action === "whatsapp") {
         addMessage("I need WhatsApp support.", "user");
         reply("You can contact CBE Nexus support directly on WhatsApp: " + WA + ".");
