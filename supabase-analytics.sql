@@ -28,3 +28,19 @@ create index if not exists downloads_resource_id_idx on public.downloads(resourc
 -- which bypasses RLS, while browser clients must not be given direct access.
 alter table public.purchases enable row level security;
 alter table public.downloads enable row level security;
+
+
+-- Admin-controlled download approval workflow
+create table if not exists public.download_approvals (
+  id text primary key,
+  resource_id text not null,
+  customer_phone text not null,
+  payment_reference text,
+  status text not null default 'pending',
+  created_at timestamptz not null default now(),
+  approved_at timestamptz
+);
+create index if not exists download_approvals_resource_idx on public.download_approvals(resource_id);
+create index if not exists download_approvals_phone_idx on public.download_approvals(customer_phone);
+create index if not exists download_approvals_status_idx on public.download_approvals(status);
+alter table public.download_approvals enable row level security;
