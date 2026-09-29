@@ -225,7 +225,6 @@ async function handleApi(req,res,url){
       const {data,error}=await supabase.from("download_approvals").insert(item).select("*").single();if(error)throw error;
       sendJson(res,201,{ok:true,approval:data,payment:{status:"paid",receipt:payment.mpesa_receipt||null},storage:"supabase"});return true;
     }catch(error){console.error("Download approval request error:",error);sendJson(res,500,{ok:false,error:"Download request could not be recorded securely."});return true;}
-    sendJson(res,201,{ok:true,approval:await appendJsonStore("download-approvals.json",item),storage:"local"});return true;
   }
   if(req.method==="POST"&&url.pathname==="/api/admin/download-approval"){
     if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
