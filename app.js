@@ -700,7 +700,7 @@ function renderResources() {
         ${resource.sellerUsername ? `<span class="tag">Seller: ${escapeHtml(resource.sellerUsername)}</span>` : ""}
       </div>
       <h3>${escapeHtml(resource.title)}</h3>
-      <p>${escapeHtml(resource.description)}</p>
+      <p>${escapeHtml(resource.description)}</p>\n      <div class="resource-activity"><span>🗓 Updated ${resource.updatedAt ? new Date(resource.updatedAt).toLocaleDateString("en-KE") : "recently"}</span><a href="mailto:cbenexus@gmail.com?subject=Resource%20report&body=Please%20review%20this%20resource:%20${encodeURIComponent(resource.title || "")}" aria-label="Report resource">Report resource</a></div>
       <div class="resource-activity"><span>📥 ${Number(remoteStats.byResource?.[resource.id]?.downloads ?? resource.downloads ?? 0)} downloads</span><span>🛒 ${Number(remoteStats.byResource?.[resource.id]?.purchases ?? resource.purchases ?? 0)} purchases</span></div>
       <div class="price-row">
         <div>
