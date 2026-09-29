@@ -10,7 +10,7 @@ const SecurityUtils = {
       projects: this.decode("L2FwaS9wcm9qZWN0cw=="),
       tuition: this.decode("L2FwaS90dWl0aW9u"),
       quizzes: this.decode("L2FwaS9xdWl6emVz"),
-      homework: this.decode("L2FwaS9ob21ld29yay1oZWxwZXI=")
+
     };
   }
 };
@@ -381,11 +381,11 @@ const elements = {
   quizLearner: document.querySelector("#quizLearnerInput"),
   quizStatus: document.querySelector("#quizStatus"),
   progressReport: document.querySelector("#progressReport"),
-  homeworkForm: document.querySelector("#homeworkForm"),
-  homeworkGrade: document.querySelector("#homeworkGradeInput"),
-  homeworkSubject: document.querySelector("#homeworkSubjectInput"),
-  homeworkQuestion: document.querySelector("#homeworkQuestionInput"),
-  homeworkAnswer: document.querySelector("#homeworkAnswer"),
+
+
+
+
+
   toast: document.querySelector("#toast")
 };
 
@@ -648,7 +648,7 @@ function setupFilters() {
   optionList(elements.sellerGrade, grades, "Grade 1");
   optionList(elements.projectGrade, grades, "Grade 1");
   optionList(elements.tuitionGrade, grades, "Grade 1");
-  optionList(elements.homeworkGrade, grades, "Grade 1");
+
   optionList(elements.typeFilter, ["All Materials", ...materialTypes], state.type);
   optionList(elements.adminType, materialTypes, "Notes");
   optionList(elements.sellerType, materialTypes, "Notes");
@@ -1008,23 +1008,6 @@ async function handleQuizSubmit(event) {
   elements.quizForm.reset();
   renderProgressReport();
   showToast("Quiz marked and progress report updated.");
-}
-
-async function handleHomeworkHelper(event) {
-  event.preventDefault();
-  const payload = {
-    grade: elements.homeworkGrade.value,
-    subject: elements.homeworkSubject.value.trim(),
-    question: elements.homeworkQuestion.value.trim()
-  };
-  elements.homeworkAnswer.textContent = "Preparing a guided homework response...";
-  const backend = await postToBackend(API_ENDPOINTS.homework, payload);
-  if (!backend || !backend.ok) { elements.homeworkAnswer.innerHTML = `<strong>AI Homework Helper</strong><p>${escapeHtml((backend && backend.error) || "The AI Homework Helper is temporarily unavailable.")}</p>`; showToast("AI Homework Helper needs configuration."); return; }
-  const answer = backend.answer
-    ? backend.answer
-    : `Guided help for ${payload.grade} ${payload.subject}: Start by identifying what the question is asking, list the known facts, solve one step at a time, then check whether your answer fits the question. For this question, write the key idea in your own words first: "${payload.question}"`;
-  elements.homeworkAnswer.innerHTML = `<strong>AI Homework Helper</strong><p>${escapeHtml(answer)}</p>`;
-  showToast("Homework helper response ready.");
 }
 
 async function handleSellerSubmit(event) {
@@ -1876,7 +1859,6 @@ function bindEvents() {
   safeOn(elements.projectForm, "submit", handleProjectUpload);
   safeOn(elements.tuitionForm, "submit", handleTuitionRegistration);
   safeOn(elements.quizForm, "submit", handleQuizSubmit);
-  safeOn(elements.homeworkForm, "submit", handleHomeworkHelper);
 
   document.addEventListener("click", (event) => {
     if (event.target.dataset.downloadResource) {
