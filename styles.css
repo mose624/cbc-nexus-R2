@@ -1672,7 +1672,6 @@ textarea {
   }
 }
 
-
 /* Compact responsive layout: phone-first, including narrow desktop-mode viewports */
 html, body {
   max-width: 100%;
@@ -2116,7 +2115,6 @@ img, svg, video, iframe {
   }
 }
 
-
 /* CBE Nexus professional three-column portal */
 .portal-dashboard {
   width: min(1440px, calc(100% - 24px));
@@ -2409,7 +2407,6 @@ img, svg, video, iframe {
   }
 }
 
-
 /* Balanced portal layout on phones: preserves the desktop-style three-panel structure */
 .portal-sidebar-title,
 .portal-card-heading {
@@ -2660,7 +2657,6 @@ img, svg, video, iframe {
   }
 }
 
-
 /* CBE Nexus colour-balanced portal: yellow dashboard with green, blue, red and white accents */
 .portal-dashboard {
   grid-template-columns: 30% minmax(0, 40%) 30%;
@@ -2835,7 +2831,6 @@ img, svg, video, iframe {
   }
 }
 
-
 /* Header navigation visibility: high-contrast buttons on red header */
 .site-header,
 .top-strip,
@@ -2939,7 +2934,6 @@ img, svg, video, iframe {
   }
 }
 
-
 /* Compact blue grade buttons matching Quick Resources */
 .portal-sidebar .grade-list .grade-card {
   border: 0;
@@ -3025,7 +3019,6 @@ img, svg, video, iframe {
     padding: 2px 3px;
   }
 }
-
 
 /* Mobile-only: tightly pack portal buttons to reduce space */
 @media (max-width: 760px) {
@@ -3116,7 +3109,6 @@ img, svg, video, iframe {
     font-size: 5.5px;
   }
 }
-
 
 /* Mobile-only: compact header navigation to save screen space */
 @media (max-width: 760px) {
@@ -3262,7 +3254,6 @@ img, svg, video, iframe {
   }
 }
 
-
 /* Footer resource links: blue from Notes through Study Guides */
 .site-footer .footer-resource-link {
   color: #0645ad !important;
@@ -3277,7 +3268,6 @@ img, svg, video, iframe {
   padding-left: 4px;
   padding-right: 4px;
 }
-
 
 /* Professional colour coding for the quick resource buttons in the header */
 .top-strip {
@@ -3350,7 +3340,6 @@ img, svg, video, iframe {
   }
 }
 
-
 /* Phone quick-access header: compact two-row button grid */
 @media (max-width: 760px) {
   .top-strip {
@@ -3393,7 +3382,6 @@ img, svg, video, iframe {
   }
 }
 
-
 /* Phone quick-access buttons: touching grid with softly curved outer corners */
 @media (max-width: 760px) {
   .top-strip {
@@ -3424,7 +3412,6 @@ img, svg, video, iframe {
   .top-strip > a:nth-child(8) { border-bottom-left-radius: 6px; }
   .top-strip > a:nth-child(14) { border-bottom-right-radius: 6px; }
 }
-
 
 /* FINAL MOBILE HEADER SHAPE: compact touching buttons with rounded individual edges */
 @media (max-width: 760px) {
@@ -3494,8 +3481,6 @@ img, svg, video, iframe {
   }
 }
 
-
-
 /* Unified green header quick-access buttons */
 .top-strip > a {
   background: #0b8750 !important;
@@ -3523,8 +3508,6 @@ img, svg, video, iframe {
   color: #ffffff !important;
 }
 
-
-
 /* Main header navigation buttons: blue */
 .main-nav .nav-menu > .nav-link,
 .main-nav .nav-menu > .nav-dropdown > summary {
@@ -3540,7 +3523,6 @@ img, svg, video, iframe {
   color: #ffffff !important;
 }
 
-
 /* Upper header quick-access buttons: unified green */
 .top-strip > a {
   background: #0b8750 !important;
@@ -3553,7 +3535,6 @@ img, svg, video, iframe {
   background: #086b40 !important;
   color: #ffffff !important;
 }
-
 
 /* Footer action links moved from the main navigation */
 .site-footer .footer-action-link {
@@ -3580,7 +3561,6 @@ img, svg, video, iframe {
     border-radius: 4px;
   }
 }
-
 
 /* Automated assessment and learner progress */
 .quiz-toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin:1rem 0}
@@ -3628,7 +3608,6 @@ img, svg, video, iframe {
   .progress-subject .progress-meter{grid-column:1 / -1}
 }
 
-
 /* Targeted learning-gap and remediation panel */
 .learning-gaps-panel{margin-top:24px;padding:18px;border:1px solid #d9e2ec;border-radius:14px;background:#f8fafc}
 .gap-intro{display:flex;gap:10px;flex-direction:column;margin-bottom:14px}
@@ -3643,7 +3622,6 @@ img, svg, video, iframe {
   .learning-gap-card{align-items:stretch;flex-direction:column}
   .remedial-button{width:100%}
 }
-
 
 /* Admin Control Centre */
 .admin-control-panel{margin-top:24px;padding:22px;border:1px solid #d9e2ec;border-radius:16px;background:#f8fafc}
@@ -3908,7 +3886,6 @@ img, svg, video, iframe {
   }
 }
 
-
 /* Performance and responsive hardening */
 html { scroll-padding-top: 96px; }
 .site-header { backdrop-filter: none; -webkit-backdrop-filter: none; }
@@ -3949,7 +3926,6 @@ button, a, input, select, textarea { touch-action: manipulation; }
   .card-actions > *, .payment-actions > *, .approval-actions > * { width: 100%; }
   .portal-category-grid, .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-
 
 /* Mobile usability fix - CBE Nexus */
 /* Keep header and footer unchanged. On phones, body sections stack cleanly
@@ -4221,7 +4197,6 @@ button, a, input, select, textarea { touch-action: manipulation; }
     min-width: 0 !important;
   }
 }
-
 
 /* Phone-only CBE Nexus Resource Centre layout
    Desktop/tablet layouts remain unchanged. Header and footer are untouched. */
@@ -4799,7 +4774,6 @@ button, a, input, select, textarea { touch-action: manipulation; }
   }
 }
 
-
 /* Mobile dashboard columns: 30% blue, 40% green, 30% yellow. */
 @media (max-width: 768px) {
   .mobile-dashboard-table {
@@ -4810,7 +4784,6 @@ button, a, input, select, textarea { touch-action: manipulation; }
   .mobile-dashboard-table td.mobile-green { width: 40%; }
   .mobile-dashboard-table td.mobile-yellow { width: 30%; }
 }
-
 
 /* Administrator-only management areas. Hidden until verified admin login. */
 .admin-only-section,
@@ -4831,7 +4804,6 @@ body.admin-unlocked .admin-only-link {
     display: flex !important;
   }
 }
-
 
 /* Grade visibility: keep Grades on the left and use a clear red treatment. */
 .grade-card {
@@ -4942,7 +4914,6 @@ body.admin-unlocked .admin-only-link {
   }
 }
 
-
 /* FINAL GRADE 1-12 SUBJECT DROPDOWN FIX — CBE NEXUS */
 #dashboard.portal-dashboard > .portal-sidebar .grade-list{display:grid!important;gap:8px!important;max-height:560px!important;overflow-y:auto!important;overflow-x:hidden!important;padding-right:3px!important}
 #dashboard.portal-dashboard > .portal-sidebar .grade-card{display:block!important;visibility:visible!important;opacity:1!important;width:100%!important;border:1px solid #0b5f3d!important;border-radius:8px!important;background:#0f7a4f!important;overflow:hidden!important}
@@ -4969,7 +4940,6 @@ body.admin-unlocked .admin-only-link {
 #dashboard.portal-dashboard > .portal-sidebar .subject-dropdown-label{font-size:8px!important}
 #dashboard.portal-dashboard > .portal-sidebar .subject-dropdown{min-height:31px!important;padding:5px 6px!important;font-size:9px!important}
 }
-
 
 /* Grade 1-12 dropdown reliability layer */
 #gradeList.grade-list > .grade-card {
@@ -4998,7 +4968,6 @@ body.admin-unlocked .admin-only-link {
   position:relative!important;
   z-index:5!important;
 }
-
 
 /* SHOW A SUBJECT DROPDOWN FOR EVERY GRADE */
 #gradeList.grade-list > .grade-card .subject-menu,
@@ -5070,7 +5039,6 @@ body.admin-unlocked .admin-only-link {
   }
 }
 
-
 /* CEO SEO Center */
 .admin-seo-badge{font-size:.72rem;padding:.2rem .5rem;border-radius:999px;background:rgba(24,119,242,.12);color:inherit;font-weight:700}
 .admin-seo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-top:1rem}
@@ -5082,7 +5050,6 @@ body.admin-unlocked .admin-only-link {
 .admin-seo-keywords span{padding:.42rem .65rem;border-radius:999px;background:rgba(0,0,0,.055);font-size:.82rem}
 .admin-seo-note{margin-top:1rem;padding:1rem;border-left:4px solid currentColor;border-radius:10px;background:rgba(0,0,0,.035);line-height:1.55}
 @media (max-width:760px){.admin-seo-grid{grid-template-columns:1fr}}
-
 
 /* PHONE-ONLY COMPACT DASHBOARD OVERRIDE
    Desktop/tablet dashboard remains unchanged.
@@ -5138,7 +5105,6 @@ body.admin-unlocked .admin-only-link {
     border-radius: 3px !important;
   }
 }
-
 
 /* PHONE-ONLY HEADER COMPACT LAYOUT
    Keeps the desktop/tablet header unchanged. */
@@ -5203,7 +5169,6 @@ body.admin-unlocked .admin-only-link {
     max-width: 100% !important;
   }
 }
-
 
 /* FINAL PHONE HEADER FIX — targets the actual CBE Nexus header classes.
    Desktop/tablet are untouched. */
@@ -5332,7 +5297,6 @@ body.admin-unlocked .admin-only-link {
   }
 }
 
-
 /* Compact Why CBC NEXUS block in About Us */
 .why-cbe-nexus {
   margin-top: 14px;
@@ -5398,7 +5362,6 @@ body.admin-unlocked .admin-only-link {
     font-size: 8px;
   }
 }
-
 
 /* COMPACT ABOUT US — reduce vertical space and box size without changing other sections */
 #about.info-band {
@@ -5514,7 +5477,6 @@ body.admin-unlocked .admin-only-link {
   }
 }
 
-
 /* COMPACT 10-PAGE WEBSITE DIRECTORY — reduce space without changing other sections */
 .page-directory {
   padding-top: 12px !important;
@@ -5595,7 +5557,6 @@ body.admin-unlocked .admin-only-link {
   }
 }
 
-
 /* Compact Learners Holiday Program dashboard card only.
    Keeps the existing dashboard layout and all other components unchanged. */
 #dashboard.portal-dashboard > .portal-main .summary-grid .holiday-program-card {
@@ -5665,7 +5626,6 @@ body.admin-unlocked .admin-only-link {
   }
 }
 
-
 /* Light pink theme — specified CBE Nexus sections only.
    All other website sections remain unchanged. */
 .competitive-band {
@@ -5709,7 +5669,6 @@ body.admin-unlocked .admin-only-link {
 #dashboard.portal-dashboard .portal-sidebar-title h2 {
   color: #a63d62;
 }
-
 
 /* MOBILE: preserve the requested light pink theme on the specified sections only. */
 @media (max-width: 640px) {
@@ -5755,7 +5714,6 @@ body.admin-unlocked .admin-only-link {
     color: #a63d62 !important;
   }
 }
-
 
 /* MEDIUM-SIZE TARGETED SECTIONS — no other website structure changed. */
 
@@ -5901,7 +5859,6 @@ body.admin-unlocked .admin-only-link {
   }
 }
 
-
 /* Compact Pay and confirm your resource order section only. */
 #payments {
   padding-top: 20px !important;
@@ -5972,7 +5929,6 @@ body.admin-unlocked .admin-only-link {
   }
 }
 
-
 /* Match the Pay and confirm order section to the existing About Us section size. */
 #payments {
   padding-top: 46px !important;
@@ -6025,7 +5981,6 @@ body.admin-unlocked .admin-only-link {
     padding: 12px !important;
   }
 }
-
 
 /* Match SEO resource and Popular searches sections to the compact About Us sizing. */
 .seo-band {
@@ -6090,7 +6045,6 @@ body.admin-unlocked .admin-only-link {
   }
 }
 
-
 /* Final exact About Us sizing for SEO and Popular searches only. */
 .seo-band,
 .landing-band {
@@ -6147,52 +6101,6 @@ body.admin-unlocked .admin-only-link {
   }
 }
 
-
-/* Match Competitive CBE resource centre to the existing About Us size. */
-.competitive-band {
-  padding-top: 18px !important;
-  padding-bottom: 18px !important;
-}
-.competitive-band .section-heading {
-  margin-bottom: 10px !important;
-}
-.competitive-band .eyebrow {
-  margin-bottom: 4px !important;
-  font-size: 10px !important;
-}
-.competitive-band .section-heading h2 {
-  margin-bottom: 7px !important;
-  font-size: 24px !important;
-  line-height: 1.15 !important;
-}
-.competitive-band .price-pill {
-  padding: 8px 10px !important;
-  font-size: 11px !important;
-}
-.competitive-band .feature-grid {
-  gap: 8px !important;
-  margin-bottom: 10px !important;
-}
-.competitive-band .feature-grid article {
-  padding: 11px !important;
-  border-radius: 7px !important;
-}
-.competitive-band .feature-grid strong {
-  font-size: 12px !important;
-}
-.competitive-band .feature-grid span {
-  margin-top: 4px !important;
-  font-size: 10px !important;
-  line-height: 1.3 !important;
-}
-.competitive-band .quick-types {
-  gap: 6px !important;
-}
-.competitive-band .quick-types button {
-  padding: 7px 9px !important;
-  font-size: 10px !important;
-}
-
 @media (max-width: 640px) {
   .competitive-band {
     padding-top: 12px !important;
@@ -6222,6 +6130,70 @@ body.admin-unlocked .admin-only-link {
   }
   .competitive-band .quick-types button {
     padding: 6px 7px !important;
+    font-size: 9px !important;
+  }
+}
+
+
+/* Final compact size: Competitive CBE resource centre = About Us dimensions. */
+.competitive-band {
+  padding: 18px clamp(16px, 4vw, 48px) !important;
+}
+.competitive-band .section-heading {
+  margin-bottom: 10px !important;
+}
+.competitive-band .section-heading .eyebrow {
+  margin-bottom: 4px !important;
+  font-size: 10px !important;
+}
+.competitive-band .section-heading h2 {
+  margin: 0 0 7px !important;
+  font-size: 24px !important;
+  line-height: 1.15 !important;
+}
+.competitive-band .feature-grid {
+  gap: 8px !important;
+  margin-bottom: 10px !important;
+}
+.competitive-band .feature-grid article {
+  padding: 9px 11px !important;
+  border-radius: 7px !important;
+}
+.competitive-band .feature-grid strong {
+  font-size: 11px !important;
+}
+.competitive-band .feature-grid span {
+  margin-top: 3px !important;
+  font-size: 10px !important;
+  line-height: 1.3 !important;
+}
+.competitive-band .quick-types {
+  gap: 5px !important;
+}
+.competitive-band .quick-types button {
+  padding: 6px 8px !important;
+  font-size: 10px !important;
+}
+.competitive-band .price-pill {
+  padding: 7px 9px !important;
+  font-size: 10px !important;
+}
+
+@media (max-width: 640px) {
+  .competitive-band {
+    padding: 12px 16px !important;
+  }
+  .competitive-band .section-heading h2 {
+    font-size: 18px !important;
+  }
+  .competitive-band .feature-grid article {
+    padding: 8px !important;
+  }
+  .competitive-band .feature-grid strong {
+    font-size: 10px !important;
+  }
+  .competitive-band .feature-grid span,
+  .competitive-band .quick-types button {
     font-size: 9px !important;
   }
 }
