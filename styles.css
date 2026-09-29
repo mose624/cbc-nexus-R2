@@ -6418,3 +6418,16 @@ body.admin-unlocked .admin-only-link {
 .admin-analytics-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .admin-analytics-actions .secondary-button{min-height:32px;padding:6px 9px;font-size:.72rem}
 @media(max-width:600px){.admin-analytics-actions{width:100%}.admin-analytics-actions .secondary-button{flex:1}}
+
+/* Affiliate marketplace */
+.affiliate-band{padding:24px clamp(16px,4vw,48px);background:linear-gradient(180deg,#fff8fb 0%,#fff 100%);border-top:1px solid #f3c6d7;border-bottom:1px solid #f3c6d7}
+.affiliate-disclosure{margin:0 auto 12px;max-width:900px;padding:8px 10px;border:1px solid #f3c6d7;border-radius:7px;background:#fff;font-size:10px;line-height:1.4;color:#64748b}
+.affiliate-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.affiliate-card{padding:12px;border:1px solid #f3c6d7;border-radius:9px;background:#fff;display:flex;flex-direction:column;gap:6px}
+.affiliate-card h3{margin:0;font-size:15px}
+.affiliate-card p{margin:0;color:#64748b;font-size:11px;line-height:1.35}
+.affiliate-card small{color:#64748b;font-size:10px;margin-top:auto}
+.affiliate-category{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+.affiliate-card .primary-button,.affiliate-card .secondary-button{margin-top:5px;text-align:center;font-size:10px;padding:7px 8px}
+@media(max-width:900px){.affiliate-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.affiliate-band{padding:16px}.affiliate-grid{grid-template-columns:1fr}.affiliate-card h3{font-size:13px}}
