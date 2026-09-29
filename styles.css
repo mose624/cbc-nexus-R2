@@ -5971,3 +5971,57 @@ body.admin-unlocked .admin-only-link {
     font-size: 10px !important;
   }
 }
+
+
+/* Match the Pay and confirm order section to the existing About Us section size. */
+#payments {
+  padding-top: 46px !important;
+  padding-bottom: 46px !important;
+}
+#payments .section-heading h2 {
+  font-size: 28px !important;
+  line-height: 1.2 !important;
+}
+#payments .eyebrow {
+  font-size: 12px !important;
+}
+#payments .section-heading {
+  margin-bottom: 18px !important;
+}
+#payments .payment-layout {
+  gap: 18px !important;
+}
+#payments .payment-form,
+#payments .payment-card {
+  padding: 18px !important;
+}
+#payments label,
+#payments .payment-card p {
+  font-size: 13px !important;
+}
+#payments input,
+#payments .payment-actions button,
+#payments .payment-actions a {
+  font-size: 13px !important;
+  padding: 9px 12px !important;
+}
+#payments .payment-card h3 {
+  font-size: 16px !important;
+}
+
+@media (max-width: 640px) {
+  #payments {
+    padding-top: 28px !important;
+    padding-bottom: 28px !important;
+  }
+  #payments .section-heading h2 {
+    font-size: 20px !important;
+  }
+  #payments .eyebrow {
+    font-size: 10px !important;
+  }
+  #payments .payment-form,
+  #payments .payment-card {
+    padding: 12px !important;
+  }
+}
