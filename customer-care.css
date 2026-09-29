@@ -8,129 +8,42 @@
   box-sizing: border-box;
 }
 #cbe-customer-care *, #cbe-customer-care *::before, #cbe-customer-care *::after { box-sizing: border-box; }
-#cbe-customer-care .cc-launcher {
-  border: 0;
-  border-radius: 999px;
-  padding: 12px 17px;
-  background: #0f7a4f;
-  color: #fff;
-  font: 700 14px/1 Arial, sans-serif;
-  cursor: pointer;
-  box-shadow: 0 5px 18px rgba(0,0,0,.2);
-}
-#cbe-customer-care .cc-icon { margin-right: 7px; }
-#cbe-customer-care .cc-panel {
-  width: min(360px, calc(100vw - 28px));
-  height: min(520px, calc(100vh - 110px));
-  margin-bottom: 10px;
-  background: #fff;
-  border: 1px solid #d9e1e7;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 12px 35px rgba(0,0,0,.22);
-  display: flex;
-  flex-direction: column;
-}
-#cbe-customer-care .cc-panel[hidden] { display: none; }
-#cbe-customer-care .cc-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 14px 15px;
-  background: #0f7a4f;
-  color: #fff;
-}
+#cbe-customer-care .cc-launcher { border:0; border-radius:999px; padding:12px 17px; background:#0f7a4f; color:#fff; font:700 14px/1 Arial,sans-serif; cursor:pointer; box-shadow:0 5px 18px rgba(0,0,0,.2); }
+#cbe-customer-care .cc-icon { margin-right:7px; }
+#cbe-customer-care .cc-panel { width:min(360px,calc(100vw - 28px)); height:min(520px,calc(100vh - 110px)); margin-bottom:10px; background:#fff; border:1px solid #d9e1e7; border-radius:14px; overflow:hidden; box-shadow:0 12px 35px rgba(0,0,0,.22); display:flex; flex-direction:column; }
+#cbe-customer-care .cc-panel[hidden] { display:none; }
+#cbe-customer-care .cc-header { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:14px 15px; background:#0f7a4f; color:#fff; }
 #cbe-customer-care .cc-header strong { display:block; font-size:15px; }
 #cbe-customer-care .cc-header small { display:block; margin-top:4px; font-size:11px; opacity:.9; }
-#cbe-customer-care .cc-close {
-  border: 0;
-  background: transparent;
-  color: #fff;
-  font-size: 24px;
-  line-height: 1;
-  cursor: pointer;
-}
-#cbe-customer-care .cc-messages {
-  flex: 1;
-  overflow-y: auto;
-  padding: 14px;
-  background: #f7f9fa;
-}
-#cbe-customer-care .cc-message {
-  max-width: 88%;
-  margin: 0 0 9px;
-  padding: 9px 11px;
-  border-radius: 10px;
-  font-size: 13px;
-  line-height: 1.4;
-  white-space: pre-wrap;
-}
-#cbe-customer-care .cc-message.bot { background: #fff; border: 1px solid #e0e6ea; color:#173042; }
+#cbe-customer-care .cc-close { border:0; background:transparent; color:#fff; font-size:24px; line-height:1; cursor:pointer; }
+#cbe-customer-care .cc-messages { flex:1; overflow-y:auto; padding:14px; background:#f7f9fa; }
+#cbe-customer-care .cc-message { max-width:88%; margin:0 0 9px; padding:9px 11px; border-radius:10px; font-size:13px; line-height:1.4; white-space:pre-wrap; }
+#cbe-customer-care .cc-message.bot { background:#fff; border:1px solid #e0e6ea; color:#173042; }
 #cbe-customer-care .cc-message.user { margin-left:auto; background:#0f7a4f; color:#fff; }
 #cbe-customer-care .cc-actions { display:grid; grid-template-columns:1fr; gap:6px; padding:10px; border-top:1px solid #e5eaee; }
-#cbe-customer-care .cc-actions button {
-  border:1px solid #c7d6ce; border-radius:8px; padding:8px; background:#fff; color:#0b5f3d;
-  font:700 12px/1.2 Arial,sans-serif; cursor:pointer;
-}
+#cbe-customer-care .cc-actions button { border:1px solid #c7d6ce; border-radius:8px; padding:8px; background:#fff; color:#0b5f3d; font:700 12px/1.2 Arial,sans-serif; cursor:pointer; }
 #cbe-customer-care .cc-form { display:flex; gap:7px; padding:10px; border-top:1px solid #e5eaee; background:#fff; }
 #cbe-customer-care .cc-input { min-width:0; flex:1; border:1px solid #cbd5dc; border-radius:8px; padding:9px; font:13px Arial,sans-serif; outline:none; }
 #cbe-customer-care .cc-input:focus { border-color:#0f7a4f; }
 #cbe-customer-care .cc-send { border:0; border-radius:8px; padding:0 13px; background:#0f7a4f; color:#fff; font:700 12px Arial,sans-serif; cursor:pointer; }
+.summary-grid .holiday-program-card { grid-column:1/-1; display:flex; align-items:center; justify-content:space-between; gap:14px; min-height:82px; padding:16px 20px; border-radius:14px; text-decoration:none; background:linear-gradient(135deg,#0f7a4f,#126b8f); color:#fff; box-shadow:0 8px 22px rgba(15,122,79,.18); transition:transform .18s ease,box-shadow .18s ease; }
+.summary-grid .holiday-program-card:hover { transform:translateY(-2px); box-shadow:0 12px 26px rgba(15,122,79,.25); }
+.summary-grid .holiday-program-icon { display:grid; place-items:center; width:46px; height:46px; flex:0 0 46px; border-radius:12px; background:rgba(255,255,255,.16); font-size:24px; }
+.summary-grid .holiday-program-copy { display:flex; flex-direction:column; gap:4px; flex:1; }
+.summary-grid .holiday-program-copy strong { font-size:17px; line-height:1.2; }
+.summary-grid .holiday-program-copy small { font-size:13px; opacity:.92; }
+.summary-grid .holiday-program-arrow { font-size:25px; font-weight:800; padding-left:8px; }
 
-/* Learners Holiday Program — dashboard-only replacement card */
-.summary-grid .holiday-program-card {
-  grid-column: 1 / -1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  min-height: 82px;
-  padding: 16px 20px;
-  border-radius: 14px;
-  text-decoration: none;
-  background: linear-gradient(135deg, #0f7a4f, #126b8f);
-  color: #fff;
-  box-shadow: 0 8px 22px rgba(15,122,79,.18);
-  transition: transform .18s ease, box-shadow .18s ease;
-}
-.summary-grid .holiday-program-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 26px rgba(15,122,79,.25);
-}
-.summary-grid .holiday-program-icon {
-  display: grid;
-  place-items: center;
-  width: 46px;
-  height: 46px;
-  flex: 0 0 46px;
-  border-radius: 12px;
-  background: rgba(255,255,255,.16);
-  font-size: 24px;
-}
-.summary-grid .holiday-program-copy {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  flex: 1;
-}
-.summary-grid .holiday-program-copy strong {
-  font-size: 17px;
-  line-height: 1.2;
-}
-.summary-grid .holiday-program-copy small {
-  font-size: 13px;
-  opacity: .92;
-}
-.summary-grid .holiday-program-arrow {
-  font-size: 25px;
-  font-weight: 800;
-  padding-left: 8px;
-}
-@media (max-width:640px) {
-  #cbe-customer-care { right:10px; bottom:10px; }
-  #cbe-customer-care .cc-launcher { padding:11px 13px; font-size:12px; }
-  .summary-grid .holiday-program-card { padding: 14px; min-height: 74px; }
-  .summary-grid .holiday-program-copy strong { font-size: 15px; }
-  .summary-grid .holiday-program-copy small { font-size: 12px; }
-}
+/* CBE Nexus website rating — compact, bold 0–5 scale with clickable stars. */
+#cbe-website-rating { margin-top:18px; padding:13px 15px; border:1px solid #f2e7a6; border-radius:10px; background:linear-gradient(180deg,#fffdf0 0%,#fff8cc 55%,#fffdf0 100%); text-align:center; }
+#cbe-website-rating .cbe-rating-inner { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:7px; }
+#cbe-website-rating .cbe-rating-title, #cbe-website-rating .cbe-rating-scale, #cbe-website-rating .cbe-rating-value { font-weight:800; }
+#cbe-website-rating .cbe-rating-title { font-size:14px; }
+#cbe-website-rating .cbe-rating-scale, #cbe-website-rating .cbe-rating-value { font-size:13px; }
+#cbe-website-rating .cbe-stars { display:inline-flex; gap:2px; }
+#cbe-website-rating .cbe-star { border:0; background:transparent; color:#d5d5d5; font-size:23px; line-height:1; padding:2px; cursor:pointer; transition:transform .12s ease,color .12s ease; }
+#cbe-website-rating .cbe-star:hover, #cbe-website-rating .cbe-star:focus { color:#e0ad00; transform:scale(1.08); outline:2px solid #e0ad00; outline-offset:1px; }
+#cbe-website-rating .cbe-star.selected { color:#e0ad00; }
+#cbe-website-rating .cbe-rating-summary { width:100%; font-size:11px; color:#52616b; }
+#cbe-website-rating .cbe-rating-thanks { width:100%; font-size:11px; font-weight:700; color:#0f7a4f; min-height:14px; }
+@media (max-width:640px) { #cbe-customer-care{right:10px;bottom:10px;} #cbe-customer-care .cc-launcher{padding:11px 13px;font-size:12px;} .summary-grid .holiday-program-card{padding:14px;min-height:74px;} .summary-grid .holiday-program-copy strong{font-size:15px;} .summary-grid .holiday-program-copy small{font-size:12px;} #cbe-website-rating{padding:10px;} #cbe-website-rating .cbe-star{font-size:21px;} #cbe-website-rating .cbe-rating-title{font-size:13px;} }
