@@ -28,6 +28,7 @@
         <button type="button" data-action="purchase">📚 How to purchase</button>
         <button type="button" data-action="whatsapp">💬 WhatsApp support</button>
         <button type="button" data-action="download-help">📥 I paid — help me download</button>
+        <a class="cc-email" href="mailto:cbenexus@gmail.com">📧 Email us</a>
       </div>
       <form class="cc-form">
         <input class="cc-input" type="text" maxlength="300" autocomplete="off" placeholder="Type your question…">
