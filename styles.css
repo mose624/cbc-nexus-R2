@@ -6197,3 +6197,73 @@ body.admin-unlocked .admin-only-link {
     font-size: 9px !important;
   }
 }
+
+
+/* Learners Holiday Program dashboard: match About Us compact dimensions. */
+#holidayTuition {
+  padding-top: 18px !important;
+  padding-bottom: 18px !important;
+}
+#holidayTuition .section-heading {
+  margin-bottom: 10px !important;
+}
+#holidayTuition .section-heading .eyebrow {
+  margin-bottom: 4px !important;
+  font-size: 10px !important;
+}
+#holidayTuition .section-heading h2 {
+  margin-bottom: 7px !important;
+  font-size: 24px !important;
+  line-height: 1.15 !important;
+}
+#holidayTuition > p,
+#holidayTuition .holiday-copy,
+#holidayTuition .holiday-description {
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+}
+#holidayTuition form,
+#holidayTuition .holiday-form,
+#holidayTuition .tuition-form {
+  gap: 8px !important;
+}
+#holidayTuition label {
+  font-size: 11px !important;
+}
+#holidayTuition input,
+#holidayTuition select,
+#holidayTuition textarea,
+#holidayTuition button {
+  min-height: 34px !important;
+  padding: 7px 9px !important;
+  font-size: 11px !important;
+}
+#holidayTuition .form-card,
+#holidayTuition .tuition-card,
+#holidayTuition .holiday-card {
+  padding: 11px 13px !important;
+  border-radius: 7px !important;
+}
+
+@media (max-width: 640px) {
+  #holidayTuition {
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+  }
+  #holidayTuition .section-heading h2 {
+    font-size: 18px !important;
+  }
+  #holidayTuition > p,
+  #holidayTuition .holiday-copy,
+  #holidayTuition .holiday-description {
+    font-size: 10px !important;
+  }
+  #holidayTuition input,
+  #holidayTuition select,
+  #holidayTuition textarea,
+  #holidayTuition button {
+    min-height: 31px !important;
+    padding: 6px 8px !important;
+    font-size: 10px !important;
+  }
+}
