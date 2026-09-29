@@ -98,6 +98,35 @@ async function updatePaymentByCheckout(checkoutRequestId,patch){if(!supabaseConf
 function callbackMetadataToObject(items){const out={};for(const item of Array.isArray(items)?items:[]){if(item?.Name)out[item.Name]=item.Value??null;}return out;}
 async function verifyMpesaPaymentByQuery(checkoutRequestId){const c=getMpesaConfig();if(!checkoutRequestId||!c.shortCode||!c.passkey)return null;const token=await getMpesaAccessToken(),timestamp=mpesaTimestamp(),response=await darajaPost("/mpesa/stkpushquery/v1/query",{BusinessShortCode:c.shortCode,Password:mpesaPassword(c.shortCode,c.passkey,timestamp),Timestamp:timestamp,CheckoutRequestID:checkoutRequestId},token);const d=response.data||{};if(Number(d.ResponseCode)===0&&String(d.ResultCode)==="0"){return updatePaymentByCheckout(checkoutRequestId,{status:"paid",result_code:0,result_desc:String(d.ResultDesc||"Success"),verified_at:new Date().toISOString()});}if(d.ResultCode!==undefined){return updatePaymentByCheckout(checkoutRequestId,{status:"failed",result_code:Number(d.ResultCode),result_desc:String(d.ResultDesc||"Payment failed"),verified_at:new Date().toISOString()});}return null;}
 async function handleApi(req,res,url){
+  if(req.method==="GET"&&url.pathname==="/api/affiliate-products"){
+    const products=await readJsonStore("affiliate-products.json");
+    sendJson(res,200,{ok:true,products:products.filter(p=>p.active!==false)});
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/admin/affiliate-products"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    sendJson(res,200,{ok:true,products:await readJsonStore("affiliate-products.json")});
+    return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/affiliate-product"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    const p=JSON.parse((await readBody(req))||"{}"), title=String(p.title||"").trim(), urlValue=String(p.url||"").trim();
+    if(!title||!urlValue){sendJson(res,400,{ok:false,error:"Product title and affiliate link are required."});return true;}
+    const items=await readJsonStore("affiliate-products.json");
+    const item={id:String(p.id||"affiliate-"+Date.now()),title,category:String(p.category||"Other").trim(),description:String(p.description||"").trim(),merchant:String(p.merchant||"Partner").trim(),url:urlValue,image:String(p.image||"").trim(),price:String(p.price||"").trim(),commission:String(p.commission||"").trim(),label:String(p.label||"Shop now").trim(),active:p.active!==false,updatedAt:new Date().toISOString()};
+    const next=[item,...items.filter(x=>String(x.id)!==item.id)];
+    await fs.writeFile(path.join(DATA_DIR,"affiliate-products.json"),JSON.stringify(next,null,2));
+    sendJson(res,200,{ok:true,product:item});
+    return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/affiliate-product-delete"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"").trim(),items=await readJsonStore("affiliate-products.json");
+    await fs.writeFile(path.join(DATA_DIR,"affiliate-products.json"),JSON.stringify(items.filter(x=>String(x.id)!==id),null,2));
+    sendJson(res,200,{ok:true,deletedId:id});
+    return true;
+  }
+
   if(req.method==="GET"&&url.pathname==="/api/admin/dashboard"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const [resources,localSellerAccounts,payments,mpesaRequests,tuition,localUsers]=await Promise.all([readJsonStore("resources.json"),readJsonStore("seller-accounts.json"),readJsonStore("payments.json"),readJsonStore("mpesa-requests.json"),readJsonStore("tuition-registrations.json"),readJsonStore("admin-users.json")]);let sellerAccounts=localSellerAccounts,users=localUsers,verifiedPurchases=[];if(supabaseConfigured){try{const {data,error}=await supabase.from("purchases").select("*").order("created_at",{ascending:false}).limit(100);if(error)throw error;verifiedPurchases=(data||[]).map(p=>({...p,id:p.id,resource:p.resource_id,resourceId:p.resource_id,customerPhone:p.customer_phone,checkoutRequestID:p.checkout_request_id,merchantRequestID:p.merchant_request_id,mpesaReceipt:p.mpesa_receipt,createdAt:p.created_at}));}catch(error){console.error("Supabase payment dashboard lookup error:",error);}}if(supabaseConfigured){try{const [{data:sellersData,error:sellersError},{data:usersData,error:usersError}]=await Promise.all([supabase.from("sellers").select("id,user_id,phone,username,status,created_at"),supabase.from("users").select("id,name,phone,role,status,created_at")]);if(sellersError)throw sellersError;if(usersError)throw usersError;sellerAccounts=sellersData||[];users=usersData||[];}catch(error){console.error("Supabase admin dashboard lookup error:",error);}}const userMap=new Map();[...users].forEach(u=>userMap.set(u.phone||u.username||u.id,u));[...payments,...mpesaRequests,...tuition].forEach(item=>{const phone=item.customerPhone||item.phone;if(phone&&!userMap.has(phone))userMap.set(phone,{id:"user-"+phone,name:item.learner||item.name||"Customer",phone,status:"active",source:"transaction"});});const allUsers=[...userMap.values()],sales=payments.filter(p=>["paid","completed","success"].includes(String(p.status||"").toLowerCase())),totalDownloads=resources.reduce((s,r)=>s+Number(r.downloads||0),0),popularResources=[...resources].map(r=>({...r,downloads:Number(r.downloads||0),purchases:Number(r.purchases||0)})).sort((a,b)=>(b.downloads+b.purchases*3)-(a.downloads+a.purchases*3)).slice(0,10);const dashboardPayments=[...payments,...mpesaRequests,...verifiedPurchases];const dashboardSales=[...payments,...verifiedPurchases].filter(p=>["paid","completed","success"].includes(String(p.status||"").toLowerCase()));sendJson(res,200,{ok:true,stats:{sellers:sellerAccounts.length,pendingSellers:sellerAccounts.filter(x=>x.status==="pending").length,resources:resources.length,pendingResources:resources.filter(x=>x.status==="pending").length,users:allUsers.length,sales:dashboardSales.length,purchases:dashboardSales.length,revenue:dashboardSales.reduce((s,x)=>s+Number(x.amount||0),0),downloads:totalDownloads},popularResources,sellers:sellerAccounts,resources,users:allUsers,sales:dashboardSales,payments:dashboardPayments.slice(0,100)});return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/resource"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const p=JSON.parse((await readBody(req))||"{}"),items=await readJsonStore("resources.json"),item={...p,status:p.status||"approved",updatedAt:new Date().toISOString()};await fs.writeFile(path.join(DATA_DIR,"resources.json"),JSON.stringify([item,...items.filter(x=>x.id!==item.id)],null,2));sendJson(res,200,{ok:true,resource:item});return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/resource-delete"){
