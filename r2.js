@@ -1,4 +1,4 @@
-const { S3Client, PutObjectCommand, GetObjectCommand, HeadBucketCommand } = require("@aws-sdk/client-s3");
+const { S3Client, PutObjectCommand, GetObjectCommand, HeadBucketCommand, DeleteObjectCommand } = require("@aws-sdk/client-s3");
 const { PDFDocument } = require("pdf-lib");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
@@ -115,6 +115,14 @@ async function createPdfPreview(key, pages = 3) {
   return { previewKey, pages: count };
 }
 
+async function deleteObject(key) {
+  const cleanKey = String(key || "").trim();
+  if (!cleanKey) return { deleted: false };
+  const { cfg, client } = getClient();
+  await client.send(new DeleteObjectCommand({ Bucket: cfg.bucket, Key: cleanKey }));
+  return { deleted: true, key: cleanKey };
+}
+
 async function createDownloadUrl(key) {
   const { cfg, client } = getClient();
   const command = new GetObjectCommand({
@@ -124,4 +132,4 @@ async function createDownloadUrl(key) {
   return getSignedUrl(client, command, { expiresIn: 300 });
 }
 
-module.exports = { createUploadUrl, createDownloadUrl, createPdfPreview, uploadObject, verifyR2Connection };
+module.exports = { createUploadUrl, createDownloadUrl, createPdfPreview, uploadObject, deleteObject, verifyR2Connection };
