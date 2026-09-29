@@ -77,7 +77,60 @@
 #cbe-customer-care .cc-input { min-width:0; flex:1; border:1px solid #cbd5dc; border-radius:8px; padding:9px; font:13px Arial,sans-serif; outline:none; }
 #cbe-customer-care .cc-input:focus { border-color:#0f7a4f; }
 #cbe-customer-care .cc-send { border:0; border-radius:8px; padding:0 13px; background:#0f7a4f; color:#fff; font:700 12px Arial,sans-serif; cursor:pointer; }
+
+/* Learners Holiday Program — dashboard-only replacement card */
+.summary-grid .holiday-program-card {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 82px;
+  padding: 16px 20px;
+  border-radius: 14px;
+  text-decoration: none;
+  background: linear-gradient(135deg, #0f7a4f, #126b8f);
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(15,122,79,.18);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.summary-grid .holiday-program-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(15,122,79,.25);
+}
+.summary-grid .holiday-program-icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.16);
+  font-size: 24px;
+}
+.summary-grid .holiday-program-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+.summary-grid .holiday-program-copy strong {
+  font-size: 17px;
+  line-height: 1.2;
+}
+.summary-grid .holiday-program-copy small {
+  font-size: 13px;
+  opacity: .92;
+}
+.summary-grid .holiday-program-arrow {
+  font-size: 25px;
+  font-weight: 800;
+  padding-left: 8px;
+}
 @media (max-width:640px) {
   #cbe-customer-care { right:10px; bottom:10px; }
   #cbe-customer-care .cc-launcher { padding:11px 13px; font-size:12px; }
+  .summary-grid .holiday-program-card { padding: 14px; min-height: 74px; }
+  .summary-grid .holiday-program-copy strong { font-size: 15px; }
+  .summary-grid .holiday-program-copy small { font-size: 12px; }
 }
