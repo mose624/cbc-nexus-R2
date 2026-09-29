@@ -44,3 +44,15 @@ create index if not exists download_approvals_resource_idx on public.download_ap
 create index if not exists download_approvals_phone_idx on public.download_approvals(customer_phone);
 create index if not exists download_approvals_status_idx on public.download_approvals(status);
 alter table public.download_approvals enable row level security;
+
+
+-- Server-side Safaricom Daraja STK Push verification fields
+alter table public.purchases add column if not exists checkout_request_id text;
+alter table public.purchases add column if not exists merchant_request_id text;
+alter table public.purchases add column if not exists mpesa_receipt text;
+alter table public.purchases add column if not exists result_code integer;
+alter table public.purchases add column if not exists result_desc text;
+alter table public.purchases add column if not exists transaction_time text;
+alter table public.purchases add column if not exists verified_at timestamptz;
+create unique index if not exists purchases_checkout_request_id_uidx on public.purchases(checkout_request_id) where checkout_request_id is not null;
+create index if not exists purchases_customer_phone_idx on public.purchases(customer_phone);
