@@ -59,7 +59,7 @@
     launcher.setAttribute("aria-expanded", "true");
     if (!messages.children.length) {
       addMessage("Hello! 👋 Welcome to CBE Nexus Customer Care. How can I help you today?", "bot");
-      reply("You can ask about payment, purchasing resources, downloads, or WhatsApp support.");
+      reply("You can ask about payment, purchasing resources, downloads, or WhatsApp support. M-Pesa payment number: 0798462815.");
     }
     input.focus();
   }
@@ -76,7 +76,7 @@
       return "Hello! 👋 Welcome to CBE Nexus. How may I assist you?";
     }
     if (q.includes("payment") || q.includes("mpesa") || q.includes("m-pesa") || q.includes("pay")) {
-      return "For a paid resource, select the resource and follow the payment prompt. CBE Nexus uses an M-Pesa STK Push: enter your Safaricom number when prompted and approve the request on your phone. Your download is unlocked after successful payment.";
+      return "For a paid resource, select the resource and follow the payment prompt. Payment method: pay through M-Pesa to 0798462815. After payment, keep your M-Pesa confirmation message and follow the download instructions. If you need help, contact Customer Care on WhatsApp: 0798462815.";
     }
     if (q.includes("buy") || q.includes("purchase") || q.includes("order")) {
       return "To purchase a resource: choose your Grade and Subject, open the resource, review its details/preview, then proceed with the payment prompt. After successful payment, continue to the download.";
