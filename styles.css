@@ -5594,3 +5594,73 @@ body.admin-unlocked .admin-only-link {
     border-radius: 4px !important;
   }
 }
+
+
+/* Compact Learners Holiday Program dashboard card only.
+   Keeps the existing dashboard layout and all other components unchanged. */
+#dashboard.portal-dashboard > .portal-main .summary-grid .holiday-program-card {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  min-width: 0 !important;
+  width: fit-content !important;
+  max-width: 280px !important;
+  padding: 9px 12px !important;
+  margin: 0 !important;
+  border-radius: 8px !important;
+  box-sizing: border-box !important;
+  text-decoration: none !important;
+}
+
+#dashboard.portal-dashboard > .portal-main .summary-grid .holiday-program-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 auto !important;
+  font-size: 18px !important;
+  line-height: 1 !important;
+}
+
+#dashboard.portal-dashboard > .portal-main .summary-grid .holiday-program-copy {
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+  line-height: 1.15 !important;
+}
+
+#dashboard.portal-dashboard > .portal-main .summary-grid .holiday-program-copy strong {
+  display: block !important;
+  font-size: 12px !important;
+  line-height: 1.15 !important;
+  white-space: nowrap !important;
+}
+
+#dashboard.portal-dashboard > .portal-main .summary-grid .holiday-program-copy small {
+  display: block !important;
+  font-size: 9px !important;
+  line-height: 1.15 !important;
+  white-space: nowrap !important;
+}
+
+#dashboard.portal-dashboard > .portal-main .summary-grid .holiday-program-arrow {
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  font-size: 13px !important;
+  line-height: 1 !important;
+}
+
+@media (max-width: 600px) {
+  #dashboard.portal-dashboard > .portal-main .summary-grid .holiday-program-card {
+    max-width: 240px !important;
+    padding: 8px 10px !important;
+    gap: 8px !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-main .summary-grid .holiday-program-copy strong {
+    font-size: 11px !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-main .summary-grid .holiday-program-copy small {
+    font-size: 8px !important;
+  }
+}
