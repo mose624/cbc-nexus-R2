@@ -141,6 +141,28 @@ async function handleApi(req,res,url){
   }
   if(req.method==="POST"&&url.pathname==="/api/r2/upload-url"){const p=JSON.parse((await readBody(req))||"{}"),admin=verifyAdminSession(req),seller=verifySellerSession(req);if(p.role==="admin"&&!admin){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}if(p.role==="seller"&&!seller){sendJson(res,401,{ok:false,error:"Approved seller login required."});return true;}if(!["admin","seller"].includes(p.role)){sendJson(res,400,{ok:false,error:"Upload role is required."});return true;}sendJson(res,200,{ok:true,...await createUploadUrl(p)});return true;}
   if(req.method==="POST"&&url.pathname==="/api/r2/project-upload-url"){const p=JSON.parse((await readBody(req))||"{}");if(!p.grade||!p.subject){sendJson(res,400,{ok:false,error:"Project grade and subject are required."});return true;}sendJson(res,200,{ok:true,...await createUploadUrl({...p,type:"CBC Projects"})});return true;}
+  if(req.method==="POST"&&url.pathname==="/api/download-approval/request"){
+    const p=JSON.parse((await readBody(req))||"{}");
+    const resourceId=String(p.resourceId||"").trim(), phone=normalizeMpesaPhone(p.customerPhone||p.phone||"");
+    if(!resourceId||!phone){sendJson(res,400,{ok:false,error:"Resource and valid customer phone are required."});return true;}
+    const item={id:"approval-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),resourceId,customerPhone:phone,paymentReference:String(p.paymentReference||p.checkoutRequestID||"").trim(),status:"pending",createdAt:new Date().toISOString()};
+    if(supabaseConfigured){try{const {data,error}=await supabase.from("download_approvals").insert(item).select("*").single();if(error)throw error;sendJson(res,201,{ok:true,approval:data,storage:"supabase"});return true;}catch(error){console.error("Download approval request error:",error);sendJson(res,500,{ok:false,error:"Download request could not be recorded."});return true;}}
+    sendJson(res,201,{ok:true,approval:await appendJsonStore("download-approvals.json",item),storage:"local"});return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/download-approval"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"").trim(),status=String(p.status||"").trim().toLowerCase();
+    if(!id||!["approved","rejected"].includes(status)){sendJson(res,400,{ok:false,error:"Approval ID and status are required."});return true;}
+    if(supabaseConfigured){try{const {data,error}=await supabase.from("download_approvals").update({status,approved_at:status==="approved"?new Date().toISOString():null}).eq("id",id).select("*").single();if(error)throw error;sendJson(res,200,{ok:true,approval:data,storage:"supabase"});return true;}catch(error){console.error("Download approval update error:",error);sendJson(res,500,{ok:false,error:"Download approval could not be updated."});return true;}}
+    const items=await readJsonStore("download-approvals.json"),next=items.map(x=>x.id===id?{...x,status,approvedAt:status==="approved"?new Date().toISOString():null}:x);
+    await fs.writeFile(path.join(DATA_DIR,"download-approvals.json"),JSON.stringify(next,null,2));
+    sendJson(res,200,{ok:true,approval:next.find(x=>x.id===id),storage:"local"});return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/admin/download-approvals"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    if(supabaseConfigured){try{const {data,error}=await supabase.from("download_approvals").select("*").order("created_at",{ascending:false}).limit(100);if(error)throw error;sendJson(res,200,{ok:true,approvals:data||[],storage:"supabase"});return true;}catch(error){console.error("Download approvals lookup error:",error);sendJson(res,500,{ok:false,error:"Download approvals could not be loaded."});return true;}}
+    sendJson(res,200,{ok:true,approvals:(await readJsonStore("download-approvals.json")).slice(0,100),storage:"local"});return true;
+  }
   if(req.method==="POST"&&url.pathname==="/api/public/view"){
     if(!supabaseConfigured){sendJson(res,200,{ok:true});return true;}
     try{
