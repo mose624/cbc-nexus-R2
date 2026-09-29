@@ -16,7 +16,7 @@ const LANDINGS={
 "/cbc-exam-generator":["Free CBC Exam Generator Kenya","Generate CBC practice exams and marking schemes by grade, subject, strand, marks and number of questions with CBE Nexus."]};
 function esc(v){return String(v||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
 function slug(v){return String(v||"").toLowerCase().trim().replace(/&/g,"and").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");}
-function base(req){const e=String(process.env.PUBLIC_SITE_URL||"").trim().replace(/\/$/,"");if(e)return e;return (String(req.headers["x-forwarded-proto"]||"https"))+"://"+String(req.headers.host||"localhost");}
+function base(req){const e=String(process.env.PUBLIC_SITE_URL||"").trim().replace(/\/$/,"");if(e)return e;return "https://cbenexus.co.ke";}
 function page(req,title,description,canonical,h1,intro,links){
  const b=base(req);
  const json=JSON.stringify({"@context":"https://schema.org","@type":"WebPage","name":title,"description":description,"url":b+canonical,"isPartOf":{"@type":"WebSite","name":"CBE Nexus","url":b},"about":{"@type":"EducationalOrganization","name":"CBE Nexus","areaServed":"Kenya"}});
