@@ -1172,7 +1172,8 @@
             <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="sales">Sales <span id="adminSalesBadge">0</span></button>
             <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="payments">Payments <span id="adminPaymentBadge">0</span></button>
             <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="prices">Prices</button>
-            <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="seo">SEO Center <span class="admin-seo-badge">Ubersuggest</span></button>
+            <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="affiliate">Affiliate <span id="adminAffiliateBadge">0</span></button>
+          <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="seo">SEO Center <span class="admin-seo-badge">Ubersuggest</span></button>
           </div>
 
           <div class="admin-module-panel active" data-admin-module-panel="sellers">
@@ -1215,6 +1216,24 @@
             <div id="adminPaymentManagement" class="admin-management-list"></div>
           </div>
 
+          <div class="admin-module-panel" data-admin-module-panel="affiliate">
+            <div class="admin-module-heading"><div><h3>Affiliate Marketplace</h3><span>Add and manage partner products and tracking links.</span></div><span id="adminAffiliateSummary" class="admin-module-summary">0 products</span></div>
+            <form id="affiliateAdminForm" class="affiliate-admin-form">
+              <input type="hidden" id="affiliateAdminId">
+              <label>Product title<input id="affiliateAdminTitle" required></label>
+              <label>Category<input id="affiliateAdminCategory" placeholder="Books, laptops, school supplies"></label>
+              <label>Merchant<input id="affiliateAdminMerchant" placeholder="Jumia"></label>
+              <label>Affiliate tracking link<input id="affiliateAdminUrl" type="url" required placeholder="https://..."></label>
+              <label>Image URL<input id="affiliateAdminImage" type="url" placeholder="https://..."></label>
+              <label>Price / range<input id="affiliateAdminPrice" placeholder="KES 10,000"></label>
+              <label>Commission<input id="affiliateAdminCommission" placeholder="e.g. 5%"></label>
+              <label>Button text<input id="affiliateAdminLabel" value="Shop now"></label>
+              <label class="affiliate-admin-wide">Description<textarea id="affiliateAdminDescription" rows="3"></textarea></label>
+              <label class="affiliate-admin-check"><input id="affiliateAdminActive" type="checkbox" checked> Active on marketplace</label>
+              <div class="affiliate-admin-actions"><button class="primary-button" type="submit">Save Product</button><button class="secondary-button" id="affiliateAdminClear" type="button">Clear</button></div>
+            </form>
+            <div id="affiliateAdminList" class="admin-management-list"></div>
+          </div>
           <div class="admin-module-panel" data-admin-module-panel="seo">
             <div class="admin-module-heading">
               <div><h3>SEO Center</h3><span>CEO-only SEO workspace for CBE Nexus. Use Ubersuggest for keyword research, competitor analysis, site audits and content opportunities.</span></div>
