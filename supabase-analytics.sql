@@ -24,5 +24,7 @@ create table if not exists public.downloads (
 
 create index if not exists downloads_resource_id_idx on public.downloads(resource_id);
 
-alter table public.purchases disable row level security;
-alter table public.downloads disable row level security;
+-- Keep these tables server-only. The Node backend uses the Supabase service-role key,
+-- which bypasses RLS, while browser clients must not be given direct access.
+alter table public.purchases enable row level security;
+alter table public.downloads enable row level security;
