@@ -1215,6 +1215,38 @@ function renderAdminControlCentre(data) {
   if (elements.adminUserBadge) elements.adminUserBadge.textContent = users.length;
   if (elements.adminSalesBadge) elements.adminSalesBadge.textContent = sales.length;
   if (elements.adminPaymentBadge) elements.adminPaymentBadge.textContent = pendingPayments;
+  const analyticsNode = document.getElementById("adminAnalyticsGrid");
+  if (analyticsNode) {
+    const monthMap = {};
+    sales.forEach((item) => {
+      const d = new Date(item.createdAt || item.confirmedAt || Date.now());
+      if (Number.isNaN(d.getTime())) return;
+      const key = d.toLocaleDateString(undefined, { month: "short", year: "numeric" });
+      monthMap[key] = (monthMap[key] || 0) + Number(item.amount || 0);
+    });
+    const months = Object.entries(monthMap).slice(-6);
+    const resourceStatuses = {};
+    resources.forEach((r) => {
+      const key = String(r.status || "approved").toLowerCase();
+      resourceStatuses[key] = (resourceStatuses[key] || 0) + 1;
+    });
+    const userStatuses = {};
+    users.forEach((u) => {
+      const key = String(u.status || "active").toLowerCase();
+      userStatuses[key] = (userStatuses[key] || 0) + 1;
+    });
+    const list = (items, formatter) => items.length
+      ? "<div class=\"admin-analytics-list\">" + items.map(([k,v]) => "<div><span>" + escapeHtml(k) + "</span><strong>" + formatter(v) + "</strong></div>").join("") + "</div>"
+      : "<p class=\"admin-analytics-empty\">No data recorded yet.</p>";
+    analyticsNode.innerHTML =
+      "<article><h4>Sales revenue</h4><strong class=\"admin-analytics-total\">" + money(stats.revenue || 0) + "</strong>" +
+      list(months, (v) => money(v)) + "</article>" +
+      "<article><h4>Resource status</h4><strong class=\"admin-analytics-total\">" + resources.length + "</strong>" +
+      list(Object.entries(resourceStatuses).sort((a,b) => b[1]-a[1]), (v) => v) + "</article>" +
+      "<article><h4>User activity</h4><strong class=\"admin-analytics-total\">" + users.length + "</strong>" +
+      list(Object.entries(userStatuses).sort((a,b) => b[1]-a[1]), (v) => v) + "</article>";
+  }
+
   if (elements.adminPopularResources) {
     const popular = data.popularResources || [];
     elements.adminPopularResources.innerHTML = popular.length ? popular.map((r, index) =>
