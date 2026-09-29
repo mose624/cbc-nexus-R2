@@ -1220,39 +1220,52 @@ function renderAdminControlCentre(data) {
     const monthMap = {};
     sales.forEach((item) => {
       const d = new Date(item.createdAt || item.confirmedAt || Date.now());
-      if (Number.isNaN(d.getTime())) return;
-      const key = d.toLocaleDateString(undefined, { month: "short", year: "numeric" });
-      monthMap[key] = (monthMap[key] || 0) + Number(item.amount || 0);
-    });
-    const months = Object.entries(monthMap).slice(-6);
-    const resourceStatuses = {};
-    resources.forEach((r) => {
-      const key = String(r.status || "approved").toLowerCase();
-      resourceStatuses[key] = (resourceStatuses[key] || 0) + 1;
-    });
-    const userStatuses = {};
-    users.forEach((u) => {
-      const key = String(u.status || "active").toLowerCase();
-      userStatuses[key] = (userStatuses[key] || 0) + 1;
+      if (!Number.isNaN(d.getTime())) {
+        const key = d.toLocaleDateString(undefined, { month: "short", year: "numeric" });
+        monthMap[key] = (monthMap[key] || 0) + Number(item.amount || 0);
+      }
     });
     const list = (items, formatter) => items.length
       ? "<div class=\"admin-analytics-list\">" + items.map(([k,v]) => "<div><span>" + escapeHtml(k) + "</span><strong>" + formatter(v) + "</strong></div>").join("") + "</div>"
       : "<p class=\"admin-analytics-empty\">No data recorded yet.</p>";
+    const topResources = [...resources].map((r) => [r.title || "Untitled resource", Number(r.purchases || 0), Number(r.downloads || 0)])
+      .sort((x,y) => (y[1]*3+y[2])-(x[1]*3+x[2])).slice(0,5);
+    const sellerMap = new Map(sellers.map((s) => [String(s.id), s]));
+    const sellerStats = new Map();
+    resources.forEach((r) => {
+      const sid = String(r.sellerId || r.seller_id || "");
+      if (!sid) return;
+      const m = sellerStats.get(sid) || { purchases: 0, downloads: 0 };
+      m.purchases += Number(r.purchases || 0); m.downloads += Number(r.downloads || 0);
+      sellerStats.set(sid, m);
+    });
+    const topSellers = [...sellerStats.entries()].map(([id,m]) => {
+      const s = sellerMap.get(id);
+      return [s?.name || s?.username || "Seller", m.purchases, m.downloads];
+    }).sort((x,y) => (y[1]*3+y[2])-(x[1]*3+x[2])).slice(0,5);
+    const resourceStatuses = {};
+    resources.forEach((r) => { const k=String(r.status||"approved").toLowerCase(); resourceStatuses[k]=(resourceStatuses[k]||0)+1; });
     analyticsNode.innerHTML =
-      "<article><h4>Sales revenue</h4><strong class=\"admin-analytics-total\">" + money(stats.revenue || 0) + "</strong>" +
-      list(months, (v) => money(v)) + "</article>" +
-      "<article><h4>Resource status</h4><strong class=\"admin-analytics-total\">" + resources.length + "</strong>" +
-      list(Object.entries(resourceStatuses).sort((a,b) => b[1]-a[1]), (v) => v) + "</article>" +
-      "<article><h4>User activity</h4><strong class=\"admin-analytics-total\">" + users.length + "</strong>" +
-      list(Object.entries(userStatuses).sort((a,b) => b[1]-a[1]), (v) => v) + "</article>";
+      "<article><h4>Sales revenue</h4><strong class=\"admin-analytics-total\">" + money(stats.revenue||0) + "</strong>" + list(Object.entries(monthMap).slice(-6),(v)=>money(v)) + "</article>" +
+      "<article><h4>Top resources</h4><strong class=\"admin-analytics-total\">" + topResources.length + "</strong>" + list(topResources.map(x=>[x[0],x[1]+" purchases · "+x[2]+" downloads"]),(v)=>v) + "</article>" +
+      "<article><h4>Top sellers</h4><strong class=\"admin-analytics-total\">" + topSellers.length + "</strong>" + list(topSellers.map(x=>[x[0],x[1]+" purchases · "+x[2]+" downloads"]),(v)=>v) + "</article>" +
+      "<article><h4>Resource status</h4><strong class=\"admin-analytics-total\">" + resources.length + "</strong>" + list(Object.entries(resourceStatuses),(v)=>v) + "</article>" +
+      "<article><h4>User activity</h4><strong class=\"admin-analytics-total\">" + users.length + "</strong><div class=\"admin-analytics-list\"><div><span>Active</span><strong>" + users.filter(u=>String(u.status||"active").toLowerCase()==="active").length + "</strong></div><div><span>Blocked</span><strong>" + users.filter(u=>String(u.status||"").toLowerCase()==="blocked").length + "</strong></div></div></article>" +
+      "<article><h4>Marketplace activity</h4><strong class=\"admin-analytics-total\">" + (Number(stats.purchases||stats.sales||0)+Number(stats.downloads||0)) + "</strong><div class=\"admin-analytics-list\"><div><span>Purchases</span><strong>" + Number(stats.purchases||stats.sales||0) + "</strong></div><div><span>Downloads</span><strong>" + Number(stats.downloads||0) + "</strong></div></div></article>";
   }
 
-  if (elements.adminPopularResources) {
-    const popular = data.popularResources || [];
-    elements.adminPopularResources.innerHTML = popular.length ? popular.map((r, index) =>
-      "<div class=\"admin-popular-row\"><span class=\"admin-rank\">" + (index + 1) + "</span><div class=\"admin-record-main\"><strong>" + escapeHtml(r.title || "Untitled resource") + "</strong><span>" + escapeHtml(r.grade || "") + " · " + escapeHtml(r.subject || "") + "</span></div><span class=\"admin-popular-metric\">" + Number(r.purchases || 0) + " purchases · " + Number(r.downloads || 0) + " downloads</span></div>"
-    ).join("") : "<div class=\"empty-state\">No resource activity has been recorded yet.</div>";
+  function exportAdminCsv(filename, headers, rows) {
+    const csv = [headers, ...rows].map((row) => row.map((value) => '"' + String(value ?? "").replace(/"/g, '""') + '"').join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url; link.download = filename; link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
+  const exportSalesButton = document.getElementById("adminExportSales");
+  if (exportSalesButton) exportSalesButton.onclick = () => exportAdminCsv("cbe-nexus-sales.csv", ["Resource","Customer","Amount","Status","Date"], sales.map(s => [s.resource||"",s.customerPhone||s.phone||"",s.amount||0,s.status||"",s.createdAt||s.confirmedAt||""]));
+  const exportResourcesButton = document.getElementById("adminExportResources");
+  if (exportResourcesButton) exportResourcesButton.onclick = () => exportAdminCsv("cbe-nexus-resources.csv", ["Title","Grade","Subject","Type","Status","Price","Purchases","Downloads"], resources.map(r => [r.title||"",r.grade||"",r.subject||"",r.type||"",r.status||"",r.price||0,r.purchases||0,r.downloads||0]));
 
   const query = String(elements.adminDashboardSearch?.value || "").trim().toLowerCase();
   const status = String(elements.adminStatusFilter?.value || "all").toLowerCase();
