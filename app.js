@@ -570,7 +570,21 @@ async function loadPublicStats() {
     stat("statDownloads", remoteStats.downloads);
     stat("statViews", remoteStats.views);
     renderResources();
-    renderTrending();
+    const AFFILIATE_PRODUCTS = [
+  {title:"Laptops & Tablets",category:"Study Technology",description:"Explore devices suitable for learners, teachers and digital learning.",merchant:"Jumia",url:"",label:"Shop devices"},
+  {title:"Educational Books",category:"Books",description:"Find books and learning materials from online partner sellers.",merchant:"Jumia",url:"",label:"Shop books"},
+  {title:"Computer Accessories",category:"Learning Tools",description:"Discover keyboards, mice, headphones and other study accessories.",merchant:"Jumia",url:"",label:"Shop accessories"},
+  {title:"School & Office Essentials",category:"School Supplies",description:"Browse useful stationery and study equipment from partner marketplaces.",merchant:"Partner Seller",url:"",label:"View products"}
+];
+
+function renderAffiliateMarketplace(){
+  const grid=document.getElementById("affiliateProductGrid");
+  if(!grid)return;
+  grid.innerHTML=AFFILIATE_PRODUCTS.map((p)=>`<article class="affiliate-card"><span class="affiliate-category">${escapeHtml(p.category)}</span><h3>${escapeHtml(p.title)}</h3><p>${escapeHtml(p.description)}</p><small>Partner: ${escapeHtml(p.merchant)}</small>${p.url?`<a class="primary-button" href="${escapeHtml(p.url)}" target="_blank" rel="sponsored noopener nofollow">${escapeHtml(p.label)}</a>`:"<button class=\"secondary-button affiliate-coming-soon\" type=\"button\">Partner link coming soon</button>"}</article>`).join("");
+}
+renderAffiliateMarketplace();
+
+renderTrending();
   } catch (error) {
     console.warn("Public statistics could not be loaded:", error);
   }
