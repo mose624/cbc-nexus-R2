@@ -5664,13 +5664,3 @@ body.admin-unlocked .admin-only-link {
     font-size: 8px !important;
   }
 }
-
-/* Sky green accent for automated marked quizzes and learner progress only. */
-#quizCentre {
-  background: #e8f7f1;
-}
-#quizCentre .section-heading h2,
-#quizCentre .section-heading p,
-#quizCentre .eyebrow {
-  color: #2f8f72;
-}
