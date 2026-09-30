@@ -6676,3 +6676,14 @@ body.admin-unlocked .admin-only-link {
     line-height: 1 !important;
   }
 }
+
+/* Final phone header typography: smaller, compact, and bold. */
+@media (max-width: 480px) {
+  .site-header .nav-menu > .nav-link,
+  .site-header .nav-menu > .nav-dropdown > summary,
+  .site-header .nav-actions > * {
+    font-size: 7px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0 !important;
+  }
+}
