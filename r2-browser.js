@@ -104,6 +104,7 @@
         save("cbeResources", [...existing.filter((item) => item.id !== savedResource.id), savedResource]);
         status.textContent = "Resource uploaded to Cloudflare R2 and saved to Supabase successfully.";
         resourceForm.reset();
+        if (typeof window.loadAdminDashboard === "function") await window.loadAdminDashboard();
       } catch (error) {
         status.textContent = error.message || "R2 upload failed.";
       }
@@ -150,6 +151,7 @@
         save("cbeSellerResources", [savedItem, ...json("cbeSellerResources").filter((entry) => entry.id !== savedItem.id)]);
         status.textContent = "Seller resource uploaded to R2 and saved to Supabase for approval.";
         sellerForm.reset();
+        if (typeof window.loadAdminDashboard === "function") await window.loadAdminDashboard();
       } catch (error) {
         status.textContent = error.message || "R2 upload failed.";
       }
