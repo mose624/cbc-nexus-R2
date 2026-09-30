@@ -2056,6 +2056,7 @@ injectContactInfo();
 renderResources();
 renderTrending();
 loadPublicStats();
+syncPublicResourcesFromServer();
 renderCart();
 renderSellerResources();
 renderSellerAccountApprovals();
