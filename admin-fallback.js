@@ -49,6 +49,8 @@
         loginSection.setAttribute("aria-hidden", "true");
       }
 
+      document.body.classList.add("admin-unlocked");
+
       const dashboard = document.getElementById("admin");
       if (dashboard) {
         dashboard.classList.add("open");
