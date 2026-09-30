@@ -28,6 +28,7 @@ const QUIZ_PROGRESS_KEY = "cbeQuizProgress";
 const SELLER_STORAGE_LIMIT_BYTES = 20 * 1024 * 1024 * 1024; // 20 GB storage space
 const APPROVED_DOWNLOADS_KEY = "cbeApprovedDownloads";
 let remoteStats = { resources: 0, purchases: 0, downloads: 0, views: 0, byResource: {} };
+let serverResources = [];
 let activeAdminModule = "resources";
 // Sensitive data now encrypted via SecurityUtils
 const MPESA_PHONE = SecurityUtils.MPESA_PHONE;
@@ -368,6 +369,7 @@ async function syncPublicResourcesFromServer() {
       }))
       .filter((r) => r.id && r.status === "approved");
 
+    serverResources = remote;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(remote));
     renderResources();
     renderTrending();
@@ -430,11 +432,19 @@ function getSellerStorageUsage() {
 }
 
 function getAllResources() {
-  return [
+  const combined = [
     ...starterResources,
     ...readSavedResources().map(normalizeResourceForLibrary),
+    ...serverResources.map(normalizeResourceForLibrary),
     ...readSellerResources().filter((resource) => resource.status === "approved").map(normalizeResourceForLibrary)
   ];
+  const seen = new Set();
+  return combined.filter((resource) => {
+    const key = String(resource.id || "");
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 
 function readCart() {
