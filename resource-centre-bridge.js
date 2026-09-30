@@ -16,6 +16,8 @@
       localStorage.setItem(KEY,JSON.stringify([...merged.values()]));
       if(typeof window.renderResources==="function")window.renderResources();
       if(typeof window.renderTrending==="function")window.renderTrending();
+      [document.querySelector("#searchFilter"),document.querySelector("#gradeFilter"),document.querySelector("#subjectFilter"),document.querySelector("#typeFilter")].forEach(node=>{if(node)node.dispatchEvent(new Event(node.tagName==="INPUT"?"input":"change",{bubbles:true}))});
+      if(typeof window.renderTrending==="function")window.renderTrending();
       wireSubjectLinks();
       window.dispatchEvent(new CustomEvent("cbe:resources-synced",{detail:{count:live.length}}));
     }catch(e){console.warn("CBE Nexus resource bridge failed:",e)}
