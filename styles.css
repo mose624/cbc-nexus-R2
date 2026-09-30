@@ -6642,3 +6642,37 @@ body.admin-unlocked .admin-only-link {
     font-size: 9px !important;
   }
 }
+
+
+/* Extra-compact phone header controls — saves vertical space without changing functionality. */
+@media (max-width: 480px) {
+  .site-header .main-nav {
+    gap: 4px !important;
+  }
+
+  .site-header .nav-menu {
+    gap: 3px !important;
+  }
+
+  .site-header .nav-menu > .nav-link,
+  .site-header .nav-menu > .nav-dropdown > summary {
+    min-height: 26px !important;
+    height: 26px !important;
+    padding: 4px 5px !important;
+    font-size: 8px !important;
+    line-height: 1 !important;
+  }
+
+  .site-header .nav-actions {
+    gap: 3px !important;
+    margin-top: 0 !important;
+  }
+
+  .site-header .nav-actions > * {
+    min-height: 26px !important;
+    height: 26px !important;
+    padding: 4px 5px !important;
+    font-size: 8px !important;
+    line-height: 1 !important;
+  }
+}
