@@ -129,3 +129,27 @@
   root.querySelectorAll("[data-action]").forEach(btn => btn.addEventListener("click", () => { const action=btn.dataset.action; if(action==="payment") addMessage("How do I pay?","user"); if(action==="purchase") addMessage("How do I purchase a resource?","user"); if(action==="download-help"){ addMessage("I paid but I can’t download my resource.","user"); reply("No problem. Please send Customer Care the resource title, your M-Pesa confirmation code, and the phone number used for payment. Our team can then help you check the payment and download. M-Pesa STK Push is used for paid resources."); return; } if(action==="whatsapp"){ addMessage("I need WhatsApp support.","user"); reply("You can contact CBE Nexus support directly on WhatsApp: " + WA + "."); window.open(WA_URL+"?text="+encodeURIComponent("Hello CBE Nexus Customer Care, I need assistance."),"_blank","noopener"); return; } if(action==="payment") reply(answer("payment")); if(action==="purchase") reply(answer("purchase")); }));
   form.addEventListener("submit", event => { event.preventDefault(); const value=input.value.trim(); if(!value)return; addMessage(value,"user"); input.value=""; reply(answer(value)); });
 })();
+
+/* Public resource sync: the admin upload pipeline writes approved metadata to Supabase/R2.
+   The main page historically rendered localStorage only, so refreshes could hide newly published resources.
+   This lightweight sync runs after app.js and hydrates the public library from the server. */
+(function syncPublishedResources(){
+  "use strict";
+  const STORAGE_KEY = "cbeResources";
+  async function sync(){
+    try{
+      const response = await fetch("/api/resources", { credentials:"same-origin", cache:"no-store" });
+      if(!response.ok) return;
+      const data = await response.json();
+      if(!data.ok || !Array.isArray(data.resources)) return;
+      const approved = data.resources.filter(r => String(r.status || "").toLowerCase() === "approved");
+      const local = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      const merged = new Map(local.map(r => [String(r.id), r]));
+      approved.forEach(r => merged.set(String(r.id), r));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([...merged.values()]));
+      if(typeof window.renderResources === "function") window.renderResources();
+      if(typeof window.renderTrending === "function") window.renderTrending();
+    }catch(error){ console.warn("Published resource sync failed:", error); }
+  }
+  window.setTimeout(sync, 50);
+})();
