@@ -1239,7 +1239,7 @@ function setAdminModule(module) {
 function renderAdminControlCentre(data) {
   const stats = data.stats || {};
   const sellers = data.sellers || [];
-  const resources = data.resources || [];
+  // Admin uses the complete Supabase resource set. Do not hide approved records because of frontend field-name differences.\n  const resources = (Array.isArray(data.resources) ? data.resources : []).map(normalizeResourceForLibrary);
   const users = data.users || [];
   const sales = data.sales || [];
   const payments = data.payments || [];
@@ -1334,7 +1334,7 @@ function renderAdminControlCentre(data) {
     ).join("")
     : "<div class=\"empty-state\">No sellers match the current filters.</div>";
 
-  const visibleResources = resources.filter((r) => matches(r, [r.title, r.grade, r.subject, r.type, r.sellerUsername, r.status])).slice(0, 50);
+  // Show every matching resource in the Admin Resource Management list.\n  // The existing search/status filters still apply; there is no arbitrary 50-record cutoff.\n  const visibleResources = resources.filter((r) => matches(r, [r.title, r.grade, r.subject, r.type, r.sellerUsername, r.status]));
   elements.adminResourceManagement.innerHTML = visibleResources.length
     ? visibleResources.map((r) =>
       "<div class=\"admin-record\"><div class=\"admin-record-main\"><strong>" + escapeHtml(r.title || "Untitled resource") +
@@ -1381,7 +1381,7 @@ function renderAdminControlCentre(data) {
     ).join("")
     : "<div class=\"empty-state\">No payments match the current filters.</div>";
 
-  const visiblePrices = resources.filter((r) => matches(r, [r.title, r.grade, r.subject, r.type, r.price, r.discount])).slice(0, 50);
+  const visiblePrices = resources.filter((r) => matches(r, [r.title, r.grade, r.subject, r.type, r.price, r.discount]));
   elements.adminPriceManagement.innerHTML = visiblePrices.length
     ? visiblePrices.map((r) =>
       "<div class=\"admin-price-row\"><div><strong>" + escapeHtml(r.title || "Untitled resource") +
