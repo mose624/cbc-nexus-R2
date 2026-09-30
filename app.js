@@ -60,18 +60,18 @@ const prePrimarySubjects = [
 
 const lowerPrimarySubjects = [
   "English","Kiswahili","Mathematics","Environmental Activities","Creative Activities",
-  "Christian Religious Education","Islamic Religious Education","Hindu Religious Education","Indigenous Language"
+  "Christian Religious Education","Hindu Religious Education","Islamic Religious Education","Indigenous Language"
 ];
 
 const upperPrimarySubjects = [
   "English","Kiswahili","Mathematics","Agriculture & Nutrition","Social Studies","Creative Activities",
-  "Science & Technology","Christian Religious Education","Islamic Religious Education","Hindu Religious Education",
+  "Science & Technology","Hindu Religious Education","Christian Religious Education","Islamic Religious Education",
   "Indigenous Language","Arabic","Mandarin","French","German"
 ];
 
 const juniorSchoolSubjects = [
-  "Agriculture","Pre-Technical Studies","Creative Arts and Sports","Christian Religious Education",
-  "Islamic Religious Education","Hindu Religious Education","Integrated Science","Social Studies",
+  "Agriculture","Pre-Technical Studies","Creative Arts and Sports","Hindu Religious Education",
+  "Islamic Religious Education","Christian Religious Education","Integrated Science","Social Studies",
   "Mathematics","English","Kiswahili","Indigenous Language","Arabic","Mandarin","French","German"
 ];
 
@@ -85,8 +85,29 @@ const seniorSchoolSubjects = [
   "Electricity","Power Mechanics","Media Technology","Marine Technology"
 ];
 
+const specialNeedsSubjects = [
+  "English Grade 1-3 (Hearing Impairment)","Environmental PP 1-2 (Hearing Impairment)",
+  "Environmental Grade 1-3 (Hearing Impairment)","Movement and Creative Activities",
+  "Psychomotor Activities","Kenyan Sign Language PP 1-2","Kenyan Sign Language Grade 1-3",
+  "Mathematics and Environmental (Physical Impairment)",
+  "Environmental, Mathematics, Psychomotor and Creative Activities (Visual Impairment)",
+  "Pre-Braille","Literacy Braille","Communication, Social and Pre-Literacy Skills",
+  "Activities of Daily Living Skills and Religious Education","Sensory Motor and Creative Activities",
+  "Orientation and Mobility Activities","Pre-Numeracy Activities"
+];
+
+const teacherTrainingSubjects = [
+  "Research Skills","Arabic","Art and Craft","Child Development and Psychology","CRE","Curriculum Studies",
+  "Educational Assessment","Educational Resources","English","Environmental Studies","French","German",
+  "Health and Nutrition","HRE","ICT Integration in Education","Inclusive Education","Indigenous Languages",
+  "IRE","Kiswahili","Kenya Sign Language (KSL)","Leadership and Management","Mandarin","Mathematics",
+  "Micro Teaching","Music","Physical Education","Sociological and Philosophical Foundation",
+  "Historical and Comparative Foundations of Education"
+];
+
 const allCbeSubjects = [...new Set([
-  ...prePrimarySubjects,...lowerPrimarySubjects,...upperPrimarySubjects,...juniorSchoolSubjects,...seniorSchoolSubjects
+  ...prePrimarySubjects,...lowerPrimarySubjects,...upperPrimarySubjects,...juniorSchoolSubjects,
+  ...seniorSchoolSubjects,...specialNeedsSubjects,...teacherTrainingSubjects
 ])].sort((a,b)=>a.localeCompare(b));
 
 const gradeSubjects = {
