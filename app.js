@@ -70,7 +70,7 @@ const upperPrimarySubjects = [
 ];
 
 const juniorSchoolSubjects = [
-  "Agriculture","Pre-Technical Studies","Creative Arts and Sports","Hindu Religious Education",
+  "Agriculture","Pre technical Studies","Creative Arts and Sports","Hindu Religious Education",
   "Islamic Religious Education","Christian Religious Education","Integrated Science","Social Studies",
   "Mathematics","English","Kiswahili","Indigenous Language","Arabic","Mandarin","French","German"
 ];
@@ -86,123 +86,28 @@ const seniorSchoolSubjects = [
 ];
 
 const specialNeedsSubjects = [
-  "English Grade 1-3 (Hearing Impairment)","Environmental PP 1-2 (Hearing Impairment)",
-  "Environmental Grade 1-3 (Hearing Impairment)","Movement and Creative Activities",
+  "English Grade 1-3","Environmental PP 1-2","Environmental Grade 1-3","Movement and Creative Activities",
   "Psychomotor Activities","Kenyan Sign Language PP 1-2","Kenyan Sign Language Grade 1-3",
-  "Mathematics and Environmental (Physical Impairment)",
-  "Environmental, Mathematics, Psychomotor and Creative Activities (Visual Impairment)",
-  "Pre-Braille","Literacy Braille","Communication, Social and Pre-Literacy Skills",
+  "Mathematics and Environmental","Environmental, Mathematics, Psychomotor and Creative Activities",
+  "Pre Braille","Literacy Braille","Communication, Social and Pre-Literacy Skills",
   "Activities of Daily Living Skills and Religious Education","Sensory Motor and Creative Activities",
-  "Orientation and Mobility Activities","Pre-Numeracy Activities"
+  "Orientation and Mobility Activities","Pre-Numeracy Activities","KSL","Sign Language Skills"
 ];
 
-const teacherTrainingSubjects = [
-  "Research Skills","Arabic","Art and Craft","Child Development and Psychology","CRE","Curriculum Studies",
+const diplomaTeacherEducationSubjects = [
+  "Research skills","Arabic","Art and Craft","Child Development and Psychology","CRE","Curriculum Studies",
   "Educational Assessment","Educational Resources","English","Environmental Studies","French","German",
-  "Health and Nutrition","HRE","ICT Integration in Education","Inclusive Education","Indigenous Languages",
-  "IRE","Kiswahili","Kenya Sign Language (KSL)","Leadership and Management","Mandarin","Mathematics",
-  "Micro Teaching","Music","Physical Education","Sociological and Philosophical Foundation",
-  "Historical and Comparative Foundations of Education"
+  "Health & Nutrition","HRE","ICT integration in Education","Inclusive Education","Indigenous Languages",
+  "IRE","Kiswahili","Kenya Sign Language(KSL)","Leadership & Management","Mandarin","Mathematics",
+  "Micro Teaching","Music","Physical education","Sociological and Philosophical foundation",
+  "Historical and comparative Foundations of Education","Agriculture"
 ];
 
 const allCbeSubjects = [...new Set([
   ...prePrimarySubjects,...lowerPrimarySubjects,...upperPrimarySubjects,...juniorSchoolSubjects,
-  ...seniorSchoolSubjects,...specialNeedsSubjects,...teacherTrainingSubjects
+  ...seniorSchoolSubjects,...specialNeedsSubjects,...diplomaTeacherEducationSubjects
 ])].sort((a,b)=>a.localeCompare(b));
 
-const gradeSubjects = {
-  "Grade 1": lowerPrimarySubjects,"Grade 2": lowerPrimarySubjects,"Grade 3": lowerPrimarySubjects,
-  "Grade 4": upperPrimarySubjects,"Grade 5": upperPrimarySubjects,"Grade 6": upperPrimarySubjects,
-  "Grade 7": juniorSchoolSubjects,"Grade 8": juniorSchoolSubjects,"Grade 9": juniorSchoolSubjects,
-  "Grade 10": seniorSchoolSubjects,"Grade 11": seniorSchoolSubjects,"Grade 12": seniorSchoolSubjects
-};
-
-const starterResources = [
-  {
-    id: "g1-math-notes",
-    title: "Grade 1 Mathematics Number Work Notes",
-    grade: "Grade 1",
-    subject: "Mathematics Activities",
-    type: "Notes",
-    description: "Learner-friendly number work notes with activities for counting, grouping, and comparing numbers.",
-    price: 100,
-    discount: 10,
-    term: "Term 1",
-    isFreeSample: true,
-    popularity: 15,
-    file: "resources/grade-1-mathematics-notes.txt"
-  },
-  {
-    id: "g4-science-scheme",
-    title: "Grade 4 Science and Technology Scheme of Work",
-    grade: "Grade 4",
-    subject: "Science and Technology",
-    type: "Schemes of Work",
-    description: "A termly scheme with strands, sub-strands, learning experiences, key inquiry questions, and assessment rubrics.",
-    price: 200,
-    discount: 0,
-    term: "Term 2",
-    isFreeSample: false,
-    popularity: 14,
-    file: "resources/grade-4-science-scheme.txt"
-  },
-  {
-    id: "g7-math-topical",
-    title: "Grade 7 Mathematics Topical Questions",
-    grade: "Grade 7",
-    subject: "Mathematics",
-    type: "Topical Questions",
-    description: "Competency-based topical revision covering integers, algebraic expressions, geometry, and data handling.",
-    price: 120,
-    discount: 15,
-    term: "Term 2",
-    isFreeSample: false,
-    popularity: 13,
-    file: "resources/grade-7-mathematics-topical-questions.txt"
-  },
-  {
-    id: "g8-english-lesson",
-    title: "Grade 8 English Lesson Plan Pack",
-    grade: "Grade 8",
-    subject: "English",
-    type: "Lesson Plan",
-    description: "Structured lesson plans with vocabulary practice, reading tasks, oral skills, and learner reflection prompts.",
-    price: 150,
-    discount: 0,
-    term: "Term 1",
-    isFreeSample: true,
-    popularity: 12,
-    file: "resources/grade-8-english-lesson-plan.txt"
-  },
-  {
-    id: "g10-biology-assessment",
-    title: "Grade 10 Biology Assessment Test",
-    grade: "Grade 10",
-    subject: "Biology",
-    type: "Assessment Test",
-    description: "A competency-aligned assessment test with practical skills, short responses, and marking guidance.",
-    price: 180,
-    discount: 20,
-    term: "Term 3",
-    isFreeSample: false,
-    popularity: 11,
-    file: "resources/grade-10-biology-assessment.txt"
-  },
-  {
-    id: "g12-business-holiday",
-    title: "Grade 12 Business Studies Holiday Workbook",
-    grade: "Grade 12",
-    subject: "Business Studies",
-    type: "Holiday Workbooks",
-    description: "Holiday revision workbook with enterprise questions, case studies, and self-assessment checklists.",
-    price: 250,
-    discount: 5,
-    term: "Term 3",
-    isFreeSample: false,
-    popularity: 10,
-    file: "resources/grade-12-business-holiday-workbook.txt"
-  }
-];
 
 const state = {
   grade: "All Grades",
