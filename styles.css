@@ -6724,3 +6724,18 @@ body.admin-unlocked .admin-only-link {
     box-sizing: border-box;
   }
 }
+
+/* Phone header: final compact 20px button height. */
+@media (max-width: 480px) {
+  .site-header .nav-menu > .nav-link,
+  .site-header .nav-menu > .nav-dropdown > summary,
+  .site-header .nav-actions > * {
+    min-height: 20px !important;
+    height: 20px !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    font-size: 7px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+  }
+}
