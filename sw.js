@@ -11,7 +11,7 @@ async function getQuizFixedResponse(request) {
   if (!response.ok) return response;
   const source = await response.text();
   const oldSubFilter = `combined = combined.filter((item) => String(item[6] || "") === String(selectedSub));`;
-  const newSubFilter = `combined = combined.filter((item) => { const explicitSubStr = String(item[6] || "").trim(); const topic = String(item[3] || "").trim(); return explicitSubStr ? explicitSubStr === String(selectedSub) : topic === String(selectedSub); });`;
+  const newSubFilter = `combined = combined.filter((item) => { const explicitSubStrand = String(item[6] || "").trim(); const topic = String(item[3] || "").trim(); return explicitSubStrand ? explicitSubStrand === String(selectedSub) : topic === String(selectedSub); });`;
   const oldOutcomeFilter = `combined = combined.filter((item) => String(item[7] || "") === String(selectedOutcome));`;
   const newOutcomeFilter = `combined = combined.filter((item) => { const explicitOutcome = String(item[7] || "").trim(); if (explicitOutcome) return explicitOutcome === String(selectedOutcome); const topic = String(item[3] || "").trim(); const fallbackOutcome = topic ? "Demonstrate understanding and application of " + topic + "." : ""; return fallbackOutcome === String(selectedOutcome); });`;
   const fixed = source.replace(oldSubFilter, newSubFilter).replace(oldOutcomeFilter, newOutcomeFilter);
