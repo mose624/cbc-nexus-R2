@@ -1564,7 +1564,8 @@ function applyGradeSubjectFromLink(scroll = false) {
 
   if (grade && gradeSubjects[grade]) {
     state.grade = grade;
-    state.subject = subject && gradeSubjects[grade].includes(subject) ? subject : "All Subjects";
+    const canonicalSubject = canonicalSubjectName(subject);
+    state.subject = canonicalSubject && gradeSubjects[grade].includes(canonicalSubject) ? canonicalSubject : "All Subjects";
     if (elements.gradeFilter) elements.gradeFilter.value = state.grade;
     refreshSubjectFilters();
     if (elements.subjectFilter) elements.subjectFilter.value = state.subject;
@@ -1589,7 +1590,7 @@ function applyGradeSubjectFromLink(scroll = false) {
 
 function setGradeSubject(grade, subject, updateLink = true) {
   state.grade = grade;
-  state.subject = subject;
+  state.subject = canonicalSubjectName(subject);
   if (elements.gradeFilter) elements.gradeFilter.value = grade;
   refreshSubjectFilters();
   if (elements.subjectFilter) elements.subjectFilter.value = subject;
