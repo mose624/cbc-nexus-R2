@@ -6544,3 +6544,101 @@ body.admin-unlocked .admin-only-link {
     overflow: hidden;
   }
 }
+
+
+/* Header navigation organization for tablet and mobile — keeps desktop styling unchanged. */
+@media (max-width: 760px) {
+  .site-header .main-nav {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 8px !important;
+    align-items: center !important;
+  }
+
+  .site-header .main-nav > .brand {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .site-header .nav-menu {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 5px !important;
+    min-width: 0;
+  }
+
+  .site-header .nav-menu > .nav-link,
+  .site-header .nav-menu > .nav-dropdown {
+    min-width: 0;
+  }
+
+  .site-header .nav-menu > .nav-link {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .site-header .nav-menu > .nav-dropdown {
+    width: 100%;
+  }
+
+  .site-header .nav-menu > .nav-dropdown > summary {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+    white-space: normal;
+  }
+
+  .site-header .nav-actions {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+    margin-top: 1px;
+  }
+
+  .site-header .nav-actions > * {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header .main-nav {
+    gap: 6px !important;
+  }
+
+  .site-header .nav-menu {
+    gap: 4px !important;
+  }
+
+  .site-header .nav-menu > .nav-link,
+  .site-header .nav-menu > .nav-dropdown > summary {
+    min-height: 32px !important;
+    padding: 6px 5px !important;
+    font-size: 9px !important;
+  }
+
+  .site-header .nav-actions {
+    gap: 4px !important;
+  }
+
+  .site-header .nav-actions > * {
+    min-height: 32px !important;
+    padding: 6px 5px !important;
+    font-size: 9px !important;
+  }
+}
