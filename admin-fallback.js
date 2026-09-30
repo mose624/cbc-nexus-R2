@@ -16,7 +16,7 @@
     event.stopImmediatePropagation();
 
     const form = event.currentTarget;
-    const username = String(document.getElementById("adminUsername")?.value || "").trim();
+    const username = String(document.getElementById("adminUsernameInput")?.value || "").trim();
     const password = String(document.getElementById("adminPasswordInput")?.value || "");
     const email = String(document.getElementById("adminEmailInput")?.value || "").trim().toLowerCase();
     const status = document.getElementById("adminLoginStatus");
