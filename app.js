@@ -28,6 +28,7 @@ const QUIZ_PROGRESS_KEY = "cbeQuizProgress";
 const SELLER_STORAGE_LIMIT_BYTES = 20 * 1024 * 1024 * 1024; // 20 GB storage space
 const APPROVED_DOWNLOADS_KEY = "cbeApprovedDownloads";
 let remoteStats = { resources: 0, purchases: 0, downloads: 0, views: 0, byResource: {} };
+let activeAdminModule = "resources";
 // Sensitive data now encrypted via SecurityUtils
 const MPESA_PHONE = SecurityUtils.MPESA_PHONE;
 const WHATSAPP_PHONE = SecurityUtils.WHATSAPP_PHONE;
