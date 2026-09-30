@@ -1035,7 +1035,13 @@
               </label>
               <label>
                 Grade
-                <select id="adminGradeInput" required></select>
+                <select id="adminGradeInput" required>
+                  <option value="">Select Grade</option>
+                  <option>Grade 1</option><option>Grade 2</option><option>Grade 3</option>
+                  <option>Grade 4</option><option>Grade 5</option><option>Grade 6</option>
+                  <option>Grade 7</option><option>Grade 8</option><option>Grade 9</option>
+                  <option>Grade 10</option><option>Grade 11</option><option>Grade 12</option>
+                </select>
               </label>
             </div>
             <div class="form-row">
@@ -1045,7 +1051,24 @@
               </label>
               <label>
                 Material Type
-                <select id="adminTypeInput" required></select>
+                <select id="adminTypeInput" required>
+                  <option value="">Select Material Type</option>
+                  <option>Notes</option>
+                  <option>Schemes of Work</option>
+                  <option>Lesson Plan</option>
+                  <option>Records of Work</option>
+                  <option>Assessment Test</option>
+                  <option>Topical Questions</option>
+                  <option>Holiday Workbooks</option>
+                  <option>Past Papers</option>
+                  <option>Marking Schemes</option>
+                  <option>Quizzes</option>
+                  <option>Study Guides</option>
+                  <option>Projects</option>
+                  <option>KNEC Rubrics</option>
+                  <option>Assignments</option>
+                  <option>Bookshop</option>
+                </select>
               </label>
             </div>
             <label>
@@ -1439,7 +1462,7 @@
         <iframe id="resourcePreviewFrame" title="Resource preview" loading="lazy"></iframe>
       </div>
     </div>
-    <script src="app.js?v=20260930-20"></script>
+    <script src="app.js?v=20260930-21"></script>
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => navigator.serviceWorker.register("/sw.js").catch(() => {}));
