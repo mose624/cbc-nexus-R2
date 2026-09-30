@@ -53,39 +53,47 @@ const materialTypes = [
   "Bookshop"
 ];
 
-const seniorSchoolSubjects = [
-  "Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education (CRE)","Community Service Learning (CSL)","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History and Citizenship","Home Science","ICT","Islamic Religious Education (IRE)","Kiswahili","Kenya Sign Language (KSL)","Literature in English","Marine and Fisheries Technology","Media Technology","Metalwork","Music and Dance","Physics","Power Mechanics","Sports and Recreation","Theatre and Film","Woodwork","Indigenous Languages","Arabic","French","German","Mandarin Chinese","Hindu Religious Education (HRE)","Sign Language"
+const prePrimarySubjects = [
+  "Language Activities","Mathematics Activities","Creative Arts","Environmental Activities",
+  "Christian Religious Education","Islamic Religious Education","Hindu Religious Education"
 ];
 
 const lowerPrimarySubjects = [
-  "English Activities","Kiswahili","Mathematics","Environmental Activities","Creative Activities","Christian Religious Education (CRE)","Hindu Religious Education (HRE)","Islamic Religious Education (IRE)","Indigenous Languages"
+  "English","Kiswahili","Mathematics","Environmental Activities","Creative Activities",
+  "Christian Religious Education","Islamic Religious Education","Hindu Religious Education","Indigenous Language"
 ];
 
 const upperPrimarySubjects = [
-  "English","Kiswahili","Mathematics","Agriculture","Home Science","Science and Technology","Social Studies","Creative Arts","Physical and Health Education","Christian Religious Education (CRE)","Hindu Religious Education (HRE)","Islamic Religious Education (IRE)","Indigenous Language","Arabic","French","German","Mandarin"
+  "English","Kiswahili","Mathematics","Agriculture & Nutrition","Social Studies","Creative Activities",
+  "Science & Technology","Christian Religious Education","Islamic Religious Education","Hindu Religious Education",
+  "Indigenous Language","Arabic","Mandarin","French","German"
 ];
 
 const juniorSchoolSubjects = [
-  "English","Kiswahili","Mathematics","Integrated Science","Social Studies","Agriculture","Pre-Technical Studies","Creative Arts and Sports","Physical and Health Education","Christian Religious Education (CRE)","Hindu Religious Education (HRE)","Islamic Religious Education (IRE)","Indigenous Language","Arabic","French","German","Mandarin"
+  "Agriculture","Pre-Technical Studies","Creative Arts and Sports","Christian Religious Education",
+  "Islamic Religious Education","Hindu Religious Education","Integrated Science","Social Studies",
+  "Mathematics","English","Kiswahili","Indigenous Language","Arabic","Mandarin","French","German"
+];
+
+const seniorSchoolSubjects = [
+  "English","Literature in English","Indigenous Languages","Lugha ya Kiswahili","Fasihi ya Kiswahili",
+  "Arabic","French","German","Mandarin Chinese","Christian Religious Education","Islamic Religious Education",
+  "Hindu Religious Education","Community Service Learning","Business Studies","History and Citizenship",
+  "Geography","Physical Education","Sports and Recreation","Music and Dance","Theatre and Film","Fine Arts",
+  "Agriculture","Computer Studies","Home Science","ICT","Biology","Chemistry","Physics","General Science",
+  "Essential Mathematics","Core Mathematics","Building and Construction","Metal Work","Woodwork","Aviation",
+  "Electricity","Power Mechanics","Media Technology","Marine Technology"
 ];
 
 const allCbeSubjects = [...new Set([
-  ...lowerPrimarySubjects,...upperPrimarySubjects,...juniorSchoolSubjects,...seniorSchoolSubjects
+  ...prePrimarySubjects,...lowerPrimarySubjects,...upperPrimarySubjects,...juniorSchoolSubjects,...seniorSchoolSubjects
 ])].sort((a,b)=>a.localeCompare(b));
 
 const gradeSubjects = {
-  "Grade 1": lowerPrimarySubjects,
-  "Grade 2": lowerPrimarySubjects,
-  "Grade 3": lowerPrimarySubjects,
-  "Grade 4": upperPrimarySubjects,
-  "Grade 5": upperPrimarySubjects,
-  "Grade 6": upperPrimarySubjects,
-  "Grade 7": juniorSchoolSubjects,
-  "Grade 8": juniorSchoolSubjects,
-  "Grade 9": juniorSchoolSubjects,
-  "Grade 10": seniorSchoolSubjects,
-  "Grade 11": seniorSchoolSubjects,
-  "Grade 12": seniorSchoolSubjects
+  "Grade 1": lowerPrimarySubjects,"Grade 2": lowerPrimarySubjects,"Grade 3": lowerPrimarySubjects,
+  "Grade 4": upperPrimarySubjects,"Grade 5": upperPrimarySubjects,"Grade 6": upperPrimarySubjects,
+  "Grade 7": juniorSchoolSubjects,"Grade 8": juniorSchoolSubjects,"Grade 9": juniorSchoolSubjects,
+  "Grade 10": seniorSchoolSubjects,"Grade 11": seniorSchoolSubjects,"Grade 12": seniorSchoolSubjects
 };
 
 const starterResources = [
@@ -1864,12 +1872,7 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
   });
 
   safeOn(elements.adminGrade, "change", () => {
-    const allAdminSubjects = [...new Set([
-      ...lowerPrimarySubjects,
-      ...upperPrimarySubjects,
-      ...juniorSchoolSubjects,
-      ...seniorSchoolSubjects
-    ])].sort((a,b) => a.localeCompare(b));
+    const allAdminSubjects = allCbeSubjects;
     const current = elements.adminSubject?.value;
     optionList(elements.adminSubject, allAdminSubjects, current || "Mathematics Activities");
   });
