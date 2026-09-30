@@ -279,6 +279,39 @@ function readSavedResources() {
   }
 }
 
+async function syncPublicResourcesFromServer() {
+  try {
+    const response = await fetch("/api/resources?_public=" + Date.now(), {
+      credentials: "same-origin",
+      cache: "no-store",
+      headers: { "Cache-Control": "no-cache" }
+    });
+    if (!response.ok) throw new Error("Resource API returned " + response.status);
+    const data = await response.json();
+    if (!data.ok || !Array.isArray(data.resources)) throw new Error("Invalid resource API response");
+
+    const blocked = new Set(["pending", "rejected", "draft", "deleted"]);
+    const remote = data.resources
+      .map((r) => ({
+        ...r,
+        id: r.id ?? r.resource_id,
+        type: r.type || r.resource_type || "",
+        r2Key: r.r2Key || r.r2_key || "",
+        fileName: r.fileName || r.filename || "",
+        previewKey: r.previewKey || r.preview_key || "",
+        status: String(r.status || "approved").toLowerCase()
+      }))
+      .filter((r) => !blocked.has(r.status));
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(remote));
+    renderResources();
+    renderTrending();
+    console.info("CBE Nexus: loaded", remote.length, "public resources from server");
+  } catch (error) {
+    console.warn("CBE Nexus public resource sync failed:", error);
+  }
+}
+
 function readSellerResources() {
   try {
     return JSON.parse(localStorage.getItem(SELLER_STORAGE_KEY)) || [];
