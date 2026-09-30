@@ -18,26 +18,23 @@
       if(typeof window.renderTrending==="function")window.renderTrending();
       wireSubjectLinks();
       window.dispatchEvent(new CustomEvent("cbe:resources-synced",{detail:{count:live.length}}));
-      console.info("CBE Nexus resource bridge: "+live.length+" live resources");
     }catch(e){console.warn("CBE Nexus resource bridge failed:",e)}
   }
   function apply(grade,subject){
     const gf=document.querySelector("#gradeFilter"),sf=document.querySelector("#subjectFilter");
     if(gf){gf.value=grade||"All Grades";gf.dispatchEvent(new Event("change",{bubbles:true}))}
-    if(sf){sf.value=subject||"All Subjects";sf.dispatchEvent(new Event("change",{bubbles:true}))}
-    const section=document.querySelector("#resources");
-    if(section)setTimeout(()=>section.scrollIntoView({behavior:"smooth",block:"start"}),50);
+    setTimeout(()=>{
+      if(sf){sf.value=subject||"All Subjects";sf.dispatchEvent(new Event("change",{bubbles:true}))}
+      const section=document.querySelector("#resources");
+      if(section)section.scrollIntoView({behavior:"smooth",block:"start"});
+      history.replaceState(null,"",`#resources?grade=${encodeURIComponent(grade||"All Grades")}&subject=${encodeURIComponent(subject||"All Subjects")}`);
+    },0);
   }
   function wireSubjectLinks(){
     document.querySelectorAll("a[href^=\"#resources?\"]").forEach(a=>{
       if(a.dataset.cbeSubjectWired==="1")return;
-      const href=a.getAttribute("href")||"";
-      const q=href.split("?")[1]||"";
-      const p=new URLSearchParams(q);
-      const grade=p.get("grade"),subject=p.get("subject");
-      if(!grade&&!subject)return;
-      a.dataset.cbeSubjectWired="1";
-      a.addEventListener("click",e=>{e.preventDefault();apply(grade,subject)});
+      const q=(a.getAttribute("href")||"").split("?")[1]||"";const p=new URLSearchParams(q);const grade=p.get("grade"),subject=p.get("subject");if(!grade&&!subject)return;
+      a.dataset.cbeSubjectWired="1";a.addEventListener("click",e=>{e.preventDefault();apply(grade,subject)});
     });
     document.querySelectorAll("[data-grade-subject-select]").forEach(select=>{
       if(select.dataset.cbeSubjectWired==="1")return;
@@ -45,6 +42,6 @@
       select.addEventListener("change",()=>{const grade=select.dataset.grade||"All Grades";const subject=select.value||"All Subjects";if(subject!=="All Subjects")apply(grade,subject)});
     });
   }
-  function boot(){wireSubjectLinks();sync();setTimeout(wireSubjectLinks,500);setTimeout(wireSubjectLinks,1500);}
+  function boot(){wireSubjectLinks();sync();setTimeout(wireSubjectLinks,500);setTimeout(wireSubjectLinks,1500);setTimeout(wireSubjectLinks,3000);}
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot,{once:true});else boot();
 })();
