@@ -6687,3 +6687,40 @@ body.admin-unlocked .admin-only-link {
     letter-spacing: 0 !important;
   }
 }
+
+/* Phone header: compact two-column menu with shared boundaries. */
+@media (max-width: 480px) {
+  .site-header .nav-menu {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0 !important;
+    border-left: 1px solid rgba(255,255,255,.28);
+    border-top: 1px solid rgba(255,255,255,.28);
+  }
+
+  .site-header .nav-menu > .nav-link,
+  .site-header .nav-menu > .nav-dropdown > summary {
+    min-height: 24px !important;
+    height: 24px !important;
+    margin: 0 !important;
+    padding: 3px 5px !important;
+    border-radius: 0 !important;
+    border-right: 1px solid rgba(255,255,255,.28) !important;
+    border-bottom: 1px solid rgba(255,255,255,.28) !important;
+    font-size: 7px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .site-header .nav-menu > .nav-dropdown {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .site-header .nav-menu > .nav-dropdown > summary {
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+}
