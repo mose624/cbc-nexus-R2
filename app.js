@@ -341,7 +341,7 @@ function readSavedResources() {
   }
 }
 
-async function syncPublicResourcesFromServer() {
+async async function syncPublicResourcesFromServer() {
   try {
     const response = await fetch("/api/resources?_public=" + Date.now(), {
       credentials: "same-origin",
@@ -352,27 +352,30 @@ async function syncPublicResourcesFromServer() {
     const data = await response.json();
     if (!data.ok || !Array.isArray(data.resources)) throw new Error("Invalid resource API response");
 
-    const blocked = new Set(["pending", "rejected", "draft", "deleted"]);
+    // The public API is the single source of truth for published resources.
     const remote = data.resources
       .map((r) => normalizeResourceForLibrary({
         ...r,
         id: r.id ?? r.resource_id,
+        title: r.title || "Untitled resource",
+        grade: r.grade || "",
+        subject: r.subject || "",
         type: r.type || r.resource_type || "",
         r2Key: r.r2Key || r.r2_key || "",
         fileName: r.fileName || r.filename || "",
-        previewKey: r.previewKey || r.preview_key || ""
+        previewKey: r.previewKey || r.preview_key || "",
+        file: r.file || ((r.r2Key || r.r2_key) ? "/api/r2/file?key=" + encodeURIComponent(r.r2Key || r.r2_key) : "")
       }))
-      .filter((r) => !blocked.has(r.status));
+      .filter((r) => r.id && r.status === "approved");
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(remote));
     renderResources();
     renderTrending();
-    console.info("CBE Nexus: loaded", remote.length, "public resources from server");
+    console.info("CBE Nexus: loaded", remote.length, "approved resources from Supabase");
   } catch (error) {
     console.warn("CBE Nexus public resource sync failed:", error);
   }
 }
-
 function readSellerResources() {
   try {
     return JSON.parse(localStorage.getItem(SELLER_STORAGE_KEY)) || [];
