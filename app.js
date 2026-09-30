@@ -108,6 +108,67 @@ const allCbeSubjects = [...new Set([
   ...seniorSchoolSubjects,...specialNeedsSubjects,...diplomaTeacherEducationSubjects
 ])].sort((a,b)=>a.localeCompare(b));
 
+/*
+ * Canonical CBE/Nexus grade-to-subject catalogue.
+ * Keep these exact names everywhere so a resource saved in Supabase/R2
+ * matches the subject selected in the Resource Library.
+ * Names follow KICD curriculum-design terminology where applicable.
+ */
+const gradeSubjects = {
+  "Grade 1": ["Creative Activities","Christian Religious Education","English Activities","Environmental Activities","Hindu Religious Education","Islamic Religious Education","Kiswahili Activities","Mathematics Activities"],
+  "Grade 2": ["Creative Activities","Christian Religious Education","English Activities","Environmental Activities","Hindu Religious Education","Islamic Religious Education","Kiswahili Activities","Mathematics Activities"],
+  "Grade 3": ["Creative Activities","Christian Religious Education","English Activities","Environmental Activities","Hindu Religious Education","Islamic Religious Education","Kiswahili Activities","Mathematics Activities"],
+  "Grade 4": ["Agriculture","Arabic","Creative Arts","Christian Religious Education","English","French","German","Hindu Religious Education","Indigenous Language","Islamic Religious Education","Kiswahili","Mandarin","Mathematics","Science and Technology","Social Studies"],
+  "Grade 5": ["Agriculture","Arabic","Creative Arts","Christian Religious Education","English","French","German","Hindu Religious Education","Indigenous Language","Islamic Religious Education","Kiswahili","Mandarin","Mathematics","Science and Technology","Social Studies"],
+  "Grade 6": ["Agriculture","Arabic","Creative Arts","Christian Religious Education","English","French","German","Hindu Religious Education","Indigenous Language","Islamic Religious Education","Kiswahili","Mandarin","Mathematics","Science and Technology","Social Studies"],
+  "Grade 7": ["Agriculture","Arabic","Creative Arts","Christian Religious Education","English","French","German","Hindu Religious Education","Indigenous Language","Integrated Science","Islamic Religious Education","Kiswahili","Mandarin","Mathematics","Pre-Technical Studies","Social Studies"],
+  "Grade 8": ["Agriculture","Arabic","Creative Arts","Christian Religious Education","English","French","German","Hindu Religious Education","Indigenous Language","Integrated Science","Islamic Religious Education","Kiswahili","Mandarin","Mathematics","Pre-Technical Studies","Social Studies"],
+  "Grade 9": ["Agriculture","Arabic","Creative Arts","Christian Religious Education","English","French","German","Hindu Religious Education","Indigenous Language","Integrated Science","Islamic Religious Education","Kiswahili","Mandarin","Mathematics","Pre-Technical Studies","Social Studies"],
+  "Grade 10": ["Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","Islamic Religious Education","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","Hindu Religious Education","Mandarin Chinese"],
+  "Grade 11": ["Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","Islamic Religious Education","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","Hindu Religious Education","Mandarin Chinese"],
+  "Grade 12": ["Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","Islamic Religious Education","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","Hindu Religious Education","Mandarin Chinese"]
+};
+
+const subjectAliases = {
+  "CRE": "Christian Religious Education",
+  "Christian Religious Education (CRE)": "Christian Religious Education",
+  "HRE": "Hindu Religious Education",
+  "Hindu Religious Education (HRE)": "Hindu Religious Education",
+  "IRE": "Islamic Religious Education",
+  "Islamic Religious Education (IRE)": "Islamic Religious Education",
+  "Pre technical Studies": "Pre-Technical Studies",
+  "Pre-Technical": "Pre-Technical Studies",
+  "Science and Technology": "Science and Technology",
+  "History and Citizenship": "History & Citizenship",
+  "History & Citizenship": "History & Citizenship",
+  "Music and Dance": "Music & Dance",
+  "Theatre and Film": "Theatre & Film",
+  "Sports and Recreation": "Sports & Recreation",
+  "Building & Construction": "Building and Construction",
+  "Metalwork": "Metal Work",
+  "Wood Technology": "Woodwork",
+  "Marine and Fisheries Technology": "Marine & Fisheries",
+  "Marine Technology": "Marine & Fisheries",
+  "Kenya Sign Language (KSL)": "Kenya Sign Language",
+  "KSL": "Kenya Sign Language",
+  "Community Service Learning (CSL)": "Community Service Learning",
+  "Sign Language Skills": "Sign Language"
+};
+
+function canonicalSubjectName(subject) {
+  const value = String(subject || "").trim();
+  return subjectAliases[value] || value;
+}
+
+function normalizeResourceForLibrary(resource) {
+  const normalized = { ...resource };
+  normalized.grade = String(normalized.grade || "").trim();
+  normalized.subject = canonicalSubjectName(normalized.subject);
+  normalized.type = normalized.type || normalized.resource_type || "";
+  normalized.status = String(normalized.status || "approved").toLowerCase();
+  return normalized;
+}
+
 
 const state = {
   grade: "All Grades",
@@ -292,14 +353,13 @@ async function syncPublicResourcesFromServer() {
 
     const blocked = new Set(["pending", "rejected", "draft", "deleted"]);
     const remote = data.resources
-      .map((r) => ({
+      .map((r) => normalizeResourceForLibrary({
         ...r,
         id: r.id ?? r.resource_id,
         type: r.type || r.resource_type || "",
         r2Key: r.r2Key || r.r2_key || "",
         fileName: r.fileName || r.filename || "",
-        previewKey: r.previewKey || r.preview_key || "",
-        status: String(r.status || "approved").toLowerCase()
+        previewKey: r.previewKey || r.preview_key || ""
       }))
       .filter((r) => !blocked.has(r.status));
 
@@ -368,8 +428,8 @@ function getSellerStorageUsage() {
 function getAllResources() {
   return [
     ...starterResources,
-    ...readSavedResources(),
-    ...readSellerResources().filter((resource) => resource.status === "approved")
+    ...readSavedResources().map(normalizeResourceForLibrary),
+    ...readSellerResources().filter((resource) => resource.status === "approved").map(normalizeResourceForLibrary)
   ];
 }
 
@@ -611,13 +671,14 @@ function setupFilters() {
 }
 
 function resourceMatches(resource) {
+  const normalized = normalizeResourceForLibrary(resource);
   const query = state.search.trim().toLowerCase();
-  const searchable = `${resource.title} ${resource.description} ${resource.subject} ${resource.type} ${resource.term || ""}`.toLowerCase();
-  return (state.grade === "All Grades" || resource.grade === state.grade)
-    && (state.subject === "All Subjects" || resource.subject === state.subject)
-    && (state.type === "All Materials" || resource.type === state.type)
-    && (state.term === "All Terms" || resource.term === state.term)
-    && (state.access === "All Access" || (state.access === "Free Samples" ? resource.isFreeSample : !resource.isFreeSample))
+  const searchable = `${normalized.title} ${normalized.description} ${normalized.subject} ${normalized.type} ${normalized.term || ""}`.toLowerCase();
+  return (state.grade === "All Grades" || normalized.grade === state.grade)
+    && (state.subject === "All Subjects" || normalized.subject === canonicalSubjectName(state.subject))
+    && (state.type === "All Materials" || normalized.type === state.type)
+    && (state.term === "All Terms" || normalized.term === state.term)
+    && (state.access === "All Access" || (state.access === "Free Samples" ? normalized.isFreeSample : !normalized.isFreeSample))
     && (!query || searchable.includes(query));
 }
 
@@ -631,7 +692,7 @@ function sortResources(resources) {
 }
 
 function renderResources() {
-  const resources = getAllResources();
+  const resources = getAllResources().map(normalizeResourceForLibrary);
   const filtered = sortResources(resources.filter(resourceMatches));
   elements.statResources.textContent = Number(remoteStats.resources || resources.length).toLocaleString("en-KE");
   elements.activeContext.textContent = `${filtered.length} material(s) showing for ${state.grade}, ${state.subject}, ${state.type}`;
