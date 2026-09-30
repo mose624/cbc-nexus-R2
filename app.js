@@ -714,6 +714,13 @@ function refreshSubjectFilters() {
 
 function setupFilters() {
   const grades = Object.keys(gradeSubjects);
+  const allAdminSubjects = [...new Set([
+    ...lowerPrimarySubjects,
+    ...upperPrimarySubjects,
+    ...juniorSchoolSubjects,
+    ...seniorSchoolSubjects
+  ])].sort((a,b) => a.localeCompare(b));
+
   optionList(elements.gradeFilter, ["All Grades", ...grades], state.grade);
   optionList(elements.adminGrade, grades, "Grade 1");
   optionList(elements.sellerGrade, grades, "Grade 1");
@@ -723,8 +730,9 @@ function setupFilters() {
   optionList(elements.typeFilter, ["All Materials", ...materialTypes], state.type);
   optionList(elements.adminType, materialTypes, "Notes");
   optionList(elements.sellerType, materialTypes, "Notes");
-  optionList(elements.adminSubject, gradeSubjects["Grade 1"], "Mathematics Activities");
-  optionList(elements.sellerSubject, gradeSubjects["Grade 1"], "Mathematics Activities");
+  // Upload and Publish Learning Resources: show the complete subject catalogue.
+  optionList(elements.adminSubject, allAdminSubjects, "Mathematics Activities");
+  optionList(elements.sellerSubject, allAdminSubjects, "Mathematics Activities");
   refreshSubjectFilters();
 }
 
@@ -1948,9 +1956,15 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
     renderResources();
   });
 
-  safeOn(elements.adminGrade, "change", (event) => {
-    const subjects = gradeSubjects[event.target.value];
-    optionList(elements.adminSubject, subjects, subjects[0]);
+  safeOn(elements.adminGrade, "change", () => {
+    const allAdminSubjects = [...new Set([
+      ...lowerPrimarySubjects,
+      ...upperPrimarySubjects,
+      ...juniorSchoolSubjects,
+      ...seniorSchoolSubjects
+    ])].sort((a,b) => a.localeCompare(b));
+    const current = elements.adminSubject?.value;
+    optionList(elements.adminSubject, allAdminSubjects, current || "Mathematics Activities");
   });
 
   safeOn(elements.sellerGrade, "change", (event) => {
