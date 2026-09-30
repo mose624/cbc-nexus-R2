@@ -161,6 +161,17 @@ const juniorSchoolSubjects = [
   "Social Studies"
 ];
 
+const allCbeSubjects = [...new Set([
+  ...lowerPrimarySubjects, ...upperPrimarySubjects, ...juniorSchoolSubjects, ...seniorSchoolSubjects,
+  "Literacy Activities","Mathematical Activities","Kiswahili Language Activities","Religious Activities",
+  "Creative Arts and Sports","Life Skills Education","Health Education","Physical and Health Education",
+  "Creative Arts","Performing Arts","Visual Arts","Music","Dance","Theatre","Film","Drama","Media Studies",
+  "Journalism","Communication Skills","General Mathematics","Pure Mathematics","Applied Mathematics","Statistics",
+  "Earth and Space Science","Entrepreneurship","Accounting","Government and Politics","Religious Education",
+  "ICT","Digital Literacy","Coding and Programming","Artificial Intelligence","Robotics","Technical Drawing",
+  "Electronics","Physical Education","Project Work","Research","Life Skills","Library Studies"
+])].sort((a, b) => a.localeCompare(b));
+
 const gradeSubjects = {
   "Grade 1": lowerPrimarySubjects,
   "Grade 2": lowerPrimarySubjects,
@@ -714,12 +725,7 @@ function refreshSubjectFilters() {
 
 function setupFilters() {
   const grades = Object.keys(gradeSubjects);
-  const allAdminSubjects = [...new Set([
-    ...lowerPrimarySubjects,
-    ...upperPrimarySubjects,
-    ...juniorSchoolSubjects,
-    ...seniorSchoolSubjects
-  ])].sort((a,b) => a.localeCompare(b));
+  const allAdminSubjects = allCbeSubjects;
 
   optionList(elements.gradeFilter, ["All Grades", ...grades], state.grade);
   optionList(elements.adminGrade, grades, "Grade 1");
@@ -1985,8 +1991,8 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
 
   safeOn(document.querySelector("#startGradeOneUploadButton"), "click", () => {
     if (elements.adminGrade) elements.adminGrade.value = "Grade 1";
-    const subjects = gradeSubjects["Grade 1"] || [];
-    if (elements.adminSubject) optionList(elements.adminSubject, subjects, subjects[0] || "All Subjects");
+    const subjects = allCbeSubjects;
+    if (elements.adminSubject) optionList(elements.adminSubject, subjects, elements.adminSubject.value || "Mathematics Activities");
     if (elements.formStatus) elements.formStatus.textContent = "Grade 1 selected. Choose the subject, material type and file, then publish.";
     const subjectField = elements.adminSubject?.closest("label");
     subjectField?.scrollIntoView({ behavior: "smooth", block: "center" });
