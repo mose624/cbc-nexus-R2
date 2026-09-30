@@ -341,7 +341,7 @@ function readSavedResources() {
   }
 }
 
-async async function syncPublicResourcesFromServer() {
+async function syncPublicResourcesFromServer() {
   try {
     const response = await fetch("/api/resources?_public=" + Date.now(), {
       credentials: "same-origin",
