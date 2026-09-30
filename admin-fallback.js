@@ -7,7 +7,7 @@
     section.classList.add("open");
     section.setAttribute("aria-hidden", "false");
     section.scrollIntoView({ behavior: "smooth", block: "start" });
-    const username = document.getElementById("adminUsername");
+    const username = document.getElementById("adminUsernameInput");
     if (username) setTimeout(() => username.focus(), 150);
   }
 
@@ -17,11 +17,12 @@
 
     const form = event.currentTarget;
     const username = String(document.getElementById("adminUsername")?.value || "").trim();
-    const password = String(document.getElementById("adminPassword")?.value || "");
+    const password = String(document.getElementById("adminPasswordInput")?.value || "");
+    const email = String(document.getElementById("adminEmailInput")?.value || "").trim().toLowerCase();
     const status = document.getElementById("adminLoginStatus");
 
-    if (!username || !password) {
-      if (status) status.textContent = "Enter your admin username and password.";
+    if (!email || !username || !password) {
+      if (status) status.textContent = "Enter your admin email, username and password.";
       return;
     }
 
@@ -32,7 +33,7 @@
         method: "POST",
         credentials: "same-origin",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username, password, email })
       });
       const data = await response.json().catch(() => ({}));
 
@@ -48,7 +49,7 @@
         loginSection.setAttribute("aria-hidden", "true");
       }
 
-      const dashboard = document.getElementById("adminDashboard");
+      const dashboard = document.getElementById("admin");
       if (dashboard) {
         dashboard.classList.add("open");
         dashboard.setAttribute("aria-hidden", "false");
