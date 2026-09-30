@@ -6472,3 +6472,75 @@ body.admin-unlocked .admin-only-link {
   outline: 2px solid rgba(255,255,255,.3);
   outline-offset: 2px;
 }
+
+
+/* Final targeted mobile usability improvements — preserves desktop layout. */
+@media (max-width: 640px) {
+  /* Keep the existing navigation structure readable without changing its layout. */
+  .site-header .main-nav > .brand strong {
+    font-size: 15px !important;
+  }
+  .site-header .main-nav > .brand small {
+    font-size: 9px !important;
+  }
+  .site-header .nav-menu > .nav-link,
+  .site-header .nav-menu > .nav-dropdown > summary {
+    min-height: 30px !important;
+    padding: 6px 7px !important;
+    font-size: 10px !important;
+    line-height: 1.15 !important;
+  }
+  .site-header .nav-actions > * {
+    min-height: 30px !important;
+    padding: 6px 8px !important;
+    font-size: 10px !important;
+  }
+
+  /* Keep long resource names and action areas inside the phone width. */
+  .resource-card h3,
+  .resource-card p,
+  .resource-meta,
+  .resource-library-actions {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .resource-library-actions {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* Admin tabs remain usable horizontally instead of shrinking into unreadable text. */
+  .admin-module-tabs {
+    overflow-x: auto !important;
+    justify-content: flex-start !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  .admin-module-tab {
+    flex: 0 0 auto !important;
+    min-height: 36px !important;
+    font-size: 10px !important;
+    padding: 8px 10px !important;
+  }
+
+  /* Prevent dashboard headings/actions from colliding on narrow screens. */
+  .admin-module-heading,
+  .admin-control-topbar {
+    align-items: flex-start !important;
+  }
+  .admin-module-heading {
+    flex-direction: column !important;
+  }
+  .admin-module-summary {
+    max-width: 100%;
+    white-space: normal !important;
+  }
+
+  /* Compact the awards image on phones while keeping it visible. */
+  #faq img[alt="CBE Awards 2026 trophies"] {
+    width: 100% !important;
+    max-width: 90px !important;
+    height: auto !important;
+  }
+  #faq .info-card {
+    overflow: hidden;
+  }
+}
