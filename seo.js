@@ -65,11 +65,13 @@ function blogPage(req){
  const b=base(req),items=posts.map(p=>'<article><h2><a href="'+p[1]+'">'+esc(p[0])+'</a></h2><p>Explore CBC/CBE learning resources and practical information for Kenyan learners and teachers.</p></article>').join("");
  return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kenya Education Blog 2026 | CBE Nexus</title><meta name="description" content="Current Kenya education updates, KNEC information, CBC/CBE resources, KJSEA, Grade 9 and Grade 10 learning materials."><meta name="robots" content="index,follow"><link rel="canonical" href="'+b+'/education-blog"><meta property="og:type" content="website"><meta property="og:title" content="Kenya Education Blog 2026 | CBE Nexus"><meta property="og:description" content="Current Kenya education updates and CBC/CBE resource guides."><meta property="og:url" content="'+b+'/education-blog"><style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;max-width:1000px;margin:auto;padding:24px;line-height:1.6;color:#172033}a{color:#075985}header{padding:18px 0;border-bottom:1px solid #ddd}.hero{padding:30px 0}article{border-top:1px solid #ddd;padding:16px 0}h1{margin-bottom:8px}h2{font-size:1.15rem}</style></head><body><header><strong>CBE Nexus</strong> — Connecting learners to excellence | Kenya</header><main><section class="hero"><p>Kenyan CBC/CBE education information</p><h1>Kenya Education Blog 2026</h1><p>Practical guides and current resource information for learners, teachers, parents and schools.</p></section>'+items+'</main></body></html>';
 }
-\nasync function match(req){
+
+async function match(req){
  const p=new URL(req.url,"http://localhost").pathname.replace(/\/$/,"")||"/";
  const rm=p.match(/^\/resource\/([^/]+)$/);
  if(rm){return await resourcePage(req,decodeURIComponent(rm[1]));}
- if(p==="/education-blog")return blogPage(req);\n if(LANDINGS[p]){const x=LANDINGS[p];const links=GRADES.map(g=>({url:"/grade-"+g,label:"Grade "+g+" CBC Resources"}));return page(req,x[0],x[1],p,x[0],x[1],links);}
+ if(p==="/education-blog")return blogPage(req);
+ if(LANDINGS[p]){const x=LANDINGS[p];const links=GRADES.map(g=>({url:"/grade-"+g,label:"Grade "+g+" CBC Resources"}));return page(req,x[0],x[1],p,x[0],x[1],links);}
  const m=p.match(/^\/grade-(7|8|9|10|11|12)(?:\/([^/]+))?$/);return m?gradePage(req,m[1],m[2]):null;
 }
 function xml(v){return String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&apos;");}
