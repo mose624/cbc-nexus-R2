@@ -54,123 +54,24 @@ const materialTypes = [
 ];
 
 const seniorSchoolSubjects = [
-  "English",
-  "Kiswahili",
-  "Kenya Sign Language (KSL)",
-  "Core Mathematics",
-  "Essential Mathematics",
-  "Literature in English",
-  "Fasihi ya Kiswahili",
-  "Indigenous Languages",
-  "Sign Language",
-  "Arabic",
-  "French",
-  "German",
-  "Mandarin Chinese",
-  "Christian Religious Education (CRE)",
-  "Islamic Religious Education (IRE)",
-  "Hindu Religious Education (HRE)",
-  "Community Service Learning (CSL)",
-  "History and Citizenship",
-  "Geography",
-  "Business Studies",
-  "Economics",
-  "Biology",
-  "Chemistry",
-  "Physics",
-  "General Science",
-  "Agriculture",
-  "Computer Studies",
-  "Computer Science",
-  "Home Science",
-  "Environmental Science",
-  "Aviation",
-  "Building and Construction",
-  "Electricity",
-  "Metalwork",
-  "Power Mechanics",
-  "Wood Technology",
-  "Media Technology",
-  "Marine and Fisheries Technology",
-  "Manufacturing Technology",
-  "Design and Technology",
-  "Food and Nutrition",
-  "Fashion and Design",
-  "Leatherwork",
-  "Plumbing",
-  "Welding and Fabrication",
-  "Automotive Engineering",
-  "Mechatronics",
-  "Crop Production",
-  "Animal Production",
-  "Fisheries",
-  "Forestry",
-  "Sports and Recreation",
-  "Music and Dance",
-  "Theatre and Film",
-  "Fine Arts",
-  "Visual Arts",
-  "Performing Arts"
+  "Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education (CRE)","Community Service Learning (CSL)","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History and Citizenship","Home Science","ICT","Islamic Religious Education (IRE)","Kiswahili","Kenya Sign Language (KSL)","Literature in English","Marine and Fisheries Technology","Media Technology","Metalwork","Music and Dance","Physics","Power Mechanics","Sports and Recreation","Theatre and Film","Woodwork","Indigenous Languages","Arabic","French","German","Mandarin Chinese","Hindu Religious Education (HRE)","Sign Language"
 ];
 
 const lowerPrimarySubjects = [
-  "Creative Activities",
-  "Christian Religious Education (CRE)",
-  "English Activities",
-  "Environmental Activities",
-  "Hindu Religious Education (HRE)",
-  "Islamic Religious Education (IRE)",
-  "Kiswahili Activities",
-  "Mathematics Activities"
+  "English Activities","Kiswahili","Mathematics","Environmental Activities","Creative Activities","Christian Religious Education (CRE)","Hindu Religious Education (HRE)","Islamic Religious Education (IRE)","Indigenous Languages"
 ];
 
 const upperPrimarySubjects = [
-  "Agriculture",
-  "Arabic",
-  "Creative Arts",
-  "Christian Religious Education (CRE)",
-  "English",
-  "French",
-  "German",
-  "Hindu Religious Education (HRE)",
-  "Indigenous Language",
-  "Islamic Religious Education (IRE)",
-  "Kiswahili",
-  "Mandarin",
-  "Mathematics",
-  "Science and Technology",
-  "Social Studies"
+  "English","Kiswahili","Mathematics","Agriculture","Home Science","Science and Technology","Social Studies","Creative Arts","Physical and Health Education","Christian Religious Education (CRE)","Hindu Religious Education (HRE)","Islamic Religious Education (IRE)","Indigenous Language","Arabic","French","German","Mandarin"
 ];
 
 const juniorSchoolSubjects = [
-  "Agriculture",
-  "Arabic",
-  "Creative Arts",
-  "Christian Religious Education (CRE)",
-  "English",
-  "French",
-  "German",
-  "Hindu Religious Education (HRE)",
-  "Indigenous Language",
-  "Integrated Science",
-  "Islamic Religious Education (IRE)",
-  "Kiswahili",
-  "Mandarin",
-  "Mathematics",
-  "Pre-Technical Studies",
-  "Social Studies"
+  "English","Kiswahili","Mathematics","Integrated Science","Social Studies","Agriculture","Pre-Technical Studies","Creative Arts and Sports","Physical and Health Education","Christian Religious Education (CRE)","Hindu Religious Education (HRE)","Islamic Religious Education (IRE)","Indigenous Language","Arabic","French","German","Mandarin"
 ];
 
 const allCbeSubjects = [...new Set([
-  ...lowerPrimarySubjects, ...upperPrimarySubjects, ...juniorSchoolSubjects, ...seniorSchoolSubjects,
-  "Literacy Activities","Mathematical Activities","Kiswahili Language Activities","Religious Activities",
-  "Creative Arts and Sports","Life Skills Education","Health Education","Physical and Health Education",
-  "Creative Arts","Performing Arts","Visual Arts","Music","Dance","Theatre","Film","Drama","Media Studies",
-  "Journalism","Communication Skills","General Mathematics","Pure Mathematics","Applied Mathematics","Statistics",
-  "Earth and Space Science","Entrepreneurship","Accounting","Government and Politics","Religious Education",
-  "ICT","Digital Literacy","Coding and Programming","Artificial Intelligence","Robotics","Technical Drawing",
-  "Electronics","Physical Education","Project Work","Research","Life Skills","Library Studies"
-])].sort((a, b) => a.localeCompare(b));
+  ...lowerPrimarySubjects,...upperPrimarySubjects,...juniorSchoolSubjects,...seniorSchoolSubjects
+])].sort((a,b)=>a.localeCompare(b));
 
 const gradeSubjects = {
   "Grade 1": lowerPrimarySubjects,
