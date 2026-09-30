@@ -1123,12 +1123,44 @@ async function restoreAdminAccess() {
 async function loadAdminDashboard() {
   if (!elements.adminControlPanel) return;
   try {
-    const response = await fetch("/api/admin/dashboard", { credentials: "same-origin" });
+    const response = await fetch("/api/admin/dashboard", {
+      credentials: "same-origin",
+      cache: "no-store",
+      headers: { "Cache-Control": "no-cache" }
+    });
     if (!response.ok) return;
     const data = await response.json();
     if (!data.ok) return;
+
+    // Keep the existing admin dashboard data flow, but also reconcile the
+    // resource list directly from the live resource API. This prevents an
+    // approved Supabase resource from being absent from the Admin Control
+    // Centre when the dashboard response is briefly stale.
+    try {
+      const resourceResponse = await fetch("/api/resources?_admin_sync=" + Date.now(), {
+        credentials: "same-origin",
+        cache: "no-store",
+        headers: { "Cache-Control": "no-cache" }
+      });
+      if (resourceResponse.ok) {
+        const resourceData = await resourceResponse.json();
+        if (resourceData.ok && Array.isArray(resourceData.resources)) {
+          const merged = new Map((Array.isArray(data.resources) ? data.resources : []).map((item) => [String(item.id), item]));
+          resourceData.resources.forEach((item) => {
+            const key = String(item.id ?? item.resource_id ?? "");
+            if (key) merged.set(key, { ...(merged.get(key) || {}), ...item });
+          });
+          data.resources = [...merged.values()];
+        }
+      }
+    } catch (resourceSyncError) {
+      console.warn("CBE Nexus admin resource reconciliation failed:", resourceSyncError);
+    }
+
     renderAdminControlCentre(data);
-  } catch {}
+  } catch (error) {
+    console.warn("CBE Nexus admin dashboard load failed:", error);
+  }
 }
 
 function setAdminModule(module) {
