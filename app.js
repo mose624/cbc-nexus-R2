@@ -517,8 +517,16 @@ function setActiveMaterialLink() {
 }
 
 function renderQuickTypes() {
-  elements.quickTypes.innerHTML = materialTypes
-    .map((type) => `<button type="button" data-quick-type="${escapeHtml(type)}">${escapeHtml(type)}</button>`)
+  if (!elements.quickTypes) return;
+
+  elements.quickTypes.innerHTML = [
+    "All Materials",
+    ...materialTypes
+  ]
+    .map((type) => {
+      const active = state.type === type ? " active" : "";
+      return `<button type="button" class="quick-type-button${active}" data-quick-type="${escapeHtml(type)}" aria-pressed="${state.type === type ? "true" : "false"}">${escapeHtml(type)}</button>`;
+    })
     .join("");
 }
 
@@ -690,7 +698,7 @@ function resourceMatches(resource) {
   const searchable = `${normalized.title} ${normalized.description} ${normalized.subject} ${normalized.type} ${normalized.term || ""}`.toLowerCase();
   return (state.grade === "All Grades" || normalized.grade === state.grade)
     && (state.subject === "All Subjects" || normalized.subject === canonicalSubjectName(state.subject))
-    && (state.type === "All Materials" || normalized.type === state.type)
+    && (state.type === "All Materials" || normalized.type.trim().toLowerCase() === String(state.type).trim().toLowerCase())
     && (state.term === "All Terms" || normalized.term === state.term)
     && (state.access === "All Access" || (state.access === "Free Samples" ? normalized.isFreeSample : !normalized.isFreeSample))
     && (!query || searchable.includes(query));
@@ -1739,8 +1747,9 @@ function bindEvents() {
   safeOn(elements.quickTypes, "click", (event) => {
     const button = event.target.closest("[data-quick-type]");
     if (!button) return;
-    state.type = button.dataset.quickType;
-    elements.typeFilter.value = state.type;
+    state.type = button.dataset.quickType || "All Materials";
+    if (elements.typeFilter) elements.typeFilter.value = state.type;
+    renderQuickTypes();
     renderResources();
     showToast(`${state.type} selected.`);
     document.querySelector("#resources").scrollIntoView({ behavior: "smooth", block: "start" });
