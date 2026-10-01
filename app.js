@@ -284,6 +284,7 @@ const elements = {
   resourcePreviewTitle: document.querySelector("#resourcePreviewTitle"),
   resourcePreviewInfo: document.querySelector("#resourcePreviewInfo"),
   resourcePreviewFrame: document.querySelector("#resourcePreviewFrame"),
+  bundleGrid: document.querySelector("#bundleGrid"),
   closeResourcePreview: document.querySelector("#closeResourcePreview"),
   adminSection: document.querySelector("#admin"),
   adminLoginForm: document.querySelector("#adminLoginForm"),
@@ -373,6 +374,7 @@ async function syncPublicResourcesFromServer() {
     serverResources = remote;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(remote));
     renderResources();
+    renderResourceBundles();
     renderTrending();
     console.info("CBE Nexus: loaded", remote.length, "approved resources from Supabase");
   } catch (error) {
@@ -789,6 +791,43 @@ function cartWhatsappLink(cart) {
   return `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(message)}`;
 }
 
+function getResourceBundles() {
+  const all = getAllResources().map(normalizeResourceForLibrary);
+  const grade = state.grade !== "All Grades" ? state.grade : (all[0]?.grade || "");
+  const subject = state.subject !== "All Subjects" ? canonicalSubjectName(state.subject) : (all.find(r => r.grade === grade)?.subject || "");
+  if (!grade || !subject) return [];
+  const pool = all.filter(r => r.grade === grade && r.subject === subject && !r.isFreeSample);
+  const definitions = [
+    { id:"student", title:"Student Essentials Pack", description:"Notes + practice + assessment materials for daily learning.", types:["Notes","Topical Questions","Assessment Test"] },
+    { id:"teacher", title:"Teacher Toolkit Pack", description:"Core teaching materials for planning and classroom delivery.", types:["Notes","Schemes of Work","Lesson Plan","Records of Work"] },
+    { id:"exam", title:"Exam Preparation Pack", description:"Practice papers and marking support for focused revision.", types:["Past Papers","Assessment Test","Marking Schemes","Topical Questions"] }
+  ];
+  return definitions.map(bundle => {
+    const items = [];
+    bundle.types.forEach(type => { const match = pool.find(r => r.type.trim().toLowerCase() === type.trim().toLowerCase()); if (match && !items.some(x => x.id === match.id)) items.push(match); });
+    if (items.length < 2) return null;
+    const original = items.reduce((sum,r) => sum + Number(r.price || 0), 0);
+    const total = Math.max(0, Math.round(original * 0.85));
+    return {...bundle, grade, subject, items, original, total, savings: Math.max(0, original-total)};
+  }).filter(Boolean);
+}
+
+function renderResourceBundles() {
+  if (!elements.bundleGrid) return;
+  const bundles = getResourceBundles();
+  if (!bundles.length) { elements.bundleGrid.innerHTML = '<div class="empty-state">Bundles will appear when enough resources are available for the selected grade and subject.</div>'; return; }
+  elements.bundleGrid.innerHTML = bundles.map(bundle => '<article class="bundle-card"><span class="tag">' + escapeHtml(bundle.grade) + ' • ' + escapeHtml(bundle.subject) + '</span><h3>' + escapeHtml(bundle.title) + '</h3><p>' + escapeHtml(bundle.description) + '</p><ul>' + bundle.items.map(r => '<li>' + escapeHtml(r.title) + '</li>').join("") + '</ul><div class="bundle-price"><del>' + money(bundle.original) + '</del> <strong>' + money(bundle.total) + '</strong> <span>Save ' + money(bundle.savings) + '</span></div><button class="primary-button" type="button" data-add-bundle="' + escapeHtml(bundle.id) + '">Add Bundle to Cart</button><a class="secondary-button whatsapp-buy-button" href="' + cartWhatsappLink(bundle.items) + '" target="_blank" rel="noopener">💬 Order Bundle on WhatsApp</a></article>').join("");
+  elements.bundleGrid.querySelectorAll("[data-add-bundle]").forEach(button => {
+    button.addEventListener("click", () => {
+      const bundle = bundles.find(b => b.id === button.dataset.addBundle); if (!bundle) return;
+      const cart = readCart(); const merged = [...cart];
+      bundle.items.forEach(resource => { if (!merged.some(x => x.id === resource.id)) merged.push(resource); });
+      localStorage.setItem(CART_KEY, JSON.stringify(merged)); renderCart();
+      elements.cartDrawer.classList.add("open"); elements.cartDrawer.setAttribute("aria-hidden","false");
+      showToast(bundle.title + " added to cart.");
+    });
+  });
+}
 function renderCart() {
   const cart = readCart();
   elements.cartCount.textContent = cart.length;
@@ -2212,6 +2251,7 @@ restoreAdminAccess();
 bindEvents();
 injectContactInfo();
 renderResources();
+renderResourceBundles();
 renderTrending();
 loadPublicStats();
 syncPublicResourcesFromServer();
