@@ -829,6 +829,18 @@ textarea:focus-visible {
 .quick-types button {
   font-weight: 800;
   color: var(--navy);
+  transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.quick-types button:hover,
+.quick-types button:focus-visible {
+  transform: translateY(-1px);
+}
+
+.quick-types button.active {
+  background: var(--navy);
+  color: white;
+  border-color: var(--navy);
 }
 
 .trending-panel {
