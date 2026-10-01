@@ -191,6 +191,7 @@ const elements = {
   termFilter: document.querySelector("#termFilter"),
   accessFilter: document.querySelector("#accessFilter"),
   sortFilter: document.querySelector("#sortFilter"),
+  clearResourceFilters: document.querySelector("#clearResourceFilters"),
   resourceGrid: document.querySelector("#resourceGrid"),
   activeContext: document.querySelector("#activeContext"),
   statResources: document.querySelector("#statResources"),
@@ -1940,6 +1941,27 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
   safeOn(elements.sortFilter, "change", (event) => {
     state.sort = event.target.value;
     renderResources();
+  });
+
+  safeOn(elements.clearResourceFilters, "click", () => {
+    state.grade = "All Grades";
+    state.subject = "All Subjects";
+    state.type = "All Materials";
+    state.search = "";
+    state.term = "All Terms";
+    state.access = "All Access";
+    state.sort = "Latest";
+    if (elements.gradeFilter) elements.gradeFilter.value = state.grade;
+    refreshSubjectFilters();
+    if (elements.subjectFilter) elements.subjectFilter.value = state.subject;
+    if (elements.typeFilter) elements.typeFilter.value = state.type;
+    if (elements.searchFilter) elements.searchFilter.value = state.search;
+    if (elements.termFilter) elements.termFilter.value = state.term;
+    if (elements.accessFilter) elements.accessFilter.value = state.access;
+    if (elements.sortFilter) elements.sortFilter.value = state.sort;
+    renderQuickTypes();
+    renderResources();
+    showToast("All resource filters cleared.");
   });
 
   safeOn(elements.searchFilter, "input", (event) => {
