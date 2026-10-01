@@ -1266,12 +1266,10 @@ async function loadAdminDashboard() {
     const data = await response.json();
     if (!data.ok) return;
 
-    // Keep the existing admin dashboard data flow, but also reconcile the
-    // resource list directly from the live resource API. This prevents an
-    // approved Supabase resource from being absent from the Admin Control
-    // Centre when the dashboard response is briefly stale.
+    // Load the complete resource catalogue from the authenticated admin endpoint.
+    // The public endpoint intentionally returns approved resources only.
     try {
-      const resourceResponse = await fetch("/api/resources?_admin_sync=" + Date.now(), {
+      const resourceResponse = await fetch("/api/admin/resources?_=" + Date.now(), {
         credentials: "same-origin",
         cache: "no-store",
         headers: { "Cache-Control": "no-cache" }
@@ -1279,16 +1277,15 @@ async function loadAdminDashboard() {
       if (resourceResponse.ok) {
         const resourceData = await resourceResponse.json();
         if (resourceData.ok && Array.isArray(resourceData.resources)) {
-          const merged = new Map((Array.isArray(data.resources) ? data.resources : []).map((item) => [String(item.id), item]));
-          resourceData.resources.forEach((item) => {
-            const key = String(item.id ?? item.resource_id ?? "");
-            if (key) merged.set(key, { ...(merged.get(key) || {}), ...item });
-          });
-          data.resources = [...merged.values()];
+          data.resources = resourceData.resources;
+          if (data.stats) {
+            data.stats.resources = resourceData.resources.length;
+            data.stats.pendingResources = resourceData.resources.filter((item) => String(item.status || "").toLowerCase() === "pending").length;
+          }
         }
       }
     } catch (resourceSyncError) {
-      console.warn("CBE Nexus admin resource reconciliation failed:", resourceSyncError);
+      console.warn("CBE Nexus admin resource catalogue load failed:", resourceSyncError);
     }
 
     renderAdminControlCentre(data);
