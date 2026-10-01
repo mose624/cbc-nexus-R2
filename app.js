@@ -516,6 +516,27 @@ function setActiveMaterialLink() {
   });
 }
 
+document.addEventListener("click", (event) => {
+  const button = event.target.closest("#quickTypes [data-quick-type]");
+  if (!button) return;
+
+  event.preventDefault();
+  const selectedType = String(button.dataset.quickType || "All Materials").trim();
+  state.type = selectedType;
+
+  if (elements.typeFilter) {
+    elements.typeFilter.value = selectedType;
+  }
+
+  renderQuickTypes();
+  renderResources();
+
+  const resourcesSection = document.querySelector("#resources");
+  if (resourcesSection) {
+    resourcesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}, true);
+
 function renderQuickTypes() {
   if (!elements.quickTypes) return;
 
