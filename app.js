@@ -1571,7 +1571,26 @@ async function pollMpesaPayment(checkoutRequestID, phone, resourceId) {
       const records = readPaymentRecords().map(item => item.checkoutRequestID === checkoutRequestID ? {...item, status: status === "paid" ? "paid" : status === "failed" ? "failed" : "pending confirmation", mpesaReceipt: data.payment?.receipt || null} : item);
       localStorage.setItem(PAYMENT_RECORDS_KEY, JSON.stringify(records));
       renderPaymentRecords();
-      if (status === "paid") { clearInterval(timer); elements.paymentStatus.textContent = "Payment verified. You can now request the download for admin approval."; showToast("M-Pesa payment verified."); }
+      if (status === "paid") {
+        clearInterval(timer);
+        elements.paymentStatus.textContent = "Payment verified. Sending your download request for admin approval...";
+        showToast("M-Pesa payment verified.");
+        try {
+          const approvalResponse = await fetch("/api/download-approval/request", {
+            method: "POST",
+            credentials: "same-origin",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify({resourceId, customerPhone: phone, checkoutRequestID})
+          });
+          const approvalData = await approvalResponse.json().catch(() => ({}));
+          if (!approvalResponse.ok || !approvalData.ok) throw new Error(approvalData.error || "Download request could not be recorded.");
+          elements.paymentStatus.textContent = "Payment verified. Your download request has been sent to admin. You can download the file after approval.";
+          showToast("Payment verified and download request sent.");
+        } catch (approvalError) {
+          elements.paymentStatus.textContent = approvalError.message || "Payment verified, but the download request needs to be submitted again."; 
+          showToast(approvalError.message || "Download request could not be recorded.");
+        }
+      }
       else if (status === "failed") { clearInterval(timer); elements.paymentStatus.textContent = "M-Pesa payment was not completed."; showToast("M-Pesa payment was not completed."); }
     } catch {}
     if (attempts >= 12) clearInterval(timer);
