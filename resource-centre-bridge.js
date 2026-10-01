@@ -56,9 +56,9 @@
 
       const source=Array.isArray(data.resources)?data.resources:[];
       const live=source.map(normalize).filter(r=>!BLOCKED.has(r.status));
-      const merged=new Map(read().map(r=>[String(r.id),r]));
-      live.forEach(r=>merged.set(String(r.id),r));
-      localStorage.setItem(KEY,JSON.stringify([...merged.values()]));
+      // Supabase is authoritative for published resources. Replace the cache rather than
+      // merging stale/deleted records back into the public library.
+      localStorage.setItem(KEY,JSON.stringify(live));
 
       if(typeof window.renderResources==="function") window.renderResources();
       if(typeof window.renderTrending==="function") window.renderTrending();

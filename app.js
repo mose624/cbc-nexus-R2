@@ -1999,10 +1999,14 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
 }
 
 async function openResourcePreview(resourceId) {
-  const resource = getAllResources().find((r) => r.id === resourceId);
-  if (!resource?.previewKey) { showToast("A page preview is not available for this resource yet."); return; }
+  const resource = getAllResources().find((r) => String(r.id) === String(resourceId));
+  if (!resource) { showToast("Resource could not be found. Refresh the library and try again."); return; }
+  if (!resource.previewKey && !resource.r2Key) { showToast("This resource has no previewable file."); return; }
   try {
-    const response = await fetch("/api/r2/preview?key=" + encodeURIComponent(resource.previewKey), { credentials: "same-origin" });
+    const query = resource.previewKey
+      ? "key=" + encodeURIComponent(resource.previewKey)
+      : "resourceId=" + encodeURIComponent(resource.id);
+    const response = await fetch("/api/r2/preview?" + query + "&_=" + Date.now(), { credentials: "same-origin", cache: "no-store" });
     const data = await response.json();
     if (!response.ok || !data.ok) throw new Error(data.error || "Preview could not be opened.");
     elements.resourcePreviewTitle.textContent = resource.title;
