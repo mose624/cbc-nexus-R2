@@ -45,8 +45,6 @@
       try{
         data=await fetchJson("/api/resources?_="+Date.now());
       }catch(primaryError){
-        // The admin endpoint is a safe authenticated fallback. This keeps an
-        // existing admin dashboard usable if the public resource query fails.
         if(document.body.classList.contains("admin-unlocked") || sessionStorage.getItem("cbeAdminUnlocked")==="true"){
           data=await fetchJson("/api/admin/dashboard?_="+Date.now());
         }else{
@@ -61,15 +59,51 @@
       localStorage.setItem(KEY,JSON.stringify([...merged.values()]));
 
       if(typeof window.renderResources==="function") window.renderResources();
+      if(typeof window.renderResourceBundles==="function") window.renderResourceBundles();
       if(typeof window.renderTrending==="function") window.renderTrending();
       if(typeof window.loadAdminDashboard==="function" && (document.body.classList.contains("admin-unlocked") || sessionStorage.getItem("cbeAdminUnlocked")==="true")){
         await window.loadAdminDashboard();
       }
 
       window.dispatchEvent(new CustomEvent("cbe:resources-synced",{detail:{count:live.length}}));
+      return live.length;
     }catch(e){
       console.warn("CBE Nexus resource bridge failed:",e);
+      throw e;
     }
+  }
+
+  function showMessage(message){
+    if(typeof window.showToast==="function") window.showToast(message);
+    else console.info("CBE Nexus:",message);
+  }
+
+  function installUploadRefreshButton(){
+    const form=document.querySelector("#resourceForm");
+    if(!form || document.querySelector("#refreshUploadResourcesButton")) return;
+    const button=document.createElement("button");
+    button.id="refreshUploadResourcesButton";
+    button.type="button";
+    button.className="secondary-button";
+    button.textContent="↻ Refresh Resources";
+    button.title="Reload the latest resources from Supabase and refresh the dashboard";
+    button.style.margin="0 0 14px 0";
+    button.addEventListener("click",async function(){
+      if(button.disabled) return;
+      button.disabled=true;
+      const original=button.textContent;
+      button.textContent="↻ Refreshing...";
+      try{
+        const count=await sync();
+        showMessage(`Resources refreshed successfully. ${count} published resource(s) loaded.`);
+      }catch(error){
+        showMessage(error.message||"Resources could not be refreshed.");
+      }finally{
+        button.disabled=false;
+        button.textContent=original;
+      }
+    });
+    form.parentNode.insertBefore(button,form);
   }
 
   function apply(grade,subject){
@@ -106,10 +140,11 @@
 
   function boot(){
     wireSubjectLinks();
-    sync();
-    setTimeout(wireSubjectLinks,500);
-    setTimeout(wireSubjectLinks,1500);
-    setTimeout(wireSubjectLinks,3000);
+    installUploadRefreshButton();
+    sync().catch(()=>{});
+    setTimeout(()=>{wireSubjectLinks();installUploadRefreshButton()},500);
+    setTimeout(()=>{wireSubjectLinks();installUploadRefreshButton()},1500);
+    setTimeout(()=>{wireSubjectLinks();installUploadRefreshButton()},3000);
   }
 
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot,{once:true});
