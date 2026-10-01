@@ -516,26 +516,16 @@ function setActiveMaterialLink() {
   });
 }
 
-document.addEventListener("click", (event) => {
-  const button = event.target.closest("#quickTypes [data-quick-type]");
-  if (!button) return;
-
-  event.preventDefault();
-  const selectedType = String(button.dataset.quickType || "All Materials").trim();
-  state.type = selectedType;
-
-  if (elements.typeFilter) {
-    elements.typeFilter.value = selectedType;
-  }
-
+function selectQuickType(selectedType) {
+  const type = String(selectedType || "All Materials").trim();
+  state.type = type;
+  if (elements.typeFilter) elements.typeFilter.value = type;
   renderQuickTypes();
   renderResources();
-
   const resourcesSection = document.querySelector("#resources");
-  if (resourcesSection) {
-    resourcesSection.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-}, true);
+  if (resourcesSection) resourcesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  showToast(type + " selected.");
+}
 
 function renderQuickTypes() {
   if (!elements.quickTypes) return;
@@ -546,7 +536,7 @@ function renderQuickTypes() {
   ]
     .map((type) => {
       const active = state.type === type ? " active" : "";
-      return `<button type="button" class="quick-type-button${active}" data-quick-type="${escapeHtml(type)}" aria-pressed="${state.type === type ? "true" : "false"}">${escapeHtml(type)}</button>`;
+      return `<button type="button" class="quick-type-button${active}" data-quick-type="${escapeHtml(type)}" aria-pressed="${state.type === type ? "true" : "false"}" onclick="selectQuickType(this.dataset.quickType)">${escapeHtml(type)}</button>`;
     })
     .join("");
 }
@@ -1763,17 +1753,6 @@ function bindEvents() {
       showToast(`${category} selected.`);
       document.querySelector("#resources").scrollIntoView({ behavior: "smooth", block: "start" });
     });
-  });
-
-  safeOn(elements.quickTypes, "click", (event) => {
-    const button = event.target.closest("[data-quick-type]");
-    if (!button) return;
-    state.type = button.dataset.quickType || "All Materials";
-    if (elements.typeFilter) elements.typeFilter.value = state.type;
-    renderQuickTypes();
-    renderResources();
-    showToast(`${state.type} selected.`);
-    document.querySelector("#resources").scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
   if (elements.trendingList) safeOn(elements.trendingList, "click", (event) => {
