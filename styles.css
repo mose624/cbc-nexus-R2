@@ -6751,3 +6751,6 @@ body.admin-unlocked .admin-only-link {
     line-height: 1 !important;
   }
 }
+
+
+.bundle-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:18px}.bundle-card{border:1px solid var(--line);border-radius:16px;padding:20px;background:#fff;box-shadow:0 8px 24px rgba(0,0,0,.06)}.bundle-card h3{margin:10px 0 8px}.bundle-card p{color:var(--muted,#667085)}.bundle-card ul{padding-left:20px;min-height:72px}.bundle-price{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:16px 0;font-size:15px}.bundle-price strong{font-size:22px}.bundle-price span{font-weight:800}.bundle-card .whatsapp-buy-button{display:inline-block;margin-top:10px;text-decoration:none}
