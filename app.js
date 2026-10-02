@@ -1341,6 +1341,28 @@ async function initVacancies(){loadVacancies("homeVacancyGrid",true);loadVacanci
   if(document.body.classList.contains("admin-unlocked")){host.dataset.loaded="1";load();}
 })();
 
+/* Reliable page navigation for dashboard/action buttons. Existing form, modal, grade-toggle and admin-tab actions are left untouched. */
+(function wireButtonPageNavigation(){
+  const routes={
+    openSellerDashboardButtonSecondary:"upload.html",
+    startQuizButton:"quizzes.html",
+    toggleQuestionSetterButton:"quizzes.html",
+    startGradeOneUploadButton:"upload.html?grade=Grade%201"
+  };
+  function go(url){ if(url) window.location.assign(url); }
+  document.addEventListener("click",function(event){
+    const button=event.target.closest("button");
+    if(!button) return;
+    if(button.dataset.page) { event.preventDefault(); go(button.dataset.page); return; }
+    if(routes[button.id]) { event.preventDefault(); go(routes[button.id]); return; }
+    const search=button.closest("[data-landing-search]")?.dataset.landingSearch || button.dataset.landingSearch;
+    if(search){
+      event.preventDefault();
+      go("resource-category.html?search="+encodeURIComponent(search));
+    }
+  },true);
+})();
+
 /* Automatic grade colour theme for Teaching & Learning pages. */
 (function(){
   const gradeThemeMap={
