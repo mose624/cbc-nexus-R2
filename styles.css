@@ -6495,22 +6495,25 @@ body.admin-unlocked .admin-only-link {
   border-radius:8px;
   font-weight:900;
   padding:9px 11px;
-  margin:3px 0;
-  background:linear-gradient(90deg,#fff7cf,#fff);
-  border-left:5px solid #f2c94c;
+  margin:4px 0 3px;
+  border:1px solid;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  cursor:pointer;
 }
-#dashboard .teaching-materials-dropdown .dropdown-grade:nth-of-type(1) > summary{border-left-color:#e85d8e}
-#dashboard .teaching-materials-dropdown .dropdown-grade:nth-of-type(2) > summary{border-left-color:#e08a8a}
-#dashboard .teaching-materials-dropdown .dropdown-grade:nth-of-type(3) > summary{border-left-color:#e6c83f}
-#dashboard .teaching-materials-dropdown .dropdown-grade:nth-of-type(4) > summary{border-left-color:#a8743b}
-#dashboard .teaching-materials-dropdown .dropdown-grade:nth-of-type(5) > summary{border-left-color:#55a866}
-#dashboard .teaching-materials-dropdown .dropdown-grade:nth-of-type(6) > summary{border-left-color:#4d9bd2}
-#dashboard .teaching-materials-dropdown .dropdown-grade:nth-of-type(7) > summary{border-left-color:#4b4fa3}
-#dashboard .teaching-materials-dropdown .dropdown-grade:nth-of-type(8) > summary{border-left-color:#8e5bb7}
-#dashboard .teaching-materials-dropdown .dropdown-grade:nth-of-type(9) > summary{border-left-color:#a06ac2}
-#dashboard .teaching-materials-dropdown .dropdown-grade:nth-of-type(10) > summary{border-left-color:#7b1e2b}
-#dashboard .teaching-materials-dropdown .dropdown-grade:nth-of-type(11) > summary{border-left-color:#7a4b2a}
-#dashboard .teaching-materials-dropdown .dropdown-grade:nth-of-type(12) > summary{border-left-color:#d4a72c}
+#dashboard .teaching-materials-dropdown .dropdown-grade:nth-of-type(1) > summary{background:#fff0f5;border-color:#e8a1bd;color:#8a214d}
+#dashboard .teaching-materials-dropdown .dropdown-grade:nth-of-type(2) > summary{background:#fff1f1;border-color:#e2a4a4;color:#7d3030}
+#dashboard .teaching-materials-dropdown .dropdown-grade:nth-of-type(3) > summary{background:#fffbe0;border-color:#e6d36a;color:#665400}
+#dashboard .teaching-materials-dropdown .dropdown-grade:nth-of-type(4) > summary{background:#f8eee5;border-color:#c99b70;color:#633c1c}
+#dashboard .teaching-materials-dropdown .dropdown-grade:nth-of-type(5) > summary{background:#edf8ee;border-color:#a9d6ad;color:#24562c}
+#dashboard .teaching-materials-dropdown .dropdown-grade:nth-of-type(6) > summary{background:#eaf6ff;border-color:#9fcbea;color:#17496b}
+#dashboard .teaching-materials-dropdown .dropdown-grade:nth-of-type(7) > summary{background:#eef0ff;border-color:#aeb2e2;color:#363a83}
+#dashboard .teaching-materials-dropdown .dropdown-grade:nth-of-type(8) > summary{background:#f5ebff;border-color:#d7b8ed;color:#56336d}
+#dashboard .teaching-materials-dropdown .dropdown-grade:nth-of-type(9) > summary{background:#f8edff;border-color:#d8b8e8;color:#633b7c}
+#dashboard .teaching-materials-dropdown .dropdown-grade:nth-of-type(10) > summary{background:#fff0f2;border-color:#d69aa5;color:#741d2b}
+#dashboard .teaching-materials-dropdown .dropdown-grade:nth-of-type(11) > summary{background:#f7eee8;border-color:#c9a58c;color:#684329}
+#dashboard .teaching-materials-dropdown .dropdown-grade:nth-of-type(12) > summary{background:#fff8df;border-color:#e4c66b;color:#72530a}
 #dashboard .teaching-materials-dropdown .dropdown-grade-subjects{
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
@@ -6521,13 +6524,13 @@ body.admin-unlocked .admin-only-link {
   display:block;
   padding:7px 8px;
   border-radius:7px;
-  background:#fff8cf;
-  border:1px solid #f0df83;
-  color:#4a3d00;
+  background:#fff4b8;
+  border:1px solid #e6d45a;
+  color:#4d4300;
   font-weight:750;
   font-size:.78rem;
   line-height:1.2;
-  transition:transform .12s ease,box-shadow .12s ease,background .12s ease;
+  transition:transform .12s ease,box-shadow .12s ease,filter .12s ease;
 }
 #dashboard .teaching-materials-dropdown .dropdown-grade-subjects a:nth-child(4n+2){background:#eaf6ff;border-color:#b8dbf4;color:#17496b}
 #dashboard .teaching-materials-dropdown .dropdown-grade-subjects a:nth-child(4n+3){background:#edf8ed;border-color:#b9dfb9;color:#24562c}
@@ -6536,7 +6539,7 @@ body.admin-unlocked .admin-only-link {
 #dashboard .teaching-materials-dropdown .dropdown-grade-subjects a:focus-visible{
   transform:translateY(-1px);
   box-shadow:0 3px 10px rgba(0,0,0,.10);
-  background:#fff1a8;
+  filter:brightness(.97);
 }
 @media(max-width:700px){
   #dashboard .teaching-materials-dropdown .dropdown-grade-subjects{grid-template-columns:1fr}
