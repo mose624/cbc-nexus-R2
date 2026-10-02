@@ -430,7 +430,7 @@ function downloadAdminJson(filename,data){
   setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 function auditAdminExportButtons(){
-  safeOn(document.getElementById("adminExportSales"),"click",()=>{
+  const salesButton=document.getElementById("adminExportSales");\n  if(salesButton) salesButton.onclick=()=>{
     downloadAdminJson("cbe-nexus-sales.json",adminDashboardData?.sales||[]);
     showToast("Sales export downloaded.");
   });
