@@ -958,13 +958,22 @@
 
 <div id="adminControlPanel" class="admin-control-panel">
           <div class="admin-control-topbar">
-            <div>
-              <p class="eyebrow">Central management</p>
+            <div class="admin-title-block">
+              <div class="admin-title-line">
+                <span class="admin-status-dot" aria-hidden="true"></span>
+                <p class="eyebrow">CBE NEXUS · ADMINISTRATION</p>
+                <span class="admin-live-badge">LIVE</span>
+              </div>
               <h2>Admin Control Centre</h2>
-              <p>One place to manage resources, customers, sales, prices, SEO and international teaching vacancies.</p>
+              <p>Welcome back, Administrator. Manage your learning marketplace, users, sales, teaching jobs and SEO from one secure workspace.</p>
             </div>
             <div class="admin-toolbar-actions">
-              <span id="adminLastUpdated" class="admin-last-updated">Not loaded</span>
+              <div class="admin-session-info">
+                <span class="admin-session-label">System status</span>
+                <strong>Operational</strong>
+                <span id="adminLastUpdated" class="admin-last-updated">Not loaded</span>
+              </div>
+              <a class="secondary-button admin-public-link" href="#dashboard">View Website</a>
               <button class="secondary-button" id="refreshAdminDashboardButton" type="button">↻ Refresh</button>
             </div>
           </div>
