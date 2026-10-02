@@ -974,3 +974,85 @@ renderProgressReport();
 (function(){const q=id=>document.getElementById(id);function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));}function url(v){try{const u=new URL(String(v||""),location.origin);return /^https?:$/.test(u.protocol)?u.href:"#";}catch{return "#";}}
 async function loadVacancies(id,publicMode){const t=q(id);if(!t)return;try{const r=await fetch("/api/vacancies?_="+Date.now(),{credentials:"same-origin"}),d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||"Vacancies could not be loaded.");const rows=d.vacancies||[];if(!rows.length){t.innerHTML='<div class="empty-state">No teaching vacancies published yet.</div>';return;}t.innerHTML=rows.map(v=>'<article class="vacancy-card '+(v.featured?'featured':'')+'"><div class="vacancy-card-top"><span class="vacancy-region">'+esc(v.region||v.country||"International")+'</span>'+(v.featured?'<span class="vacancy-featured">FEATURED</span>':'')+'</div><h3>'+esc(v.title)+'</h3><strong>'+esc(v.school)+'</strong><p class="vacancy-meta">'+esc(v.country)+' · '+esc(v.subject)+' · '+esc(v.level)+' · '+esc(v.employment||"Full-time")+'</p>'+(v.salary?'<p><strong>Package:</strong> '+esc(v.salary)+'</p>':'')+(v.deadline?'<p><strong>Deadline:</strong> '+esc(v.deadline)+'</p>':'')+(v.description?'<p>'+esc(v.description).slice(0,320)+(String(v.description).length>320?'…':'')+'</p>':'')+'<div class="vacancy-card-actions"><a class="primary-button" href="'+url(v.apply_url)+'" target="_blank" rel="noopener noreferrer">Apply / View Vacancy</a>'+(publicMode?'':'<button class="ghost-button" type="button" data-delete-vacancy="'+esc(v.id)+'">Delete</button>')+'</div></article>').join("");}catch(e){t.innerHTML='<p class="form-status error">'+esc(e.message)+'</p>';}}
 async function initVacancies(){loadVacancies("homeVacancyGrid",true);loadVacancies("internationalVacancyGrid",true);const form=q("adminVacancyForm");if(!form)return;try{const r=await fetch("/api/admin/me",{credentials:"same-origin"});const d=await r.json();if(!r.ok||!d.authenticated){form.closest(".admin-vacancies-card")?.remove();return;}}catch{form.closest(".admin-vacancies-card")?.remove();return;}loadVacancies("adminVacancyList",false);form.addEventListener("submit",async e=>{e.preventDefault();const s=q("adminVacancyStatus");s.textContent="Publishing vacancy…";const body={title:q("vacancyTitleInput").value,school:q("vacancySchoolInput").value,country:q("vacancyCountryInput").value,region:q("vacancyRegionInput").value,subject:q("vacancySubjectInput").value,level:q("vacancyLevelInput").value,employment:q("vacancyEmploymentInput").value,salary:q("vacancySalaryInput").value,deadline:q("vacancyDeadlineInput").value,applyUrl:q("vacancyApplyUrlInput").value,description:q("vacancyDescriptionInput").value,requirements:q("vacancyRequirementsInput").value,featured:q("vacancyFeaturedInput").checked};try{const r=await fetch("/api/admin/vacancy",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)}),d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||"Vacancy could not be published.");s.textContent="✓ Vacancy published successfully.";form.reset();loadVacancies("adminVacancyList",false);loadVacancies("homeVacancyGrid",true);loadVacancies("internationalVacancyGrid",true);}catch(e){s.textContent=e.message||"Vacancy could not be published.";}});q("clearAdminVacancyButton")?.addEventListener("click",()=>{form.reset();q("adminVacancyStatus").textContent="";});q("adminVacancyList")?.addEventListener("click",async e=>{const b=e.target.closest("[data-delete-vacancy]");if(!b)return;if(!confirm("Delete this teaching vacancy?"))return;const r=await fetch("/api/admin/vacancy-delete",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({id:b.dataset.deleteVacancy})}),d=await r.json();if(!r.ok||!d.ok){q("adminVacancyStatus").textContent=d.error||"Could not delete vacancy.";return;}loadVacancies("adminVacancyList",false);loadVacancies("homeVacancyGrid",true);loadVacancies("internationalVacancyGrid",true);});}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initVacancies);else initVacancies();})();
+
+/* Admin resource moderation: approve, reject or permanently delete uploaded resources. */
+(function initAdminResourceModeration(){
+  const host=document.getElementById("adminResourceManagement");
+  if(!host)return;
+  let adminResources=[];
+  const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
+  async function load(){
+    try{
+      const r=await fetch("/api/admin/resources?_="+Date.now(),{credentials:"same-origin",cache:"no-store"});
+      if(r.status===401){host.innerHTML='<p class="form-status">Admin login required.</p>';return;}
+      const d=await r.json();
+      if(!r.ok||!d.ok)throw new Error(d.error||"Resources could not be loaded.");
+      adminResources=d.resources||[];
+      render();
+    }catch(e){host.innerHTML='<p class="form-status error">'+esc(e.message)+'</p>';}
+  }
+  function render(){
+    const q=String(document.getElementById("adminDashboardSearch")?.value||"").trim().toLowerCase();
+    const filter=String(document.getElementById("adminStatusFilter")?.value||"all").toLowerCase();
+    const rows=adminResources.filter(x=>{
+      const hay=[x.title,x.grade,x.subject,x.type,x.fileName,x.filename].join(" ").toLowerCase();
+      return (!q||hay.includes(q))&&(filter==="all"||String(x.status||"pending").toLowerCase()===filter);
+    });
+    const pending=adminResources.filter(x=>String(x.status||"pending").toLowerCase()==="pending").length;
+    const approved=adminResources.filter(x=>String(x.status||"").toLowerCase()==="approved").length;
+    const rejected=adminResources.filter(x=>String(x.status||"").toLowerCase()==="rejected").length;
+    const summary=document.getElementById("adminResourceSummary");
+    if(summary)summary.textContent=`${pending} pending · ${approved} online · ${rejected} rejected`;
+    if(!rows.length){host.innerHTML='<div class="admin-management-card"><strong>No uploaded resources match this filter.</strong><p>New seller uploads will appear here for moderation.</p></div>';return;}
+    host.innerHTML=rows.map(x=>{
+      const s=String(x.status||"pending").toLowerCase();
+      const badge=s==="approved"?"✓ ONLINE":s==="rejected"?"✕ REJECTED":"● PENDING";
+      return `<article class="admin-management-card admin-resource-moderation-card">
+        <div class="admin-management-heading"><div><span class="eyebrow">${esc(x.grade||"Grade")} · ${esc(x.subject||"Subject")}</span><h4>${esc(x.title||"Untitled resource")}</h4><p>${esc(x.type||"Resource")} · ${esc(x.fileName||x.filename||"File")}</p></div><span class="price-pill">${badge}</span></div>
+        <p><strong>Price:</strong> KES ${Number(x.price||0).toLocaleString("en-KE")} · <strong>Status:</strong> ${esc(s)}</p>
+        <div class="admin-resource-moderation-actions">
+          <button class="primary-button" type="button" data-resource-moderate="approved" data-resource-id="${esc(x.id)}" ${s==="approved"?"disabled":""}>✓ Approve / Publish</button>
+          <button class="secondary-button" type="button" data-resource-moderate="rejected" data-resource-id="${esc(x.id)}" ${s==="rejected"?"disabled":""}>✕ Reject / Hide</button>
+          <button class="danger-button" type="button" data-resource-delete="${esc(x.id)}">🗑 Delete File</button>
+        </div>
+      </article>`;
+    }).join("");
+  }
+  host.addEventListener("click",async e=>{
+    const statusBtn=e.target.closest("[data-resource-moderate]");
+    const deleteBtn=e.target.closest("[data-resource-delete]");
+    if(!statusBtn&&!deleteBtn)return;
+    const id=(statusBtn||deleteBtn).dataset.resourceId||(deleteBtn?.dataset.resourceDelete);
+    if(deleteBtn){
+      if(!confirm("Permanently delete this resource from CBE Nexus and Cloudflare R2? This cannot be undone."))return;
+      deleteBtn.disabled=true;
+      try{
+        const r=await fetch("/api/admin/resource-delete",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({id})});
+        const d=await r.json().catch(()=>({}));
+        if(!r.ok||!d.ok)throw new Error(d.error||"Delete failed.");
+        adminResources=adminResources.filter(x=>String(x.id)!==String(id));render();
+        if(typeof window.syncPublicResourcesFromServer==="function")await window.syncPublicResourcesFromServer();
+        if(typeof showToast==="function")showToast("Resource and stored file deleted.");
+      }catch(err){deleteBtn.disabled=false;showToast(err.message||"Delete failed.");}
+      return;
+    }
+    const status=statusBtn.dataset.resourceModerate;
+    statusBtn.disabled=true;
+    try{
+      const r=await fetch("/api/admin/resource-status",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({id,status})});
+      const d=await r.json().catch(()=>({}));
+      if(!r.ok||!d.ok)throw new Error(d.error||"Status update failed.");
+      const item=adminResources.find(x=>String(x.id)===String(id));if(item)item.status=status;render();
+      if(typeof window.syncPublicResourcesFromServer==="function")await window.syncPublicResourcesFromServer();
+      if(typeof showToast==="function")showToast(status==="approved"?"Resource is now online.":"Resource rejected and hidden from clients.");
+    }catch(err){statusBtn.disabled=false;showToast(err.message||"Status update failed.");}
+  });
+  const refresh=document.getElementById("refreshAdminDashboardButton");
+  refresh?.addEventListener("click",load);
+  document.getElementById("adminDashboardSearch")?.addEventListener("input",render);
+  document.getElementById("adminStatusFilter")?.addEventListener("change",render);
+  window.loadAdminResourceModeration=load;
+  const observer=new MutationObserver(()=>{if(document.body.classList.contains("admin-unlocked")&&host.dataset.loaded!=="1"){host.dataset.loaded="1";load();}});
+  observer.observe(document.body,{attributes:true,attributeFilter:["class"]});
+  if(document.body.classList.contains("admin-unlocked")){host.dataset.loaded="1";load();}
+})();
