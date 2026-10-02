@@ -47,8 +47,28 @@ function esc(v){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",
 fillSubjects();getResources().then(r=>{resources=r;render()});
 
 
+const PDFJS_URL="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs";
+let pdfjsPromise=null;
+async function loadPdfJs(){if(!pdfjsPromise)pdfjsPromise=import(PDFJS_URL);return pdfjsPromise;}
+async function renderPdfWithoutToolbar(url){
+ const box=document.getElementById("pdfViewer"),frame=document.getElementById("viewerFrame");
+ if(!box||!frame)return;
+ box.classList.add("active");frame.style.display="none";box.innerHTML='<div class="pdf-loading">Loading document preview…</div>';
+ try{
+  const pdfjs=await loadPdfJs();
+  pdfjs.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs";
+  const pdf=await pdfjs.getDocument({url,withCredentials:false}).promise;
+  box.innerHTML="";
+  for(let n=1;n<=pdf.numPages;n++){
+   const page=await pdf.getPage(n),viewport=page.getViewport({scale:1.35}),canvas=document.createElement("canvas");
+   canvas.className="pdf-page";canvas.width=viewport.width;canvas.height=viewport.height;
+   box.appendChild(canvas);
+   await page.render({canvasContext:canvas.getContext("2d"),viewport}).promise;
+  }
+ }catch(e){box.innerHTML='<div class="pdf-error">This document preview could not be displayed.</div>';console.warn("PDF preview error",e);}
+}
 const viewerModal=document.getElementById("viewerModal"),viewerFrame=document.getElementById("viewerFrame"),viewerTitle=document.getElementById("viewerTitle"),viewerClose=document.getElementById("viewerClose");
-function closeViewer(){if(!viewerModal)return;viewerModal.classList.remove("open");viewerModal.setAttribute("aria-hidden","true");if(viewerFrame)viewerFrame.src="";}
+function closeViewer(){if(!viewerModal)return;viewerModal.classList.remove("open");viewerModal.setAttribute("aria-hidden","true");if(viewerFrame){viewerFrame.src="";viewerFrame.style.display="block";}const box=document.getElementById("pdfViewer");if(box){box.classList.remove("active");box.innerHTML="";}}
 viewerClose?.addEventListener("click",closeViewer);
 viewerModal?.addEventListener("click",event=>{if(event.target===viewerModal)closeViewer();});
 document.addEventListener("keydown",event=>{if(event.key==="Escape")closeViewer();});
@@ -75,8 +95,10 @@ async function openResourceViewer(resource){
       viewUrl=data.viewUrl;
     }
     if(isPdf){
-      viewerFrame.src=viewUrl;
+      await renderPdfWithoutToolbar(viewUrl);
     }else{
+      const box=document.getElementById("pdfViewer");if(box)box.classList.remove("active");
+      viewerFrame.style.display="block";
       viewerFrame.src="https://view.officeapps.live.com/op/embed.aspx?src="+encodeURIComponent(viewUrl);
     }
   }catch(error){
