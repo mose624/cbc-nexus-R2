@@ -98,8 +98,12 @@ async function openResourceViewer(resource){
       await renderPdfWithoutToolbar(viewUrl);
     }else{
       const box=document.getElementById("pdfViewer");if(box)box.classList.remove("active");
-      viewerFrame.style.display="block";
-      viewerFrame.src="https://view.officeapps.live.com/op/embed.aspx?src="+encodeURIComponent(viewUrl);
+      viewerFrame.style.display="none";
+      const box=document.getElementById("pdfViewer");
+      if(box){
+        box.classList.add("active");
+        box.innerHTML=`<div class="protected-office-preview"><div class="protected-icon">📄</div><h3>Protected document preview</h3><p>This ${isPdf?"":"Office "}file is available for viewing after opening the resource through the CBE Nexus viewer.</p><p class="protected-small">External document viewers are disabled to remove Download, Copy, Print, Accessibility, embedded-information, privacy and cookie controls.</p></div>`;
+      }
     }
   }catch(error){
     closeViewer();
