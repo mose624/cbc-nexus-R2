@@ -682,8 +682,24 @@ function setActiveMaterialLink() {
     link.addEventListener("click", (event) => {
       const category = link.dataset.heroResource;
       if (!category) return;
+      // Dashboard category cards stay on the main Teaching & Learning Dashboard.
+      // They must not redirect learners to a subject/resource-category page.
       event.preventDefault();
-      window.location.href = "resource-category.html?type=" + encodeURIComponent(category);
+      const categoryTypeMap = {
+        "Holiday Classes": "Holiday Workbooks",
+        "Assignments": "Assignments",
+        "KNEC Rubrics": "KNEC Rubrics",
+        "Novels": "Bookshop",
+        "Novels & Setbooks": "Bookshop",
+        "Revision Booklets": "Study Guides",
+        "Bookshop": "Bookshop"
+      };
+      const selectedType = categoryTypeMap[category] || category;
+      if (elements.typeFilter) elements.typeFilter.value = selectedType;
+      state.type = selectedType;
+      renderResources();
+      document.querySelector("#resources")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      showToast(category + " selected.");
     });
   });
 
