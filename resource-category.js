@@ -18,7 +18,7 @@ Object.keys(gradeSubjects).forEach(g=>grade.add(new Option(g,g)));
 typeSelect.value=params.get("type")||"All Materials";
 const initialGrade=params.get("grade")||"All Grades",initialSubject=params.get("subject")||"All Subjects";
 grade.value=initialGrade;
-function fillSubjects(){const g=grade.value;subject.innerHTML="<option value="All Subjects">All Subjects</option>";(g==="All Grades"?[...new Set(Object.values(gradeSubjects).flat())]:gradeSubjects[g]||[]).forEach(s=>subject.add(new Option(s,s)));if(g===initialGrade&&grade.value!=="All Grades"&&gradeSubjects[g]?.includes(initialSubject))subject.value=initialSubject;render()}
+function fillSubjects(){const g=grade.value;subject.innerHTML='<option value="All Subjects">All Subjects</option>';(g==="All Grades"?[...new Set(Object.values(gradeSubjects).flat())]:gradeSubjects[g]||[]).forEach(s=>subject.add(new Option(s,s)));if(g===initialGrade&&grade.value!=="All Grades"&&gradeSubjects[g]?.includes(initialSubject))subject.value=initialSubject;render()}
 typeSelect.addEventListener("change",render);grade.addEventListener("change",()=>{fillSubjects();updateUrl()});subject.addEventListener("change",()=>{updateUrl();render()});search.addEventListener("input",render);
 function updateUrl(){const p=new URLSearchParams();if(typeSelect.value!=="All Materials")p.set("type",typeSelect.value);if(grade.value!=="All Grades")p.set("grade",grade.value);if(subject.value!=="All Subjects")p.set("subject",subject.value);history.replaceState(null,"","resource-category.html"+(p.toString()?"?"+p.toString():""));}
 async function getResources(){try{const r=await fetch("/api/resources?_public="+Date.now(),{cache:"no-store"}),d=await r.json();return (d.resources||[]).filter(x=>x.status==="approved")}catch{return[]}}
