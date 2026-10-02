@@ -97,6 +97,45 @@ async function savePayment(row){if(!supabaseConfigured)throw new Error("Supabase
 async function updatePaymentByCheckout(checkoutRequestId,patch){if(!supabaseConfigured)throw new Error("Supabase is required for server-side M-Pesa verification.");const {data,error}=await supabase.from("purchases").update(patch).eq("checkout_request_id",checkoutRequestId).select("*").single();if(error)throw error;return data;}
 function callbackMetadataToObject(items){const out={};for(const item of Array.isArray(items)?items:[]){if(item?.Name)out[item.Name]=item.Value??null;}return out;}
 async function verifyMpesaPaymentByQuery(checkoutRequestId){const c=getMpesaConfig();if(!checkoutRequestId||!c.shortCode||!c.passkey)return null;const token=await getMpesaAccessToken(),timestamp=mpesaTimestamp(),response=await darajaPost("/mpesa/stkpushquery/v1/query",{BusinessShortCode:c.shortCode,Password:mpesaPassword(c.shortCode,c.passkey,timestamp),Timestamp:timestamp,CheckoutRequestID:checkoutRequestId},token);const d=response.data||{};if(Number(d.ResponseCode)===0&&String(d.ResultCode)==="0"){return updatePaymentByCheckout(checkoutRequestId,{status:"paid",result_code:0,result_desc:String(d.ResultDesc||"Success"),verified_at:new Date().toISOString()});}if(d.ResultCode!==undefined){return updatePaymentByCheckout(checkoutRequestId,{status:"failed",result_code:Number(d.ResultCode),result_desc:String(d.ResultDesc||"Payment failed"),verified_at:new Date().toISOString()});}return null;}
+async function refineCvWithSmartEditor(payload){
+  const clean=(v,max=6000)=>String(v||"").trim().slice(0,max);
+  const base={
+    name:clean(payload.name,160), jobTitle:clean(payload.jobTitle,200), country:clean(payload.country,120),
+    languages:clean(payload.languages,1000), education:clean(payload.education,5000), units:clean(payload.units,4000),
+    universityClass:clean(payload.universityClass,500), experience:clean(payload.experience,7000),
+    achievements:clean(payload.achievements,4000), skills:clean(payload.skills,3000),
+    targetJob:clean(payload.targetJob,5000)
+  };
+  const fallback={
+    profile: base.jobTitle+" with relevant education, practical experience and transferable skills, presenting a clear record of responsibility, results and professional growth.",
+    skills:Array.from(new Set((base.skills.split(/[,;\n]+/).map(x=>x.trim()).filter(Boolean)).concat(["Professional communication","Team collaboration","Problem solving","Time management","Digital literacy","Adaptability"]))).slice(0,14),
+    experience: base.experience,
+    achievements: base.achievements
+  };
+  const apiKey=String(process.env.OPENAI_API_KEY||"").trim();
+  if(!apiKey)return fallback;
+  const model=String(process.env.OPENAI_MODEL||"gpt-5-mini").trim();
+  const system="You are a senior international CV editor. Rewrite candidate information into concise, truthful, employer-focused CV language. Never invent employers, qualifications, certifications, licences, dates, achievements, metrics or skills that are not supported by the candidate's information. You may identify transferable skills clearly implied by the supplied experience. Tailor terminology to the selected destination and target role. For US and Canadian applications, keep the structure ATS-friendly and do not recommend a photograph or unnecessary personal details. For UAE applications, use a professional international CV style and allow a photo only where appropriate. Return JSON only with keys: profile (string), skills (array of strings), experience (string), achievements (string).";
+  const user=JSON.stringify(base);
+  const body={model,messages:[{role:"system",content:system},{role:"user",content:"Refine this candidate information for an international job application. Strengthen the profile, rewrite experience into action-and-impact bullets where the evidence permits, improve achievements, and identify relevant employer-facing skills. Target vacancy if supplied: "+user}],response_format:{type:"json_object"}};
+  const https=require("https");
+  const result=await new Promise((resolve,reject)=>{
+    const req=https.request("https://api.openai.com/v1/chat/completions",{method:"POST",headers:{"Authorization":"Bearer "+apiKey,"Content-Type":"application/json"}},res=>{
+      let data="";res.on("data",d=>data+=d);res.on("end",()=>{try{resolve({status:res.statusCode||500,data:JSON.parse(data)})}catch{resolve({status:res.statusCode||500,data:{}})}})
+    });
+    req.on("error",reject);req.write(JSON.stringify(body));req.end();
+  });
+  if(result.status<200||result.status>=300)throw new Error("Smart CV editor is temporarily unavailable.");
+  const text=String(result.data?.choices?.[0]?.message?.content||"").trim();
+  let out;try{out=JSON.parse(text)}catch{throw new Error("Smart CV editor returned an invalid response.");}
+  return {
+    profile:clean(out.profile,1800)||fallback.profile,
+    skills:Array.isArray(out.skills)?out.skills.map(x=>clean(x,120)).filter(Boolean).slice(0,18):fallback.skills,
+    experience:clean(out.experience,8000)||fallback.experience,
+    achievements:clean(out.achievements,5000)||fallback.achievements
+  };
+}
+
 async function handleApi(req,res,url){
   if(req.method==="GET"&&url.pathname==="/api/affiliate-products"){
     const products=await readJsonStore("affiliate-products.json");
