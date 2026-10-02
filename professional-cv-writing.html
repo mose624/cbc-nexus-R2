@@ -9,12 +9,70 @@
 </style></head><body>
 <header class="site-header"><nav class="main-nav"><a class="brand" href="index.html#dashboard"><span class="brand-mark">CBE</span><span><strong>CBE Nexus</strong><small>Connecting learners to excellence</small></span></a><div class="nav-actions"><a class="secondary-button" href="index.html#dashboard">← Home</a><a class="primary-button" href="international-teaching-jobs.html">International Jobs</a></div></nav></header>
 <main class="page"><a class="back" href="index.html#dashboard">← Back to CBE Nexus</a>
-<section class="hero"><span class="price">PROFESSIONAL CV WRITING</span><h1>Build a CV That Presents You Professionally</h1><p>Professional CV writing support for teachers, graduates and job seekers applying locally or internationally. Your CV is structured for clarity, relevance, ATS-friendly formatting and professional presentation.</p><div class="actions"><a class="whatsapp-button" href="https://wa.me/254798462815?text=Hello%20CBE%20Nexus%2C%20I%20would%20like%20professional%20CV%20writing%20services." target="_blank" rel="noopener">Request CV Writing on WhatsApp</a><a class="secondary-button" href="index.html#contact">Contact CBE Nexus</a></div></section>
-<section class="grid">
-<div class="card"><h3>What we prepare</h3><ul><li>Professional CV</li><li>ATS-friendly CV version</li><li>International teaching CV</li><li>Cover letter</li><li>Professional profile / summary</li><li>Application document review</li></ul></div>
-<div class="card"><h3>For teachers</h3><p>Highlight teaching experience, subjects, curriculum exposure, classroom impact, qualifications, certifications, leadership and professional development.</p></div>
-<div class="card"><h3>For international applications</h3><p>We can structure your CV for international-school applications while keeping information truthful and allowing each employer's requirements to guide the final version.</p></div>
-<div class="card"><h3>Simple process</h3><ol class="steps"><li>Send your existing CV or career details.</li><li>Tell us the job/country you are targeting.</li><li>We structure and improve the CV.</li><li>Review the draft and request corrections.</li><li>Receive the final professional version.</li></ol></div>
+<section class="hero"><span class="price">AUTOMATED CV GENERATOR</span><h1>Build a CV That Presents You Professionally</h1><p>Create a professional CV by entering your career details below. The generator tailors the structure and language to the country and education system selected, shows a live preview, and prepares the final CV for paid download.</p></section>
+
+<section class="card" id="cvGenerator" style="margin-top:22px">
+<h2>Automated CV Generator</h2>
+<p>Complete the form. Fields marked optional can be left blank.</p>
+<form id="cvGeneratorForm">
+<div class="grid">
+<div><label for="cvName"><strong>Full Name</strong></label><input id="cvName" required placeholder="Full name"></div>
+<div><label for="cvJobTitle"><strong>Job Title</strong></label><input id="cvJobTitle" required placeholder="e.g. Teacher, Accountant"></div>
+<div><label for="cvGender"><strong>Gender</strong></label><select id="cvGender"><option value="">Select</option><option>Male</option><option>Female</option><option>Prefer not to say</option></select></div>
+<div><label for="cvLanguage"><strong>Proficiency Language(s)</strong></label><input id="cvLanguage" required placeholder="e.g. English - Fluent; Kiswahili - Fluent"></div>
+<div><label for="cvEmail"><strong>Email Address</strong></label><input id="cvEmail" type="email" required placeholder="name@example.com"></div>
+<div><label for="cvPhone"><strong>Phone Number</strong></label><input id="cvPhone" required placeholder="+254..."></div>
+<div><label for="cvCountry"><strong>Country of Application</strong></label><select id="cvCountry" required><option value="">Select country</option><option>Kenya</option><option>United States</option><option>Canada</option><option>United Kingdom</option><option>United Arab Emirates</option><option>Qatar</option><option>Saudi Arabia</option><option>Oman</option><option>China</option><option>Japan</option><option>South Korea</option><option>Singapore</option><option>Australia</option><option>New Zealand</option><option>Germany</option><option>France</option><option>Netherlands</option><option>South Africa</option><option>Other</option></select></div>
+<div><label for="cvType"><strong>Type of CV</strong></label><select id="cvType" required><option value="Starter">Starter CV</option><option value="Medium">Medium CV</option><option value="Professional">Professional CV</option></select></div>
+<div><label for="cvUniversityUnits"><strong>Units / Courses in University</strong></label><textarea id="cvUniversityUnits" rows="4" placeholder="List relevant units, courses or modules"></textarea></div>
+<div><label for="cvClass"><strong>Class in University</strong></label><input id="cvClass" placeholder="e.g. Second Class Upper"></div>
+<div><label for="cvEducation"><strong>Education &amp; Qualifications</strong></label><textarea id="cvEducation" rows="4" required placeholder="University, college, school, qualifications, years"></textarea></div>
+<div><label for="cvExperience"><strong>Working Experiences</strong></label><textarea id="cvExperience" rows="6" required placeholder="Employer, role, dates, responsibilities and results"></textarea></div>
+<div><label for="cvAchievements"><strong>Achievements</strong></label><textarea id="cvAchievements" rows="5" placeholder="Awards, measurable results, leadership, projects"></textarea></div>
+<div><label for="cvSkills"><strong>Skills</strong></label><textarea id="cvSkills" rows="5" required placeholder="Teaching, leadership, ICT, communication, classroom management, subject skills, etc."></textarea></div>
+<div><label for="cvReferees"><strong>Referees (if applicable)</strong></label><textarea id="cvReferees" rows="5" placeholder="Name, title, organisation, email and phone"></textarea></div>
+</div>
+<div class="actions"><button class="primary-button" type="submit">Generate CV Preview</button><button class="secondary-button" type="reset" id="resetCv">Clear Form</button></div>
+<p id="cvStatus" class="form-status" aria-live="polite"></p>
+</form>
 </section>
-<div class="card" style="margin-top:18px"><h3>What to send</h3><p>Name and contacts, education, work history, subjects taught, achievements, certifications, skills, referees and the job advert or target role. Do not send passwords or unnecessary sensitive information.</p></div>
-</main></body></html>
+
+<section class="card" style="margin-top:22px">
+<h2>CV Preview</h2>
+<p id="previewHint">Your tailored CV preview will appear here after generation.</p>
+<div id="cvPreview" style="background:#fff;border:1px solid var(--line);padding:28px;min-height:280px"></div>
+<div class="actions"><button class="primary-button" type="button" id="payToDownloadCv">Pay to Download CV</button><a class="whatsapp-button" href="https://wa.me/254798462815?text=Hello%20CBE%20Nexus%2C%20I%20need%20help%20with%20my%20automated%20CV." target="_blank" rel="noopener">Need Help? WhatsApp</a></div>
+<p id="cvPaymentStatus" class="form-status" aria-live="polite"></p>
+</section>
+
+<section class="grid" style="margin-top:22px">
+<div class="card"><h3>What we prepare</h3><ul><li>Professional CV</li><li>ATS-friendly CV version</li><li>International teaching CV</li><li>Country and education-system tailored structure</li><li>Professional profile / summary</li><li>Relevant skills section</li><li>Cover-letter-ready career information</li><li>Referees where applicable</li></ul></div>
+<div class="card"><h3>Education-system tailoring</h3><p>The preview uses the selected country to guide terminology, ordering and presentation. The information remains based on the client's actual qualifications and experience; it does not invent credentials, licences or achievements.</p></div>
+<div class="card"><h3>For teachers</h3><p>Include subjects taught, curriculum exposure, classroom impact, qualifications, certifications, leadership, professional development, ICT and other relevant teaching skills.</p></div>
+<div class="card"><h3>Simple process</h3><ol class="steps"><li>Enter your details.</li><li>Select country and CV type.</li><li>Generate and review the preview.</li><li>Make corrections and regenerate.</li><li>Pay to download the final CV.</li></ol></div>
+</section>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const fields=["cvName","cvJobTitle","cvGender","cvLanguage","cvEmail","cvPhone","cvCountry","cvType","cvUniversityUnits","cvClass","cvEducation","cvExperience","cvAchievements","cvSkills","cvReferees"];
+const esc=v=>String(v||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
+function section(title,value){if(!value)return "";return "<h3>"+title+"</h3><p style='white-space:pre-line'>"+esc(value)+"</p>";}
+function generate(){
+const data=Object.fromEntries(fields.map(id=>[id,$(id).value.trim()]));
+if(!data.cvName||!data.cvJobTitle||!data.cvLanguage||!data.cvEmail||!data.cvPhone||!data.cvCountry||!data.cvEducation||!data.cvExperience||!data.cvSkills){$("cvStatus").textContent="Please complete all required fields.";return;}
+$("cvPreview").innerHTML="<div style='text-align:center'><h1 style='margin-bottom:4px'>"+esc(data.cvName)+"</h1><h2 style='margin-top:0'>"+esc(data.cvJobTitle)+"</h2><p>"+esc(data.cvEmail)+" | "+esc(data.cvPhone)+" | "+esc(data.cvCountry)+"</p></div>"+section("Professional Profile","Tailored "+data.cvType+" CV for "+data.cvCountry+" applications. "+data.cvJobTitle+" with relevant education, experience and skills presented for professional and ATS-friendly review.")+section("Languages",data.cvLanguage)+section("Education & Qualifications",data.cvEducation)+section("University Units / Courses",data.cvUniversityUnits)+section("University Class",data.cvClass)+section("Working Experience",data.cvExperience)+section("Achievements",data.cvAchievements)+section("Skills",data.cvSkills)+section("Referees",data.cvReferees);
+$("previewHint").style.display="none";$("cvStatus").textContent="Preview generated. Review your details before payment.";
+$("cvPreview").dataset.generated="true"; $("cvPreview").dataset.cv=JSON.stringify(data);
+}
+$("cvGeneratorForm").addEventListener("submit",e=>{e.preventDefault();generate();});
+$("resetCv").addEventListener("click",()=>{setTimeout(()=>{$("cvPreview").innerHTML="";$("previewHint").style.display="block";$("cvStatus").textContent="";$("cvPaymentStatus").textContent="";},0);});
+$("payToDownloadCv").addEventListener("click",()=>{
+if($("cvPreview").dataset.generated!=="true"){$("cvPaymentStatus").textContent="Generate the CV preview first.";return;}
+const d=JSON.parse($("cvPreview").dataset.cv||"{}");
+const amount=d.cvType==="Starter"?300:d.cvType==="Medium"?600:1000;
+$("cvPaymentStatus").textContent="CV selected: "+d.cvType+" | Country: "+d.cvCountry+" | Download price: KSh "+amount+". Proceed to secure M-Pesa checkout.";
+window.location.href="index.html?cv="+encodeURIComponent(d.cvName)+"&amount="+amount+"&type="+encodeURIComponent(d.cvType)+"#payments";
+});
+})();
+</script></main></body></html>
