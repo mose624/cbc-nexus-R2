@@ -77,6 +77,45 @@
         if (!grade || !subject || !type) {
           throw new Error("Please select Grade, Subject, and Material Type before publishing.");
         }
+
+        // Prevent a resource from being uploaded under a subject that
+        // does not belong to the selected grade.
+        const gradeSubjectMap = {
+          "Grade 1":["Creative Activities","Christian Religious Education","English Activities","Environmental Activities","Hindu Religious Education","Islamic Religious Education","Kiswahili Activities","Mathematics Activities"],
+          "Grade 2":["Creative Activities","Christian Religious Education","English Activities","Environmental Activities","Hindu Religious Education","Islamic Religious Education","Kiswahili Activities","Mathematics Activities"],
+          "Grade 3":["Creative Activities","Christian Religious Education","English Activities","Environmental Activities","Hindu Religious Education","Islamic Religious Education","Kiswahili Activities","Mathematics Activities"],
+          "Grade 4":["Agriculture","Arabic","Creative Arts","Christian Religious Education","English","French","German","Hindu Religious Education","Indigenous Language","Islamic Religious Education","Kiswahili","Mandarin","Mathematics","Science and Technology","Social Studies"],
+          "Grade 5":["Agriculture","Arabic","Creative Arts","Christian Religious Education","English","French","German","Hindu Religious Education","Indigenous Language","Islamic Religious Education","Kiswahili","Mandarin","Mathematics","Science and Technology","Social Studies"],
+          "Grade 6":["Agriculture","Arabic","Creative Arts","Christian Religious Education","English","French","German","Hindu Religious Education","Indigenous Language","Islamic Religious Education","Kiswahili","Mandarin","Mathematics","Science and Technology","Social Studies"],
+          "Grade 7":["Agriculture","Arabic","Creative Arts","Christian Religious Education","English","French","German","Hindu Religious Education","Indigenous Language","Integrated Science","Islamic Religious Education","Kiswahili","Mandarin","Mathematics","Pre-Technical Studies","Social Studies"],
+          "Grade 8":["Agriculture","Arabic","Creative Arts","Christian Religious Education","English","French","German","Hindu Religious Education","Indigenous Language","Integrated Science","Islamic Religious Education","Kiswahili","Mandarin","Mathematics","Pre-Technical Studies","Social Studies"],
+          "Grade 9":["Agriculture","Arabic","Creative Arts","Christian Religious Education","English","French","German","Hindu Religious Education","Indigenous Language","Integrated Science","Islamic Religious Education","Kiswahili","Mandarin","Mathematics","Pre-Technical Studies","Social Studies"],
+          "Grade 10":["Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","Islamic Religious Education","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","Hindu Religious Education","Mandarin Chinese"],
+          "Grade 11":["Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","Islamic Religious Education","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","Hindu Religious Education","Mandarin Chinese"],
+          "Grade 12":["Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","Islamic Religious Education","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","Hindu Religious Education","Mandarin Chinese"]
+        };
+        const subjectAliases = {
+          "CRE":"Christian Religious Education",
+          "Christian Religious Education (CRE)":"Christian Religious Education",
+          "HRE":"Hindu Religious Education",
+          "Hindu Religious Education (HRE)":"Hindu Religious Education",
+          "IRE":"Islamic Religious Education",
+          "Islamic Religious Education (IRE)":"Islamic Religious Education",
+          "Science & Technology":"Science and Technology",
+          "History and Citizenship":"History & Citizenship",
+          "Building & Construction":"Building and Construction",
+          "Marine and Fisheries Technology":"Marine & Fisheries",
+          "Metalwork":"Metal Work",
+          "Wood Technology":"Woodwork",
+          "Music and Dance":"Music & Dance",
+          "Theatre and Film":"Theatre & Film",
+          "Sports and Recreation":"Sports & Recreation"
+        };
+        const canonicalSubject = value => subjectAliases[String(value || "").trim()] || String(value || "").trim();
+        const allowedSubjects = gradeSubjectMap[grade] || [];
+        if (!allowedSubjects.length || !allowedSubjects.some(item => canonicalSubject(item) === canonicalSubject(subject))) {
+          throw new Error("The selected subject does not belong to " + grade + ". Please select the subject from the grade-specific list.");
+        }
         const result = await upload(file, { grade, subject, type, resourceId: id, role: "admin" });
         const resource = {
           id,
