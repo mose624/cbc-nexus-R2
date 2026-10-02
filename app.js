@@ -657,7 +657,6 @@ function refreshSubjectFilters() {
 
 function setupFilters() {
   const grades = Object.keys(gradeSubjects);
-  const allAdminSubjects = allCbeSubjects;
 
   optionList(elements.gradeFilter, ["All Grades", ...grades], state.grade);
   optionList(elements.adminGrade, grades, "Grade 1");
@@ -668,9 +667,20 @@ function setupFilters() {
   optionList(elements.typeFilter, ["All Materials", ...materialTypes], state.type);
   optionList(elements.adminType, materialTypes, "Notes");
   optionList(elements.sellerType, materialTypes, "Notes");
-  // Upload and Publish Learning Resources: show the complete subject catalogue.
-  optionList(elements.adminSubject, allAdminSubjects, "Mathematics Activities");
-  optionList(elements.sellerSubject, allAdminSubjects, "Mathematics Activities");
+
+  // Keep upload metadata aligned with the same Grade -> Subject catalogue
+  // used by the public Resource Library.
+  const syncUploadSubjects = (gradeElement, subjectElement) => {
+    if (!gradeElement || !subjectElement) return;
+    const sync = () => {
+      const subjects = gradeSubjects[gradeElement.value] || [];
+      optionList(subjectElement, subjects, subjects[0] || "");
+    };
+    gradeElement.addEventListener("change", sync);
+    sync();
+  };
+  syncUploadSubjects(elements.adminGrade, elements.adminSubject);
+  syncUploadSubjects(elements.sellerGrade, elements.sellerSubject);
   refreshSubjectFilters();
 }
 
