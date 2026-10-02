@@ -9,7 +9,7 @@
 </style></head><body>
 <header class="site-header"><nav class="main-nav"><a class="brand" href="index.html#dashboard"><span class="brand-mark">CBE</span><span><strong>CBE Nexus</strong><small>Connecting learners to excellence</small></span></a><div class="nav-actions"><a class="secondary-button" href="index.html#dashboard">← Home</a><a class="primary-button" href="international-teaching-jobs.html">International Jobs</a></div></nav></header>
 <main class="page"><a class="back" href="index.html#dashboard">← Back to CBE Nexus</a>
-<section class="hero"><span class="price">AUTOMATED CV GENERATOR</span><h1>Build a CV That Presents You Professionally</h1><p>Create a professional CV by entering your career details below. The generator tailors the structure and language to the country and education system selected, shows a live preview, and prepares the final CV for paid download.</p></section>
+<section class="hero"><span class="price">AUTOMATED CV GENERATOR</span><h1>Build a CV That Presents You Professionally</h1><p>Create a polished, professional CV for international applications. Your information is intelligently organised into a clear, job-focused structure tailored to the selected destination and education system, with a live preview before payment.</p></section>
 
 <section class="card" id="cvGenerator" style="margin-top:22px">
 <h2>Automated CV Generator</h2>
@@ -24,6 +24,8 @@
 <div><label for="cvPhone"><strong>Phone Number</strong></label><input id="cvPhone" required placeholder="+254..."></div>
 <div><label for="cvCountry"><strong>Country of Application</strong></label><select id="cvCountry" required><option value="">Select country</option><option>Kenya</option><option>United States</option><option>Canada</option><option>United Kingdom</option><option>United Arab Emirates</option><option>Qatar</option><option>Saudi Arabia</option><option>Oman</option><option>China</option><option>Japan</option><option>South Korea</option><option>Singapore</option><option>Australia</option><option>New Zealand</option><option>Germany</option><option>France</option><option>Netherlands</option><option>South Africa</option><option>Other</option></select></div>
 <div><label for="cvType"><strong>Type of CV</strong></label><select id="cvType" required><option value="Starter">Starter CV</option><option value="Medium">Medium CV</option><option value="Professional">Professional CV</option></select></div>
+<div><label for="cvPages"><strong>Number of Pages</strong></label><select id="cvPages" required><option value="1">1 Page</option><option value="2" selected>2 Pages</option><option value="3">3 Pages</option><option value="4">4 Pages</option><option value="5">5 Pages</option></select></div>
+<div><label for="cvPhoto"><strong>Passport Photo</strong> <small>(optional)</small></label><input id="cvPhoto" type="file" accept="image/jpeg,image/png,image/webp"><small>Upload a clear passport-size photo. It will only appear where appropriate for the selected destination.</small></div>
 <div><label for="cvUniversityUnits"><strong>Units / Courses in University</strong></label><textarea id="cvUniversityUnits" rows="4" placeholder="List relevant units, courses or modules"></textarea></div>
 <div><label for="cvClass"><strong>Class in University</strong></label><input id="cvClass" placeholder="e.g. Second Class Upper"></div>
 <div><label for="cvEducation"><strong>Education &amp; Qualifications</strong></label><textarea id="cvEducation" rows="4" required placeholder="University, college, school, qualifications, years"></textarea></div>
@@ -46,7 +48,7 @@
 </section>
 
 <section class="grid" style="margin-top:22px">
-<div class="card"><h3>What we prepare</h3><ul><li>Professional CV</li><li>ATS-friendly CV version</li><li>International teaching CV</li><li>Country and education-system tailored structure</li><li>Professional profile / summary</li><li>Relevant skills section</li><li>Cover-letter-ready career information</li><li>Referees where applicable</li></ul></div>
+<div class="card"><h3>What we prepare</h3><ul><li>Professional CV</li><li>ATS-friendly CV version</li><li>International teaching CV</li><li>USA, Canada and UAE application structures</li><li>Country and education-system tailored structure</li><li>Professional profile / summary</li><li>Relevant skills section</li><li>Cover-letter-ready career information</li><li>Referees where applicable</li><li>Optional passport photo placement where appropriate</li><li>1–5 page CV length selected by the applicant</li></ul></div>
 <div class="card"><h3>Education-system tailoring</h3><p>The preview uses the selected country to guide terminology, ordering and presentation. The information remains based on the client's actual qualifications and experience; it does not invent credentials, licences or achievements.</p></div>
 <div class="card"><h3>For teachers</h3><p>Include subjects taught, curriculum exposure, classroom impact, qualifications, certifications, leadership, professional development, ICT and other relevant teaching skills.</p></div>
 <div class="card"><h3>Simple process</h3><ol class="steps"><li>Enter your details.</li><li>Select country and CV type.</li><li>Generate and review the preview.</li><li>Make corrections and regenerate.</li><li>Pay to download the final CV.</li></ol></div>
@@ -55,13 +57,34 @@
 <script>
 (function(){
 const $=id=>document.getElementById(id);
-const fields=["cvName","cvJobTitle","cvGender","cvLanguage","cvEmail","cvPhone","cvCountry","cvType","cvUniversityUnits","cvClass","cvEducation","cvExperience","cvAchievements","cvSkills","cvReferees"];
+const fields=["cvName","cvJobTitle","cvGender","cvLanguage","cvEmail","cvPhone","cvCountry","cvType","cvPages","cvUniversityUnits","cvClass","cvEducation","cvExperience","cvAchievements","cvSkills","cvReferees"];
 const esc=v=>String(v||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
 function section(title,value){if(!value)return "";return "<h3>"+title+"</h3><p style='white-space:pre-line'>"+esc(value)+"</p>";}
+let photoData="";
+$("cvPhoto").addEventListener("change",e=>{
+const f=e.target.files&&e.target.files[0];
+if(!f){photoData="";return;}
+if(f.size>2*1024*1024){e.target.value="";photoData="";$("cvStatus").textContent="Please upload a photo smaller than 2 MB.";return;}
+const reader=new FileReader();reader.onload=()=>{photoData=reader.result;};reader.readAsDataURL(f);
+});
+function destinationRules(country){
+if(country==="United States")return {photo:false,style:"US professional resume/CV structure",label:"United States"};
+if(country==="Canada")return {photo:false,style:"Canadian professional resume/CV structure",label:"Canada"};
+if(country==="United Arab Emirates")return {photo:true,style:"UAE international CV structure",label:"United Arab Emirates"};
+return {photo:false,style:"International professional CV structure",label:country};
+}
+function smartProfile(d){
+const rules=destinationRules(d.cvCountry);
+const education=d.cvEducation.split(/\n+/).filter(Boolean).slice(0,2).join("; ");
+return d.cvJobTitle+" with experience and qualifications relevant to international applications. Professionally structured for "+rules.style.toLowerCase()+", highlighting practical impact, transferable skills and career evidence. "+(education?"Education includes "+education+".":"");
+}
 function generate(){
 const data=Object.fromEntries(fields.map(id=>[id,$(id).value.trim()]));
 if(!data.cvName||!data.cvJobTitle||!data.cvLanguage||!data.cvEmail||!data.cvPhone||!data.cvCountry||!data.cvEducation||!data.cvExperience||!data.cvSkills){$("cvStatus").textContent="Please complete all required fields.";return;}
-$("cvPreview").innerHTML="<div style='text-align:center'><h1 style='margin-bottom:4px'>"+esc(data.cvName)+"</h1><h2 style='margin-top:0'>"+esc(data.cvJobTitle)+"</h2><p>"+esc(data.cvEmail)+" | "+esc(data.cvPhone)+" | "+esc(data.cvCountry)+"</p></div>"+section("Professional Profile","Tailored "+data.cvType+" CV for "+data.cvCountry+" applications. "+data.cvJobTitle+" with relevant education, experience and skills presented for professional and ATS-friendly review.")+section("Languages",data.cvLanguage)+section("Education & Qualifications",data.cvEducation)+section("University Units / Courses",data.cvUniversityUnits)+section("University Class",data.cvClass)+section("Working Experience",data.cvExperience)+section("Achievements",data.cvAchievements)+section("Skills",data.cvSkills)+section("Referees",data.cvReferees);
+const rules=destinationRules(data.cvCountry);
+const showPhoto=!!photoData && rules.photo;
+const photo=showPhoto?"<img src='"+photoData+"' alt='Passport photo' style='width:100px;height:125px;object-fit:cover;border:1px solid #ccc;border-radius:4px'>":"";
+$("cvPreview").innerHTML="<div style='border-bottom:3px solid #d8b84c;padding-bottom:16px;display:flex;gap:18px;align-items:center;justify-content:space-between'><div><h1 style='margin:0 0 4px'>"+esc(data.cvName)+"</h1><h2 style='margin:0 0 8px'>"+esc(data.cvJobTitle)+"</h2><p style='margin:0'>"+esc(data.cvEmail)+" | "+esc(data.cvPhone)+" | "+esc(data.cvCountry)+"</p></div>"+photo+"</div>"+section("Professional Profile",smartProfile(data))+section("Languages",data.cvLanguage)+section("Education & Qualifications",data.cvEducation)+section("University Units / Courses",data.cvUniversityUnits)+section("University Class",data.cvClass)+section("Working Experience",data.cvExperience)+section("Achievements",data.cvAchievements)+section("Relevant Skills",data.cvSkills)+section("Referees",data.cvReferees)+"<p style='font-size:11px;color:#777;margin-top:22px'>Prepared in a "+esc(rules.style)+" format • Requested length: "+esc(data.cvPages)+" page(s)</p>";
 $("previewHint").style.display="none";$("cvStatus").textContent="Preview generated. Review your details before payment.";
 $("cvPreview").dataset.generated="true"; $("cvPreview").dataset.cv=JSON.stringify(data);
 }
@@ -71,8 +94,8 @@ $("payToDownloadCv").addEventListener("click",()=>{
 if($("cvPreview").dataset.generated!=="true"){$("cvPaymentStatus").textContent="Generate the CV preview first.";return;}
 const d=JSON.parse($("cvPreview").dataset.cv||"{}");
 const amount=d.cvType==="Starter"?300:d.cvType==="Medium"?600:1000;
-$("cvPaymentStatus").textContent="CV selected: "+d.cvType+" | Country: "+d.cvCountry+" | Download price: KSh "+amount+". Proceed to secure M-Pesa checkout.";
-window.location.href="index.html?cv="+encodeURIComponent(d.cvName)+"&amount="+amount+"&type="+encodeURIComponent(d.cvType)+"#payments";
+$("cvPaymentStatus").textContent="CV selected: "+d.cvType+" | "+d.cvCountry+" | "+d.cvPages+" page(s) | Download price: KSh "+amount+". Proceed to secure M-Pesa checkout.";
+window.location.href="index.html?cv="+encodeURIComponent(d.cvName)+"&amount="+amount+"&type="+encodeURIComponent(d.cvType)+"&country="+encodeURIComponent(d.cvCountry)+"&pages="+encodeURIComponent(d.cvPages)+"#payments";
 });
 })();
 </script></main></body></html>
