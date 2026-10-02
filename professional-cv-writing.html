@@ -42,7 +42,7 @@
 </section>
 
 <section class="card" style="margin-top:22px">
-<h2>CV Preview</h2>
+<h2>Professional CV Preview</h2><div class="cv-standard-note"><strong>Professional standard:</strong> Arial 10.5–11 pt body text, 14–16 pt section headings, 20–22 pt name, clean single-column structure, standard section headings, consistent spacing and ATS-readable formatting. Current guidance recommends common fonts such as Arial, Calibri and Times New Roman and avoiding complex graphics, columns and decorative elements. citeturn0search1turn0search4</div>
 <p id="previewHint">Your tailored CV preview will appear here after generation.</p>
 <div id="cvPreview" style="background:#fff;border:1px solid var(--line);padding:28px;min-height:280px"></div>
 <div class="actions"><button class="primary-button" type="button" id="payToDownloadCv">Pay to Download CV</button><a class="whatsapp-button" href="https://wa.me/254798462815?text=Hello%20CBE%20Nexus%2C%20I%20need%20help%20with%20my%20automated%20CV." target="_blank" rel="noopener">Need Help? WhatsApp</a></div>
@@ -87,7 +87,7 @@ const rules=destinationRules(data.cvCountry);
 const refinedProfile=$("cvPreview").dataset.refinedProfile||smartProfile(data);
 const showPhoto=!!photoData && rules.photo;
 const photo=showPhoto?"<img src='"+photoData+"' alt='Passport photo' style='width:100px;height:125px;object-fit:cover;border:1px solid #ccc;border-radius:4px'>":"";
-$("cvPreview").innerHTML="<div style='border-bottom:3px solid #d8b84c;padding-bottom:16px;display:flex;gap:18px;align-items:center;justify-content:space-between'><div><h1 style='margin:0 0 4px'>"+esc(data.cvName)+"</h1><h2 style='margin:0 0 8px'>"+esc(data.cvJobTitle)+"</h2><p style='margin:0'>"+esc(data.cvEmail)+" | "+esc(data.cvPhone)+" | "+esc(data.cvCountry)+"</p></div>"+photo+"</div>"+section("Professional Profile",refinedProfile)+section("Languages",data.cvLanguage)+section("Education & Qualifications",data.cvEducation)+section("University Units / Courses",data.cvUniversityUnits)+section("University Class",data.cvClass)+section("Working Experience",data.cvExperience)+section("Achievements",data.cvAchievements)+section("Relevant Skills",data.cvSkills)+section("Referees",data.cvReferees)+"<p style='font-size:11px;color:#777;margin-top:22px'>Prepared in a "+esc(rules.style)+" format • Requested length: "+esc(data.cvPages)+" page(s)</p>";
+$("cvPreview").innerHTML="<article class='cv-preview-paper'><div class='cv-accent' style='display:flex;gap:18px;align-items:center;justify-content:space-between'><div><p class='cv-name'>"+esc(data.cvName)+"</p><p class='cv-role'>"+esc(data.cvJobTitle)+"</p><p class='cv-contact'>Email: "+esc(data.cvEmail)+" | Phone: "+esc(data.cvPhone)+" | Application: "+esc(data.cvCountry)+"</p></div>"+photo+"</div>"+section("Professional Profile",refinedProfile)+section("Core Skills",data.cvSkills)+section("Professional Experience",data.cvExperience)+section("Education & Qualifications",data.cvEducation)+section("Relevant University Units / Courses",data.cvUniversityUnits)+section("University Classification",data.cvClass)+section("Key Achievements",data.cvAchievements)+section("Languages",data.cvLanguage)+section("Referees",data.cvReferees)+"<p style='font-size:9pt;color:#6b7280;margin-top:24px'>Prepared for "+esc(rules.style)+" • Requested length: "+esc(data.cvPages)+" page(s)</p></article>";
 $("previewHint").style.display="none";$("cvStatus").textContent="Preview generated. Review your details before payment.";
 $("cvPreview").dataset.generated="true"; $("cvPreview").dataset.cv=JSON.stringify(data);
 }
