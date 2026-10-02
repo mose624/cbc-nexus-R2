@@ -799,8 +799,36 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
     const selectedGrade = String(grade || "").trim();
     const selectedSubject = String(subject || "").trim();
     if (!selectedGrade || !selectedSubject || selectedSubject === "All Subjects") return;
-    const target = "resource-category.html?grade=" + encodeURIComponent(selectedGrade) +
-      "&subject=" + encodeURIComponent(selectedSubject);
+
+    // Reuse the exact destination already defined by the HEADER Grade -> Subject buttons.
+    // This keeps the Left Dashboard and Header navigation permanently in sync.
+    const normalize = (value) => String(value || "")
+      .trim()
+      .toLowerCase()
+      .replace(/&/g, "and")
+      .replace(/[()]/g, "")
+      .replace(/\\s+/g, " ");
+
+    const headerLinks = Array.from(document.querySelectorAll(
+      ".teaching-materials-dropdown a[href*=\"resource-category.html?grade=\"]"
+    ));
+
+    const matchingLink = headerLinks.find((link) => {
+      try {
+        const url = new URL(link.getAttribute("href"), window.location.href);
+        const headerGrade = url.searchParams.get("grade") || "";
+        const headerSubject = url.searchParams.get("subject") || "";
+        return normalize(headerGrade) === normalize(selectedGrade) &&
+          normalize(headerSubject) === normalize(selectedSubject);
+      } catch {
+        return false;
+      }
+    });
+
+    const target = matchingLink?.getAttribute("href") ||
+      ("resource-category.html?grade=" + encodeURIComponent(selectedGrade) +
+       "&subject=" + encodeURIComponent(selectedSubject));
+
     window.location.assign(target);
   }
 
