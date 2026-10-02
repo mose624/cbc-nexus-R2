@@ -4999,3 +4999,40 @@ body.admin-unlocked .admin-only-link {
   border-bottom: 1px solid rgba(0,0,0,.1);
   margin-bottom: 4px;
 .international-vacancies-band{background:#fffdf2}.vacancy-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.vacancy-card{background:#fff;border:1px solid rgba(24,38,61,.12);border-radius:16px;padding:20px;box-shadow:0 8px 24px rgba(24,38,61,.07)}.vacancy-card.featured{border-width:2px}.vacancy-card-top{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:10px}.vacancy-region,.vacancy-featured{font-size:.76rem;font-weight:800}.vacancy-featured{padding:5px 8px;border-radius:999px;background:#fff0a8}.vacancy-card h3{margin:.25rem 0 .4rem}.vacancy-meta{font-weight:700}.vacancy-card-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.admin-vacancies-card{margin-top:20px;padding:20px;border:1px solid rgba(24,38,61,.12);border-radius:16px;background:#fffdf2}@media(max-width:980px){.vacancy-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:640px){.vacancy-grid{grid-template-columns:1fr}}
+
+
+/* ADMIN DASHBOARD — RED ACTION BUTTONS */
+#admin .admin-module-tabs button,
+#admin [data-admin-module],
+#admin .admin-resource-moderation-actions button,
+#admin .vacancy-card-actions button,
+#admin .admin-vacancies-card button,
+#admin button.primary-button,
+#admin button.secondary-button,
+#admin button.ghost-button,
+#admin button.danger-button,
+#admin a.primary-button {
+  background:#d32f2f !important;
+  border-color:#b71c1c !important;
+  color:#fff !important;
+}
+#admin .admin-module-tabs button:hover,
+#admin [data-admin-module]:hover,
+#admin .admin-resource-moderation-actions button:hover,
+#admin .vacancy-card-actions button:hover,
+#admin .admin-vacancies-card button:hover,
+#admin button.primary-button:hover,
+#admin button.secondary-button:hover,
+#admin button.ghost-button:hover,
+#admin button.danger-button:hover,
+#admin a.primary-button:hover {
+  background:#b71c1c !important;
+  border-color:#8f1515 !important;
+  color:#fff !important;
+}
+#admin .admin-module-tabs button.active,
+#admin [data-admin-module].active {
+  background:#b71c1c !important;
+  border-color:#8f1515 !important;
+  color:#fff !important;
+}
