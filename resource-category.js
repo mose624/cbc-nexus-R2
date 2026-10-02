@@ -118,3 +118,20 @@ document.addEventListener("click",event=>{
 
 
 document.addEventListener("click",event=>{const button=event.target.closest("[data-mpesa-pay]");if(!button)return;event.preventDefault();const card=button.closest("[data-resource-id]");const id=card?.dataset.resourceId;const resource=resources.find(r=>String(r.id||r._id||r.key||"")===String(id));if(!resource)return;const amount=Number(resource.discount)>0?Number(resource.discount):Number(resource.price)||0;const params=new URLSearchParams({resource:resource.title||"Untitled resource",amount:String(amount),grade:resource.grade||"",subject:resource.subject||"",type:resource.type||""});window.location.href="index.html?"+params.toString()+"#payments";});
+
+
+/* Automatic colour theme for the selected Resource Centre grade. */
+const resourceGradeThemeMap={
+  "Grade 1":"lower-primary","Grade 2":"lower-primary","Grade 3":"lower-primary",
+  "Grade 4":"upper-primary","Grade 5":"upper-primary","Grade 6":"upper-primary",
+  "Grade 7":"junior-secondary","Grade 8":"junior-secondary","Grade 9":"junior-secondary",
+  "Grade 10":"senior-school","Grade 11":"senior-school","Grade 12":"senior-school"
+};
+function applyResourceGradeTheme(value){
+  const gradeValue=String(value||"").trim();
+  document.documentElement.setAttribute("data-grade-theme",resourceGradeThemeMap[gradeValue]||"preprimary");
+  document.body?.setAttribute("data-selected-grade",gradeValue);
+}
+const originalResourceFillSubjects=fillSubjects;
+fillSubjects=function(){originalResourceFillSubjects();applyResourceGradeTheme(grade.value);};
+applyResourceGradeTheme(grade.value);
