@@ -181,5 +181,5 @@ $('sampleCv').addEventListener('click',()=>{$('cvName').value='Your Full Name';$
 const input=$('jobSearchInput'),region=$('regionFilter'),level=$('levelFilter'),cards=[...document.querySelectorAll('.job-card')];function filterJobs(){let q=(input.value||'').toLowerCase().trim(),r=region.value,l=level.value;let shown=0;cards.forEach(c=>{let okQ=!q||c.dataset.keywords.includes(q),okR=r==='all'||c.dataset.region===r,okL=l==='all'||c.dataset.level.includes(l);c.classList.toggle('hidden',!(okQ&&okR&&okL));if(okQ&&okR&&okL)shown++});$('jobEmpty').classList.toggle('hidden',shown>0)}[input,region,level].forEach(x=>x.addEventListener('input',filterJobs));$('clearJobFilters').addEventListener('click',()=>{input.value='';region.value='all';level.value='all';filterJobs()});score();
 })();
 </script>
-</body>
+<section id="internationalVacanciesPublic" class="content-band international-vacancies-band"><div class="section-heading"><div><p class="eyebrow">Live vacancy board</p><h2>Teaching Vacancies Abroad</h2><p>Published opportunities are added and managed by CBE Nexus admin.</p></div></div><div id="internationalVacancyGrid" class="vacancy-grid"><p class="form-status">Loading vacancies...</p></div></section><script src="app.js"></script></body>
 </html>
