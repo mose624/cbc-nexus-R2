@@ -484,7 +484,8 @@
         </form>
       </section>
 
-      <section id="freeCbcResources" class="info-band info-band-light">
+      <section id="internationalVacancies" class="content-band international-vacancies-band"><div class="section-heading"><div><p class="eyebrow">International careers</p><h2>Teaching Vacancies Abroad</h2><p>Browse current vacancies published by CBE Nexus.</p></div><a class="primary-button" href="international-teaching-jobs.html">Open Jobs Centre</a></div><div id="homeVacancyGrid" class="vacancy-grid"><p class="form-status">Loading vacancies...</p></div></section>
+<section id="freeCbcResources" class="info-band info-band-light">
         <div class="section-heading">
           <div>
             <p class="eyebrow">Free CBC downloads</p>
@@ -1133,7 +1134,24 @@
               <div><h3>Price management</h3><span>Update price and discount without leaving the dashboard.</span></div>
               <span class="admin-module-summary">KES</span>
             </div>
-            <div id="adminPriceManagement" class="admin-management-list"></div>
+            <div id="adminPriceManagement" class="admin-management-list"></div><div class="admin-management-card admin-vacancies-card" data-admin-module-panel="vacancies">
+<div class="admin-management-heading"><div><p class="eyebrow">International careers</p><h3>Teaching Vacancies Abroad</h3><p>Add and publish overseas teaching opportunities. Published vacancies appear automatically on the International Teaching Jobs page.</p></div><span class="price-pill">Admin publishing</span></div>
+<form id="adminVacancyForm" class="admin-form feature-form"><div class="form-row">
+<label>Job Title<input id="vacancyTitleInput" required placeholder="Secondary Science Teacher"></label>
+<label>School / Employer<input id="vacancySchoolInput" required placeholder="International School"></label></div>
+<div class="form-row"><label>Country<input id="vacancyCountryInput" required placeholder="United Arab Emirates"></label>
+<label>Region<select id="vacancyRegionInput"><option>UAE &amp; Gulf</option><option>USA &amp; Canada</option><option>UK &amp; Europe</option><option>Asia</option><option>Australia &amp; New Zealand</option><option>Africa</option><option>Latin America</option></select></label></div>
+<div class="form-row"><label>Subject<input id="vacancySubjectInput" required placeholder="Physics / Biology / Mathematics"></label>
+<label>Teaching Level<input id="vacancyLevelInput" required placeholder="Primary / Secondary / IB / IGCSE"></label></div>
+<div class="form-row"><label>Employment Type<select id="vacancyEmploymentInput"><option>Full-time</option><option>Part-time</option><option>Temporary</option><option>Contract</option></select></label>
+<label>Salary / Benefits<input id="vacancySalaryInput" placeholder="Salary, housing, medical, flights, etc."></label></div>
+<div class="form-row"><label>Application Deadline<input id="vacancyDeadlineInput" type="date"></label>
+<label>Application Link<input id="vacancyApplyUrlInput" type="url" required placeholder="https://school.example/jobs/123"></label></div>
+<label>Job Description<textarea id="vacancyDescriptionInput" rows="4" required placeholder="Describe the role, curriculum and key duties."></textarea></label>
+<label>Requirements<textarea id="vacancyRequirementsInput" rows="4" required placeholder="Qualifications, licence, experience, safeguarding and other stated requirements."></textarea></label>
+<label class="checkbox-label"><input id="vacancyFeaturedInput" type="checkbox"> Feature this vacancy</label>
+<div class="quiz-actions"><button class="primary-button" type="submit">➕ Publish Vacancy</button><button class="ghost-button" id="clearAdminVacancyButton" type="button">Clear</button></div>
+<p id="adminVacancyStatus" class="form-status" aria-live="polite"></p></form><div id="adminVacancyList" class="admin-management-list"></div></div>
           </div>
         </div>
       </section>
