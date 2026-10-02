@@ -794,6 +794,16 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
   safeOn(elements.adminStatusFilter, "change", () => renderAdminControlCentre(adminDashboardData || {}));
   document.querySelectorAll("[data-admin-module]").forEach((button) => safeOn(button, "click", () => setAdminModule(button.dataset.adminModule)));
 
+  // Left Dashboard navigation: Grade -> Subject -> dedicated Resource Centre page.
+  function openCbeGradeSubjectPage(grade, subject) {
+    const selectedGrade = String(grade || "").trim();
+    const selectedSubject = String(subject || "").trim();
+    if (!selectedGrade || !selectedSubject || selectedSubject === "All Subjects") return;
+    const target = "resource-category.html?grade=" + encodeURIComponent(selectedGrade) +
+      "&subject=" + encodeURIComponent(selectedSubject);
+    window.location.assign(target);
+  }
+
   // Main dashboard subject links: open the Resource Centre directly for the selected grade + subject.
   // Capture the click so no older navigation handler can redirect the user elsewhere.
   safeOn(elements.gradeList, "click", (event) => {
@@ -854,7 +864,7 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
     toggle?.setAttribute("aria-expanded", "true");
 
     if (subject !== "All Subjects") {
-      window.location.href = "resource-category.html?grade=" + encodeURIComponent(grade) + "&subject=" + encodeURIComponent(subject);
+      openCbeGradeSubjectPage(grade, subject);
       return;
     }
     setGradeSubject(grade, subject);
