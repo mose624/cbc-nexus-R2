@@ -5436,3 +5436,104 @@ body.admin-unlocked .admin-only-link {
   #admin .admin-kpi-grid > *{min-height:88px}
   #admin .admin-resource-moderation-actions > *{width:100%}
 }
+
+
+/* ============================================================
+   CBE NEXUS ADMIN — COLORFUL RESPONSIVE CONTROL CENTRE
+   Keeps existing HTML/JS/API structure and IDs intact.
+   ============================================================ */
+#admin.admin-band{background:linear-gradient(135deg,#fffdf2 0%,#fff6c9 42%,#f7fbff 100%)}
+#adminControlPanel.admin-control-panel{background:rgba(255,255,255,.96);border:1px solid #eadfb5;box-shadow:0 20px 60px rgba(54,45,18,.12)}
+#admin .admin-control-topbar{background:linear-gradient(135deg,#fff9df,#ffffff);border:1px solid #eee4bd;border-radius:18px;padding:20px;margin-bottom:18px}
+#admin .admin-title-block h2{font-size:clamp(1.6rem,3vw,2.35rem)}
+#admin .admin-live-badge{animation:adminPulse 2s infinite}
+@keyframes adminPulse{0%,100%{box-shadow:0 0 0 0 rgba(46,125,50,.16)}50%{box-shadow:0 0 0 5px rgba(46,125,50,.04)}}
+
+#admin .admin-kpi-grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
+#admin .admin-kpi-grid>*{position:relative;overflow:hidden;border:0;border-radius:17px;background:linear-gradient(145deg,#fff,#fffdf4);box-shadow:0 9px 25px rgba(48,42,22,.09)}
+#admin .admin-kpi-grid>*:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(#d32f2f,#f2c94c)}
+#admin .admin-kpi-grid>*:nth-child(2):before{background:linear-gradient(#2e7d32,#8bc34a)}
+#admin .admin-kpi-grid>*:nth-child(3):before{background:linear-gradient(#ef6c00,#ffb74d)}
+#admin .admin-kpi-grid>*:nth-child(4):before{background:linear-gradient(#1565c0,#64b5f6)}
+#admin .admin-kpi-grid>*:nth-child(5):before{background:linear-gradient(#7b1fa2,#ba68c8)}
+#admin .admin-kpi-grid>*:nth-child(6):before{background:linear-gradient(#00838f,#4dd0e1)}
+
+#admin .admin-command-bar{background:linear-gradient(135deg,#fffdf4,#f6fbff);border-color:#e8dfc0}
+#admin .admin-module-tabs{background:#f4f1e7;border-color:#e6ddbf}
+#admin .admin-module-tabs .admin-module-tab{position:relative;min-height:44px}
+#admin .admin-module-tabs .admin-module-tab:nth-child(1).active{background:#b71c1c}
+#admin .admin-module-tabs .admin-module-tab:nth-child(2).active{background:#1565c0}
+#admin .admin-module-tabs .admin-module-tab:nth-child(3).active{background:#7b1fa2}
+#admin .admin-module-tabs .admin-module-tab:nth-child(4).active{background:#00838f}
+#admin .admin-module-tabs .admin-module-tab:nth-child(5).active{background:#ef6c00}
+#admin .admin-module-tabs .admin-module-tab:nth-child(6).active{background:#2e7d32}
+#admin .admin-module-tabs .admin-module-tab:nth-child(7).active{background:#6d4c41}
+#admin .admin-module-tabs .admin-module-tab.active,
+#admin .admin-module-tabs .admin-module-tab[aria-selected="true"]{color:#fff;box-shadow:0 7px 16px rgba(0,0,0,.15)}
+
+#admin .admin-module-panel{background:linear-gradient(180deg,#fff,#fffefa);border-color:#e9e0c5}
+#admin .admin-module-panel.active{animation:adminPanelIn .2s ease-out}
+@keyframes adminPanelIn{from{opacity:.65;transform:translateY(3px)}to{opacity:1;transform:none}}
+
+#admin .admin-control-panel .primary-button,
+#admin .admin-control-panel .secondary-button,
+#admin .admin-control-panel .danger-button,
+#admin .admin-control-panel .ghost-button{
+  min-height:42px;padding:10px 15px;border-radius:10px;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  transition:transform .16s ease,box-shadow .16s ease,filter .16s ease;
+}
+#admin .admin-control-panel button:not(:disabled):hover,
+#admin .admin-control-panel a.primary-button:hover,
+#admin .admin-control-panel a.secondary-button:hover,
+#admin .admin-control-panel a.ghost-button:hover{transform:translateY(-2px);filter:brightness(.97);box-shadow:0 7px 16px rgba(40,35,20,.13)}
+#admin .admin-control-panel button:not(:disabled):active,
+#admin .admin-control-panel a.primary-button:active,
+#admin .admin-control-panel a.secondary-button:active{transform:translateY(0);box-shadow:0 3px 7px rgba(40,35,20,.10)}
+#admin .admin-control-panel button:focus-visible,
+#admin .admin-control-panel a:focus-visible,
+#admin .admin-control-panel input:focus-visible,
+#admin .admin-control-panel select:focus-visible,
+#admin .admin-control-panel textarea:focus-visible{outline:3px solid rgba(33,150,243,.22);outline-offset:2px}
+#admin .admin-control-panel button:disabled{opacity:.55;cursor:not-allowed}
+
+#admin .admin-resource-moderation-actions a,
+#admin .admin-resource-moderation-actions button,
+#admin .quiz-actions button{min-width:110px}
+#admin .admin-management-card{background:#fff;border-left:4px solid #e0c85a}
+#admin .admin-management-card:nth-child(3n+2){border-left-color:#64b5f6}
+#admin .admin-management-card:nth-child(3n){border-left-color:#81c784}
+
+#admin .admin-analytics-card{background:linear-gradient(135deg,#ffffff,#f8fbff)}
+#admin .admin-popular-card{background:linear-gradient(135deg,#ffffff,#fffaf0)}
+#admin .admin-seo-card{border-radius:15px;border:1px solid #e6ddbf;box-shadow:0 7px 20px rgba(50,45,25,.06)}
+#admin .admin-seo-card:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(50,45,25,.10)}
+
+#admin .admin-form{background:linear-gradient(180deg,#fff,#fffdf5);box-shadow:0 7px 22px rgba(55,45,15,.05)}
+#admin .admin-form .submit-button{width:auto;min-width:170px}
+#admin .form-status{min-height:20px}
+
+@media(max-width:1200px){
+ #admin .admin-kpi-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:800px){
+ #admin .admin-control-topbar{padding:16px}
+ #admin .admin-toolbar-actions{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+ #admin .admin-session-info{grid-column:1/-1}
+ #admin .admin-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #admin .admin-command-bar{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+ #adminControlPanel.admin-control-panel{padding:10px;margin-top:14px;border-radius:13px}
+ #admin .admin-control-topbar{border-radius:13px}
+ #admin .admin-toolbar-actions{grid-template-columns:1fr}
+ #admin .admin-kpi-grid{grid-template-columns:1fr}
+ #admin .admin-module-tabs{display:grid;grid-template-columns:1fr 1fr;overflow:visible}
+ #admin .admin-module-tabs .admin-module-tab{width:100%;min-width:0}
+ #admin .admin-module-panel{padding:11px}
+ #admin .admin-resource-moderation-actions,
+ #admin .quiz-actions{display:grid;grid-template-columns:1fr}
+ #admin .admin-resource-moderation-actions>*,
+ #admin .quiz-actions>*{width:100%;min-width:0}
+ #admin .admin-form .submit-button{width:100%}
+}
