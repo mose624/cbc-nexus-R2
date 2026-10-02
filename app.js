@@ -317,6 +317,129 @@ const elements = {
 
 let toastTimer;
 
+let adminDashboardData = {};
+function safeOn(target, eventName, handler, options) {
+  if (!target || typeof target.addEventListener !== "function" || typeof handler !== "function") return;
+  target.addEventListener(eventName, handler, options);
+}
+function restoreAdminAccess() {
+  try {
+    const unlocked = sessionStorage.getItem("cbeAdminUnlocked") === "true";
+    if (unlocked) {
+      document.body.classList.add("admin-unlocked");
+      const dashboard = document.getElementById("admin");
+      if (dashboard) { dashboard.classList.add("open"); dashboard.setAttribute("aria-hidden","false"); }
+    }
+  } catch (_) {}
+}
+function openAdminLogin(event) {
+  event?.preventDefault();
+  const section=document.getElementById("adminLogin");
+  if (!section) return;
+  section.classList.add("open");
+  section.setAttribute("aria-hidden","false");
+  section.scrollIntoView({behavior:"smooth",block:"start"});
+  setTimeout(()=>document.getElementById("adminUsernameInput")?.focus(),120);
+}
+function setAdminModule(module) {
+  activeAdminModule = module || "resources";
+  document.querySelectorAll("[data-admin-module]").forEach((button)=>{
+    const active=button.dataset.adminModule===activeAdminModule;
+    button.classList.toggle("active",active);
+    button.setAttribute("aria-selected",String(active));
+  });
+  document.querySelectorAll("[data-admin-module-panel]").forEach((panel)=>{
+    const active=panel.dataset.adminModulePanel===activeAdminModule;
+    panel.classList.toggle("active",active);
+    panel.hidden=!active;
+  });
+  if (activeAdminModule==="resources" && typeof window.loadAdminResourceModeration==="function") {
+    window.loadAdminResourceModeration();
+  }
+}
+function handleAdminControlClick(event) {
+  const button=event.target.closest("[data-admin-module]");
+  if (button) setAdminModule(button.dataset.adminModule);
+}
+function renderAdminControlCentre(data) {
+  adminDashboardData=data||{};
+  const resources=Array.isArray(data.resources)?data.resources:[];
+  const sellers=Array.isArray(data.sellers)?data.sellers:readSellerAccounts();
+  const payments=Array.isArray(data.payments)?data.payments:readPaymentRecords();
+  const downloads=Array.isArray(data.downloads)?data.downloads:readApprovedDownloads();
+  const users=Array.isArray(data.users)?data.users:[];
+  const sales=Array.isArray(data.sales)?data.sales:[];
+  const pending=resources.filter(r=>String(r.status||"pending").toLowerCase()==="pending").length;
+  const approved=resources.filter(r=>String(r.status||"").toLowerCase()==="approved").length;
+  const rejected=resources.filter(r=>String(r.status||"").toLowerCase()==="rejected").length;
+  if(elements.adminStatsGrid) {
+    const cards=[
+      ["Resources",resources.length,"All uploaded resources"],
+      ["Pending",pending,"Awaiting verification"],
+      ["Online",approved,"Visible to clients"],
+      ["Rejected",rejected,"Hidden from clients"],
+      ["Sellers",sellers.length,"Seller accounts"],
+      ["Sales",sales.length,"Recorded sales"],
+      ["Payments",payments.length,"M-Pesa records"],
+      ["Downloads",downloads.length,"Download approvals"]
+    ];
+    elements.adminStatsGrid.innerHTML=cards.map(c=>`<div class="admin-kpi-card"><span>${escapeHtml(c[0])}</span><strong>${Number(c[1]||0).toLocaleString("en-KE")}</strong><small>${escapeHtml(c[2])}</small></div>`).join("");
+  }
+  if(elements.adminResourceBadge) elements.adminResourceBadge.textContent=resources.length;
+  if(elements.adminSellerBadge) elements.adminSellerBadge.textContent=sellers.length;
+  if(elements.adminPaymentBadge) elements.adminPaymentBadge.textContent=payments.length;
+  if(elements.adminSalesBadge) elements.adminSalesBadge.textContent=sales.length;
+  if(elements.adminUserBadge) elements.adminUserBadge.textContent=users.length;
+  if(elements.adminLastUpdated) elements.adminLastUpdated.textContent="Updated "+new Date().toLocaleString("en-KE");
+  const summary=document.getElementById("adminResourceSummary");
+  if(summary) summary.textContent=`${pending} pending · ${approved} online · ${rejected} rejected`;
+}
+async function loadAdminDashboard() {
+  if(!isAdminUnlocked()) return;
+  try {
+    const me=await fetch("/api/admin/me",{credentials:"same-origin",cache:"no-store"});
+    if(me.ok){ const md=await me.json().catch(()=>({})); if(md.authenticated===false){sessionStorage.removeItem("cbeAdminUnlocked");return;} }
+  } catch (_) {}
+  document.body.classList.add("admin-unlocked");
+  try {
+    const r=await fetch("/api/admin/resources?_="+Date.now(),{credentials:"same-origin",cache:"no-store"});
+    const d=await r.json().catch(()=>({}));
+    if(r.ok && d.ok) adminDashboardData={...adminDashboardData,resources:d.resources||[]};
+  } catch (_) {}
+  adminDashboardData.sellers=readSellerAccounts();
+  adminDashboardData.payments=readPaymentRecords();
+  adminDashboardData.downloads=readApprovedDownloads();
+  adminDashboardData.users=JSON.parse(localStorage.getItem("cbeUsers")||"[]");
+  adminDashboardData.sales=JSON.parse(localStorage.getItem("cbeSales")||"[]");
+  renderAdminControlCentre(adminDashboardData);
+  setAdminModule(activeAdminModule||"resources");
+  if(typeof window.loadAdminResourceModeration==="function") await window.loadAdminResourceModeration();
+}
+async function unlockAdmin(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  const username=String(elements.adminUsername?.value||"").trim();
+  const password=String(elements.adminPassword?.value||"");
+  const email=String(elements.adminEmail?.value||"").trim().toLowerCase();
+  if(!username||!password||!email){ if(elements.adminLoginStatus) elements.adminLoginStatus.textContent="Enter your admin email, username and password."; return; }
+  if(elements.adminLoginStatus) elements.adminLoginStatus.textContent="Checking admin credentials...";
+  try {
+    const r=await fetch("/api/admin/login",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({username,password,email})});
+    const d=await r.json().catch(()=>({}));
+    if(!r.ok||!d.ok) throw new Error(d.error||"Invalid admin credentials.");
+    sessionStorage.setItem("cbeAdminUnlocked","true");
+    document.body.classList.add("admin-unlocked");
+    const login=document.getElementById("adminLogin");
+    if(login){login.classList.remove("open");login.setAttribute("aria-hidden","true");}
+    const dashboard=document.getElementById("admin");
+    if(dashboard){dashboard.classList.add("open");dashboard.setAttribute("aria-hidden","false");dashboard.scrollIntoView({behavior:"smooth",block:"start"});}
+    if(elements.adminLoginStatus) elements.adminLoginStatus.textContent="Admin login successful.";
+    await loadAdminDashboard();
+  } catch(error) {
+    if(elements.adminLoginStatus) elements.adminLoginStatus.textContent=error.message||"Admin login failed.";
+  }
+}
+
 function isAdminUnlocked(){ return document.body.classList.contains("admin-unlocked"); }
 
 function setAdminOnlyVisibility(unlocked){
@@ -341,7 +464,7 @@ function readSavedResources() {
   }
 }
 
-async async function syncPublicResourcesFromServer() {
+async function syncPublicResourcesFromServer() {
   try {
     const response = await fetch("/api/resources?_public=" + Date.now(), {
       credentials: "same-origin",
