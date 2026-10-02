@@ -800,17 +800,65 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
     const selectedSubject = String(subject || "").trim();
     if (!selectedGrade || !selectedSubject || selectedSubject === "All Subjects") return;
 
-    // Reuse the exact destination already defined by the HEADER Grade -> Subject buttons.
-    // This keeps the Left Dashboard and Header navigation permanently in sync.
+    // The HEADER Grade -> Subject links are the single source of truth.
+    // The Left Resource Centre resolves its selection to the exact same href.
     const normalize = (value) => String(value || "")
       .trim()
       .toLowerCase()
       .replace(/&/g, "and")
       .replace(/[()]/g, "")
-      .replace(/\\s+/g, " ");
+      .replace(/\s+/g, " ")
+      .replace(/[^a-z0-9]+/g, " ")
+      .trim();
+
+    const aliasKey = (value) => {
+      const raw = String(value || "").trim();
+      const aliases = {
+        "cre": "christian religious education",
+        "christian religious education (cre)": "christian religious education",
+        "hre": "hindu religious education",
+        "hindu religious education (hre)": "hindu religious education",
+        "ire": "islamic religious education",
+        "islamic religious education (ire)": "islamic religious education",
+        "pre technical studies": "pre technical studies",
+        "pre technical": "pre technical studies",
+        "science & technology": "science and technology",
+        "science and technology": "science and technology",
+        "history and citizenship": "history and citizenship",
+        "history & citizenship": "history and citizenship",
+        "music and dance": "music and dance",
+        "music & dance": "music and dance",
+        "theatre and film": "theatre and film",
+        "theatre & film": "theatre and film",
+        "sports and recreation": "sports and recreation",
+        "sports & recreation": "sports and recreation",
+        "building and construction": "building and construction",
+        "building & construction": "building and construction",
+        "metalwork": "metal work",
+        "metal work": "metal work",
+        "wood technology": "woodwork",
+        "woodwork": "woodwork",
+        "marine and fisheries technology": "marine fisheries",
+        "marine technology": "marine fisheries",
+        "marine & fisheries": "marine fisheries",
+        "kenya sign language (ksl)": "sign language",
+        "kenya sign language": "sign language",
+        "ksl": "sign language",
+        "community service learning (csl)": "community service learning",
+        "community service learning": "community service learning",
+        "indigenous language": "indigenous languages",
+        "indigenous languages": "indigenous languages",
+        "kiswahili activities": "kiswahili",
+        "mathematics activities": "mathematics"
+      };
+      return normalize(aliases[raw.toLowerCase()] || raw);
+    };
+
+    const gradeKey = normalize(selectedGrade);
+    const subjectKey = aliasKey(selectedSubject);
 
     const headerLinks = Array.from(document.querySelectorAll(
-      ".teaching-materials-dropdown a[href*=\"resource-category.html?grade=\"]"
+      "a[href*=\"resource-category.html?grade=\"]"
     ));
 
     const matchingLink = headerLinks.find((link) => {
@@ -818,8 +866,7 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
         const url = new URL(link.getAttribute("href"), window.location.href);
         const headerGrade = url.searchParams.get("grade") || "";
         const headerSubject = url.searchParams.get("subject") || "";
-        return normalize(headerGrade) === normalize(selectedGrade) &&
-          normalize(headerSubject) === normalize(selectedSubject);
+        return normalize(headerGrade) === gradeKey && aliasKey(headerSubject) === subjectKey;
       } catch {
         return false;
       }
