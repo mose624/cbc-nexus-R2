@@ -318,6 +318,10 @@ const elements = {
 let toastTimer;
 
 let adminDashboardData = {};
+function readApprovedDownloads() {
+  try { return JSON.parse(localStorage.getItem(APPROVED_DOWNLOADS_KEY) || "[]"); }
+  catch (_) { return []; }
+}
 function safeOn(target, eventName, handler, options) {
   if (!target || typeof target.addEventListener !== "function" || typeof handler !== "function") return;
   target.addEventListener(eventName, handler, options);
