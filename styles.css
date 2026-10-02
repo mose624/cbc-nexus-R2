@@ -5537,3 +5537,35 @@ body.admin-unlocked .admin-only-link {
  #admin .quiz-actions>*{width:100%;min-width:0}
  #admin .admin-form .submit-button{width:100%}
 }
+
+
+/* ============================================================
+   CBE NEXUS — AUTOMATIC GRADE COLOUR THEMES
+   The active colour changes automatically with the selected grade.
+   ============================================================ */
+:root{
+  --grade-accent:#b8860b;
+  --grade-accent-2:#f2c94c;
+  --grade-soft:#fff8d8;
+  --grade-surface:#fffdf4;
+}
+html[data-grade-theme="preprimary"]{--grade-accent:#c58a00;--grade-accent-2:#f4c542;--grade-soft:#fff4c2;--grade-surface:#fffdf1}
+html[data-grade-theme="lower-primary"]{--grade-accent:#2e7d32;--grade-accent-2:#81c784;--grade-soft:#eaf7eb;--grade-surface:#f8fff8}
+html[data-grade-theme="upper-primary"]{--grade-accent:#1565c0;--grade-accent-2:#64b5f6;--grade-soft:#eaf4ff;--grade-surface:#f8fbff}
+html[data-grade-theme="junior-secondary"]{--grade-accent:#ef6c00;--grade-accent-2:#ffb74d;--grade-soft:#fff1e4;--grade-surface:#fffaf5}
+html[data-grade-theme="senior-school"]{--grade-accent:#7b1fa2;--grade-accent-2:#ba68c8;--grade-soft:#f7eefe;--grade-surface:#fdf9ff}
+html[data-grade-theme="international"]{--grade-accent:#00838f;--grade-accent-2:#4dd0e1;--grade-soft:#e6f8fa;--grade-surface:#f7ffff}
+
+#dashboard .grade-card:hover,
+#dashboard .grade-card.open{
+  border-color:var(--grade-accent)!important;
+  box-shadow:0 10px 28px color-mix(in srgb,var(--grade-accent) 18%,transparent)!important;
+}
+#dashboard .grade-card .grade-title,
+#dashboard .grade-card .grade-heading{color:var(--grade-accent)!important}
+#dashboard .grade-card .grade-toggle.active,
+#dashboard .grade-card .subject-dropdown:focus{
+  border-color:var(--grade-accent)!important;
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--grade-accent) 12%,transparent)!important;
+}
+#dashboard .grade-card .grade-chevron{color:var(--grade-accent)!important}
