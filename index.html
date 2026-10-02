@@ -783,10 +783,10 @@
       <section id="payments" class="payment-band">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">M-Pesa and WhatsApp checkout</p>
-            <h2>Pay and confirm your resource order</h2>
+            <p class="eyebrow">Secure M-Pesa & WhatsApp Checkout</p>
+            <h2>Complete Your Resource Purchase</h2>
           </div>
-          <div class="price-pill">M-Pesa payment phone: <strong>***</strong></div>
+          <div class="price-pill">M-Pesa Till/Phone: <strong>0798462815</strong></div>
         </div>
 
         <div class="payment-layout">
@@ -809,7 +809,7 @@
               <button class="primary-button" type="submit">Pay with M-Pesa</button>
               <a id="whatsappOrderButton" class="whatsapp-button" href="https://wa.me/254798462815" target="_blank" rel="noopener">Order on WhatsApp</a>
             </div>
-            <p id="paymentStatus" class="form-status" aria-live="polite"></p>
+            <p id="paymentStatus" class="form-status" aria-live="polite">Your payment is processed securely through the CBE Nexus M-Pesa checkout.</p>
           </form>
 
           <div class="payment-card">
@@ -817,9 +817,7 @@
             <p><strong>M-Pesa:</strong> ***</p>
             <p><strong>WhatsApp:</strong> ***</p>
             <p>
-              The M-Pesa button is ready to call a live Daraja/STK backend at
-              <code>/api/mpesa/stk-push</code> when Safaricom API credentials are added.
-              Until then, buyers can pay manually and send confirmation on WhatsApp.
+              Enter the phone number you want to receive the M-Pesa STK Push on and confirm the amount shown. Click <strong>Pay with M-Pesa</strong> to initiate checkout. If STK Push is unavailable, pay <strong>KSh</strong> <span id="mpesaManualAmount">the amount shown</span> to <strong>0798462815</strong> and send the M-Pesa confirmation on WhatsApp for verification.
             </p>
           </div>
         </div>
@@ -1308,7 +1306,7 @@
         <iframe id="resourcePreviewFrame" title="Resource preview" loading="lazy"></iframe>
       </div>
     </div>
-    <script src="app.js?v=20261002-28"></script>
+    <script src="app.js?v=20261002-29"></script>
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => navigator.serviceWorker.register("/sw.js").catch(() => {}));
