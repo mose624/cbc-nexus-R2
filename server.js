@@ -137,6 +137,18 @@ async function refineCvWithSmartEditor(payload){
 }
 
 async function handleApi(req,res,url){
+  if(req.method==="POST"&&url.pathname==="/api/cv/refine"){
+    try{
+      const payload=JSON.parse((await readBody(req))||"{}");
+      if(!String(payload.jobTitle||"").trim()||!String(payload.country||"").trim()){sendJson(res,400,{ok:false,error:"Job title and country are required."});return true;}
+      const refined=await refineCvWithSmartEditor(payload);
+      sendJson(res,200,{ok:true,refined});
+    }catch(error){
+      console.error("CV refinement error:",error);
+      sendJson(res,503,{ok:false,error:"The CV refinement service is temporarily unavailable. Please try again."});
+    }
+    return true;
+  }
   if(req.method==="GET"&&url.pathname==="/api/affiliate-products"){
     const products=await readJsonStore("affiliate-products.json");
     sendJson(res,200,{ok:true,products:products.filter(p=>p.active!==false)});
