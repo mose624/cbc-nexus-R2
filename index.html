@@ -1095,44 +1095,61 @@
 
           <div class="admin-module-panel" data-admin-module-panel="prices">
             <div class="admin-module-heading">
-              <div><h3>Price management</h3><span>Update price and discount without leaving the dashboard.</span></div>
+              <div><h3>Price management</h3><span>Review the current marketplace pricing configuration.</span></div>
               <span class="admin-module-summary">KES</span>
             </div>
-            <div id="adminPriceManagement" class="admin-management-list"></div><div class="admin-module-panel" data-admin-module-panel="cv-writing">
-  <div class="admin-module-heading">
-    <div><h3>Professional CV Writing</h3><span>Manage and access the international CV service from one place.</span></div>
-    <span class="admin-module-summary">SERVICE</span>
-  </div>
-  <div class="admin-management-card">
-    <h4>CV Writing Centre</h4>
-    <p>Create professional, ATS-friendly CVs for Kenyan and international teachers and job seekers.</p>
-    <div class="admin-resource-moderation-actions">
-      <a class="primary-button" href="professional-cv-writing.html">Open CV Writing</a>
-      <a class="secondary-button" href="international-teaching-jobs.html">View Teaching Jobs</a>
-    </div>
-    <p class="form-status">CV service requests can be handled through the CV Writing Centre and the site's customer-support/WhatsApp channel.</p>
-  </div>
-</div>
-<div class="admin-management-card admin-vacancies-card" data-admin-module-panel="vacancies">
-<div class="admin-management-heading"><div><p class="eyebrow">International careers</p><h3>Teaching Vacancies Abroad</h3><p>Add and publish overseas teaching opportunities. Published vacancies appear automatically on the International Teaching Jobs page.</p></div><span class="price-pill">Admin publishing</span></div>
-<form id="adminVacancyForm" class="admin-form feature-form"><div class="form-row">
-<label>Job Title<input id="vacancyTitleInput" required placeholder="Secondary Science Teacher"></label>
-<label>School / Employer<input id="vacancySchoolInput" required placeholder="International School"></label></div>
-<div class="form-row"><label>Country<input id="vacancyCountryInput" required placeholder="United Arab Emirates"></label>
-<label>Region<select id="vacancyRegionInput"><option>UAE &amp; Gulf</option><option>USA &amp; Canada</option><option>UK &amp; Europe</option><option>Asia</option><option>Australia &amp; New Zealand</option><option>Africa</option><option>Latin America</option></select></label></div>
-<div class="form-row"><label>Subject<input id="vacancySubjectInput" required placeholder="Physics / Biology / Mathematics"></label>
-<label>Teaching Level<input id="vacancyLevelInput" required placeholder="Primary / Secondary / IB / IGCSE"></label></div>
-<div class="form-row"><label>Employment Type<select id="vacancyEmploymentInput"><option>Full-time</option><option>Part-time</option><option>Temporary</option><option>Contract</option></select></label>
-<label>Salary / Benefits<input id="vacancySalaryInput" placeholder="Salary, housing, medical, flights, etc."></label></div>
-<div class="form-row"><label>Application Deadline<input id="vacancyDeadlineInput" type="date"></label>
-<label>Application Link<input id="vacancyApplyUrlInput" type="url" required placeholder="https://school.example/jobs/123"></label></div>
-<label>Job Description<textarea id="vacancyDescriptionInput" rows="4" required placeholder="Describe the role, curriculum and key duties."></textarea></label>
-<label>Requirements<textarea id="vacancyRequirementsInput" rows="4" required placeholder="Qualifications, licence, experience, safeguarding and other stated requirements."></textarea></label>
-<label class="checkbox-label"><input id="vacancyFeaturedInput" type="checkbox"> Feature this vacancy</label>
-<div class="quiz-actions"><button class="primary-button" type="submit">➕ Publish Vacancy</button><button class="ghost-button" id="clearAdminVacancyButton" type="button">Clear</button></div>
-<p id="adminVacancyStatus" class="form-status" aria-live="polite"></p></form><div id="adminVacancyList" class="admin-management-list"></div></div>
+            <div id="adminPriceManagement" class="admin-management-list"></div>
           </div>
-        </div>
+
+          <div class="admin-module-panel" data-admin-module-panel="cv-writing">
+            <div class="admin-module-heading">
+              <div><h3>Professional CV Writing</h3><span>Manage and access the international CV service from one place.</span></div>
+              <span class="admin-module-summary">SERVICE</span>
+            </div>
+            <div class="admin-management-card">
+              <h4>CV Writing Centre</h4>
+              <p>Create professional, ATS-friendly CVs for Kenyan and international teachers and job seekers.</p>
+              <div class="admin-resource-moderation-actions">
+                <a class="primary-button" href="professional-cv-writing.html">Open CV Writing</a>
+                <a class="secondary-button" href="international-teaching-jobs.html">View Teaching Jobs</a>
+              </div>
+              <p class="form-status">CV service requests can be handled through the CV Writing Centre and the site's customer-support/WhatsApp channel.</p>
+            </div>
+          </div>
+
+          <div class="admin-module-panel" data-admin-module-panel="vacancies">
+            <div class="admin-management-card admin-vacancies-card">
+              <div class="admin-management-heading"><div><p class="eyebrow">International careers</p><h3>Teaching Vacancies Abroad</h3><p>Add and publish overseas teaching opportunities. Published vacancies appear automatically on the International Teaching Jobs page.</p></div><span class="price-pill">Admin publishing</span></div>
+              <form id="adminVacancyForm" class="admin-form feature-form">
+                <div class="form-row">
+                  <label>Job Title<input id="vacancyTitleInput" required placeholder="Secondary Science Teacher"></label>
+                  <label>School / Employer<input id="vacancySchoolInput" required placeholder="International School"></label>
+                </div>
+                <div class="form-row">
+                  <label>Country<input id="vacancyCountryInput" required placeholder="United Arab Emirates"></label>
+                  <label>Region<select id="vacancyRegionInput"><option>UAE &amp; Gulf</option><option>USA &amp; Canada</option><option>UK &amp; Europe</option><option>Asia</option><option>Australia &amp; New Zealand</option><option>Africa</option><option>Latin America</option></select></label>
+                </div>
+                <div class="form-row">
+                  <label>Subject<input id="vacancySubjectInput" required placeholder="Physics / Biology / Mathematics"></label>
+                  <label>Teaching Level<input id="vacancyLevelInput" required placeholder="Primary / Secondary / IB / IGCSE"></label>
+                </div>
+                <div class="form-row">
+                  <label>Employment Type<select id="vacancyEmploymentInput"><option>Full-time</option><option>Part-time</option><option>Temporary</option><option>Contract</option></select></label>
+                  <label>Salary / Benefits<input id="vacancySalaryInput" placeholder="Salary, housing, medical, flights, etc."></label>
+                </div>
+                <div class="form-row">
+                  <label>Application Deadline<input id="vacancyDeadlineInput" type="date"></label>
+                  <label>Application Link<input id="vacancyApplyUrlInput" type="url" required placeholder="https://school.example/jobs/123"></label>
+                </div>
+                <label>Job Description<textarea id="vacancyDescriptionInput" rows="4" required placeholder="Describe the role, curriculum and key duties."></textarea></label>
+                <label>Requirements<textarea id="vacancyRequirementsInput" rows="4" required placeholder="Qualifications, licence, experience, safeguarding and other stated requirements."></textarea></label>
+                <label class="checkbox-label"><input id="vacancyFeaturedInput" type="checkbox"> Feature this vacancy</label>
+                <div class="quiz-actions"><button class="primary-button" type="submit">➕ Publish Vacancy</button><button class="ghost-button" id="clearAdminVacancyButton" type="button">Clear</button></div>
+                <p id="adminVacancyStatus" class="form-status" aria-live="polite"></p>
+              </form>
+              <div id="adminVacancyList" class="admin-management-list"></div>
+            </div>
+          </div>
       </section>
 
       <section id="about" class="info-band">
