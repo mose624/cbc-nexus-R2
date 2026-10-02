@@ -72,15 +72,33 @@
     }
   }
 
+  function normalize(value){
+    return String(value||"").trim().toLowerCase()
+      .replace(/&/g,"and").replace(/[()]/g,"").replace(/\s+/g," ")
+      .replace(/[^a-z0-9]+/g," ").trim();
+  }
+
+  // Header Grade -> Subject links are the single source of truth.
+  // Dashboard Grade -> Subject selections open those exact same pages.
   function apply(grade,subject){
-    const gf=document.querySelector("#gradeFilter"),sf=document.querySelector("#subjectFilter");
-    if(gf){gf.value=grade||"All Grades";gf.dispatchEvent(new Event("change",{bubbles:true}))}
-    setTimeout(()=>{
-      if(sf){sf.value=subject||"All Subjects";sf.dispatchEvent(new Event("change",{bubbles:true}))}
-      const section=document.querySelector("#resources");
-      if(section)section.scrollIntoView({behavior:"smooth",block:"start"});
-      history.replaceState(null,"",`#resources?grade=${encodeURIComponent(grade||"All Grades")}&subject=${encodeURIComponent(subject||"All Subjects")}`);
-    },0);
+    const wantedGrade=normalize(grade), wantedSubject=normalize(subject);
+    if(!wantedGrade || !wantedSubject || wantedSubject==="all subjects") return;
+
+    const links=Array.from(document.querySelectorAll('a[href*="resource-category.html?grade="]'));
+    const match=links.find(link=>{
+      try{
+        const u=new URL(link.getAttribute("href"),window.location.href);
+        return normalize(u.searchParams.get("grade"))===wantedGrade &&
+               normalize(u.searchParams.get("subject"))===wantedSubject;
+      }catch{return false;}
+    });
+
+    if(match){
+      window.location.assign(match.href);
+      return;
+    }
+
+    window.location.assign("resource-category.html?grade="+encodeURIComponent(grade)+"&subject="+encodeURIComponent(subject));
   }
 
   function wireSubjectLinks(){
