@@ -47,6 +47,43 @@ function esc(v){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",
 fillSubjects();getResources().then(r=>{resources=r;render()});
 
 
+const viewerModal=document.getElementById("viewerModal"),viewerFrame=document.getElementById("viewerFrame"),viewerTitle=document.getElementById("viewerTitle"),viewerClose=document.getElementById("viewerClose");
+function closeViewer(){if(!viewerModal)return;viewerModal.classList.remove("open");viewerModal.setAttribute("aria-hidden","true");if(viewerFrame)viewerFrame.src="";}
+viewerClose?.addEventListener("click",closeViewer);
+viewerModal?.addEventListener("click",event=>{if(event.target===viewerModal)closeViewer();});
+document.addEventListener("keydown",event=>{if(event.key==="Escape")closeViewer();});
+async function openResourceViewer(resource){
+  if(!resource||!resource.id){return;}
+  if(!viewerModal||!viewerFrame)return;
+  viewerTitle.textContent=resource.title||"Resource Viewer";
+  viewerModal.classList.add("open");
+  viewerModal.setAttribute("aria-hidden","false");
+  viewerFrame.src="about:blank";
+  try{
+    const fileName=String(resource.fileName||"").toLowerCase();
+    const isPdf=/\.pdf$/.test(fileName);
+    let viewUrl="";
+    if(isPdf&&resource.previewKey){
+      const response=await fetch("/api/r2/preview?key="+encodeURIComponent(resource.previewKey),{credentials:"same-origin",cache:"no-store"});
+      const data=await response.json();
+      if(!response.ok||!data.ok)throw new Error(data.error||"PDF preview unavailable.");
+      viewUrl=data.previewUrl;
+    }else{
+      const response=await fetch("/api/r2/view?resourceId="+encodeURIComponent(resource.id),{credentials:"same-origin",cache:"no-store"});
+      const data=await response.json();
+      if(!response.ok||!data.ok)throw new Error(data.error||"Document view unavailable.");
+      viewUrl=data.viewUrl;
+    }
+    if(isPdf){
+      viewerFrame.src=viewUrl;
+    }else{
+      viewerFrame.src="https://view.officeapps.live.com/op/embed.aspx?src="+encodeURIComponent(viewUrl);
+    }
+  }catch(error){
+    closeViewer();
+    alert(error.message||"The document could not be opened.");
+  }
+}
 document.addEventListener("click",event=>{
   const link=event.target.closest("[data-resource-view]");
   if(!link)return;
@@ -54,10 +91,5 @@ document.addEventListener("click",event=>{
   const card=link.closest("[data-resource-id]");
   const id=card?.dataset.resourceId;
   const resource=resources.find(r=>String(r.id||r._id||r.key||"")===String(id));
-  if(resource?.url||resource?.public_url||resource?.downloadUrl){
-    window.open(resource.url||resource.public_url||resource.downloadUrl,"_blank","noopener");
-  }else{
-    const title=resource?.title||"this resource";
-    window.location.href="resource-category.html?grade="+encodeURIComponent(resource?.grade||grade.value)+"&subject="+encodeURIComponent(resource?.subject||subject.value);
-  }
+  if(resource)openResourceViewer(resource);
 });
