@@ -863,10 +863,19 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
     renderResources();
   });
 
-  safeOn(elements.adminGrade, "change", () => {
-    const allAdminSubjects = allCbeSubjects;
-    const current = elements.adminSubject?.value;
-    optionList(elements.adminSubject, allAdminSubjects, current || "Mathematics Activities");
+  // ADMIN UPLOAD: Grade controls the Subject list.
+  // This keeps every uploaded resource aligned with the grade pages.
+  safeOn(elements.adminGrade, "change", (event) => {
+    const grade = String(event.target.value || "").trim();
+    const subjects = gradeSubjects[grade] || [];
+    const current = canonicalSubjectName(elements.adminSubject?.value || "");
+    const selected = subjects.find((subject) => canonicalSubjectName(subject) === current) || subjects[0] || "";
+    optionList(elements.adminSubject, subjects, selected);
+    if (elements.formStatus && grade) {
+      elements.formStatus.textContent = subjects.length
+        ? grade + " selected. Only subjects belonging to " + grade + " are available."
+        : "Select a valid grade.";
+    }
   });
 
   safeOn(elements.sellerGrade, "change", (event) => {
