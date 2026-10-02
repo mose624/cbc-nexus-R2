@@ -102,15 +102,8 @@
   }
 
   function wireSubjectLinks(){
-    document.querySelectorAll("a[href^=\"#resources?\"]").forEach(a=>{
-      if(a.dataset.cbeSubjectWired==="1")return;
-      const q=(a.getAttribute("href")||"").split("?")[1]||"";
-      const p=new URLSearchParams(q);
-      const grade=p.get("grade"),subject=p.get("subject");
-      if(!grade&&!subject)return;
-      a.dataset.cbeSubjectWired="1";
-      a.addEventListener("click",e=>{e.preventDefault();apply(grade,subject)});
-    });
+    // LEFT Resource Centre only: Grade -> Subject opens the same
+    // resource-category page used by the header.
     document.querySelectorAll("[data-grade-subject-select]").forEach(select=>{
       if(select.dataset.cbeSubjectWired==="1")return;
       select.dataset.cbeSubjectWired="1";
@@ -120,6 +113,9 @@
         if(subject!=="All Subjects")apply(grade,subject);
       });
     });
+
+    // Do NOT intercept the middle dashboard resource/category cards.
+    // Their existing behavior remains unchanged.
   }
 
   function boot(){
