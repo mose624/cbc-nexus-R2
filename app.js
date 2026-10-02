@@ -1239,3 +1239,39 @@ async function initVacancies(){loadVacancies("homeVacancyGrid",true);loadVacanci
   observer.observe(document.body,{attributes:true,attributeFilter:["class"]});
   if(document.body.classList.contains("admin-unlocked")){host.dataset.loaded="1";load();}
 })();
+
+/* Automatic grade colour theme for Teaching & Learning pages. */
+(function(){
+  const gradeThemeMap={
+    "PP1":"preprimary","PP2":"preprimary",
+    "Grade 1":"lower-primary","Grade 2":"lower-primary","Grade 3":"lower-primary",
+    "Grade 4":"upper-primary","Grade 5":"upper-primary","Grade 6":"upper-primary",
+    "Grade 7":"junior-secondary","Grade 8":"junior-secondary","Grade 9":"junior-secondary",
+    "Grade 10":"senior-school","Grade 11":"senior-school","Grade 12":"senior-school"
+  };
+  function applyGradeTheme(grade){
+    const value=String(grade||"").trim();
+    const theme=gradeThemeMap[value]||"preprimary";
+    document.documentElement.setAttribute("data-grade-theme",theme);
+    document.documentElement.style.setProperty("--selected-grade",JSON.stringify(value));
+    document.body?.setAttribute("data-selected-grade",value);
+  }
+  function readSelectedGrade(){
+    const candidates=[
+      document.querySelector("#gradeFilter"),
+      document.querySelector("#gradeSelect"),
+      document.querySelector("#grade"),
+      document.querySelector("[data-grade-select]")
+    ];
+    const selected=candidates.find(el=>el&&el.value&&el.value!=="All Grades");
+    if(selected) applyGradeTheme(selected.value);
+  }
+  document.addEventListener("DOMContentLoaded",function(){
+    readSelectedGrade();
+    document.addEventListener("change",function(event){
+      const el=event.target;
+      if(el&&["gradeFilter","gradeSelect","grade"].includes(el.id)) applyGradeTheme(el.value);
+    });
+  });
+  window.applyCbeGradeTheme=applyGradeTheme;
+})();
