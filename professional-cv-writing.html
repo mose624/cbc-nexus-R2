@@ -4,12 +4,18 @@
 <meta name="description" content="Professional CV writing and application-document support for teachers and job seekers.">
 <link rel="stylesheet" href="styles.css?v=20260929-20">
 <style>
-.page{max-width:1100px;margin:auto;padding:32px 18px}.hero{background:#fff;border-radius:14px;padding:42px;border:1px solid var(--line);box-shadow:var(--shadow)}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:22px}.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px}.card h3{margin-top:0}.price{display:inline-block;background:#fff4b8;border:1px solid #e6d45a;border-radius:7px;padding:7px 10px;font-weight:900}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.steps{margin:0;padding-left:22px}.back{display:inline-block;margin-bottom:18px}
-@media(max-width:700px){.grid{grid-template-columns:1fr}}
+.page{max-width:1100px;margin:auto;padding:32px 18px}.hero{background:#fff;border-radius:14px;padding:42px;border:1px solid var(--line);box-shadow:var(--shadow)}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:22px}.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px}.card h3{margin-top:0}.price{display:inline-block;background:#fff4b8;border:1px solid #e6d45a;border-radius:7px;padding:7px 10px;font-weight:900}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.steps{margin:0;padding-left:22px}.back{display:inline-block;margin-bottom:18px}.cv-pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}.cv-package{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px;text-align:center}.cv-package h3{margin:0 0 8px}.cv-package .amount{font-size:28px;font-weight:900;margin:8px 0 4px}.cv-package p{margin:0;color:#666;font-size:13px}.cv-package.featured{border:2px solid #d7bd32;box-shadow:0 4px 14px rgba(0,0,0,.07)}
+@media(max-width:700px){.grid,.cv-pricing{grid-template-columns:1fr}}
 </style></head><body>
 <header class="site-header"><nav class="main-nav"><a class="brand" href="index.html#dashboard"><span class="brand-mark">CBE</span><span><strong>CBE Nexus</strong><small>Connecting learners to excellence</small></span></a><div class="nav-actions"><a class="secondary-button" href="index.html#dashboard">← Home</a><a class="primary-button" href="international-teaching-jobs.html">International Jobs</a></div></nav></header>
 <main class="page"><a class="back" href="index.html#dashboard">← Back to CBE Nexus</a>
 <section class="hero"><span class="price">AUTOMATED CV GENERATOR</span><h1>Build a CV That Presents You Professionally</h1><p>Create a polished, professional CV for international applications. Your information is intelligently organised into a clear, job-focused structure tailored to the selected destination and education system, with a live preview before payment.</p></section>
+
+<section class="cv-pricing" aria-label="CV packages">
+<div class="cv-package"><h3>Basic CV</h3><div class="amount">KSh 200</div><p>Clean professional CV for straightforward applications.</p></div>
+<div class="cv-package"><h3>Classic CV</h3><div class="amount">KSh 400</div><p>Enhanced structure and presentation for competitive applications.</p></div>
+<div class="cv-package featured"><h3>Professional CV</h3><div class="amount">KSh 800</div><p>Advanced international, ATS-friendly professional presentation.</p></div>
+</section>
 
 <section class="card" id="cvGenerator" style="margin-top:22px">
 <h2>Automated CV Generator</h2>
@@ -23,7 +29,7 @@
 <div><label for="cvEmail"><strong>Email Address</strong></label><input id="cvEmail" type="email" required placeholder="name@example.com"></div>
 <div><label for="cvPhone"><strong>Phone Number</strong></label><input id="cvPhone" required placeholder="+254..."></div>
 <div><label for="cvCountry"><strong>Country of Application</strong></label><select id="cvCountry" required><option value="">Select country</option><option>Kenya</option><option>United States</option><option>Canada</option><option>United Kingdom</option><option>United Arab Emirates</option><option>Qatar</option><option>Saudi Arabia</option><option>Oman</option><option>China</option><option>Japan</option><option>South Korea</option><option>Singapore</option><option>Australia</option><option>New Zealand</option><option>Germany</option><option>France</option><option>Netherlands</option><option>South Africa</option><option>Other</option></select></div>
-<div><label for="cvType"><strong>Type of CV</strong></label><select id="cvType" required><option value="Starter">Starter CV</option><option value="Medium">Medium CV</option><option value="Professional">Professional CV</option></select></div>
+<div><label for="cvType"><strong>Type of CV</strong></label><select id="cvType" required><option value="Basic">Basic CV — KSh 200</option><option value="Classic">Classic CV — KSh 400</option><option value="Professional">Professional CV — KSh 800</option></select></div>
 <div><label for="cvPages"><strong>Number of Pages</strong></label><select id="cvPages" required><option value="1">1 Page</option><option value="2" selected>2 Pages</option><option value="3">3 Pages</option><option value="4">4 Pages</option><option value="5">5 Pages</option></select></div>
 <div><label for="cvPhoto"><strong>Passport Photo</strong> <small>(optional)</small></label><input id="cvPhoto" type="file" accept="image/jpeg,image/png,image/webp"><small>Upload a clear passport-size photo. It will only appear where appropriate for the selected destination.</small></div>
 <div><label for="cvUniversityUnits"><strong>Units / Courses in University</strong></label><textarea id="cvUniversityUnits" rows="4" placeholder="List relevant units, courses or modules"></textarea></div>
@@ -42,7 +48,7 @@
 </section>
 
 <section class="card" style="margin-top:22px">
-<h2>Professional CV Preview</h2><div class="cv-standard-note"><strong>Professional standard:</strong> Arial 10.5–11 pt body text, 14–16 pt section headings, 20–22 pt name, clean single-column structure, standard section headings, consistent spacing and ATS-readable formatting. Current guidance recommends common fonts such as Arial, Calibri and Times New Roman and avoiding complex graphics, columns and decorative elements. citeturn0search1turn0search4</div>
+<h2>Professional CV Preview</h2><div class="cv-standard-note"><strong>Professional standard:</strong> Arial 10.5–11 pt body text, 14–16 pt section headings, 20–22 pt name, clean single-column structure, standard section headings, consistent spacing and ATS-readable formatting. Current guidance recommends common fonts such as Arial, Calibri and Times New Roman and avoiding complex graphics, columns and decorative elements.</div>
 <p id="previewHint">Your tailored CV preview will appear here after generation.</p>
 <div id="cvPreview" style="background:#fff;border:1px solid var(--line);padding:28px;min-height:280px"></div>
 <div class="actions"><button class="primary-button" type="button" id="payToDownloadCv">Pay to Download CV</button><a class="whatsapp-button" href="https://wa.me/254798462815?text=Hello%20CBE%20Nexus%2C%20I%20need%20help%20with%20my%20automated%20CV." target="_blank" rel="noopener">Need Help? WhatsApp</a></div>
@@ -89,7 +95,7 @@ const showPhoto=!!photoData && rules.photo;
 const photo=showPhoto?"<img src='"+photoData+"' alt='Passport photo' style='width:100px;height:125px;object-fit:cover;border:1px solid #ccc;border-radius:4px'>":"";
 $("cvPreview").innerHTML="<article class='cv-preview-paper'><div class='cv-accent' style='display:flex;gap:18px;align-items:center;justify-content:space-between'><div><p class='cv-name'>"+esc(data.cvName)+"</p><p class='cv-role'>"+esc(data.cvJobTitle)+"</p><p class='cv-contact'>Email: "+esc(data.cvEmail)+" | Phone: "+esc(data.cvPhone)+" | Application: "+esc(data.cvCountry)+"</p></div>"+photo+"</div>"+section("Professional Profile",refinedProfile)+section("Core Skills",data.cvSkills)+section("Professional Experience",data.cvExperience)+section("Education & Qualifications",data.cvEducation)+section("Relevant University Units / Courses",data.cvUniversityUnits)+section("University Classification",data.cvClass)+section("Key Achievements",data.cvAchievements)+section("Languages",data.cvLanguage)+section("Referees",data.cvReferees)+"<p style='font-size:9pt;color:#6b7280;margin-top:24px'>Prepared for "+esc(rules.style)+" • Requested length: "+esc(data.cvPages)+" page(s)</p></article>";
 $("previewHint").style.display="none";$("cvStatus").textContent="Preview generated. Review your details before payment.";
-$("cvPreview").dataset.generated="true"; $("cvPreview").dataset.cv=JSON.stringify(data);
+$("cvPreview").dataset.generated="true";$("cvPreview").dataset.cv=JSON.stringify(data);
 }
 $("cvGeneratorForm").addEventListener("submit",e=>{e.preventDefault();generate();});
 $("refineCv").addEventListener("click",async()=>{
@@ -117,7 +123,7 @@ $("resetCv").addEventListener("click",()=>{setTimeout(()=>{$("cvPreview").innerH
 $("payToDownloadCv").addEventListener("click",()=>{
 if($("cvPreview").dataset.generated!=="true"){$("cvPaymentStatus").textContent="Generate the CV preview first.";return;}
 const d=JSON.parse($("cvPreview").dataset.cv||"{}");
-const amount=d.cvType==="Starter"?300:d.cvType==="Medium"?600:1000;
+const amount=d.cvType==="Basic"?200:d.cvType==="Classic"?400:800;
 $("cvPaymentStatus").textContent="CV selected: "+d.cvType+" | "+d.cvCountry+" | "+d.cvPages+" page(s) | Download price: KSh "+amount+". Proceed to secure M-Pesa checkout.";
 window.location.href="index.html?cv="+encodeURIComponent(d.cvName)+"&amount="+amount+"&type="+encodeURIComponent(d.cvType)+"&country="+encodeURIComponent(d.cvCountry)+"&pages="+encodeURIComponent(d.cvPages)+"#payments";
 });
