@@ -6474,21 +6474,17 @@ body.admin-unlocked .admin-only-link {
 }
 
 
-/* CBE Nexus grade colour palette — visual styling only, structure unchanged */
-#gradeList .grade-card:nth-child(1) .grade-toggle { background:#f8b6c8; border-color:#f8b6c8; color:#4a2430; }
-#gradeList .grade-card:nth-child(2) .grade-toggle { background:#f5e6d3; border-color:#d98b8b; color:#5a2a2a; }
-#gradeList .grade-card:nth-child(3) .grade-toggle { background:#fff3a6; border-color:#e6d45a; color:#4d4300; }
-#gradeList .grade-card:nth-child(4) .grade-toggle { background:#d8b48a; border-color:#b98d60; color:#3f2918; }
-#gradeList .grade-card:nth-child(5) .grade-toggle { background:#bfe8c2; border-color:#82c98a; color:#1d4d25; }
-#gradeList .grade-card:nth-child(6) .grade-toggle { background:#b9def5; border-color:#7fb9df; color:#173c55; }
-#gradeList .grade-card:nth-child(7) .grade-toggle { background:#3f51b5; border-color:#303f9f; color:#fff; }
-#gradeList .grade-card:nth-child(8) .grade-toggle { background:#9c6ade; border-color:#7b4db5; color:#fff; }
-#gradeList .grade-card:nth-child(9) .grade-toggle { background:#b07be8; border-color:#8b55c2; color:#fff; }
-#gradeList .grade-card:nth-child(10) .grade-toggle { background:#800020; border-color:#650018; color:#fff; }
-#gradeList .grade-card:nth-child(11) .grade-toggle { background:#7b3f00; border-color:#5d3000; color:#fff; }
-#gradeList .grade-card:nth-child(12) .grade-toggle { background:#e0b84f; border-color:#c49a2f; color:#3d2d00; }
-#gradeList .grade-card .grade-toggle:hover { filter:brightness(.96); }
-#gradeList .grade-card.open .grade-toggle { color:inherit; }
-#gradeList .grade-card:nth-child(n+7) .grade-toggle { color:#fff; }
-#gradeList .grade-card:nth-child(10) .grade-toggle,
-#gradeList .grade-card:nth-child(11) .grade-toggle { color:#fff; }
+
+/* CBE Nexus Grade 1-12 colour palette — visual only */
+#dashboard.portal-dashboard > .portal-sidebar #gradeList .grade-card:nth-child(1) .grade-toggle { background:#f8b6c8 !important; color:#4a2430 !important; border-color:#f8b6c8 !important; }
+#dashboard.portal-dashboard > .portal-sidebar #gradeList .grade-card:nth-child(2) .grade-toggle { background:#f3d6d6 !important; color:#5a2a2a !important; border-color:#d98b8b !important; }
+#dashboard.portal-dashboard > .portal-sidebar #gradeList .grade-card:nth-child(3) .grade-toggle { background:#fff3a6 !important; color:#4d4300 !important; border-color:#e6d45a !important; }
+#dashboard.portal-dashboard > .portal-sidebar #gradeList .grade-card:nth-child(4) .grade-toggle { background:#d6b08c !important; color:#3f2918 !important; border-color:#b98d60 !important; }
+#dashboard.portal-dashboard > .portal-sidebar #gradeList .grade-card:nth-child(5) .grade-toggle { background:#b9dfb9 !important; color:#1d4d25 !important; border-color:#82c98a !important; }
+#dashboard.portal-dashboard > .portal-sidebar #gradeList .grade-card:nth-child(6) .grade-toggle { background:#b9dcf5 !important; color:#173c55 !important; border-color:#7fb9df !important; }
+#dashboard.portal-dashboard > .portal-sidebar #gradeList .grade-card:nth-child(7) .grade-toggle { background:#4b4fa3 !important; color:#fff !important; border-color:#3b3f88 !important; }
+#dashboard.portal-dashboard > .portal-sidebar #gradeList .grade-card:nth-child(8) .grade-toggle { background:#8e5bb7 !important; color:#fff !important; border-color:#714693 !important; }
+#dashboard.portal-dashboard > .portal-sidebar #gradeList .grade-card:nth-child(9) .grade-toggle { background:#a06ac2 !important; color:#fff !important; border-color:#814da2 !important; }
+#dashboard.portal-dashboard > .portal-sidebar #gradeList .grade-card:nth-child(10) .grade-toggle { background:#7b1e2b !important; color:#fff !important; border-color:#651722 !important; }
+#dashboard.portal-dashboard > .portal-sidebar #gradeList .grade-card:nth-child(11) .grade-toggle { background:#7a4b2a !important; color:#fff !important; border-color:#613b22 !important; }
+#dashboard.portal-dashboard > .portal-sidebar #gradeList .grade-card:nth-child(12) .grade-toggle { background:#d4a72c !important; color:#17202a !important; border-color:#b88e1f !important; }
