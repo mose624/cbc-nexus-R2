@@ -1864,8 +1864,11 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
     toggle?.classList.add("active");
     toggle?.setAttribute("aria-expanded", "true");
 
+    if (subject !== "All Subjects") {
+      window.location.href = "resource-category.html?grade=" + encodeURIComponent(grade) + "&subject=" + encodeURIComponent(subject);
+      return;
+    }
     setGradeSubject(grade, subject);
-    if (subject !== "All Subjects") showToast(`${grade} — ${subject} selected.`);
   });
 
   safeOn(elements.resourceGrid, "click", (event) => {
