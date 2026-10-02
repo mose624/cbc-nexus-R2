@@ -16,7 +16,9 @@ const resourceTypes=["Notes","Schemes of Work","Lesson Plan","Records of Work","
 typeSelect.add(new Option("All Resources","All Materials"));resourceTypes.forEach(t=>typeSelect.add(new Option(t,t)));
 Object.keys(gradeSubjects).forEach(g=>grade.add(new Option(g,g)));
 typeSelect.value=params.get("type")||"All Materials";
-const initialGrade=params.get("grade")||"All Grades",initialSubject=params.get("subject")||"All Subjects";
+const subjectAliases={"Christian Religious Education (CRE)":"CRE","Hindu Religious Education (HRE)":"HRE","Islamic Religious Education (IRE)":"IRE","Kiswahili Activities":"Kiswahili","Mathematics Activities":"Mathematics","Indigenous Language":"Indigenous Languages","Science and Technology":"Science & Technology","History & Citizenship":"History and Citizenship","Building and Construction":"Building & Construction","Metal Work":"Metalwork","Woodwork":"Wood Technology","Marine & Fisheries":"Marine and Fisheries Technology","Marine & Fisheries Technology":"Marine and Fisheries Technology","Community Service Learning":"Community Service Learning (CSL)","Community Service Learning (CSL)":"Community Service Learning (CSL)","Kenya Sign Language (KSL)":"Sign Language"};
+const subjectForFilter=s=>subjectAliases[s]||s;
+const initialGrade=params.get("grade")||"All Grades",initialSubject=subjectForFilter(params.get("subject")||"All Subjects");
 grade.value=initialGrade;
 function fillSubjects(){const g=grade.value;subject.innerHTML='<option value="All Subjects">All Subjects</option>';(g==="All Grades"?[...new Set(Object.values(gradeSubjects).flat())]:gradeSubjects[g]||[]).forEach(s=>subject.add(new Option(s,s)));if(g===initialGrade&&grade.value!=="All Grades"&&gradeSubjects[g]?.includes(initialSubject))subject.value=initialSubject;render()}
 typeSelect.addEventListener("change",render);grade.addEventListener("change",()=>{fillSubjects();updateUrl()});subject.addEventListener("change",()=>{updateUrl();render()});search.addEventListener("input",render);
