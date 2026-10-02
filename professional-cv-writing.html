@@ -33,9 +33,11 @@
 <div><label for="cvAchievements"><strong>Achievements</strong></label><textarea id="cvAchievements" rows="5" placeholder="Awards, measurable results, leadership, projects"></textarea></div>
 <div><label for="cvSkills"><strong>Skills</strong></label><textarea id="cvSkills" rows="5" required placeholder="Teaching, leadership, ICT, communication, classroom management, subject skills, etc."></textarea></div>
 <div><label for="cvReferees"><strong>Referees (if applicable)</strong></label><textarea id="cvReferees" rows="5" placeholder="Name, title, organisation, email and phone"></textarea></div>
+<div style="grid-column:1/-1"><label for="cvTargetJob"><strong>Target Job / Vacancy Details</strong> <small>(optional but recommended)</small></label><textarea id="cvTargetJob" rows="5" placeholder="Paste the job title, advert or key requirements. The CV will be refined around the employer's requirements without inventing qualifications or experience."></textarea></div>
 </div>
-<div class="actions"><button class="primary-button" type="submit">Generate CV Preview</button><button class="secondary-button" type="reset" id="resetCv">Clear Form</button></div>
+<div class="actions"><button class="primary-button" type="submit">Generate CV Preview</button><button class="secondary-button" type="button" id="refineCv">Refine &amp; Strengthen CV</button><button class="secondary-button" type="reset" id="resetCv">Clear Form</button></div>
 <p id="cvStatus" class="form-status" aria-live="polite"></p>
+<p style="font-size:12px;color:#666">The refinement reviews the information you provide, strengthens professional wording, improves job-relevant skills and aligns the CV with the selected destination and vacancy.</p>
 </form>
 </section>
 
@@ -57,7 +59,7 @@
 <script>
 (function(){
 const $=id=>document.getElementById(id);
-const fields=["cvName","cvJobTitle","cvGender","cvLanguage","cvEmail","cvPhone","cvCountry","cvType","cvPages","cvUniversityUnits","cvClass","cvEducation","cvExperience","cvAchievements","cvSkills","cvReferees"];
+const fields=["cvName","cvJobTitle","cvGender","cvLanguage","cvEmail","cvPhone","cvCountry","cvType","cvPages","cvUniversityUnits","cvClass","cvEducation","cvExperience","cvAchievements","cvSkills","cvReferees","cvTargetJob"];
 const esc=v=>String(v||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
 function section(title,value){if(!value)return "";return "<h3>"+title+"</h3><p style='white-space:pre-line'>"+esc(value)+"</p>";}
 let photoData="";
@@ -82,13 +84,35 @@ function generate(){
 const data=Object.fromEntries(fields.map(id=>[id,$(id).value.trim()]));
 if(!data.cvName||!data.cvJobTitle||!data.cvLanguage||!data.cvEmail||!data.cvPhone||!data.cvCountry||!data.cvEducation||!data.cvExperience||!data.cvSkills){$("cvStatus").textContent="Please complete all required fields.";return;}
 const rules=destinationRules(data.cvCountry);
+const refinedProfile=$("cvPreview").dataset.refinedProfile||smartProfile(data);
 const showPhoto=!!photoData && rules.photo;
 const photo=showPhoto?"<img src='"+photoData+"' alt='Passport photo' style='width:100px;height:125px;object-fit:cover;border:1px solid #ccc;border-radius:4px'>":"";
-$("cvPreview").innerHTML="<div style='border-bottom:3px solid #d8b84c;padding-bottom:16px;display:flex;gap:18px;align-items:center;justify-content:space-between'><div><h1 style='margin:0 0 4px'>"+esc(data.cvName)+"</h1><h2 style='margin:0 0 8px'>"+esc(data.cvJobTitle)+"</h2><p style='margin:0'>"+esc(data.cvEmail)+" | "+esc(data.cvPhone)+" | "+esc(data.cvCountry)+"</p></div>"+photo+"</div>"+section("Professional Profile",smartProfile(data))+section("Languages",data.cvLanguage)+section("Education & Qualifications",data.cvEducation)+section("University Units / Courses",data.cvUniversityUnits)+section("University Class",data.cvClass)+section("Working Experience",data.cvExperience)+section("Achievements",data.cvAchievements)+section("Relevant Skills",data.cvSkills)+section("Referees",data.cvReferees)+"<p style='font-size:11px;color:#777;margin-top:22px'>Prepared in a "+esc(rules.style)+" format • Requested length: "+esc(data.cvPages)+" page(s)</p>";
+$("cvPreview").innerHTML="<div style='border-bottom:3px solid #d8b84c;padding-bottom:16px;display:flex;gap:18px;align-items:center;justify-content:space-between'><div><h1 style='margin:0 0 4px'>"+esc(data.cvName)+"</h1><h2 style='margin:0 0 8px'>"+esc(data.cvJobTitle)+"</h2><p style='margin:0'>"+esc(data.cvEmail)+" | "+esc(data.cvPhone)+" | "+esc(data.cvCountry)+"</p></div>"+photo+"</div>"+section("Professional Profile",refinedProfile)+section("Languages",data.cvLanguage)+section("Education & Qualifications",data.cvEducation)+section("University Units / Courses",data.cvUniversityUnits)+section("University Class",data.cvClass)+section("Working Experience",data.cvExperience)+section("Achievements",data.cvAchievements)+section("Relevant Skills",data.cvSkills)+section("Referees",data.cvReferees)+"<p style='font-size:11px;color:#777;margin-top:22px'>Prepared in a "+esc(rules.style)+" format • Requested length: "+esc(data.cvPages)+" page(s)</p>";
 $("previewHint").style.display="none";$("cvStatus").textContent="Preview generated. Review your details before payment.";
 $("cvPreview").dataset.generated="true"; $("cvPreview").dataset.cv=JSON.stringify(data);
 }
 $("cvGeneratorForm").addEventListener("submit",e=>{e.preventDefault();generate();});
+$("refineCv").addEventListener("click",async()=>{
+  const data=Object.fromEntries(fields.map(id=>[id,$(id).value.trim()]));
+  if(!data.cvJobTitle||!data.cvCountry||!data.cvName||!data.cvExperience||!data.cvSkills){$("cvStatus").textContent="Complete your name, job title, country, experience and skills first.";return;}
+  const button=$("refineCv");button.disabled=true;button.textContent="Refining CV...";
+  $("cvStatus").textContent="Reviewing your information and strengthening the professional wording...";
+  try{
+    const response=await fetch("/api/cv/refine",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+      name:data.cvName,jobTitle:data.cvJobTitle,country:data.cvCountry,languages:data.cvLanguage,education:data.cvEducation,units:data.cvUniversityUnits,universityClass:data.cvClass,experience:data.cvExperience,achievements:data.cvAchievements,skills:data.cvSkills,targetJob:data.cvTargetJob
+    })});
+    const result=await response.json();
+    if(!response.ok||!result.ok)throw new Error(result.error||"Unable to refine the CV.");
+    const r=result.refined||{};
+    if(r.profile)$("cvPreview").dataset.refinedProfile=r.profile;
+    if(r.experience)$("cvExperience").value=r.experience;
+    if(r.achievements)$("cvAchievements").value=r.achievements;
+    if(Array.isArray(r.skills))$("cvSkills").value=r.skills.join("; ");
+    generate();
+    $("cvStatus").textContent="Your CV has been refined. Review the updated wording and skills before payment.";
+  }catch(error){$("cvStatus").textContent=error.message||"Unable to refine the CV right now.";}
+  finally{button.disabled=false;button.textContent="Refine & Strengthen CV";}
+});
 $("resetCv").addEventListener("click",()=>{setTimeout(()=>{$("cvPreview").innerHTML="";$("previewHint").style.display="block";$("cvStatus").textContent="";$("cvPaymentStatus").textContent="";},0);});
 $("payToDownloadCv").addEventListener("click",()=>{
 if($("cvPreview").dataset.generated!=="true"){$("cvPaymentStatus").textContent="Generate the CV preview first.";return;}
