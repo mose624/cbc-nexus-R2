@@ -610,6 +610,18 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
   safeOn(elements.adminStatusFilter, "change", () => renderAdminControlCentre(adminDashboardData || {}));
   document.querySelectorAll("[data-admin-module]").forEach((button) => safeOn(button, "click", () => setAdminModule(button.dataset.adminModule)));
 
+  // Main dashboard subject links: open the Resource Centre directly for the selected grade + subject.
+  // Capture the click so no older navigation handler can redirect the user elsewhere.
+  safeOn(elements.gradeList, "click", (event) => {
+    const subjectLink = event.target.closest(".dropdown-grade-subjects a[href*=\"resource-category.html?grade=\"]");
+    if (!subjectLink) return;
+    const href = subjectLink.getAttribute("href");
+    if (!href) return;
+    event.preventDefault();
+    event.stopPropagation();
+    window.location.assign(href);
+  }, true);
+
   // Grade 1-12 navigation: every grade opens its own subject dropdown.
   safeOn(elements.gradeList, "click", (event) => {
     const toggle = event.target.closest("[data-grade-toggle]");
