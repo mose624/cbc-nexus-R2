@@ -390,7 +390,7 @@ function renderAdminControlCentre(data) {
     ];
     elements.adminStatsGrid.innerHTML=cards.map(c=>`<div class="admin-kpi-card"><span>${escapeHtml(c[0])}</span><strong>${Number(c[1]||0).toLocaleString("en-KE")}</strong><small>${escapeHtml(c[2])}</small></div>`).join("");
   }
-  if(elements.adminResourceBadge) elements.adminResourceBadge.textContent=resources.length;
+  renderAdminModuleDetails(data);\n  auditAdminExportButtons();\n  if(elements.adminResourceBadge) elements.adminResourceBadge.textContent=resources.length;
   if(elements.adminSellerBadge) elements.adminSellerBadge.textContent=sellers.length;
   if(elements.adminPaymentBadge) elements.adminPaymentBadge.textContent=payments.length;
   if(elements.adminSalesBadge) elements.adminSalesBadge.textContent=sales.length;
@@ -398,6 +398,46 @@ function renderAdminControlCentre(data) {
   if(elements.adminLastUpdated) elements.adminLastUpdated.textContent="Updated "+new Date().toLocaleString("en-KE");
   const summary=document.getElementById("adminResourceSummary");
   if(summary) summary.textContent=`${pending} pending · ${approved} online · ${rejected} rejected`;
+}
+function renderAdminModuleDetails(data){
+  const users=Array.isArray(data?.users)?data.users:[];
+  const sales=Array.isArray(data?.sales)?data.sales:[];
+  const resources=Array.isArray(data?.resources)?data.resources:[];
+  const userHost=document.getElementById("adminUserManagement");
+  if(userHost){
+    userHost.innerHTML=users.length
+      ? users.slice(0,100).map((u,i)=>'<article class="admin-management-card"><div class="admin-management-heading"><div><span class="eyebrow">USER '+(i+1)+'</span><h4>'+escapeHtml(u.name||u.username||u.email||"Customer")+'</h4><p>'+escapeHtml(u.email||u.phone||"Account")+'</p></div><span class="price-pill">ACTIVE</span></div></article>').join("")
+      : '<div class="admin-management-card"><strong>No customer accounts found.</strong><p>Registered users will appear here.</p></div>';
+  }
+  const salesHost=document.getElementById("adminSalesManagement");
+  if(salesHost){
+    salesHost.innerHTML=sales.length
+      ? sales.slice().reverse().slice(0,100).map((s,i)=>'<article class="admin-management-card"><div class="admin-management-heading"><div><span class="eyebrow">SALE '+(i+1)+'</span><h4>'+escapeHtml(s.resource||s.title||"Resource purchase")+'</h4><p>'+escapeHtml(s.phone||s.email||s.customer||"Customer")+'</p></div><span class="price-pill">KES '+Number(s.amount||s.price||0).toLocaleString("en-KE")+'</span></div><p>'+escapeHtml(s.status||s.date||s.createdAt||"Recorded transaction")+'</p></article>').join("")
+      : '<div class="admin-management-card"><strong>No sales recorded yet.</strong><p>Completed marketplace transactions will appear here.</p></div>';
+  }
+  const priceHost=document.getElementById("adminPriceManagement");
+  if(priceHost){
+    const priced=resources.filter(r=>Number(r.price||0)>0);
+    const free=resources.filter(r=>Number(r.price||0)<=0);
+    const avg=priced.length?priced.reduce((n,r)=>n+Number(r.price||0),0)/priced.length:0;
+    priceHost.innerHTML='<article class="admin-management-card"><div class="admin-management-heading"><div><span class="eyebrow">MARKETPLACE PRICING</span><h4>Resource pricing overview</h4><p>Prices are stored with each uploaded resource.</p></div><span class="price-pill">KES</span></div><div class="summary-grid"><div><strong>'+priced.length+'</strong><span>Paid resources</span></div><div><strong>'+free.length+'</strong><span>Free resources</span></div><div><strong>KES '+Math.round(avg).toLocaleString("en-KE")+'</strong><span>Average price</span></div></div></article>';
+  }
+}
+function downloadAdminJson(filename,data){
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json;charset=utf-8"});
+  const url=URL.createObjectURL(blob); const a=document.createElement("a");
+  a.href=url; a.download=filename; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function auditAdminExportButtons(){
+  safeOn(document.getElementById("adminExportSales"),"click",()=>{
+    downloadAdminJson("cbe-nexus-sales.json",adminDashboardData?.sales||[]);
+    showToast("Sales export downloaded.");
+  });
+  safeOn(document.getElementById("adminExportResources"),"click",()=>{
+    downloadAdminJson("cbe-nexus-resources.json",adminDashboardData?.resources||[]);
+    showToast("Resources export downloaded.");
+  });
 }
 async function loadAdminDashboard() {
   if(!isAdminUnlocked()) return;
