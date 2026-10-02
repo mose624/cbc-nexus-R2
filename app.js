@@ -270,6 +270,7 @@ const elements = {
   adminPriceManagement: document.querySelector("#adminPriceManagement"),
   refreshAdminDashboardButton: document.querySelector("#refreshAdminDashboardButton"),
   adminDashboardSearch: document.querySelector("#adminDashboardSearch"),
+  adminGradeFilter: document.querySelector("#adminGradeFilter"),
   adminStatusFilter: document.querySelector("#adminStatusFilter"),
   adminLastUpdated: document.querySelector("#adminLastUpdated"),
   adminSellerBadge: document.querySelector("#adminSellerBadge"),
@@ -1130,9 +1131,13 @@ async function initVacancies(){loadVacancies("homeVacancyGrid",true);loadVacanci
   function render(){
     const q=String(document.getElementById("adminDashboardSearch")?.value||"").trim().toLowerCase();
     const filter=String(document.getElementById("adminStatusFilter")?.value||"all").toLowerCase();
+    const gradeFilter=String(document.getElementById("adminGradeFilter")?.value||"all").trim().toLowerCase();
     const rows=adminResources.filter(x=>{
       const hay=[x.title,x.grade,x.subject,x.type,x.fileName,x.filename].join(" ").toLowerCase();
-      return (!q||hay.includes(q))&&(filter==="all"||String(x.status||"pending").toLowerCase()===filter);
+      const resourceGrade=String(x.grade||"").trim().toLowerCase();
+      return (!q||hay.includes(q))
+        && (filter==="all"||String(x.status||"pending").toLowerCase()===filter)
+        && (gradeFilter==="all"||resourceGrade===gradeFilter);
     });
     const pending=adminResources.filter(x=>String(x.status||"pending").toLowerCase()==="pending").length;
     const approved=adminResources.filter(x=>String(x.status||"").toLowerCase()==="approved").length;
@@ -1147,6 +1152,7 @@ async function initVacancies(){loadVacancies("homeVacancyGrid",true);loadVacanci
         <div class="admin-management-heading"><div><span class="eyebrow">${esc(x.grade||"Grade")} · ${esc(x.subject||"Subject")}</span><h4>${esc(x.title||"Untitled resource")}</h4><p>${esc(x.type||"Resource")} · ${esc(x.fileName||x.filename||"File")}</p></div><span class="price-pill">${badge}</span></div>
         <p><strong>Price:</strong> KES ${Number(x.price||0).toLocaleString("en-KE")} · <strong>Status:</strong> ${esc(s)}</p>
         <div class="admin-resource-moderation-actions">
+          <a class="secondary-button" href="resource-category.html?grade=${encodeURIComponent(String(x.grade||""))}&subject=${encodeURIComponent(String(x.subject||""))}" target="_self">View Grade Page</a>
           <button class="primary-button" type="button" data-resource-moderate="approved" data-resource-id="${esc(x.id)}" ${s==="approved"?"disabled":""}>✓ Approve / Publish</button>
           <button class="secondary-button" type="button" data-resource-moderate="rejected" data-resource-id="${esc(x.id)}" ${s==="rejected"?"disabled":""}>✕ Reject / Hide</button>
           <button class="danger-button" type="button" data-resource-delete="${esc(x.id)}">🗑 Delete File</button>
@@ -1186,6 +1192,7 @@ async function initVacancies(){loadVacancies("homeVacancyGrid",true);loadVacanci
   const refresh=document.getElementById("refreshAdminDashboardButton");
   refresh?.addEventListener("click",load);
   document.getElementById("adminDashboardSearch")?.addEventListener("input",render);
+  document.getElementById("adminGradeFilter")?.addEventListener("change",render);
   document.getElementById("adminStatusFilter")?.addEventListener("change",render);
   window.loadAdminResourceModeration=load;
   const observer=new MutationObserver(()=>{if(document.body.classList.contains("admin-unlocked")&&host.dataset.loaded!=="1"){host.dataset.loaded="1";load();}});
