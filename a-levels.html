@@ -1,1 +1,74 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A-Levels Resources | CBE Nexus</title><style>body{margin:0;font-family:Arial;background:#f4f7fb;color:#172033}.hero{background:#071b3a;color:white;padding:42px 20px;text-align:center}.hero h1{margin:0 0 8px}.hero p{color:#dce7f5}.wrap{max-width:1100px;margin:28px auto;padding:0 18px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}.card{background:white;border:1px solid #dce4ee;border-radius:10px;padding:18px;text-decoration:none;color:#10233f;box-shadow:0 3px 10px #071b3a12}.card h3{margin:0 0 7px}.card p{margin:0;font-size:12px;color:#607089}.back{display:inline-block;margin-top:24px;color:#071b3a}</style></head><body><header class="hero"><h1>A-Levels</h1><p>Advanced Level subjects and international-standard learning resources</p></header><main class="wrap"><h2>Subjects</h2><div class="grid" id="subjects"></div><a class="back" href="index.html">← Back to CBE Nexus</a></main><script>const subjects=['Mathematics','Further Mathematics','English Literature','Biology','Chemistry','Physics','Computer Science','Geography','History','Economics','Business','Accounting','Psychology','Sociology','Law','Art & Design','French','Spanish'];const g=document.getElementById('subjects');subjects.forEach(s=>g.insertAdjacentHTML('beforeend',`<a class="card" href="resource-category.html?curriculum=A-Levels&subject=${encodeURIComponent(s)}"><h3>${s}</h3><p>A-Level resources</p></a>`));</script></body></html>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A-Levels Resources | CBE Nexus</title>
+<meta name="description" content="A-Levels resources on CBE Nexus: notes, schemes, lesson plans, revision materials, past papers, marking schemes and teacher support.">
+<style>
+:root{--navy:#071a3d;--navy2:#0b2858;--accent:#9b6cff;--light:#f3efff;}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:#f5f8fc;color:#17233b}
+.top{background:var(--navy);color:#fff;padding:10px 5%;font-size:13px}.top a{color:#fff;text-decoration:none}
+.nav{background:#fff;border-bottom:1px solid #dce5f0;padding:15px 5%;display:flex;align-items:center;justify-content:space-between;gap:15px;position:sticky;top:0;z-index:5}.brand{font-size:22px;font-weight:900;color:var(--navy);text-decoration:none}.back{color:var(--navy);font-weight:800;text-decoration:none}
+.hero{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:58px 5%;border-bottom:5px solid var(--accent)}
+.wrap{max-width:1180px;margin:auto}.eyebrow{color:var(--accent);font-weight:900;text-transform:uppercase;letter-spacing:1.5px;font-size:12px}.hero h1{font-size:clamp(34px,5vw,58px);margin:8px 0}.hero p{max-width:780px;line-height:1.7;color:#dce8fa;font-size:17px}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.btn{display:inline-block;padding:12px 17px;border-radius:9px;text-decoration:none;font-weight:900}.primary{background:var(--accent);color:#071a3d}.secondary{border:1px solid #8ca5c8;color:#fff}
+.info{background:var(--light);border-left:5px solid var(--accent);padding:16px 18px;margin:26px 0;border-radius:10px}.info strong{color:var(--navy)}
+main{padding:32px 5% 60px}.group{margin:28px 0}.group h2{color:var(--navy);font-size:23px;border-left:5px solid var(--accent);padding-left:12px}.subjects{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.subject{background:#fff;border:1px solid #dbe4ef;border-radius:10px;padding:15px;text-decoration:none;color:#17233b;font-weight:800;display:flex;justify-content:space-between;align-items:center;box-shadow:0 3px 10px rgba(7,26,61,.05);transition:.15s}.subject:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 7px 18px rgba(7,26,61,.1)}.subject span{color:var(--accent);font-size:20px}
+.resource-box{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:20px}.resource{background:var(--navy);color:#fff;border-radius:10px;padding:17px;border-top:4px solid var(--accent)}.resource b{display:block;margin-bottom:6px}.resource small{color:#dce8fa}
+footer{background:var(--navy);color:#c9d7eb;text-align:center;padding:28px 5%;font-size:13px}footer a{color:#fff}
+@media(max-width:650px){.nav{position:static}.hero{padding:42px 5%}.subjects{grid-template-columns:1fr}}
+</style></head>
+<body>
+<div class="top"><div class="wrap">CBE Nexus • International Curriculum Resource Centre</div></div>
+<nav class="nav"><a class="brand" href="index.html">CBE Nexus</a><a class="back" href="index.html">← Back to CBE Nexus</a></nav>
+<header class="hero"><div class="wrap"><div class="eyebrow">International Curriculum</div><h1>A-Levels</h1><p><strong>International Advanced Level & A-Level Resources</strong><br>Advanced-level resources for subject study, structured revision and examination preparation.</p>
+<div class="actions"><a class="btn primary" href="#subjects">Browse Subjects</a><a class="btn secondary" href="resource-category.html?curriculum=A-Levels">Open Resource Library</a></div></div></header>
+<main><div class="wrap">
+<div class="info"><strong>How CBE Nexus organizes international resources:</strong> Curriculum → subject/group → resource type → revision & assessment support. Subject buttons connect to the existing Resource Library.</div>
+<section><h2 style="color:var(--navy)">Resource types</h2><div class="resource-box">
+<div class="resource"><b>📘 Notes & Study Guides</b><small>Topic notes, summaries and revision guides.</small></div>
+<div class="resource"><b>📝 Past Papers</b><small>Practice papers and examination preparation.</small></div>
+<div class="resource"><b>✅ Marking Schemes</b><small>Answer support and self-assessment.</small></div>
+<div class="resource"><b>📋 Schemes & Lesson Plans</b><small>Teacher planning and classroom delivery.</small></div>
+<div class="resource"><b>🎯 Topical Questions</b><small>Focused practice by topic and subject.</small></div>
+<div class="resource"><b>🔬 Practical & Projects</b><small>Practical activities, projects and coursework support.</small></div>
+</div></section>
+<section id="subjects"><h2 style="color:var(--navy);margin-top:42px">Subjects</h2>
+    <section class="group">
+      <h2>Mathematics</h2>
+      <div class="subjects">
+        <a href="resource-category.html?subject=Mathematics&curriculum=A-Levels" class="subject">Mathematics<span>→</span></a><a href="resource-category.html?subject=Further%20Mathematics&curriculum=A-Levels" class="subject">Further Mathematics<span>→</span></a><a href="resource-category.html?subject=Statistics&curriculum=A-Levels" class="subject">Statistics<span>→</span></a>
+      </div>
+    </section>
+    <section class="group">
+      <h2>Sciences</h2>
+      <div class="subjects">
+        <a href="resource-category.html?subject=Biology&curriculum=A-Levels" class="subject">Biology<span>→</span></a><a href="resource-category.html?subject=Chemistry&curriculum=A-Levels" class="subject">Chemistry<span>→</span></a><a href="resource-category.html?subject=Physics&curriculum=A-Levels" class="subject">Physics<span>→</span></a><a href="resource-category.html?subject=Environmental%20Science&curriculum=A-Levels" class="subject">Environmental Science<span>→</span></a>
+      </div>
+    </section>
+    <section class="group">
+      <h2>Humanities</h2>
+      <div class="subjects">
+        <a href="resource-category.html?subject=History&curriculum=A-Levels" class="subject">History<span>→</span></a><a href="resource-category.html?subject=Geography&curriculum=A-Levels" class="subject">Geography<span>→</span></a><a href="resource-category.html?subject=Psychology&curriculum=A-Levels" class="subject">Psychology<span>→</span></a><a href="resource-category.html?subject=Sociology&curriculum=A-Levels" class="subject">Sociology<span>→</span></a><a href="resource-category.html?subject=Philosophy&curriculum=A-Levels" class="subject">Philosophy<span>→</span></a>
+      </div>
+    </section>
+    <section class="group">
+      <h2>Business & Economics</h2>
+      <div class="subjects">
+        <a href="resource-category.html?subject=Accounting&curriculum=A-Levels" class="subject">Accounting<span>→</span></a><a href="resource-category.html?subject=Business&curriculum=A-Levels" class="subject">Business<span>→</span></a><a href="resource-category.html?subject=Economics&curriculum=A-Levels" class="subject">Economics<span>→</span></a>
+      </div>
+    </section>
+    <section class="group">
+      <h2>Languages</h2>
+      <div class="subjects">
+        <a href="resource-category.html?subject=English%20Language&curriculum=A-Levels" class="subject">English Language<span>→</span></a><a href="resource-category.html?subject=English%20Literature&curriculum=A-Levels" class="subject">English Literature<span>→</span></a><a href="resource-category.html?subject=French&curriculum=A-Levels" class="subject">French<span>→</span></a><a href="resource-category.html?subject=German&curriculum=A-Levels" class="subject">German<span>→</span></a><a href="resource-category.html?subject=Spanish&curriculum=A-Levels" class="subject">Spanish<span>→</span></a><a href="resource-category.html?subject=Arabic&curriculum=A-Levels" class="subject">Arabic<span>→</span></a>
+      </div>
+    </section>
+    <section class="group">
+      <h2>Computing & Creative</h2>
+      <div class="subjects">
+        <a href="resource-category.html?subject=Computer%20Science&curriculum=A-Levels" class="subject">Computer Science<span>→</span></a><a href="resource-category.html?subject=Information%20Technology&curriculum=A-Levels" class="subject">Information Technology<span>→</span></a><a href="resource-category.html?subject=Art%20%26%20Design&curriculum=A-Levels" class="subject">Art & Design<span>→</span></a><a href="resource-category.html?subject=Media%20Studies&curriculum=A-Levels" class="subject">Media Studies<span>→</span></a>
+      </div>
+    </section></section>
+</div></main>
+<footer><div class="wrap"><strong>CBE Nexus</strong> — Connecting learners to excellence.<br><a href="index.html">Home</a> · <a href="resource-category.html">Resource Library</a> · <a href="international-teaching-jobs.html">International Teaching Jobs</a></div></footer>
+</body></html>
