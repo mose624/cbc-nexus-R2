@@ -29,3 +29,132 @@ section:has(#faq-title){padding:16px 0;background:#fff0f3}section:has(#faq-title
 
 /* Mobile: compact but readable. */
 @media(max-width:700px){.international-vacancies-band,.info-band,.competitive-band,.promo-band,.seller-band,.admin-band,.content-band,#freeCbcResources,#aboutNexus,#contact,#contactNexus,#privacy,#privacyPolicy,.about-nexus,.contact-section,.privacy-section,.recommended-products,#recommendedProducts,.products-band,.product-recommendations,section:has(#faq-title){padding:13px 0}.international-vacancies-band h2,.info-band h2,.competitive-band h2,.promo-band h2,.seller-band h2,.info-band-light h2,#aboutNexus h2,#contact h2,#contactNexus h2,#privacy h2,#privacyPolicy h2,.about-nexus h2,.contact-section h2,.privacy-section h2,.recommended-products h2,#recommendedProducts h2,.products-band h2,.product-recommendations h2,section:has(#faq-title) h2{font-size:15px}.international-vacancies-band p,.info-band p,.competitive-band p,.promo-band p,.seller-band p,.info-band-light p,#aboutNexus p,#contact p,#contactNexus p,#privacy p,#privacyPolicy p,.about-nexus p,.contact-section p,.privacy-section p,.recommended-products p,#recommendedProducts p,.products-band p,.product-recommendations p,.product-card p,section:has(#faq-title) p,section:has(#faq-title) summary,section:has(#faq-title) .faq-answer{font-size:10px}}
+
+/* ============================================================
+   EXACTLY SCOPED COMPACT SECTIONS — structure untouched
+   ============================================================ */
+#internationalVacancies,
+#freeCbcResources,
+#quizCentre,
+.page-directory,
+section.competitive-band,
+section.landing-band,
+#payments,
+#about,
+#contact,
+#privacy,
+#affiliateMarketplace,
+section.info-band[aria-labelledby="faq-title"] {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+#internationalVacancies h2,
+#freeCbcResources h2,
+#quizCentre h2,
+.page-directory h2,
+section.competitive-band h2,
+section.landing-band h2,
+#payments h2,
+#about h2,
+#contact h2,
+#privacy h2,
+#affiliateMarketplace h2,
+section.info-band[aria-labelledby="faq-title"] h2 {
+  font-size: 17px;
+  line-height: 1.2;
+  margin-bottom: 5px;
+}
+
+#internationalVacancies p,
+#freeCbcResources p,
+#quizCentre p,
+.page-directory p,
+section.competitive-band p,
+section.landing-band p,
+#payments p,
+#about p,
+#contact p,
+#privacy p,
+#affiliateMarketplace p,
+section.info-band[aria-labelledby="faq-title"] p {
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+#internationalVacancies .eyebrow,
+#freeCbcResources .eyebrow,
+#quizCentre .eyebrow,
+.page-directory .eyebrow,
+section.competitive-band .eyebrow,
+section.landing-band .eyebrow,
+#payments .eyebrow,
+#about .eyebrow,
+#contact .eyebrow,
+#privacy .eyebrow,
+#affiliateMarketplace .eyebrow,
+section.info-band[aria-labelledby="faq-title"] .eyebrow {
+  font-size: 9px;
+  margin-bottom: 3px;
+}
+
+#internationalVacancies .primary-button,
+#freeCbcResources .download-tile,
+#quizCentre button,
+.page-directory .download-tile,
+section.competitive-band button,
+section.competitive-band a,
+section.landing-band button,
+#payments button,
+#payments a,
+#contact a,
+#affiliateMarketplace a {
+  font-size: 10px;
+}
+
+#freeCbcResources,
+.page-directory { background: #f1f9f3; }
+
+#internationalVacancies { background: #eef7ff; }
+#quizCentre { background: #fff9e8; }
+section.competitive-band { background: #fff8e8; }
+section.landing-band { background: #f6f0ff; }
+#payments { background: #eefafa; }
+#about { background: #f5f8fb; }
+#contact { background: #f3f9fa; }
+#privacy { background: #f7f7f7; }
+#affiliateMarketplace { background: #f1f8f8; }
+section.info-band[aria-labelledby="faq-title"] { background: #fff1f4; }
+
+@media (max-width: 700px) {
+  #internationalVacancies,
+  #freeCbcResources,
+  #quizCentre,
+  .page-directory,
+  section.competitive-band,
+  section.landing-band,
+  #payments,
+  #about,
+  #contact,
+  #privacy,
+  #affiliateMarketplace,
+  section.info-band[aria-labelledby="faq-title"] {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  #internationalVacancies h2,
+  #freeCbcResources h2,
+  #quizCentre h2,
+  .page-directory h2,
+  section.competitive-band h2,
+  section.landing-band h2,
+  #payments h2,
+  #about h2,
+  #contact h2,
+  #privacy h2,
+  #affiliateMarketplace h2,
+  section.info-band[aria-labelledby="faq-title"] h2 {
+    font-size: 15px;
+  }
+}
