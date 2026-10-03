@@ -1398,3 +1398,33 @@ async function initVacancies(){loadVacancies("homeVacancyGrid",true);loadVacanci
   });
   window.applyCbeGradeTheme=applyGradeTheme;
 })();
+
+
+/* CBE NEXUS — FORCE VISIBLE GRADE COLOURS
+   Applies inline styles to the existing Grade 1–12 cards so no
+   inherited/legacy CSS can hide the individual colours. */
+(function forceVisibleGradeCardColours(){
+  const colours={
+    "Grade 1":["#d84315","#fff3ee"],"Grade 2":["#8e24aa","#faf0fc"],
+    "Grade 3":["#1565c0","#edf5ff"],"Grade 4":["#00838f","#eafafa"],
+    "Grade 5":["#2e7d32","#eef9ef"],"Grade 6":["#558b2f","#f2f9eb"],
+    "Grade 7":["#ef6c00","#fff4e8"],"Grade 8":["#6a1b9a","#f8effc"],
+    "Grade 9":["#ad1457","#fff0f6"],"Grade 10":["#283593","#eef0ff"],
+    "Grade 11":["#00695c","#eaf8f5"],"Grade 12":["#bf360c","#fff1ec"]
+  };
+  function paint(){
+    document.querySelectorAll('#dashboard .grade-card[data-grade-card]').forEach(card=>{
+      const pair=colours[card.getAttribute('data-grade-card')]; if(!pair)return;
+      card.style.setProperty('border-left','6px solid '+pair[0],'important');
+      card.style.setProperty('background','linear-gradient(135deg,'+pair[1]+' 0%,#ffffff 100%)','important');
+      card.style.setProperty('border-radius','12px','important');
+      const toggle=card.querySelector('.grade-toggle');
+      const chev=card.querySelector('.grade-chevron');
+      if(toggle)toggle.style.setProperty('color',pair[0],'important');
+      if(chev)chev.style.setProperty('color',pair[0],'important');
+    });
+  }
+  document.addEventListener('DOMContentLoaded',paint);
+  if(document.readyState!=='loading')paint();
+})();
+\n
