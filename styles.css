@@ -5569,3 +5569,44 @@ html[data-grade-theme="international"]{--grade-accent:#00838f;--grade-accent-2:#
   box-shadow:0 0 0 3px color-mix(in srgb,var(--grade-accent) 12%,transparent)!important;
 }
 #dashboard .grade-card .grade-chevron{color:var(--grade-accent)!important}
+
+
+/* ============================================================
+   CBE NEXUS — GRADE & SUBJECT RESOURCE CENTRE COLOURS
+   Visual-only styling for the centre dashboard grade cards.
+   Existing HTML structure, IDs and navigation remain unchanged.
+   ============================================================ */
+#dashboard .portal-sidebar .grade-card{
+  border-left:5px solid var(--grade-card-accent,#1565c0)!important;
+  background:linear-gradient(135deg,var(--grade-card-soft,#f7fbff),#fff)!important;
+  transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;
+}
+#dashboard .portal-sidebar .grade-card:hover,
+#dashboard .portal-sidebar .grade-card.open{
+  border-left-color:var(--grade-card-accent)!important;
+  box-shadow:0 9px 24px color-mix(in srgb,var(--grade-card-accent) 18%,transparent)!important;
+  transform:translateY(-1px);
+}
+#dashboard .portal-sidebar .grade-card .grade-toggle{
+  color:var(--grade-card-accent)!important;
+}
+#dashboard .portal-sidebar .grade-card .grade-chevron{
+  color:var(--grade-card-accent)!important;
+}
+#dashboard .portal-sidebar .grade-card .subject-dropdown:focus{
+  border-color:var(--grade-card-accent)!important;
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--grade-card-accent) 12%,transparent)!important;
+}
+/* Grade 1–12: distinct, consistent colours */
+#dashboard .portal-sidebar .grade-card[data-grade-card="Grade 1"]{--grade-card-accent:#d84315;--grade-card-soft:#fff3ee}
+#dashboard .portal-sidebar .grade-card[data-grade-card="Grade 2"]{--grade-card-accent:#8e24aa;--grade-card-soft:#faf0fc}
+#dashboard .portal-sidebar .grade-card[data-grade-card="Grade 3"]{--grade-card-accent:#1565c0;--grade-card-soft:#edf5ff}
+#dashboard .portal-sidebar .grade-card[data-grade-card="Grade 4"]{--grade-card-accent:#00838f;--grade-card-soft:#eafafa}
+#dashboard .portal-sidebar .grade-card[data-grade-card="Grade 5"]{--grade-card-accent:#2e7d32;--grade-card-soft:#eef9ef}
+#dashboard .portal-sidebar .grade-card[data-grade-card="Grade 6"]{--grade-card-accent:#558b2f;--grade-card-soft:#f2f9eb}
+#dashboard .portal-sidebar .grade-card[data-grade-card="Grade 7"]{--grade-card-accent:#ef6c00;--grade-card-soft:#fff4e8}
+#dashboard .portal-sidebar .grade-card[data-grade-card="Grade 8"]{--grade-card-accent:#6a1b9a;--grade-card-soft:#f8effc}
+#dashboard .portal-sidebar .grade-card[data-grade-card="Grade 9"]{--grade-card-accent:#ad1457;--grade-card-soft:#fff0f6}
+#dashboard .portal-sidebar .grade-card[data-grade-card="Grade 10"]{--grade-card-accent:#283593;--grade-card-soft:#eef0ff}
+#dashboard .portal-sidebar .grade-card[data-grade-card="Grade 11"]{--grade-card-accent:#00695c;--grade-card-soft:#eaf8f5}
+#dashboard .portal-sidebar .grade-card[data-grade-card="Grade 12"]{--grade-card-accent:#bf360c;--grade-card-soft:#fff1ec}
