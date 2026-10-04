@@ -380,6 +380,18 @@ function setAdminModule(module) {
     window.loadAdminResourceModeration();
   }
 }
+/* Robust admin tab navigation: works for every coloured dashboard button even if another listener intercepts the click. */
+(function enableReliableAdminTabs(){
+  document.addEventListener("click",function(event){
+    const button=event.target.closest("[data-admin-module]");
+    if(!button) return;
+    event.preventDefault();
+    event.stopPropagation();
+    setAdminModule(button.dataset.adminModule);
+    const panel=document.querySelector('[data-admin-module-panel="'+CSS.escape(button.dataset.adminModule)+'"]');
+    if(panel) panel.scrollIntoView({behavior:"smooth",block:"nearest"});
+  },true);
+})();
 function handleAdminControlClick(event) {
   const button=event.target.closest("[data-admin-module]");
   if (button) setAdminModule(button.dataset.adminModule);
