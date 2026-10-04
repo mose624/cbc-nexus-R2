@@ -5933,3 +5933,8 @@ html[data-grade-theme="international"]{--grade-accent:#00838f;--grade-accent-2:#
 @media (min-width: 768px) {
   /* Desktop remains completely unchanged. */
 }
+
+
+/* Compact main navigation buttons - keeps existing structure unchanged */
+@media (min-width:768px){.main-nav{gap:10px;min-width:0}.main-nav .brand{flex:0 0 auto}.main-nav .nav-menu{flex:1 1 auto;min-width:0;display:flex;align-items:center;justify-content:flex-end;gap:5px;flex-wrap:nowrap}.main-nav .nav-menu .nav-link,.main-nav .nav-menu .nav-dropdown>summary{min-height:36px;padding:6px 8px;border-radius:6px;font-size:11px;line-height:1.15;font-weight:800;white-space:nowrap;text-align:center}.main-nav .nav-menu .nav-link{flex:0 1 auto}}
+@media (min-width:768px) and (max-width:1180px){.main-nav{gap:6px;padding-left:14px;padding-right:14px}.main-nav .brand{gap:7px}.main-nav .brand-mark{width:40px;height:40px;font-size:12px}.main-nav .brand strong{font-size:13px}.main-nav .brand small{font-size:10px}.main-nav .nav-menu{gap:3px}.main-nav .nav-menu .nav-link,.main-nav .nav-menu .nav-dropdown>summary{min-height:34px;padding:5px 6px;font-size:9.5px;letter-spacing:-.1px}}
