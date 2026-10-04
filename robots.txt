@@ -1,9 +1,20 @@
 User-agent: *
 Allow: /
 
+# AI/search crawlers — keep public educational content discoverable.
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
 # Keep private/admin and API endpoints out of search results.
 Disallow: /api/
 Disallow: /admin
 Disallow: /upload.html
+Disallow: /backend-data/
 
 Sitemap: https://cbenexus.co.ke/sitemap.xml
