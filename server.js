@@ -1069,6 +1069,13 @@ function injectSeoFooter(html,pathname){
   return html.replace(/<\/head>/i,styles+"</head>");
 }
 
+function injectGoogleTag(html){
+  const measurementId=String(process.env.GA_MEASUREMENT_ID||"G-8E0HGCJM8W").trim();
+  if(!measurementId || /googletagmanager\.com\/gtag\/js/i.test(html) || /gtag\(['"]config['"]\s*,/i.test(html)) return html;
+  const tag='<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id='+measurementId+'"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","'+measurementId+'");</script>';
+  return html.replace(/<head([^>]*)>/i,'<head$1>'+tag);
+}
+
 async function serveStatic(req,res,url){
   if(req.method==="GET" && url.pathname==="/sitemap.xml"){
     res.writeHead(200,{"Content-Type":"application/xml; charset=utf-8","Cache-Control":"public, max-age=3600"});
@@ -1084,7 +1091,7 @@ async function serveStatic(req,res,url){
   const seoPage=await seo.match(req);
   if(req.method==="GET" && seoPage){
     res.writeHead(200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"public, max-age=600"});
-    res.end(injectSeoFooter(seoPage,url.pathname));
+    res.end(injectGoogleTag(injectSeoFooter(seoPage,url.pathname)));
     return;
   }
   const requestedPath=decodeURIComponent(url.pathname==="/"?"/index.html":url.pathname);
@@ -1108,7 +1115,7 @@ async function serveStatic(req,res,url){
       if (!data.toString("utf8").includes("resource-centre-bridge.js")) data = Buffer.from(data.toString("utf8").replace("</body>", bridgeScript + "</body>"));
     }
     const ext=path.extname(target).toLowerCase();
-    const isHtml=ext===".html";
+    if(ext===".html") data=Buffer.from(injectGoogleTag(data.toString("utf8")));\n    const isHtml=ext===".html";
     const isVersionedAsset=/[?&]v=|-[0-9]{8,}/.test(url.search||"") && [".css",".js"].includes(ext);
     const cacheControl=isHtml
       ? "public, max-age=300, must-revalidate"
