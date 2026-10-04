@@ -104,9 +104,20 @@ const diplomaTeacherEducationSubjects = [
   "Historical and comparative Foundations of Education","Agriculture"
 ];
 
+const internationalCurriculumSubjects = [
+  "Mathematics","Further Mathematics","Mathematics A","Mathematics B","Further Pure Mathematics",
+  "Biology","Human Biology","Chemistry","Physics","Science Double Award","Computer Science","ICT",
+  "English","English Language","English Language A","English Language B","English Literature",
+  "English Language & Literature","Business","Business Studies","Business Management","Accounting",
+  "Economics","Geography","History","Religious Studies","Psychology","Sociology","Law",
+  "French","Spanish","German","Arabic","Swahili","Art & Design","Visual Arts","Music","Theatre",
+  "Drama","Film","Physical Education","Design & Technology","Agriculture","Global Perspectives",
+  "Travel & Tourism","Commerce"
+];
+
 const allCbeSubjects = [...new Set([
   ...prePrimarySubjects,...lowerPrimarySubjects,...upperPrimarySubjects,...juniorSchoolSubjects,
-  ...seniorSchoolSubjects,...specialNeedsSubjects,...diplomaTeacherEducationSubjects
+  ...seniorSchoolSubjects,...specialNeedsSubjects,...diplomaTeacherEducationSubjects,...internationalCurriculumSubjects
 ])].sort((a,b)=>a.localeCompare(b));
 
 /*
@@ -127,7 +138,12 @@ const gradeSubjects = {
   "Grade 9": ["Agriculture","Arabic","Creative Arts","Christian Religious Education","English","French","German","Hindu Religious Education","Indigenous Language","Integrated Science","Islamic Religious Education","Kiswahili","Mandarin","Mathematics","Pre-Technical Studies","Social Studies"],
   "Grade 10": ["Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","Islamic Religious Education","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","Hindu Religious Education","Mandarin Chinese"],
   "Grade 11": ["Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","Islamic Religious Education","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","Hindu Religious Education","Mandarin Chinese"],
-  "Grade 12": ["Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","Islamic Religious Education","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","Hindu Religious Education","Mandarin Chinese"]
+  "Grade 12": ["Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","Islamic Religious Education","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","Hindu Religious Education","Mandarin Chinese"],
+  "IGCSE": ["Mathematics","Biology","Chemistry","Physics","English","Business Studies","Economics","Computer Science","Geography","History","French","Spanish","German","Swahili","Art & Design","Physical Education","Accounting","Agriculture","Design & Technology","Drama","Global Perspectives","ICT","Psychology","Sociology","Travel & Tourism"],
+  "IB": ["English Language & Literature","English Literature","French","Spanish","Business Management","Economics","Geography","History","Biology","Chemistry","Physics","Computer Science","Mathematics","Visual Arts","Music","Theatre","Film"],
+  "O Level": ["English","Mathematics","Biology","Chemistry","Physics","Geography","History","Business Studies","Accounting","Economics","Computer Science","ICT","French","Spanish","Arabic","Art & Design","Design & Technology","Religious Studies","Physical Education"],
+  "A Level": ["Mathematics","Further Mathematics","Physics","Chemistry","Biology","Economics","Business","Accounting","Computer Science","English Language","English Literature","French","Spanish","Geography","History","Psychology","Art & Design","Music","Drama","Travel & Tourism","Sociology","Law"],
+  "Pearson": ["English Language A","English Language B","English Literature","Mathematics A","Mathematics B","Further Pure Mathematics","Biology","Human Biology","Chemistry","Physics","Science Double Award","Accounting","Business Studies","Commerce","Economics","Computer Science","ICT","Geography","History","Religious Studies","Arabic","French","German","Spanish","Swahili","Art & Design","Global Citizenship"]
 };
 
 const subjectAliases = {
@@ -194,6 +210,7 @@ const elements = {
   activeContext: document.querySelector("#activeContext"),
   statResources: document.querySelector("#statResources"),
   form: document.querySelector("#resourceForm"),
+  adminCurriculum: document.querySelector("#adminCurriculumInput"),
   adminGrade: document.querySelector("#adminGradeInput"),
   adminSubject: document.querySelector("#adminSubjectInput"),
   adminType: document.querySelector("#adminTypeInput"),
@@ -534,7 +551,7 @@ async function syncPublicResourcesFromServer() {
         previewKey: r.previewKey || r.preview_key || "",
         file: r.file || ((r.r2Key || r.r2_key) ? "/api/r2/file?key=" + encodeURIComponent(r.r2Key || r.r2_key) : "")
       }))
-      .filter((r) => r.id && r.status === "approved");
+      .filter((r) => r.id && r.status === "approved" && !["IGCSE","IB","O Level","A Level","Pearson"].includes(String(r.grade || "").trim()));
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(remote));
     renderResources();
@@ -1005,20 +1022,7 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
     renderResources();
   });
 
-  // ADMIN UPLOAD: Grade controls the Subject list.
-  // This keeps every uploaded resource aligned with the grade pages.
-  safeOn(elements.adminGrade, "change", (event) => {
-    const grade = String(event.target.value || "").trim();
-    const subjects = gradeSubjects[grade] || [];
-    const current = canonicalSubjectName(elements.adminSubject?.value || "");
-    const selected = subjects.find((subject) => canonicalSubjectName(subject) === current) || subjects[0] || "";
-    optionList(elements.adminSubject, subjects, selected);
-    if (elements.formStatus && grade) {
-      elements.formStatus.textContent = subjects.length
-        ? grade + " selected. Only subjects belonging to " + grade + " are available."
-        : "Select a valid grade.";
-    }
-  });
+  // ADMIN UPLOAD: curriculum controls the available grade/subject choices.\n  function refreshAdminUploadSubjects() {\n    if (!elements.adminCurriculum || !elements.adminGrade || !elements.adminSubject) return;\n    const curriculum = String(elements.adminCurriculum.value || "CBC/CBE");\n    const international = ["IGCSE","IB","O Level","A Level","Pearson"].includes(curriculum);\n    if (international) {\n      optionList(elements.adminGrade, [curriculum], curriculum);\n      optionList(elements.adminSubject, gradeSubjects[curriculum] || [], "");\n    } else {\n      const grades = Object.keys(gradeSubjects).filter((value) => !["IGCSE","IB","O Level","A Level","Pearson"].includes(value));\n      optionList(elements.adminGrade, grades, "Grade 1");\n      const subjects = gradeSubjects["Grade 1"] || allCbeSubjects;\n      optionList(elements.adminSubject, subjects, subjects[0] || "");\n    }\n  }\n\n  safeOn(elements.adminCurriculum, "change", () => {\n    refreshAdminUploadSubjects();\n    const selected = String(elements.adminCurriculum?.value || "CBC/CBE");\n    if (elements.formStatus) elements.formStatus.textContent = selected === "CBC/CBE" ? "CBC / CBE upload selected." : selected + " upload selected. This resource will appear only on its dedicated international curriculum page.";\n  });\n\n  safeOn(elements.adminGrade, "change", (event) => {\n    const grade = String(event.target.value || "").trim();\n    const subjects = gradeSubjects[grade] || [];\n    const current = canonicalSubjectName(elements.adminSubject?.value || "");\n    const selected = subjects.find((subject) => canonicalSubjectName(subject) === current) || subjects[0] || "";\n    optionList(elements.adminSubject, subjects, selected);\n  });
 
   safeOn(elements.sellerGrade, "change", (event) => {
     const subjects = gradeSubjects[event.target.value];
