@@ -544,6 +544,43 @@ async function handleApi(req,res,url){
     catch(error){sendJson(res,404,{ok:false,error:"Blog image could not be opened."});}
     return true;
   }
+  // Public website ratings: persistent in Supabase when configured, with local fallback.
+  if(req.method==="GET"&&url.pathname==="/api/ratings"){
+    try{
+      const visitorId=String(url.searchParams.get("visitorId")||"").trim();
+      if(supabaseConfigured){
+        const {data,error}=await supabase.from("website_ratings").select("rating,visitor_id").eq("site_key","cbe-nexus");
+        if(error)throw error;
+        const rows=data||[],sum=rows.reduce((s,x)=>s+Number(x.rating||0),0),mine=visitorId?(rows.find(x=>String(x.visitor_id)===visitorId)?.rating||0):0;
+        sendJson(res,200,{ok:true,average:rows.length?sum/rows.length:0,count:rows.length,myRating:Number(mine)||0});
+        return true;
+      }
+      const rows=await readJsonStore("website-ratings.json"),sum=rows.reduce((s,x)=>s+Number(x.rating||0),0),mine=visitorId?(rows.find(x=>String(x.visitorId)===visitorId)?.rating||0):0;
+      sendJson(res,200,{ok:true,average:rows.length?sum/rows.length:0,count:rows.length,myRating:Number(mine)||0});
+    }catch(error){console.error("Ratings lookup error:",error);sendJson(res,500,{ok:false,error:"Ratings could not be loaded."});}
+    return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/ratings"){
+    try{
+      const p=JSON.parse((await readBody(req))||"{}"),rating=Math.round(Number(p.rating)),visitorId=String(p.visitorId||"").trim().slice(0,120);
+      if(!Number.isInteger(rating)||rating<1||rating>5||!visitorId){sendJson(res,400,{ok:false,error:"A rating from 1 to 5 and a visitor ID are required."});return true;}
+      if(supabaseConfigured){
+        const {error}=await supabase.from("website_ratings").upsert({site_key:"cbe-nexus",visitor_id:visitorId,rating},{onConflict:"site_key,visitor_id"});
+        if(error)throw error;
+        const {data,error:readError}=await supabase.from("website_ratings").select("rating").eq("site_key","cbe-nexus");
+        if(readError)throw readError;
+        const rows=data||[],sum=rows.reduce((s,x)=>s+Number(x.rating||0),0);
+        sendJson(res,200,{ok:true,average:rows.length?sum/rows.length:0,count:rows.length,myRating:rating});return true;
+      }
+      const rows=await readJsonStore("website-ratings.json"),i=rows.findIndex(x=>String(x.visitorId)===visitorId);
+      const item={id:i>=0?rows[i].id:"rating-"+Date.now()+"-"+crypto.randomBytes(3).toString("hex"),siteKey:"cbe-nexus",visitorId,rating,updatedAt:new Date().toISOString()};
+      if(i>=0)rows[i]=item;else rows.unshift(item);
+      await fs.writeFile(path.join(DATA_DIR,"website-ratings.json"),JSON.stringify(rows,null,2));
+      const sum=rows.reduce((s,x)=>s+Number(x.rating||0),0);
+      sendJson(res,200,{ok:true,average:rows.length?sum/rows.length:0,count:rows.length,myRating:rating});
+    }catch(error){console.error("Rating save error:",error);sendJson(res,500,{ok:false,error:"Rating could not be saved."});}
+    return true;
+  }
   if(req.method==="GET"&&url.pathname==="/api/admin/dashboard"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}let resources=await readJsonStore("resources.json");const [localSellerAccounts,payments,mpesaRequests,tuition,localUsers]=await Promise.all([readJsonStore("seller-accounts.json"),readJsonStore("payments.json"),readJsonStore("mpesa-requests.json"),readJsonStore("tuition-registrations.json"),readJsonStore("admin-users.json")]);if(supabaseConfigured){try{const {data:resourceData,error:resourceError}=await supabase.from("resources").select("*").eq("status","approved").order("created_at",{ascending:false});if(resourceError)throw resourceError;resources=(resourceData||[]).map(resourcePayloadFromRow);}catch(error){console.error("Supabase resource dashboard lookup error:",error);}}let sellerAccounts=localSellerAccounts,users=localUsers,verifiedPurchases=[];if(supabaseConfigured){try{const {data,error}=await supabase.from("purchases").select("*").order("created_at",{ascending:false}).limit(100);if(error)throw error;verifiedPurchases=(data||[]).map(p=>({...p,id:p.id,resource:p.resource_id,resourceId:p.resource_id,customerPhone:p.customer_phone,checkoutRequestID:p.checkout_request_id,merchantRequestID:p.merchant_request_id,mpesaReceipt:p.mpesa_receipt,createdAt:p.created_at}));}catch(error){console.error("Supabase payment dashboard lookup error:",error);}}if(supabaseConfigured){try{const [{data:sellersData,error:sellersError},{data:usersData,error:usersError}]=await Promise.all([supabase.from("sellers").select("id,user_id,phone,username,status,created_at"),supabase.from("users").select("id,name,phone,role,status,created_at")]);if(sellersError)throw sellersError;if(usersError)throw usersError;sellerAccounts=sellersData||[];users=usersData||[];}catch(error){console.error("Supabase admin dashboard lookup error:",error);}}const userMap=new Map();[...users].forEach(u=>userMap.set(u.phone||u.username||u.id,u));[...payments,...mpesaRequests,...tuition].forEach(item=>{const phone=item.customerPhone||item.phone;if(phone&&!userMap.has(phone))userMap.set(phone,{id:"user-"+phone,name:item.learner||item.name||"Customer",phone,status:"active",source:"transaction"});});const allUsers=[...userMap.values()],sales=payments.filter(p=>["paid","completed","success"].includes(String(p.status||"").toLowerCase())),totalDownloads=resources.reduce((s,r)=>s+Number(r.downloads||0),0),popularResources=[...resources].map(r=>({...r,downloads:Number(r.downloads||0),purchases:Number(r.purchases||0)})).sort((a,b)=>(b.downloads+b.purchases*3)-(a.downloads+a.purchases*3)).slice(0,10);const dashboardPayments=[...payments,...mpesaRequests,...verifiedPurchases];const dashboardSales=[...payments,...verifiedPurchases].filter(p=>["paid","completed","success"].includes(String(p.status||"").toLowerCase()));sendJson(res,200,{ok:true,stats:{sellers:sellerAccounts.length,pendingSellers:sellerAccounts.filter(x=>x.status==="pending").length,resources:resources.length,pendingResources:resources.filter(x=>x.status==="pending").length,users:allUsers.length,sales:dashboardSales.length,purchases:dashboardSales.length,revenue:dashboardSales.reduce((s,x)=>s+Number(x.amount||0),0),downloads:totalDownloads},popularResources,sellers:sellerAccounts,resources,users:allUsers,sales:dashboardSales,payments:dashboardPayments.slice(0,100)});return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/resource"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const p=JSON.parse((await readBody(req))||"{}"),items=await readJsonStore("resources.json"),item={...p,status:p.status||"approved",updatedAt:new Date().toISOString()};await fs.writeFile(path.join(DATA_DIR,"resources.json"),JSON.stringify([item,...items.filter(x=>x.id!==item.id)],null,2));sendJson(res,200,{ok:true,resource:item});return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/resource-delete"){
