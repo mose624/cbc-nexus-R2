@@ -16,8 +16,9 @@ main{padding:32px 5% 60px}.group{margin:28px 0}.group h2{color:var(--navy);font-
 .resource-box{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:20px}.resource{background:var(--navy);color:#fff;border-radius:10px;padding:17px;border-top:4px solid var(--accent)}.resource b{display:block;margin-bottom:6px}.resource small{color:#dce8fa}
 footer{background:var(--navy);color:#c9d7eb;text-align:center;padding:28px 5%;font-size:13px}footer a{color:#fff}
 @media(max-width:650px){.nav{position:static}.hero{padding:42px 5%}.subjects{grid-template-columns:1fr}}
-</style></head>
-<body>
+</style><link rel="stylesheet" href="international-resource-library.css?v=20261004-1">
+</head>
+<body data-curriculum="A Level">
 <div class="top"><div class="wrap">CBE Nexus • International Curriculum Resource Centre</div></div>
 <nav class="nav"><a class="brand" href="index.html">CBE Nexus</a><a class="back" href="index.html">← Back to CBE Nexus</a></nav>
 <header class="hero"><div class="wrap"><div class="eyebrow">International Curriculum</div><h1>A-Levels</h1><p><strong>International Advanced Level & A-Level Resources</strong><br>Advanced-level resources for subject study, structured revision and examination preparation.</p>
@@ -69,6 +70,28 @@ footer{background:var(--navy);color:#c9d7eb;text-align:center;padding:28px 5%;fo
         <a href="resource-category.html?subject=Computer%20Science&curriculum=A-Levels" class="subject">Computer Science<span>→</span></a><a href="resource-category.html?subject=Information%20Technology&curriculum=A-Levels" class="subject">Information Technology<span>→</span></a><a href="resource-category.html?subject=Art%20%26%20Design&curriculum=A-Levels" class="subject">Art & Design<span>→</span></a><a href="resource-category.html?subject=Media%20Studies&curriculum=A-Levels" class="subject">Media Studies<span>→</span></a>
       </div>
     </section></section>
-</div></main>
+</div>
+<section id="internationalResources" class="international-library-section" aria-label="A Level dedicated resource library">
+  <div class="international-library-header">
+    <div>
+      <div class="international-library-kicker">Dedicated Resource Library</div>
+      <h2>A Level Resources</h2>
+      <p id="internationalLibraryStatus">Loading approved resources...</p>
+    </div>
+  </div>
+  <div class="international-library-controls">
+    <input id="internationalLibrarySearch" type="search" placeholder="Search A Level resources..." aria-label="Search A Level resources">
+    <select id="internationalLibrarySubject" aria-label="Filter by subject"><option value="">All Subjects</option></select>
+    <select id="internationalLibraryType" aria-label="Filter by resource type">
+      <option value="">All Resource Types</option>
+      <option>Notes</option><option>Study Guides</option><option>Topical Questions</option><option>Assessment Test</option><option>Past Papers</option><option>Marking Schemes</option><option>Schemes of Work</option><option>Lesson Plan</option><option>Assignments</option><option>Projects</option><option>Quizzes</option>
+    </select>
+    <button id="internationalLibraryReset" type="button">Reset</button>
+  </div>
+  <div class="international-library-summary"><span><strong id="internationalLibraryCount">0</strong> approved resource(s)</span><span>Only A Level materials are shown here.</span></div>
+  <div id="internationalLibraryGrid" class="international-library-grid"></div>
+</section>
+</main>
 <footer><div class="wrap"><strong>CBE Nexus</strong> — Connecting learners to excellence.<br><a href="index.html">Home</a> · <a href="resource-category.html">Resource Library</a> · <a href="international-teaching-jobs.html">International Teaching Jobs</a></div></footer>
+<script src="international-resource-library.js?v=20261004-1"></script>
 </body></html>
