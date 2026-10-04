@@ -6132,3 +6132,19 @@ html[data-grade-theme="international"]{--grade-accent:#00838f;--grade-accent-2:#
   #educationHubHome .education-hub-card h3{font-size:8px!important}
   #educationHubHome .education-hub-card p,#educationHubHome .education-hub-card a{font-size:6.5px!important}
 }
+
+/* Compact About Us section */
+#about.info-band{padding-top:24px;padding-bottom:24px}
+#about .info-layout{gap:16px}
+#about .info-layout h2{font-size:1.45rem;line-height:1.2;margin-bottom:8px}
+#about .info-layout p{font-size:.88rem;line-height:1.55;margin-bottom:10px}
+#about .info-card{padding:14px}
+#about .info-card h3{font-size:1rem;margin-bottom:7px}
+#about .info-card p{font-size:.84rem;line-height:1.5}
+#about .why-cbe-nexus h4{font-size:.92rem;margin-bottom:5px}
+#about .why-cbe-nexus ul{font-size:.84rem;line-height:1.45;margin-top:6px}
+@media(max-width:650px){
+  #about.info-band{padding-top:20px;padding-bottom:20px}
+  #about .info-layout h2{font-size:1.3rem}
+  #about .info-layout p,#about .info-card p{font-size:.84rem}
+}
