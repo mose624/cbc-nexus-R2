@@ -1034,6 +1034,97 @@ async function handleApi(req,res,url){
     if(!found){sendJson(res,404,{ok:false,verified:false,error:"Certificate not found."});return true;}
     sendJson(res,200,{ok:true,verified:String(found.status||"valid")==="valid",certificate:found});return true;
   }
+
+// ---------------- KUCCPS UNIVERSITY PROGRAMME DIRECTORY ----------------
+const kuccpsProgrammeCache=new Map();
+function kuccpsHttpGet(target,timeoutMs=15000){
+  return new Promise((resolve,reject)=>{
+    const https=require("https"),req=https.get(target,{headers:{"User-Agent":"CBE-Nexus/1.0 (+https://cbenexus.co.ke)","Accept":"text/html,application/xhtml+xml"}},r=>{
+      let body="";
+      r.setEncoding("utf8");
+      r.on("data",chunk=>body+=chunk);
+      r.on("end",()=>{if(r.statusCode>=200&&r.statusCode<400)resolve(body);else reject(new Error("KUCCPS returned HTTP "+r.statusCode));});
+    });
+    req.on("error",reject);
+    req.setTimeout(timeoutMs,()=>{req.destroy(new Error("KUCCPS request timed out."));});
+  });
+}
+function htmlText(v){
+  return String(v||"").replace(/<br\s*\/?>/gi," ").replace(/<[^>]*>/g," ").replace(/&nbsp;/gi," ").replace(/&amp;/gi,"&").replace(/&quot;/gi,'"').replace(/&#39;/gi,"'").replace(/&#x27;/gi,"'").replace(/\s+/g," ").trim();
+}
+function normKuccpsName(v){
+  return htmlText(v).toLowerCase().replace(/[’‘]/g,"'").replace(/&/g,"and").replace(/[^a-z0-9]+/g," ").trim();
+}
+async function kuccpsFindInstitutionId(name){
+  const wanted=normKuccpsName(name);
+  const directoryUrls=[
+    "https://students.kuccps.net/institutions/?category=university&sponsor=public",
+    "https://students.kuccps.net/institutions/?category=university&sponsor=private"
+  ];
+  for(const directoryUrl of directoryUrls){
+    const html=await kuccpsHttpGet(directoryUrl);
+    const re=/<a[^>]+href=["'](?:https?:\/\/students\.kuccps\.net)?\/institutions\/(\d+)\/?["'][^>]*>([\s\S]*?)<\/a>/gi;
+    let m;
+    while((m=re.exec(html))){
+      const label=normKuccpsName(m[2]);
+      if(label===wanted || label.includes(wanted) || wanted.includes(label)) return {id:m[1],name:htmlText(m[2])};
+    }
+    // Fallback: locate the institution name and the nearest institution/ID link.
+    const plain=normKuccpsName(name);
+    const idx=html.toLowerCase().indexOf(plain);
+    if(idx>=0){
+      const windowText=html.slice(Math.max(0,idx-1800),Math.min(html.length,idx+1800));
+      const near=windowText.match(/\/institutions\/(\d+)\/?/i);
+      if(near)return {id:near[1],name:name};
+    }
+  }
+  return null;
+}
+function parseKuccpsProgrammes(html){
+  const rows=[];
+  const trRe=/<tr[^>]*>([\s\S]*?)<\/tr>/gi;
+  let tr;
+  while((tr=trRe.exec(html))){
+    const cells=[]; const tdRe=/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi; let td;
+    while((td=tdRe.exec(tr[1]))) cells.push(htmlText(td[1]));
+    if(cells.length>=4){
+      const code=cells.find(x=>/^\d{6,10}$/.test(x))||"";
+      const codeIndex=code?cells.indexOf(code):-1;
+      if(codeIndex>=0 && cells[codeIndex+1]){
+        const name=cells[codeIndex+1];
+        if(!/^programme name$/i.test(name) && !/^programmes? on offer/i.test(name)){
+          rows.push({code,name,institutionType:cells[codeIndex+2]||"",cutoff2025:cells[codeIndex+3]||"-",cutoff2024:cells[codeIndex+4]||"-",cutoff2023:cells[codeIndex+5]||"-",level:"Bachelor's Degree"});
+        }
+      }
+    }
+  }
+  return rows;
+}
+async function getKuccpsProgrammes(institutionName){
+  const key=normKuccpsName(institutionName),cached=kuccpsProgrammeCache.get(key);
+  if(cached && Date.now()-cached.at<6*60*60*1000)return cached.value;
+  const found=await kuccpsFindInstitutionId(institutionName);
+  if(!found)return {ok:false,institutionName,programmes:[],sourceUrl:"https://students.kuccps.net/institutions/"};
+  const sourceUrl="https://students.kuccps.net/institutions/"+found.id+"/";
+  const html=await kuccpsHttpGet(sourceUrl);
+  const programmes=parseKuccpsProgrammes(html);
+  const value={ok:true,institutionName:found.name||institutionName,institutionId:found.id,programmes,sourceUrl,cycle:"2026/2027",source:"KUCCPS"};
+  kuccpsProgrammeCache.set(key,{at:Date.now(),value});
+  return value;
+}
+
+  if(req.method==="GET"&&url.pathname==="/api/kuccps/university-programmes"){
+    const institutionName=String(url.searchParams.get("institution")||"").trim();
+    if(!institutionName){sendJson(res,400,{ok:false,error:"University name is required."});return true;}
+    try{
+      const data=await getKuccpsProgrammes(institutionName);
+      sendJson(res,data.ok?200:404,data);
+    }catch(error){
+      console.error("KUCCPS programme lookup error:",error);
+      sendJson(res,502,{ok:false,institutionName,programmes:[],error:"KUCCPS programme data could not be loaded right now. Use the official KUCCPS link below."});
+    }
+    return true;
+  }
   if(req.method==="POST"&&stores[url.pathname]){const p=JSON.parse((await readBody(req))||"{}");sendJson(res,201,{ok:true,saved:await appendJsonStore(stores[url.pathname],p)});return true;}
   if(url.pathname.startsWith("/api/")){sendJson(res,404,{ok:false,error:"API route not found."});return true;}return false;
 }
