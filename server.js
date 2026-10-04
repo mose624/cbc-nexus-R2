@@ -1115,7 +1115,8 @@ async function serveStatic(req,res,url){
       if (!data.toString("utf8").includes("resource-centre-bridge.js")) data = Buffer.from(data.toString("utf8").replace("</body>", bridgeScript + "</body>"));
     }
     const ext=path.extname(target).toLowerCase();
-    if(ext===".html") data=Buffer.from(injectGoogleTag(data.toString("utf8")));\n    const isHtml=ext===".html";
+    if(ext===".html") data=Buffer.from(injectGoogleTag(data.toString("utf8")));
+    const isHtml=ext===".html";
     const isVersionedAsset=/[?&]v=|-[0-9]{8,}/.test(url.search||"") && [".css",".js"].includes(ext);
     const cacheControl=isHtml
       ? "public, max-age=300, must-revalidate"
