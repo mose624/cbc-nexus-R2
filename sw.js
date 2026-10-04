@@ -1,4 +1,4 @@
-const CACHE_NAME = "cbe-nexus-static-v11";
+const CACHE_NAME = "cbe-nexus-static-v12";
 const STATIC_EXTENSIONS = /\.(?:css|js|png|jpg|jpeg|webp|svg|ico|woff2?)$/i;
 
 self.addEventListener("install", () => self.skipWaiting());
