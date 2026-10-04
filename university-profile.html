@@ -1,1 +1,123 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>University Course Profile | CBE Nexus</title><link rel="stylesheet" href="styles.css?v=20261004-compact2"><style>body{background:#f8fafc}.up{max-width:1100px;margin:auto;padding:25px 16px 55px}.hero{background:linear-gradient(135deg,#b91c1c,#7f1d1d);color:#fff;border-radius:18px;padding:32px;text-align:center}.hero h1{font-size:2rem;margin:8px 0}.meta{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}.tag{background:#ffffff33;color:#fff;padding:7px 11px;border-radius:999px;font-weight:700}.panel{background:#fff;border:1px solid #e5e7eb;border-radius:15px;padding:20px;margin-top:18px}.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.level{border:1px solid #dbe3ea;border-radius:12px;padding:15px}.level h3{color:#166534;margin-top:0}.course{padding:7px 9px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;margin:5px 0;font-size:.86rem}.actions{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}.btn{display:inline-block;padding:10px 14px;border-radius:9px;background:#166534;color:#fff;text-decoration:none;font-weight:800}.btn.alt{background:#fff;color:#166534;border:1px solid #86efac}@media(max-width:750px){.levels{grid-template-columns:1fr}}</style></head><body><main class="up"><section class="hero"><div>🎓 CBE NEXUS • UNIVERSITY COURSE DIRECTORY</div><h1 id="name">University Course Profile</h1><div class="meta"><span class="tag" id="county"></span><span class="tag" id="area"></span></div></section><section class="panel"><h2 style="text-align:center">🎓 Courses Offered by Level</h2><p style="text-align:center;color:#64748b">Structured course reference based on the institution's listed programme areas. Use the KUCCPS record for current 2026/2027 programmes and cut-offs; CUE is the authority for approved university academic programmes.</p><div class="levels" id="levels"></div></section><section class="panel"><div class="actions"><a class="btn" id="kuccps" target="_blank" rel="noopener">KUCCPS Current Programmes ↗</a><a class="btn alt" id="website" target="_blank" rel="noopener">University Official Website ↗</a><a class="btn alt" href="public-universities.html">← Universities Directory</a></div></section></main><script>(function(){const p=new URLSearchParams(location.search),name=p.get("name")||"University Course Profile",county=p.get("county")||"",area=p.get("area")||"",site=p.get("website")||"",id=p.get("kuccps")||"";document.title=name+" | CBE Nexus";document.querySelector("#name").textContent=name;document.querySelector("#county").textContent="📍 "+county;document.querySelector("#area").textContent=area;const u=document.querySelector("#website");if(site){u.href=site}else{u.remove()}const k=document.querySelector("#kuccps");k.href=id?"https://students.kuccps.net/institutions/"+id+"/":"https://students.kuccps.net/institutions/";const M={education:["Bachelor of Education (Arts)","Bachelor of Education (Science)","Bachelor of Education (Early Childhood / Primary Education)","Postgraduate Diploma in Education","Master of Education","PhD in Education"],medicine:["Bachelor of Medicine and Bachelor of Surgery (MBChB)","Bachelor of Pharmacy","Bachelor of Science in Nursing","Bachelor of Medical Laboratory Sciences","Master of Public Health","PhD in Health Sciences"],health:["Bachelor of Science in Nursing","Bachelor of Public Health","Bachelor of Medical Laboratory Sciences","Bachelor of Clinical Medicine","Master of Public Health","PhD in Health Sciences"],law:["Bachelor of Laws (LL.B.)","Postgraduate Diploma in Law","Master of Laws (LL.M.)","PhD in Law"],engineering:["Civil Engineering","Electrical & Electronic Engineering","Mechanical Engineering","Quantity Surveying","Construction Management","Master of Engineering","PhD in Engineering"],computing:["Bachelor of Science in Computer Science","Bachelor of Information Technology","Bachelor of Software Engineering","Cyber Security / Computer Security","Master of Science in Computer Science / IT","PhD in Computing"],business:["Bachelor of Commerce","Bachelor of Business Administration / Management","Bachelor of Accounting / Finance","Bachelor of Economics","MBA","PhD in Business / Management"],science:["Bachelor of Science","Biology / Biological Sciences","Chemistry","Physics","Mathematics","Master of Science","PhD in Science"],agriculture:["Bachelor of Science in Agriculture","Agribusiness","Animal Science","Horticulture","Agricultural Education & Extension","Master of Science in Agriculture","PhD in Agriculture"],social:["Bachelor of Arts in Sociology / Social Sciences","Economics","Psychology / Counselling","Development Studies","Political Science / International Relations","Master of Arts in Social Sciences","PhD in Social Sciences"],communication:["Communication / Journalism","Media Studies","Public Relations","Film / Broadcast Production","Master of Communication / Media","PhD in Communication"],tourism:["Tourism Management","Hospitality Management","Travel and Tourism","Hotel Management","Master of Tourism / Hospitality Management"]};const rules=[["medicine","medicine"],["health","health"],["law","law"],["engineer","engineering"],["comput","computing"],["ict","computing"],["business","business"],["finance","business"],["account","business"],["science","science"],["agriculture","agriculture"],["animal","agriculture"],["education","education"],["social","social"],["psychology","social"],["communication","communication"],["media","communication"],["tourism","tourism"],["hospitality","tourism"]];let keys=[];rules.forEach(function(r){if(area.toLowerCase().includes(r[0])&&!keys.includes(r[1]))keys.push(r[1])});if(!keys.length)keys=["business","social"];const levels={certificate:["Certificate programmes / relevant professional pathways"],diploma:["Diploma programmes in relevant disciplines"],degree:[],postgrad:["Postgraduate Diploma programmes"],masters:[],phd:[]};keys.forEach(function(key){(M[key]||[]).forEach(function(x){const z=x.toLowerCase();if(z.includes("phd"))levels.phd.push(x);else if(z.includes("master")||x==="MBA")levels.masters.push(x);else if(z.includes("postgraduate"))levels.postgrad.push(x);else levels.degree.push(x)})});levels.degree=[...new Set(levels.degree)];Object.keys(levels).forEach(function(k){levels[k]=[...new Set(levels[k])]});const labels={certificate:"Certificate",diploma:"Diploma",degree:"Bachelor’s Degree",postgrad:"Postgraduate Diploma",masters:"Master’s Degree",phd:"PhD / Doctoral"};document.querySelector("#levels").innerHTML=Object.entries(levels).map(function(e){const k=e[0],a=e[1];return '<div class="level"><h3>'+labels[k]+'</h3>'+(a.length?a.map(function(x){return '<div class="course">'+x+'</div>'}).join(""):'<div class="course">Check KUCCPS / CUE for programmes at this level.</div>')+'</div>'}).join("")})()</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>University Course Profile | CBE Nexus</title>
+<link rel="stylesheet" href="styles.css?v=20261004-compact2">
+<style>
+body{background:#f8fafc}.up{max-width:1180px;margin:auto;padding:25px 16px 55px}
+.hero{background:linear-gradient(135deg,#b91c1c,#7f1d1d);color:#fff;border-radius:18px;padding:32px;text-align:center}.hero h1{font-size:2rem;margin:8px 0}.meta{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}.tag{background:#ffffff33;color:#fff;padding:7px 11px;border-radius:999px;font-weight:700}
+.panel{background:#fff;border:1px solid #e5e7eb;border-radius:15px;padding:20px;margin-top:18px}.actions{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}.btn{display:inline-block;padding:10px 14px;border-radius:9px;background:#166534;color:#fff;text-decoration:none;font-weight:800}.btn.alt{background:#fff;color:#166534;border:1px solid #86efac}
+.tools{display:grid;grid-template-columns:2fr 1fr;gap:10px;margin:15px 0}.tools input,.tools select{width:100%;box-sizing:border-box;padding:11px;border:1px solid #cbd5e1;border-radius:9px}
+.table-wrap{overflow:auto;border:1px solid #e2e8f0;border-radius:12px}.programmes{width:100%;border-collapse:collapse;min-width:820px}.programmes th,.programmes td{padding:10px;border-bottom:1px solid #e2e8f0;text-align:left;font-size:.84rem}.programmes th{background:#f1f5f9;color:#166534;position:sticky;top:0}.programme-code{font-family:monospace;font-weight:800}.cutoff{font-weight:800;color:#166534}.status{padding:9px 12px;border-radius:9px;background:#f0fdf4;color:#166534;font-weight:700;text-align:center}.muted{color:#64748b;font-size:.86rem}.empty{text-align:center;padding:28px;color:#64748b}
+@media(max-width:700px){.tools{grid-template-columns:1fr}.hero h1{font-size:1.5rem}}
+</style>
+</head>
+<body>
+<main class="up">
+<section class="hero">
+<div>🎓 CBE NEXUS • UNIVERSITY COURSE DIRECTORY</div>
+<h1 id="name">University Course Profile</h1>
+<div class="meta"><span class="tag" id="county"></span><span class="tag" id="area"></span></div>
+</section>
+
+<section class="panel">
+<h2 style="text-align:center">🎓 2026/2027 KUCCPS Programmes</h2>
+<p class="muted" style="text-align:center">Live programme records are retrieved from the official KUCCPS institution record. Where KUCCPS does not list a programme, check the CUE approved academic-programmes record and the university's official website.</p>
+<div id="status" class="status">Loading current KUCCPS programmes…</div>
+<div class="tools">
+<input id="programmeSearch" placeholder="🔎 Search programme name or code…">
+<select id="programmeLevel"><option value="all">All programme levels</option><option value="degree">Bachelor’s Degree</option><option value="diploma">Diploma</option><option value="certificate">Certificate</option><option value="postgraduate">Postgraduate / Other</option></select>
+</div>
+<div class="table-wrap">
+<table class="programmes">
+<thead><tr><th>Programme Code</th><th>Programme Name</th><th>Level</th><th>KCSE 2025 Cut-off</th><th>KCSE 2024 Cut-off</th><th>KCSE 2023 Cut-off</th></tr></thead>
+<tbody id="programmeRows"><tr><td colspan="6" class="empty">Loading…</td></tr></tbody>
+</table>
+</div>
+</section>
+
+<section class="panel">
+<h2>📚 Approved Academic Programmes</h2>
+<p class="muted">CBE Nexus uses KUCCPS for current placement programme records and CUE for the wider approved university programme register, including bachelor’s, master’s, doctoral, postgraduate diploma, diploma and certificate programmes.</p>
+<div class="actions">
+<a class="btn" id="kuccps" target="_blank" rel="noopener">Open KUCCPS Institution ↗</a>
+<a class="btn alt" href="https://www.cue.or.ke/index.php?Itemid=253&catid=13&id=22%3Aapproved-academic-programmes&option=com_content&view=article" target="_blank" rel="noopener">CUE Approved Programmes ↗</a>
+<a class="btn alt" id="website" target="_blank" rel="noopener">University Official Website ↗</a>
+<a class="btn alt" href="public-universities.html">← Universities Directory</a>
+</div>
+</section>
+</main>
+
+<script>
+(function(){
+  const p=new URLSearchParams(location.search);
+  const name=p.get("name")||"University Course Profile";
+  const county=p.get("county")||"";
+  const area=p.get("area")||"";
+  const site=p.get("website")||"";
+  const legacyId=p.get("kuccps")||"";
+  const esc=v=>String(v??"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[m]));
+  document.title=name+" | CBE Nexus";
+  document.querySelector("#name").textContent=name;
+  document.querySelector("#county").textContent=county?"📍 "+county:"";
+  document.querySelector("#area").textContent=area;
+  const website=document.querySelector("#website");
+  if(site)website.href=site;else website.remove();
+
+  const k=document.querySelector("#kuccps");
+  if(legacyId)k.href="https://students.kuccps.net/institutions/"+encodeURIComponent(legacyId)+"/";
+  else k.href="https://students.kuccps.net/institutions/";
+
+  let all=[];
+  const status=document.querySelector("#status");
+  const rows=document.querySelector("#programmeRows");
+  const search=document.querySelector("#programmeSearch");
+  const level=document.querySelector("#programmeLevel");
+
+  function inferLevel(x){
+    const n=String(x.name||"").toLowerCase();
+    if(/phd|doctor of philosophy|doctoral/.test(n))return"Postgraduate / Other";
+    if(/master|mba|postgraduate diploma|post graduate/.test(n))return"Postgraduate / Other";
+    if(/diploma/.test(n)&&!/bachelor/.test(n))return"Diploma";
+    if(/certificate/.test(n)&&!/bachelor/.test(n))return"Certificate";
+    return" Bachelor’s Degree".trim();
+  }
+  function render(){
+    const q=search.value.trim().toLowerCase(), lv=level.value;
+    const filtered=all.filter(x=>{
+      const hay=(String(x.code||"")+" "+String(x.name||"")).toLowerCase();
+      return (!q||hay.includes(q)) && (lv==="all" || (x.level||inferLevel(x)).toLowerCase().includes(lv==="degree"?"bachelor":lv));
+    });
+    if(!filtered.length){rows.innerHTML='<tr><td colspan="6" class="empty">No matching programmes found.</td></tr>';return;}
+    rows.innerHTML=filtered.map(x=>'<tr><td class="programme-code">'+esc(x.code||"—")+'</td><td><strong>'+esc(x.name||"")+'</strong></td><td>'+esc(x.level||inferLevel(x))+'</td><td class="cutoff">'+esc(x.cutoff2025||"-")+'</td><td>'+esc(x.cutoff2024||"-")+'</td><td>'+esc(x.cutoff2023||"-")+'</td></tr>').join("");
+  }
+  async function load(){
+    try{
+      const r=await fetch("/api/kuccps/university-programmes?institution="+encodeURIComponent(name),{cache:"no-store"});
+      const d=await r.json();
+      if(!r.ok||!d.ok){
+        status.textContent=d.error||"KUCCPS programme data could not be loaded.";
+        status.style.background="#fff7ed";status.style.color="#9a3412";
+        rows.innerHTML='<tr><td colspan="6" class="empty">Use the official KUCCPS institution link above to view the current programme record.</td></tr>';
+        if(d.sourceUrl)k.href=d.sourceUrl;
+        return;
+      }
+      all=(d.programmes||[]).map(x=>({...x,level:x.level||inferLevel(x)}));
+      status.textContent=all.length+" KUCCPS programme(s) found for the 2026/2027 cycle.";
+      if(d.sourceUrl)k.href=d.sourceUrl;
+      render();
+    }catch(e){
+      status.textContent="Unable to reach the live KUCCPS programme service. Please use the official KUCCPS link below.";
+      status.style.background="#fff7ed";status.style.color="#9a3412";
+      rows.innerHTML='<tr><td colspan="6" class="empty">Live programme data is temporarily unavailable.</td></tr>';
+    }
+  }
+  search.addEventListener("input",render);
+  level.addEventListener("change",render);
+  load();
+})();
+</script>
+</body>
+</html>
