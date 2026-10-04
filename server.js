@@ -992,7 +992,42 @@ async function handleApi(req,res,url){
   if(req.method==="POST"&&stores[url.pathname]){const p=JSON.parse((await readBody(req))||"{}");sendJson(res,201,{ok:true,saved:await appendJsonStore(stores[url.pathname],p)});return true;}
   if(url.pathname.startsWith("/api/")){sendJson(res,404,{ok:false,error:"API route not found."});return true;}return false;
 }
-async function serveStatic(req,res,url){
+
+function seoFooterForPath(pathname){
+  const p=String(pathname||"/").toLowerCase();
+  let theme={name:"CBE Nexus",color:"#e8f1ff",accent:"#1d4ed8",label:"CBE NEXUS EDUCATION PLATFORM"};
+  let groups=[
+    ["Explore CBE Nexus",[["Education Hub","learning-hub.html"],["Free Resources","free-resources.html"],["AI Courses","ai-training.html"],["School Directory","school-directory.html"]]],
+    ["For Teachers",[["International Teacher Jobs","international-teaching-jobs.html"],["Teacher CV Builder","professional-cv-writing.html"],["Teaching Resources","resources.html"],["Lesson Planning","lesson-planning-assessment.html"]]],
+    ["Opportunities",[["Scholarships & Opportunities","scholarships-opportunities.html"],["School Vacancies","school-directory.html"],["Career Resources","learning-hub.html"],["Education Guides","blog.html"]]]
+  ];
+  if(p.includes("international-teaching-jobs")||p.includes("professional-cv-writing")){
+    theme={name:"International Teacher Careers",color:"#e8f4ff",accent:"#0369a1",label:"INTERNATIONAL TEACHING CAREERS"};
+    groups=[["Teacher Careers",[["International Teacher Jobs","international-teaching-jobs.html"],["Build an International CV","professional-cv-writing.html"],["Teaching Jobs Abroad","blog.html"],["Career Guides","learning-hub.html"]]],["Professional Tools",[["CV Builder","professional-cv-writing.html"],["Education Hub","learning-hub.html"],["Teaching Resources","resources.html"],["AI for Teachers","ai-for-teachers.html"]]],["Opportunities",[["Scholarships","scholarships-opportunities.html"],["School Vacancies","school-directory.html"],["Career Guides","blog.html"],["CBE Nexus Resources","resources.html"]]]];
+  }else if(p.includes("scholarships")){
+    theme={name:"Scholarships & Opportunities",color:"#edfbea",accent:"#15803d",label:"SCHOLARSHIPS & OPPORTUNITIES"};
+    groups=[["Find Funding",[["Scholarships","scholarships-opportunities.html"],["Education Opportunities","learning-hub.html"],["Study Guides","blog.html"],["AI Learning","ai-training.html"]]],["Career Growth",[["International Teacher Jobs","international-teaching-jobs.html"],["Teacher CV Builder","professional-cv-writing.html"],["School Directory","school-directory.html"],["Teaching Resources","resources.html"]]],["Explore CBE Nexus",[["Education Hub","learning-hub.html"],["Free Resources","free-resources.html"],["AI Courses","ai-training.html"],["About CBE Nexus","index.html#about"]]]];
+  }else if(p.includes("ai-")||p.includes("chatgpt")||p.includes("gemini")||p.includes("generative-ai")||p.includes("prompt-engineering")){
+    theme={name:"AI Learning & Digital Skills",color:"#f2ecff",accent:"#6d28d9",label:"AI LEARNING & DIGITAL SKILLS"};
+    groups=[["AI Learning",[["AI Courses","ai-training.html"],["AI for Teachers","ai-for-teachers.html"],["AI for Students","ai-for-students.html"],["Generative AI","generative-ai.html"]]],["Digital Skills",[["Computer Literacy","computer-digital-literacy.html"],["Digital Marketing","digital-marketing.html"],["Python Programming","python-programming.html"],["Web Development","web-development-html-css.html"]]],["Career & Education",[["Teacher Jobs Abroad","international-teaching-jobs.html"],["Teacher CV Builder","professional-cv-writing.html"],["Scholarships","scholarships-opportunities.html"],["Education Hub","learning-hub.html"]]]];
+  }else if(p.includes("resource")||p.includes("tuition")||p.includes("quiz")||p.includes("school")){
+    theme={name:"CBE Learning Resources",color:"#fff5e8",accent:"#c2410c",label:"CBC • CBE • LEARNING RESOURCES"};
+    groups=[["Learning Resources",[["Free Resources","free-resources.html"],["All Resources","resources.html"],["Lesson Planning","lesson-planning-assessment.html"],["Teaching with Technology","teaching-with-technology.html"]]],["Schools & Teachers",[["School Directory","school-directory.html"],["International Teacher Jobs","international-teaching-jobs.html"],["Teacher CV Builder","professional-cv-writing.html"],["AI for Teachers","ai-for-teachers.html"]]],["Learning Support",[["Education Hub","learning-hub.html"],["Scholarships","scholarships-opportunities.html"],["Holiday Tuition","tuition.html"],["AI Courses","ai-training.html"]]]];
+  }else if(p.includes("blog")||p.includes("learning-hub")||p.includes("article")){
+    theme={name:"CBE Nexus Education Hub",color:"#eaf8f6",accent:"#0f766e",label:"CBE NEXUS EDUCATION HUB"};
+    groups=[["Latest Learning",[["Education Hub","learning-hub.html"],["Education Articles","blog.html"],["Teacher Career Guides","international-teaching-jobs.html"],["Scholarship Guides","scholarships-opportunities.html"]]],["Teacher Tools",[["International Teacher CV","professional-cv-writing.html"],["Teaching Resources","resources.html"],["AI for Teachers","ai-for-teachers.html"],["School Directory","school-directory.html"]]],["Opportunities",[["Teaching Jobs Abroad","international-teaching-jobs.html"],["Scholarships","scholarships-opportunities.html"],["School Vacancies","school-directory.html"],["Free Resources","free-resources.html"]]]];
+  }
+  const cards=groups.map(g=>'<section class="seo-footer-group"><h3>'+g[0]+'</h3><ul>'+g[1].map(x=>'<li><a href="'+x[1]+'">'+x[0]+'</a></li>').join("")+'</ul></section>').join("");
+  return '<footer class="site-footer seo-footer" style="--seo-footer-bg:'+theme.color+';--seo-footer-accent:'+theme.accent+'"><div class="seo-footer-inner"><div class="seo-footer-brand"><span class="seo-footer-kicker">'+theme.label+'</span><strong>'+theme.name+'</strong><p>CBE Nexus connects learners, teachers, schools and education professionals with practical learning resources, career opportunities, scholarships, professional tools and digital skills.</p></div><div class="seo-footer-groups">'+cards+'</div></div><div class="seo-footer-seo"><strong>Explore CBE Nexus:</strong> CBC and CBE learning resources, international teacher jobs, teacher CV building, scholarships, school vacancies, AI courses and practical education guides for learners and educators.</div><nav class="footer-links seo-footer-bottom" aria-label="Footer navigation"><a href="index.html#about">About Us</a><a href="learning-hub.html">Learning Hub</a><a href="privacy-policy.html">Privacy Policy</a><a href="terms-and-conditions.html">Terms</a><a href="copyright.html">Copyright</a><button class="footer-admin-dot" id="adminAreaButton" type="button" aria-label="Admin login" title="Admin login"><span aria-hidden="true"></span></button></nav><p class="seo-footer-copy">&copy; 2026 CBE Nexus. Education Resources, Teacher Jobs, Scholarships, CV Builder &amp; AI Learning.</p></footer>';
+}
+function injectSeoFooter(html,pathname){
+  const footer=seoFooterForPath(pathname);
+  const styles='<style id="cbe-seo-footer-css">.seo-footer{background:var(--seo-footer-bg)!important;border-top:4px solid var(--seo-footer-accent)!important;padding:24px 20px 14px!important;margin-top:24px!important}.seo-footer-inner{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.2fr 2fr;gap:24px}.seo-footer-brand strong{display:block;font-size:20px;color:#123447;margin:5px 0 8px}.seo-footer-kicker{font-size:9px;font-weight:800;letter-spacing:.12em;color:var(--seo-footer-accent)}.seo-footer-brand p{font-size:11px;line-height:1.55;max-width:440px;margin:0;color:#334e5f}.seo-footer-groups{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.seo-footer-group h3{font-size:12px;margin:0 0 7px;color:#123447}.seo-footer-group ul{list-style:none;padding:0;margin:0}.seo-footer-group li{margin:4px 0}.seo-footer-group a{font-size:10px;color:#31576b;text-decoration:none}.seo-footer-group a:hover{color:var(--seo-footer-accent);text-decoration:underline}.seo-footer-seo{max-width:1180px;margin:18px auto 10px;padding:10px 12px;border-radius:7px;background:rgba(255,255,255,.65);font-size:9px;line-height:1.5;color:#405766}.seo-footer-bottom{max-width:1180px;margin:8px auto!important}.seo-footer-copy{text-align:center!important;font-size:8px!important;margin:8px 0 0!important;opacity:.7}@media(max-width:760px){.seo-footer{padding:18px 10px 10px!important}.seo-footer-inner{grid-template-columns:1fr;gap:14px}.seo-footer-groups{grid-template-columns:repeat(3,1fr);gap:7px}.seo-footer-group h3{font-size:9px}.seo-footer-group a{font-size:7.5px}.seo-footer-brand strong{font-size:15px}.seo-footer-brand p,.seo-footer-seo{font-size:8px}}@media(max-width:480px){.seo-footer-groups{grid-template-columns:1fr 1fr}.seo-footer-group:nth-child(3){grid-column:1/-1}}</style>';
+  if(/<footer[\\s\\S]*?<\\/footer>/i.test(html)) html=html.replace(/<footer[\\s\\S]*?<\\/footer>/i,footer);
+  else html=html.replace(/<\\/body>/i,footer+'</body>');
+  return html.replace(/<\\/head>/i,styles+'</head>');
+}
+\nasync function serveStatic(req,res,url){
   if(req.method==="GET" && url.pathname==="/sitemap.xml"){
     res.writeHead(200,{"Content-Type":"application/xml; charset=utf-8","Cache-Control":"public, max-age=3600"});
     res.end(await seo.sitemap(req));
@@ -1007,7 +1042,7 @@ async function serveStatic(req,res,url){
   const seoPage=await seo.match(req);
   if(req.method==="GET" && seoPage){
     res.writeHead(200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"public, max-age=600"});
-    res.end(seoPage);
+    res.end(injectSeoFooter(seoPage,url.pathname));
     return;
   }
   const requestedPath=decodeURIComponent(url.pathname==="/"?"/index.html":url.pathname);
