@@ -375,6 +375,7 @@ function setAdminModule(module) {
     panel.classList.toggle("active",active);
     panel.hidden=!active;
   });
+  if (activeAdminModule==="ai-notes") initAICourseNotesAdmin();
   if (activeAdminModule==="resources" && typeof window.loadAdminResourceModeration==="function") {
     window.loadAdminResourceModeration();
   }
@@ -417,6 +418,25 @@ function renderAdminControlCentre(data) {
   if(elements.adminLastUpdated) elements.adminLastUpdated.textContent="Updated "+new Date().toLocaleString("en-KE");
   const summary=document.getElementById("adminResourceSummary");
   if(summary) summary.textContent=`${pending} pending · ${approved} online · ${rejected} rejected`;
+}
+function initAICourseNotesAdmin(){
+  const courseSelect=document.getElementById("aiNotesCourseInput"), moduleSelect=document.getElementById("aiNotesModuleInput"), levelSelect=document.getElementById("aiNotesLevelInput"), statusSelect=document.getElementById("aiNotesStatusInput");
+  const form=document.getElementById("aiNotesAdminForm"); if(!courseSelect||!moduleSelect||!form||courseSelect.dataset.ready==="1") return;
+  courseSelect.dataset.ready="1";
+  const courses=window.CBENexusAICourses||{};
+  courseSelect.innerHTML=Object.keys(courses).map(s=>'<option value="'+escapeHtml(s)+'">'+escapeHtml(courses[s].title)+'</option>').join("");
+  function refreshModules(){const c=courses[courseSelect.value];moduleSelect.innerHTML=(c?.modules||[]).map((m,i)=>'<option value="'+(i+1)+'">Module '+(i+1)+': '+escapeHtml(m[0])+'</option>').join("");document.getElementById("aiNotesModuleTitleInput").value=c?.modules?.[Number(moduleSelect.value)-1]?.[0]||"";}
+  refreshModules();courseSelect.addEventListener("change",refreshModules);moduleSelect.addEventListener("change",refreshModules);
+  document.getElementById("aiNotesLoadButton")?.addEventListener("click",loadAICourseNoteAdmin);
+  document.getElementById("aiNotesPreviewButton")?.addEventListener("click",()=>{const v=document.getElementById("aiNotesContentInput").value;const w=window.open("","_blank","noopener");if(w)w.document.write("<html><body style='font-family:Arial;padding:30px;max-width:900px;margin:auto'><h1>"+escapeHtml(document.getElementById("aiNotesModuleTitleInput").value)+"</h1><pre style='white-space:pre-wrap;line-height:1.6'>"+escapeHtml(v)+"</pre></body></html>");});
+  form.addEventListener("submit",async e=>{e.preventDefault();const c=courses[courseSelect.value],m=c.modules[Number(moduleSelect.value)-1];const payload={courseSlug:courseSelect.value,courseTitle:c.title,moduleNumber:Number(moduleSelect.value),moduleTitle:document.getElementById("aiNotesModuleTitleInput").value,level:levelSelect.value,status:statusSelect.value,content:document.getElementById("aiNotesContentInput").value,objectives:document.getElementById("aiNotesObjectivesInput").value,examples:document.getElementById("aiNotesExamplesInput").value,activity:document.getElementById("aiNotesActivityInput").value,questions:document.getElementById("aiNotesQuestionsInput").value};const st=document.getElementById("aiNotesAdminStatus");st.textContent="Saving...";try{const r=await fetch("/api/admin/ai-course-notes",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}),d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||"Could not save notes.");st.textContent=payload.status==="published"?"Published successfully.":"Saved as draft.";loadAICourseNotesAdmin();}catch(err){st.textContent=err.message;}}); loadAICourseNotesAdmin();
+}
+async function loadAICourseNotesAdmin(){
+  const host=document.getElementById("aiNotesAdminList");if(!host||!isAdminUnlocked())return;try{const r=await fetch("/api/admin/ai-course-notes?_="+Date.now(),{credentials:"same-origin",cache:"no-store"}),d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||"Could not load notes.");host.innerHTML=(d.notes||[]).map(n=>'<article class="ai-notes-admin-card"><span class="eyebrow">'+escapeHtml(String(n.status||"").toUpperCase())+' • '+escapeHtml(n.level||"basic")+'</span><h4>'+escapeHtml(n.course_title||n.course_slug)+'</h4><p>Module '+n.module_number+': '+escapeHtml(n.module_title||"")+'</p><button class="secondary-button" data-ai-note-load="'+escapeHtml(n.id)+'">Load</button></article>').join("")||'<div class="admin-management-card">No notes published yet.</div>';host.querySelectorAll("[data-ai-note-load]").forEach(b=>b.addEventListener("click",()=>loadAICourseNoteAdmin(b.dataset.aiNoteLoad)));document.getElementById("aiNotesAdminSummary").textContent=(d.notes||[]).length+" saved notes";}catch(e){host.innerHTML='<div class="admin-management-card">'+escapeHtml(e.message)+'</div>';}
+}
+async function loadAICourseNoteAdmin(id){
+  const r=await fetch("/api/admin/ai-course-notes?_="+Date.now(),{credentials:"same-origin",cache:"no-store"}),d=await r.json();const n=(d.notes||[]).find(x=>String(x.id)===String(id));if(!n)return;
+  document.getElementById("aiNotesCourseInput").value=n.course_slug;document.getElementById("aiNotesCourseInput").dispatchEvent(new Event("change"));document.getElementById("aiNotesModuleInput").value=n.module_number;document.getElementById("aiNotesModuleInput").dispatchEvent(new Event("change"));document.getElementById("aiNotesLevelInput").value=n.level;document.getElementById("aiNotesStatusInput").value=n.status;document.getElementById("aiNotesModuleTitleInput").value=n.module_title||"";document.getElementById("aiNotesObjectivesInput").value=n.objectives||"";document.getElementById("aiNotesContentInput").value=n.content||"";document.getElementById("aiNotesExamplesInput").value=n.examples||"";document.getElementById("aiNotesActivityInput").value=n.activity||"";document.getElementById("aiNotesQuestionsInput").value=n.questions||"";window.scrollTo({top:document.getElementById("aiNotesAdminForm").offsetTop-100,behavior:"smooth"});
 }
 function renderAdminModuleDetails(data){
   const users=Array.isArray(data?.users)?data.users:[];
