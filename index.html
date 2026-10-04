@@ -1110,6 +1110,7 @@
             <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="sales">Sales <span id="adminSalesBadge">0</span></button>
             <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="cv-writing">CV Writing</button>
             <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="vacancies">Teaching Jobs</button>
+          <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="ai-courses">🤖 Free AI Courses</button>
             <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="prices">Prices</button>
           <button class="admin-module-tab ai-academy-notes-tab" type="button" role="tab" aria-selected="false" data-admin-module="ai-notes">🤖 AI Academy Notes</button>
           <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="blog">📝 Blog <span id="adminBlogBadge">0</span></button>
@@ -1279,6 +1280,40 @@
                 <a class="secondary-button" href="international-teaching-jobs.html">View Teaching Jobs</a>
               </div>
               <p class="form-status">CV service requests can be handled through the CV Writing Centre and the site's customer-support/WhatsApp channel.</p>
+            </div>
+          </div>
+
+          <div class="admin-module-panel" data-admin-module-panel="ai-courses">
+            <div class="admin-management-card admin-ai-courses-card">
+              <div class="admin-management-heading">
+                <div><p class="eyebrow">AI Academy</p><h3>Free AI Courses</h3><p>Add, edit, publish and share free AI courses. Courses published here appear automatically on the public AI Academy page.</p></div>
+                <span class="price-pill">FREE</span>
+              </div>
+              <form id="adminAICourseForm" class="admin-form feature-form">
+                <input id="aiCourseIdInput" type="hidden">
+                <div class="form-row">
+                  <label>Course Title<input id="aiCourseTitleInput" required placeholder="AI for Teachers"></label>
+                  <label>Provider<input id="aiCourseProviderInput" placeholder="CBE Nexus / Coursera / Google / Microsoft"></label>
+                </div>
+                <div class="form-row">
+                  <label>Category<input id="aiCourseCategoryInput" placeholder="AI, Education, Productivity"></label>
+                  <label>Level<select id="aiCourseLevelInput"><option>Beginner</option><option>Intermediate</option><option>Advanced</option><option>All Levels</option></select></label>
+                </div>
+                <div class="form-row">
+                  <label>Duration<input id="aiCourseDurationInput" placeholder="4 weeks / 6 hours"></label>
+                  <label>Course Link<input id="aiCourseUrlInput" type="url" required placeholder="https://example.com/free-course"></label>
+                </div>
+                <label>Short Description<textarea id="aiCourseShortInput" rows="3" required placeholder="A concise description shown on the course card."></textarea></label>
+                <label>Full Description<textarea id="aiCourseDescriptionInput" rows="4" placeholder="What learners will gain from this course."></textarea></label>
+                <label class="checkbox-label"><input id="aiCourseFeaturedInput" type="checkbox"> Feature this course</label>
+                <div class="quiz-actions">
+                  <button class="primary-button" id="saveAICourseButton" type="submit">➕ Publish Course</button>
+                  <button class="ghost-button" id="clearAICourseButton" type="button">Clear</button>
+                </div>
+                <p id="adminAICourseStatus" class="form-status" aria-live="polite"></p>
+              </form>
+              <div class="admin-management-heading"><div><h4>Published & Draft Courses</h4><span>Use Copy to share a course link and Edit to update it.</span></div><span id="adminAICourseSummary" class="admin-module-summary"></span></div>
+              <div id="adminAICourseList" class="admin-management-list"></div>
             </div>
           </div>
 
