@@ -60,7 +60,7 @@
     const r = resources.find(x => String(x.id) === String(id));
     if (!r) return;
     sessionStorage.setItem("cbeInternationalSelectedResource", JSON.stringify({id:r.id,title:r.title,curriculum}));
-    window.location.href = "index.html#payments";
+    window.location.href = "index.html?resource="+encodeURIComponent(r.title)+"&amount="+encodeURIComponent(Math.max(0, Math.round(Number(r.price || 0))))+"#payments";
   }
 
   function fillSubjects() {

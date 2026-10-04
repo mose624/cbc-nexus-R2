@@ -829,18 +829,6 @@ textarea:focus-visible {
 .quick-types button {
   font-weight: 800;
   color: var(--navy);
-  transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
-}
-
-.quick-types button:hover,
-.quick-types button:focus-visible {
-  transform: translateY(-1px);
-}
-
-.quick-types button.active {
-  background: var(--navy);
-  color: white;
-  border-color: var(--navy);
 }
 
 .trending-panel {
@@ -5010,1747 +4998,615 @@ body.admin-unlocked .admin-only-link {
   font-weight: 800;
   border-bottom: 1px solid rgba(0,0,0,.1);
   margin-bottom: 4px;
-}
-.dropdown-grade {
-  border-bottom: 1px solid rgba(0,0,0,.08);
-}
-.dropdown-grade summary {
-  list-style: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 9px 12px;
-  font-weight: 700;
-  color: inherit;
-}
-.dropdown-grade summary::-webkit-details-marker { display:none; }
-.dropdown-grade summary:hover,
-.dropdown-grade[open] > summary {
-  background: rgba(0, 128, 0, .08);
-}
-.dropdown-grade-subjects {
-  display: grid;
-  gap: 2px;
-  padding: 0 8px 8px 20px;
-}
-.dropdown-grade-subjects a {
-  display: block;
-  padding: 7px 10px;
-  border-radius: 6px;
-  font-size: .92rem;
-}
-.dropdown-grade-subjects a:hover {
-  background: rgba(0, 128, 0, .1);
-}
-@media (max-width: 760px) {
-  .teaching-materials-dropdown {
-    min-width: 240px;
-    max-height: 65vh;
-  }
-}
-
-/* CEO SEO Center */
-.admin-seo-badge{font-size:.72rem;padding:.2rem .5rem;border-radius:999px;background:rgba(24,119,242,.12);color:inherit;font-weight:700}
-.admin-seo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-top:1rem}
-.admin-seo-card{padding:1.2rem;border:1px solid rgba(0,0,0,.08);border-radius:16px;background:var(--card-bg,#fff);box-shadow:0 8px 24px rgba(0,0,0,.05)}
-.admin-seo-card h4{margin:.35rem 0 .55rem;font-size:1.08rem}
-.admin-seo-card p{line-height:1.6;margin:0 0 1rem}
-.admin-seo-card .primary-button,.admin-seo-card .secondary-button{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;margin-top:.25rem}
-.admin-seo-keywords{display:flex;flex-wrap:wrap;gap:.45rem;margin:.8rem 0 1rem}
-.admin-seo-keywords span{padding:.42rem .65rem;border-radius:999px;background:rgba(0,0,0,.055);font-size:.82rem}
-.admin-seo-note{margin-top:1rem;padding:1rem;border-left:4px solid currentColor;border-radius:10px;background:rgba(0,0,0,.035);line-height:1.55}
-@media (max-width:760px){.admin-seo-grid{grid-template-columns:1fr}}
-
-/* PHONE-ONLY COMPACT DASHBOARD OVERRIDE
-   Desktop/tablet dashboard remains unchanged.
-   On phones, show only the dedicated mobile dashboard to save vertical space. */
-@media (max-width: 640px) {
-  #dashboard.portal-dashboard {
-    display: none !important;
-  }
-
-  .mobile-dashboard-stack {
-    display: grid !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-    gap: 5px !important;
-    padding: 4px !important;
-    margin: 0 !important;
-  }
-
-  .mobile-dashboard {
-    grid-template-columns: 30% 40% 30% !important;
-    grid-template-rows: 20px auto !important;
-    border-radius: 5px !important;
-    box-shadow: none !important;
-  }
-
-  .mobile-dashboard-title {
-    padding: 4px 2px !important;
-    font-size: 6.5px !important;
-    line-height: 1 !important;
-  }
-
-  .mobile-dashboard-table {
-    border-spacing: 1px !important;
-  }
-
-  .mobile-dashboard-table td {
-    padding: 4px 2px !important;
-  }
-
-  .mobile-dashboard-table td strong {
-    margin-bottom: 2px !important;
-    font-size: 6px !important;
-    line-height: 1 !important;
-  }
-
-  .mobile-dashboard-table td a {
-    min-height: 21px !important;
-    margin: 1px 0 !important;
-    padding: 3px 1px !important;
-    font-size: 6px !important;
-    line-height: 1 !important;
-    border-radius: 3px !important;
-  }
-}
-
-/* PHONE-ONLY HEADER COMPACT LAYOUT
-   Keeps the desktop/tablet header unchanged. */
-@media (max-width: 640px) {
-  header, .site-header, .main-header, .top-header {
-    width: 100% !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-  }
-
-  header nav, .site-header nav, .main-header nav, .top-header nav,
-  header .nav, .site-header .nav, .main-header .nav, .top-header .nav {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    align-items: center !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-    gap: 3px !important;
-    row-gap: 3px !important;
-    overflow: visible !important;
-  }
-
-  header nav a, header nav button,
-  .site-header nav a, .site-header nav button,
-  .main-header nav a, .main-header nav button,
-  .top-header nav a, .top-header nav button,
-  header .nav a, header .nav button,
-  .site-header .nav a, .site-header .nav button,
-  .main-header .nav a, .main-header .nav button,
-  .top-header .nav a, .top-header .nav button {
-    flex: 0 1 auto !important;
-    min-width: 0 !important;
-    width: auto !important;
-    max-width: 100% !important;
-    min-height: 28px !important;
-    padding: 5px 7px !important;
-    font-size: 10px !important;
-    line-height: 1.1 !important;
-    white-space: normal !important;
-    text-align: center !important;
-    box-sizing: border-box !important;
-  }
-
-  header .logo, header .brand,
-  .site-header .logo, .site-header .brand,
-  .main-header .logo, .main-header .brand,
-  .top-header .logo, .top-header .brand {
-    max-width: 100% !important;
-    min-width: 0 !important;
-  }
-
-  header .header-actions, header .nav-actions,
-  .site-header .header-actions, .site-header .nav-actions,
-  .main-header .header-actions, .main-header .nav-actions,
-  .top-header .header-actions, .top-header .nav-actions {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    gap: 3px !important;
-    max-width: 100% !important;
-  }
-}
-
-/* FINAL PHONE HEADER FIX — targets the actual CBE Nexus header classes.
-   Desktop/tablet are untouched. */
-@media (max-width: 640px) {
-  .site-header {
-    width: 100% !important;
-    overflow: visible !important;
-  }
-
-  .site-header .top-strip {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 2px !important;
-    row-gap: 2px !important;
-    width: 100% !important;
-    height: auto !important;
-    max-height: none !important;
-    overflow: visible !important;
-    padding: 3px 4px !important;
-    box-sizing: border-box !important;
-  }
-
-  .site-header .top-strip a {
-    flex: 0 1 auto !important;
-    width: auto !important;
-    min-width: 0 !important;
-    min-height: 22px !important;
-    padding: 3px 5px !important;
-    font-size: 8px !important;
-    line-height: 1 !important;
-    white-space: normal !important;
-    text-align: center !important;
-    box-sizing: border-box !important;
-  }
-
-  .site-header .main-nav {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 4px !important;
-    row-gap: 4px !important;
-    width: 100% !important;
-    height: auto !important;
-    min-height: 0 !important;
-    overflow: visible !important;
-    padding: 5px !important;
-    box-sizing: border-box !important;
-  }
-
-  .site-header .main-nav > .brand {
-    flex: 1 0 100% !important;
-    justify-content: center !important;
-    min-width: 0 !important;
-    width: 100% !important;
-    padding: 3px !important;
-  }
-
-  .site-header .main-nav > .brand strong {
-    font-size: 13px !important;
-  }
-
-  .site-header .main-nav > .brand small {
-    font-size: 7px !important;
-  }
-
-  .site-header .nav-menu {
-    display: flex !important;
-    flex: 1 0 100% !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 3px !important;
-    row-gap: 3px !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    overflow: visible !important;
-  }
-
-  .site-header .nav-menu > .nav-link,
-  .site-header .nav-menu > .nav-dropdown > summary {
-    flex: 0 1 auto !important;
-    min-width: 0 !important;
-    min-height: 26px !important;
-    width: auto !important;
-    max-width: 100% !important;
-    padding: 5px 6px !important;
-    font-size: 8px !important;
-    line-height: 1.05 !important;
-    white-space: normal !important;
-    text-align: center !important;
-    box-sizing: border-box !important;
-  }
-
-  .site-header .nav-actions {
-    display: flex !important;
-    flex: 1 0 100% !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 3px !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    overflow: visible !important;
-  }
-
-  .site-header .nav-actions > * {
-    flex: 0 1 auto !important;
-    min-width: 0 !important;
-    min-height: 26px !important;
-    padding: 5px 7px !important;
-    font-size: 8px !important;
-    line-height: 1 !important;
-    box-sizing: border-box !important;
-    white-space: nowrap !important;
-  }
-
-  .site-header .nav-dropdown {
-    min-width: 0 !important;
-  }
-
-  .site-header .nav-dropdown .dropdown-panel {
-    max-width: calc(100vw - 12px) !important;
-  }
-}
-
-/* Compact Why CBC NEXUS block in About Us */
-.why-cbe-nexus {
-  margin-top: 14px;
-  padding-top: 10px;
-  border-top: 1px solid var(--line);
-}
-
-.why-cbe-nexus h4 {
-  margin: 0 0 3px;
-  color: var(--navy);
-  font-size: 15px;
-  line-height: 1.2;
-}
-
-.why-cbe-nexus p {
-  margin: 0 0 5px;
-  color: var(--muted);
-  font-size: 11px;
-  line-height: 1.25;
-}
-
-.why-cbe-nexus ul {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 10px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.why-cbe-nexus li {
-  color: var(--muted);
-  font-size: 10px;
-  line-height: 1.2;
-  white-space: nowrap;
-}
-
-.why-cbe-nexus li::before {
-  content: "• ";
-  color: var(--teal);
-  font-weight: 800;
-}
-
-@media (max-width: 640px) {
-  .why-cbe-nexus {
-    margin-top: 9px;
-    padding-top: 7px;
-  }
-
-  .why-cbe-nexus h4 {
-    font-size: 12px;
-  }
-
-  .why-cbe-nexus p {
-    font-size: 9px;
-  }
-
-  .why-cbe-nexus ul {
-    gap: 3px 7px;
-  }
-
-  .why-cbe-nexus li {
-    font-size: 8px;
-  }
-}
-
-/* COMPACT ABOUT US — reduce vertical space and box size without changing other sections */
-#about.info-band {
-  padding-top: 18px;
-  padding-bottom: 18px;
-}
-
-#about .info-layout {
-  grid-template-columns: minmax(0, 1fr) minmax(220px, 0.42fr);
-  gap: 12px;
-  align-items: center;
-}
-
-#about .eyebrow {
-  margin-bottom: 4px;
-  font-size: 10px;
-}
-
-#about h2 {
-  margin-bottom: 7px;
-  font-size: 24px;
-  line-height: 1.15;
-}
-
-#about .info-layout > div:first-child > p:not(.eyebrow) {
-  margin-bottom: 7px;
-  font-size: 12px;
-  line-height: 1.35;
-}
-
-#about .info-card {
-  width: min(100%, 330px);
-  justify-self: end;
-  padding: 11px 13px;
-  border-radius: 7px;
-  box-shadow: 0 6px 18px rgba(18, 52, 71, 0.08);
-}
-
-#about .info-card h3 {
-  margin-bottom: 5px;
-  font-size: 15px;
-  line-height: 1.2;
-}
-
-#about .info-card > p {
-  margin-bottom: 6px;
-  font-size: 11px;
-  line-height: 1.3;
-}
-
-#about .why-cbe-nexus {
-  margin-top: 7px;
-  padding-top: 6px;
-}
-
-#about .why-cbe-nexus h4 {
-  font-size: 12px;
-  margin-bottom: 2px;
-}
-
-#about .why-cbe-nexus p {
-  font-size: 9px;
-  margin-bottom: 3px;
-}
-
-#about .why-cbe-nexus ul {
-  gap: 3px 7px;
-}
-
-#about .why-cbe-nexus li {
-  font-size: 9px;
-  line-height: 1.15;
-}
-
-@media (max-width: 980px) {
-  #about .info-layout {
-    grid-template-columns: 1fr;
-    align-items: start;
-  }
-
-  #about .info-card {
-    width: min(100%, 420px);
-    justify-self: start;
-  }
-}
-
-@media (max-width: 640px) {
-  #about.info-band {
-    padding-top: 12px;
-    padding-bottom: 12px;
-  }
-
-  #about h2 {
-    font-size: 18px;
-  }
-
-  #about .info-layout > div:first-child > p:not(.eyebrow) {
-    font-size: 10px;
-    line-height: 1.3;
-  }
-
-  #about .info-card {
-    padding: 8px 10px;
-    width: 100%;
-  }
-
-  #about .info-card h3 {
-    font-size: 12px;
-  }
-
-  #about .info-card > p {
-    font-size: 9px;
-  }
-}
-
-/* COMPACT 10-PAGE WEBSITE DIRECTORY — reduce space without changing other sections */
-.page-directory {
-  padding-top: 12px !important;
-  padding-bottom: 12px !important;
-}
-
-.page-directory .section-heading {
-  margin-bottom: 8px !important;
-}
-
-.page-directory .eyebrow {
-  margin-bottom: 2px !important;
-  font-size: 9px !important;
-  line-height: 1.1 !important;
-}
-
-.page-directory h2 {
-  margin: 0 !important;
-  font-size: 18px !important;
-  line-height: 1.15 !important;
-}
-
-.page-directory .download-grid {
-  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
-  gap: 6px !important;
-  margin-top: 0 !important;
-}
-
-.page-directory .download-tile {
-  min-height: 0 !important;
-  padding: 7px 6px !important;
-  border-radius: 6px !important;
-  font-size: 10px !important;
-  line-height: 1.15 !important;
-  text-align: center !important;
-  white-space: normal !important;
-}
-
-@media (max-width: 900px) {
-  .page-directory .download-grid {
-    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
-    gap: 5px !important;
-  }
-
-  .page-directory .download-tile {
-    padding: 6px 4px !important;
-    font-size: 9px !important;
-  }
-}
-
-@media (max-width: 640px) {
-  .page-directory {
-    padding: 9px 8px !important;
-  }
-
-  .page-directory .section-heading {
-    margin-bottom: 5px !important;
-  }
-
-  .page-directory h2 {
-    font-size: 15px !important;
-  }
-
-  .page-directory .eyebrow {
-    font-size: 7px !important;
-  }
-
-  .page-directory .download-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 4px !important;
-  }
-
-  .page-directory .download-tile {
-    padding: 5px 4px !important;
-    font-size: 8px !important;
-    line-height: 1.1 !important;
-    border-radius: 4px !important;
-  }
-}
-
-/* Compact Learners Holiday Program dashboard card only.
-   Keeps the existing dashboard layout and all other components unchanged. */
-#dashboard.portal-dashboard > .portal-main .summary-grid .holiday-program-card {
-  display: flex !important;
-  align-items: center !important;
-  gap: 10px !important;
-  min-width: 0 !important;
-  width: fit-content !important;
-  max-width: 280px !important;
-  padding: 9px 12px !important;
-  margin: 0 !important;
-  border-radius: 8px !important;
-  box-sizing: border-box !important;
-  text-decoration: none !important;
-}
-
-#dashboard.portal-dashboard > .portal-main .summary-grid .holiday-program-icon {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  flex: 0 0 auto !important;
-  font-size: 18px !important;
-  line-height: 1 !important;
-}
-
-#dashboard.portal-dashboard > .portal-main .summary-grid .holiday-program-copy {
-  display: flex !important;
-  flex-direction: column !important;
-  min-width: 0 !important;
-  line-height: 1.15 !important;
-}
-
-#dashboard.portal-dashboard > .portal-main .summary-grid .holiday-program-copy strong {
-  display: block !important;
-  font-size: 12px !important;
-  line-height: 1.15 !important;
-  white-space: nowrap !important;
-}
-
-#dashboard.portal-dashboard > .portal-main .summary-grid .holiday-program-copy small {
-  display: block !important;
-  font-size: 9px !important;
-  line-height: 1.15 !important;
-  white-space: nowrap !important;
-}
-
-#dashboard.portal-dashboard > .portal-main .summary-grid .holiday-program-arrow {
-  display: inline-flex !important;
-  flex: 0 0 auto !important;
-  font-size: 13px !important;
-  line-height: 1 !important;
-}
-
-@media (max-width: 600px) {
-  #dashboard.portal-dashboard > .portal-main .summary-grid .holiday-program-card {
-    max-width: 240px !important;
-    padding: 8px 10px !important;
-    gap: 8px !important;
-  }
-
-  #dashboard.portal-dashboard > .portal-main .summary-grid .holiday-program-copy strong {
-    font-size: 11px !important;
-  }
-
-  #dashboard.portal-dashboard > .portal-main .summary-grid .holiday-program-copy small {
-    font-size: 8px !important;
-  }
-}
-
-/* Light pink theme — specified CBE Nexus sections only.
-   All other website sections remain unchanged. */
-.competitive-band {
-  background: #fff1f6;
-  border-top-color: #f3c6d7;
-}
-
-.seo-band,
-.landing-band {
-  background: #fff5f8;
-  border-top-color: #f3c6d7;
-  border-bottom-color: #f3c6d7;
-}
-
-#privacy.info-band {
-  background: #fff1f6;
-  border-top-color: #f3c6d7;
-  border-bottom-color: #f3c6d7;
-}
-
-#dashboard.portal-dashboard {
-  background: #fff1f6;
-}
-
-.competitive-band .feature-grid article,
-.landing-band .landing-grid button {
-  background: #fff8fa;
-  border-color: #f3c6d7;
-}
-
-.competitive-band .quick-types button,
-.competitive-band .trending-item {
-  background: #fff8fa;
-  border-color: #f3c6d7;
-}
-
-.competitive-band .section-heading h2,
-.seo-band h2,
-.landing-band .section-heading h2,
-#privacy.info-band h2,
-#dashboard.portal-dashboard .portal-sidebar-title h2 {
-  color: #a63d62;
-}
-
-/* MOBILE: preserve the requested light pink theme on the specified sections only. */
-@media (max-width: 640px) {
-  .competitive-band {
-    background: #fff1f6 !important;
-    border-top-color: #f3c6d7 !important;
-  }
-
-  .seo-band,
-  .landing-band {
-    background: #fff5f8 !important;
-    border-top-color: #f3c6d7 !important;
-    border-bottom-color: #f3c6d7 !important;
-  }
-
-  #privacy.info-band {
-    background: #fff1f6 !important;
-    border-top-color: #f3c6d7 !important;
-    border-bottom-color: #f3c6d7 !important;
-  }
-
-  #dashboard.portal-dashboard {
-    background: #fff1f6 !important;
-  }
-
-  /* The phone layout uses the dedicated mobile dashboard stack. */
-  .mobile-dashboard-stack {
-    background: #fff1f6 !important;
-  }
-
-  .competitive-band .feature-grid article,
-  .landing-band .landing-grid button,
-  .competitive-band .quick-types button,
-  .competitive-band .trending-item {
-    background: #fff8fa !important;
-    border-color: #f3c6d7 !important;
-  }
-
-  .competitive-band .section-heading h2,
-  .seo-band h2,
-  .landing-band .section-heading h2,
-  #privacy.info-band h2 {
-    color: #a63d62 !important;
-  }
-}
-
-/* MEDIUM-SIZE TARGETED SECTIONS — no other website structure changed. */
-
-/* Learners Holiday Program: medium dashboard card */
-.summary-grid .holiday-program-card {
-  width: min(100%, 430px) !important;
-  max-width: 430px !important;
-  min-height: 62px !important;
-  padding: 10px 14px !important;
-  gap: 10px !important;
-  border-radius: 9px !important;
-}
-.summary-grid .holiday-program-icon {
-  width: 34px !important;
-  height: 34px !important;
-  flex: 0 0 34px !important;
-  border-radius: 8px !important;
-  font-size: 18px !important;
-}
-.summary-grid .holiday-program-copy {
-  gap: 2px !important;
-}
-.summary-grid .holiday-program-copy strong {
-  font-size: 14px !important;
-  line-height: 1.15 !important;
-}
-.summary-grid .holiday-program-copy small {
-  font-size: 11px !important;
-  line-height: 1.15 !important;
-}
-.summary-grid .holiday-program-arrow {
-  font-size: 18px !important;
-  padding-left: 4px !important;
-}
-
-/* Get Free CBC Resources: medium section */
-#freeCbcResources {
-  padding-top: 20px !important;
-  padding-bottom: 20px !important;
-}
-#freeCbcResources .section-heading {
-  margin-bottom: 12px !important;
-}
-#freeCbcResources .section-heading h2 {
-  font-size: 24px !important;
-  line-height: 1.2 !important;
-}
-#freeCbcResources .section-heading p:not(.eyebrow) {
-  font-size: 13px !important;
-  line-height: 1.35 !important;
-}
-#freeCbcResources .download-grid {
-  gap: 8px !important;
-}
-#freeCbcResources .download-tile {
-  min-height: 54px !important;
-  padding: 9px 11px !important;
-  font-size: 13px !important;
-}
-
-/* Automated Marked Assessment & Learner Progress: medium section */
-#quizCentre {
-  padding-top: 26px !important;
-  padding-bottom: 26px !important;
-}
-#quizCentre .section-heading {
-  margin-bottom: 14px !important;
-}
-#quizCentre .section-heading h2 {
-  font-size: 24px !important;
-  line-height: 1.2 !important;
-}
-#quizCentre .section-heading p:not(.eyebrow) {
-  font-size: 13px !important;
-  line-height: 1.35 !important;
-}
-#quizCentre .price-pill {
-  padding: 7px 10px !important;
-  font-size: 12px !important;
-}
-#quizCentre .quiz-panel {
-  max-width: 760px !important;
-  padding: 14px !important;
-  gap: 10px !important;
-}
-#quizCentre .quiz-panel fieldset {
-  padding: 10px !important;
-}
-#quizCentre .progress-panel {
-  max-width: 760px !important;
-  padding: 14px !important;
-}
-
-@media (max-width: 640px) {
-  .summary-grid .holiday-program-card {
-    width: min(100%, 300px) !important;
-    max-width: 300px !important;
-    min-height: 54px !important;
-    padding: 8px 10px !important;
-    gap: 7px !important;
-  }
-  .summary-grid .holiday-program-icon {
-    width: 28px !important;
-    height: 28px !important;
-    flex-basis: 28px !important;
-    font-size: 15px !important;
-  }
-  .summary-grid .holiday-program-copy strong {
-    font-size: 11px !important;
-  }
-  .summary-grid .holiday-program-copy small {
-    font-size: 8px !important;
-  }
-  .summary-grid .holiday-program-arrow {
-    font-size: 15px !important;
-  }
-
-  #freeCbcResources {
-    padding-top: 14px !important;
-    padding-bottom: 14px !important;
-  }
-  #freeCbcResources .section-heading h2,
-  #quizCentre .section-heading h2 {
-    font-size: 18px !important;
-  }
-  #freeCbcResources .section-heading p:not(.eyebrow),
-  #quizCentre .section-heading p:not(.eyebrow) {
-    font-size: 10px !important;
-  }
-  #freeCbcResources .download-tile {
-    min-height: 44px !important;
-    padding: 7px 8px !important;
-    font-size: 10px !important;
-  }
-
-  #quizCentre {
-    padding-top: 16px !important;
-    padding-bottom: 16px !important;
-  }
-  #quizCentre .quiz-panel,
-  #quizCentre .progress-panel {
-    padding: 10px !important;
-  }
-}
-
-/* Compact Pay and confirm your resource order section only. */
-#payments {
-  padding-top: 20px !important;
-  padding-bottom: 20px !important;
-}
-#payments .section-heading {
-  margin-bottom: 10px !important;
-}
-#payments .section-heading h2 {
-  font-size: 20px !important;
-  line-height: 1.2 !important;
-}
-#payments .eyebrow {
-  font-size: 10px !important;
-}
-#payments .price-pill {
-  padding: 5px 8px !important;
-  font-size: 10px !important;
-}
-#payments .payment-layout {
-  gap: 10px !important;
-}
-#payments .payment-form,
-#payments .payment-card {
-  padding: 10px !important;
-}
-#payments label,
-#payments .payment-card p {
-  font-size: 11px !important;
-}
-#payments input,
-#payments .payment-actions button,
-#payments .payment-actions a {
-  font-size: 11px !important;
-  padding: 7px 9px !important;
-}
-#payments .payment-card h3 {
-  font-size: 13px !important;
-  margin-bottom: 6px !important;
-}
-#payments .payment-card code,
-#payments #paymentStatus {
-  font-size: 10px !important;
-}
-
-@media (max-width: 640px) {
-  #payments {
-    padding-top: 12px !important;
-    padding-bottom: 12px !important;
-  }
-  #payments .section-heading h2 {
-    font-size: 16px !important;
-  }
-  #payments .eyebrow,
-  #payments .price-pill {
-    font-size: 9px !important;
-  }
-  #payments .payment-form,
-  #payments .payment-card {
-    padding: 8px !important;
-  }
-  #payments label,
-  #payments .payment-card p,
-  #payments input,
-  #payments .payment-actions button,
-  #payments .payment-actions a {
-    font-size: 10px !important;
-  }
-}
-
-/* Match the Pay and confirm order section to the existing About Us section size. */
-#payments {
-  padding-top: 46px !important;
-  padding-bottom: 46px !important;
-}
-#payments .section-heading h2 {
-  font-size: 28px !important;
-  line-height: 1.2 !important;
-}
-#payments .eyebrow {
-  font-size: 12px !important;
-}
-#payments .section-heading {
-  margin-bottom: 18px !important;
-}
-#payments .payment-layout {
-  gap: 18px !important;
-}
-#payments .payment-form,
-#payments .payment-card {
-  padding: 18px !important;
-}
-#payments label,
-#payments .payment-card p {
-  font-size: 13px !important;
-}
-#payments input,
-#payments .payment-actions button,
-#payments .payment-actions a {
-  font-size: 13px !important;
-  padding: 9px 12px !important;
-}
-#payments .payment-card h3 {
-  font-size: 16px !important;
-}
-
-@media (max-width: 640px) {
-  #payments {
-    padding-top: 28px !important;
-    padding-bottom: 28px !important;
-  }
-  #payments .section-heading h2 {
-    font-size: 20px !important;
-  }
-  #payments .eyebrow {
-    font-size: 10px !important;
-  }
-  #payments .payment-form,
-  #payments .payment-card {
-    padding: 12px !important;
-  }
-}
-
-/* Match SEO resource and Popular searches sections to the compact About Us sizing. */
-.seo-band {
-  padding-top: 18px !important;
-  padding-bottom: 18px !important;
-}
-.seo-band h2 {
-  margin-bottom: 7px !important;
-  font-size: 24px !important;
-  line-height: 1.15 !important;
-}
-.seo-band p {
-  font-size: 12px !important;
-  line-height: 1.35 !important;
-}
-
-.landing-band {
-  padding-top: 18px !important;
-  padding-bottom: 18px !important;
-}
-.landing-band .section-heading {
-  margin-bottom: 10px !important;
-}
-.landing-band .eyebrow {
-  margin-bottom: 4px !important;
-  font-size: 10px !important;
-}
-.landing-band .section-heading h2 {
-  margin-bottom: 7px !important;
-  font-size: 24px !important;
-  line-height: 1.15 !important;
-}
-.landing-band .landing-grid {
-  gap: 8px !important;
-}
-.landing-band .landing-grid button {
-  min-height: 46px !important;
-  padding: 9px 11px !important;
-  font-size: 12px !important;
-}
-
-@media (max-width: 640px) {
-  .seo-band,
-  .landing-band {
-    padding-top: 14px !important;
-    padding-bottom: 14px !important;
-  }
-  .seo-band h2,
-  .landing-band .section-heading h2 {
-    font-size: 20px !important;
-  }
-  .seo-band p {
-    font-size: 11px !important;
-  }
-  .landing-band .eyebrow {
-    font-size: 9px !important;
-  }
-  .landing-band .landing-grid button {
-    min-height: 40px !important;
-    padding: 7px 9px !important;
-    font-size: 10px !important;
-  }
-}
-
-/* Final exact About Us sizing for SEO and Popular searches only. */
-.seo-band,
-.landing-band {
-  padding-top: 18px !important;
-  padding-bottom: 18px !important;
-}
-.seo-band h2,
-.landing-band .section-heading h2 {
-  font-size: 24px !important;
-  line-height: 1.15 !important;
-}
-.seo-band p {
-  font-size: 12px !important;
-  line-height: 1.35 !important;
-}
-.seo-band .section-heading,
-.landing-band .section-heading {
-  margin-bottom: 10px !important;
-}
-.landing-band .eyebrow {
-  font-size: 10px !important;
-  margin-bottom: 4px !important;
-}
-.landing-band .landing-grid {
-  gap: 8px !important;
-}
-.landing-band .landing-grid button {
-  min-height: 46px !important;
-  padding: 9px 11px !important;
-  font-size: 12px !important;
-}
-
-@media (max-width: 640px) {
-  .seo-band,
-  .landing-band {
-    padding-top: 12px !important;
-    padding-bottom: 12px !important;
-  }
-  .seo-band h2,
-  .landing-band .section-heading h2 {
-    font-size: 18px !important;
-  }
-  .seo-band p {
-    font-size: 10px !important;
-    line-height: 1.3 !important;
-  }
-  .landing-band .eyebrow {
-    font-size: 9px !important;
-  }
-  .landing-band .landing-grid button {
-    min-height: 40px !important;
-    padding: 7px 9px !important;
-    font-size: 10px !important;
-  }
-}
-
-@media (max-width: 640px) {
-  .competitive-band {
-    padding-top: 12px !important;
-    padding-bottom: 12px !important;
-  }
-  .competitive-band .section-heading h2 {
-    font-size: 18px !important;
-  }
-  .competitive-band .eyebrow {
-    font-size: 9px !important;
-  }
-  .competitive-band .price-pill {
-    font-size: 9px !important;
-    padding: 6px 8px !important;
-  }
-  .competitive-band .feature-grid {
-    gap: 6px !important;
-  }
-  .competitive-band .feature-grid article {
-    padding: 8px !important;
-  }
-  .competitive-band .feature-grid strong {
-    font-size: 10px !important;
-  }
-  .competitive-band .feature-grid span {
-    font-size: 9px !important;
-  }
-  .competitive-band .quick-types button {
-    padding: 6px 7px !important;
-    font-size: 9px !important;
-  }
-}
-
-
-/* Final compact size: Competitive CBE resource centre = About Us dimensions. */
-.competitive-band {
-  padding: 18px clamp(16px, 4vw, 48px) !important;
-}
-.competitive-band .section-heading {
-  margin-bottom: 10px !important;
-}
-.competitive-band .section-heading .eyebrow {
-  margin-bottom: 4px !important;
-  font-size: 10px !important;
-}
-.competitive-band .section-heading h2 {
-  margin: 0 0 7px !important;
-  font-size: 24px !important;
-  line-height: 1.15 !important;
-}
-.competitive-band .feature-grid {
-  gap: 8px !important;
-  margin-bottom: 10px !important;
-}
-.competitive-band .feature-grid article {
-  padding: 9px 11px !important;
-  border-radius: 7px !important;
-}
-.competitive-band .feature-grid strong {
-  font-size: 11px !important;
-}
-.competitive-band .feature-grid span {
-  margin-top: 3px !important;
-  font-size: 10px !important;
-  line-height: 1.3 !important;
-}
-.competitive-band .quick-types {
-  gap: 5px !important;
-}
-.competitive-band .quick-types button {
-  padding: 6px 8px !important;
-  font-size: 10px !important;
-}
-.competitive-band .price-pill {
-  padding: 7px 9px !important;
-  font-size: 10px !important;
-}
-
-@media (max-width: 640px) {
-  .competitive-band {
-    padding: 12px 16px !important;
-  }
-  .competitive-band .section-heading h2 {
-    font-size: 18px !important;
-  }
-  .competitive-band .feature-grid article {
-    padding: 8px !important;
-  }
-  .competitive-band .feature-grid strong {
-    font-size: 10px !important;
-  }
-  .competitive-band .feature-grid span,
-  .competitive-band .quick-types button {
-    font-size: 9px !important;
-  }
-}
-
-
-/* Learners Holiday Program dashboard: match About Us compact dimensions. */
-#holidayTuition {
-  padding-top: 18px !important;
-  padding-bottom: 18px !important;
-}
-#holidayTuition .section-heading {
-  margin-bottom: 10px !important;
-}
-#holidayTuition .section-heading .eyebrow {
-  margin-bottom: 4px !important;
-  font-size: 10px !important;
-}
-#holidayTuition .section-heading h2 {
-  margin-bottom: 7px !important;
-  font-size: 24px !important;
-  line-height: 1.15 !important;
-}
-#holidayTuition > p,
-#holidayTuition .holiday-copy,
-#holidayTuition .holiday-description {
-  font-size: 12px !important;
-  line-height: 1.35 !important;
-}
-#holidayTuition form,
-#holidayTuition .holiday-form,
-#holidayTuition .tuition-form {
-  gap: 8px !important;
-}
-#holidayTuition label {
-  font-size: 11px !important;
-}
-#holidayTuition input,
-#holidayTuition select,
-#holidayTuition textarea,
-#holidayTuition button {
-  min-height: 34px !important;
-  padding: 7px 9px !important;
-  font-size: 11px !important;
-}
-#holidayTuition .form-card,
-#holidayTuition .tuition-card,
-#holidayTuition .holiday-card {
-  padding: 11px 13px !important;
-  border-radius: 7px !important;
-}
-
-@media (max-width: 640px) {
-  #holidayTuition {
-    padding-top: 12px !important;
-    padding-bottom: 12px !important;
-  }
-  #holidayTuition .section-heading h2 {
-    font-size: 18px !important;
-  }
-  #holidayTuition > p,
-  #holidayTuition .holiday-copy,
-  #holidayTuition .holiday-description {
-    font-size: 10px !important;
-  }
-  #holidayTuition input,
-  #holidayTuition select,
-  #holidayTuition textarea,
-  #holidayTuition button {
-    min-height: 31px !important;
-    padding: 6px 8px !important;
-    font-size: 10px !important;
-  }
-}
-
-/* SEO FAQ: compact, accessible, and consistent with the existing About section. */
-#faq details { border-top: 1px solid var(--line); padding: 8px 0; }
-#faq details:first-child { border-top: 0; }
-#faq summary { cursor: pointer; font-weight: 700; font-size: 12px; }
-#faq details p { margin: 5px 0 0; font-size: 11px; line-height: 1.4; color: var(--muted); }
-#faq .info-card { padding: 11px 13px; border-radius: 7px; }
-@media (max-width: 640px) {
-  #faq summary { font-size: 10px; }
-  #faq details p { font-size: 9px; }
-}
-
-/* SEO FAQ */
-#faq details{border-top:1px solid var(--line);padding:8px 0}#faq details:first-child{border-top:0}#faq summary{cursor:pointer;font-weight:700;font-size:12px}#faq details p{margin:5px 0 0;font-size:11px;line-height:1.4;color:var(--muted)}#faq .info-card{padding:11px 13px;border-radius:7px}@media(max-width:640px){#faq summary{font-size:10px}#faq details p{font-size:9px}}
-
-/* CBE Nexus FAQ: soft fading light-yellow background */
-#faq {
-  background: linear-gradient(180deg, #fffdf0 0%, #fff8cc 55%, #fffdf0 100%) !important;
-  border-top-color: #f2e7a6 !important;
-}
-#faq .info-card {
-  background: rgba(255, 255, 245, 0.82) !important;
-  border-color: #f2e7a6 !important;
-}
-
-
-/* Automated Quizzes + Learner Progress: 50/50 dashboard layout. */
-@media (min-width: 901px) {
-  #quizCentre > .quiz-panel,
-  #quizCentre > .progress-panel {
-    width: 100% !important;
-    max-width: none !important;
-    min-width: 0 !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
-
-  #quizCentre {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
-    gap: 16px !important;
-    align-items: start !important;
-  }
-
-  #quizCentre > .section-heading,
-  #quizCentre > #quizResultPanel {
-    grid-column: 1 / -1 !important;
-  }
-}
-
-/* Medium typography and compact spacing for both dashboards. */
-#quizCentre > .quiz-panel,
-#quizCentre > .progress-panel {
-  font-size: 13px !important;
-}
-#quizCentre > .quiz-panel h3,
-#quizCentre > .progress-panel h3 {
-  font-size: 17px !important;
-  line-height: 1.2 !important;
-}
-#quizCentre > .quiz-panel p,
-#quizCentre > .progress-panel p,
-#quizCentre > .quiz-panel label,
-#quizCentre > .progress-panel label {
-  font-size: 12px !important;
-  line-height: 1.35 !important;
-}
-#quizCentre > .quiz-panel input,
-#quizCentre > .quiz-panel select,
-#quizCentre > .quiz-panel textarea,
-#quizCentre > .progress-panel input,
-#quizCentre > .progress-panel select {
-  font-size: 12px !important;
-  padding: 8px 9px !important;
-  min-height: 36px !important;
-}
-#quizCentre > .quiz-panel .primary-button,
-#quizCentre > .quiz-panel .secondary-button,
-#quizCentre > .quiz-panel .ghost-button,
-#quizCentre > .progress-panel .secondary-button {
-  min-height: 36px !important;
-  padding: 8px 10px !important;
-  font-size: 12px !important;
-}
-#quizCentre > .quiz-panel .form-row {
-  gap: 8px !important;
-}
-#quizCentre > .quiz-panel .quiz-toolbar {
-  gap: 8px !important;
-}
-#quizCentre > .progress-panel {
-  padding: 14px !important;
-}
-
-@media (max-width: 900px) {
-  #quizCentre > .quiz-panel,
-  #quizCentre > .progress-panel {
-    width: 100% !important;
-    max-width: none !important;
-  }
-}
-
-@media (max-width: 640px) {
-  #quizCentre > .quiz-panel,
-  #quizCentre > .progress-panel {
-    font-size: 11px !important;
-  }
-  #quizCentre > .quiz-panel h3,
-  #quizCentre > .progress-panel h3 {
-    font-size: 15px !important;
-  }
-  #quizCentre > .quiz-panel p,
-  #quizCentre > .progress-panel p,
-  #quizCentre > .quiz-panel label,
-  #quizCentre > .progress-panel label,
-  #quizCentre > .quiz-panel input,
-  #quizCentre > .quiz-panel select,
-  #quizCentre > .quiz-panel textarea {
-    font-size: 10px !important;
-  }
-}
-
-
-/* CBE Nexus speed optimization: respect reduced motion and avoid unnecessary animation work. */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    scroll-behavior: auto !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-
-/* Admin analytics */
-.admin-analytics-card{margin:12px 0;padding:14px;border:1px solid #d9e2ec;border-radius:12px;background:#fff}
-.admin-analytics-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
-.admin-analytics-grid article{padding:11px;border:1px solid #e2e8f0;border-radius:9px;background:#f8fafc}
-.admin-analytics-grid h4{margin:0 0 5px;font-size:.85rem;color:#0f172a}
-.admin-analytics-total{display:block;font-size:1.25rem;line-height:1.2;color:#0645ad}
-.admin-analytics-list{margin-top:8px;display:grid;gap:4px}
-.admin-analytics-list div{display:flex;justify-content:space-between;gap:8px;font-size:.72rem;padding-top:4px;border-top:1px solid #e2e8f0}
-.admin-analytics-list span{color:#64748b}
-.admin-analytics-list strong{color:#0f172a}
-.admin-analytics-empty{margin:8px 0 0;font-size:.72rem;color:#64748b}
-@media(max-width:900px){.admin-analytics-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:600px){.admin-analytics-grid{grid-template-columns:1fr}.admin-analytics-card{padding:11px}}
-
-.admin-analytics-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.admin-analytics-actions .secondary-button{min-height:32px;padding:6px 9px;font-size:.72rem}
-@media(max-width:600px){.admin-analytics-actions{width:100%}.admin-analytics-actions .secondary-button{flex:1}}
-
-/* Affiliate marketplace */
-.affiliate-band{padding:24px clamp(16px,4vw,48px);background:linear-gradient(180deg,#fff8fb 0%,#fff 100%);border-top:1px solid #f3c6d7;border-bottom:1px solid #f3c6d7}
-.affiliate-disclosure{margin:0 auto 12px;max-width:900px;padding:8px 10px;border:1px solid #f3c6d7;border-radius:7px;background:#fff;font-size:10px;line-height:1.4;color:#64748b}
-.affiliate-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-.affiliate-card{padding:12px;border:1px solid #f3c6d7;border-radius:9px;background:#fff;display:flex;flex-direction:column;gap:6px}
-.affiliate-card h3{margin:0;font-size:15px}
-.affiliate-card p{margin:0;color:#64748b;font-size:11px;line-height:1.35}
-.affiliate-card small{color:#64748b;font-size:10px;margin-top:auto}
-.affiliate-category{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
-.affiliate-card .primary-button,.affiliate-card .secondary-button{margin-top:5px;text-align:center;font-size:10px;padding:7px 8px}
-@media(max-width:900px){.affiliate-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:600px){.affiliate-band{padding:16px}.affiliate-grid{grid-template-columns:1fr}.affiliate-card h3{font-size:13px}}
-
-.affiliate-card img{width:100%;height:120px;object-fit:cover;border-radius:7px;margin-bottom:2px}
-.affiliate-admin-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:12px 0}
-.affiliate-admin-form label{font-size:.75rem;font-weight:700;color:#334155}
-.affiliate-admin-form input,.affiliate-admin-form textarea{display:block;width:100%;margin-top:4px;padding:8px;border:1px solid #cbd5e1;border-radius:6px;font:inherit;font-size:.75rem;box-sizing:border-box}
-.affiliate-admin-wide{grid-column:1/-1}.affiliate-admin-check{display:flex;align-items:center;gap:6px}.affiliate-admin-check input{width:auto;margin:0}.affiliate-admin-actions{grid-column:1/-1;display:flex;gap:7px}
-@media(max-width:600px){.affiliate-admin-form{grid-template-columns:1fr}.affiliate-admin-wide{grid-column:auto}}
-
-
-/* Discreet footer admin access: the Admin Area label is hidden behind a small circle. */
-.footer-admin-dot {
-  width: 18px;
-  height: 18px;
-  min-width: 18px;
-  min-height: 18px;
-  margin: 0 2px;
-  padding: 0;
-  border: 1px solid rgba(255,255,255,.55);
-  border-radius: 50%;
-  background: rgba(255,255,255,.12);
-  color: transparent;
-  cursor: pointer;
-  display: inline-grid;
-  place-items: center;
-  vertical-align: middle;
-  box-shadow: none;
-}
-.footer-admin-dot span {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: rgba(255,255,255,.72);
-  display: block;
-}
-.footer-admin-dot:hover,
-.footer-admin-dot:focus-visible {
-  background: rgba(255,255,255,.24);
-  border-color: rgba(255,255,255,.9);
-  outline: 2px solid rgba(255,255,255,.3);
-  outline-offset: 2px;
-}
-
-
-/* Final targeted mobile usability improvements — preserves desktop layout. */
-@media (max-width: 640px) {
-  /* Keep the existing navigation structure readable without changing its layout. */
-  .site-header .main-nav > .brand strong {
-    font-size: 15px !important;
-  }
-  .site-header .main-nav > .brand small {
-    font-size: 9px !important;
-  }
-  .site-header .nav-menu > .nav-link,
-  .site-header .nav-menu > .nav-dropdown > summary {
-    min-height: 30px !important;
-    padding: 6px 7px !important;
-    font-size: 10px !important;
-    line-height: 1.15 !important;
-  }
-  .site-header .nav-actions > * {
-    min-height: 30px !important;
-    padding: 6px 8px !important;
-    font-size: 10px !important;
-  }
-
-  /* Keep long resource names and action areas inside the phone width. */
-  .resource-card h3,
-  .resource-card p,
-  .resource-meta,
-  .resource-library-actions {
-    min-width: 0;
-    overflow-wrap: anywhere;
-  }
-  .resource-library-actions {
-    grid-template-columns: 1fr 1fr !important;
-  }
-
-  /* Admin tabs remain usable horizontally instead of shrinking into unreadable text. */
-  .admin-module-tabs {
-    overflow-x: auto !important;
-    justify-content: flex-start !important;
-    -webkit-overflow-scrolling: touch;
-  }
-  .admin-module-tab {
-    flex: 0 0 auto !important;
-    min-height: 36px !important;
-    font-size: 10px !important;
-    padding: 8px 10px !important;
-  }
-
-  /* Prevent dashboard headings/actions from colliding on narrow screens. */
-  .admin-module-heading,
-  .admin-control-topbar {
-    align-items: flex-start !important;
-  }
-  .admin-module-heading {
-    flex-direction: column !important;
-  }
-  .admin-module-summary {
-    max-width: 100%;
-    white-space: normal !important;
-  }
-
-  /* Compact the awards image on phones while keeping it visible. */
-  #faq img[alt="CBE Awards 2026 trophies"] {
-    width: 100% !important;
-    max-width: 90px !important;
-    height: auto !important;
-  }
-  #faq .info-card {
-    overflow: hidden;
-  }
-}
-
-
-/* Header navigation organization for tablet and mobile — keeps desktop styling unchanged. */
-@media (max-width: 760px) {
-  .site-header .main-nav {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) !important;
-    gap: 8px !important;
-    align-items: center !important;
-  }
-
-  .site-header .main-nav > .brand {
-    min-width: 0;
-    width: 100%;
-  }
-
-  .site-header .nav-menu {
-    width: 100% !important;
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 5px !important;
-    min-width: 0;
-  }
-
-  .site-header .nav-menu > .nav-link,
-  .site-header .nav-menu > .nav-dropdown {
-    min-width: 0;
-  }
-
-  .site-header .nav-menu > .nav-link {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    white-space: nowrap;
-  }
-
-  .site-header .nav-menu > .nav-dropdown {
-    width: 100%;
-  }
-
-  .site-header .nav-menu > .nav-dropdown > summary {
-    display: flex !important;
-    align-items: center;
-    justify-content: space-between;
-    gap: 5px;
-    width: 100%;
-    box-sizing: border-box;
-    text-align: left;
-    white-space: normal;
-  }
-
-  .site-header .nav-actions {
-    width: 100% !important;
-    display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 6px !important;
-    margin-top: 1px;
-  }
-
-  .site-header .nav-actions > * {
-    width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    white-space: nowrap;
-  }
-}
-
-@media (max-width: 480px) {
-  .site-header .main-nav {
-    gap: 6px !important;
-  }
-
-  .site-header .nav-menu {
-    gap: 4px !important;
-  }
-
-  .site-header .nav-menu > .nav-link,
-  .site-header .nav-menu > .nav-dropdown > summary {
-    min-height: 32px !important;
-    padding: 6px 5px !important;
-    font-size: 9px !important;
-  }
-
-  .site-header .nav-actions {
-    gap: 4px !important;
-  }
-
-  .site-header .nav-actions > * {
-    min-height: 32px !important;
-    padding: 6px 5px !important;
-    font-size: 9px !important;
-  }
-}
-
-
-/* Extra-compact phone header controls — saves vertical space without changing functionality. */
-@media (max-width: 480px) {
-  .site-header .main-nav {
-    gap: 4px !important;
-  }
-
-  .site-header .nav-menu {
-    gap: 3px !important;
-  }
-
-  .site-header .nav-menu > .nav-link,
-  .site-header .nav-menu > .nav-dropdown > summary {
-    min-height: 26px !important;
-    height: 26px !important;
-    padding: 4px 5px !important;
-    font-size: 8px !important;
-    line-height: 1 !important;
-  }
-
-  .site-header .nav-actions {
-    gap: 3px !important;
-    margin-top: 0 !important;
-  }
-
-  .site-header .nav-actions > * {
-    min-height: 26px !important;
-    height: 26px !important;
-    padding: 4px 5px !important;
-    font-size: 8px !important;
-    line-height: 1 !important;
-  }
-}
-
-/* Final phone header typography: smaller, compact, and bold. */
-@media (max-width: 480px) {
-  .site-header .nav-menu > .nav-link,
-  .site-header .nav-menu > .nav-dropdown > summary,
-  .site-header .nav-actions > * {
-    font-size: 7px !important;
-    font-weight: 800 !important;
-    letter-spacing: 0 !important;
-  }
-}
-
-/* Phone header: compact two-column menu with shared boundaries. */
-@media (max-width: 480px) {
-  .site-header .nav-menu {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 0 !important;
-    border-left: 1px solid rgba(255,255,255,.28);
-    border-top: 1px solid rgba(255,255,255,.28);
-  }
-
-  .site-header .nav-menu > .nav-link,
-  .site-header .nav-menu > .nav-dropdown > summary {
-    min-height: 24px !important;
-    height: 24px !important;
-    margin: 0 !important;
-    padding: 3px 5px !important;
-    border-radius: 0 !important;
-    border-right: 1px solid rgba(255,255,255,.28) !important;
-    border-bottom: 1px solid rgba(255,255,255,.28) !important;
-    font-size: 7px !important;
-    font-weight: 800 !important;
-    line-height: 1 !important;
-    white-space: nowrap !important;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .site-header .nav-menu > .nav-dropdown {
-    width: 100% !important;
-    margin: 0 !important;
-  }
-
-  .site-header .nav-menu > .nav-dropdown > summary {
-    width: 100% !important;
-    box-sizing: border-box;
-  }
-}
-
-/* Phone header: final compact 20px button height. */
-@media (max-width: 480px) {
-  .site-header .nav-menu > .nav-link,
-  .site-header .nav-menu > .nav-dropdown > summary,
-  .site-header .nav-actions > * {
-    min-height: 20px !important;
-    height: 20px !important;
-    padding-top: 2px !important;
-    padding-bottom: 2px !important;
-    font-size: 7px !important;
-    font-weight: 800 !important;
-    line-height: 1 !important;
-  }
-}
-
-
-.bundle-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:18px}.bundle-card{border:1px solid var(--line);border-radius:16px;padding:20px;background:#fff;box-shadow:0 8px 24px rgba(0,0,0,.06)}.bundle-card h3{margin:10px 0 8px}.bundle-card p{color:var(--muted,#667085)}.bundle-card ul{padding-left:20px;min-height:72px}.bundle-price{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:16px 0;font-size:15px}.bundle-price strong{font-size:22px}.bundle-price span{font-weight:800}.bundle-card .whatsapp-buy-button{display:inline-block;margin-top:10px;text-decoration:none}
+.international-vacancies-band{background:#fffdf2}.vacancy-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.vacancy-card{background:#fff;border:1px solid rgba(24,38,61,.12);border-radius:16px;padding:20px;box-shadow:0 8px 24px rgba(24,38,61,.07)}.vacancy-card.featured{border-width:2px}.vacancy-card-top{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:10px}.vacancy-region,.vacancy-featured{font-size:.76rem;font-weight:800}.vacancy-featured{padding:5px 8px;border-radius:999px;background:#fff0a8}.vacancy-card h3{margin:.25rem 0 .4rem}.vacancy-meta{font-weight:700}.vacancy-card-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.admin-vacancies-card{margin-top:20px;padding:20px;border:1px solid rgba(24,38,61,.12);border-radius:16px;background:#fffdf2}@media(max-width:980px){.vacancy-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:640px){.vacancy-grid{grid-template-columns:1fr}}
+
+
+/* ADMIN DASHBOARD — RED ACTION BUTTONS */
+#admin .admin-module-tabs button,
+#admin [data-admin-module],
+#admin .admin-resource-moderation-actions button,
+#admin .vacancy-card-actions button,
+#admin .admin-vacancies-card button,
+#admin button.primary-button,
+#admin button.secondary-button,
+#admin button.ghost-button,
+#admin button.danger-button,
+#admin a.primary-button {
+  background:#d32f2f !important;
+  border-color:#b71c1c !important;
+  color:#fff !important;
+}
+#admin .admin-module-tabs button:hover,
+#admin [data-admin-module]:hover,
+#admin .admin-resource-moderation-actions button:hover,
+#admin .vacancy-card-actions button:hover,
+#admin .admin-vacancies-card button:hover,
+#admin button.primary-button:hover,
+#admin button.secondary-button:hover,
+#admin button.ghost-button:hover,
+#admin button.danger-button:hover,
+#admin a.primary-button:hover {
+  background:#b71c1c !important;
+  border-color:#8f1515 !important;
+  color:#fff !important;
+}
+#admin .admin-module-tabs button.active,
+#admin [data-admin-module].active {
+  background:#b71c1c !important;
+  border-color:#8f1515 !important;
+  color:#fff !important;
+}
+
+/* ============================================================
+   CBE NEXUS — PROFESSIONAL ADMIN DASHBOARD
+   Visual-only enhancement: preserves existing IDs, JS handlers,
+   API endpoints, tabs, forms and dashboard structure.
+   ============================================================ */
+
+#admin.admin-band{
+  background:linear-gradient(180deg,#fffdf2 0%,#fff8d9 48%,#fffdf5 100%);
+  padding:32px 0 56px;
+}
+
+#admin .admin-layout{
+  max-width:1480px;
+  margin:0 auto;
+}
+
+#admin .admin-copy{
+  margin-bottom:18px;
+}
+
+#admin .admin-copy h2{
+  font-size:clamp(1.65rem,2.6vw,2.35rem);
+  letter-spacing:-.025em;
+  margin-bottom:8px;
+}
+
+#admin .admin-note{
+  border:1px solid rgba(183,28,28,.12);
+  background:rgba(255,255,255,.78);
+  border-radius:12px;
+  box-shadow:0 5px 18px rgba(58,47,20,.05);
+}
+
+#adminControlPanel.admin-control-panel{
+  position:relative;
+  overflow:hidden;
+  margin-top:24px;
+  padding:24px;
+  border:1px solid rgba(132,104,25,.16);
+  border-radius:22px;
+  background:rgba(255,255,255,.92);
+  box-shadow:0 18px 55px rgba(67,54,19,.10);
+}
+
+#adminControlPanel.admin-control-panel:before{
+  content:"";
+  position:absolute;
+  inset:0 0 auto;
+  height:5px;
+  background:linear-gradient(90deg,#b71c1c,#d32f2f,#f2c94c);
+}
+
+#admin .admin-control-topbar{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:24px;
+  padding:4px 2px 22px;
+  border-bottom:1px solid #eee7cf;
+}
+
+#admin .admin-title-block{min-width:0}
+#admin .admin-title-line{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:5px;
+}
+#admin .admin-title-line .eyebrow{margin:0}
+#admin .admin-status-dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#2e7d32;
+  box-shadow:0 0 0 4px rgba(46,125,50,.10);
+}
+#admin .admin-live-badge{
+  display:inline-flex;
+  align-items:center;
+  padding:3px 7px;
+  border-radius:999px;
+  background:#eaf6ec;
+  color:#2e7d32;
+  font-size:.67rem;
+  font-weight:800;
+  letter-spacing:.06em;
+}
+#admin .admin-control-topbar h2{
+  margin:0 0 5px;
+  font-size:clamp(1.45rem,2.2vw,2rem);
+  letter-spacing:-.025em;
+}
+#admin .admin-control-topbar p{
+  margin:0;
+  color:#6c654f;
+  max-width:760px;
+}
+#admin .admin-toolbar-actions{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:10px;
+  flex-wrap:wrap;
+}
+#admin .admin-session-info{
+  display:grid;
+  gap:1px;
+  padding:8px 12px;
+  min-width:145px;
+  border:1px solid #eee7cf;
+  border-radius:10px;
+  background:#fffdf6;
+}
+#admin .admin-session-label{
+  font-size:.68rem;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  color:#8a8064;
+  font-weight:700;
+}
+#admin .admin-session-info strong{
+  color:#2e7d32;
+  font-size:.82rem;
+}
+#admin .admin-session-info .admin-last-updated{
+  font-size:.68rem;
+  color:#8a8064;
+}
+#admin .admin-public-link{ text-decoration:none; }
+
+#admin .admin-kpi-grid{
+  display:grid;
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:12px;
+  margin:20px 0;
+}
+#admin .admin-kpi-grid > *{
+  min-height:108px;
+  padding:17px;
+  border:1px solid #eee7cf;
+  border-radius:15px;
+  background:#fff;
+  box-shadow:0 6px 20px rgba(67,54,19,.055);
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
+}
+#admin .admin-kpi-grid > *:hover{
+  transform:translateY(-2px);
+  border-color:#e1d3a4;
+  box-shadow:0 10px 28px rgba(67,54,19,.09);
+}
+
+#admin .admin-analytics-card,
+#admin .admin-popular-card{
+  border:1px solid #eee7cf;
+  border-radius:17px;
+  background:#fff;
+  box-shadow:0 7px 24px rgba(67,54,19,.055);
+  margin-top:14px;
+  padding:18px;
+}
+
+#admin .admin-module-heading{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:14px;
+}
+#admin .admin-module-heading h3{margin:0 0 3px;font-size:1.05rem}
+#admin .admin-module-heading span:not(.admin-module-summary){color:#776f5b;font-size:.84rem}
+#admin .admin-module-summary{
+  display:inline-flex;
+  align-items:center;
+  white-space:nowrap;
+  padding:6px 9px;
+  border-radius:999px;
+  background:#fff7d5;
+  color:#7a5d00;
+  border:1px solid #f0df9d;
+  font-size:.72rem;
+  font-weight:800;
+}
+
+#admin .admin-command-bar{
+  display:grid;
+  grid-template-columns:minmax(260px,1.7fr) minmax(150px,.65fr) minmax(150px,.65fr);
+  gap:10px;
+  align-items:end;
+  margin:18px 0 12px;
+  padding:13px;
+  border:1px solid #eee7cf;
+  border-radius:14px;
+  background:#fffaf0;
+}
+#admin .admin-search,
+#admin .admin-filter{
+  display:grid;
+  gap:6px;
+}
+#admin .admin-search > span,
+#admin .admin-filter > span{
+  font-size:.69rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  color:#776f5b;
+}
+#admin .admin-command-bar input,
+#admin .admin-command-bar select{
+  width:100%;
+  min-height:42px;
+  border:1px solid #ddd4b8;
+  border-radius:9px;
+  background:#fff;
+  padding:9px 11px;
+  color:#302d25;
+  outline:none;
+}
+#admin .admin-command-bar input:focus,
+#admin .admin-command-bar select:focus{
+  border-color:#d32f2f;
+  box-shadow:0 0 0 3px rgba(211,47,47,.09);
+}
+
+#admin .admin-module-tabs{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  padding:7px;
+  margin:0 0 12px;
+  border:1px solid #eee7cf;
+  border-radius:14px;
+  background:#f8f5e9;
+}
+#admin .admin-module-tabs .admin-module-tab{
+  min-height:42px;
+  padding:9px 14px;
+  border:1px solid transparent;
+  border-radius:9px;
+  background:transparent;
+  color:#5d5645;
+  font-weight:800;
+  font-size:.82rem;
+  cursor:pointer;
+  transition:all .16s ease;
+}
+#admin .admin-module-tabs .admin-module-tab:hover{
+  background:#fff;
+  color:#a51f1f;
+}
+#admin .admin-module-tabs .admin-module-tab.active,
+#admin .admin-module-tabs .admin-module-tab[aria-selected="true"]{
+  background:#b71c1c;
+  color:#fff;
+  border-color:#991818;
+  box-shadow:0 5px 13px rgba(183,28,28,.18);
+}
+#admin .admin-module-tabs .admin-module-tab span{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:20px;
+  min-height:20px;
+  margin-left:4px;
+  padding:2px 6px;
+  border-radius:999px;
+  background:rgba(255,255,255,.20);
+  font-size:.68rem;
+}
+
+#admin .admin-module-panel{
+  border:1px solid #eee7cf;
+  border-radius:16px;
+  background:#fff;
+  box-shadow:0 7px 24px rgba(67,54,19,.045);
+  padding:18px;
+}
+#admin .admin-management-list{
+  display:grid;
+  gap:11px;
+}
+#admin .admin-management-card{
+  border:1px solid #ece5d2;
+  border-radius:13px;
+  background:#fffdf8;
+  padding:15px;
+  transition:box-shadow .16s ease,border-color .16s ease,transform .16s ease;
+}
+#admin .admin-management-card:hover{
+  border-color:#dfd0a5;
+  box-shadow:0 8px 22px rgba(67,54,19,.07);
+  transform:translateY(-1px);
+}
+#admin .admin-management-heading{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:14px;
+}
+#admin .admin-management-heading h4{margin:2px 0 4px}
+#admin .admin-management-heading p{margin:0;color:#756d5c;font-size:.82rem}
+#admin .eyebrow{
+  font-size:.68rem;
+  letter-spacing:.07em;
+  font-weight:800;
+  text-transform:uppercase;
+  color:#a51f1f;
+}
+
+#admin .admin-resource-moderation-actions,
+#admin .quiz-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:12px;
+}
+#admin .admin-resource-moderation-actions button,
+#admin .admin-resource-moderation-actions a,
+#admin .quiz-actions button{
+  min-height:38px;
+  border-radius:8px;
+  font-size:.78rem;
+  font-weight:800;
+  text-decoration:none;
+}
+
+#admin .admin-form{
+  border:1px solid #eee7cf;
+  border-radius:15px;
+  padding:18px;
+  background:#fff;
+}
+#admin .admin-form label{
+  color:#403b30;
+  font-weight:700;
+  font-size:.82rem;
+}
+#admin .admin-form input,
+#admin .admin-form select,
+#admin .admin-form textarea{
+  border-color:#ddd4b8;
+  border-radius:9px;
+  background:#fffdf9;
+}
+#admin .admin-form input:focus,
+#admin .admin-form select:focus,
+#admin .admin-form textarea:focus{
+  border-color:#d32f2f;
+  box-shadow:0 0 0 3px rgba(211,47,47,.08);
+}
+#admin .file-upload-box{
+  border:1.5px dashed #d5c78e;
+  background:#fffbea;
+  border-radius:12px;
+  padding:15px;
+}
+#admin .file-upload-box:hover{
+  border-color:#b71c1c;
+  background:#fff8df;
+}
+
+#admin .admin-control-panel .primary-button,
+#admin .admin-control-panel .secondary-button,
+#admin .admin-control-panel .danger-button,
+#admin .admin-control-panel .ghost-button{
+  border-radius:8px;
+  font-weight:800;
+  transition:transform .14s ease,box-shadow .14s ease,background .14s ease;
+}
+#admin .admin-control-panel .primary-button:hover,
+#admin .admin-control-panel .secondary-button:hover,
+#admin .admin-control-panel .danger-button:hover,
+#admin .admin-control-panel .ghost-button:hover{
+  transform:translateY(-1px);
+}
+
+@media (max-width:1100px){
+  #admin .admin-kpi-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  #admin .admin-control-topbar{flex-direction:column}
+  #admin .admin-toolbar-actions{justify-content:flex-start}
+}
+@media (max-width:760px){
+  #admin.admin-band{padding:18px 0 40px}
+  #adminControlPanel.admin-control-panel{padding:14px;border-radius:15px}
+  #admin .admin-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  #admin .admin-command-bar{grid-template-columns:1fr}
+  #admin .admin-module-tabs{overflow-x:auto;flex-wrap:nowrap}
+  #admin .admin-module-tabs .admin-module-tab{white-space:nowrap}
+  #admin .admin-module-panel{padding:13px}
+  #admin .admin-module-heading,
+  #admin .admin-management-heading{align-items:flex-start;flex-direction:column}
+  #admin .admin-toolbar-actions{width:100%}
+  #admin .admin-toolbar-actions > *{flex:1 1 auto}
+}
+@media (max-width:480px){
+  #admin .admin-kpi-grid{grid-template-columns:1fr}
+  #admin .admin-kpi-grid > *{min-height:88px}
+  #admin .admin-resource-moderation-actions > *{width:100%}
+}
+
+
+/* ============================================================
+   CBE NEXUS ADMIN — COLORFUL RESPONSIVE CONTROL CENTRE
+   Keeps existing HTML/JS/API structure and IDs intact.
+   ============================================================ */
+#admin.admin-band{background:linear-gradient(135deg,#fffdf2 0%,#fff6c9 42%,#f7fbff 100%)}
+#adminControlPanel.admin-control-panel{background:rgba(255,255,255,.96);border:1px solid #eadfb5;box-shadow:0 20px 60px rgba(54,45,18,.12)}
+#admin .admin-control-topbar{background:linear-gradient(135deg,#fff9df,#ffffff);border:1px solid #eee4bd;border-radius:18px;padding:20px;margin-bottom:18px}
+#admin .admin-title-block h2{font-size:clamp(1.6rem,3vw,2.35rem)}
+#admin .admin-live-badge{animation:adminPulse 2s infinite}
+@keyframes adminPulse{0%,100%{box-shadow:0 0 0 0 rgba(46,125,50,.16)}50%{box-shadow:0 0 0 5px rgba(46,125,50,.04)}}
+
+#admin .admin-kpi-grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
+#admin .admin-kpi-grid>*{position:relative;overflow:hidden;border:0;border-radius:17px;background:linear-gradient(145deg,#fff,#fffdf4);box-shadow:0 9px 25px rgba(48,42,22,.09)}
+#admin .admin-kpi-grid>*:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(#d32f2f,#f2c94c)}
+#admin .admin-kpi-grid>*:nth-child(2):before{background:linear-gradient(#2e7d32,#8bc34a)}
+#admin .admin-kpi-grid>*:nth-child(3):before{background:linear-gradient(#ef6c00,#ffb74d)}
+#admin .admin-kpi-grid>*:nth-child(4):before{background:linear-gradient(#1565c0,#64b5f6)}
+#admin .admin-kpi-grid>*:nth-child(5):before{background:linear-gradient(#7b1fa2,#ba68c8)}
+#admin .admin-kpi-grid>*:nth-child(6):before{background:linear-gradient(#00838f,#4dd0e1)}
+
+#admin .admin-command-bar{background:linear-gradient(135deg,#fffdf4,#f6fbff);border-color:#e8dfc0}
+#admin .admin-module-tabs{background:#f4f1e7;border-color:#e6ddbf}
+#admin .admin-module-tabs .admin-module-tab{position:relative;min-height:44px}
+#admin .admin-module-tabs .admin-module-tab:nth-child(1).active{background:#b71c1c}
+#admin .admin-module-tabs .admin-module-tab:nth-child(2).active{background:#1565c0}
+#admin .admin-module-tabs .admin-module-tab:nth-child(3).active{background:#7b1fa2}
+#admin .admin-module-tabs .admin-module-tab:nth-child(4).active{background:#00838f}
+#admin .admin-module-tabs .admin-module-tab:nth-child(5).active{background:#ef6c00}
+#admin .admin-module-tabs .admin-module-tab:nth-child(6).active{background:#2e7d32}
+#admin .admin-module-tabs .admin-module-tab:nth-child(7).active{background:#6d4c41}
+#admin .admin-module-tabs .admin-module-tab.active,
+#admin .admin-module-tabs .admin-module-tab[aria-selected="true"]{color:#fff;box-shadow:0 7px 16px rgba(0,0,0,.15)}
+
+#admin .admin-module-panel{background:linear-gradient(180deg,#fff,#fffefa);border-color:#e9e0c5}
+#admin .admin-module-panel.active{animation:adminPanelIn .2s ease-out}
+@keyframes adminPanelIn{from{opacity:.65;transform:translateY(3px)}to{opacity:1;transform:none}}
+
+#admin .admin-control-panel .primary-button,
+#admin .admin-control-panel .secondary-button,
+#admin .admin-control-panel .danger-button,
+#admin .admin-control-panel .ghost-button{
+  min-height:42px;padding:10px 15px;border-radius:10px;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  transition:transform .16s ease,box-shadow .16s ease,filter .16s ease;
+}
+#admin .admin-control-panel button:not(:disabled):hover,
+#admin .admin-control-panel a.primary-button:hover,
+#admin .admin-control-panel a.secondary-button:hover,
+#admin .admin-control-panel a.ghost-button:hover{transform:translateY(-2px);filter:brightness(.97);box-shadow:0 7px 16px rgba(40,35,20,.13)}
+#admin .admin-control-panel button:not(:disabled):active,
+#admin .admin-control-panel a.primary-button:active,
+#admin .admin-control-panel a.secondary-button:active{transform:translateY(0);box-shadow:0 3px 7px rgba(40,35,20,.10)}
+#admin .admin-control-panel button:focus-visible,
+#admin .admin-control-panel a:focus-visible,
+#admin .admin-control-panel input:focus-visible,
+#admin .admin-control-panel select:focus-visible,
+#admin .admin-control-panel textarea:focus-visible{outline:3px solid rgba(33,150,243,.22);outline-offset:2px}
+#admin .admin-control-panel button:disabled{opacity:.55;cursor:not-allowed}
+
+#admin .admin-resource-moderation-actions a,
+#admin .admin-resource-moderation-actions button,
+#admin .quiz-actions button{min-width:110px}
+#admin .admin-management-card{background:#fff;border-left:4px solid #e0c85a}
+#admin .admin-management-card:nth-child(3n+2){border-left-color:#64b5f6}
+#admin .admin-management-card:nth-child(3n){border-left-color:#81c784}
+
+#admin .admin-analytics-card{background:linear-gradient(135deg,#ffffff,#f8fbff)}
+#admin .admin-popular-card{background:linear-gradient(135deg,#ffffff,#fffaf0)}
+#admin .admin-seo-card{border-radius:15px;border:1px solid #e6ddbf;box-shadow:0 7px 20px rgba(50,45,25,.06)}
+#admin .admin-seo-card:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(50,45,25,.10)}
+
+#admin .admin-form{background:linear-gradient(180deg,#fff,#fffdf5);box-shadow:0 7px 22px rgba(55,45,15,.05)}
+#admin .admin-form .submit-button{width:auto;min-width:170px}
+#admin .form-status{min-height:20px}
+
+@media(max-width:1200px){
+ #admin .admin-kpi-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:800px){
+ #admin .admin-control-topbar{padding:16px}
+ #admin .admin-toolbar-actions{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+ #admin .admin-session-info{grid-column:1/-1}
+ #admin .admin-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #admin .admin-command-bar{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+ #adminControlPanel.admin-control-panel{padding:10px;margin-top:14px;border-radius:13px}
+ #admin .admin-control-topbar{border-radius:13px}
+ #admin .admin-toolbar-actions{grid-template-columns:1fr}
+ #admin .admin-kpi-grid{grid-template-columns:1fr}
+ #admin .admin-module-tabs{display:grid;grid-template-columns:1fr 1fr;overflow:visible}
+ #admin .admin-module-tabs .admin-module-tab{width:100%;min-width:0}
+ #admin .admin-module-panel{padding:11px}
+ #admin .admin-resource-moderation-actions,
+ #admin .quiz-actions{display:grid;grid-template-columns:1fr}
+ #admin .admin-resource-moderation-actions>*,
+ #admin .quiz-actions>*{width:100%;min-width:0}
+ #admin .admin-form .submit-button{width:100%}
+}
+
+
+/* ============================================================
+   CBE NEXUS — AUTOMATIC GRADE COLOUR THEMES
+   The active colour changes automatically with the selected grade.
+   ============================================================ */
+:root{
+  --grade-accent:#b8860b;
+  --grade-accent-2:#f2c94c;
+  --grade-soft:#fff8d8;
+  --grade-surface:#fffdf4;
+}
+html[data-grade-theme="preprimary"]{--grade-accent:#c58a00;--grade-accent-2:#f4c542;--grade-soft:#fff4c2;--grade-surface:#fffdf1}
+html[data-grade-theme="lower-primary"]{--grade-accent:#2e7d32;--grade-accent-2:#81c784;--grade-soft:#eaf7eb;--grade-surface:#f8fff8}
+html[data-grade-theme="upper-primary"]{--grade-accent:#1565c0;--grade-accent-2:#64b5f6;--grade-soft:#eaf4ff;--grade-surface:#f8fbff}
+html[data-grade-theme="junior-secondary"]{--grade-accent:#ef6c00;--grade-accent-2:#ffb74d;--grade-soft:#fff1e4;--grade-surface:#fffaf5}
+html[data-grade-theme="senior-school"]{--grade-accent:#7b1fa2;--grade-accent-2:#ba68c8;--grade-soft:#f7eefe;--grade-surface:#fdf9ff}
+html[data-grade-theme="international"]{--grade-accent:#00838f;--grade-accent-2:#4dd0e1;--grade-soft:#e6f8fa;--grade-surface:#f7ffff}
+
+#dashboard .grade-card:hover,
+#dashboard .grade-card.open{
+  border-color:var(--grade-accent)!important;
+  box-shadow:0 10px 28px color-mix(in srgb,var(--grade-accent) 18%,transparent)!important;
+}
+#dashboard .grade-card .grade-title,
+#dashboard .grade-card .grade-heading{color:var(--grade-accent)!important}
+#dashboard .grade-card .grade-toggle.active,
+#dashboard .grade-card .subject-dropdown:focus{
+  border-color:var(--grade-accent)!important;
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--grade-accent) 12%,transparent)!important;
+}
+#dashboard .grade-card .grade-chevron{color:var(--grade-accent)!important}
+
+
+/* ============================================================
+   CBE NEXUS — GRADE & SUBJECT RESOURCE CENTRE COLOURS
+   Visual-only styling for the centre dashboard grade cards.
+   Existing HTML structure, IDs and navigation remain unchanged.
+   ============================================================ */
+#dashboard .portal-sidebar .grade-card{
+  border-left:5px solid var(--grade-card-accent,#1565c0)!important;
+  background:linear-gradient(135deg,var(--grade-card-soft,#f7fbff),#fff)!important;
+  transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;
+}
+#dashboard .portal-sidebar .grade-card:hover,
+#dashboard .portal-sidebar .grade-card.open{
+  border-left-color:var(--grade-card-accent)!important;
+  box-shadow:0 9px 24px color-mix(in srgb,var(--grade-card-accent) 18%,transparent)!important;
+  transform:translateY(-1px);
+}
+#dashboard .portal-sidebar .grade-card .grade-toggle{
+  color:var(--grade-card-accent)!important;
+}
+#dashboard .portal-sidebar .grade-card .grade-chevron{
+  color:var(--grade-card-accent)!important;
+}
+#dashboard .portal-sidebar .grade-card .subject-dropdown:focus{
+  border-color:var(--grade-card-accent)!important;
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--grade-card-accent) 12%,transparent)!important;
+}
+/* Grade 1–12: distinct, consistent colours */
+#dashboard .portal-sidebar .grade-card[data-grade-card="Grade 1"]{--grade-card-accent:#d84315;--grade-card-soft:#fff3ee}
+#dashboard .portal-sidebar .grade-card[data-grade-card="Grade 2"]{--grade-card-accent:#8e24aa;--grade-card-soft:#faf0fc}
+#dashboard .portal-sidebar .grade-card[data-grade-card="Grade 3"]{--grade-card-accent:#1565c0;--grade-card-soft:#edf5ff}
+#dashboard .portal-sidebar .grade-card[data-grade-card="Grade 4"]{--grade-card-accent:#00838f;--grade-card-soft:#eafafa}
+#dashboard .portal-sidebar .grade-card[data-grade-card="Grade 5"]{--grade-card-accent:#2e7d32;--grade-card-soft:#eef9ef}
+#dashboard .portal-sidebar .grade-card[data-grade-card="Grade 6"]{--grade-card-accent:#558b2f;--grade-card-soft:#f2f9eb}
+#dashboard .portal-sidebar .grade-card[data-grade-card="Grade 7"]{--grade-card-accent:#ef6c00;--grade-card-soft:#fff4e8}
+#dashboard .portal-sidebar .grade-card[data-grade-card="Grade 8"]{--grade-card-accent:#6a1b9a;--grade-card-soft:#f8effc}
+#dashboard .portal-sidebar .grade-card[data-grade-card="Grade 9"]{--grade-card-accent:#ad1457;--grade-card-soft:#fff0f6}
+#dashboard .portal-sidebar .grade-card[data-grade-card="Grade 10"]{--grade-card-accent:#283593;--grade-card-soft:#eef0ff}
+#dashboard .portal-sidebar .grade-card[data-grade-card="Grade 11"]{--grade-card-accent:#00695c;--grade-card-soft:#eaf8f5}
+#dashboard .portal-sidebar .grade-card[data-grade-card="Grade 12"]{--grade-card-accent:#bf360c;--grade-card-soft:#fff1ec}

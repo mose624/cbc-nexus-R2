@@ -97,7 +97,60 @@ async function savePayment(row){if(!supabaseConfigured)throw new Error("Supabase
 async function updatePaymentByCheckout(checkoutRequestId,patch){if(!supabaseConfigured)throw new Error("Supabase is required for server-side M-Pesa verification.");const {data,error}=await supabase.from("purchases").update(patch).eq("checkout_request_id",checkoutRequestId).select("*").single();if(error)throw error;return data;}
 function callbackMetadataToObject(items){const out={};for(const item of Array.isArray(items)?items:[]){if(item?.Name)out[item.Name]=item.Value??null;}return out;}
 async function verifyMpesaPaymentByQuery(checkoutRequestId){const c=getMpesaConfig();if(!checkoutRequestId||!c.shortCode||!c.passkey)return null;const token=await getMpesaAccessToken(),timestamp=mpesaTimestamp(),response=await darajaPost("/mpesa/stkpushquery/v1/query",{BusinessShortCode:c.shortCode,Password:mpesaPassword(c.shortCode,c.passkey,timestamp),Timestamp:timestamp,CheckoutRequestID:checkoutRequestId},token);const d=response.data||{};if(Number(d.ResponseCode)===0&&String(d.ResultCode)==="0"){return updatePaymentByCheckout(checkoutRequestId,{status:"paid",result_code:0,result_desc:String(d.ResultDesc||"Success"),verified_at:new Date().toISOString()});}if(d.ResultCode!==undefined){return updatePaymentByCheckout(checkoutRequestId,{status:"failed",result_code:Number(d.ResultCode),result_desc:String(d.ResultDesc||"Payment failed"),verified_at:new Date().toISOString()});}return null;}
+async function getTeachingVacancies(){if(supabaseConfigured){try{const {data,error}=await supabase.from("teaching_vacancies").select("*").eq("status","published").order("featured",{ascending:false}).order("created_at",{ascending:false});if(!error)return data||[];}catch(error){console.warn("Supabase teaching vacancies lookup failed:",error.message||error);}}return (await readJsonStore("teaching-vacancies.json")).filter(v=>v.status!=="deleted"&&v.status!=="draft");}
+async function saveTeachingVacancy(p){const clean=(v,max=4000)=>String(v??"").trim().slice(0,max);const item={id:String(p.id||"vacancy-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex")),title:clean(p.title,180),school:clean(p.school,180),country:clean(p.country,100),region:clean(p.region,100),subject:clean(p.subject,160),level:clean(p.level,160),employment:clean(p.employment,80),salary:clean(p.salary,160),deadline:clean(p.deadline,40),description:clean(p.description,5000),requirements:clean(p.requirements,5000),apply_url:clean(p.applyUrl||p.apply_url,1000),featured:!!p.featured,status:"published",created_at:new Date().toISOString(),updated_at:new Date().toISOString()};if(!item.title||!item.school||!item.country||!item.subject||!item.level||!item.apply_url)throw new Error("Title, school, country, subject, level and application link are required.");if(supabaseConfigured){try{const {data,error}=await supabase.from("teaching_vacancies").upsert(item,{onConflict:"id"}).select("*").single();if(!error)return data;console.warn("Supabase vacancy save failed:",error.message||error);}catch(error){console.warn("Supabase vacancy save failed:",error.message||error);}}const items=await readJsonStore("teaching-vacancies.json");await fs.writeFile(path.join(DATA_DIR,"teaching-vacancies.json"),JSON.stringify([item,...items.filter(x=>x.id!==item.id)],null,2));return item;}
+async function refineCvWithSmartEditor(payload){
+  const clean=(v,max=6000)=>String(v||"").trim().slice(0,max);
+  const base={
+    name:clean(payload.name,160), jobTitle:clean(payload.jobTitle,200), country:clean(payload.country,120),
+    languages:clean(payload.languages,1000), education:clean(payload.education,5000), units:clean(payload.units,4000),
+    universityClass:clean(payload.universityClass,500), experience:clean(payload.experience,7000),
+    achievements:clean(payload.achievements,4000), skills:clean(payload.skills,3000),
+    targetJob:clean(payload.targetJob,5000)
+  };
+  const fallback={
+    profile: base.jobTitle+" with relevant education, practical experience and transferable skills, presenting a clear record of responsibility, results and professional growth.",
+    skills:Array.from(new Set((base.skills.split(/[,;\n]+/).map(x=>x.trim()).filter(Boolean)).concat(["Professional communication","Team collaboration","Problem solving","Time management","Digital literacy","Adaptability"]))).slice(0,14),
+    experience: base.experience,
+    achievements: base.achievements
+  };
+  const apiKey=String(process.env.OPENAI_API_KEY||"").trim();
+  if(!apiKey)return fallback;
+  const model=String(process.env.OPENAI_MODEL||"gpt-5-mini").trim();
+  const system="You are a senior international CV editor. Rewrite candidate information into concise, truthful, employer-focused CV language. Never invent employers, qualifications, certifications, licences, dates, achievements, metrics or skills that are not supported by the candidate's information. You may identify transferable skills clearly implied by the supplied experience. Tailor terminology to the selected destination and target role. For US and Canadian applications, keep the structure ATS-friendly and do not recommend a photograph or unnecessary personal details. For UAE applications, use a professional international CV style and allow a photo only where appropriate. Return JSON only with keys: profile (string), skills (array of strings), experience (string), achievements (string).";
+  const user=JSON.stringify(base);
+  const body={model,messages:[{role:"system",content:system},{role:"user",content:"Refine this candidate information for an international job application. Strengthen the profile, rewrite experience into action-and-impact bullets where the evidence permits, improve achievements, and identify relevant employer-facing skills. Target vacancy if supplied: "+user}],response_format:{type:"json_object"}};
+  const https=require("https");
+  const result=await new Promise((resolve,reject)=>{
+    const req=https.request("https://api.openai.com/v1/chat/completions",{method:"POST",headers:{"Authorization":"Bearer "+apiKey,"Content-Type":"application/json"}},res=>{
+      let data="";res.on("data",d=>data+=d);res.on("end",()=>{try{resolve({status:res.statusCode||500,data:JSON.parse(data)})}catch{resolve({status:res.statusCode||500,data:{}})}})
+    });
+    req.on("error",reject);req.write(JSON.stringify(body));req.end();
+  });
+  if(result.status<200||result.status>=300)throw new Error("Smart CV editor is temporarily unavailable.");
+  const text=String(result.data?.choices?.[0]?.message?.content||"").trim();
+  let out;try{out=JSON.parse(text)}catch{throw new Error("Smart CV editor returned an invalid response.");}
+  return {
+    profile:clean(out.profile,1800)||fallback.profile,
+    skills:Array.isArray(out.skills)?out.skills.map(x=>clean(x,120)).filter(Boolean).slice(0,18):fallback.skills,
+    experience:clean(out.experience,8000)||fallback.experience,
+    achievements:clean(out.achievements,5000)||fallback.achievements
+  };
+}
+
 async function handleApi(req,res,url){
+  if(req.method==="POST"&&url.pathname==="/api/cv/refine"){
+    try{
+      const payload=JSON.parse((await readBody(req))||"{}");
+      if(!String(payload.jobTitle||"").trim()||!String(payload.country||"").trim()){sendJson(res,400,{ok:false,error:"Job title and country are required."});return true;}
+      const refined=await refineCvWithSmartEditor(payload);
+      sendJson(res,200,{ok:true,refined});
+    }catch(error){
+      console.error("CV refinement error:",error);
+      sendJson(res,503,{ok:false,error:"The CV refinement service is temporarily unavailable. Please try again."});
+    }
+    return true;
+  }
   if(req.method==="GET"&&url.pathname==="/api/affiliate-products"){
     const products=await readJsonStore("affiliate-products.json");
     sendJson(res,200,{ok:true,products:products.filter(p=>p.active!==false)});
@@ -127,7 +180,10 @@ async function handleApi(req,res,url){
     return true;
   }
 
-  if(req.method==="GET"&&url.pathname==="/api/admin/dashboard"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}let resources=await readJsonStore("resources.json");const [localSellerAccounts,payments,mpesaRequests,tuition,localUsers]=await Promise.all([readJsonStore("seller-accounts.json"),readJsonStore("payments.json"),readJsonStore("mpesa-requests.json"),readJsonStore("tuition-registrations.json"),readJsonStore("admin-users.json")]);if(supabaseConfigured){try{const {data:resourceData,error:resourceError}=await supabase.from("resources").select("*").order("created_at",{ascending:false});if(resourceError)throw resourceError;resources=(resourceData||[]).map(resourcePayloadFromRow);}catch(error){console.error("Supabase resource dashboard lookup error:",error);}}let sellerAccounts=localSellerAccounts,users=localUsers,verifiedPurchases=[];if(supabaseConfigured){try{const {data,error}=await supabase.from("purchases").select("*").order("created_at",{ascending:false}).limit(100);if(error)throw error;verifiedPurchases=(data||[]).map(p=>({...p,id:p.id,resource:p.resource_id,resourceId:p.resource_id,customerPhone:p.customer_phone,checkoutRequestID:p.checkout_request_id,merchantRequestID:p.merchant_request_id,mpesaReceipt:p.mpesa_receipt,createdAt:p.created_at}));}catch(error){console.error("Supabase payment dashboard lookup error:",error);}}if(supabaseConfigured){try{const [{data:sellersData,error:sellersError},{data:usersData,error:usersError}]=await Promise.all([supabase.from("sellers").select("id,user_id,phone,username,status,created_at"),supabase.from("users").select("id,name,phone,role,status,created_at")]);if(sellersError)throw sellersError;if(usersError)throw usersError;sellerAccounts=sellersData||[];users=usersData||[];}catch(error){console.error("Supabase admin dashboard lookup error:",error);}}const userMap=new Map();[...users].forEach(u=>userMap.set(u.phone||u.username||u.id,u));[...payments,...mpesaRequests,...tuition].forEach(item=>{const phone=item.customerPhone||item.phone;if(phone&&!userMap.has(phone))userMap.set(phone,{id:"user-"+phone,name:item.learner||item.name||"Customer",phone,status:"active",source:"transaction"});});const allUsers=[...userMap.values()],sales=payments.filter(p=>["paid","completed","success"].includes(String(p.status||"").toLowerCase())),totalDownloads=resources.reduce((s,r)=>s+Number(r.downloads||0),0),popularResources=[...resources].map(r=>({...r,downloads:Number(r.downloads||0),purchases:Number(r.purchases||0)})).sort((a,b)=>(b.downloads+b.purchases*3)-(a.downloads+a.purchases*3)).slice(0,10);const dashboardPayments=[...payments,...mpesaRequests,...verifiedPurchases];const dashboardSales=[...payments,...verifiedPurchases].filter(p=>["paid","completed","success"].includes(String(p.status||"").toLowerCase()));sendJson(res,200,{ok:true,stats:{sellers:sellerAccounts.length,pendingSellers:sellerAccounts.filter(x=>x.status==="pending").length,resources:resources.length,pendingResources:resources.filter(x=>x.status==="pending").length,users:allUsers.length,sales:dashboardSales.length,purchases:dashboardSales.length,revenue:dashboardSales.reduce((s,x)=>s+Number(x.amount||0),0),downloads:totalDownloads},popularResources,sellers:sellerAccounts,resources,users:allUsers,sales:dashboardSales,payments:dashboardPayments.slice(0,100)});return true;}
+  if(req.method==="GET"&&url.pathname==="/api/vacancies"){try{sendJson(res,200,{ok:true,vacancies:await getTeachingVacancies()});}catch(error){console.error("Teaching vacancies lookup error:",error);sendJson(res,500,{ok:false,error:"Teaching vacancies could not be loaded."});}return true;}
+  if(req.method==="POST"&&url.pathname==="/api/admin/vacancy"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}try{const item=await saveTeachingVacancy(JSON.parse((await readBody(req))||"{}"));sendJson(res,201,{ok:true,vacancy:item});}catch(error){sendJson(res,400,{ok:false,error:error.message||"Vacancy could not be saved."});}return true;}
+  if(req.method==="POST"&&url.pathname==="/api/admin/vacancy-delete"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"").trim();if(!id){sendJson(res,400,{ok:false,error:"Vacancy ID is required."});return true;}if(supabaseConfigured){try{const {error}=await supabase.from("teaching_vacancies").update({status:"deleted",updated_at:new Date().toISOString()}).eq("id",id);if(!error){sendJson(res,200,{ok:true,deletedId:id});return true;}}catch(error){console.warn("Supabase vacancy delete failed:",error.message||error);}}const items=await readJsonStore("teaching-vacancies.json"),next=items.map(x=>x.id===id?{...x,status:"deleted",updatedAt:new Date().toISOString()}:x);await fs.writeFile(path.join(DATA_DIR,"teaching-vacancies.json"),JSON.stringify(next,null,2));sendJson(res,200,{ok:true,deletedId:id});return true;}
+  if(req.method==="GET"&&url.pathname==="/api/admin/dashboard"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}let resources=await readJsonStore("resources.json");const [localSellerAccounts,payments,mpesaRequests,tuition,localUsers]=await Promise.all([readJsonStore("seller-accounts.json"),readJsonStore("payments.json"),readJsonStore("mpesa-requests.json"),readJsonStore("tuition-registrations.json"),readJsonStore("admin-users.json")]);if(supabaseConfigured){try{const {data:resourceData,error:resourceError}=await supabase.from("resources").select("*").eq("status","approved").order("created_at",{ascending:false});if(resourceError)throw resourceError;resources=(resourceData||[]).map(resourcePayloadFromRow);}catch(error){console.error("Supabase resource dashboard lookup error:",error);}}let sellerAccounts=localSellerAccounts,users=localUsers,verifiedPurchases=[];if(supabaseConfigured){try{const {data,error}=await supabase.from("purchases").select("*").order("created_at",{ascending:false}).limit(100);if(error)throw error;verifiedPurchases=(data||[]).map(p=>({...p,id:p.id,resource:p.resource_id,resourceId:p.resource_id,customerPhone:p.customer_phone,checkoutRequestID:p.checkout_request_id,merchantRequestID:p.merchant_request_id,mpesaReceipt:p.mpesa_receipt,createdAt:p.created_at}));}catch(error){console.error("Supabase payment dashboard lookup error:",error);}}if(supabaseConfigured){try{const [{data:sellersData,error:sellersError},{data:usersData,error:usersError}]=await Promise.all([supabase.from("sellers").select("id,user_id,phone,username,status,created_at"),supabase.from("users").select("id,name,phone,role,status,created_at")]);if(sellersError)throw sellersError;if(usersError)throw usersError;sellerAccounts=sellersData||[];users=usersData||[];}catch(error){console.error("Supabase admin dashboard lookup error:",error);}}const userMap=new Map();[...users].forEach(u=>userMap.set(u.phone||u.username||u.id,u));[...payments,...mpesaRequests,...tuition].forEach(item=>{const phone=item.customerPhone||item.phone;if(phone&&!userMap.has(phone))userMap.set(phone,{id:"user-"+phone,name:item.learner||item.name||"Customer",phone,status:"active",source:"transaction"});});const allUsers=[...userMap.values()],sales=payments.filter(p=>["paid","completed","success"].includes(String(p.status||"").toLowerCase())),totalDownloads=resources.reduce((s,r)=>s+Number(r.downloads||0),0),popularResources=[...resources].map(r=>({...r,downloads:Number(r.downloads||0),purchases:Number(r.purchases||0)})).sort((a,b)=>(b.downloads+b.purchases*3)-(a.downloads+a.purchases*3)).slice(0,10);const dashboardPayments=[...payments,...mpesaRequests,...verifiedPurchases];const dashboardSales=[...payments,...verifiedPurchases].filter(p=>["paid","completed","success"].includes(String(p.status||"").toLowerCase()));sendJson(res,200,{ok:true,stats:{sellers:sellerAccounts.length,pendingSellers:sellerAccounts.filter(x=>x.status==="pending").length,resources:resources.length,pendingResources:resources.filter(x=>x.status==="pending").length,users:allUsers.length,sales:dashboardSales.length,purchases:dashboardSales.length,revenue:dashboardSales.reduce((s,x)=>s+Number(x.amount||0),0),downloads:totalDownloads},popularResources,sellers:sellerAccounts,resources,users:allUsers,sales:dashboardSales,payments:dashboardPayments.slice(0,100)});return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/resource"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const p=JSON.parse((await readBody(req))||"{}"),items=await readJsonStore("resources.json"),item={...p,status:p.status||"approved",updatedAt:new Date().toISOString()};await fs.writeFile(path.join(DATA_DIR,"resources.json"),JSON.stringify([item,...items.filter(x=>x.id!==item.id)],null,2));sendJson(res,200,{ok:true,resource:item});return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/resource-delete"){
     if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
@@ -327,6 +383,29 @@ async function handleApi(req,res,url){
     if(supabaseConfigured){try{const {data,error}=await supabase.from("download_approvals").select("*").order("created_at",{ascending:false}).limit(100);if(error)throw error;sendJson(res,200,{ok:true,approvals:data||[],storage:"supabase"});return true;}catch(error){console.error("Download approvals lookup error:",error);sendJson(res,500,{ok:false,error:"Download approvals could not be loaded."});return true;}}
     sendJson(res,200,{ok:true,approvals:(await readJsonStore("download-approvals.json")).slice(0,100),storage:"local"});return true;
   }
+  if(req.method==="GET"&&url.pathname==="/api/r2/view"){
+    const resourceId=String(url.searchParams.get("resourceId")||"").trim();
+    if(!resourceId){sendJson(res,400,{ok:false,error:"Resource ID is required."});return true;}
+    try{
+      let resource=null;
+      if(supabaseConfigured){
+        const {data,error}=await supabase.from("resources").select("id,r2_key,status,filename,title").eq("id",resourceId).maybeSingle();
+        if(error)throw error;
+        resource=data;
+      } else {
+        resource=(await readJsonStore("resources.json")).find(x=>String(x.id)===resourceId);
+      }
+      if(!resource||!resource.r2_key||String(resource.status||"approved").toLowerCase()!=="approved"){
+        sendJson(res,403,{ok:false,error:"This resource is not available for viewing."});return true;
+      }
+      const viewUrl=await createDownloadUrl(resource.r2_key);
+      sendJson(res,200,{ok:true,viewUrl,expiresIn:300,fileName:resource.filename||"",title:resource.title||""});
+    }catch(error){
+      console.error("R2 resource view error:",error);
+      sendJson(res,500,{ok:false,error:"Resource preview could not be opened."});
+    }
+    return true;
+  }
   if(req.method==="GET"&&url.pathname==="/api/r2/file"){
     const key=String(url.searchParams.get("key")||"").trim(),resourceId=String(url.searchParams.get("resourceId")||"").trim(),phone=normalizeMpesaPhone(url.searchParams.get("phone")||"");
     if(!key||!resourceId||!phone){sendJson(res,400,{ok:false,error:"Resource, phone and protected file are required."});return true;}
@@ -405,18 +484,50 @@ async function handleApi(req,res,url){
     if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
     if(supabaseConfigured){
       try{
-        const {data,error}=await supabase.from("resources").select("*").order("created_at",{ascending:false});
-        if(error) throw error;
-        sendJson(res,200,{ok:true,resources:(data||[]).map(resourcePayloadFromRow),storage:"supabase"});
-        return true;
-      }catch(error){
-        console.error("Supabase admin resource lookup error:",error);
-        sendJson(res,500,{ok:false,error:"Admin resources could not be loaded from Supabase."});
-        return true;
-      }
+        const {data,error}=await supabase.from("resources").select("*").order("created_at",{ascending:false}).limit(500);
+        if(error)throw error;
+        sendJson(res,200,{ok:true,resources:(data||[]).map(resourcePayloadFromRow),storage:"supabase"});return true;
+      }catch(error){console.error("Admin resource lookup error:",error);sendJson(res,500,{ok:false,error:"Resources could not be loaded for admin."});return true;}
     }
-    sendJson(res,200,{ok:true,resources:await readJsonStore("resources.json"),storage:"local"});
-    return true;
+    sendJson(res,200,{ok:true,resources:await readJsonStore("resources.json"),storage:"local"});return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/resource-status"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"").trim(),status=String(p.status||"").trim().toLowerCase();
+    if(!id||!["approved","rejected","pending"].includes(status)){sendJson(res,400,{ok:false,error:"Resource ID and a valid status are required."});return true;}
+    if(supabaseConfigured){
+      try{
+        const {data,error}=await supabase.from("resources").update({status}).eq("id",id).select("*").single();
+        if(error)throw error;
+        sendJson(res,200,{ok:true,resource:resourcePayloadFromRow(data),storage:"supabase"});return true;
+      }catch(error){console.error("Admin resource status update error:",error);sendJson(res,500,{ok:false,error:"Resource status could not be updated."});return true;}
+    }
+    const items=await readJsonStore("resources.json"),found=items.find(x=>String(x.id)===id);
+    if(!found){sendJson(res,404,{ok:false,error:"Resource not found."});return true;}
+    found.status=status;found.updatedAt=new Date().toISOString();
+    await fs.writeFile(path.join(DATA_DIR,"resources.json"),JSON.stringify(items,null,2));
+    sendJson(res,200,{ok:true,resource:found,storage:"local"});return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/resource-delete"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"").trim();
+    if(!id){sendJson(res,400,{ok:false,error:"Resource ID is required."});return true;}
+    if(supabaseConfigured){
+      try{
+        const {data,error}=await supabase.from("resources").select("id,r2_key,preview_key,title").eq("id",id).maybeSingle();
+        if(error)throw error;
+        if(!data){sendJson(res,404,{ok:false,error:"Resource not found."});return true;}
+        for(const key of [data.r2_key,data.preview_key]){if(key){try{await deleteObject(key);}catch(e){console.warn("R2 object deletion warning:",e.message||e);}}}
+        const {error:delError}=await supabase.from("resources").delete().eq("id",id);
+        if(delError)throw delError;
+        sendJson(res,200,{ok:true,deletedId:id,storage:"supabase"});return true;
+      }catch(error){console.error("Admin resource deletion error:",error);sendJson(res,500,{ok:false,error:"Resource and its stored file could not be deleted."});return true;}
+    }
+    const items=await readJsonStore("resources.json"),found=items.find(x=>String(x.id)===id);
+    if(!found){sendJson(res,404,{ok:false,error:"Resource not found."});return true;}
+    for(const key of [found.r2Key,found.r2_key,found.previewKey,found.preview_key]){if(key){try{await deleteObject(key);}catch(e){console.warn("R2 object deletion warning:",e.message||e);}}}
+    await fs.writeFile(path.join(DATA_DIR,"resources.json"),JSON.stringify(items.filter(x=>String(x.id)!==id),null,2));
+    sendJson(res,200,{ok:true,deletedId:id,storage:"local"});return true;
   }
   if(req.method==="GET"&&url.pathname==="/api/resources"){if(supabaseConfigured){try{const {data,error}=await supabase.from("resources").select("*").eq("status","approved").order("created_at",{ascending:false});if(error)throw error;sendJson(res,200,{ok:true,resources:(data||[]).map(resourcePayloadFromRow),storage:"supabase"});return true;}catch(error){console.error("Supabase resource lookup error:",error);sendJson(res,500,{ok:false,error:"Resources could not be loaded from Supabase."});return true;}}sendJson(res,200,{ok:true,resources:await readJsonStore("resources.json"),storage:"local"});return true;}
   if(req.method==="POST"&&url.pathname==="/api/resources"){const payload=JSON.parse((await readBody(req))||"{}"),isAdmin=verifyAdminSession(req),sellerUsername=String(payload.sellerUsername||"").trim().toLowerCase(),authenticatedSeller=verifySellerSession(req),isSeller=Boolean(authenticatedSeller);if((payload.role==="admin"&&!isAdmin)||(payload.role==="seller"&&!isSeller)){sendJson(res,401,{ok:false,error:"Authorized account required."});return true;}if(!["admin","seller"].includes(payload.role)){sendJson(res,400,{ok:false,error:"Resource role is required."});return true;}if(supabaseConfigured){try{let sellerId=null;if(payload.role==="seller"){const username=authenticatedSeller||sellerUsername,{data:seller,error:sellerError}=await supabase.from("sellers").select("id").eq("username",username).maybeSingle();if(sellerError)throw sellerError;if(!seller){sendJson(res,403,{ok:false,error:"Approved seller account was not found in Supabase."});return true;}sellerId=seller.id;}let previewKey=String(payload.previewKey||"").trim();if(!previewKey&&/\.pdf$/i.test(String(payload.fileName||""))&&payload.r2Key){try{const preview=await createPdfPreview(payload.r2Key,3);previewKey=preview.previewKey;}catch(error){console.error("PDF preview generation error:",error);}}const row=resourceRowFromPayload(payload,sellerId,previewKey);if(!row.title||!row.grade||!row.subject||!row.resource_type||!row.r2_key){sendJson(res,400,{ok:false,error:"Resource title, grade, subject, type and R2 file are required."});return true;}const {data,error}=await supabase.from("resources").insert(row).select("*").single();if(error)throw error;sendJson(res,201,{ok:true,saved:resourcePayloadFromRow(data),storage:"supabase"});return true;}catch(error){console.error("Supabase resource save error:",error);sendJson(res,500,{ok:false,error:"Resource could not be saved to Supabase."});return true;}}const saved=await appendJsonStore("resources.json",payload);sendJson(res,201,{ok:true,saved,storage:"local"});return true;}

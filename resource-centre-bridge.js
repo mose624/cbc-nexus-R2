@@ -45,6 +45,8 @@
       try{
         data=await fetchJson("/api/resources?_="+Date.now());
       }catch(primaryError){
+        // The admin endpoint is a safe authenticated fallback. This keeps an
+        // existing admin dashboard usable if the public resource query fails.
         if(document.body.classList.contains("admin-unlocked") || sessionStorage.getItem("cbeAdminUnlocked")==="true"){
           data=await fetchJson("/api/admin/dashboard?_="+Date.now());
         }else{
@@ -59,74 +61,49 @@
       localStorage.setItem(KEY,JSON.stringify([...merged.values()]));
 
       if(typeof window.renderResources==="function") window.renderResources();
-      if(typeof window.renderResourceBundles==="function") window.renderResourceBundles();
       if(typeof window.renderTrending==="function") window.renderTrending();
       if(typeof window.loadAdminDashboard==="function" && (document.body.classList.contains("admin-unlocked") || sessionStorage.getItem("cbeAdminUnlocked")==="true")){
         await window.loadAdminDashboard();
       }
 
       window.dispatchEvent(new CustomEvent("cbe:resources-synced",{detail:{count:live.length}}));
-      return live.length;
     }catch(e){
       console.warn("CBE Nexus resource bridge failed:",e);
-      throw e;
     }
   }
 
-  function showMessage(message){
-    if(typeof window.showToast==="function") window.showToast(message);
-    else console.info("CBE Nexus:",message);
+  function normalize(value){
+    return String(value||"").trim().toLowerCase()
+      .replace(/&/g,"and").replace(/[()]/g,"").replace(/\s+/g," ")
+      .replace(/[^a-z0-9]+/g," ").trim();
   }
 
-  function installUploadRefreshButton(){
-    const form=document.querySelector("#resourceForm");
-    if(!form || document.querySelector("#refreshUploadResourcesButton")) return;
-    const button=document.createElement("button");
-    button.id="refreshUploadResourcesButton";
-    button.type="button";
-    button.className="secondary-button";
-    button.textContent="↻ Refresh Resources";
-    button.title="Reload the latest resources from Supabase and refresh the dashboard";
-    button.style.margin="0 0 14px 0";
-    button.addEventListener("click",async function(){
-      if(button.disabled) return;
-      button.disabled=true;
-      const original=button.textContent;
-      button.textContent="↻ Refreshing...";
-      try{
-        const count=await sync();
-        showMessage(`Resources refreshed successfully. ${count} published resource(s) loaded.`);
-      }catch(error){
-        showMessage(error.message||"Resources could not be refreshed.");
-      }finally{
-        button.disabled=false;
-        button.textContent=original;
-      }
-    });
-    form.parentNode.insertBefore(button,form);
-  }
-
+  // Header Grade -> Subject links are the single source of truth.
+  // Dashboard Grade -> Subject selections open those exact same pages.
   function apply(grade,subject){
-    const gf=document.querySelector("#gradeFilter"),sf=document.querySelector("#subjectFilter");
-    if(gf){gf.value=grade||"All Grades";gf.dispatchEvent(new Event("change",{bubbles:true}))}
-    setTimeout(()=>{
-      if(sf){sf.value=subject||"All Subjects";sf.dispatchEvent(new Event("change",{bubbles:true}))}
-      const section=document.querySelector("#resources");
-      if(section)section.scrollIntoView({behavior:"smooth",block:"start"});
-      history.replaceState(null,"",`#resources?grade=${encodeURIComponent(grade||"All Grades")}&subject=${encodeURIComponent(subject||"All Subjects")}`);
-    },0);
+    const wantedGrade=normalize(grade), wantedSubject=normalize(subject);
+    if(!wantedGrade || !wantedSubject || wantedSubject==="all subjects") return;
+
+    const links=Array.from(document.querySelectorAll('a[href*="resource-category.html?grade="]'));
+    const match=links.find(link=>{
+      try{
+        const u=new URL(link.getAttribute("href"),window.location.href);
+        return normalize(u.searchParams.get("grade"))===wantedGrade &&
+               normalize(u.searchParams.get("subject"))===wantedSubject;
+      }catch{return false;}
+    });
+
+    if(match){
+      window.location.assign(match.href);
+      return;
+    }
+
+    window.location.assign("resource-category.html?grade="+encodeURIComponent(grade)+"&subject="+encodeURIComponent(subject));
   }
 
   function wireSubjectLinks(){
-    document.querySelectorAll("a[href^=\"#resources?\"]").forEach(a=>{
-      if(a.dataset.cbeSubjectWired==="1")return;
-      const q=(a.getAttribute("href")||"").split("?")[1]||"";
-      const p=new URLSearchParams(q);
-      const grade=p.get("grade"),subject=p.get("subject");
-      if(!grade&&!subject)return;
-      a.dataset.cbeSubjectWired="1";
-      a.addEventListener("click",e=>{e.preventDefault();apply(grade,subject)});
-    });
+    // LEFT Resource Centre only: Grade -> Subject opens the same
+    // resource-category page used by the header.
     document.querySelectorAll("[data-grade-subject-select]").forEach(select=>{
       if(select.dataset.cbeSubjectWired==="1")return;
       select.dataset.cbeSubjectWired="1";
@@ -136,15 +113,17 @@
         if(subject!=="All Subjects")apply(grade,subject);
       });
     });
+
+    // Do NOT intercept the middle dashboard resource/category cards.
+    // Their existing behavior remains unchanged.
   }
 
   function boot(){
     wireSubjectLinks();
-    installUploadRefreshButton();
-    sync().catch(()=>{});
-    setTimeout(()=>{wireSubjectLinks();installUploadRefreshButton()},500);
-    setTimeout(()=>{wireSubjectLinks();installUploadRefreshButton()},1500);
-    setTimeout(()=>{wireSubjectLinks();installUploadRefreshButton()},3000);
+    sync();
+    setTimeout(wireSubjectLinks,500);
+    setTimeout(wireSubjectLinks,1500);
+    setTimeout(wireSubjectLinks,3000);
   }
 
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot,{once:true});
