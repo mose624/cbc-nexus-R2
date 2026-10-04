@@ -30,7 +30,7 @@ function gradePage(req,g,sub){
  return page(req,"Grade "+g+" CBC Resources Kenya | CBE Nexus","Grade "+g+" CBC/CBE notes, exams, revision questions, marking schemes and teacher resources for Kenya.","/grade-"+g,"Grade "+g+" CBC Resources Kenya","Browse Grade "+g+" subjects and discover CBC/CBE notes, exams, revision questions, marking schemes and teacher resources.",links);
 }
 function countyPage(req,county){
- const label=county.replace(/-/g," ").replace(/\\b\\w/g,c=>c.toUpperCase());
+ const label=county.replace(/-/g," ").replace(/\b\w/g,c=>c.toUpperCase());
  const links=[
   {url:"/kenya-universities-colleges.html?county="+encodeURIComponent(label),label:label+" universities and colleges"},
   {url:"/tvet-colleges.html?county="+encodeURIComponent(label),label:label+" TVET colleges"},
@@ -80,7 +80,7 @@ async function match(req){
  const p=new URL(req.url,"http://localhost").pathname.replace(/\/$/,"")||"/";
  const rm=p.match(/^\/resource\/([^/]+)$/);
  if(rm){return await resourcePage(req,decodeURIComponent(rm[1]));}
- if(p==="/blog-article.html"){const q=new URL(req.url,"http://localhost").searchParams.get("slug");if(q)return await blogArticlePage(req,q);}
+ const countyMatch=p.match(/^\/kenya-education-county\/([^/]+)$/);\n if(countyMatch){return countyPage(req,countyMatch[1]);}\n if(p==="/blog-article.html"){const q=new URL(req.url,"http://localhost").searchParams.get("slug");if(q)return await blogArticlePage(req,q);}
  if(p!=="/cbc-exam-generator" && LANDINGS[p]){const x=LANDINGS[p];const links=GRADES.map(g=>({url:"/grade-"+g,label:"Grade "+g+" CBC Resources"}));return page(req,x[0],x[1],p,x[0],x[1],links);}
  const m=p.match(/^\/grade-(7|8|9|10|11|12)(?:\/([^/]+))?$/);return m?gradePage(req,m[1],m[2]):null;
 }
