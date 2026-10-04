@@ -1132,6 +1132,7 @@ async function getKuccpsProgrammes(institutionName){
 }
 
 const tvetaCourseCache=new Map();
+const tvetaInstitutionCache=new Map();
 async function getTvetaCourses(){
   const cached=tvetaCourseCache.get("courses");
   if(cached && Date.now()-cached.at<6*60*60*1000) return cached.value;
@@ -1156,6 +1157,38 @@ async function getTvetaCourses(){
   return value;
 }
 
+  if(req.method==="GET"&&url.pathname==="/api/tveta/institutions"){
+    try{
+      const cached=tvetaInstitutionCache.get("institutions");
+      if(cached && Date.now()-cached.at<6*60*60*1000){sendJson(res,200,cached.value);return true;}
+      const source="https://www.tveta.go.ke/accredited-tvet-institutions/";
+      const response=await fetch(source,{headers:{"User-Agent":"CBE-Nexus-Education-Directory/1.0"}});
+      if(!response.ok) throw new Error("TVETA returned "+response.status);
+      const html=await response.text(),rows=[];
+      const trRe=new RegExp("<tr[^>]*>([\\s\\S]*?)</tr>","gi");
+      const tdRe=new RegExp("<t[dh][^>]*>([\\s\\S]*?)</t[dh]>","gi");
+      const clean=s=>String(s).replace(/<[^>]+>/g," ").replace(/&amp;/g,"&").replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/&nbsp;/g," ").replace(/\\s+/g," ").trim();
+      const linkRe=new RegExp('<a[^>]+href=["\\\']([^"\\\']+)["\\\'][^>]*>([\\s\\S]*?)</a>',"gi");
+      let tr;
+      while((tr=trRe.exec(html))){
+        const cells=[];let td;
+        while((td=tdRe.exec(tr[1])))cells.push(clean(td[1]));
+        if(cells.length>=8 && /^\\d+$/.test(cells[0]) && cells[1]){
+          let detailsUrl="",lm;
+          while((lm=linkRe.exec(tr[1]))){detailsUrl=new URL(lm[1],source).href;break;}
+          rows.push({number:Number(cells[0]),name:cells[1],registrationNumber:cells[2]||"",category:cells[3]||"",type:cells[4]||"",county:cells[5]||"",expiryDate:cells[6]||"",status:cells[7]||"",detailsUrl});
+        }
+        linkRe.lastIndex=0;
+      }
+      const value={ok:true,count:rows.length,institutions:rows,source:"TVETA",sourceUrl:source,fetchedAt:new Date().toISOString()};
+      tvetaInstitutionCache.set("institutions",{at:Date.now(),value});
+      sendJson(res,200,value);
+    }catch(error){
+      console.error("TVETA institutions lookup error:",error);
+      sendJson(res,502,{ok:false,institutions:[],count:0,source:"TVETA",sourceUrl:"https://www.tveta.go.ke/accredited-tvet-institutions/",error:"TVETA institution register could not be loaded right now."});
+    }
+    return true;
+  }
   if(req.method==="GET"&&url.pathname==="/api/tveta/courses"){
     try{
       const data=await getTvetaCourses();
