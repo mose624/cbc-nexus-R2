@@ -104,9 +104,20 @@ const diplomaTeacherEducationSubjects = [
   "Historical and comparative Foundations of Education","Agriculture"
 ];
 
+const internationalCurriculumSubjects = [
+  "Mathematics","Further Mathematics","Mathematics A","Mathematics B","Further Pure Mathematics",
+  "Biology","Human Biology","Chemistry","Physics","Science Double Award","Computer Science","ICT",
+  "English","English Language","English Language A","English Language B","English Literature",
+  "English Language & Literature","Business","Business Studies","Business Management","Accounting",
+  "Economics","Geography","History","Religious Studies","Psychology","Sociology","Law",
+  "French","Spanish","German","Arabic","Swahili","Art & Design","Visual Arts","Music","Theatre",
+  "Drama","Film","Physical Education","Design & Technology","Agriculture","Global Perspectives",
+  "Travel & Tourism","Commerce"
+];
+
 const allCbeSubjects = [...new Set([
   ...prePrimarySubjects,...lowerPrimarySubjects,...upperPrimarySubjects,...juniorSchoolSubjects,
-  ...seniorSchoolSubjects,...specialNeedsSubjects,...diplomaTeacherEducationSubjects
+  ...seniorSchoolSubjects,...specialNeedsSubjects,...diplomaTeacherEducationSubjects,...internationalCurriculumSubjects
 ])].sort((a,b)=>a.localeCompare(b));
 
 /*
@@ -127,7 +138,12 @@ const gradeSubjects = {
   "Grade 9": ["Agriculture","Arabic","Creative Arts","Christian Religious Education","English","French","German","Hindu Religious Education","Indigenous Language","Integrated Science","Islamic Religious Education","Kiswahili","Mandarin","Mathematics","Pre-Technical Studies","Social Studies"],
   "Grade 10": ["Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","Islamic Religious Education","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","Hindu Religious Education","Mandarin Chinese"],
   "Grade 11": ["Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","Islamic Religious Education","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","Hindu Religious Education","Mandarin Chinese"],
-  "Grade 12": ["Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","Islamic Religious Education","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","Hindu Religious Education","Mandarin Chinese"]
+  "Grade 12": ["Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","Islamic Religious Education","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","Hindu Religious Education","Mandarin Chinese"],
+  "IGCSE": ["Mathematics","Biology","Chemistry","Physics","English","Business Studies","Economics","Computer Science","Geography","History","French","Spanish","German","Swahili","Art & Design","Physical Education","Accounting","Agriculture","Design & Technology","Drama","Global Perspectives","ICT","Psychology","Sociology","Travel & Tourism"],
+  "IB": ["English Language & Literature","English Literature","French","Spanish","Business Management","Economics","Geography","History","Biology","Chemistry","Physics","Computer Science","Mathematics","Visual Arts","Music","Theatre","Film"],
+  "O Level": ["English","Mathematics","Biology","Chemistry","Physics","Geography","History","Business Studies","Accounting","Economics","Computer Science","ICT","French","Spanish","Arabic","Art & Design","Design & Technology","Religious Studies","Physical Education"],
+  "A Level": ["Mathematics","Further Mathematics","Physics","Chemistry","Biology","Economics","Business","Accounting","Computer Science","English Language","English Literature","French","Spanish","Geography","History","Psychology","Art & Design","Music","Drama","Travel & Tourism","Sociology","Law"],
+  "Pearson": ["English Language A","English Language B","English Literature","Mathematics A","Mathematics B","Further Pure Mathematics","Biology","Human Biology","Chemistry","Physics","Science Double Award","Accounting","Business Studies","Commerce","Economics","Computer Science","ICT","Geography","History","Religious Studies","Arabic","French","German","Spanish","Swahili","Art & Design","Global Citizenship"]
 };
 
 const subjectAliases = {
@@ -194,6 +210,7 @@ const elements = {
   activeContext: document.querySelector("#activeContext"),
   statResources: document.querySelector("#statResources"),
   form: document.querySelector("#resourceForm"),
+  adminCurriculum: document.querySelector("#adminCurriculumInput"),
   adminGrade: document.querySelector("#adminGradeInput"),
   adminSubject: document.querySelector("#adminSubjectInput"),
   adminType: document.querySelector("#adminTypeInput"),
@@ -390,7 +407,9 @@ function renderAdminControlCentre(data) {
     ];
     elements.adminStatsGrid.innerHTML=cards.map(c=>`<div class="admin-kpi-card"><span>${escapeHtml(c[0])}</span><strong>${Number(c[1]||0).toLocaleString("en-KE")}</strong><small>${escapeHtml(c[2])}</small></div>`).join("");
   }
-  renderAdminModuleDetails(data);\n  auditAdminExportButtons();\n  if(elements.adminResourceBadge) elements.adminResourceBadge.textContent=resources.length;
+  renderAdminModuleDetails(data);
+  auditAdminExportButtons();
+  if(elements.adminResourceBadge) elements.adminResourceBadge.textContent=resources.length;
   if(elements.adminSellerBadge) elements.adminSellerBadge.textContent=sellers.length;
   if(elements.adminPaymentBadge) elements.adminPaymentBadge.textContent=payments.length;
   if(elements.adminSalesBadge) elements.adminSalesBadge.textContent=sales.length;
@@ -430,10 +449,11 @@ function downloadAdminJson(filename,data){
   setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 function auditAdminExportButtons(){
-  const salesButton=document.getElementById("adminExportSales");\n  if(salesButton) salesButton.onclick=()=>{
+  const salesButton=document.getElementById("adminExportSales");
+  if(salesButton) salesButton.onclick=()=>{
     downloadAdminJson("cbe-nexus-sales.json",adminDashboardData?.sales||[]);
     showToast("Sales export downloaded.");
-  });
+  };
   safeOn(document.getElementById("adminExportResources"),"click",()=>{
     downloadAdminJson("cbe-nexus-resources.json",adminDashboardData?.resources||[]);
     showToast("Resources export downloaded.");
@@ -534,7 +554,7 @@ async function syncPublicResourcesFromServer() {
         previewKey: r.previewKey || r.preview_key || "",
         file: r.file || ((r.r2Key || r.r2_key) ? "/api/r2/file?key=" + encodeURIComponent(r.r2Key || r.r2_key) : "")
       }))
-      .filter((r) => r.id && r.status === "approved");
+      .filter((r) => r.id && r.status === "approved" && !["IGCSE","IB","O Level","A Level","Pearson"].includes(String(r.grade || "").trim()));
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(remote));
     renderResources();
@@ -666,6 +686,142 @@ async function postToBackend(endpoint, payload) {
 function saveLocalList(key, item) {
   const existing = JSON.parse(localStorage.getItem(key) || "[]");
   localStorage.setItem(key, JSON.stringify([item, ...existing]));
+}
+
+function refreshAdminUploadSubjects() {
+  if (!elements.adminCurriculum || !elements.adminGrade || !elements.adminSubject) return;
+  const curriculum = String(elements.adminCurriculum.value || "CBC/CBE").trim();
+  const internationalCurricula = ["IGCSE","IB","O Level","A Level","Pearson"];
+  const international = internationalCurricula.includes(curriculum);
+  if (international) {
+    optionList(elements.adminGrade, [curriculum], curriculum);
+    const subjects = gradeSubjects[curriculum] || [];
+    optionList(elements.adminSubject, subjects, subjects[0] || "");
+    if (elements.formStatus) elements.formStatus.textContent = curriculum + " selected — choose a " + curriculum + " subject below, then upload and publish.";
+  } else {
+    const grades = Object.keys(gradeSubjects).filter((value) => !internationalCurricula.includes(value));
+    optionList(elements.adminGrade, grades, "Grade 1");
+    const subjects = gradeSubjects["Grade 1"] || allCbeSubjects;
+    optionList(elements.adminSubject, subjects, subjects[0] || "");
+  }
+}
+
+async function handleFormSubmit(event) {
+  event.preventDefault();
+  const uploadedFile = elements.fileInput.files[0];
+  const title = document.querySelector("#titleInput").value.trim();
+  const description = document.querySelector("#descriptionInput").value.trim();
+  const notes = elements.notesContent.value.trim();
+  const price = Number(document.querySelector("#priceInput").value || 0);
+  const discount = Number(document.querySelector("#discountInput").value || 0);
+  const grade = elements.adminGrade.value;
+  const curriculum = elements.adminCurriculum ? elements.adminCurriculum.value : "CBC/CBE";
+  const subject = elements.adminSubject.value;
+  const type = elements.adminType.value;
+  let fileName = document.querySelector("#fileNameInput").value.trim();
+  const internationalCurricula = ["IGCSE","IB","O Level","A Level","Pearson"];
+  const isInternationalUpload = internationalCurricula.includes(curriculum);
+
+  if (!title || !description || !subject || !type || !price && price !== 0) {
+    elements.formStatus.textContent = "Complete the resource title, description, subject, material type and price before publishing.";
+    showToast("Please complete all required resource details.");
+    return;
+  }
+
+  if (isInternationalUpload && (!grade || grade !== curriculum)) {
+    elements.formStatus.textContent = "Select the international curriculum and its subject before publishing.";
+    showToast("Choose a valid international curriculum and subject.");
+    return;
+  }
+
+  if (!uploadedFile) {
+    elements.formStatus.textContent = "Please choose the resource file before publishing.";
+    showToast("Select a resource file first.");
+    return;
+  }
+
+  fileName = fileName || uploadedFile.name;
+  const resourceId = `admin-${Date.now()}`;
+
+  try {
+    elements.formStatus.textContent = isInternationalUpload
+      ? `Uploading ${curriculum} resource to its dedicated international library...`
+      : "Uploading resource to Cloudflare R2...";
+    const uploadResponse = await fetch("/api/r2/upload", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": uploadedFile.type || "application/octet-stream",
+        "Content-Length": String(uploadedFile.size),
+        "X-CBE-Role": "admin",
+        "X-CBE-Grade": grade,
+        "X-CBE-Subject": subject,
+        "X-CBE-Type": type,
+        "X-CBE-Filename": fileName,
+        "X-CBE-Resource-Id": resourceId
+      },
+      body: uploadedFile
+    });
+    const uploadData = await uploadResponse.json().catch(() => ({}));
+    if (!uploadResponse.ok || !uploadData.ok) throw new Error(uploadData.error || "Resource file could not be uploaded to R2.");
+
+    elements.formStatus.textContent = "Saving resource details to Supabase...";
+    const resourceResponse = await fetch("/api/resources", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({
+        id: resourceId,
+        role: "admin",
+        title,
+        grade,
+        curriculum,
+        subject,
+        type,
+        description,
+        notes,
+        price,
+        discount,
+        term: elements.termInput.value,
+        isFreeSample: elements.freeSample.value === "true",
+        popularity: 1,
+        fileName,
+        r2Key: uploadData.r2Key || uploadData.key,
+        previewKey: uploadData.previewKey || ""
+      })
+    });
+    const resourceData = await resourceResponse.json().catch(() => ({}));
+    if (!resourceResponse.ok || !resourceData.ok) throw new Error(resourceData.error || "Resource metadata could not be saved to Supabase.");
+
+    const saved = resourceData.saved || {
+      ...resourceData.resource,
+      id: resourceId, title, grade, subject, type, description, price, discount, term: elements.termInput.value,
+      isFreeSample: elements.freeSample.value === "true", fileName,
+      r2Key: uploadData.r2Key || uploadData.key
+    };
+    const local = readSavedResources().filter((r) => String(r.id) !== String(saved.id));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([...local, normalizeResourceForLibrary(saved)]));
+
+    elements.form.reset();
+    document.querySelector("#priceInput").value = "";
+    document.querySelector("#discountInput").value = 0;
+    elements.termInput.value = "Term 1";
+    elements.freeSample.value = "false";
+    elements.notesContent.value = "";
+    elements.adminGrade.value = "Grade 1";
+    if (typeof refreshAdminUploadSubjects === "function") refreshAdminUploadSubjects();
+    elements.fileHelp.textContent = "Choose a PDF, Word document, PowerPoint, Excel file, text file, or ZIP.";
+    elements.formStatus.textContent = isInternationalUpload
+      ? `${curriculum} resource uploaded successfully. It will appear only on the ${curriculum} resource page after approval.`
+      : "Resource uploaded to R2 and saved to Supabase successfully.";
+    showToast(isInternationalUpload ? `${curriculum} resource uploaded successfully.` : "Resource uploaded successfully.");
+    await syncPublicResourcesFromServer();
+    if (typeof loadAdminDashboard === "function") await loadAdminDashboard();
+  } catch (error) {
+    console.error("CBE Nexus resource publish error:", error);
+    elements.formStatus.textContent = error.message || "Resource could not be published.";
+    showToast(error.message || "Resource could not be published.");
+  }
 }
 
 function setActiveMaterialLink() {
@@ -1020,6 +1176,14 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
     }
   });
 
+  safeOn(elements.adminCurriculum, "change", () => {
+    refreshAdminUploadSubjects();
+    const selected = String(elements.adminCurriculum?.value || "CBC/CBE");
+    if (elements.formStatus) elements.formStatus.textContent = selected === "CBC/CBE"
+      ? "CBC / CBE upload selected."
+      : selected + " upload selected. This resource will appear only on its dedicated international curriculum page.";
+  });
+
   safeOn(elements.sellerGrade, "change", (event) => {
     const subjects = gradeSubjects[event.target.value];
     optionList(elements.sellerSubject, subjects, subjects[0]);
@@ -1236,7 +1400,6 @@ setupFilters();
 applyGradeSubjectFromLink(false);
 renderQuickTypes();
 restoreAdminAccess();
-bindEvents();
 injectContactInfo();
 renderResources();
 renderTrending();
@@ -1427,4 +1590,3 @@ async function initVacancies(){loadVacancies("homeVacancyGrid",true);loadVacanci
   document.addEventListener('DOMContentLoaded',paint);
   if(document.readyState!=='loading')paint();
 })();
-\n

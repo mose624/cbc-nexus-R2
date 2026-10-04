@@ -864,7 +864,34 @@
               <button class="secondary-button" id="startGradeOneUploadButton" type="button">Set Grade 1</button>
             </div>
             <form id="resourceForm" class="admin-form">
-            <div class="form-row">
+            <section class="international-admin-upload-card" aria-label="International curriculum resource upload">
+              <div class="international-admin-upload-heading">
+                <div>
+                  <p class="eyebrow">International Curriculum Resources</p>
+                  <h3>Upload to a dedicated international curriculum page</h3>
+                  <p>Use this section for IGCSE, IB, O Level, A Level and Pearson Edexcel materials. International resources are kept separate from the main CBC/CBE Resource Library and appear only on their matching curriculum page.</p>
+                </div>
+                <span class="international-admin-badge">SEPARATE LIBRARY</span>
+              </div>
+              <div class="form-row">
+                <label>
+                  Resource Curriculum
+                  <select id="adminCurriculumInput" required>
+                    <option value="CBC/CBE">CBC / CBE</option>
+                    <option value="IGCSE">IGCSE</option>
+                    <option value="IB">IB</option>
+                    <option value="O Level">O Level</option>
+                    <option value="A Level">A Level</option>
+                    <option value="Pearson">Pearson Edexcel</option>
+                  </select>
+                </label>
+                <div class="international-admin-help">
+                  <strong>How it works</strong>
+                  <span>Select an international curriculum → choose its subject → upload the file → Publish Resource.</span>
+                </div>
+              </div>
+            </section>
+                        <div class="form-row">
               <label>
                 Resource Title
                 <input id="titleInput" required placeholder="Grade 7 Mathematics Topical Questions">
@@ -1311,7 +1338,7 @@
         <iframe id="resourcePreviewFrame" title="Resource preview" loading="lazy"></iframe>
       </div>
     </div>
-    <script src="app.js?v=20261003-31"></script>
+    <script src="app.js?v=20261004-1"></script>
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => navigator.serviceWorker.register("/sw.js").catch(() => {}));
