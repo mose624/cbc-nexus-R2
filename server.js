@@ -1069,6 +1069,21 @@ function injectSeoFooter(html,pathname){
   return html.replace(/<\/head>/i,styles+"</head>");
 }
 
+function xmlEscape(value){return String(value??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&apos;");}
+function rssCdata(value){return "<![CDATA["+String(value??"").replace(/]]>/g,"]]]]><![CDATA[>")+"]]>";
+}
+async function buildBlogRss(req){
+  const base=seo.base(req).replace(/\/$/,"");
+  const posts=await getBlogPosts(false);
+  const items=posts.slice(0,50).map(p=>{
+    const link=base+"/blog-article.html?slug="+encodeURIComponent(String(p.slug||""));
+    const date=p.publishedAt||p.createdAt||new Date().toISOString();
+    const description=String(p.excerpt||p.content||"").replace(/<script[\\s\\S]*?<\\/script>/gi,"").slice(0,4000);
+    return "<item><title>"+rssCdata(p.title)+"</title><link>"+xmlEscape(link)+"</link><guid isPermaLink=\"true\">"+xmlEscape(link)+"</guid><description>"+rssCdata(description)+"</description><author>"+xmlEscape(p.author||"CBE Nexus")+"</author><category>"+xmlEscape(p.category||"Education")+"</category><pubDate>"+new Date(date).toUTCString()+"</pubDate></item>";
+  }).join("");
+  return '<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>CBE Nexus Education Hub</title><link>'+xmlEscape(base+"/blog.html")+'</link><description>Education news, teaching guides, scholarships, AI and CBC/CBE resources from CBE Nexus.</description><language>en-ke</language><lastBuildDate>'+new Date().toUTCString()+'</lastBuildDate>'+items+"</channel></rss>";
+}
+
 function injectAnalyticsTags(html){
   const measurementId=String(process.env.GA_MEASUREMENT_ID||"G-8E0HGCJM8W").trim();
   const clarityId=String(process.env.CLARITY_PROJECT_ID||"ysl6ujcrkf").trim();
@@ -1085,6 +1100,17 @@ function injectAnalyticsTags(html){
 }
 
 async function serveStatic(req,res,url){
+  if(req.method==="GET" && url.pathname==="/rss.xml"){
+    try{
+      res.writeHead(200,{"Content-Type":"application/rss+xml; charset=utf-8","Cache-Control":"public, max-age=900"});
+      res.end(await buildBlogRss(req));
+    }catch(error){
+      console.error("RSS feed error:",error);
+      res.writeHead(500,{"Content-Type":"application/xml; charset=utf-8"});
+      res.end('<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>CBE Nexus Education Hub</title><description>RSS feed temporarily unavailable.</description></channel></rss>');
+    }
+    return;
+  }
   if(req.method==="GET" && url.pathname==="/sitemap.xml"){
     res.writeHead(200,{"Content-Type":"application/xml; charset=utf-8","Cache-Control":"public, max-age=3600"});
     res.end(await seo.sitemap(req));
