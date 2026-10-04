@@ -462,7 +462,9 @@ async function handleApi(req,res,url){
         let q=supabase.from("blog_posts").select("*").order("created_at",{ascending:false}).limit(500);
         if(!includeDrafts)q=q.eq("status","published");
         const {data,error}=await q;if(error)throw error;
-        return (data||[]).map(blogPayloadFromRow);
+        if((data||[]).length)return (data||[]).map(blogPayloadFromRow);
+        const seedRows=await readJsonStore("blog-posts.json");
+        return seedRows.filter(x=>includeDrafts||x.status==="published").map(blogPayloadFromRow);
       }catch(error){console.warn("Supabase blog lookup failed:",error.message||error);}
     }
     const rows=await readJsonStore("blog-posts.json");
