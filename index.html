@@ -68,6 +68,10 @@
 .ai-notes-admin-grid button{cursor:pointer;min-height:42px}
 @media(max-width:1000px){.ai-academy-integrations{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.admin-module-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.admin-module-tab{width:100%;min-height:46px}.ai-academy-integrations{grid-template-columns:1fr}.ai-notes-admin-grid{grid-template-columns:1fr!important}.ai-notes-admin-grid .form-row{grid-template-columns:1fr!important}.ai-notes-admin-grid textarea{font-size:16px}}
+</style><style id="admin-resource-actions-style">
+.admin-resource-quick-actions{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 18px}
+.admin-resource-quick-actions a{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;min-height:44px}
+@media(max-width:600px){.admin-resource-quick-actions{display:grid;grid-template-columns:1fr}.admin-resource-quick-actions a{width:100%}}
 </style></head>
   <body>
     <header class="site-header">
@@ -1088,6 +1092,7 @@
               <div><h3>Resource management</h3><span>Review marketplace content before publication.</span></div>
               <span id="adminResourceSummary" class="admin-module-summary"></span>
             </div>
+            <div class="admin-resource-quick-actions"><a class="primary-button" href="upload.html">➕ Upload / Add Resource</a><a class="secondary-button" href="resource-category.html">📚 Open Resource Library</a></div>
             <div id="adminResourceManagement" class="admin-management-list"></div>
           </div>
 
