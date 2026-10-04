@@ -213,6 +213,7 @@ const elements = {
   activeContext: document.querySelector("#activeContext"),
   statResources: document.querySelector("#statResources"),
   form: document.querySelector("#resourceForm"),
+  adminCurriculum: document.querySelector("#adminCurriculumInput"),
   adminGrade: document.querySelector("#adminGradeInput"),
   adminSubject: document.querySelector("#adminSubjectInput"),
   adminType: document.querySelector("#adminTypeInput"),
@@ -705,11 +706,11 @@ function refreshSubjectFilters() {
 }
 
 function setupFilters() {
-  const grades = Object.keys(gradeSubjects);
+  const grades = Object.keys(gradeSubjects).filter((value) => !["IGCSE","IB","O Level","A Level","Pearson"].includes(value));
   const allAdminSubjects = allCbeSubjects;
 
   optionList(elements.gradeFilter, ["All Grades", ...grades], state.grade);
-  optionList(elements.adminGrade, [...grades, "IGCSE", "IB", "O Level", "A Level", "Pearson"], "Grade 1");
+  optionList(elements.adminGrade, grades, "Grade 1");
   optionList(elements.sellerGrade, grades, "Grade 1");
   optionList(elements.projectGrade, grades, "Grade 1");
   optionList(elements.tuitionGrade, grades, "Grade 1");
@@ -717,11 +718,27 @@ function setupFilters() {
   optionList(elements.typeFilter, ["All Materials", ...materialTypes], state.type);
   optionList(elements.adminType, materialTypes, "Notes");
   optionList(elements.sellerType, materialTypes, "Notes");
-  // Upload and Publish Learning Resources: show the complete subject catalogue.
   optionList(elements.adminSubject, allAdminSubjects, "Mathematics Activities");
   optionList(elements.sellerSubject, allAdminSubjects, "Mathematics Activities");
+  if (elements.adminCurriculum) elements.adminCurriculum.value = "CBC/CBE";
+  refreshAdminUploadSubjects();
   refreshSubjectFilters();
 }
+
+function refreshAdminUploadSubjects() {
+  if (!elements.adminCurriculum || !elements.adminGrade || !elements.adminSubject) return;
+  const curriculum = String(elements.adminCurriculum.value || "CBC/CBE");
+  const international = ["IGCSE","IB","O Level","A Level","Pearson"].includes(curriculum);
+  if (international) {
+    optionList(elements.adminGrade, [curriculum], curriculum);
+    optionList(elements.adminSubject, gradeSubjects[curriculum] || [], "");
+  } else {
+    const grades = Object.keys(gradeSubjects).filter((value) => !["IGCSE","IB","O Level","A Level","Pearson"].includes(value));
+    optionList(elements.adminGrade, grades, "Grade 1");
+    optionList(elements.adminSubject, allCbeSubjects, "Mathematics Activities");
+  }
+}
+
 
 function resourceMatches(resource) {
   const normalized = normalizeResourceForLibrary(resource);
@@ -1742,6 +1759,7 @@ async function handleFormSubmit(event) {
   const price = Number(document.querySelector("#priceInput").value || 0);
   const discount = Number(document.querySelector("#discountInput").value || 0);
   const grade = elements.adminGrade.value;
+  const curriculum = elements.adminCurriculum ? elements.adminCurriculum.value : "CBC/CBE";
   const subject = elements.adminSubject.value;
   const type = elements.adminType.value;
   let fileName = document.querySelector("#fileNameInput").value.trim();
@@ -1785,6 +1803,7 @@ async function handleFormSubmit(event) {
         role: "admin",
         title,
         grade,
+        curriculum,
         subject,
         type,
         description,
@@ -1832,7 +1851,13 @@ async function handleFormSubmit(event) {
   }
 }
 
-function safeOn(element, eventName, handler, options) {
+safeOn(elements.adminCurriculum, "change", () => {
+    refreshAdminUploadSubjects();
+    showToast(elements.adminCurriculum.value === "CBC/CBE"
+      ? "CBC / CBE upload selected."
+      : elements.adminCurriculum.value + " upload selected. This resource will appear on its own international curriculum page.");
+  });
+  function safeOn(element, eventName, handler, options) {
   if (element && typeof element.addEventListener === "function") {
     element.addEventListener(eventName, handler, options);
   }
