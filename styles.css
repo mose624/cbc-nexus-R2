@@ -6111,3 +6111,24 @@ html[data-grade-theme="international"]{--grade-accent:#00838f;--grade-accent-2:#
   #about .primary-button,#privacy .primary-button,
   #holidayTuition .danger-blink-button{min-height:25px!important;padding:4px 7px!important;font-size:8px!important}
 }
+
+/* COMPACT EDUCATION HUB HOME DASHBOARD */
+#educationHubHome{padding:10px 14px!important;margin:7px auto!important;max-width:1040px!important}
+#educationHubHome .education-hub-heading{margin-bottom:7px!important}
+#educationHubHome .education-hub-heading h2{font-size:16px!important;line-height:1.2!important;margin:2px 0 4px!important}
+#educationHubHome .education-hub-heading p{font-size:9px!important;line-height:1.35!important;margin:2px 0!important}
+#educationHubHome .education-hub-heading .eyebrow{font-size:7px!important;margin-bottom:2px!important}
+#educationHubHome .education-hub-view-all{font-size:8px!important;padding:5px 8px!important;min-height:26px!important}
+#educationHubHome .education-hub-home-grid{gap:7px!important}
+#educationHubHome .education-hub-card{padding:8px!important;border-radius:7px!important}
+#educationHubHome .education-hub-card h3{font-size:11px!important;line-height:1.25!important;margin:3px 0!important}
+#educationHubHome .education-hub-card p{font-size:8px!important;line-height:1.35!important;margin:3px 0!important}
+#educationHubHome .education-hub-card a{font-size:8px!important}
+@media(max-width:640px){
+  #educationHubHome{width:calc(100% - 10px)!important;padding:7px 8px!important;margin:5px auto!important}
+  #educationHubHome .education-hub-heading h2{font-size:11px!important}
+  #educationHubHome .education-hub-heading p{font-size:7px!important}
+  #educationHubHome .education-hub-card{padding:5px!important}
+  #educationHubHome .education-hub-card h3{font-size:8px!important}
+  #educationHubHome .education-hub-card p,#educationHubHome .education-hub-card a{font-size:6.5px!important}
+}
