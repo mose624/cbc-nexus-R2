@@ -5688,3 +5688,248 @@ html[data-grade-theme="international"]{--grade-accent:#00838f;--grade-accent-2:#
     pointer-events: auto;
   }
 }
+
+
+/* =========================================================
+   CBE NEXUS — REAL PHONE MODE
+   Functional desktop feature set, compact responsive layout.
+   Optimized for 320–430px screens without changing desktop.
+   ========================================================= */
+@media (max-width: 767px) {
+  html, body {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  * { box-sizing: border-box; }
+
+  .top-strip {
+    font-size: 9px !important;
+    padding: 4px 6px !important;
+    min-height: 24px !important;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .main-nav {
+    min-height: 52px !important;
+    padding: 6px 8px !important;
+    gap: 6px !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .main-nav .nav-brand,
+  .main-nav .brand,
+  .main-nav .logo {
+    flex: 0 0 auto !important;
+  }
+
+  .nav-menu {
+    flex: 0 0 auto !important;
+    width: max-content !important;
+    min-width: max-content !important;
+    display: flex !important;
+    gap: 4px !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .nav-menu .nav-link,
+  .nav-menu .nav-dropdown summary {
+    min-height: 36px !important;
+    padding: 7px 8px !important;
+    font-size: 10px !important;
+    white-space: nowrap !important;
+  }
+
+  .dropdown-panel {
+    max-width: calc(100vw - 12px) !important;
+  }
+
+  #dashboard.portal-dashboard {
+    width: calc(100% - 8px) !important;
+    max-width: none !important;
+    margin: 7px auto !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 30fr) minmax(0, 40fr) minmax(0, 30fr) !important;
+    gap: 4px !important;
+    align-items: start !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-main,
+  #dashboard.portal-dashboard > .portal-sidebar,
+  #dashboard.portal-dashboard > .portal-rightbar {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  .portal-card,
+  .portal-panel,
+  .portal-main-card,
+  .resource-card,
+  .grade-card {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow: hidden;
+  }
+
+  .portal-card {
+    padding: 6px !important;
+    margin-bottom: 5px !important;
+    border-radius: 7px !important;
+  }
+
+  .portal-card-heading {
+    font-size: 8px !important;
+    line-height: 1.2 !important;
+  }
+
+  .portal-side-link,
+  .portal-card a {
+    font-size: 8px !important;
+    line-height: 1.25 !important;
+    padding: 5px 3px !important;
+    min-height: 28px !important;
+    overflow-wrap: anywhere;
+  }
+
+  #dashboard .grade-card {
+    padding: 5px !important;
+    margin-bottom: 4px !important;
+  }
+
+  #dashboard .grade-card h3,
+  #dashboard .grade-card .grade-title {
+    font-size: 9px !important;
+    line-height: 1.15 !important;
+  }
+
+  #dashboard .grade-card .subject-dropdown {
+    min-height: 31px !important;
+    padding: 5px 6px !important;
+    font-size: 8px !important;
+  }
+
+  #dashboard .grade-card .subject-dropdown-label {
+    font-size: 7px !important;
+    margin-bottom: 3px !important;
+  }
+
+  .portal-main h1,
+  .portal-main h2,
+  .portal-main h3 {
+    overflow-wrap: anywhere;
+  }
+
+  .portal-main h1 { font-size: 17px !important; }
+  .portal-main h2 { font-size: 14px !important; }
+  .portal-main h3 { font-size: 11px !important; }
+
+  .resource-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 5px !important;
+  }
+
+  .resource-grid .resource-card {
+    padding: 6px !important;
+  }
+
+  .resource-card h3,
+  .resource-card h4 {
+    font-size: 9px !important;
+    line-height: 1.2 !important;
+  }
+
+  .resource-card p {
+    font-size: 8px !important;
+    line-height: 1.25 !important;
+  }
+
+  .actions,
+  .resource-card .actions {
+    gap: 3px !important;
+    margin-top: 5px !important;
+  }
+
+  .actions .btn,
+  .resource-card button,
+  .resource-card a.btn {
+    min-height: 30px !important;
+    padding: 5px 6px !important;
+    font-size: 8px !important;
+    white-space: normal !important;
+  }
+
+  input, select, textarea {
+    max-width: 100% !important;
+    font-size: 12px !important;
+  }
+
+  button {
+    min-height: 32px;
+    font-size: 10px;
+  }
+
+  .viewer-modal {
+    padding: 4px !important;
+  }
+
+  .viewer-dialog {
+    width: 100% !important;
+    height: 96vh !important;
+    max-height: 96vh !important;
+  }
+
+  .viewer-head {
+    padding: 7px 9px !important;
+  }
+
+  .viewer-head h2 {
+    font-size: 12px !important;
+  }
+
+  .viewer-close {
+    min-height: 32px !important;
+    padding: 6px 9px !important;
+    font-size: 10px !important;
+  }
+
+  .resource-preview-modal {
+    padding: 4px !important;
+  }
+
+  .resource-preview-dialog {
+    width: 100% !important;
+    height: 96vh !important;
+    max-height: 96vh !important;
+  }
+
+  img, video, iframe, canvas {
+    max-width: 100%;
+  }
+
+  .footer,
+  footer {
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 380px) {
+  #dashboard.portal-dashboard {
+    gap: 3px !important;
+    width: calc(100% - 6px) !important;
+  }
+
+  .portal-card { padding: 5px !important; }
+  .portal-side-link,
+  .portal-card a { font-size: 7px !important; }
+  #dashboard .grade-card .subject-dropdown { font-size: 7px !important; }
+}
+
+@media (min-width: 768px) {
+  /* Desktop remains completely unchanged. */
+}
