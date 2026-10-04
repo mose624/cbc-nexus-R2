@@ -108,6 +108,11 @@
 @media(max-width:520px){.nexus-quick-links{padding:28px 14px}.nexus-quick-links-grid{grid-template-columns:1fr;gap:9px}.nexus-quick-link{min-height:42px;padding:8px 10px;font-size:.9rem}}
 </style>
 <style id="nexus-school-directory-link-style">.nexus-quick-link.school-directory-link{background:#92400e;color:#fff}</style>
+<style id="nexus-whatsapp-floating-footer">
+.whatsapp-floating-footer{position:fixed;right:22px;bottom:22px;z-index:99990;display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:12px 18px;border-radius:999px;background:#16a34a;color:#fff!important;font-weight:900;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.2);transition:transform .18s ease,box-shadow .18s ease}
+.whatsapp-floating-footer:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(0,0,0,.25)}
+@media(max-width:520px){.whatsapp-floating-footer{right:14px;bottom:14px;padding:11px 15px;font-size:.9rem}}
+</style>
 <style id="school-directory-admin-style">.school-admin-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}.school-admin-toolbar input,.school-admin-toolbar select{flex:1;min-width:180px;padding:11px;border:1px solid #d7c7aa;border-radius:9px}.school-admin-item{background:#fff;border:1px solid #e6dccb;border-radius:14px;padding:16px;margin:10px 0}.school-admin-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.school-admin-meta{color:#64748b;font-size:.9rem;margin:5px 0}.school-admin-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.school-admin-actions button{cursor:pointer}.school-status-badge{display:inline-block;padding:4px 9px;border-radius:999px;font-size:.78rem;font-weight:800;text-transform:capitalize}.school-status-badge.pending{background:#fef3c7;color:#92400e}.school-status-badge.published{background:#dcfce7;color:#166534}.school-status-badge.rejected{background:#fee2e2;color:#991b1b}.school-vacancy-admin{border-top:1px solid #eee4d4;margin-top:14px;padding-top:12px}.school-vacancy-admin strong{display:block}.school-admin-danger{background:#fee2e2!important;color:#991b1b!important;border-color:#fecaca!important}@media(max-width:650px){.school-admin-head{display:block}.school-admin-toolbar{display:grid;grid-template-columns:1fr}.school-admin-toolbar input,.school-admin-toolbar select{width:100%;box-sizing:border-box}}</style></head>
   <body>
     <header class="site-header">
@@ -160,7 +165,6 @@
         </div>
 
         <div class="nav-actions">
-          <a class="whatsapp-button nav-utility" href="https://wa.me/254798462815" target="_blank" rel="noopener">WhatsApp</a>
           <a class="primary-button nav-cta" href="resource-category.html">Browse</a>
         </div>
       </nav>
@@ -1542,6 +1546,8 @@
       </nav>
       <p style="margin-top: 1rem; font-size: 0.85rem; opacity: 0.8;">&copy; 2026 CBE E-Learning Resources. All rights reserved.</p>
     </footer>
+
+    <a class="whatsapp-floating-footer" href="https://wa.me/254798462815" target="_blank" rel="noopener" aria-label="Chat with CBE Nexus on WhatsApp" title="Chat with CBE Nexus on WhatsApp">💬 WhatsApp</a>
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <aside id="cartDrawer" class="cart-drawer" aria-label="Resource cart" aria-hidden="true">
