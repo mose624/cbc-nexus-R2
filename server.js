@@ -509,11 +509,15 @@ async function handleApi(req,res,url){
       if(supabaseConfigured){
         const {data,error}=await supabase.from("blog_posts").upsert(row,{onConflict:"id"}).select("*").single();
         if(error)throw error;
-        sendJson(res,200,{ok:true,post:blogPayloadFromRow(data),storage:"supabase"});return true;
+        const publishedPost=blogPayloadFromRow(data);
+        if(String(publishedPost.status)==="published") notifyIndexNow(req,[seo.base(req).replace(/\/$/,"")+"/blog-article.html?slug="+encodeURIComponent(String(publishedPost.slug||"")),seo.base(req).replace(/\/$/,"")+"/blog.html",seo.base(req).replace(/\/$/,"")+"/sitemap.xml"]).catch(()=>{});
+        sendJson(res,200,{ok:true,post:publishedPost,storage:"supabase"});return true;
       }
       const rows=await readJsonStore("blog-posts.json");
       await fs.writeFile(path.join(DATA_DIR,"blog-posts.json"),JSON.stringify([row,...rows.filter(x=>x.id!==row.id)],null,2));
-      sendJson(res,200,{ok:true,post:blogPayloadFromRow(row),storage:"local"});
+      const publishedPost=blogPayloadFromRow(row);
+      if(String(publishedPost.status)==="published") notifyIndexNow(req,[seo.base(req).replace(/\/$/,"")+"/blog-article.html?slug="+encodeURIComponent(String(publishedPost.slug||"")),seo.base(req).replace(/\/$/,"")+"/blog.html",seo.base(req).replace(/\/$/,"")+"/sitemap.xml"]).catch(()=>{});
+      sendJson(res,200,{ok:true,post:publishedPost,storage:"local"});
     }catch(error){console.error("Admin blog save error:",error);sendJson(res,500,{ok:false,error:error.message||"Article could not be saved. If Supabase is enabled, run the blog schema SQL first."});}
     return true;
   }
@@ -1072,6 +1076,31 @@ function injectSeoFooter(html,pathname){
 function xmlEscape(value){return String(value??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&apos;");}
 function rssCdata(value){return "<![CDATA["+String(value??"").replace(/]]>/g,"]]]]><![CDATA[>")+"]]>";
 }
+function indexNowKey(req){
+  const configured=String(process.env.INDEXNOW_KEY||"").trim();
+  if(configured && /^[A-Za-z0-9-]{8,128}$/.test(configured)) return configured;
+  const seed=String(process.env.INDEXNOW_SEED||process.env.ADMIN_SESSION_SECRET||"cbe-nexus-indexnow");
+  return crypto.createHash("sha256").update("cbe-nexus:"+seed).digest("hex").slice(0,32);
+}
+async function notifyIndexNow(req, urls){
+  const list=[...new Set((Array.isArray(urls)?urls:[]).filter(Boolean))].slice(0,10000);
+  if(!list.length)return {ok:false,skipped:true,reason:"no_urls"};
+  try{
+    const base=seo.base(req).replace(/\/$/,"");
+    const key=indexNowKey(req);
+    const host=new URL(base).host;
+    const response=await fetch("https://api.indexnow.org/indexnow",{
+      method:"POST",
+      headers:{"Content-Type":"application/json; charset=utf-8"},
+      body:JSON.stringify({host,key,keyLocation:base+"/indexnow-key.txt",urlList:list})
+    });
+    const status=response.status;
+    return {ok:status>=200&&status<300,status,urls:list.length};
+  }catch(error){
+    console.warn("IndexNow notification failed:",error.message||error);
+    return {ok:false,error:String(error.message||error)};
+  }
+}
 async function buildBlogRss(req){
   const base=seo.base(req).replace(/\/$/,"");
   const posts=await getBlogPosts(false);
@@ -1081,7 +1110,7 @@ async function buildBlogRss(req){
     const description=String(p.excerpt||p.content||"").replace(/<script[\\s\\S]*?<\\/script>/gi,"").slice(0,4000);
     return "<item><title>"+rssCdata(p.title)+"</title><link>"+xmlEscape(link)+"</link><guid isPermaLink=\"true\">"+xmlEscape(link)+"</guid><description>"+rssCdata(description)+"</description><author>"+xmlEscape(p.author||"CBE Nexus")+"</author><category>"+xmlEscape(p.category||"Education")+"</category><pubDate>"+new Date(date).toUTCString()+"</pubDate></item>";
   }).join("");
-  return '<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>CBE Nexus Education Hub</title><link>'+xmlEscape(base+"/blog.html")+'</link><description>Education news, teaching guides, scholarships, AI and CBC/CBE resources from CBE Nexus.</description><language>en-ke</language><lastBuildDate>'+new Date().toUTCString()+'</lastBuildDate>'+items+"</channel></rss>";
+  return '<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CBE Nexus Education Hub</title><atom:link href="'+xmlEscape(base+"/rss.xml")+'" rel="self" type="application/rss+xml"/><link>'+xmlEscape(base+"/blog.html")+'</link><description>Education news, teaching guides, scholarships, AI and CBC/CBE resources from CBE Nexus.</description><language>en-ke</language><lastBuildDate>'+new Date().toUTCString()+'</lastBuildDate>'+items+"</channel></rss>";
 }
 
 function injectAnalyticsTags(html){
@@ -1114,6 +1143,11 @@ async function serveStatic(req,res,url){
   if(req.method==="GET" && url.pathname==="/sitemap.xml"){
     res.writeHead(200,{"Content-Type":"application/xml; charset=utf-8","Cache-Control":"public, max-age=3600"});
     res.end(await seo.sitemap(req));
+    return;
+  }
+  if(req.method==="GET" && url.pathname==="/indexnow-key.txt"){
+    res.writeHead(200,{"Content-Type":"text/plain; charset=utf-8","Cache-Control":"public, max-age=86400"});
+    res.end(indexNowKey(req));
     return;
   }
   if(req.method==="GET" && url.pathname==="/robots.txt"){
