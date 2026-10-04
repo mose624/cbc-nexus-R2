@@ -5633,3 +5633,58 @@ html[data-grade-theme="international"]{--grade-accent:#00838f;--grade-accent-2:#
     overflow-x: auto;
   }
 }
+
+
+/* =========================================================
+   CBE NEXUS — MOBILE FEATURE PARITY
+   Keep the desktop-mode layout on phones, but make every
+   existing desktop interaction usable with touch input.
+   No feature is hidden, disabled, reordered, or replaced.
+   ========================================================= */
+@media (max-width: 767px) {
+  /* Preserve the desktop canvas while allowing the full site to be reached. */
+  html, body {
+    min-width: 1024px;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Touch should activate the same controls as mouse click. */
+  a, button, input, select, textarea, summary,
+  [role="button"], [onclick], .clickable, .nav-link,
+  .nav-dropdown summary, .dropdown-panel a, .dropdown-panel button {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(15, 122, 79, .14);
+  }
+
+  /* Do not rely on hover for access to controls on phones. */
+  button, a, summary, select, input, textarea {
+    cursor: pointer;
+  }
+
+  /* Keep menus and dropdowns fully reachable on touch screens. */
+  .nav-dropdown[open] .dropdown-panel,
+  .nav-dropdown[open] > .dropdown-panel {
+    pointer-events: auto;
+  }
+
+  /* Prevent fixed dialogs/viewers from becoming unusable after opening. */
+  .viewer-modal.open,
+  .resource-preview-modal.open,
+  [role="dialog"].open,
+  .modal.open {
+    pointer-events: auto;
+    touch-action: auto;
+  }
+
+  /* Preserve readable form controls without changing their desktop layout. */
+  input, select, textarea, button {
+    -webkit-appearance: auto;
+  }
+
+  /* Never disable links/buttons merely because the device is touch. */
+  a, button, summary {
+    pointer-events: auto;
+  }
+}
