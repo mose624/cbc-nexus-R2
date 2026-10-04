@@ -90,6 +90,20 @@
 /* Customer Care: move floating control to the left side of the footer */
 #customerCareWidget,#customerCareButton,#customer-care-widget,#customer-care-button{left:14px!important;right:auto!important;bottom:14px!important;transform:scale(.31)!important;transform-origin:bottom left!important}
 @media(max-width:520px){#customerCareWidget,#customerCareButton,#customer-care-widget,#customer-care-button{left:14px!important;bottom:14px!important}}
+</style><style id="ad-revenue-dashboard-style">
+.ad-revenue-tab{background:#15803d!important;color:#fff!important;border-color:#166534!important}
+.ad-revenue-tab.active{background:#166534!important}
+.ar-period{margin:4px 0 14px;color:#64748b;font-size:.9rem;font-weight:700}
+.ar-kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:14px 0 18px}
+.ar-kpi{background:#fff;border:1px solid #dbe5ef;border-radius:14px;padding:16px;min-height:96px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 4px 14px rgba(15,23,42,.05)}
+.ar-kpi span{font-size:.82rem;font-weight:800;color:#64748b}.ar-kpi strong{font-size:1.65rem;line-height:1.15;color:#0f172a}.ar-kpi small{color:#94a3b8}.ar-kpi-revenue{border:2px solid #15803d;background:#f0fdf4}.ar-kpi-revenue strong{color:#166534}
+.ar-country-card{background:#fff;border:1px solid #dbe5ef;border-radius:16px;padding:18px;box-shadow:0 4px 14px rgba(15,23,42,.05)}
+.ar-section-heading{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-bottom:12px}.ar-section-heading h4{margin:0 0 4px;font-size:1.05rem}.ar-section-heading p{margin:0;color:#64748b;font-size:.9rem}.ar-section-heading>span{color:#64748b;font-size:.78rem;white-space:nowrap}
+.ar-table-wrap{overflow:auto}.ar-table-wrap table{width:100%;border-collapse:collapse;min-width:650px}.ar-table-wrap th,.ar-table-wrap td{text-align:left;padding:11px 10px;border-bottom:1px solid #eef2f7;font-size:.88rem}.ar-table-wrap th{color:#475569;background:#f8fafc}.ar-table-wrap td:not(:first-child),.ar-table-wrap th:not(:first-child){text-align:right}
+.ar-error{padding:14px 16px;margin:10px 0 16px;background:#fff7ed;border:1px solid #fdba74;border-radius:12px;color:#9a3412;line-height:1.55}.ar-error small{display:block;margin-top:7px;color:#7c2d12}
+.ar-note{margin-top:14px;padding:13px 15px;border-radius:12px;background:#fffbeb;border:1px solid #fde68a;color:#713f12;font-size:.86rem;line-height:1.5}
+@media(max-width:900px){.ar-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ar-section-heading{display:block}.ar-section-heading>span{display:block;margin-top:8px}}
+@media(max-width:520px){.ar-kpi-grid{grid-template-columns:1fr}.ar-kpi strong{font-size:1.5rem}}
 </style><style id="ai-academy-admin-tab-style">
 .admin-module-tab.ai-academy-notes-tab{background:#facc15!important;color:#111827!important;border:2px solid #eab308!important;font-weight:800!important;box-shadow:0 3px 10px rgba(234,179,8,.25)}
 .admin-module-tab.ai-academy-notes-tab:hover{background:#fde047!important;color:#111827!important;transform:translateY(-1px)}
@@ -1008,6 +1022,7 @@
           <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="school-directory">🏫 School Directory</button>
           <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="analytics">📊 CBE Nexus Analytics</button>
           <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="seo">SEO Center <span class="admin-seo-badge">Ubersuggest</span></button>
+          <button class="admin-module-tab ad-revenue-tab" type="button" role="tab" aria-selected="false" data-admin-module="ad-revenue">💰 Ad Revenue</button>
           </div>
           <div class="admin-module-panel" data-admin-module-panel="analytics">
             <div class="admin-module-heading">
@@ -1043,6 +1058,30 @@
               <a class="secondary-button" href="https://developers.google.com/analytics/devguides/reporting/data/v1" target="_blank" rel="noopener">GA4 Data API documentation ↗</a>
               <a class="secondary-button" href="https://learn.microsoft.com/en-us/clarity/" target="_blank" rel="noopener">Clarity documentation ↗</a>
             </div>
+          </div>
+
+          <div class="admin-module-panel" data-admin-module-panel="ad-revenue">
+            <div class="admin-module-heading">
+              <div><p class="eyebrow">CBE NEXUS MONETIZATION</p><h3>💰 Ad Revenue Dashboard</h3><span>Live advertising performance from GA4. No sample figures are shown as real earnings.</span></div>
+              <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span id="arStatus" class="admin-module-summary">Checking…</span><button id="arRefresh" type="button" class="secondary-button">↻ Refresh</button></div>
+            </div>
+            <div id="arPeriod" class="ar-period">Select Ad Revenue to load the reporting period.</div>
+            <div id="arError" class="ar-error" hidden></div>
+            <div class="ar-kpi-grid">
+              <article class="ar-kpi"><span>Pageviews</span><strong id="arPageviews">—</strong><small>GA4 screen page views</small></article>
+              <article class="ar-kpi"><span>Sessions</span><strong id="arSessions">—</strong><small>GA4 sessions</small></article>
+              <article class="ar-kpi"><span>Pages / session</span><strong id="arPagesSession">—</strong><small>Pageviews ÷ sessions</small></article>
+              <article class="ar-kpi"><span>Ad impressions</span><strong id="arImpressions">—</strong><small>Publisher ad impressions</small></article>
+              <article class="ar-kpi"><span>Ad CTR</span><strong id="arCtr">—</strong><small>Clicks ÷ impressions</small></article>
+              <article class="ar-kpi"><span>RPM</span><strong id="arRpm">—</strong><small>Revenue per 1,000 pageviews</small></article>
+              <article class="ar-kpi ar-kpi-revenue"><span>Estimated revenue</span><strong id="arRevenue">—</strong><small>Reported publisher ad revenue</small></article>
+              <article class="ar-kpi"><span>Ad clicks</span><strong id="arClicks">—</strong><small>Publisher ad clicks</small></article>
+            </div>
+            <section class="ar-country-card">
+              <div class="ar-section-heading"><div><h4>🌍 Traffic & revenue by country</h4><p>Useful for understanding the share and value of Kenya, USA, UK, Canada and other markets.</p></div><span id="arLastUpdated">—</span></div>
+              <div class="ar-table-wrap"><table><thead><tr><th>Country</th><th>Sessions</th><th>Traffic share</th><th>Pageviews</th><th>Ad revenue</th></tr></thead><tbody id="arCountryTable"><tr><td colspan="5">Live country data will appear here.</td></tr></tbody></table></div>
+            </section>
+            <div class="ar-note"><strong>Important:</strong> this dashboard reads GA4 reporting data securely on the server. GA4_PROPERTY_ID and GA4_SERVICE_ACCOUNT_JSON are never sent to the browser. Ad revenue appears only when GA4 is receiving publisher-ad revenue data and the property is correctly configured.</div>
           </div>
 
           <div class="admin-module-panel active" data-admin-module-panel="resources">
@@ -1572,6 +1611,7 @@
         if(name==='vacancies')document.getElementById('adminVacancyForm')?.scrollIntoView({behavior:'smooth',block:'start'});
       }
       if(name==='analytics' && window.CBENexusAnalytics)window.CBENexusAnalytics.track('admin_analytics_open',{page:'admin'});
+      if(name==='ad-revenue' && window.CBENexusAdRevenue)window.CBENexusAdRevenue.load();
       if(name==='resources' && typeof window.loadAdminResourceModeration==='function')window.loadAdminResourceModeration();
       if(name==='ai-notes' && typeof window.initAICourseNotesAdmin==='function')window.initAICourseNotesAdmin();
         if(name==='scholarships' && typeof window.CBENexusLoadOpportunitiesAdmin==='function')window.CBENexusLoadOpportunitiesAdmin();\n        if(name==='school-directory' && typeof window.CBENexusLoadSchoolDirectoryAdmin==='function')window.CBENexusLoadSchoolDirectoryAdmin();
@@ -1592,5 +1632,6 @@
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
 </script>
+<script src="/ad-revenue.js?v=20261005-1" defer></script>
 </body>
 </html>
