@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>School Directory & Vacancies | CBE Nexus</title>
+<meta name="description" content="Schools can create profiles and advertise teaching vacancies on CBE Nexus.">
+<style>
+:root{--brown:#8b5e3c;--brown2:#b9825b;--cream:#f4e8da;--paper:#fffaf5;--ink:#3b2a20}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--cream);color:var(--ink)}.wrap{max-width:1180px;margin:auto;padding:24px 18px}.hero{background:linear-gradient(135deg,var(--brown),var(--brown2));color:#fff;border-radius:20px;padding:42px 28px;margin-bottom:22px}.hero h1{font-size:2.3rem;margin:8px 0}.hero p{max-width:800px;line-height:1.6}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.btn{border:0;border-radius:10px;padding:12px 16px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-block}.btn-light{background:#fff;color:var(--brown)}.btn-brown{background:var(--brown);color:#fff}.panel{background:var(--paper);border:1px solid #dfc9b4;border-radius:16px;padding:22px;margin:22px 0;box-shadow:0 6px 20px #6b452515}.panel h2{margin-top:0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.school{background:var(--paper);border:1px solid #dfc9b4;border-radius:15px;padding:20px}.school h3{margin:8px 0}.pill{display:inline-block;background:#ead8c5;color:#704522;padding:5px 9px;border-radius:20px;font-size:.78rem;font-weight:800;margin:2px}.vacancy{margin-top:14px;padding:14px;border-left:4px solid var(--brown2);background:#f8eee4;border-radius:8px}.vacancy h4{margin:0 0 6px}.meta{font-size:.9rem;color:#6b5548}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}label{font-weight:700;font-size:.9rem}input,select,textarea{display:block;width:100%;margin-top:6px;padding:12px;border:1px solid #d7c2ad;border-radius:9px;background:#fffdfb;color:var(--ink)}textarea{resize:vertical}.full{grid-column:1/-1}.status{margin-top:12px;font-weight:700}.notice{background:#f0dfcc;padding:14px;border-radius:10px}.empty{text-align:center;padding:30px;background:var(--paper);border-radius:14px}@media(max-width:850px){.grid{grid-template-columns:1fr 1fr}}@media(max-width:600px){.grid,.form-grid{grid-template-columns:1fr}.full{grid-column:auto}}
+</style></head><body><main class="wrap">
+<section class="hero"><div>🏫 CBE NEXUS SCHOOL DIRECTORY</div><h1>Schools & Teaching Vacancies</h1><p>Create a professional school profile and advertise your teaching vacancies to teachers looking for opportunities in Kenya and internationally.</p><div class="hero-actions"><a class="btn btn-light" href="#schools">Find Schools & Vacancies</a><a class="btn btn-light" href="#advertise">Advertise a Vacancy</a></div></section>
+<section id="advertise" class="panel"><h2>📢 Advertise Your School & Vacancy</h2><p class="notice">Submit your school profile and one vacancy. Your submission is reviewed by CBE Nexus before it appears publicly.</p>
+<form id="schoolForm"><div class="form-grid">
+<label>School Name*<input name="name" required placeholder="e.g. Green Valley International School"></label>
+<label>Country*<input name="country" required placeholder="Kenya"></label>
+<label>City / Town<input name="city" placeholder="Kisii"></label>
+<label>School Type<select name="type"><option>Private School</option><option>International School</option><option>Public School</option><option>Academy</option><option>College</option><option>Other</option></select></label>
+<label>Curriculum<input name="curriculum" placeholder="CBC / IGCSE / IB / Cambridge"></label>
+<label>School Website<input name="website" type="url" placeholder="https://example.com"></label>
+<label>Contact Email*<input name="email" type="email" required placeholder="hr@school.com"></label>
+<label>Phone / WhatsApp<input name="phone" placeholder="+254..."></label>
+<label class="full">School Description<textarea name="description" rows="3" placeholder="Tell teachers about the school, curriculum and working environment."></textarea></label>
+<label>Vacancy Title*<input name="title" required placeholder="Secondary Biology Teacher"></label>
+<label>Subject*<input name="subject" required placeholder="Biology"></label>
+<label>Teaching Level*<input name="level" required placeholder="Secondary / Primary / IB"></label>
+<label>Employment Type<select name="employment"><option>Full-time</option><option>Part-time</option><option>Contract</option><option>Temporary</option></select></label>
+<label>Salary / Benefits<input name="salary" placeholder="Salary, housing, medical, flights..."></label>
+<label>Application Deadline<input name="deadline" type="date"></label>
+<label class="full">Job Description*<textarea name="vacancyDescription" rows="4" required placeholder="Responsibilities, curriculum and duties."></textarea></label>
+<label class="full">Requirements<textarea name="requirements" rows="4" placeholder="Qualifications, experience, teaching licence, etc."></textarea></label>
+<label class="full">Application Link*<input name="applyUrl" type="url" required placeholder="https://school.com/careers"></label>
+</div><button class="btn btn-brown" type="submit">🏫 Submit School & Vacancy</button><p id="status" class="status" aria-live="polite"></p></form></section>
+<section id="schools"><div class="panel"><h2>🏫 Find Schools & Vacancies</h2><input id="search" placeholder="Search school, country, subject or vacancy..."></div><div id="list" class="grid"><div class="empty">Loading schools...</div></div></section>
+</main>
+<script>
+const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
+let schools=[];
+function render(){const q=document.getElementById("search").value.toLowerCase();const out=schools.filter(s=>JSON.stringify(s).toLowerCase().includes(q));document.getElementById("list").innerHTML=out.length?out.map(s=>'<article class="school"><span class="pill">'+esc(s.type||"School")+'</span><span class="pill">'+esc(s.country)+'</span><h3>'+esc(s.name)+'</h3><p class="meta">'+esc(s.city||"")+" · "+esc(s.curriculum||"")+'</p><p>'+esc(s.description||"")+'</p>'+(s.website?'<p><a href="'+esc(s.website)+'" target="_blank" rel="noopener">School Website →</a></p>':'')+(s.vacancies||[]).map(v=>'<div class="vacancy"><h4>'+esc(v.title)+'</h4><p class="meta">'+esc(v.subject)+' · '+esc(v.level)+' · '+esc(v.employment||"Full-time")+'</p>'+(v.salary?'<p><strong>Package:</strong> '+esc(v.salary)+'</p>':'')+(v.deadline?'<p><strong>Deadline:</strong> '+esc(v.deadline)+'</p>':'')+'<p>'+esc(v.description||"")+'</p><a class="btn btn-brown" href="'+esc(v.apply_url)+'" target="_blank" rel="noopener">Apply Now →</a></div>').join("")+'</article>').join(""):'<div class="empty">No published schools or vacancies found.</div>'}
+async function load(){try{const r=await fetch("/api/schools?_="+Date.now());const d=await r.json();if(!r.ok||!d.ok)throw Error(d.error||"Could not load schools.");schools=d.schools||[];render()}catch(e){document.getElementById("list").innerHTML='<div class="empty">'+esc(e.message)+'</div>'}}
+document.getElementById("search").addEventListener("input",render);
+document.getElementById("schoolForm").addEventListener("submit",async e=>{e.preventDefault();const form=e.currentTarget,status=document.getElementById("status"),data=Object.fromEntries(new FormData(form).entries());const payload={...data,description:data.description,title:data.title,description:data.vacancyDescription};status.textContent="Submitting for review…";try{const r=await fetch("/api/schools/advertise",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}),d=await r.json();if(!r.ok||!d.ok)throw Error(d.error||"Submission failed.");status.textContent="✓ Submitted successfully. CBE Nexus will review your school and vacancy before publishing.";form.reset()}catch(err){status.textContent=err.message||"Submission failed."}});
+load();
+</script></body></html>
