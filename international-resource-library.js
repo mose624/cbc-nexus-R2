@@ -14,6 +14,7 @@
   const esc = (v) => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const money = v => "KSh " + Math.max(0, Math.round(Number(v || 0))).toLocaleString();
   const curr = curriculum.toLowerCase();
+  const requestedSubject = new URLSearchParams(window.location.search).get("subject")?.trim() || "";
 
   function matches(r) {
     const c = String(r.curriculum || r.grade || "").trim().toLowerCase();
@@ -78,6 +79,7 @@
       if (!response.ok || !data.ok || !Array.isArray(data.resources)) throw new Error("Library request failed.");
       resources = data.resources.filter(r => String(r.curriculum || r.grade || "").trim().toLowerCase() === curr && String(r.status || "approved").toLowerCase() === "approved");
       fillSubjects();
+      if (requestedSubject && subject) subject.value = [...subject.options].some(o => o.value.toLowerCase() === requestedSubject.toLowerCase()) ? requestedSubject : "";
       status.textContent = resources.length ? "This is the dedicated "+curriculum+" library. CBC/CBE resources remain completely separate." : "No approved "+curriculum+" resources have been published yet.";
       render();
     } catch {
@@ -87,6 +89,6 @@
   }
 
   [subject,type,search].forEach(el => el?.addEventListener(el === search ? "input" : "change", render));
-  reset?.addEventListener("click", () => { if(subject) subject.value=""; if(type) type.value=""; if(search) search.value=""; render(); });
+  reset?.addEventListener("click", () => { if(subject) subject.value=""; if (window.history?.replaceState) window.history.replaceState({}, "", window.location.pathname + "#internationalResources"); if(type) type.value=""; if(search) search.value=""; render(); });
   load();
 })();
