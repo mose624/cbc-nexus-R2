@@ -72,7 +72,19 @@
 .admin-resource-quick-actions{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 18px}
 .admin-resource-quick-actions a{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;min-height:44px}
 @media(max-width:600px){.admin-resource-quick-actions{display:grid;grid-template-columns:1fr}.admin-resource-quick-actions a{width:100%}}
-</style><style id="admin-upload-link-style">[data-admin-upload-link]{cursor:pointer!important;text-decoration:none!important}</style></head>
+</style><style id="admin-upload-link-style">[data-admin-upload-link]{cursor:pointer!important;text-decoration:none!important}</style><style>
+.blog-admin-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.85fr);gap:20px}
+.blog-admin-grid .admin-form,.blog-admin-grid>div{min-width:0}
+.blog-image-upload{border:2px dashed #facc15;background:#fffbeb;border-radius:14px;padding:14px;margin:12px 0}
+.blog-image-upload input[type=file]{display:block;margin-top:8px}
+.blog-admin-actions{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap}
+.blog-admin-list-card{background:#fff;border:1px solid #eadf9c;border-radius:14px;padding:14px;margin-bottom:10px}
+.blog-admin-list-card h4{margin:0 0 5px}
+.blog-admin-list-meta{font-size:.82rem;color:#64748b;margin-bottom:10px}
+.blog-admin-list-actions{display:flex;gap:8px;flex-wrap:wrap}
+.blog-admin-list-actions button{cursor:pointer}
+@media(max-width:900px){.blog-admin-grid{grid-template-columns:1fr}}
+</style></head>
   <body>
     <header class="site-header">
       <div class="top-strip">
@@ -1086,6 +1098,7 @@
             <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="vacancies">Teaching Jobs</button>
             <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="prices">Prices</button>
           <button class="admin-module-tab ai-academy-notes-tab" type="button" role="tab" aria-selected="false" data-admin-module="ai-notes">🤖 AI Academy Notes</button>
+          <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="blog">📝 Blog <span id="adminBlogBadge">0</span></button>
           <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="seo">SEO Center <span class="admin-seo-badge">Ubersuggest</span></button>
           </div>
           <div class="admin-module-panel active" data-admin-module-panel="resources">
@@ -1146,6 +1159,53 @@
       <p id="aiNotesAdminStatus" class="form-status" aria-live="polite"></p>
     </form>
     <div id="aiNotesAdminList" class="admin-management-list"><div class="admin-management-card">Loading published notes...</div></div>
+  </div>
+</div>
+<div class="admin-module-panel" data-admin-module-panel="blog">
+  <div class="admin-module-heading">
+    <div><h3>📝 Blog Publishing Centre</h3><span>Create, edit, add featured images, optimize SEO, save drafts and publish articles directly to the public CBE Nexus Blog.</span></div>
+    <span id="adminBlogSummary" class="admin-module-summary">0 articles</span>
+  </div>
+  <div class="blog-admin-grid">
+    <form id="adminBlogForm" class="admin-form feature-form">
+      <input type="hidden" id="adminBlogId">
+      <div class="form-row">
+        <label>Article Title<input id="adminBlogTitle" required maxlength="220" placeholder="Grade 9 to Grade 10: How Parents Can Prepare"></label>
+        <label>Category<select id="adminBlogCategory">
+          <option>CBC/CBE</option><option>Grade 10</option><option>Parents</option><option>Teachers</option><option>Schools</option><option>Teaching Tips</option><option>AI for Teachers</option><option>Teacher Jobs</option><option>Opportunities</option><option>Education News</option>
+        </select></label>
+      </div>
+      <div class="form-row">
+        <label>Excerpt<textarea id="adminBlogExcerpt" rows="3" maxlength="500" placeholder="Short summary shown on the public Blog page."></textarea></label>
+        <label>Keywords<input id="adminBlogKeywords" maxlength="1000" placeholder="Grade 10 schools Kenya, CBC, CBE, KEMIS"></label>
+      </div>
+      <label>Article Content (HTML)
+        <textarea id="adminBlogContent" rows="18" required placeholder="<p>Write your article...</p><h2>Key points</h2><ul><li>...</li></ul>"></textarea>
+      </label>
+      <div class="form-row">
+        <label>SEO Title<input id="adminBlogSeoTitle" maxlength="220" placeholder="Grade 10 Schools in Kenya 2027 | CBE Nexus"></label>
+        <label>Meta Description<textarea id="adminBlogMeta" rows="3" maxlength="320" placeholder="Search-friendly description for Google and social sharing."></textarea></label>
+      </div>
+      <div class="blog-image-upload">
+        <strong>🖼️ Featured Image</strong>
+        <input id="adminBlogImage" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
+        <small id="adminBlogImageStatus">JPG, PNG, WebP or GIF · maximum 8 MB.</small>
+        <img id="adminBlogImagePreview" alt="Featured image preview" style="display:none;max-width:220px;max-height:130px;border-radius:12px;margin-top:10px;object-fit:cover">
+        <input type="hidden" id="adminBlogFeaturedImage">
+      </div>
+      <div class="form-row">
+        <label>Publishing Status<select id="adminBlogStatus"><option value="published">Publish now</option><option value="draft">Save as draft</option></select></label>
+        <div class="blog-admin-actions">
+          <button class="primary-button" type="submit">🚀 Save / Publish Article</button>
+          <button class="secondary-button" id="adminBlogNewButton" type="button">＋ New Article</button>
+        </div>
+      </div>
+      <p id="adminBlogStatusMessage" class="form-status" aria-live="polite"></p>
+    </form>
+    <div>
+      <div class="admin-module-heading"><div><h4>Articles</h4><span>Edit drafts, republish articles or remove old posts.</span></div></div>
+      <div id="adminBlogList" class="admin-management-list"><div class="admin-management-card">Open Blog tab to load articles.</div></div>
+    </div>
   </div>
 </div>
 <div class="admin-module-panel" data-admin-module-panel="seo">
@@ -1412,7 +1472,7 @@
     <script src="r2-browser.js" defer></script>
     <script src="customer-care.js?v=20260929-4" defer></script>
     <script src="assessment-cbc-banks.js?v=20260928-6" defer></script>\n    <script src="kicd-curriculum-content.js?v=20260928-8" defer></script>\n    <script src="assessment.js?v=20260928-9" defer></script>
-  <script src="admin-module-fix.js" defer></script>
+  <script src="admin-module-fix.js" defer></script>\n  <script src="admin-blog.js?v=20261004-1" defer></script>
 
 <!-- CBE NEXUS ADMIN DIRECT TAB CONTROLLER -->
 <style>
