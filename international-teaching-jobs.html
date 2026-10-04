@@ -28,6 +28,7 @@
 @media(max-width:650px){.grid,.job-grid,.form-grid,.tips,.builder-top,.check-grid{grid-template-columns:1fr}.filter-row{grid-template-columns:1fr}.hero{padding:28px 20px}.hero h1{font-size:27px}.preview-paper{padding:24px}.checklist{columns:1}}
 @media print{.site-header,.back,.actions,.job-tools,.section:not(#cvPreviewSection),#cvBuilderSection,.note,.faq,.score{display:none!important}.page{padding:0}.preview-wrap{background:#fff;border:0;padding:0}.preview-paper{box-shadow:none;max-width:none;padding:20px}}
 </style>
+<link rel="stylesheet" href="customer-care.css?v=20261004-2">
 </head>
 <body>
 <header class="site-header"><nav class="main-nav"><a class="brand" href="index.html#dashboard"><span class="brand-mark">CBE</span><span><strong>CBE Nexus</strong><small>Connecting learners to excellence</small></span></a><div class="nav-actions"><a class="secondary-button" href="index.html#dashboard">← Home</a><a class="primary-button" href="professional-cv-writing.html">Professional CV Writing</a></div></nav></header>
@@ -181,5 +182,6 @@ $('sampleCv').addEventListener('click',()=>{$('cvName').value='Your Full Name';$
 const input=$('jobSearchInput'),region=$('regionFilter'),level=$('levelFilter'),cards=[...document.querySelectorAll('.job-card')];function filterJobs(){let q=(input.value||'').toLowerCase().trim(),r=region.value,l=level.value;let shown=0;cards.forEach(c=>{let okQ=!q||c.dataset.keywords.includes(q),okR=r==='all'||c.dataset.region===r,okL=l==='all'||c.dataset.level.includes(l);c.classList.toggle('hidden',!(okQ&&okR&&okL));if(okQ&&okR&&okL)shown++});$('jobEmpty').classList.toggle('hidden',shown>0)}[input,region,level].forEach(x=>x.addEventListener('input',filterJobs));$('clearJobFilters').addEventListener('click',()=>{input.value='';region.value='all';level.value='all';filterJobs()});score();
 })();
 </script>
-<section id="internationalVacanciesPublic" class="content-band international-vacancies-band"><div class="section-heading"><div><p class="eyebrow">Live vacancy board</p><h2>Teaching Vacancies Abroad</h2><p>Published opportunities are added and managed by CBE Nexus admin.</p></div></div><div id="internationalVacancyGrid" class="vacancy-grid"><p class="form-status">Loading vacancies...</p></div></section><script src="app.js"></script></body>
+<section id="internationalVacanciesPublic" class="content-band international-vacancies-band"><div class="section-heading"><div><p class="eyebrow">Live vacancy board</p><h2>Teaching Vacancies Abroad</h2><p>Published opportunities are added and managed by CBE Nexus admin.</p></div></div><div id="internationalVacancyGrid" class="vacancy-grid"><p class="form-status">Loading vacancies...</p></div></section><script src="app.js"></script><script src="customer-care.js?v=20261004-2" defer></script>
+</body>
 </html>
