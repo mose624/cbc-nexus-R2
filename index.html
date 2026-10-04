@@ -108,7 +108,7 @@
 @media(max-width:520px){.nexus-quick-links{padding:28px 14px}.nexus-quick-links-grid{grid-template-columns:1fr;gap:9px}.nexus-quick-link{min-height:42px;padding:8px 10px;font-size:.9rem}}
 </style>
 <style id="nexus-school-directory-link-style">.nexus-quick-link.school-directory-link{background:#92400e;color:#fff}</style>
-</head>
+<style id="school-directory-admin-style">.school-admin-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}.school-admin-toolbar input,.school-admin-toolbar select{flex:1;min-width:180px;padding:11px;border:1px solid #d7c7aa;border-radius:9px}.school-admin-item{background:#fff;border:1px solid #e6dccb;border-radius:14px;padding:16px;margin:10px 0}.school-admin-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.school-admin-meta{color:#64748b;font-size:.9rem;margin:5px 0}.school-admin-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.school-admin-actions button{cursor:pointer}.school-status-badge{display:inline-block;padding:4px 9px;border-radius:999px;font-size:.78rem;font-weight:800;text-transform:capitalize}.school-status-badge.pending{background:#fef3c7;color:#92400e}.school-status-badge.published{background:#dcfce7;color:#166534}.school-status-badge.rejected{background:#fee2e2;color:#991b1b}.school-vacancy-admin{border-top:1px solid #eee4d4;margin-top:14px;padding-top:12px}.school-vacancy-admin strong{display:block}.school-admin-danger{background:#fee2e2!important;color:#991b1b!important;border-color:#fecaca!important}@media(max-width:650px){.school-admin-head{display:block}.school-admin-toolbar{display:grid;grid-template-columns:1fr}.school-admin-toolbar input,.school-admin-toolbar select{width:100%;box-sizing:border-box}}</style></head>
   <body>
     <header class="site-header">
       <div class="top-strip">
@@ -1117,6 +1117,7 @@
           <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="prices">Prices</button>
           <button class="admin-module-tab ai-academy-notes-tab" type="button" role="tab" aria-selected="false" data-admin-module="ai-notes">🤖 AI Academy Notes</button>
           <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="blog">📝 Blog <span id="adminBlogBadge">0</span></button>
+          <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="school-directory">🏫 School Directory</button>
           <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="seo">SEO Center <span class="admin-seo-badge">Ubersuggest</span></button>
           </div>
           <div class="admin-module-panel active" data-admin-module-panel="resources">
@@ -1338,6 +1339,14 @@
             </div>
           </div>
 
+          <div class="admin-module-panel" data-admin-module-panel="school-directory">
+            <div class="admin-management-card school-directory-admin-card">
+              <div class="admin-management-heading"><div><p class="eyebrow">School marketplace moderation</p><h3>🏫 School Directory & Vacancies</h3><p>Review schools and teaching vacancies submitted through the public directory before they appear publicly.</p></div><span class="price-pill" id="schoolDirectoryAdminSummary">0 schools</span></div>
+              <div class="school-admin-toolbar"><input id="schoolDirectoryAdminSearch" type="search" placeholder="Search school, country, subject or vacancy..."><select id="schoolDirectoryAdminStatus"><option value="all">All statuses</option><option value="pending">Pending</option><option value="published">Published</option><option value="rejected">Rejected</option></select><button class="ghost-button" type="button" id="refreshSchoolDirectoryAdmin">↻ Refresh</button></div>
+              <div id="schoolDirectoryAdminStatusMessage" class="form-status" aria-live="polite"></div>
+              <div id="schoolDirectoryAdminList" class="admin-management-list"></div>
+            </div>
+          </div>
           <div class="admin-module-panel" data-admin-module-panel="vacancies">
             <div class="admin-management-card admin-vacancies-card">
               <div class="admin-management-heading"><div><p class="eyebrow">International careers</p><h3>Teaching Vacancies Abroad</h3><p>Add and publish overseas teaching opportunities. Published vacancies appear automatically on the International Teaching Jobs page.</p></div><span class="price-pill">Admin publishing</span></div>
@@ -1559,7 +1568,7 @@
     <script src="ai-foundations-data.js?v=20261004-1"></script><script src="prompt-engineering-data.js?v=20261004-1"></script><script src="ai-for-teachers-data.js?v=20261004-1"></script><script src="ai-productivity-business-data.js?v=20261004-1"></script><script src="responsible-ai-data.js?v=20261004-1"></script><script src="build-with-ai-data.js?v=20261004-1"></script><script src="ai-more-courses-data.js?v=20261004-1"></script>
 <script src="app.js?v=20261004-2"></script>
 <script src="ai-course-admin.js?v=20261004-1"></script>
-<script src="scholarships-admin.js?v=20261004-1"></script>
+<script src="scholarships-admin.js?v=20261004-1"></script><script src="school-directory-admin.js?v=20261004-1" defer></script>
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => navigator.serviceWorker.register("/sw.js").catch(() => {}));
