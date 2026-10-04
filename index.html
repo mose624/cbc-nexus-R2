@@ -1111,7 +1111,8 @@
             <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="cv-writing">CV Writing</button>
             <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="vacancies">Teaching Jobs</button>
           <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="ai-courses">🤖 Free AI Courses</button>
-            <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="prices">Prices</button>
+            <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="scholarships">🎓 Scholarships & Opportunities</button>
+          <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="prices">Prices</button>
           <button class="admin-module-tab ai-academy-notes-tab" type="button" role="tab" aria-selected="false" data-admin-module="ai-notes">🤖 AI Academy Notes</button>
           <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="blog">📝 Blog <span id="adminBlogBadge">0</span></button>
           <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="seo">SEO Center <span class="admin-seo-badge">Ubersuggest</span></button>
@@ -1257,6 +1258,24 @@
               </div>
             </div>
             <div class="admin-seo-note"><strong>Important:</strong> This dashboard does not store or expose an Ubersuggest password/API credential. Ubersuggest is opened securely in its own account session. If Ubersuggest provides an approved API for your plan in future, we can replace these launch links with server-side API data.</div>
+          </div>
+
+          <div class="admin-module-panel" data-admin-module-panel="scholarships">
+            <div class="admin-management-card admin-opportunities-card">
+              <div class="admin-management-heading"><div><p class="eyebrow">Opportunities</p><h3>Scholarships & Opportunities</h3><p>Add, edit, publish and remove scholarships, fellowships, grants, internships and other opportunities.</p></div><span id="adminOpportunitySummary" class="admin-module-summary"></span></div>
+              <form id="adminOpportunityForm" class="admin-form feature-form">
+                <div class="form-row"><label>Title<input id="opTitleInput" required placeholder="Mastercard Foundation Scholars Program"></label><label>Organization<input id="opOrganizationInput" placeholder="Organization / University"></label></div>
+                <div class="form-row"><label>Country<input id="opCountryInput" placeholder="Kenya / Canada / International"></label><label>Type<select id="opTypeInput"><option>Scholarship</option><option>Fellowship</option><option>Grant</option><option>Internship</option><option>Competition</option><option>Exchange</option><option>Research</option><option>Teacher Development</option><option>Youth Opportunity</option></select></label></div>
+                <div class="form-row"><label>Education Level<input id="opLevelInput" placeholder="Secondary / Undergraduate / Masters / PhD"></label><label>Field<input id="opFieldInput" placeholder="STEM, Education, Business..."></label></div>
+                <div class="form-row"><label>Funding<input id="opFundingInput" placeholder="Fully Funded / Partially Funded / Free"></label><label>Deadline<input id="opDeadlineInput" type="date"></label></div>
+                <div class="form-row"><label>Opening Date<input id="opOpeningDateInput" type="date"></label><label>Official Application Link<input id="opApplyUrlInput" type="url" required placeholder="https://official-site.example/apply"></label></div>
+                <label>Description<textarea id="opDescriptionInput" rows="4" required></textarea></label><label>Eligibility<textarea id="opEligibilityInput" rows="3"></textarea></label><label>Benefits / Funding Details<textarea id="opBenefitsInput" rows="3"></textarea></label><label>Requirements<textarea id="opRequirementsInput" rows="3"></textarea></label>
+                <div class="form-row"><label>Status<select id="opStatusInput"><option value="published">Published</option><option value="draft">Draft</option><option value="closed">Closed</option></select></label><label class="checkbox-label"><input id="opFeaturedInput" type="checkbox"> Feature this opportunity</label></div>
+                <div class="quiz-actions"><button class="primary-button" id="saveOpportunityButton" type="submit">➕ Publish Opportunity</button><button class="ghost-button" id="clearAdminOpportunityButton" type="button">Clear</button></div>
+                <p id="adminOpportunityStatus" class="form-status" aria-live="polite"></p>
+              </form>
+              <div id="adminOpportunityList" class="admin-management-list"></div>
+            </div>
           </div>
 
           <div class="admin-module-panel" data-admin-module-panel="prices">
@@ -1537,6 +1556,7 @@
     <script src="ai-foundations-data.js?v=20261004-1"></script><script src="prompt-engineering-data.js?v=20261004-1"></script><script src="ai-for-teachers-data.js?v=20261004-1"></script><script src="ai-productivity-business-data.js?v=20261004-1"></script><script src="responsible-ai-data.js?v=20261004-1"></script><script src="build-with-ai-data.js?v=20261004-1"></script><script src="ai-more-courses-data.js?v=20261004-1"></script>
 <script src="app.js?v=20261004-2"></script>
 <script src="ai-course-admin.js?v=20261004-1"></script>
+<script src="scholarships-admin.js?v=20261004-1"></script>
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => navigator.serviceWorker.register("/sw.js").catch(() => {}));
@@ -1587,6 +1607,7 @@
       }
       if(name==='resources' && typeof window.loadAdminResourceModeration==='function')window.loadAdminResourceModeration();
       if(name==='ai-notes' && typeof window.initAICourseNotesAdmin==='function')window.initAICourseNotesAdmin();
+        if(name==='scholarships' && typeof window.CBENexusLoadOpportunitiesAdmin==='function')window.CBENexusLoadOpportunitiesAdmin();
     }
     window.CBENexusOpenAdminModule=openModule;
     tabs.forEach(function(tab){
