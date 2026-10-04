@@ -72,7 +72,7 @@
 .admin-resource-quick-actions{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 18px}
 .admin-resource-quick-actions a{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;min-height:44px}
 @media(max-width:600px){.admin-resource-quick-actions{display:grid;grid-template-columns:1fr}.admin-resource-quick-actions a{width:100%}}
-</style></head>
+</style><style id="admin-upload-link-style">[data-admin-upload-link]{cursor:pointer!important;text-decoration:none!important}</style></head>
   <body>
     <header class="site-header">
       <div class="top-strip">
@@ -1092,7 +1092,7 @@
               <div><h3>Resource management</h3><span>Review marketplace content before publication.</span></div>
               <span id="adminResourceSummary" class="admin-module-summary"></span>
             </div>
-            <div class="admin-resource-quick-actions"><a class="primary-button" href="upload.html">➕ Upload / Add Resource</a><a class="secondary-button" href="resource-category.html">📚 Open Resource Library</a></div>
+            <div class="admin-resource-quick-actions"><a class="primary-button" href="#resourceForm" data-admin-upload-link>➕ Upload / Add Resource</a><a class="secondary-button" href="resource-category.html">📚 Open Resource Library</a></div>
             <div id="adminResourceManagement" class="admin-management-list"></div>
           </div>
 
