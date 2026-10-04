@@ -1,0 +1,31 @@
+# CBE Nexus
+
+> CBE Nexus is a Kenya-focused education and learning-resource platform connecting learners, teachers, parents and schools to CBC/CBE resources, revision support, higher-education discovery, scholarships, teacher opportunities and digital learning tools.
+
+## Primary website
+- https://cbenexus.co.ke/
+
+## High-value public pages
+- https://cbenexus.co.ke/resources.html — CBC/CBE learning resource library
+- https://cbenexus.co.ke/cbc-notes-kenya — CBC/CBE notes
+- https://cbenexus.co.ke/cbc-exams-kenya — exams and marking schemes
+- https://cbenexus.co.ke/kjsea-revision — KJSEA and Grade 9 revision
+- https://cbenexus.co.ke/cbc-exam-generator — free CBC exam generator
+- https://cbenexus.co.ke/answer-hub.html — Kenya education answers and explainers
+- https://cbenexus.co.ke/kenya-universities-colleges.html — higher education directory
+- https://cbenexus.co.ke/university-course-catalogue.html — university course discovery
+- https://cbenexus.co.ke/technical-vocational-catalogue.html — TVET and technical course discovery
+- https://cbenexus.co.ke/scholarships-opportunities.html — scholarships and opportunities
+- https://cbenexus.co.ke/international-teaching-jobs.html — international teacher opportunities
+- https://cbenexus.co.ke/professional-cv-writing.html — professional CV support
+- https://cbenexus.co.ke/ai-training.html — AI training
+- https://cbenexus.co.ke/learning-hub.html — education guides and articles
+
+## Topic focus
+CBE Nexus focuses on Kenya education, CBC, CBE, KJSEA, Grade 7–12 learning, revision, exams, marking schemes, teacher resources, universities, KUCCPS-related discovery, TVET, KMTC, teacher training, scholarships, teaching jobs and responsible educational technology.
+
+## Accuracy
+CBE Nexus should not be treated as the final authority for changing institutional details. For admissions, accreditation, placement, fees, examination requirements, deadlines and vacancies, verify with the relevant official institution or regulator.
+
+## Crawling
+Public educational pages are intended to be discoverable by search engines and AI search systems. Private, administrative, upload and API areas are not intended for indexing.
