@@ -63,14 +63,43 @@ async function match(req){
  const p=new URL(req.url,"http://localhost").pathname.replace(/\/$/,"")||"/";
  const rm=p.match(/^\/resource\/([^/]+)$/);
  if(rm){return await resourcePage(req,decodeURIComponent(rm[1]));}
- if(p!=="/cbc-exam-generator" && LANDINGS[p]){const x=LANDINGS[p];const links=GRADES.map(g=>({url:"/grade-"+g,label:"Grade "+g+" CBC Resources"}));return page(req,x[0],x[1],p,x[0],x[1],links);}
+ if(p==="/blog-article.html"){const q=new URL(req.url,"http://localhost").searchParams.get("slug");if(q)return await blogArticlePage(req,q);}\n if(p!=="/cbc-exam-generator" && LANDINGS[p]){const x=LANDINGS[p];const links=GRADES.map(g=>({url:"/grade-"+g,label:"Grade "+g+" CBC Resources"}));return page(req,x[0],x[1],p,x[0],x[1],links);}
  const m=p.match(/^\/grade-(7|8|9|10|11|12)(?:\/([^/]+))?$/);return m?gradePage(req,m[1],m[2]):null;
+}
+async function blogArticlePage(req,slugValue){
+ const slugValueClean=String(slugValue||"").trim();
+ let r=null;
+ try{
+  if(supabaseConfigured){
+   const {data,error}=await supabase.from("blog_posts").select("*").eq("slug",slugValueClean).eq("status","published").maybeSingle();
+   if(error)throw error;
+   r=data||null;
+  }
+  if(!r){
+   try{
+    const local=JSON.parse(await fs.readFile(path.join(__dirname,"backend-data","blog-posts.json"),"utf8"));
+    r=(Array.isArray(local)?local:[]).find(x=>String(x.slug)===slugValueClean&&String(x.status)==="published")||null;
+   }catch{}
+  }
+ }catch(e){console.warn("SEO blog article lookup failed:",e.message||e);}
+ if(!r)return null;
+ const b=base(req),title=String(r.seo_title||r.seoTitle||r.title||"CBE Nexus Article").trim();
+ const description=String(r.meta_description||r.metaDescription||r.excerpt||"").trim().slice(0,320);
+ const canonical="/blog-article.html?slug="+encodeURIComponent(slugValueClean);
+ const image=String(r.featured_image||r.featuredImage||"").trim();
+ const published=r.published_at||r.publishedAt||r.created_at||r.createdAt||new Date().toISOString();
+ const modified=r.updated_at||r.updatedAt||published;
+ const author=String(r.author||"CBE Nexus").trim();
+ const json={"@context":"https://schema.org","@type":"NewsArticle","headline":String(r.title||title),"description":description,"datePublished":published,"dateModified":modified,"author":{"@type":"Person","name":author},"publisher":{"@type":"Organization","name":"CBE Nexus","url":b},"mainEntityOfPage":{"@type":"WebPage","@id":b+canonical},"url":b+canonical,"articleSection":String(r.category||"Education")};
+ if(image)json.image=[image.startsWith("http")?image:b+"/"+image.replace(/^\//,"")];
+ const body=String(r.content||"");
+ return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(title)+'</title><meta name="description" content="'+esc(description)+'"><meta name="robots" content="index,follow"><link rel="canonical" href="'+esc(b+canonical)+'"><meta property="og:type" content="article"><meta property="og:title" content="'+esc(String(r.title||title))+'"><meta property="og:description" content="'+esc(description)+'"><meta property="og:url" content="'+esc(b+canonical)+'">'+(image?'<meta property="og:image" content="'+esc(json.image[0])+'">':"")+'<meta property="article:published_time" content="'+esc(published)+'"><meta property="article:modified_time" content="'+esc(modified)+'"><script type="application/ld+json">'+JSON.stringify(json).replace(/</g,"\\u003c")+'</script><link rel="alternate" type="application/rss+xml" title="CBE Nexus Education Hub RSS" href="/rss.xml"><style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;max-width:900px;margin:auto;padding:24px;line-height:1.7;color:#172033}header{padding:18px 0;border-bottom:1px solid #ddd}.meta{color:#5b6770;font-size:.9rem}.hero{padding:30px 0 15px}article img{max-width:100%;height:auto;border-radius:12px}article{font-size:1.05rem}a{color:#075985}</style></head><body><header><strong>CBE Nexus</strong> — Connecting learners to excellence | Kenya</header><main><section class="hero"><p class="meta">'+esc(String(r.category||"Education"))+' · '+esc(author)+' · '+esc(new Date(published).toLocaleDateString("en-KE"))+'</p><h1>'+esc(String(r.title||title))+'</h1><p>'+esc(description)+'</p>'+(image?'<img src="'+esc(json.image[0])+'" alt="'+esc(String(r.title||title))+'">':"")+'</section><article>'+body+'</article><p><a href="/blog.html">← More CBE Nexus articles</a> · <a href="/rss.xml">Subscribe to RSS</a></p></main></body></html>';
 }
 function xml(v){return String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&apos;");}
 async function sitemap(req){
- const b=base(req),urls=["/","/cbc-notes-kenya","/cbc-exams-kenya","/kjsea-revision","/cbc-exam-generator"];
+ const b=base(req),urls=["/","/cbc-notes-kenya","/cbc-exams-kenya","/kjsea-revision","/cbc-exam-generator","/blog.html"];
  GRADES.forEach(g=>{urls.push("/grade-"+g);(SUBJECTS[g]||[]).forEach(s=>urls.push("/grade-"+g+"/"+slug(s)));});
- if(supabaseConfigured){try{const {data}=await supabase.from("resources").select("id").eq("status","approved").limit(5000);(data||[]).forEach(r=>urls.push("/resource/"+encodeURIComponent(r.id)));}catch(e){console.warn("SEO sitemap resource lookup failed:",e.message||e);}}
+ if(supabaseConfigured){try{const {data}=await supabase.from("resources").select("id").eq("status","approved").limit(5000);(data||[]).forEach(r=>urls.push("/resource/"+encodeURIComponent(r.id)));}catch(e){console.warn("SEO sitemap resource lookup failed:",e.message||e);}}\n if(supabaseConfigured){try{const {data}=await supabase.from("blog_posts").select("slug,updated_at,published_at").eq("status","published").limit(5000);(data||[]).forEach(p=>urls.push("/blog-article.html?slug="+encodeURIComponent(String(p.slug||""))));}catch(e){console.warn("SEO sitemap blog lookup failed:",e.message||e);}}
  return '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+[...new Set(urls)].map(u=>'<url><loc>'+xml(b+u)+'</loc></url>').join("")+"</urlset>";
 }
 module.exports={match,sitemap,base};
