@@ -128,55 +128,52 @@
   function makeQuestions(slug,course,m){
     if(slug==='prompt-engineering') return makePromptEngineeringQuestions();
     const p=profile(slug,course), title=m[0], focus=m[1];
-    const base=[
-      ["A school team wants to use "+title+" but has not defined success. What should happen first?", "Define the real outcome, users, constraints and success criteria before selecting an AI workflow."],
-      ["Which approach best reflects responsible use of "+title+"?", "Use AI to assist the task while keeping human responsibility for verification and consequential decisions."],
-      ["A generated result sounds confident but contains a claim that matters. What is the strongest response?", "Trace the claim to trustworthy evidence and correct or remove it if it cannot be verified."],
-      ["Why should a professional distinguish source material from generated content?", "It prevents generated statements from being mistaken for verified evidence and makes review easier."],
-      ["Which prompt is most likely to produce a reliable result?", "A prompt that specifies the task, context, constraints, output format, quality criteria and verification requirements."],
-      ["A workflow saves time but exposes unnecessary personal data. What should be changed?", "Minimise the data, review privacy requirements and redesign the workflow before deployment."],
-      ["What is the main weakness of judging an AI answer only by how fluent it sounds?", "Fluency does not establish factual accuracy, completeness, safety or suitability."],
-      ["A first prompt produces inconsistent results. What is the best next step?", "Add precise constraints, examples or an output schema and test the revised prompt on several cases."],
-      ["Why are edge cases important in professional AI workflows?", "They reveal failure modes that ordinary examples may hide and help define safe boundaries."],
-      ["What should a human verification checklist contain?", "Accuracy, evidence, relevance, completeness, bias or safety risks and any decision requiring human approval."],
-      ["When is automation least appropriate?", "When the action is high-impact, difficult to reverse, poorly understood or cannot be meaningfully supervised."],
-      ["What does a good evaluation rubric provide?", "Explicit criteria that allow outputs to be compared consistently against the intended goal."],
-      ["Why should prompts be tested on more than one example?", "A prompt can appear successful on one case while failing on different users, inputs or edge cases."],
-      ["What is a useful reason to request uncertainty from an AI system?", "It helps the user identify claims or decisions that require additional evidence or review."],
-      ["A manager wants AI to make a final employment decision. What is the strongest principle?", "AI may support analysis, but a qualified human must retain responsibility and assess fairness and evidence."],
-      ["What should be documented for a repeatable AI workflow?", "The goal, inputs, prompt or procedure, output, checks, decision, limitations and relevant version or date."],
-      ["Why is minimising input data a good practice?", "It reduces unnecessary privacy exposure and limits the consequences of accidental disclosure."],
-      ["A user discovers that an AI tool has outdated information. What should they do?", "Supply or consult current authoritative evidence and verify time-sensitive claims before acting."],
-      ["What is the difference between an AI output and a trustworthy outcome?", "An output is generated content; a trustworthy outcome is an output that has been evaluated against the real goal and evidence."],
-      ["Which change most improves prompt reliability?", "Explicitly define the task, audience, constraints, expected structure and quality criteria."],
-      ["A learner copies an AI answer into assessed work without understanding it. What is the core problem?", "The learner has replaced authentic learning and judgement with unverified generated content."],
-      ["What is a human-in-the-loop control?", "A deliberate point where a person reviews, approves, rejects or modifies an AI-supported action before it has important consequences."],
-      ["Why should important AI workflows include failure handling?", "AI systems and connected tools can fail, so the process needs safe recovery, escalation and stopping conditions."],
-      ["What makes an AI skill transferable across tools?", "Understanding problem framing, prompting, evaluation, verification, ethics and workflow design rather than memorising one interface."],
-      ["A professional must choose between two AI workflows. What is the best basis for the decision?", "Compare evidence of quality, risk, privacy, cost, reliability, human oversight and measurable value against the actual task."]
+    const cases=[
+      ["A team gets attractive but inconsistent results from "+title+". Diagnose the weakness and propose a testable improvement.","Define the intended outcome and evaluation criteria, identify the source of inconsistency, change the relevant instruction or workflow deliberately, then compare results across representative cases."],
+      ["You inherit an AI workflow for "+focus+" that saves time but sometimes produces serious errors. How should it be redesigned?","Map failure points, classify consequential errors, add verification and human approval gates, test edge cases, and measure quality as well as time saved."],
+      ["Two prompts produce different answers to the same task. Which test gives the strongest evidence about which is better?","Run both on the same representative test set and score them against identical accuracy, relevance, completeness, safety and usability criteria."],
+      ["A colleague says an AI answer is reliable because it sounds authoritative. How would you challenge that conclusion?","Separate fluency from evidence and test important claims against trustworthy sources and the actual requirements of the task."],
+      ["A learner succeeds on familiar examples but fails on unfamiliar cases. What does this reveal?","The workflow may be overfitted to familiar cases; add varied and edge-case tests, identify the failure pattern and redesign the method."],
+      ["An organisation wants to automate a task involving personal information. What must be evaluated first?","Purpose, data minimisation, privacy and security requirements, failure impact, human oversight and whether automation is necessary."],
+      ["You have limited time and three possible AI improvements. How should you prioritise them?","Compare expected value, frequency, risk, implementation effort, data sensitivity and measurable outcomes, then pilot the highest-value low-risk option."],
+      ["An AI recommendation conflicts with trusted evidence. What is the strongest professional response?","Treat the recommendation as unverified, investigate the conflict, identify the stronger evidence and revise or reject the AI output."],
+      ["A prompt has become very long after repeated edits but quality has not improved. What should you do?","Remove redundant or conflicting instructions, retain components that affect the outcome, then retest systematically."],
+      ["A manager wants deployment after one successful demonstration. How would you respond?","Recommend representative testing, edge cases, evaluation criteria, risk review, human controls and a limited pilot before wider deployment."],
+      ["A student asks AI to complete assessed work. Design a higher-value alternative use.","Use AI for explanation, questioning, hints, feedback, practice and self-testing while requiring the student to produce and understand the assessed work."],
+      ["A teacher notices AI-generated assessment questions test recall rather than reasoning. What should change?","Specify authentic scenarios, decision-making, justification, comparison, evaluation or creation tasks and review every item against the intended higher-order outcome."],
+      ["A business campaign gets views but few meaningful enquiries. What should be investigated first?","Check audience, offer, message-to-action alignment, contact experience, conversion evidence and lead quality rather than assuming more content is needed."],
+      ["An AI workflow works well in one department but poorly in another. What hypothesis should be tested?","Differences in users, inputs, context, process, data quality or success criteria may affect performance; compare environments before generalising."],
+      ["A generated summary omits a small detail that changes a decision. How should the workflow change?","Define critical information that must be preserved, add structured extraction or source-linked checks, test omission cases and require human verification."],
+      ["You must choose between a faster workflow with higher error risk and a slower workflow with stronger controls. How should you decide?","Compare error consequences, expected value, reversibility, oversight capacity and quality requirements rather than optimising speed alone."],
+      ["An AI tool produces biased recommendations for a user group. What is the best investigation strategy?","Test representative groups, identify where bias enters data or workflow, examine evaluation criteria and redesign or add safeguards."],
+      ["A prompt works only when written by its original creator. What does that suggest?","The process depends on undocumented assumptions; convert them into explicit instructions, examples, inputs, checks and documentation."],
+      ["A team wants to connect an AI model to external tools. What controls should exist before actions are allowed?","Define permissions, input validation, approval gates, logging, failure handling, stop conditions and least-privilege access."],
+      ["An AI report contains ten recommendations. How should you decide which deserve action?","Rank them using the actual objective, evidence strength, benefit, cost, risk, feasibility and reversibility, then validate high-impact choices."],
+      ["An AI workflow has used outdated information for months. What should happen?","Identify affected outputs, obtain current authoritative information, reassess decisions, update the workflow and add freshness checks."],
+      ["A colleague proposes adding more examples whenever quality falls. Why might that fail?","Examples cannot compensate for an unclear task, poor context or wrong evaluation criteria; diagnose the actual failure first."],
+      ["A learner can explain an AI concept but cannot use it on a new problem. What assessment better measures mastery?","Use an unfamiliar scenario requiring strategy selection, justification, production or redesign and evaluation of limitations."],
+      ["An AI recommendation saves money but increases potential harm. How should it be evaluated?","Assess user impact, severity and likelihood of harm, alternatives and safeguards; financial savings alone are insufficient."],
+      ["A team wants one universal prompt for every task in "+focus+". What would you recommend?","Create reusable principles and templates while allowing task-specific context, constraints, outputs and evaluation criteria."],
+      ["An AI output is correct but unusable for its audience. What failed?","The workflow met factual requirements but failed audience, format, accessibility or usability requirements; revise the output specification."],
+      ["An important AI decision has no record of prompt, source data or checks. Why is this a problem?","The result is difficult to reproduce, audit or improve; document inputs, method, checks, decision and limitations."],
+      ["A model performs well on average but fails on a small number of high-impact cases. How should it be judged?","Evaluate performance by risk and impact as well as averages; high-impact failures may require stronger controls or make the workflow unsuitable."],
+      ["You must improve an AI workflow without increasing its budget. Where should you look first?","Improve problem definition, input quality, instruction clarity, workflow sequencing, evaluation and human review before adding tools."],
+      ["A team disagrees about whether an AI output is good. What should you introduce?","An explicit rubric linked to the intended outcome, with measurable criteria and representative examples."],
+      ["An AI assistant repeatedly makes the same type of mistake. What is the most useful response?","Classify the failure and determine whether its cause is input, instruction, context, model limitation or workflow design, then test a targeted intervention."],
+      ["An automated workflow is technically successful but users do not trust it. What should be investigated?","Transparency, evidence, user control, error visibility, training and whether system behaviour matches user expectations."],
+      ["An AI system is asked for a definitive answer where evidence is uncertain. How should a responsible workflow respond?","Represent uncertainty, explain available evidence and identify additional verification rather than manufacturing certainty."],
+      ["Design the strongest improvement to a weak AI workflow for "+focus+". What should the learner produce?","A revised workflow with a defined objective, inputs, structured instructions, evaluation rubric, test cases, failure handling, verification evidence and justified reflection."],
+      ["A workflow saves generation time but creates more checking work. How should its value be assessed?","Measure total workflow cost including verification, correction, errors, risk and user time rather than generation time alone."],
+      ["A team wants to scale after a successful pilot. What evidence should justify scaling?","Consistent results across representative users and cases, acceptable risk, documented controls, measurable value and a monitoring plan."],
+      ["Two AI outputs are both plausible. Which response demonstrates higher-order thinking?","Compare both against explicit criteria, verify important claims, identify trade-offs and justify the choice with evidence."],
+      ["An AI solution meets technical requirements but does not solve the original human problem. What should be reconsidered?","Return to the actual user need and success criteria; technical performance is insufficient if the practical outcome has little value."]
     ];
-    base.push(
-      ["What should happen when an AI workflow produces a result outside its defined scope?", "Stop or escalate the workflow and require human review rather than forcing an action."],
-      ["Why is a clear output format useful in a professional prompt?", "It makes the response easier to inspect, compare, reuse and validate."],
-      ["What is the safest response to an unsupported AI citation?", "Treat it as unverified and locate the actual source before using the claim."],
-      ["Why should sensitive information be excluded unless genuinely necessary?", "It reduces privacy, security and compliance risk."],
-      ["What is a useful purpose of a pilot before full AI deployment?", "It allows the organisation to discover errors, user needs, risks and costs on a limited scale."],
-      ["How should an AI workflow handle an ambiguous request?", "Ask clarifying questions or define assumptions explicitly before taking consequential action."],
-      ["What does reproducibility mean in an AI-assisted process?", "Another person can understand the inputs, method, checks and decision well enough to repeat or audit the work."],
-      ["Why should human oversight be stronger for high-impact decisions?", "Errors can cause significant harm and may be difficult to reverse."],
-      ["What is prompt injection in practical terms?", "Untrusted input attempts to manipulate an AI system into ignoring its intended instructions or controls."],
-      ["What is the best defence against overreliance on AI?", "Use clear responsibility, evidence checks, independent reasoning and appropriate human approval."],
-      ["Why should learners keep a record of important AI-assisted work?", "It supports reflection, accountability, troubleshooting and demonstration of authentic learning."],
-      ["What should a quality improvement cycle include?", "Test, measure, identify failures, revise the workflow and test again."],
-      ["Why is accessibility part of responsible AI design?", "A useful system should not unnecessarily exclude people with different abilities or needs."],
-      ["What should happen if an AI recommendation conflicts with reliable evidence?", "Pause the decision, investigate the discrepancy and rely on verified evidence rather than confidence."],
-      ["What is the strongest reason to avoid blindly automating a process?", "Automation can scale mistakes and remove useful human judgement if the process is not understood and controlled."]
-    );
-    return base.map((x,i)=>({q:x[0]+"\nScenario: You are applying this in "+p[0]+" and must justify your decision.",a:x[1],w:[
+    const levels=["ANALYSE","EVALUATE","APPLY","EVALUATE","ANALYSE","CREATE"];
+    return cases.map(function(x,i){return {q:"["+levels[i%levels.length]+"] "+x[0]+"\nContext: You are applying this in "+p[0]+".",a:x[1],w:[
       "Choose the most impressive-looking output and skip verification.",
-      "Let the AI make the final decision because it is faster.",
-      "Use a vague prompt and correct problems only after publication."
-    ].filter(v=>v!==x[1])}));
+      "Add more AI tools without defining success criteria or testing.",
+      "Judge success mainly by how fluent or detailed the generated response appears."
+    ]};});
   }
 
   Object.keys(A).forEach(function(slug){
