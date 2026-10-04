@@ -1,0 +1,26 @@
+(function(){
+  const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  let schools=[];
+  async function api(path,body){const r=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const d=await r.json().catch(()=>({}));if(!r.ok||d.ok===false)throw new Error(d.error||'Request failed');return d;}
+  function render(){
+    const box=document.getElementById('schoolDirectoryAdminList'),search=String(document.getElementById('schoolDirectoryAdminSearch')?.value||'').toLowerCase(),filter=String(document.getElementById('schoolDirectoryAdminStatus')?.value||'all');
+    if(!box)return;
+    const rows=schools.filter(s=>filter==='all'||String(s.status)===filter).filter(s=>{const v=[s.name,s.country,s.city,s.curriculum,s.type,s.email,...(s.school_vacancies||[]).flatMap(x=>[x.title,x.subject,x.level,x.status])].join(' ').toLowerCase();return !search||v.includes(search);});
+    box.innerHTML=rows.length?rows.map(s=>{
+      const vs=s.school_vacancies||[];
+      return '<div class="school-admin-item"><div class="school-admin-head"><div><h4>'+esc(s.name)+'</h4><div class="school-admin-meta">🌍 '+esc(s.country)+(s.city?' · '+esc(s.city):'')+' · '+esc(s.type||'School')+'</div><div class="school-admin-meta">📚 '+esc(s.curriculum||'Curriculum not specified')+' · 📧 '+esc(s.email)+'</div></div><span class="school-status-badge '+esc(s.status||'pending')+'">'+esc(s.status||'pending')+'</span></div><p>'+esc(s.description||'No description provided.')+'</p><div class="school-admin-actions">'+(s.status!=='published'?'<button class="primary-button" data-school-action="publish" data-id="'+esc(s.id)+'">✓ Approve School</button>':'')+(s.status!=='rejected'?'<button class="ghost-button" data-school-action="reject" data-id="'+esc(s.id)+'">✕ Reject School</button>':'')+'<button class="secondary-button school-admin-danger" data-school-action="delete" data-id="'+esc(s.id)+'">🗑 Delete School</button></div>'+vs.map(v=>'<div class="school-vacancy-admin"><strong>💼 '+esc(v.title)+'</strong><div class="school-admin-meta">'+esc(v.subject)+' · '+esc(v.level)+' · '+esc(v.employment||'Full-time')+(v.deadline?' · Deadline: '+esc(v.deadline):'')+'</div><span class="school-status-badge '+esc(v.status||'pending')+'">'+esc(v.status||'pending')+'</span><div class="school-admin-actions">'+(v.status!=='published'?'<button class="primary-button" data-vacancy-action="publish" data-id="'+esc(v.id)+'">✓ Approve Vacancy</button>':'')+(v.status!=='rejected'?'<button class="ghost-button" data-vacancy-action="reject" data-id="'+esc(v.id)+'">✕ Reject Vacancy</button>':'')+'<button class="secondary-button school-admin-danger" data-vacancy-action="delete" data-id="'+esc(v.id)+'">🗑 Delete Vacancy</button></div></div>').join('')+'</div>';
+    }).join(''):'<div class="school-admin-item"><strong>No school submissions found.</strong><p>Approved schools and vacancies will appear here.</p></div>';
+    const summary=document.getElementById('schoolDirectoryAdminSummary');if(summary)summary.textContent=schools.length+' schools · '+schools.reduce((n,s)=>n+(s.school_vacancies||[]).length,0)+' vacancies';
+  }
+  async function load(){const msg=document.getElementById('schoolDirectoryAdminStatusMessage');try{if(msg)msg.textContent='Loading school submissions…';const r=await fetch('/api/admin/schools',{cache:'no-store'});const d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||'Could not load school directory.');schools=Array.isArray(d.schools)?d.schools:[];render();if(msg)msg.textContent='';}catch(e){if(msg)msg.textContent=e.message;}}
+  async function action(kind,id,status){const msg=document.getElementById('schoolDirectoryAdminStatusMessage');try{if(msg)msg.textContent='Saving…';await api(kind==='school'?'/api/admin/school-status':'/api/admin/school-vacancy-status',{id,status});await load();if(msg)msg.textContent='Updated successfully.';}catch(e){if(msg)msg.textContent=e.message;}}
+  document.addEventListener('click',async e=>{const b=e.target.closest('[data-school-action],[data-vacancy-action]');if(!b)return;const id=b.dataset.id;
+    if(b.dataset.schoolAction){const a=b.dataset.schoolAction;if(a==='delete'&&!confirm('Delete this school and its vacancies?'))return;if(a==='delete'){try{await api('/api/admin/school-delete',{id});await load();}catch(x){alert(x.message)}}else action('school',id,a==='publish'?'published':'rejected');}
+    else{const a=b.dataset.vacancyAction;if(a==='delete'&&!confirm('Delete this vacancy?'))return;if(a==='delete'){try{await api('/api/admin/school-vacancy-delete',{id});await load();}catch(x){alert(x.message)}}else action('vacancy',id,a==='publish'?'published':'rejected');}
+  });
+  document.addEventListener('input',e=>{if(e.target.id==='schoolDirectoryAdminSearch')render();});
+  document.addEventListener('change',e=>{if(e.target.id==='schoolDirectoryAdminStatus')render();});
+  document.addEventListener('click',e=>{if(e.target.id==='refreshSchoolDirectoryAdmin')load();});
+  window.CBENexusLoadSchoolDirectoryAdmin=load;
+  document.addEventListener('DOMContentLoaded',()=>{const root=document.getElementById('admin');if(!root)return;const tab=root.querySelector('[data-admin-module="school-directory"]');if(tab)tab.addEventListener('click',load);});
+})();
