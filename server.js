@@ -282,6 +282,12 @@ async function submitSchoolDirectory(payload){
 }
 
 async function handleApi(req,res,url){
+  if(req.method==="GET"&&url.pathname==="/api/admin/ad-revenue"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{sendJson(res,200,await getAdRevenueDashboard());}
+    catch(error){console.error("Ad revenue dashboard error:",error);sendJson(res,503,{ok:false,error:error.message||"Ad revenue data unavailable.",configured:Boolean(String(process.env.GA4_PROPERTY_ID||"").trim()&&String(process.env.GA4_SERVICE_ACCOUNT_JSON||"").trim())});}
+    return true;
+  }
   if(req.method==="GET"&&url.pathname==="/api/analytics/config"){
     sendJson(res,200,{ok:true,googleAnalyticsId:String(process.env.GA_MEASUREMENT_ID||"").trim(),clarityProjectId:String(process.env.CLARITY_PROJECT_ID||"").trim()});
     return true;
@@ -1321,6 +1327,63 @@ async function buildBlogRss(req){
   return '<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CBE Nexus Education Hub</title><atom:link href="'+xmlEscape(base+"/rss.xml")+'" rel="self" type="application/rss+xml"/><link>'+xmlEscape(base+"/blog.html")+'</link><description>Education news, teaching guides, scholarships, AI and CBC/CBE resources from CBE Nexus.</description><language>en-ke</language><lastBuildDate>'+new Date().toUTCString()+'</lastBuildDate>'+items+"</channel></rss>";
 }
 
+function getGa4ServiceAccount(){
+  const raw=String(process.env.GA4_SERVICE_ACCOUNT_JSON||"").trim();
+  if(!raw)return null;
+  try{
+    const decoded=raw.startsWith("{")?raw:Buffer.from(raw,"base64").toString("utf8");
+    const value=JSON.parse(decoded);
+    if(!value.client_email||!value.private_key)return null;
+    return value;
+  }catch(error){console.error("GA4 service account configuration error:",error.message||error);return null;}
+}
+function base64UrlJson(value){
+  return Buffer.from(JSON.stringify(value)).toString("base64").replace(/=/g,"").replace(/\+/g,"-").replace(/\//g,"_");
+}
+function signRs256(input,privateKey){
+  return crypto.createSign("RSA-SHA256").update(input).sign(privateKey,"base64").replace(/=/g,"").replace(/\+/g,"-").replace(/\//g,"_");
+}
+async function getGa4AccessToken(){
+  const sa=getGa4ServiceAccount();
+  if(!sa)return null;
+  const now=Math.floor(Date.now()/1000);
+  const header=base64UrlJson({alg:"RS256",typ:"JWT"});
+  const payload=base64UrlJson({iss:sa.client_email,scope:"https://www.googleapis.com/auth/analytics.readonly",aud:"https://oauth2.googleapis.com/token",iat:now,exp:now+3600});
+  const assertion=header+"."+payload+"."+signRs256(header+"."+payload,sa.private_key);
+  const response=await fetch("https://oauth2.googleapis.com/token",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams({grant_type:"urn:ietf:params:oauth:grant-type:jwt-bearer",assertion})});
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok||!data.access_token)throw new Error(data.error_description||data.error||"Could not obtain GA4 access token.");
+  return data.access_token;
+}
+async function queryGa4Report(body){
+  const propertyId=String(process.env.GA4_PROPERTY_ID||"").trim().replace(/^properties\//,"");
+  if(!propertyId)throw new Error("GA4_PROPERTY_ID is not configured.");
+  const token=await getGa4AccessToken();
+  if(!token)throw new Error("GA4_SERVICE_ACCOUNT_JSON is not configured.");
+  const response=await fetch("https://analyticsdata.googleapis.com/v1beta/properties/"+encodeURIComponent(propertyId)+":runReport",{method:"POST",headers:{"Authorization":"Bearer "+token,"Content-Type":"application/json"},body:JSON.stringify(body)});
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok)throw new Error(data.error?.message||"GA4 Data API request failed.");
+  return data;
+}
+function ga4Number(report,index){
+  const row=report?.rows?.[0]?.metricValues?.[index]?.value;
+  const n=Number(row);
+  return Number.isFinite(n)?n:0;
+}
+async function getAdRevenueDashboard(){
+  const days=Math.min(365,Math.max(1,Number(process.env.AD_REVENUE_DAYS||30)));
+  const dateRange={startDate:String(days)+"daysAgo",endDate:"yesterday"};
+  const overview=await queryGa4Report({dateRanges:[dateRange],metrics:[
+    {name:"screenPageViews"},{name:"sessions"},{name:"averageSessionDuration"},
+    {name:"publisherAdImpressions"},{name:"publisherAdClicks"},{name:"publisherAdRevenue"}
+  ]});
+  const country=await queryGa4Report({dateRanges:[dateRange],dimensions:[{name:"country"}],metrics:[{name:"sessions"},{name:"screenPageViews"},{name:"publisherAdRevenue"}],orderBys:[{metric:{metricName:"sessions"},desc:true}],limit:25});
+  const sessions=ga4Number(overview,1),pageviews=ga4Number(overview,0),impressions=ga4Number(overview,3),clicks=ga4Number(overview,4),revenue=ga4Number(overview,5);
+  const countries=(country.rows||[]).map(row=>({country:row.dimensionValues?.[0]?.value||"Unknown",sessions:Number(row.metricValues?.[0]?.value||0),pageviews:Number(row.metricValues?.[1]?.value||0),revenue:Number(row.metricValues?.[2]?.value||0)}));
+  return {ok:true,periodDays:days,startDate:days+" days ago",endDate:"yesterday",source:"GA4 Data API",metrics:{
+    pageviews,sessions,pagesPerSession:sessions?pageviews/sessions:0,adImpressions:impressions,adClicks:clicks,adCtr:impressions?clicks/impressions*100:0,rpm:pageviews?revenue/pageviews*1000:0,estimatedRevenue:revenue,averageSessionDuration:ga4Number(overview,2)
+  },countries};
+}
 function getAdSenseConfig(){
   const raw=String(process.env.ADSENSE_PUBLISHER_ID||"").trim();
   const publisherId=raw.replace(/^ca-/,"");
