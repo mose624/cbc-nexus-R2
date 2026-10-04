@@ -1321,6 +1321,41 @@ async function buildBlogRss(req){
   return '<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CBE Nexus Education Hub</title><atom:link href="'+xmlEscape(base+"/rss.xml")+'" rel="self" type="application/rss+xml"/><link>'+xmlEscape(base+"/blog.html")+'</link><description>Education news, teaching guides, scholarships, AI and CBC/CBE resources from CBE Nexus.</description><language>en-ke</language><lastBuildDate>'+new Date().toUTCString()+'</lastBuildDate>'+items+"</channel></rss>";
 }
 
+function getAdSenseConfig(){
+  const raw=String(process.env.ADSENSE_PUBLISHER_ID||"").trim();
+  const publisherId=raw.replace(/^ca-/,"");
+  const enabled=String(process.env.ADSENSE_ENABLED||"").trim().toLowerCase()==="true" && /^pub-[A-Za-z0-9]+$/.test(publisherId);
+  return {enabled,publisherId};
+}
+function isAdExcludedPath(pathname){
+  const p=String(pathname||"/").toLowerCase();
+  return p.startsWith("/api/") || p.startsWith("/admin") || p.includes("login") || p.includes("checkout") || p.includes("payment") || p.includes("upload") || p.includes("dashboard");
+}
+function optimizeHtmlForAds(html){
+  let out=String(html||"");
+  // Preserve the first meaningful image for fast visual rendering; lazy-load the rest.
+  let seenImage=false;
+  out=out.replace(/<img\\b([^>]*?)>/gi,(full,attrs)=>{
+    if(/\\bloading\\s*=|\\bdecoding\\s*=/i.test(attrs)) return full;
+    if(!seenImage){seenImage=true;return '<img'+attrs+' loading="eager" decoding="async">';}
+    return '<img'+attrs+' loading="lazy" decoding="async">';
+  });
+  return out;
+}
+function injectAdSenseTags(html,pathname){
+  const cfg=getAdSenseConfig();
+  if(!cfg.enabled || isAdExcludedPath(pathname)) return html;
+  let out=String(html||"");
+  if(/pagead2\\.googlesyndication\\.com\\/pagead\\/js\\/adsbygoogle\\.js/i.test(out)) return out;
+  const head='<link rel="preconnect" href="https://pagead2.googlesyndication.com"><link rel="preconnect" href="https://googleads.g.doubleclick.net"><meta name="google-adsense-account" content="'+cfg.publisherId+'"><script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-'+cfg.publisherId+'"></script>';
+  out=out.replace(/<head([^>]*)>/i,'<head$1>'+head);
+  return optimizeHtmlForAds(out);
+}
+function buildAdsTxt(){
+  const cfg=getAdSenseConfig();
+  if(!cfg.enabled) return "# AdSense is not enabled yet. Set ADSENSE_ENABLED=true and ADSENSE_PUBLISHER_ID=pub-XXXXXXXXXXXXXXX in Render.\\n";
+  return 'google.com, '+cfg.publisherId+', DIRECT, f08c47fec0942fa0\\n';
+}
 function injectAnalyticsTags(html){
   const measurementId=String(process.env.GA_MEASUREMENT_ID||"G-8E0HGCJM8W").trim();
   const clarityId=String(process.env.CLARITY_PROJECT_ID||"ysl6ujcrkf").trim();
@@ -1353,7 +1388,7 @@ async function serveStatic(req,res,url){
     res.end(await seo.sitemap(req));
     return;
   }
-  if(req.method==="GET" && url.pathname==="/indexnow-key.txt"){
+  if(req.method==="GET" && url.pathname==="/ads.txt"){\n    res.writeHead(200,{"Content-Type":"text/plain; charset=utf-8","Cache-Control":"public, max-age=3600"});\n    res.end(buildAdsTxt());\n    return;\n  }\n  if(req.method==="GET" && url.pathname==="/indexnow-key.txt"){
     res.writeHead(200,{"Content-Type":"text/plain; charset=utf-8","Cache-Control":"public, max-age=86400"});
     res.end(indexNowKey(req));
     return;
@@ -1367,7 +1402,7 @@ async function serveStatic(req,res,url){
   const seoPage=await seo.match(req);
   if(req.method==="GET" && seoPage){
     res.writeHead(200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"public, max-age=600"});
-    res.end(injectAnalyticsTags(injectSeoFooter(seoPage,url.pathname)));
+    res.end(injectAdSenseTags(injectAnalyticsTags(injectSeoFooter(seoPage,url.pathname)),url.pathname));
     return;
   }
   const requestedPath=decodeURIComponent(url.pathname==="/"?"/index.html":url.pathname);
@@ -1391,7 +1426,7 @@ async function serveStatic(req,res,url){
       if (!data.toString("utf8").includes("resource-centre-bridge.js")) data = Buffer.from(data.toString("utf8").replace("</body>", bridgeScript + "</body>"));
     }
     const ext=path.extname(target).toLowerCase();
-    if(ext===".html") data=Buffer.from(injectAnalyticsTags(data.toString("utf8")));
+    if(ext===".html") data=Buffer.from(injectAdSenseTags(injectAnalyticsTags(data.toString("utf8")),url.pathname));
     const isHtml=ext===".html";
     const isVersionedAsset=/[?&]v=|-[0-9]{8,}/.test(url.search||"") && [".css",".js"].includes(ext);
     const cacheControl=isHtml
