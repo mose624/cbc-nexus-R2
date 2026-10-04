@@ -139,3 +139,18 @@ main{max-width:1280px;margin:auto;padding:0 20px 70px}
 .project-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.project-form-grid label{display:block}.project-form-grid strong{display:block;margin-bottom:7px;color:var(--deep-blue)}.final-input{width:100%;padding:12px;border:1px solid #ccd6e2;border-radius:4px;font:inherit;resize:vertical}.final-input:focus{outline:2px solid rgba(4,159,217,.18);border-color:var(--cisco-blue)}.project-check{display:flex;gap:9px;align-items:flex-start;margin:18px 0;line-height:1.5;color:var(--muted)}.project-check input{margin-top:4px}.assessment-empty{max-width:850px;margin:50px auto}
 @media(max-width:900px){.assessment-hero{grid-template-columns:1fr}.answer-options{grid-template-columns:1fr}.project-steps{grid-template-columns:1fr 1fr}.project-form-grid{grid-template-columns:1fr}}
 @media(max-width:600px){.assessment-section-head{align-items:flex-start;flex-direction:column}.assessment-progress{width:100%}.assessment-question{padding:16px}.assessment-question legend{grid-template-columns:40px 1fr}.question-number{width:34px;height:34px}.answer-options{margin-left:0}.project-steps{grid-template-columns:1fr}.assessment-meta span{flex:1 1 calc(50% - 8px);text-align:center}.assessment-stat{padding:18px}}
+
+/* Final assessment: normal reading layout and sentence case */
+.final-assessment-form{display:block}
+.assessment-question{display:block;width:100%;margin:0 0 16px;padding:20px;text-align:left}
+.assessment-question legend{display:block;width:100%;padding:0}
+.question-number{display:inline-grid;vertical-align:middle;margin-right:10px}
+.question-module{display:inline;font-size:.78rem;letter-spacing:0;text-transform:none;font-weight:700}
+.question-text{display:block;margin-top:9px;font-weight:700;line-height:1.6;text-transform:none}
+.answer-options{display:block;margin:16px 0 0}
+.answer-option{display:flex!important;width:100%;margin:8px 0!important;min-height:0;padding:12px 14px;text-align:left;align-items:flex-start}
+.answer-option span:last-child{text-transform:none;line-height:1.55}
+.assessment-instruction{align-items:flex-start}
+.assessment-instruction strong,.assessment-instruction span{text-transform:none}
+.assessment-meta span{text-transform:none}
+.assessment-section-head h2,.assessment-section-head p{ text-transform:none }
