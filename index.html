@@ -1132,6 +1132,12 @@
       <label>Module Title<input id="aiNotesModuleTitleInput" required></label>
       <label>Learning Objectives<textarea id="aiNotesObjectivesInput" rows="4" placeholder="What should the learner be able to do?"></textarea></label>
       <label>Comprehensive Notes<textarea id="aiNotesContentInput" rows="16" required placeholder="Write the complete lesson notes here..."></textarea></label>
+      <div class="ai-pdf-upload-box" style="border:2px dashed #facc15;background:#fffbeb;border-radius:14px;padding:16px;margin:12px 0">
+        <strong>📄 PDF Course Notes</strong>
+        <p style="margin:6px 0;color:#475569">Upload the official PDF notes for this course/module. Maximum 50 MB.</p>
+        <input id="aiNotesPdfInput" type="file" accept="application/pdf">
+        <small id="aiNotesPdfStatus" class="form-status">Save the notes first, then upload the PDF.</small>
+      </div>
       <label>Examples / Case Studies<textarea id="aiNotesExamplesInput" rows="7"></textarea></label>
       <label>Practical Activity / Lab<textarea id="aiNotesActivityInput" rows="7"></textarea></label>
       <label>HOTS Questions<textarea id="aiNotesQuestionsInput" rows="10" placeholder="Add Analyse, Apply, Evaluate and Create questions."></textarea></label>
