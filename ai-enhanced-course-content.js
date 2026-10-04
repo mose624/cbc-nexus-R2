@@ -77,7 +77,52 @@
   }
 
   function makePromptEngineeringQuestions(){
-    return [["What best describes prompt engineering?","The deliberate design, testing and refinement of AI instructions to improve task-specific results."],["Which component tells the AI what it must accomplish?","The task."],["Why is context important?","It supplies relevant background or source information needed to perform the task accurately."],["When is few-shot prompting especially useful?","When examples are needed to demonstrate a desired pattern, format, classification or style."],["What is a strong reason to use output-format instructions?","They make responses easier to inspect, compare, reuse and validate."],["A student wants help learning rather than copying homework. Which prompt is best?","Ask the AI to diagnose understanding, give hints, demonstrate a similar example and provide practice."],["What should you do when an AI output contains an important unsupported claim?","Verify it against trustworthy evidence before relying on or publishing it."],["Why should prompts be tested on multiple cases?","One successful result does not show that the prompt is reliable across different inputs and edge cases."],["What is the safest high-level approach to complex reasoning tasks?","Break the task into clear stages and request useful conclusions, assumptions or verification steps rather than relying on hidden reasoning disclosure."],["What is the main purpose of a prompt template?","To turn a successful prompt into a reusable, consistent workflow with clearly identified variables."]].map(x=>({q:x[0],a:x[1],w:["Make the prompt longer even when the extra words do not improve the task.","Let the AI decide the goal, audience and quality standard without guidance.","Accept the first fluent answer without verification."]}));
+    const items=[
+      ["What best describes prompt engineering?","The deliberate design, testing and refinement of AI instructions to improve task-specific results."],
+      ["Which component tells the AI what it must accomplish?","The task."],
+      ["Why is context important?","It supplies relevant background or source information needed to perform the task accurately."],
+      ["When is few-shot prompting especially useful?","When examples are needed to demonstrate a desired pattern, format, classification or style."],
+      ["Why use output-format instructions?","They make responses easier to inspect, compare, reuse and validate."],
+      ["What makes a role instruction useful?","It gives the task an appropriate perspective or working context without replacing verification."],
+      ["What is the purpose of a constraint?","It defines a boundary such as length, scope, evidence, audience, exclusions or required conditions."],
+      ["Why should a prompt identify its audience?","The audience affects language, depth, examples, tone and assumptions."],
+      ["What is zero-shot prompting?","Giving a task without providing worked examples."],
+      ["What is one-shot prompting?","Providing one example to clarify the desired pattern or output."],
+      ["What is few-shot prompting?","Providing several representative examples before asking for new cases."],
+      ["What is prompt iteration?","Testing an instruction, inspecting the result, changing it deliberately and testing again."],
+      ["Why test a prompt on multiple cases?","One successful result does not establish reliability across different inputs and edge cases."],
+      ["What is a prompt template?","A reusable instruction structure containing stable guidance and variables that change between tasks."],
+      ["Why use delimiters in a prompt?","They help separate source material, instructions and examples so their roles are clearer."],
+      ["What should an AI do when required information is missing?","Ask for clarification, state uncertainty or identify the missing information rather than inventing it."],
+      ["What is the danger of a very vague prompt?","The AI must guess the goal, audience, scope and quality standard, increasing inconsistency."],
+      ["What is the danger of contradictory prompt instructions?","The model may produce an inconsistent or incomplete response because the requested objectives conflict."],
+      ["Why can a long prompt still be a poor prompt?","Length does not guarantee clarity; unnecessary or conflicting instructions can reduce reliability."],
+      ["What is a useful evaluation criterion for an AI response?","Accuracy, relevance, completeness, clarity, evidence quality, safety and suitability for the task."],
+      ["Why should fluent AI output still be checked?","Fluency does not prove that claims are true, current, complete or appropriate."],
+      ["What is a safe way to handle complex reasoning tasks?","Break the task into explicit stages and request concise conclusions, assumptions, calculations or verification checks."],
+      ["Why is prompt chaining useful?","It separates a complex workflow into smaller stages that can be inspected and evaluated."],
+      ["How can few-shot examples fail?","They may be unrepresentative, inconsistent or too narrow, causing the model to learn the wrong pattern."],
+      ["What makes a good example in few-shot prompting?","It is relevant, correct, representative and clearly demonstrates the required input-output relationship."],
+      ["What should a teacher include when requesting assessment questions?","Grade, topic boundaries, learning outcomes, difficulty, marks, format, misconceptions and review requirements."],
+      ["What should a business include when requesting an advert?","Product, audience, objective, channel, offer, brand voice, length, call to action and claims that must not be invented."],
+      ["What should a student request instead of simply asking AI to do homework?","Guidance, explanation, hints, worked examples and practice that build the student's own understanding."],
+      ["Why is a verification checklist valuable?","It converts vague review into explicit checks for accuracy, evidence, constraints, bias, privacy and suitability."],
+      ["What is a human-in-the-loop prompt workflow?","A process in which AI assists but a person reviews or approves important output before consequential use."],
+      ["Why should confidential information be minimised in prompts?","Unnecessary sensitive information increases privacy and security risk."],
+      ["What should you do with an AI-generated citation you cannot verify?","Treat it as unverified and locate the actual source before relying on it."],
+      ["Why are edge cases useful in prompt testing?","They expose failure modes that ordinary examples may not reveal."],
+      ["What is the best way to compare two prompt versions?","Use the same representative cases and score both against the same evaluation criteria."],
+      ["What belongs in a professional prompt library?","The template, intended use, variables, examples, evaluation rubric, limitations, owner and review information."],
+      ["What is a fallback instruction?","A rule describing what the workflow should do when information is missing, ambiguous or outside scope."],
+      ["Why should prompts specify what not to do when necessary?","Explicit exclusions can prevent common errors, invented information or unwanted output."],
+      ["How does tone differ from task?","Task defines what must be accomplished; tone defines how the response should communicate."],
+      ["What is the strongest sign that a prompt has improved?","Measured improvement against defined criteria across representative cases, not merely one attractive answer."]
+    ];
+    return items.map(x=>({q:x[0],a:x[1],w:[
+      "Accept the first fluent answer without checking whether it meets the task.",
+      "Let the AI decide the goal, audience and quality standard without guidance.",
+      "Make the prompt longer even when the extra words do not improve the task."
+    ]}));
   }
 
   function makeQuestions(slug,course,m){
