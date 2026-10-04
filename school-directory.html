@@ -39,5 +39,5 @@ async function load(){try{const r=await fetch("/api/schools?_="+Date.now());cons
 document.getElementById("search").addEventListener("input",render);
 document.getElementById("schoolForm").addEventListener("submit",async e=>{e.preventDefault();const form=e.currentTarget,status=document.getElementById("status"),data=Object.fromEntries(new FormData(form).entries());const payload={...data,schoolDescription:data.description,vacancyDescription:data.vacancyDescription};status.textContent="Submitting for review…";try{const r=await fetch("/api/schools/advertise",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}),d=await r.json();if(!r.ok||!d.ok)throw Error(d.error||"Submission failed.");status.textContent="✓ Submitted successfully. CBE Nexus will review your school and vacancy before publishing.";form.reset()}catch(err){status.textContent=err.message||"Submission failed."}});
 load();
-</script><script src="customer-care.js?v=20261004-2" defer></script>
+</script><script src="section-shell.js?v=20261004-4" defer></script><script src="customer-care.js?v=20261004-2" defer></script>
 </body></html>
