@@ -271,7 +271,10 @@ async function submitSchoolDirectory(payload){
       const {data:v,error:ve}=await supabase.from("school_vacancies").insert(vacancy).select("*").single();
       if(ve)throw ve;
       return {school:data,vacancy:v};
-    }catch(error){console.warn("Supabase school submission failed:",error.message||error);}
+    }catch(error){
+      console.error("Supabase school submission failed:",error);
+      throw new Error("School submission could not be saved to Supabase. Please try again.");
+    }
   }
   await appendJsonStore("schools.json",school);
   await appendJsonStore("school-vacancies.json",vacancy);
