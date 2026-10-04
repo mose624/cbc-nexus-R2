@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CBE Nexus | Free CBC Exam Generator Kenya</title>
+<meta name="description" content="Generate free CBC/CBE practice exams and marking schemes by grade, subject, strand, marks and number of questions.">
+<link rel="stylesheet" href="/styles.css?v=20261004-01">
+<style>
+.eg-page{max-width:1150px;margin:auto;padding:28px 18px 70px}.eg-hero,.eg-card{background:#fff;border:1px solid #d9e3dc;border-radius:18px;padding:24px;margin-bottom:20px;box-shadow:0 10px 28px rgba(7,59,50,.07)}.eg-hero{background:linear-gradient(135deg,#e8f7f1,#fff8d8);border-color:#b9ddd1}.eg-hero h1{font-size:32px;color:#073b32;margin:8px 0}.eg-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.eg-full{grid-column:1/-1}.eg-grid label{font-weight:800;display:block;margin-bottom:6px}.eg-grid input,.eg-grid select,.eg-grid textarea{width:100%;padding:12px;border:1px solid #cbd9d3;border-radius:10px;background:#fff;font:inherit}.eg-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.eg-status{min-height:22px;font-weight:700}.exam-paper{background:#fff;padding:38px;border:1px solid #ddd}.exam-head{text-align:center;border-bottom:2px solid #173b32;padding-bottom:16px}.exam-head h2{margin:4px 0}.q{margin:20px 0;break-inside:avoid}.q-title{font-weight:800}.opts{margin:8px 0 0 22px}.marking{margin-top:28px;padding-top:20px;border-top:2px solid #173b32}.notice{padding:12px 14px;border-left:4px solid #d9a441;background:#fff8d8;border-radius:8px}@media(max-width:720px){.eg-grid{grid-template-columns:1fr}.eg-full{grid-column:auto}.exam-paper{padding:20px}}@media print{body *{visibility:hidden!important}.print-area,.print-area *{visibility:visible!important}.print-area{position:absolute;left:0;top:0;width:100%;box-shadow:none!important;border:0!important}.no-print{display:none!important}}
+</style>
+</head>
+<body>
+<header class="site-header"><nav class="main-nav"><a class="brand" href="/index.html#dashboard"><span class="brand-mark">CBE</span><span><strong>CBE Nexus</strong><small>Connecting learners to excellence</small></span></a><div class="nav-actions"><a class="secondary-button" href="/index.html#dashboard">← Home</a><a class="primary-button" href="/international-teaching-jobs.html">Teacher Jobs</a></div></nav></header>
+<main class="eg-page">
+<a href="/index.html#dashboard">← Back to CBE Nexus</a>
+<section class="eg-hero"><p class="eyebrow">FREE CBC/CBE TEACHER TOOL</p><h1>Free CBC Exam Generator</h1><p>Generate a printable practice exam and marking scheme in seconds. Choose the grade, subject, strand, marks and number of questions. The generator is free for teachers and learners.</p></section>
+<section class="eg-card no-print"><h2>1. Exam Settings</h2><form id="examForm"><div class="eg-grid">
+<div><label for="grade">Grade</label><select id="grade" required><option value="">Select grade</option><option>Grade 1</option><option>Grade 2</option><option>Grade 3</option><option>Grade 4</option><option>Grade 5</option><option>Grade 6</option><option>Grade 7</option><option>Grade 8</option><option>Grade 9</option><option>Grade 10</option><option>Grade 11</option><option>Grade 12</option></select></div>
+<div><label for="subject">Subject</label><select id="subject" required><option value="">Select subject</option><option>Mathematics</option><option>English</option><option>Kiswahili</option><option>Integrated Science</option><option>Biology</option><option>Chemistry</option><option>Physics</option><option>Agriculture</option><option>Computer Studies</option><option>Business Studies</option><option>Geography</option><option>History and Citizenship</option><option>CRE</option></select></div>
+<div><label for="strand">Strand / Topic</label><input id="strand" required placeholder="e.g. Matter, Forces, Algebra, Cells"></div>
+<div><label for="marks">Total Marks</label><select id="marks"><option>20</option><option selected>30</option><option>40</option><option>50</option><option>70</option><option>100</option></select></div>
+<div><label for="questions">Number of Questions</label><select id="questions"><option>5</option><option selected>10</option><option>15</option><option>20</option><option>30</option></select></div>
+<div><label for="difficulty">Difficulty</label><select id="difficulty"><option>Mixed</option><option>Basic</option><option>Intermediate</option><option>Advanced</option></select></div>
+<div class="eg-full"><label for="instructions">Special Instructions (optional)</label><textarea id="instructions" rows="3" placeholder="e.g. Include calculations, diagrams or application questions."></textarea></div>
+</div><div class="eg-actions"><button class="primary-button" type="submit">⚡ Generate Exam</button><button class="secondary-button" type="button" id="sample">Use Sample Settings</button><button class="ghost-button" type="button" id="clear">Clear</button></div><p id="status" class="eg-status" aria-live="polite"></p></form></section>
+<section id="output" class="eg-card print-area" style="display:none"><div id="examPaper" class="exam-paper"></div></section>
+<section class="eg-card no-print"><div class="notice"><strong>Teacher note:</strong> Review every generated question and marking point before classroom use. This free version uses a built-in question bank and does not claim to reproduce official KICD or KNEC papers.</div><div class="eg-actions"><button class="primary-button" id="printExam" type="button">🖨 Print / Save Exam PDF</button><button class="secondary-button" id="printScheme" type="button">✓ Print Marking Scheme PDF</button></div></section>
+</main>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const bank=[
+["Mathematics","Algebra","Simplify 3x + 5x.",["8x","15x","8","x"],0,"Combine like terms: 3x + 5x = 8x."],
+["Mathematics","Algebra","Solve 2x + 6 = 14.",["x=2","x=4","x=6","x=10"],1,"2x=8, therefore x=4."],
+["Mathematics","Fractions","What is 1/2 + 1/4?",["1/4","2/4","3/4","1"],2,"1/2 = 2/4; 2/4 + 1/4 = 3/4."],
+["Biology","Cells","Which structure controls most activities of a cell?",["Cell wall","Nucleus","Vacuole","Cytoplasm"],1,"The nucleus contains genetic material and controls cell activities."],
+["Biology","Cells","Which process allows green plants to manufacture food?",["Respiration","Digestion","Photosynthesis","Excretion"],2,"Photosynthesis uses light energy to make food."],
+["Chemistry","Matter","Which change is a physical change?",["Burning paper","Rusting iron","Melting ice","Cooking food"],2,"Melting changes state without forming a new substance."],
+["Chemistry","Matter","What is the pH of a neutral solution at room temperature?",["0","5","7","14"],2,"A neutral solution has pH 7."],
+["Physics","Forces","What is the SI unit of force?",["Joule","Newton","Watt","Pascal"],1,"Force is measured in newtons (N)."],
+["Physics","Forces","Which instrument measures force?",["Thermometer","Ammeter","Spring balance","Measuring cylinder"],2,"A spring balance measures force."],
+["Integrated Science","Matter","Which state of matter has a fixed volume but no fixed shape?",["Solid","Liquid","Gas","Plasma"],1,"A liquid has a fixed volume and takes the shape of its container."],
+["English","Grammar","Choose the correctly punctuated sentence.",["What time is it.","What time is it?","What time is it!","what time is it?"],1,"A direct question ends with a question mark and begins with a capital letter."],
+["Geography","Environment","Which gas is most associated with human-caused global warming?",["Oxygen","Nitrogen","Carbon dioxide","Helium"],2,"Carbon dioxide is a major human-caused greenhouse gas."]
+];
+function esc(v){return String(v??"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));}
+function pick(g,s,t,n){let exact=bank.filter(x=>x[0]===s&&x[1].toLowerCase().includes(t.toLowerCase()));let subj=bank.filter(x=>x[0]===s);let pool=exact.length?exact:subj.length?subj:bank;let out=[];for(let i=0;i<n;i++)out.push(pool[i%pool.length]);return out;}
+function generate(){
+const g=$("grade").value,s=$("subject").value,t=$("strand").value.trim(),total=Number($("marks").value),n=Number($("questions").value);
+if(!g||!s||!t){$("status").textContent="Please select the grade, subject and strand/topic.";return;}
+const qs=pick(g,s,t,n),each=Math.max(1,Math.round((total/n)*10)/10);
+let html='<div class="exam-head"><p><strong>CBE NEXUS</strong></p><h2>'+esc(g)+' '+esc(s)+' Examination</h2><p><strong>Strand/Topic:</strong> '+esc(t)+' &nbsp; | &nbsp; <strong>Total:</strong> '+total+' marks &nbsp; | &nbsp; <strong>Questions:</strong> '+n+'</p><p>Name: ________________________________ &nbsp; Date: ______________</p></div><h3>SECTION A: QUESTIONS</h3>';
+qs.forEach((q,i)=>{html+='<div class="q"><div class="q-title">'+(i+1)+'. '+esc(q[2])+' <span>['+each+' marks]</span></div><ol class="opts" type="A">'+q[3].map(x=>'<li>'+esc(x)+'</li>').join("")+'</ol></div>';});
+html+='<div class="marking"><h3>MARKING SCHEME</h3>';qs.forEach((q,i)=>{html+='<div class="q"><strong>'+(i+1)+'. Answer: '+esc(q[3][q[4]])+'</strong> — '+esc(q[5])+' ['+each+' marks]</div>';});html+='</div>';
+$("examPaper").innerHTML=html;$("output").style.display="block";$("status").textContent="✓ Exam and marking scheme generated. Review before printing.";window.scrollTo({top:$("output").offsetTop-20,behavior:"smooth"});
+}
+$("examForm").addEventListener("submit",e=>{e.preventDefault();generate()});
+$("sample").onclick=()=>{$("grade").value="Grade 9";$("subject").value="Integrated Science";$("strand").value="Matter";$("marks").value="30";$("questions").value="10";generate()};
+$("clear").onclick=()=>{$("examForm").reset();$("output").style.display="none";$("status").textContent=""};
+function printPart(scheme){if(!$("output").style.display||!$("examPaper").innerHTML){generate();}const paper=$("examPaper").cloneNode(true);if(scheme){paper.querySelectorAll(".q-title,.opts").forEach(x=>x.remove());}else{paper.querySelector(".marking")?.remove();}const w=window.open("","_blank","width=900,height=1100");if(!w){$("status").textContent="Please allow pop-ups to print the generated paper.";return;}w.document.write("<!doctype html><html><head><title>CBE Nexus Exam</title><style>body{font-family:Arial,sans-serif;padding:30px;color:#111}.exam-head{text-align:center;border-bottom:2px solid #173b32;padding-bottom:14px}.q{margin:18px 0;break-inside:avoid}.q-title{font-weight:800}.opts{margin-left:20px}.marking{margin-top:28px;border-top:2px solid #173b32;padding-top:16px}@media print{body{padding:0}}</style></head><body>"+paper.outerHTML+"<script>window.onload=function(){setTimeout(function(){window.print()},250)};<\\/script></body></html>");w.document.close();}
+$("printExam").onclick=()=>printPart(false);$("printScheme").onclick=()=>printPart(true);
+})();
+</script>
+</body></html>
