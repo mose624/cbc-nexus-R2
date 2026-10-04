@@ -709,7 +709,7 @@ function setupFilters() {
   const allAdminSubjects = allCbeSubjects;
 
   optionList(elements.gradeFilter, ["All Grades", ...grades], state.grade);
-  optionList(elements.adminGrade, grades, "Grade 1");
+  optionList(elements.adminGrade, [...grades, "IGCSE", "IB", "O Level", "A Level", "Pearson"], "Grade 1");
   optionList(elements.sellerGrade, grades, "Grade 1");
   optionList(elements.projectGrade, grades, "Grade 1");
   optionList(elements.tuitionGrade, grades, "Grade 1");
@@ -1741,57 +1741,95 @@ async function handleFormSubmit(event) {
   const notes = elements.notesContent.value.trim();
   const price = Number(document.querySelector("#priceInput").value || 0);
   const discount = Number(document.querySelector("#discountInput").value || 0);
+  const grade = elements.adminGrade.value;
+  const subject = elements.adminSubject.value;
+  const type = elements.adminType.value;
   let fileName = document.querySelector("#fileNameInput").value.trim();
-  let file = "";
 
-  if (uploadedFile) {
-    fileName = fileName || uploadedFile.name;
-    file = await readUploadedFile(uploadedFile);
-  } else {
-    fileName = fileName || `${Date.now()}-cbe-resource.txt`;
+  if (!uploadedFile) {
+    elements.formStatus.textContent = "Please choose the resource file before publishing.";
+    showToast("Select a resource file first.");
+    return;
   }
 
-  const resource = {
-    id: `admin-${Date.now()}`,
-    title,
-    grade: elements.adminGrade.value,
-    subject: elements.adminSubject.value,
-    type: elements.adminType.value,
-    description,
-    notes,
-    price,
-    discount,
-    term: elements.termInput.value,
-    isFreeSample: elements.freeSample.value === "true",
-    popularity: 1,
-    fileName,
-    file: file || createDownloadFile({
-      title,
-      grade: elements.adminGrade.value,
-      subject: elements.adminSubject.value,
-      type: elements.adminType.value,
-      description,
-      notes,
-      price,
-      discount,
-      term: elements.termInput.value
-    })
-  };
+  fileName = fileName || uploadedFile.name;
+  const resourceId = `admin-${Date.now()}`;
 
-  const saved = readSavedResources();
-  localStorage.setItem(STORAGE_KEY, JSON.stringify([...saved, resource]));
-  elements.form.reset();
-  document.querySelector("#priceInput").value = "";
-  document.querySelector("#discountInput").value = 0;
-  elements.termInput.value = "Term 1";
-  elements.freeSample.value = "false";
-  elements.notesContent.value = "";
-  elements.adminGrade.value = "Grade 1";
-  optionList(elements.adminSubject, gradeSubjects["Grade 1"], "Mathematics Activities");
-  elements.fileHelp.textContent = "Choose a PDF, Word document, PowerPoint, Excel file, text file, or ZIP.";
-  elements.formStatus.textContent = "Resource published successfully and added to the library.";
-  showToast("Resource published successfully.");
-  renderResources();
+  try {
+    elements.formStatus.textContent = "Uploading resource to Cloudflare R2...";
+    const uploadResponse = await fetch("/api/r2/upload", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": uploadedFile.type || "application/octet-stream",
+        "Content-Length": String(uploadedFile.size),
+        "X-CBE-Role": "admin",
+        "X-CBE-Grade": grade,
+        "X-CBE-Subject": subject,
+        "X-CBE-Type": type,
+        "X-CBE-Filename": fileName,
+        "X-CBE-Resource-Id": resourceId
+      },
+      body: uploadedFile
+    });
+    const uploadData = await uploadResponse.json().catch(() => ({}));
+    if (!uploadResponse.ok || !uploadData.ok) throw new Error(uploadData.error || "Resource file could not be uploaded to R2.");
+
+    elements.formStatus.textContent = "Saving resource details to Supabase...";
+    const resourceResponse = await fetch("/api/resources", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({
+        id: resourceId,
+        role: "admin",
+        title,
+        grade,
+        subject,
+        type,
+        description,
+        notes,
+        price,
+        discount,
+        term: elements.termInput.value,
+        isFreeSample: elements.freeSample.value === "true",
+        popularity: 1,
+        fileName,
+        r2Key: uploadData.r2Key || uploadData.key,
+        previewKey: uploadData.previewKey || ""
+      })
+    });
+    const resourceData = await resourceResponse.json().catch(() => ({}));
+    if (!resourceResponse.ok || !resourceData.ok) throw new Error(resourceData.error || "Resource metadata could not be saved to Supabase.");
+
+    const saved = resourceData.saved || {
+      ...resourceData.resource,
+      id: resourceId, title, grade, subject, type, description, price, discount, term: elements.termInput.value,
+      isFreeSample: elements.freeSample.value === "true", fileName,
+      r2Key: uploadData.r2Key || uploadData.key
+    };
+    const local = readSavedResources().filter((r) => String(r.id) !== String(saved.id));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([...local, normalizeResourceForLibrary(saved)]));
+
+    elements.form.reset();
+    document.querySelector("#priceInput").value = "";
+    document.querySelector("#discountInput").value = 0;
+    elements.termInput.value = "Term 1";
+    elements.freeSample.value = "false";
+    elements.notesContent.value = "";
+    elements.adminGrade.value = "Grade 1";
+    refreshSubjectFilters();
+    optionList(elements.adminSubject, allCbeSubjects, "Mathematics Activities");
+    elements.fileHelp.textContent = "Choose a PDF, Word document, PowerPoint, Excel file, text file, or ZIP.";
+    elements.formStatus.textContent = "Resource uploaded to R2 and saved to Supabase successfully.";
+    showToast("Resource uploaded successfully.");
+    await syncPublicResourcesFromServer();
+    if (typeof loadAdminDashboard === "function") await loadAdminDashboard();
+  } catch (error) {
+    console.error("CBE Nexus resource publish error:", error);
+    elements.formStatus.textContent = error.message || "Resource could not be published.";
+    showToast(error.message || "Resource could not be published.");
+  }
 }
 
 function safeOn(element, eventName, handler, options) {
