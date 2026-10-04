@@ -408,7 +408,8 @@ function renderAdminControlCentre(data) {
     elements.adminStatsGrid.innerHTML=cards.map(c=>`<div class="admin-kpi-card"><span>${escapeHtml(c[0])}</span><strong>${Number(c[1]||0).toLocaleString("en-KE")}</strong><small>${escapeHtml(c[2])}</small></div>`).join("");
   }
   renderAdminModuleDetails(data);
-  auditAdminExportButtons();\n  if(elements.adminResourceBadge) elements.adminResourceBadge.textContent=resources.length;
+  auditAdminExportButtons();
+  if(elements.adminResourceBadge) elements.adminResourceBadge.textContent=resources.length;
   if(elements.adminSellerBadge) elements.adminSellerBadge.textContent=sellers.length;
   if(elements.adminPaymentBadge) elements.adminPaymentBadge.textContent=payments.length;
   if(elements.adminSalesBadge) elements.adminSalesBadge.textContent=sales.length;
@@ -1025,7 +1026,34 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
   });
 
   // ADMIN UPLOAD: curriculum controls the available grade/subject choices.
-  function refreshAdminUploadSubjects() {\n    if (!elements.adminCurriculum || !elements.adminGrade || !elements.adminSubject) return;\n    const curriculum = String(elements.adminCurriculum.value || "CBC/CBE");\n    const international = ["IGCSE","IB","O Level","A Level","Pearson"].includes(curriculum);\n    if (international) {\n      optionList(elements.adminGrade, [curriculum], curriculum);\n      optionList(elements.adminSubject, gradeSubjects[curriculum] || [], "");\n    } else {\n      const grades = Object.keys(gradeSubjects).filter((value) => !["IGCSE","IB","O Level","A Level","Pearson"].includes(value));\n      optionList(elements.adminGrade, grades, "Grade 1");\n      const subjects = gradeSubjects["Grade 1"] || allCbeSubjects;\n      optionList(elements.adminSubject, subjects, subjects[0] || "");\n    }\n  }\n\n  safeOn(elements.adminCurriculum, "change", () => {\n    refreshAdminUploadSubjects();\n    const selected = String(elements.adminCurriculum?.value || "CBC/CBE");\n    if (elements.formStatus) elements.formStatus.textContent = selected === "CBC/CBE" ? "CBC / CBE upload selected." : selected + " upload selected. This resource will appear only on its dedicated international curriculum page.";\n  });\n\n  safeOn(elements.adminGrade, "change", (event) => {\n    const grade = String(event.target.value || "").trim();\n    const subjects = gradeSubjects[grade] || [];\n    const current = canonicalSubjectName(elements.adminSubject?.value || "");\n    const selected = subjects.find((subject) => canonicalSubjectName(subject) === current) || subjects[0] || "";\n    optionList(elements.adminSubject, subjects, selected);\n  });
+  function refreshAdminUploadSubjects() {
+    if (!elements.adminCurriculum || !elements.adminGrade || !elements.adminSubject) return;
+    const curriculum = String(elements.adminCurriculum.value || "CBC/CBE");
+    const international = ["IGCSE","IB","O Level","A Level","Pearson"].includes(curriculum);
+    if (international) {
+      optionList(elements.adminGrade, [curriculum], curriculum);
+      optionList(elements.adminSubject, gradeSubjects[curriculum] || [], "");
+    } else {
+      const grades = Object.keys(gradeSubjects).filter((value) => !["IGCSE","IB","O Level","A Level","Pearson"].includes(value));
+      optionList(elements.adminGrade, grades, "Grade 1");
+      const subjects = gradeSubjects["Grade 1"] || allCbeSubjects;
+      optionList(elements.adminSubject, subjects, subjects[0] || "");
+    }
+  }
+
+  safeOn(elements.adminCurriculum, "change", () => {
+    refreshAdminUploadSubjects();
+    const selected = String(elements.adminCurriculum?.value || "CBC/CBE");
+    if (elements.formStatus) elements.formStatus.textContent = selected === "CBC/CBE" ? "CBC / CBE upload selected." : selected + " upload selected. This resource will appear only on its dedicated international curriculum page.";
+  });
+
+  safeOn(elements.adminGrade, "change", (event) => {
+    const grade = String(event.target.value || "").trim();
+    const subjects = gradeSubjects[grade] || [];
+    const current = canonicalSubjectName(elements.adminSubject?.value || "");
+    const selected = subjects.find((subject) => canonicalSubjectName(subject) === current) || subjects[0] || "";
+    optionList(elements.adminSubject, subjects, selected);
+  });
 
   safeOn(elements.sellerGrade, "change", (event) => {
     const subjects = gradeSubjects[event.target.value];
