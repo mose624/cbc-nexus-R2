@@ -5947,3 +5947,70 @@ html[data-grade-theme="international"]{--grade-accent:#00838f;--grade-accent-2:#
 @media(max-width:900px){.education-hub-home-grid{grid-template-columns:1fr 1fr}.education-hub-heading{align-items:flex-start;flex-direction:column}}
 @media(max-width:600px){.education-hub-home{padding:1.25rem}.education-hub-home-grid{grid-template-columns:1fr}.education-hub-view-all{width:100%;text-align:center}}
 
+
+/* Compact dashboard cards: Holiday Tuition, Automated Assessment, About CBE Nexus, Privacy Policy */
+#holidayTuition,
+#quizCentre,
+#about,
+#privacy{
+  padding:18px 24px!important;
+  margin:8px auto!important;
+  max-width:1120px!important;
+  border-radius:10px!important;
+  box-shadow:0 2px 8px rgba(18,52,71,.08)!important;
+}
+#holidayTuition{background:#d9f1ff!important;border:1px solid #b9e4fa!important}
+#quizCentre{background:#ddf5e5!important;border:1px solid #bfe7cd!important}
+#about{background:#ffe6cf!important;border:1px solid #f6c99e!important}
+#privacy{background:#ead8c8!important;border:1px solid #d7bda6!important}
+#holidayTuition .section-heading,
+#quizCentre .section-heading,
+#about .info-layout,
+#privacy .info-layout{margin-bottom:10px!important;gap:10px!important}
+#holidayTuition h2,
+#quizCentre h2,
+#about h2,
+#privacy h2{font-size:18px!important;line-height:1.15!important;margin:2px 0 6px!important}
+#holidayTuition h3,
+#quizCentre h3,
+#about h3,
+#privacy h3{font-size:14px!important}
+#holidayTuition p,
+#quizCentre p,
+#about p,
+#privacy p,
+#holidayTuition li,
+#quizCentre li,
+#about li,
+#privacy li{font-size:11px!important;line-height:1.35!important}
+#holidayTuition .eyebrow,
+#quizCentre .eyebrow,
+#about .eyebrow,
+#privacy .eyebrow{font-size:8px!important;letter-spacing:.06em!important;margin-bottom:3px!important}
+#holidayTuition .primary-button,
+#quizCentre .primary-button,
+#about .primary-button,
+#privacy .primary-button{min-height:30px!important;padding:6px 10px!important;font-size:10px!important}
+
+/* Make the main dashboard smaller and cleaner on desktop and mobile. */
+#dashboard.portal-dashboard{max-width:1180px!important;margin:0 auto!important;gap:12px!important}
+#dashboard.portal-dashboard > .portal-sidebar,
+#dashboard.portal-dashboard > .portal-main,
+#dashboard.portal-dashboard > .portal-rightbar{border-radius:9px!important}
+@media(max-width:640px){
+  #dashboard.portal-dashboard{grid-template-columns:29% 42% 29%!important;padding:5px!important;gap:3px!important}
+  #dashboard.portal-dashboard > .portal-sidebar,
+  #dashboard.portal-dashboard > .portal-main,
+  #dashboard.portal-dashboard > .portal-rightbar{min-height:430px!important}
+  #dashboard.portal-dashboard > .portal-sidebar,
+  #dashboard.portal-dashboard > .portal-main,
+  #dashboard.portal-dashboard > .portal-rightbar{padding:5px 3px!important}
+  #dashboard.portal-dashboard > .portal-sidebar .portal-sidebar-title h2{font-size:10px!important}
+  #dashboard.portal-dashboard > .portal-main .portal-welcome h1{font-size:12px!important}
+  #dashboard.portal-dashboard > .portal-main .portal-welcome p{font-size:7px!important}
+  #dashboard.portal-dashboard > .portal-rightbar .portal-card{padding:4px 3px!important}
+  #dashboard.portal-dashboard > .portal-rightbar .portal-side-link{min-height:21px!important;font-size:5.5px!important;padding:3px 2px!important}
+  #holidayTuition,#quizCentre,#about,#privacy{padding:12px 10px!important;margin:5px auto!important;border-radius:7px!important}
+  #holidayTuition h2,#quizCentre h2,#about h2,#privacy h2{font-size:13px!important}
+  #holidayTuition p,#quizCentre p,#about p,#privacy p,#holidayTuition li,#quizCentre li,#about li,#privacy li{font-size:8px!important}
+}
