@@ -139,7 +139,7 @@
         <a href="resource-category.html?type=Assessment%20Test" data-material-link="Assessment Test">Assessment Tests</a>
         <a href="resource-category.html?type=Topical%20Questions">Topical Questions</a>
         <a href="resource-category.html?type=Marking%20Schemes">Marking Schemes</a>
-        <a class="admin-only-link" href="#cbcProjects">CBC Projects</a>
+
         <a href="#holidayTuition">Holiday Tuition</a>
       </div>
 
@@ -172,7 +172,7 @@
               <a href="#quizCentre">Quizzes &amp; Progress</a>
 
               <a href="#holidayTuition">Holiday Tuition</a>
-              <a class="admin-only-link" href="#cbcProjects">CBC Projects</a>
+
             </div>
           </details>
 
@@ -248,20 +248,19 @@
             <strong>Welcome to CBE Nexus</strong>
             <p>Access your learning resources and account tools.</p>
             <a class="portal-side-link" href="#payments">Payments</a>
-            <a class="portal-side-link" href="#sellerAccount">Seller Account</a>
+
             <a class="portal-side-link" href="#holidayTuition">Holiday Tuition</a>
           </div>
           <div class="portal-card">
             <div class="portal-card-heading"><span>LEARNING TOOLS</span></div>
             <a class="portal-side-link" href="#quizCentre">Quizzes &amp; Progress</a>
 
-            <a class="portal-side-link" href="#cbcProjects">CBC Projects</a>
             <a class="portal-side-link" href="#referFriend">Refer a Friend</a>
           </div>
           <div class="portal-card portal-help-card">
             <div class="portal-card-heading"><span>NEED HELP?</span></div>
             <p>For orders, corrections and general support, contact CBE Nexus.</p>
-            <a class="primary-button" href="#contact">Contact Support</a>
+
           </div>
         </aside>
       </section>
@@ -287,7 +286,6 @@
                   <strong>LEARNING</strong>
                   <a href="#quizCentre">Quizzes &amp; Progress</a>
 
-                  <a class="admin-only-link" href="#cbcProjects">CBC Projects</a>
                   <a href="resource-category.html?type=Study%20Guides">Study Guides</a>
                   <a href="resource-category.html?type=Topical%20Questions">Topical Questions</a>
                 </td>
@@ -312,23 +310,23 @@
               <tr>
                 <td class="mobile-blue">
                   <strong>ACCOUNT &amp; SELL</strong>
-                  <a class="admin-only-link" href="#sellerAccount">Seller Account</a>
+
                   <a href="#referFriend">Refer a Friend</a>
                   <a class="admin-only-link" href="#sellEarn">Sell CBE Resources &amp; Earn 50%</a>
-                  <a class="admin-only-link" href="#sellerAccount">Create Seller Account</a>
-                  <a class="admin-only-link" href="#sellerDashboard">Seller Dashboard</a>
+
+
                 </td>
                 <td class="mobile-green">
                   <strong>PAYMENTS &amp; ORDERS</strong>
                   <a href="#payments">Payments</a>
                   <a href="resource-category.html">Browse Resources</a>
                   <a href="#payments">M-Pesa Payments</a>
-                  <a href="#contact">Order Support</a>
+
                   <a href="#cartButton">Cart</a>
                 </td>
                 <td class="mobile-yellow">
                   <strong>SUPPORT &amp; INFORMATION</strong>
-                  <a href="#contact">Contact</a>
+
         <a href="learning-hub.html">Learning Hub</a>
                   <a href="#privacy">Privacy Policy</a>
                   <a href="#about">About Us</a>
@@ -371,139 +369,6 @@
             <p>Teachers, tutors, and content creators must create a seller account first. Admin approval is completed within 24 hours.</p>
           </div>
           <button class="whatsapp-button" id="openSellerDashboardButtonSecondary" type="button">Open Seller Dashboard</button>
-        </div>
-      </section>
-
-      <section id="sellerAccount" class="seller-band hidden-section admin-only-section" aria-hidden="true">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Seller account</p>
-            <h2>Create or login to seller account</h2>
-          </div>
-          <div class="price-pill">Approval time: <strong>24 hours</strong></div>
-        </div>
-        <div class="seller-layout">
-          <form id="sellerAccountForm" class="admin-form">
-            <div class="form-row">
-              <label>
-                Full Name
-                <input id="sellerAccountNameInput" required placeholder="Seller full name">
-              </label>
-              <label>
-                Phone Number
-                <input id="sellerAccountPhoneInput" required placeholder="07XXXXXXXX">
-              </label>
-            </div>
-            <div class="form-row">
-              <label>
-                Username
-                <input id="sellerAccountUsernameInput" required placeholder="Create username">
-              </label>
-              <label>
-                Password
-                <input id="sellerAccountPasswordInput" type="password" required placeholder="Create password">
-              </label>
-            </div>
-            <button class="primary-button" type="submit">Create Seller Account</button>
-            <p id="sellerAccountStatus" class="form-status" aria-live="polite"></p>
-          </form>
-
-          <form id="sellerLoginForm" class="admin-form">
-            <label>
-              Username
-              <input id="sellerLoginUsernameInput" required placeholder="Seller username">
-            </label>
-            <label>
-              Password
-              <input id="sellerLoginPasswordInput" type="password" required placeholder="Seller password">
-            </label>
-            <button class="secondary-button" type="submit">Login as Seller</button>
-            <p id="sellerLoginStatus" class="form-status" aria-live="polite"></p>
-          </form>
-        </div>
-      </section>
-
-      <section id="sellerDashboard" class="seller-band hidden-section admin-only-section" aria-hidden="true">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Third-party seller dashboard</p>
-            <h2>Upload resources for selling</h2>
-            <p class="seller-approval-copy">Only approved seller accounts can upload. Submitted work is reviewed by the admin and approved within 3 days.</p>
-          </div>
-          <div class="price-pill">Seller commission: <strong>50%</strong></div>
-        </div>
-        <div class="seller-layout">
-          <form id="sellerForm" class="admin-form">
-            <div class="form-row">
-              <label>
-                Seller Name
-                <input id="sellerNameInput" required placeholder="Teacher or publisher name">
-              </label>
-              <label>
-                Seller Phone
-                <input id="sellerPhoneInput" required placeholder="07XXXXXXXX">
-              </label>
-            </div>
-            <div class="form-row">
-              <label>
-                Resource Title
-                <input id="sellerTitleInput" required placeholder="Grade 8 Integrated Science Notes">
-              </label>
-              <label>
-                Price
-                <input id="sellerPriceInput" type="number" min="0" required placeholder="Enter custom price">
-              </label>
-            </div>
-            <div class="form-row">
-              <label>
-                Grade
-                <select id="sellerGradeInput" required></select>
-              </label>
-              <label>
-                Subject
-                <select id="sellerSubjectInput" required></select>
-              </label>
-            </div>
-            <div class="form-row">
-              <label>
-                Material Type
-                <select id="sellerTypeInput" required></select>
-              </label>
-              <label>
-                Discount Percentage
-                <input id="sellerDiscountInput" type="number" min="0" max="100" value="0" required>
-              </label>
-            </div>
-            <label>
-              Description
-              <textarea id="sellerDescriptionInput" required rows="4" placeholder="Describe the resource, term, strand, answers, and learner level."></textarea>
-            </label>
-            <label>
-              Upload Seller Resource
-              <input id="sellerFileInput" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.zip" required>
-            </label>
-            <button class="primary-button submit-button" type="submit">Submit Seller Resource</button>
-            <p id="sellerStatus" class="form-status" aria-live="polite"></p>
-          </form>
-
-          <aside class="seller-panel">
-            <h3>Seller resource list</h3>
-            <p>Seller uploads stay pending until the admin approves them. Approval is completed within 3 days.</p>
-            <div id="sellerResourceList" class="seller-resource-list"></div>
-            <div class="seller-earnings">
-              <h3>Seller earnings</h3>
-              <strong id="sellerEarningsTotal">KES 0</strong>
-              <form id="withdrawForm" class="withdraw-form">
-                <input id="withdrawPhoneInput" placeholder="Withdrawal M-Pesa phone">
-                <button class="secondary-button" type="submit">Request Withdrawal</button>
-              </form>
-              <p id="withdrawStatus" class="form-status" aria-live="polite"></p>
-            </div>
-            <div class="seller-storage">
-              <h3>Seller storage</h3>
-              <p id="sellerStorageInfo">Seller storage usage: 0 B of 20 GB available.</p>
-            </div>
-          </aside>
         </div>
       </section>
 
@@ -572,45 +437,6 @@
           <a class="download-tile" href="resources/grade-7-mathematics-topical-questions.txt" download>Grade 7 Topical Questions</a>
           <a class="download-tile" href="resource-category.html">Browse More CBC Resources</a>
         </div>
-      </section>
-
-      <section id="cbcProjects" class="content-band admin-only-section" aria-hidden="true">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">CBC project centre</p>
-            <h2>CBC Projects Upload</h2>
-            <p>Upload learner projects, teacher project guides, assessment rubrics, and project evidence for review.</p>
-          </div>
-          <a class="primary-button" href="#projectUploadForm">Upload Project</a>
-        </div>
-        <form id="projectUploadForm" class="admin-form feature-form">
-          <div class="form-row">
-            <label>
-              Project Title
-              <input id="projectTitleInput" required placeholder="Grade 6 Agriculture Project">
-            </label>
-            <label>
-              Grade
-              <select id="projectGradeInput"></select>
-            </label>
-          </div>
-          <div class="form-row">
-            <label>
-              Subject
-              <input id="projectSubjectInput" required placeholder="Agriculture">
-            </label>
-            <label>
-              Upload File
-              <input id="projectFileInput" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.zip">
-            </label>
-          </div>
-          <label>
-            Project Notes
-            <textarea id="projectNotesInput" rows="4" required placeholder="Describe the project, rubric, materials, and expected evidence."></textarea>
-          </label>
-          <button class="primary-button" type="submit">Submit CBC Project</button>
-          <p id="projectStatus" class="form-status" aria-live="polite"></p>
-        </form>
       </section>
 
       <section id="quizCentre" class="info-band">
@@ -786,7 +612,7 @@
           <a class="download-tile" href="progress.html">7. Progress Reports</a>
 
           <a class="download-tile" href="upload.html">9. Upload Centre</a>
-          <a class="download-tile" href="contact.html">10. Contact</a>
+
         </div>
       </section>
 
@@ -1434,21 +1260,6 @@
         </div>
       </section>
 
-      <section id="contact" class="info-band info-band-light">
-        <div class="info-layout">
-          <div>
-            <p class="eyebrow">Contact page</p>
-            <h2>Contact CBE Nexus</h2>
-            <p>For resource orders, seller support, corrections, and general enquiries, reach us directly.</p>
-          </div>
-          <div class="contact-actions" aria-label="Contact details">
-            <a class="contact-link" href="mailto:cbenexus@gmail.com">cbenexus@gmail.com</a>
-            
-            <a class="whatsapp-button" href="https://wa.me/254798462815" target="_blank" rel="noopener">WhatsApp Support</a>
-          </div>
-        </div>
-      </section>
-
       <section id="privacy" class="info-band">
         <div class="info-layout">
           <div>
@@ -1555,7 +1366,7 @@
       </div>
       <nav class="footer-links" aria-label="Footer navigation">
         <a href="#about">About Us</a>
-        <a href="#contact">Contact</a>
+
         <a href="learning-hub.html">Learning Hub</a>
         <a href="privacy-policy.html">Privacy Policy</a>
         <a href="terms-and-conditions.html">Terms</a>
