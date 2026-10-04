@@ -1180,7 +1180,7 @@ async function getTvetaCourses(){
       const html=await response.text();
       const clean=s=>String(s).replace(/<[^>]+>/g," ").replace(/&amp;/g,"&").replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/&nbsp;/g," ").replace(/\s+/g," ").trim();
       const wanted=institutionName.toLowerCase();
-      const linkRe=/<a[^>]+href=["']([^"']*institution-details[^"']*)["'][^>]*>([\\s\\S]*?)<\\/a>/gi;
+      const linkRe=/<a[^>]+href=["\']([^"\']*institution-details[^"\']*)["\'][^>]*>([\s\S]*?)<\/a>/gi;
       let m,detailUrl="";
       while((m=linkRe.exec(html))){if(clean(m[2]).toLowerCase().includes(wanted)){detailUrl=new URL(m[1],source).href;break;}}
       if(!detailUrl){
