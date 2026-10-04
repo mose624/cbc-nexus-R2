@@ -6014,3 +6014,100 @@ html[data-grade-theme="international"]{--grade-accent:#00838f;--grade-accent-2:#
   #holidayTuition h2,#quizCentre h2,#about h2,#privacy h2{font-size:13px!important}
   #holidayTuition p,#quizCentre p,#about p,#privacy p,#holidayTuition li,#quizCentre li,#about li,#privacy li{font-size:8px!important}
 }
+
+/* FINAL COMPACT PANEL + DASHBOARD SIZE PASS */
+#holidayTuition,
+#quizCentre,
+#about,
+#privacy{
+  width:calc(100% - 24px)!important;
+  max-width:1040px!important;
+  margin:10px auto!important;
+  padding:14px 18px!important;
+  border-radius:9px!important;
+  box-sizing:border-box!important;
+  box-shadow:0 3px 10px rgba(18,52,71,.08)!important;
+}
+#holidayTuition{background:#dff3ff!important;border:1px solid #b9e4f7!important}
+#quizCentre{background:#e3f7ea!important;border:1px solid #bfe8ce!important}
+#about{background:#ffead7!important;border:1px solid #f3cba7!important}
+#privacy{background:#eadfd5!important;border:1px solid #d3c0ae!important}
+
+#holidayTuition h2,#quizCentre h2,#about h2,#privacy h2{
+  font-size:17px!important;
+  line-height:1.2!important;
+  margin:2px 0 5px!important;
+}
+#holidayTuition h3,#quizCentre h3,#about h3,#privacy h3{font-size:13px!important}
+#holidayTuition p,#quizCentre p,#about p,#privacy p,
+#holidayTuition li,#quizCentre li,#about li,#privacy li{
+  font-size:10px!important;
+  line-height:1.35!important;
+}
+#holidayTuition .eyebrow,#quizCentre .eyebrow,#about .eyebrow,#privacy .eyebrow{
+  font-size:7px!important;
+  margin-bottom:2px!important;
+}
+#holidayTuition .primary-button,#quizCentre .primary-button,
+#about .primary-button,#privacy .primary-button,
+#holidayTuition .danger-blink-button{
+  min-height:28px!important;
+  padding:5px 9px!important;
+  font-size:9px!important;
+  border-radius:6px!important;
+}
+
+#dashboard.portal-dashboard{
+  width:calc(100% - 24px)!important;
+  max-width:1140px!important;
+  margin:8px auto!important;
+  gap:9px!important;
+}
+#dashboard.portal-dashboard > .portal-sidebar,
+#dashboard.portal-dashboard > .portal-main,
+#dashboard.portal-dashboard > .portal-rightbar{
+  border-radius:8px!important;
+  box-shadow:0 2px 8px rgba(18,52,71,.07)!important;
+}
+#dashboard.portal-dashboard .portal-welcome h1{font-size:20px!important}
+#dashboard.portal-dashboard .portal-welcome p{font-size:11px!important;line-height:1.4!important}
+#dashboard.portal-dashboard .portal-category-grid{gap:7px!important}
+#dashboard.portal-dashboard .portal-category-grid a{padding:8px!important}
+#dashboard.portal-dashboard .portal-category-grid strong{font-size:10px!important}
+#dashboard.portal-dashboard .portal-category-grid span{font-size:8px!important}
+#dashboard.portal-dashboard .portal-side-link{font-size:9px!important;padding:7px 8px!important}
+#dashboard.portal-dashboard .portal-card{padding:9px!important}
+
+@media(max-width:640px){
+  #dashboard.portal-dashboard{
+    width:calc(100% - 10px)!important;
+    grid-template-columns:27% 46% 27%!important;
+    gap:3px!important;
+    padding:3px!important;
+  }
+  #dashboard.portal-dashboard > .portal-sidebar,
+  #dashboard.portal-dashboard > .portal-main,
+  #dashboard.portal-dashboard > .portal-rightbar{
+    min-height:390px!important;
+    padding:4px 3px!important;
+  }
+  #dashboard.portal-dashboard .portal-welcome h1{font-size:11px!important}
+  #dashboard.portal-dashboard .portal-welcome p{font-size:6.5px!important}
+  #dashboard.portal-dashboard .portal-category-grid{gap:3px!important}
+  #dashboard.portal-dashboard .portal-category-grid a{padding:4px!important}
+  #dashboard.portal-dashboard .portal-category-grid strong{font-size:7px!important}
+  #dashboard.portal-dashboard .portal-category-grid span{font-size:5.5px!important}
+  #dashboard.portal-dashboard .portal-side-link{font-size:5.5px!important;padding:3px 2px!important;min-height:20px!important}
+  #dashboard.portal-dashboard .portal-card{padding:4px 3px!important}
+  #holidayTuition,#quizCentre,#about,#privacy{
+    width:calc(100% - 10px)!important;
+    margin:5px auto!important;
+    padding:10px 9px!important;
+  }
+  #holidayTuition h2,#quizCentre h2,#about h2,#privacy h2{font-size:12px!important}
+  #holidayTuition p,#quizCentre p,#about p,#privacy p,
+  #holidayTuition li,#quizCentre li,#about li,#privacy li{font-size:7.5px!important}
+  #holidayTuition .primary-button,#quizCentre .primary-button,
+  #about .primary-button,#privacy .primary-button,
+  #holidayTuition .danger-blink-button{min-height:25px!important;padding:4px 7px!important;font-size:8px!important}
+}
