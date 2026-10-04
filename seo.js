@@ -63,7 +63,8 @@ async function match(req){
  const p=new URL(req.url,"http://localhost").pathname.replace(/\/$/,"")||"/";
  const rm=p.match(/^\/resource\/([^/]+)$/);
  if(rm){return await resourcePage(req,decodeURIComponent(rm[1]));}
- if(p==="/blog-article.html"){const q=new URL(req.url,"http://localhost").searchParams.get("slug");if(q)return await blogArticlePage(req,q);}\n if(p!=="/cbc-exam-generator" && LANDINGS[p]){const x=LANDINGS[p];const links=GRADES.map(g=>({url:"/grade-"+g,label:"Grade "+g+" CBC Resources"}));return page(req,x[0],x[1],p,x[0],x[1],links);}
+ if(p==="/blog-article.html"){const q=new URL(req.url,"http://localhost").searchParams.get("slug");if(q)return await blogArticlePage(req,q);}
+ if(p!=="/cbc-exam-generator" && LANDINGS[p]){const x=LANDINGS[p];const links=GRADES.map(g=>({url:"/grade-"+g,label:"Grade "+g+" CBC Resources"}));return page(req,x[0],x[1],p,x[0],x[1],links);}
  const m=p.match(/^\/grade-(7|8|9|10|11|12)(?:\/([^/]+))?$/);return m?gradePage(req,m[1],m[2]):null;
 }
 async function blogArticlePage(req,slugValue){
@@ -99,7 +100,8 @@ function xml(v){return String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").repl
 async function sitemap(req){
  const b=base(req),urls=["/","/cbc-notes-kenya","/cbc-exams-kenya","/kjsea-revision","/cbc-exam-generator","/blog.html"];
  GRADES.forEach(g=>{urls.push("/grade-"+g);(SUBJECTS[g]||[]).forEach(s=>urls.push("/grade-"+g+"/"+slug(s)));});
- if(supabaseConfigured){try{const {data}=await supabase.from("resources").select("id").eq("status","approved").limit(5000);(data||[]).forEach(r=>urls.push("/resource/"+encodeURIComponent(r.id)));}catch(e){console.warn("SEO sitemap resource lookup failed:",e.message||e);}}\n if(supabaseConfigured){try{const {data}=await supabase.from("blog_posts").select("slug,updated_at,published_at").eq("status","published").limit(5000);(data||[]).forEach(p=>urls.push("/blog-article.html?slug="+encodeURIComponent(String(p.slug||""))));}catch(e){console.warn("SEO sitemap blog lookup failed:",e.message||e);}}
+ if(supabaseConfigured){try{const {data}=await supabase.from("resources").select("id").eq("status","approved").limit(5000);(data||[]).forEach(r=>urls.push("/resource/"+encodeURIComponent(r.id)));}catch(e){console.warn("SEO sitemap resource lookup failed:",e.message||e);}}
+ if(supabaseConfigured){try{const {data}=await supabase.from("blog_posts").select("slug,updated_at,published_at").eq("status","published").limit(5000);(data||[]).forEach(p=>urls.push("/blog-article.html?slug="+encodeURIComponent(String(p.slug||""))));}catch(e){console.warn("SEO sitemap blog lookup failed:",e.message||e);}}
  return '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+[...new Set(urls)].map(u=>'<url><loc>'+xml(b+u)+'</loc></url>').join("")+"</urlset>";
 }
 module.exports={match,sitemap,base};
