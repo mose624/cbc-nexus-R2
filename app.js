@@ -727,7 +727,11 @@ async function handleFormSubmit(event) {
   const resourceId = `admin-${Date.now()}`;
 
   try {
-    elements.formStatus.textContent = "Uploading resource to Cloudflare R2...";
+    const internationalCurricula = ["IGCSE", "IB", "O Level", "A Level", "Pearson"];
+    const isInternationalUpload = internationalCurricula.includes(curriculum);
+    elements.formStatus.textContent = isInternationalUpload
+      ? `Uploading ${curriculum} resource to its dedicated international library...`
+      : "Uploading resource to Cloudflare R2...";
     const uploadResponse = await fetch("/api/r2/upload", {
       method: "POST",
       credentials: "same-origin",
@@ -792,8 +796,10 @@ async function handleFormSubmit(event) {
     elements.adminGrade.value = "Grade 1";
     if (typeof refreshAdminUploadSubjects === "function") refreshAdminUploadSubjects();
     elements.fileHelp.textContent = "Choose a PDF, Word document, PowerPoint, Excel file, text file, or ZIP.";
-    elements.formStatus.textContent = "Resource uploaded to R2 and saved to Supabase successfully.";
-    showToast("Resource uploaded successfully.");
+    elements.formStatus.textContent = isInternationalUpload
+      ? `${curriculum} resource uploaded successfully. It will appear only on the ${curriculum} resource page after approval.`
+      : "Resource uploaded to R2 and saved to Supabase successfully.";
+    showToast(isInternationalUpload ? `${curriculum} resource uploaded successfully.` : "Resource uploaded successfully.");
     await syncPublicResourcesFromServer();
     if (typeof loadAdminDashboard === "function") await loadAdminDashboard();
   } catch (error) {
