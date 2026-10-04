@@ -1023,11 +1023,12 @@ function seoFooterForPath(pathname){
 function injectSeoFooter(html,pathname){
   const footer=seoFooterForPath(pathname);
   const styles='<style id="cbe-seo-footer-css">.seo-footer{background:var(--seo-footer-bg)!important;border-top:4px solid var(--seo-footer-accent)!important;padding:24px 20px 14px!important;margin-top:24px!important}.seo-footer-inner{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.2fr 2fr;gap:24px}.seo-footer-brand strong{display:block;font-size:20px;color:#123447;margin:5px 0 8px}.seo-footer-kicker{font-size:9px;font-weight:800;letter-spacing:.12em;color:var(--seo-footer-accent)}.seo-footer-brand p{font-size:11px;line-height:1.55;max-width:440px;margin:0;color:#334e5f}.seo-footer-groups{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.seo-footer-group h3{font-size:12px;margin:0 0 7px;color:#123447}.seo-footer-group ul{list-style:none;padding:0;margin:0}.seo-footer-group li{margin:4px 0}.seo-footer-group a{font-size:10px;color:#31576b;text-decoration:none}.seo-footer-group a:hover{color:var(--seo-footer-accent);text-decoration:underline}.seo-footer-seo{max-width:1180px;margin:18px auto 10px;padding:10px 12px;border-radius:7px;background:rgba(255,255,255,.65);font-size:9px;line-height:1.5;color:#405766}.seo-footer-bottom{max-width:1180px;margin:8px auto!important}.seo-footer-copy{text-align:center!important;font-size:8px!important;margin:8px 0 0!important;opacity:.7}@media(max-width:760px){.seo-footer{padding:18px 10px 10px!important}.seo-footer-inner{grid-template-columns:1fr;gap:14px}.seo-footer-groups{grid-template-columns:repeat(3,1fr);gap:7px}.seo-footer-group h3{font-size:9px}.seo-footer-group a{font-size:7.5px}.seo-footer-brand strong{font-size:15px}.seo-footer-brand p,.seo-footer-seo{font-size:8px}}@media(max-width:480px){.seo-footer-groups{grid-template-columns:1fr 1fr}.seo-footer-group:nth-child(3){grid-column:1/-1}}</style>';
-  if(/<footer[\\s\\S]*?<\\/footer>/i.test(html)) html=html.replace(/<footer[\\s\\S]*?<\\/footer>/i,footer);
-  else html=html.replace(/<\\/body>/i,footer+'</body>');
-  return html.replace(/<\\/head>/i,styles+'</head>');
+  if(/<footer[\s\S]*?<\/footer>/i.test(html)) html=html.replace(/<footer[\s\S]*?<\/footer>/i,footer);
+  else html=html.replace(/<\/body>/i,footer+"</body>");
+  return html.replace(/<\/head>/i,styles+"</head>");
 }
-\nasync function serveStatic(req,res,url){
+
+async function serveStatic(req,res,url){
   if(req.method==="GET" && url.pathname==="/sitemap.xml"){
     res.writeHead(200,{"Content-Type":"application/xml; charset=utf-8","Cache-Control":"public, max-age=3600"});
     res.end(await seo.sitemap(req));
