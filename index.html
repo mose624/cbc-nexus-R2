@@ -84,7 +84,26 @@
 .blog-admin-list-actions{display:flex;gap:8px;flex-wrap:wrap}
 .blog-admin-list-actions button{cursor:pointer}
 @media(max-width:900px){.blog-admin-grid{grid-template-columns:1fr}}
-</style></head>
+</style>
+<style id="nexus-quick-links-style">
+.nexus-quick-links{padding:34px 20px;background:#f8fafc;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0}
+.nexus-quick-links-inner{max-width:1200px;margin:0 auto}
+.nexus-quick-links-heading{text-align:center;margin-bottom:22px}
+.nexus-quick-links-heading h2{margin:4px 0 8px}
+.nexus-quick-links-heading p:last-child{margin:0;color:#64748b}
+.nexus-quick-links-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.nexus-quick-link{display:flex;align-items:center;justify-content:center;min-height:52px;padding:12px 16px;border-radius:12px;text-decoration:none;font-weight:800;border:2px solid transparent;box-shadow:0 3px 10px rgba(15,23,42,.08);transition:transform .16s ease,filter .16s ease,box-shadow .16s ease}
+.nexus-quick-link:hover{transform:translateY(-2px);filter:brightness(1.03);box-shadow:0 6px 16px rgba(15,23,42,.13)}
+.nexus-quick-link.faq-link{background:#1e3a8a;color:#fff}
+.nexus-quick-link.blog-link{background:#7f1d1d;color:#fff}
+.nexus-quick-link.jobs-link{background:#0f766e;color:#fff}
+.nexus-quick-link.cv-link{background:#065f46;color:#fff}
+.nexus-quick-link.ai-link{background:#7c3aed;color:#fff}
+.nexus-quick-link.grade-link{background:#b45309;color:#fff}
+@media(max-width:800px){.nexus-quick-links-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.nexus-quick-links{padding:28px 14px}.nexus-quick-links-grid{grid-template-columns:1fr}.nexus-quick-link{min-height:48px}}
+</style>
+</head>
   <body>
     <header class="site-header">
       <div class="top-strip">
@@ -115,11 +134,7 @@
 
         <div class="nav-menu">
           <a class="nav-link" href="#dashboard">Home</a>
-          <a class="nav-link" href="international-teaching-jobs.html">International Teaching Jobs</a>
-          <a class="nav-link" href="blog.html">📝 Blog</a>
-          <a class="nav-link" href="schools-institutions.html">🏫 Schools & Institutions</a><a class="nav-link" href="grade-10-school-finder.html">🎓 Grade 10 School Finder 2027</a>
-          <a class="nav-link" href="ai-training.html">🤖 Free AI Training</a>
-          <a class="nav-link" href="professional-cv-writing.html">Professional CV Writing</a>
+          <a class="nav-link" href="schools-institutions.html">🏫 Schools & Institutions</a>
 
           <details class="nav-dropdown">
             <summary>Teaching &amp; Learning Resources <span>⌄</span></summary>
@@ -1408,7 +1423,26 @@
             <details><summary>How can I get support?</summary><p>Use the Customer Service assistant or contact CBE Nexus through the official contact and WhatsApp support options on the website.</p></details>
           </div>
         </div>
-      </section>
+      
+</section>
+
+<section id="nexusQuickLinks" class="nexus-quick-links" aria-label="CBE Nexus quick links">
+  <div class="nexus-quick-links-inner">
+    <div class="nexus-quick-links-heading">
+      <p class="eyebrow">Quick access</p>
+      <h2>Explore CBE Nexus</h2>
+      <p>Important services and information are now grouped below the FAQ instead of taking space in the main header.</p>
+    </div>
+    <nav class="nexus-quick-links-grid" aria-label="CBE Nexus services">
+      <a class="nexus-quick-link faq-link" href="#faq">❓ CBC FAQ</a>
+      <a class="nexus-quick-link blog-link" href="blog.html">📝 Blog</a>
+      <a class="nexus-quick-link jobs-link" href="international-teaching-jobs.html">🌍 International Teaching Jobs</a>
+      <a class="nexus-quick-link cv-link" href="professional-cv-writing.html">📄 Professional CV Writing</a>
+      <a class="nexus-quick-link ai-link" href="ai-training.html">🤖 Free AI Training</a>
+      <a class="nexus-quick-link grade-link" href="grade-10-school-finder.html">🎓 Grade 10 School Finder 2027</a>
+    </nav>
+  </div>
+</section>
 
     </main>
 
