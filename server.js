@@ -1398,8 +1398,8 @@ function optimizeHtmlForAds(html){
   let out=String(html||"");
   // Preserve the first meaningful image for fast visual rendering; lazy-load the rest.
   let seenImage=false;
-  out=out.replace(/<img\\b([^>]*?)>/gi,(full,attrs)=>{
-    if(/\\bloading\\s*=|\\bdecoding\\s*=/i.test(attrs)) return full;
+  out=out.replace(/<img\b([^>]*?)>/gi,(full,attrs)=>{
+    if(/\bloading\s*=|\bdecoding\s*=/i.test(attrs)) return full;
     if(!seenImage){seenImage=true;return '<img'+attrs+' loading="eager" decoding="async">';}
     return '<img'+attrs+' loading="lazy" decoding="async">';
   });
@@ -1409,7 +1409,7 @@ function injectAdSenseTags(html,pathname){
   const cfg=getAdSenseConfig();
   if(!cfg.enabled || isAdExcludedPath(pathname)) return html;
   let out=String(html||"");
-  if(/pagead2\\.googlesyndication\\.com\\/pagead\\/js\\/adsbygoogle\\.js/i.test(out)) return out;
+  if(/pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js/i.test(out)) return out;
   const head='<link rel="preconnect" href="https://pagead2.googlesyndication.com"><link rel="preconnect" href="https://googleads.g.doubleclick.net"><meta name="google-adsense-account" content="'+cfg.publisherId+'"><script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-'+cfg.publisherId+'"></script>';
   out=out.replace(/<head([^>]*)>/i,'<head$1>'+head);
   return optimizeHtmlForAds(out);
