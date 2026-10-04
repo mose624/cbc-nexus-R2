@@ -5610,3 +5610,14 @@ html[data-grade-theme="international"]{--grade-accent:#00838f;--grade-accent-2:#
 #dashboard .portal-sidebar .grade-card[data-grade-card="Grade 10"]{--grade-card-accent:#283593;--grade-card-soft:#eef0ff}
 #dashboard .portal-sidebar .grade-card[data-grade-card="Grade 11"]{--grade-card-accent:#00695c;--grade-card-soft:#eaf8f5}
 #dashboard .portal-sidebar .grade-card[data-grade-card="Grade 12"]{--grade-card-accent:#bf360c;--grade-card-soft:#fff1ec}
+
+
+/* Dedicated international curriculum upload area in Admin Dashboard */
+.international-admin-upload-card{margin:0 0 18px;padding:20px;border:1px solid #173b70;border-radius:16px;background:#f7f9fd;box-shadow:0 8px 22px rgba(6,26,58,.08)}
+.international-admin-upload-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:14px}
+.international-admin-upload-heading h3{margin:4px 0 7px;color:#061a3a}
+.international-admin-upload-heading p:not(.eyebrow){margin:0;color:#5d6b82;line-height:1.55}
+.international-admin-badge{display:inline-flex;align-items:center;white-space:nowrap;padding:7px 10px;border-radius:999px;background:#061a3a;color:#fff;font-size:11px;font-weight:900;letter-spacing:.05em}
+.international-admin-help{display:flex;flex-direction:column;justify-content:center;gap:5px;padding:12px 14px;border-radius:10px;background:#eaf0f8;color:#10213f;line-height:1.4}
+.international-admin-help strong{color:#061a3a}
+@media (max-width:700px){.international-admin-upload-heading{flex-direction:column}.international-admin-badge{align-self:flex-start}}
