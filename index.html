@@ -128,7 +128,16 @@
 .whatsapp-floating-footer:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(0,0,0,.25)}
 @media(max-width:520px){.whatsapp-floating-footer{right:14px;bottom:14px;padding:11px 15px;font-size:.9rem}}
 </style>
-<style id="school-directory-admin-style">.school-admin-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}.school-admin-toolbar input,.school-admin-toolbar select{flex:1;min-width:180px;padding:11px;border:1px solid #d7c7aa;border-radius:9px}.school-admin-item{background:#fff;border:1px solid #e6dccb;border-radius:14px;padding:16px;margin:10px 0}.school-admin-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.school-admin-meta{color:#64748b;font-size:.9rem;margin:5px 0}.school-admin-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.school-admin-actions button{cursor:pointer}.school-status-badge{display:inline-block;padding:4px 9px;border-radius:999px;font-size:.78rem;font-weight:800;text-transform:capitalize}.school-status-badge.pending{background:#fef3c7;color:#92400e}.school-status-badge.published{background:#dcfce7;color:#166534}.school-status-badge.rejected{background:#fee2e2;color:#991b1b}.school-vacancy-admin{border-top:1px solid #eee4d4;margin-top:14px;padding-top:12px}.school-vacancy-admin strong{display:block}.school-admin-danger{background:#fee2e2!important;color:#991b1b!important;border-color:#fecaca!important}@media(max-width:650px){.school-admin-head{display:block}.school-admin-toolbar{display:grid;grid-template-columns:1fr}.school-admin-toolbar input,.school-admin-toolbar select{width:100%;box-sizing:border-box}}</style></head>
+<style id="school-directory-admin-style">.school-admin-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}.school-admin-toolbar input,.school-admin-toolbar select{flex:1;min-width:180px;padding:11px;border:1px solid #d7c7aa;border-radius:9px}.school-admin-item{background:#fff;border:1px solid #e6dccb;border-radius:14px;padding:16px;margin:10px 0}.school-admin-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.school-admin-meta{color:#64748b;font-size:.9rem;margin:5px 0}.school-admin-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.school-admin-actions button{cursor:pointer}.school-status-badge{display:inline-block;padding:4px 9px;border-radius:999px;font-size:.78rem;font-weight:800;text-transform:capitalize}.school-status-badge.pending{background:#fef3c7;color:#92400e}.school-status-badge.published{background:#dcfce7;color:#166534}.school-status-badge.rejected{background:#fee2e2;color:#991b1b}.school-vacancy-admin{border-top:1px solid #eee4d4;margin-top:14px;padding-top:12px}.school-vacancy-admin strong{display:block}.school-admin-danger{background:#fee2e2!important;color:#991b1b!important;border-color:#fecaca!important}@media(max-width:650px){.school-admin-head{display:block}.school-admin-toolbar{display:grid;grid-template-columns:1fr}.school-admin-toolbar input,.school-admin-toolbar select{width:100%;box-sizing:border-box}}</style><style id="analytics-center-style">
+.analytics-integration-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:16px 0}
+.analytics-integration-card{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;background:#fff;border:1px solid #dbe5ef;border-radius:14px;padding:18px;box-shadow:0 5px 18px rgba(15,23,42,.06)}
+.analytics-logo{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;background:#facc15;color:#111827;font-size:1.35rem;font-weight:900}
+.analytics-integration-card h4{margin:2px 0 4px;font-size:1.05rem}.analytics-integration-card p:not(.eyebrow){margin:0;color:#64748b;font-size:.9rem}
+.analytics-kpi-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0}
+.analytics-kpi{padding:16px;border:1px solid #dbe5ef;border-radius:12px;background:#f8fafc}.analytics-kpi strong,.analytics-kpi span{display:block}.analytics-kpi strong{margin-bottom:5px}.analytics-kpi span{color:#64748b;font-size:.88rem}
+.analytics-setup-note code{background:#eef2f7;padding:2px 5px;border-radius:4px}.analytics-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+@media(max-width:800px){.analytics-integration-grid,.analytics-kpi-grid{grid-template-columns:1fr}.analytics-integration-card{grid-template-columns:auto 1fr}.analytics-actions{grid-column:1/-1}}
+</style></head>
   <body>
     <header class="site-header">
       <div class="top-strip">
@@ -963,8 +972,40 @@
           <button class="admin-module-tab ai-academy-notes-tab" type="button" role="tab" aria-selected="false" data-admin-module="ai-notes">🤖 AI Academy Notes</button>
           <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="blog">🎓 Education Hub <span id="adminBlogBadge">0</span></button>
           <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="school-directory">🏫 School Directory</button>
+          <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="analytics">📊 Analytics Center</button>
           <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="seo">SEO Center <span class="admin-seo-badge">Ubersuggest</span></button>
           </div>
+          <div class="admin-module-panel" data-admin-module-panel="analytics">
+            <div class="admin-module-heading">
+              <div><h3>📊 Analytics Center</h3><span>Google Analytics 4 shows traffic and conversions; Microsoft Clarity shows how visitors use the website through recordings and heatmaps.</span></div>
+              <span class="admin-module-summary">GA4 + Clarity</span>
+            </div>
+            <div class="analytics-integration-grid">
+              <article class="analytics-integration-card">
+                <div class="analytics-logo">G</div>
+                <div><p class="eyebrow">Google Analytics 4</p><h4>Traffic & conversions</h4><p id="ga4AdminStatus">Checking configuration…</p></div>
+                <div class="analytics-actions"><a class="primary-button" href="https://analytics.google.com/" target="_blank" rel="noopener">Open GA4 ↗</a></div>
+              </article>
+              <article class="analytics-integration-card">
+                <div class="analytics-logo">C</div>
+                <div><p class="eyebrow">Microsoft Clarity</p><h4>Behaviour & user experience</h4><p id="clarityAdminStatus">Checking configuration…</p></div>
+                <div class="analytics-actions"><a class="primary-button" href="https://clarity.microsoft.com/" target="_blank" rel="noopener">Open Clarity ↗</a></div>
+              </article>
+            </div>
+            <div class="analytics-kpi-grid">
+              <div class="analytics-kpi"><strong>GA4</strong><span>Visitors, page views, traffic sources, events and conversions</span></div>
+              <div class="analytics-kpi"><strong>Clarity</strong><span>Session recordings, click maps, scroll maps and user behaviour</span></div>
+              <div class="analytics-kpi"><strong>Admin data</strong><span>Resources, sales, users, downloads and ratings remain in CBE Nexus</span></div>
+            </div>
+            <div class="admin-seo-note analytics-setup-note">
+              <strong>Setup:</strong> add <code>GA_MEASUREMENT_ID</code> and <code>CLARITY_PROJECT_ID</code> to the Render environment variables. The website then loads both tracking systems automatically. Do not put API secrets in the browser.
+            </div>
+            <div class="analytics-links">
+              <a class="secondary-button" href="https://developers.google.com/analytics/devguides/reporting/data/v1" target="_blank" rel="noopener">GA4 Data API documentation ↗</a>
+              <a class="secondary-button" href="https://learn.microsoft.com/en-us/clarity/" target="_blank" rel="noopener">Clarity documentation ↗</a>
+            </div>
+          </div>
+
           <div class="admin-module-panel active" data-admin-module-panel="resources">
             <div class="admin-module-heading">
               <div><h3>Resource management</h3><span>Review marketplace content before publication.</span></div>
@@ -1401,6 +1442,38 @@
       </div>
     </div>
     <script src="ai-foundations-data.js?v=20261004-1"></script><script src="prompt-engineering-data.js?v=20261004-1"></script><script src="ai-for-teachers-data.js?v=20261004-1"></script><script src="ai-productivity-business-data.js?v=20261004-1"></script><script src="responsible-ai-data.js?v=20261004-1"></script><script src="build-with-ai-data.js?v=20261004-1"></script><script src="ai-more-courses-data.js?v=20261004-1"></script>
+<script id="cbe-nexus-analytics-loader">
+(function(){
+  function loadScript(src){return new Promise(function(resolve,reject){var s=document.createElement('script');s.async=true;s.src=src;s.onload=resolve;s.onerror=reject;document.head.appendChild(s);});}
+  function setStatus(id,text){var el=document.getElementById(id);if(el)el.textContent=text;}
+  async function initAnalytics(){
+    try{
+      var r=await fetch('/api/analytics/config',{cache:'no-store'}),cfg=await r.json();
+      var ga=String(cfg.googleAnalyticsId||'').trim(),cl=String(cfg.clarityProjectId||'').trim();
+      if(ga){
+        window.dataLayer=window.dataLayer||[];
+        window.gtag=function(){window.dataLayer.push(arguments);};
+        window.gtag('js',new Date());window.gtag('config',ga);
+        await loadScript('https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(ga));
+        setStatus('ga4AdminStatus','Connected · Measurement ID '+ga);
+      }else setStatus('ga4AdminStatus','Not configured yet · add GA_MEASUREMENT_ID in Render.');
+      if(cl){
+        window.clarity=window.clarity||function(){(window.clarity.q=window.clarity.q||[]).push(arguments);};
+        await loadScript('https://www.clarity.ms/tag/'+encodeURIComponent(cl));
+        setStatus('clarityAdminStatus','Connected · Project ID '+cl);
+      }else setStatus('clarityAdminStatus','Not configured yet · add CLARITY_PROJECT_ID in Render.');
+      window.CBENexusAnalytics={ga4:!!ga,clarity:!!cl,track:function(eventName,params){
+        if(typeof window.gtag==='function')window.gtag('event',eventName,params||{});
+        if(typeof window.clarity==='function')window.clarity('event',eventName);
+      }};
+    }catch(e){
+      setStatus('ga4AdminStatus','Analytics configuration could not be loaded.');
+      setStatus('clarityAdminStatus','Analytics configuration could not be loaded.');
+    }
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initAnalytics);else initAnalytics();
+})();
+</script>
 <script src="app.js?v=20261004-2"></script>
 <script src="ai-course-admin.js?v=20261004-1"></script>
 <script src="scholarships-admin.js?v=20261004-1"></script><script src="school-directory-admin.js?v=20261004-1" defer></script>
@@ -1453,6 +1526,7 @@
         if(name==='ai-notes')document.getElementById('aiNotesAdminForm')?.scrollIntoView({behavior:'smooth',block:'start'});
         if(name==='vacancies')document.getElementById('adminVacancyForm')?.scrollIntoView({behavior:'smooth',block:'start'});
       }
+      if(name==='analytics' && window.CBENexusAnalytics)window.CBENexusAnalytics.track('admin_analytics_open',{page:'admin'});
       if(name==='resources' && typeof window.loadAdminResourceModeration==='function')window.loadAdminResourceModeration();
       if(name==='ai-notes' && typeof window.initAICourseNotesAdmin==='function')window.initAICourseNotesAdmin();
         if(name==='scholarships' && typeof window.CBENexusLoadOpportunitiesAdmin==='function')window.CBENexusLoadOpportunitiesAdmin();\n        if(name==='school-directory' && typeof window.CBENexusLoadSchoolDirectoryAdmin==='function')window.CBENexusLoadSchoolDirectoryAdmin();
