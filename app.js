@@ -688,6 +688,122 @@ function saveLocalList(key, item) {
   localStorage.setItem(key, JSON.stringify([item, ...existing]));
 }
 
+function refreshAdminUploadSubjects() {
+  if (!elements.adminCurriculum || !elements.adminGrade || !elements.adminSubject) return;
+  const curriculum = String(elements.adminCurriculum.value || "CBC/CBE");
+  const international = ["IGCSE","IB","O Level","A Level","Pearson"].includes(curriculum);
+  if (international) {
+    optionList(elements.adminGrade, [curriculum], curriculum);
+    optionList(elements.adminSubject, gradeSubjects[curriculum] || [], "");
+  } else {
+    const grades = Object.keys(gradeSubjects).filter((value) => !["IGCSE","IB","O Level","A Level","Pearson"].includes(value));
+    optionList(elements.adminGrade, grades, "Grade 1");
+    const subjects = gradeSubjects["Grade 1"] || allCbeSubjects;
+    optionList(elements.adminSubject, subjects, subjects[0] || "");
+  }
+}
+
+async function handleFormSubmit(event) {
+  event.preventDefault();
+  const uploadedFile = elements.fileInput.files[0];
+  const title = document.querySelector("#titleInput").value.trim();
+  const description = document.querySelector("#descriptionInput").value.trim();
+  const notes = elements.notesContent.value.trim();
+  const price = Number(document.querySelector("#priceInput").value || 0);
+  const discount = Number(document.querySelector("#discountInput").value || 0);
+  const grade = elements.adminGrade.value;
+  const curriculum = elements.adminCurriculum ? elements.adminCurriculum.value : "CBC/CBE";
+  const subject = elements.adminSubject.value;
+  const type = elements.adminType.value;
+  let fileName = document.querySelector("#fileNameInput").value.trim();
+
+  if (!uploadedFile) {
+    elements.formStatus.textContent = "Please choose the resource file before publishing.";
+    showToast("Select a resource file first.");
+    return;
+  }
+
+  fileName = fileName || uploadedFile.name;
+  const resourceId = `admin-${Date.now()}`;
+
+  try {
+    elements.formStatus.textContent = "Uploading resource to Cloudflare R2...";
+    const uploadResponse = await fetch("/api/r2/upload", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": uploadedFile.type || "application/octet-stream",
+        "Content-Length": String(uploadedFile.size),
+        "X-CBE-Role": "admin",
+        "X-CBE-Grade": grade,
+        "X-CBE-Subject": subject,
+        "X-CBE-Type": type,
+        "X-CBE-Filename": fileName,
+        "X-CBE-Resource-Id": resourceId
+      },
+      body: uploadedFile
+    });
+    const uploadData = await uploadResponse.json().catch(() => ({}));
+    if (!uploadResponse.ok || !uploadData.ok) throw new Error(uploadData.error || "Resource file could not be uploaded to R2.");
+
+    elements.formStatus.textContent = "Saving resource details to Supabase...";
+    const resourceResponse = await fetch("/api/resources", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({
+        id: resourceId,
+        role: "admin",
+        title,
+        grade,
+        curriculum,
+        subject,
+        type,
+        description,
+        notes,
+        price,
+        discount,
+        term: elements.termInput.value,
+        isFreeSample: elements.freeSample.value === "true",
+        popularity: 1,
+        fileName,
+        r2Key: uploadData.r2Key || uploadData.key,
+        previewKey: uploadData.previewKey || ""
+      })
+    });
+    const resourceData = await resourceResponse.json().catch(() => ({}));
+    if (!resourceResponse.ok || !resourceData.ok) throw new Error(resourceData.error || "Resource metadata could not be saved to Supabase.");
+
+    const saved = resourceData.saved || {
+      ...resourceData.resource,
+      id: resourceId, title, grade, subject, type, description, price, discount, term: elements.termInput.value,
+      isFreeSample: elements.freeSample.value === "true", fileName,
+      r2Key: uploadData.r2Key || uploadData.key
+    };
+    const local = readSavedResources().filter((r) => String(r.id) !== String(saved.id));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([...local, normalizeResourceForLibrary(saved)]));
+
+    elements.form.reset();
+    document.querySelector("#priceInput").value = "";
+    document.querySelector("#discountInput").value = 0;
+    elements.termInput.value = "Term 1";
+    elements.freeSample.value = "false";
+    elements.notesContent.value = "";
+    elements.adminGrade.value = "Grade 1";
+    refreshSubjectFilters();
+    optionList(elements.adminSubject, allCbeSubjects, "Mathematics Activities");
+    elements.fileHelp.textContent = "Choose a PDF, Word document, PowerPoint, Excel file, text file, or ZIP.";
+    elements.formStatus.textContent = "Resource uploaded to R2 and saved to Supabase successfully.";
+    showToast("Resource uploaded successfully.");
+    await syncPublicResourcesFromServer();
+    if (typeof loadAdminDashboard === "function") await loadAdminDashboard();
+  } catch (error) {
+    console.error("CBE Nexus resource publish error:", error);
+    elements.formStatus.textContent = error.message || "Resource could not be published.";
+    showToast(error.message || "Resource could not be published.");
+  }
+}
+
 function setActiveMaterialLink() {
   document.querySelectorAll("[data-material-link]").forEach((link) => {
     link.addEventListener("click", (event) => {
@@ -1025,34 +1141,27 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
     renderResources();
   });
 
-  // ADMIN UPLOAD: curriculum controls the available grade/subject choices.
-  function refreshAdminUploadSubjects() {
-    if (!elements.adminCurriculum || !elements.adminGrade || !elements.adminSubject) return;
-    const curriculum = String(elements.adminCurriculum.value || "CBC/CBE");
-    const international = ["IGCSE","IB","O Level","A Level","Pearson"].includes(curriculum);
-    if (international) {
-      optionList(elements.adminGrade, [curriculum], curriculum);
-      optionList(elements.adminSubject, gradeSubjects[curriculum] || [], "");
-    } else {
-      const grades = Object.keys(gradeSubjects).filter((value) => !["IGCSE","IB","O Level","A Level","Pearson"].includes(value));
-      optionList(elements.adminGrade, grades, "Grade 1");
-      const subjects = gradeSubjects["Grade 1"] || allCbeSubjects;
-      optionList(elements.adminSubject, subjects, subjects[0] || "");
-    }
-  }
-
-  safeOn(elements.adminCurriculum, "change", () => {
-    refreshAdminUploadSubjects();
-    const selected = String(elements.adminCurriculum?.value || "CBC/CBE");
-    if (elements.formStatus) elements.formStatus.textContent = selected === "CBC/CBE" ? "CBC / CBE upload selected." : selected + " upload selected. This resource will appear only on its dedicated international curriculum page.";
-  });
-
+  // ADMIN UPLOAD: Grade controls the Subject list.
+  // This keeps every uploaded resource aligned with the grade pages.
   safeOn(elements.adminGrade, "change", (event) => {
     const grade = String(event.target.value || "").trim();
     const subjects = gradeSubjects[grade] || [];
     const current = canonicalSubjectName(elements.adminSubject?.value || "");
     const selected = subjects.find((subject) => canonicalSubjectName(subject) === current) || subjects[0] || "";
     optionList(elements.adminSubject, subjects, selected);
+    if (elements.formStatus && grade) {
+      elements.formStatus.textContent = subjects.length
+        ? grade + " selected. Only subjects belonging to " + grade + " are available."
+        : "Select a valid grade.";
+    }
+  });
+
+  safeOn(elements.adminCurriculum, "change", () => {
+    refreshAdminUploadSubjects();
+    const selected = String(elements.adminCurriculum?.value || "CBC/CBE");
+    if (elements.formStatus) elements.formStatus.textContent = selected === "CBC/CBE"
+      ? "CBC / CBE upload selected."
+      : selected + " upload selected. This resource will appear only on its dedicated international curriculum page.";
   });
 
   safeOn(elements.sellerGrade, "change", (event) => {
@@ -1268,11 +1377,9 @@ function injectContactInfo() {
 function initializePaymentCheckoutFromUrl(){const p=new URLSearchParams(location.search);const resource=p.get("resource");const amount=p.get("amount");if(resource&&elements.selectedResource){elements.selectedResource.value=resource;}if(amount&&elements.amount&&Number(amount)>0){elements.amount.value=amount;}if(resource&&elements.paymentStatus){elements.paymentStatus.textContent="You are purchasing: "+resource+" — Amount: KSh "+Number(amount||0).toLocaleString()+". Enter the M-Pesa phone number you will use, then select Pay with M-Pesa. An STK Push will be sent to that phone when Daraja is configured.";elements.paymentStatus.className="form-status";}if((resource||amount)&&location.hash==="#payments"){setTimeout(()=>document.getElementById("payments")?.scrollIntoView({behavior:"smooth",block:"start"}),50);}}
 renderGradeDashboard();
 setupFilters();
-refreshAdminUploadSubjects();
 applyGradeSubjectFromLink(false);
 renderQuickTypes();
 restoreAdminAccess();
-bindEvents();
 injectContactInfo();
 renderResources();
 renderTrending();
@@ -1287,10 +1394,7 @@ renderDownloadApprovals();
 renderProgressReport();
 (function(){const q=id=>document.getElementById(id);function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));}function url(v){try{const u=new URL(String(v||""),location.origin);return /^https?:$/.test(u.protocol)?u.href:"#";}catch{return "#";}}
 async function loadVacancies(id,publicMode){const t=q(id);if(!t)return;try{const r=await fetch("/api/vacancies?_="+Date.now(),{credentials:"same-origin"}),d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||"Vacancies could not be loaded.");const rows=d.vacancies||[];if(!rows.length){t.innerHTML='<div class="empty-state">No teaching vacancies published yet.</div>';return;}t.innerHTML=rows.map(v=>'<article class="vacancy-card '+(v.featured?'featured':'')+'"><div class="vacancy-card-top"><span class="vacancy-region">'+esc(v.region||v.country||"International")+'</span>'+(v.featured?'<span class="vacancy-featured">FEATURED</span>':'')+'</div><h3>'+esc(v.title)+'</h3><strong>'+esc(v.school)+'</strong><p class="vacancy-meta">'+esc(v.country)+' · '+esc(v.subject)+' · '+esc(v.level)+' · '+esc(v.employment||"Full-time")+'</p>'+(v.salary?'<p><strong>Package:</strong> '+esc(v.salary)+'</p>':'')+(v.deadline?'<p><strong>Deadline:</strong> '+esc(v.deadline)+'</p>':'')+(v.description?'<p>'+esc(v.description).slice(0,320)+(String(v.description).length>320?'…':'')+'</p>':'')+'<div class="vacancy-card-actions"><a class="primary-button" href="'+url(v.apply_url)+'" target="_blank" rel="noopener noreferrer">Apply / View Vacancy</a>'+(publicMode?'<button class="whatsapp-share-button" type="button" data-share-vacancy="whatsapp" data-vacancy-id="'+esc(v.id)+'">WhatsApp</button><button class="facebook-share-button" type="button" data-share-vacancy="facebook" data-vacancy-id="'+esc(v.id)+'">Facebook</button>':'<button class="ghost-button" type="button" data-delete-vacancy="'+esc(v.id)+'">Delete</button>')+'</div></article>').join("");}catch(e){t.innerHTML='<p class="form-status error">'+esc(e.message)+'</p>';}}
-async function initVacancies(){loadVacancies("homeVacancyGrid",true);loadVacancies("internationalVacancyGrid",true);document.addEventListener("click",e=>{const b=e.target.closest("[data-share-vacancy]");if(!b)return;const id=b.dataset.vacancyId;const card=b.closest(".vacancy-card");if(!card||!id)return;const title=card.querySelector("h3")?.textContent?.trim()||"International teaching vacancy";const school=card.querySelector("strong")?.textContent?.trim()||"";const text=school?title+" at "+school:title;const shareUrl=new URL("international-teaching-jobs.html",location.href);shareUrl.hash="vacancy-"+encodeURIComponent(id);const encodedUrl=encodeURIComponent(shareUrl.href);if(b.dataset.shareVacancy==="whatsapp"){window.open("https://wa.me/?text="+encodeURIComponent("🌍 Teaching Vacancy Abroad
-"+text+"
-
-View vacancy: "+shareUrl.href)," _blank","noopener,noreferrer");}else{window.open("https://www.facebook.com/sharer/sharer.php?u="+encodedUrl," _blank","noopener,noreferrer");}});const form=q("adminVacancyForm");if(!form)return;try{const r=await fetch("/api/admin/me",{credentials:"same-origin"});const d=await r.json();if(!r.ok||!d.authenticated){form.closest(".admin-vacancies-card")?.remove();return;}}catch{form.closest(".admin-vacancies-card")?.remove();return;}loadVacancies("adminVacancyList",false);form.addEventListener("submit",async e=>{e.preventDefault();const s=q("adminVacancyStatus");s.textContent="Publishing vacancy…";const body={title:q("vacancyTitleInput").value,school:q("vacancySchoolInput").value,country:q("vacancyCountryInput").value,region:q("vacancyRegionInput").value,subject:q("vacancySubjectInput").value,level:q("vacancyLevelInput").value,employment:q("vacancyEmploymentInput").value,salary:q("vacancySalaryInput").value,deadline:q("vacancyDeadlineInput").value,applyUrl:q("vacancyApplyUrlInput").value,description:q("vacancyDescriptionInput").value,requirements:q("vacancyRequirementsInput").value,featured:q("vacancyFeaturedInput").checked};try{const r=await fetch("/api/admin/vacancy",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)}),d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||"Vacancy could not be published.");s.textContent="✓ Vacancy published successfully.";form.reset();loadVacancies("adminVacancyList",false);loadVacancies("homeVacancyGrid",true);loadVacancies("internationalVacancyGrid",true);}catch(e){s.textContent=e.message||"Vacancy could not be published.";}});q("clearAdminVacancyButton")?.addEventListener("click",()=>{form.reset();q("adminVacancyStatus").textContent="";});q("adminVacancyList")?.addEventListener("click",async e=>{const b=e.target.closest("[data-delete-vacancy]");if(!b)return;if(!confirm("Delete this teaching vacancy?"))return;const r=await fetch("/api/admin/vacancy-delete",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({id:b.dataset.deleteVacancy})}),d=await r.json();if(!r.ok||!d.ok){q("adminVacancyStatus").textContent=d.error||"Could not delete vacancy.";return;}loadVacancies("adminVacancyList",false);loadVacancies("homeVacancyGrid",true);loadVacancies("internationalVacancyGrid",true);});}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initVacancies);else initVacancies();})();
+async function initVacancies(){loadVacancies("homeVacancyGrid",true);loadVacancies("internationalVacancyGrid",true);document.addEventListener("click",e=>{const b=e.target.closest("[data-share-vacancy]");if(!b)return;const id=b.dataset.vacancyId;const card=b.closest(".vacancy-card");if(!card||!id)return;const title=card.querySelector("h3")?.textContent?.trim()||"International teaching vacancy";const school=card.querySelector("strong")?.textContent?.trim()||"";const text=school?title+" at "+school:title;const shareUrl=new URL("international-teaching-jobs.html",location.href);shareUrl.hash="vacancy-"+encodeURIComponent(id);const encodedUrl=encodeURIComponent(shareUrl.href);if(b.dataset.shareVacancy==="whatsapp"){window.open("https://wa.me/?text="+encodeURIComponent("🌍 Teaching Vacancy Abroad\n"+text+"\n\nView vacancy: "+shareUrl.href)," _blank","noopener,noreferrer");}else{window.open("https://www.facebook.com/sharer/sharer.php?u="+encodedUrl," _blank","noopener,noreferrer");}});const form=q("adminVacancyForm");if(!form)return;try{const r=await fetch("/api/admin/me",{credentials:"same-origin"});const d=await r.json();if(!r.ok||!d.authenticated){form.closest(".admin-vacancies-card")?.remove();return;}}catch{form.closest(".admin-vacancies-card")?.remove();return;}loadVacancies("adminVacancyList",false);form.addEventListener("submit",async e=>{e.preventDefault();const s=q("adminVacancyStatus");s.textContent="Publishing vacancy…";const body={title:q("vacancyTitleInput").value,school:q("vacancySchoolInput").value,country:q("vacancyCountryInput").value,region:q("vacancyRegionInput").value,subject:q("vacancySubjectInput").value,level:q("vacancyLevelInput").value,employment:q("vacancyEmploymentInput").value,salary:q("vacancySalaryInput").value,deadline:q("vacancyDeadlineInput").value,applyUrl:q("vacancyApplyUrlInput").value,description:q("vacancyDescriptionInput").value,requirements:q("vacancyRequirementsInput").value,featured:q("vacancyFeaturedInput").checked};try{const r=await fetch("/api/admin/vacancy",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)}),d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||"Vacancy could not be published.");s.textContent="✓ Vacancy published successfully.";form.reset();loadVacancies("adminVacancyList",false);loadVacancies("homeVacancyGrid",true);loadVacancies("internationalVacancyGrid",true);}catch(e){s.textContent=e.message||"Vacancy could not be published.";}});q("clearAdminVacancyButton")?.addEventListener("click",()=>{form.reset();q("adminVacancyStatus").textContent="";});q("adminVacancyList")?.addEventListener("click",async e=>{const b=e.target.closest("[data-delete-vacancy]");if(!b)return;if(!confirm("Delete this teaching vacancy?"))return;const r=await fetch("/api/admin/vacancy-delete",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({id:b.dataset.deleteVacancy})}),d=await r.json();if(!r.ok||!d.ok){q("adminVacancyStatus").textContent=d.error||"Could not delete vacancy.";return;}loadVacancies("adminVacancyList",false);loadVacancies("homeVacancyGrid",true);loadVacancies("internationalVacancyGrid",true);});}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initVacancies);else initVacancies();})();
 
 /* Admin resource moderation: approve, reject or permanently delete uploaded resources. */
 (function initAdminResourceModeration(){
@@ -1466,105 +1570,3 @@ View vacancy: "+shareUrl.href)," _blank","noopener,noreferrer");}else{window.ope
   document.addEventListener('DOMContentLoaded',paint);
   if(document.readyState!=='loading')paint();
 })();
-async function handleFormSubmit(event) {
-  event.preventDefault();
-  const uploadedFile = elements.fileInput.files[0];
-  const title = document.querySelector("#titleInput").value.trim();
-  const description = document.querySelector("#descriptionInput").value.trim();
-  const notes = elements.notesContent.value.trim();
-  const price = Number(document.querySelector("#priceInput").value || 0);
-  const discount = Number(document.querySelector("#discountInput").value || 0);
-  const grade = elements.adminGrade.value;
-  const curriculum = elements.adminCurriculum ? elements.adminCurriculum.value : "CBC/CBE";
-  const subject = elements.adminSubject.value;
-  const type = elements.adminType.value;
-  let fileName = document.querySelector("#fileNameInput").value.trim();
-
-  if (!uploadedFile) {
-    elements.formStatus.textContent = "Please choose the resource file before publishing.";
-    showToast("Select a resource file first.");
-    return;
-  }
-
-  fileName = fileName || uploadedFile.name;
-  const resourceId = `admin-${Date.now()}`;
-
-  try {
-    elements.formStatus.textContent = "Uploading resource to Cloudflare R2...";
-    const uploadResponse = await fetch("/api/r2/upload", {
-      method: "POST",
-      credentials: "same-origin",
-      headers: {
-        "Content-Type": uploadedFile.type || "application/octet-stream",
-        "Content-Length": String(uploadedFile.size),
-        "X-CBE-Role": "admin",
-        "X-CBE-Grade": grade,
-        "X-CBE-Subject": subject,
-        "X-CBE-Type": type,
-        "X-CBE-Filename": fileName,
-        "X-CBE-Resource-Id": resourceId
-      },
-      body: uploadedFile
-    });
-    const uploadData = await uploadResponse.json().catch(() => ({}));
-    if (!uploadResponse.ok || !uploadData.ok) throw new Error(uploadData.error || "Resource file could not be uploaded to R2.");
-
-    elements.formStatus.textContent = "Saving resource details to Supabase...";
-    const resourceResponse = await fetch("/api/resources", {
-      method: "POST",
-      credentials: "same-origin",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({
-        id: resourceId,
-        role: "admin",
-        title,
-        grade,
-        curriculum,
-        subject,
-        type,
-        description,
-        notes,
-        price,
-        discount,
-        term: elements.termInput.value,
-        isFreeSample: elements.freeSample.value === "true",
-        popularity: 1,
-        fileName,
-        r2Key: uploadData.r2Key || uploadData.key,
-        previewKey: uploadData.previewKey || ""
-      })
-    });
-    const resourceData = await resourceResponse.json().catch(() => ({}));
-    if (!resourceResponse.ok || !resourceData.ok) throw new Error(resourceData.error || "Resource metadata could not be saved to Supabase.");
-
-    const saved = resourceData.saved || {
-      ...resourceData.resource,
-      id: resourceId, title, grade, subject, type, description, price, discount, term: elements.termInput.value,
-      isFreeSample: elements.freeSample.value === "true", fileName,
-      r2Key: uploadData.r2Key || uploadData.key
-    };
-    const local = readSavedResources().filter((r) => String(r.id) !== String(saved.id));
-    localStorage.setItem(STORAGE_KEY, JSON.stringify([...local, normalizeResourceForLibrary(saved)]));
-
-    elements.form.reset();
-    document.querySelector("#priceInput").value = "";
-    document.querySelector("#discountInput").value = 0;
-    elements.termInput.value = "Term 1";
-    elements.freeSample.value = "false";
-    elements.notesContent.value = "";
-    elements.adminGrade.value = "Grade 1";
-    refreshSubjectFilters();
-    optionList(elements.adminSubject, allCbeSubjects, "Mathematics Activities");
-    elements.fileHelp.textContent = "Choose a PDF, Word document, PowerPoint, Excel file, text file, or ZIP.";
-    elements.formStatus.textContent = "Resource uploaded to R2 and saved to Supabase successfully.";
-    showToast("Resource uploaded successfully.");
-    await syncPublicResourcesFromServer();
-    if (typeof loadAdminDashboard === "function") await loadAdminDashboard();
-  } catch (error) {
-    console.error("CBE Nexus resource publish error:", error);
-    elements.formStatus.textContent = error.message || "Resource could not be published.";
-    showToast(error.message || "Resource could not be published.");
-  }
-}
-
-n
