@@ -53,3 +53,73 @@ main{max-width:1280px;margin:auto;padding:0 20px 70px}
 .example-card{background:#f7f9fb;border-left:4px solid var(--cisco-blue);padding:15px;margin:10px 0;line-height:1.7}
 @media(max-width:900px){.course-grid{grid-template-columns:repeat(2,1fr)}.ai-info-strip,.steps{grid-template-columns:repeat(2,1fr)}.ai-hero,.course-hero{grid-template-columns:1fr}.level-grid{grid-template-columns:1fr}}
 @media(max-width:600px){.ai-nav{align-items:flex-start;flex-direction:column;padding:10px 18px}.ai-nav nav a{padding:10px}.course-grid,.ai-info-strip,.steps{grid-template-columns:1fr}.ai-hero,.course-hero,.notes-hero{margin-left:-20px;margin-right:-20px;padding:40px 24px}.ai-info-strip>div{border-right:0;border-bottom:1px solid var(--line)}.notes-nav{flex-direction:column}.notes-nav>*{width:100%}.notes-content p{font-size:.94rem;line-height:1.75}}
+
+
+/* CBE Nexus AI Academy — mobile-only refinement */
+@media (max-width: 767px) {
+  html, body { max-width:100%; overflow-x:hidden; }
+  .ai-nav {
+    min-height:auto;
+    padding:10px 14px;
+    gap:9px;
+    align-items:stretch;
+  }
+  .ai-brand { min-width:0; }
+  .ai-brand strong { font-size:.92rem; overflow-wrap:anywhere; }
+  .ai-nav nav {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:6px;
+    width:100%;
+  }
+  .ai-nav nav a {
+    min-height:44px;
+    padding:10px 7px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    font-size:.76rem;
+    line-height:1.2;
+  }
+  main { width:100%; max-width:100%; padding:0 12px 42px; }
+  .ai-hero,.course-hero,.notes-hero {
+    margin-left:-12px;
+    margin-right:-12px;
+    padding:34px 18px;
+    border-radius:0;
+    grid-template-columns:1fr;
+  }
+  .ai-hero h1,.course-hero h1,.notes-hero h1 {
+    font-size:clamp(2rem,10vw,2.8rem);
+    line-height:1.05;
+  }
+  .ai-hero p,.course-hero p,.notes-hero p {
+    font-size:.96rem;
+    line-height:1.65;
+  }
+  .hero-actions,.module-action {
+    display:grid;
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+  .ai-btn,.quiz-link {
+    width:100%;
+    min-height:48px;
+    justify-content:center;
+  }
+  .hero-card,.course-hero-stat { padding:20px; }
+  .hero-number,.course-hero-stat strong { font-size:3rem; }
+  .ai-info-strip { grid-template-columns:1fr; margin-bottom:28px; }
+  .ai-info-strip>div { border-right:0; border-bottom:1px solid var(--line); }
+  .course-grid,.steps,.level-grid { grid-template-columns:1fr; }
+  .course-card { padding:18px; }
+  .course-card p:not(.eyebrow) { min-height:0; }
+  .notes-paper,.module-quiz { padding:18px; }
+  .notes-nav { display:grid; grid-template-columns:1fr; }
+  .notes-nav > * { width:100%; min-height:48px; }
+  .quiz-head { align-items:flex-start; }
+  .quiz-score { flex:0 0 62px; min-width:62px; width:62px; height:62px; }
+  .module-quiz label { min-height:44px; display:flex; align-items:center; gap:8px; }
+  .learning-sidebar { position:static; }
+}
