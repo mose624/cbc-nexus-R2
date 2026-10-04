@@ -252,11 +252,11 @@ function normalizeSchoolPayload(p){
   if(!name||!country||!email)throw new Error("School name, country and contact email are required.");
   if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email))throw new Error("Enter a valid school email.");
   if(website){let u;try{u=new URL(website)}catch{throw new Error("School website is not valid.");}if(!/^https?:$/.test(u.protocol))throw new Error("School website must use http or https.");}
-  return {id:"school-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),name,country,city:clean(p.city,120),curriculum:clean(p.curriculum,180),type:clean(p.type,120),website,email,phone:clean(p.phone,60),description:clean(p.description,3000),status:"pending",created_at:new Date().toISOString(),updated_at:new Date().toISOString()};
+  return {id:"school-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),name,country,city:clean(p.city,120),curriculum:clean(p.curriculum,180),type:clean(p.type,120),website,email,phone:clean(p.phone,60),description:clean(p.schoolDescription||p.description,3000),status:"pending",created_at:new Date().toISOString(),updated_at:new Date().toISOString()};
 }
 function normalizeSchoolVacancyPayload(p,schoolId){
   const clean=(v,n)=>String(v??"").trim().slice(0,n);
-  const title=clean(p.title,220),subject=clean(p.subject,180),level=clean(p.level,150),description=clean(p.description,5000),applyUrl=clean(p.applyUrl,1000);
+  const title=clean(p.title,220),subject=clean(p.subject,180),level=clean(p.level,150),description=clean(p.vacancyDescription||p.description,5000),applyUrl=clean(p.applyUrl,1000);
   if(!title||!subject||!level||!description||!applyUrl)throw new Error("Vacancy title, subject, level, description and application link are required.");
   let u;try{u=new URL(applyUrl)}catch{throw new Error("Application link is not valid.");}
   if(!/^https?:$/.test(u.protocol))throw new Error("Application link must use http or https.");
