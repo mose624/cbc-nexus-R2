@@ -105,9 +105,21 @@ const diplomaTeacherEducationSubjects = [
   "Historical and comparative Foundations of Education","Agriculture"
 ];
 
+const internationalCurriculumSubjects = [
+  "Mathematics","Further Mathematics","Mathematics A","Mathematics B","Further Pure Mathematics",
+  "Biology","Human Biology","Chemistry","Physics","Science Double Award","Computer Science","ICT",
+  "English","English Language","English Language A","English Language B","English Literature",
+  "English Language & Literature","Business","Business Studies","Business Management","Accounting",
+  "Economics","Geography","History","Religious Studies","Psychology","Sociology","Law",
+  "French","Spanish","German","Arabic","Swahili","Art & Design","Visual Arts","Music","Theatre",
+  "Drama","Film","Physical Education","Design & Technology","Agriculture","Global Perspectives",
+  "Travel & Tourism","Commerce"
+];
+
 const allCbeSubjects = [...new Set([
   ...prePrimarySubjects,...lowerPrimarySubjects,...upperPrimarySubjects,...juniorSchoolSubjects,
-  ...seniorSchoolSubjects,...specialNeedsSubjects,...diplomaTeacherEducationSubjects
+  ...seniorSchoolSubjects,...specialNeedsSubjects,...diplomaTeacherEducationSubjects,
+  ...internationalCurriculumSubjects
 ])].sort((a,b)=>a.localeCompare(b));
 
 /*
@@ -128,7 +140,12 @@ const gradeSubjects = {
   "Grade 9": ["Agriculture","Arabic","Creative Arts","Christian Religious Education","English","French","German","Hindu Religious Education","Indigenous Language","Integrated Science","Islamic Religious Education","Kiswahili","Mandarin","Mathematics","Pre-Technical Studies","Social Studies"],
   "Grade 10": ["Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","Islamic Religious Education","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","Hindu Religious Education","Mandarin Chinese"],
   "Grade 11": ["Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","Islamic Religious Education","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","Hindu Religious Education","Mandarin Chinese"],
-  "Grade 12": ["Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","Islamic Religious Education","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","Hindu Religious Education","Mandarin Chinese"]
+  "Grade 12": ["Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","Islamic Religious Education","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","Hindu Religious Education","Mandarin Chinese"],
+  "IGCSE": ["Mathematics","Biology","Chemistry","Physics","English","Business Studies","Economics","Computer Science","Geography","History","French","Spanish","German","Swahili","Art & Design","Physical Education","Accounting","Agriculture","Design & Technology","Drama","Global Perspectives","ICT","Psychology","Sociology","Travel & Tourism"],
+  "IB": ["English Language & Literature","English Literature","French","Spanish","Business Management","Economics","Geography","History","Biology","Chemistry","Physics","Computer Science","Mathematics","Visual Arts","Music","Theatre","Film"],
+  "O Level": ["English","Mathematics","Biology","Chemistry","Physics","Geography","History","Business Studies","Accounting","Economics","Computer Science","ICT","French","Spanish","Arabic","Art & Design","Design & Technology","Religious Studies","Physical Education"],
+  "A Level": ["Mathematics","Further Mathematics","Physics","Chemistry","Biology","Economics","Business","Accounting","Computer Science","English Language","English Literature","French","Spanish","Geography","History","Psychology","Art & Design","Music","Drama","Travel & Tourism","Sociology","Law"],
+  "Pearson": ["English Language A","English Language B","English Literature","Mathematics A","Mathematics B","Further Pure Mathematics","Biology","Human Biology","Chemistry","Physics","Science Double Award","Accounting","Business Studies","Commerce","Economics","Computer Science","ICT","Geography","History","Religious Studies","Arabic","French","German","Spanish","Swahili","Art & Design","Global Citizenship"]
 };
 
 const subjectAliases = {
