@@ -1069,11 +1069,19 @@ function injectSeoFooter(html,pathname){
   return html.replace(/<\/head>/i,styles+"</head>");
 }
 
-function injectGoogleTag(html){
+function injectAnalyticsTags(html){
   const measurementId=String(process.env.GA_MEASUREMENT_ID||"G-8E0HGCJM8W").trim();
-  if(!measurementId || /googletagmanager\.com\/gtag\/js/i.test(html) || /gtag\(['"]config['"]\s*,/i.test(html)) return html;
-  const tag='<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id='+measurementId+'"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","'+measurementId+'");</script>';
-  return html.replace(/<head([^>]*)>/i,'<head$1>'+tag);
+  const clarityId=String(process.env.CLARITY_PROJECT_ID||"ysl6ujcrkf").trim();
+  let out=html;
+  if(measurementId && !/googletagmanager\.com\/gtag\/js/i.test(out) && !/gtag\(['"]config['"]\s*,/i.test(out)){
+    const tag='<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id='+measurementId+'"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","'+measurementId+'");</script>';
+    out=out.replace(/<head([^>]*)>/i,'<head$1>'+tag);
+  }
+  if(clarityId && !/clarity\.ms\/tag\//i.test(out)){
+    const tag='<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","'+clarityId+'");</script>';
+    out=out.replace(/<head([^>]*)>/i,'<head$1>'+tag);
+  }
+  return out;
 }
 
 async function serveStatic(req,res,url){
@@ -1091,7 +1099,7 @@ async function serveStatic(req,res,url){
   const seoPage=await seo.match(req);
   if(req.method==="GET" && seoPage){
     res.writeHead(200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"public, max-age=600"});
-    res.end(injectGoogleTag(injectSeoFooter(seoPage,url.pathname)));
+    res.end(injectAnalyticsTags(injectSeoFooter(seoPage,url.pathname)));
     return;
   }
   const requestedPath=decodeURIComponent(url.pathname==="/"?"/index.html":url.pathname);
@@ -1115,7 +1123,7 @@ async function serveStatic(req,res,url){
       if (!data.toString("utf8").includes("resource-centre-bridge.js")) data = Buffer.from(data.toString("utf8").replace("</body>", bridgeScript + "</body>"));
     }
     const ext=path.extname(target).toLowerCase();
-    if(ext===".html") data=Buffer.from(injectGoogleTag(data.toString("utf8")));
+    if(ext===".html") data=Buffer.from(injectAnalyticsTags(data.toString("utf8")));
     const isHtml=ext===".html";
     const isVersionedAsset=/[?&]v=|-[0-9]{8,}/.test(url.search||"") && [".css",".js"].includes(ext);
     const cacheControl=isHtml
