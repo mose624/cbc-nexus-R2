@@ -232,7 +232,72 @@ async function refineCvWithSmartEditor(payload){
   };
 }
 
+async function getSchoolDirectory(admin=false){
+  if(supabaseConfigured){
+    try{
+      let q=supabase.from("schools").select("*,school_vacancies(*)").order("created_at",{ascending:false});
+      if(!admin)q=q.eq("status","published");
+      const {data,error}=await q;
+      if(!error)return data||[];
+      console.warn("Supabase school directory lookup failed:",error.message||error);
+    }catch(error){console.warn("Supabase school directory lookup failed:",error.message||error);}
+  }
+  const schools=await readJsonStore("schools.json");
+  const vacancies=await readJsonStore("school-vacancies.json");
+  return (admin?schools:schools.filter(s=>s.status==="published")).map(s=>({...s,vacancies:vacancies.filter(v=>String(v.school_id)===String(s.id)&&(admin||v.status==="published"))}));
+}
+function normalizeSchoolPayload(p){
+  const clean=(v,n)=>String(v??"").trim().slice(0,n);
+  const name=clean(p.name,220),country=clean(p.country,120),email=clean(p.email,180),website=clean(p.website,500);
+  if(!name||!country||!email)throw new Error("School name, country and contact email are required.");
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email))throw new Error("Enter a valid school email.");
+  if(website){let u;try{u=new URL(website)}catch{throw new Error("School website is not valid.");}if(!/^https?:$/.test(u.protocol))throw new Error("School website must use http or https.");}
+  return {id:"school-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),name,country,city:clean(p.city,120),curriculum:clean(p.curriculum,180),type:clean(p.type,120),website,email,phone:clean(p.phone,60),description:clean(p.description,3000),status:"pending",created_at:new Date().toISOString(),updated_at:new Date().toISOString()};
+}
+function normalizeSchoolVacancyPayload(p,schoolId){
+  const clean=(v,n)=>String(v??"").trim().slice(0,n);
+  const title=clean(p.title,220),subject=clean(p.subject,180),level=clean(p.level,150),description=clean(p.description,5000),applyUrl=clean(p.applyUrl,1000);
+  if(!title||!subject||!level||!description||!applyUrl)throw new Error("Vacancy title, subject, level, description and application link are required.");
+  let u;try{u=new URL(applyUrl)}catch{throw new Error("Application link is not valid.");}
+  if(!/^https?:$/.test(u.protocol))throw new Error("Application link must use http or https.");
+  return {id:"school-vacancy-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),school_id:schoolId,title,subject,level,employment:clean(p.employment,80)||"Full-time",salary:clean(p.salary,300),deadline:clean(p.deadline,40),description,requirements:clean(p.requirements,4000),apply_url:applyUrl,status:"pending",featured:false,created_at:new Date().toISOString(),updated_at:new Date().toISOString()};
+}
+async function submitSchoolDirectory(payload){
+  const school=normalizeSchoolPayload(payload),vacancy=normalizeSchoolVacancyPayload(payload,school.id);
+  if(supabaseConfigured){
+    try{
+      const {data,error}=await supabase.from("schools").insert(school).select("*").single();
+      if(error)throw error;
+      const {data:v,error:ve}=await supabase.from("school_vacancies").insert(vacancy).select("*").single();
+      if(ve)throw ve;
+      return {school:data,vacancy:v};
+    }catch(error){console.warn("Supabase school submission failed:",error.message||error);}
+  }
+  await appendJsonStore("schools.json",school);
+  await appendJsonStore("school-vacancies.json",vacancy);
+  return {school,vacancy};
+}
+
 async function handleApi(req,res,url){
+  if(req.method==="GET"&&url.pathname==="/api/schools"){
+    try{sendJson(res,200,{ok:true,schools:await getSchoolDirectory(false)});}catch(error){console.error("School directory lookup error:",error);sendJson(res,500,{ok:false,error:"School directory could not be loaded."});}return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/schools/advertise"){
+    try{const payload=JSON.parse((await readBody(req))||"{}");const result=await submitSchoolDirectory(payload);sendJson(res,201,{ok:true,message:"School and vacancy submitted for review.",school:result.school,vacancy:result.vacancy});}catch(error){sendJson(res,400,{ok:false,error:error.message||"School submission failed."});}return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/admin/schools"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin authentication required."});return true;}
+    try{sendJson(res,200,{ok:true,schools:await getSchoolDirectory(true)});}catch(error){sendJson(res,500,{ok:false,error:"School directory could not be loaded."});}return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/school-status"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin authentication required."});return true;}
+    try{
+      const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||""),status=["pending","published","rejected"].includes(String(p.status))?String(p.status):"pending";
+      if(!id)throw new Error("School id is required.");
+      if(supabaseConfigured){const {error}=await supabase.from("schools").update({status,updated_at:new Date().toISOString()}).eq("id",id);if(error)throw error;sendJson(res,200,{ok:true});return true;}
+      const rows=await readJsonStore("schools.json"),next=rows.map(x=>String(x.id)===id?{...x,status,updated_at:new Date().toISOString()}:x);await fs.writeFile(path.join(DATA_DIR,"schools.json"),JSON.stringify(next,null,2));sendJson(res,200,{ok:true});
+    }catch(error){sendJson(res,400,{ok:false,error:error.message||"Status update failed."});}return true;
+  }
   if(req.method==="POST"&&url.pathname==="/api/cv/refine"){
     try{
       const payload=JSON.parse((await readBody(req))||"{}");
