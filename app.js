@@ -790,8 +790,7 @@ async function handleFormSubmit(event) {
     elements.freeSample.value = "false";
     elements.notesContent.value = "";
     elements.adminGrade.value = "Grade 1";
-    refreshSubjectFilters();
-    optionList(elements.adminSubject, allCbeSubjects, "Mathematics Activities");
+    if (typeof refreshAdminUploadSubjects === "function") refreshAdminUploadSubjects();
     elements.fileHelp.textContent = "Choose a PDF, Word document, PowerPoint, Excel file, text file, or ZIP.";
     elements.formStatus.textContent = "Resource uploaded to R2 and saved to Supabase successfully.";
     showToast("Resource uploaded successfully.");
