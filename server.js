@@ -1451,7 +1451,12 @@ async function serveStatic(req,res,url){
     res.end(await seo.sitemap(req));
     return;
   }
-  if(req.method==="GET" && url.pathname==="/ads.txt"){\n    res.writeHead(200,{"Content-Type":"text/plain; charset=utf-8","Cache-Control":"public, max-age=3600"});\n    res.end(buildAdsTxt());\n    return;\n  }\n  if(req.method==="GET" && url.pathname==="/indexnow-key.txt"){
+  if(req.method==="GET" && url.pathname==="/ads.txt"){
+    res.writeHead(200,{"Content-Type":"text/plain; charset=utf-8","Cache-Control":"public, max-age=3600"});
+    res.end(buildAdsTxt());
+    return;
+  }
+
     res.writeHead(200,{"Content-Type":"text/plain; charset=utf-8","Cache-Control":"public, max-age=86400"});
     res.end(indexNowKey(req));
     return;
