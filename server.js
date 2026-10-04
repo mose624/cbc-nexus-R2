@@ -1107,7 +1107,7 @@ async function buildBlogRss(req){
   const items=posts.slice(0,50).map(p=>{
     const link=base+"/blog-article.html?slug="+encodeURIComponent(String(p.slug||""));
     const date=p.publishedAt||p.createdAt||new Date().toISOString();
-    const description=String(p.excerpt||p.content||"").replace(/<script/gi,"").replace(/<\\/script>/gi,"").slice(0,4000);
+    const description=String(p.excerpt||p.content||"").replace(/<script/gi,"").replace(/<\/script>/gi,"").slice(0,4000);
     return "<item><title>"+rssCdata(p.title)+"</title><link>"+xmlEscape(link)+"</link><guid isPermaLink=\"true\">"+xmlEscape(link)+"</guid><description>"+rssCdata(description)+"</description><author>"+xmlEscape(p.author||"CBE Nexus")+"</author><category>"+xmlEscape(p.category||"Education")+"</category><pubDate>"+new Date(date).toUTCString()+"</pubDate></item>";
   }).join("");
   return '<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CBE Nexus Education Hub</title><atom:link href="'+xmlEscape(base+"/rss.xml")+'" rel="self" type="application/rss+xml"/><link>'+xmlEscape(base+"/blog.html")+'</link><description>Education news, teaching guides, scholarships, AI and CBC/CBE resources from CBE Nexus.</description><language>en-ke</language><lastBuildDate>'+new Date().toUTCString()+'</lastBuildDate>'+items+"</channel></rss>";
