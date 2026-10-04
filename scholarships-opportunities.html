@@ -7,7 +7,7 @@ body{font-family:Arial,sans-serif;margin:0;background:#f7f9fc;color:#172033}.wra
 </style></head><body><main class="wrap">
 <section class="hero"><p>🎓 CBE NEXUS</p><h1>Scholarships & Opportunities</h1><p>Discover scholarships, fellowships, grants, internships, competitions, exchanges and other opportunities.</p></section>
 <div class="filters"><input id="search" placeholder="Search opportunities..."><select id="type"><option value="">All types</option><option>Scholarship</option><option>Fellowship</option><option>Grant</option><option>Internship</option><option>Competition</option><option>Exchange</option><option>Research</option><option>Teacher Development</option><option>Youth Opportunity</option></select><select id="country"><option value="">All countries</option></select><select id="funding"><option value="">All funding</option><option>Fully Funded</option><option>Partially Funded</option><option>Free</option></select></div>
-section id="list" class="grid"></section>
+<section id="list" class="grid"></section>
 </main><script>
 let rows=[];
 const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",""":"&quot;","'":"&#39;"}[m]));
