@@ -33,14 +33,52 @@
   const faq = document.querySelector("#faq");
   if (faq && !document.querySelector("#cbe-website-rating")) {
     const rating = document.createElement("div"); rating.id = "cbe-website-rating";
-    rating.innerHTML = `<div class="cbe-rating-inner"><strong class="cbe-rating-title">Rate CBE Nexus</strong><span class="cbe-rating-scale">0–5</span><div class="cbe-stars" role="radiogroup" aria-label="Rate CBE Nexus from 0 to 5"><button type="button" class="cbe-star" data-rating="1" aria-label="1 out of 5">★</button><button type="button" class="cbe-star" data-rating="2" aria-label="2 out of 5">★</button><button type="button" class="cbe-star" data-rating="3" aria-label="3 out of 5">★</button><button type="button" class="cbe-star" data-rating="4" aria-label="4 out of 5">★</button><button type="button" class="cbe-star" data-rating="5" aria-label="5 out of 5">★</button></div><strong class="cbe-rating-value" aria-live="polite">0/5</strong><span class="cbe-rating-summary" aria-live="polite">No ratings yet</span><span class="cbe-rating-thanks" aria-live="polite"></span></div>`;
+    rating.innerHTML = `<div class="cbe-rating-inner"><strong class="cbe-rating-title">Rate CBE Nexus</strong><span class="cbe-rating-scale">0–5</span><div class="cbe-stars" role="radiogroup" aria-label="Rate CBE Nexus from 0 to 5"><button type="button" class="cbe-star" data-rating="1" aria-label="1 out of 5">★</button><button type="button" class="cbe-star" data-rating="2" aria-label="2 out of 5">★</button><button type="button" class="cbe-star" data-rating="3" aria-label="3 out of 5">★</button><button type="button" class="cbe-star" data-rating="4" aria-label="4 out of 5">★</button><button type="button" class="cbe-star" data-rating="5" aria-label="5 out of 5">★</button></div><strong class="cbe-rating-value" aria-live="polite">0/5</strong><span class="cbe-rating-summary" aria-live="polite">Loading ratings…</span><span class="cbe-rating-thanks" aria-live="polite"></span></div>`;
     faq.appendChild(rating);
-    const KEY="cbeNexusWebsiteRatings",MY_KEY="cbeNexusMyWebsiteRating";
-    const readRatings=()=>{try{return JSON.parse(localStorage.getItem(KEY)||"[]").filter(n=>Number.isInteger(n)&&n>=0&&n<=5)}catch{return[]}};
+
+    const KEY="cbeNexusWebsiteRatings",MY_KEY="cbeNexusMyWebsiteRating",VISITOR_KEY="cbeNexusRatingVisitorId";
+    const makeVisitorId=()=>{let id=localStorage.getItem(VISITOR_KEY);if(!id){id=(crypto.randomUUID?crypto.randomUUID():("v-"+Date.now()+"-"+Math.random().toString(36).slice(2)));localStorage.setItem(VISITOR_KEY,id)}return id};
+    const visitorId=makeVisitorId();
+    const readLocal=()=>{try{return JSON.parse(localStorage.getItem(KEY)||"[]").filter(n=>Number.isInteger(n)&&n>=0&&n<=5)}catch{return[]}};
     const stars=[...rating.querySelectorAll(".cbe-star")],value=rating.querySelector(".cbe-rating-value"),summary=rating.querySelector(".cbe-rating-summary"),thanks=rating.querySelector(".cbe-rating-thanks");
-    function render(selected){stars.forEach(star=>star.classList.toggle("selected",Number(star.dataset.rating)<=selected));value.textContent=`${selected}/5`;const ratings=readRatings();summary.textContent=ratings.length?`${(ratings.reduce((s,n)=>s+n,0)/ratings.length).toFixed(1)}/5 • ${ratings.length} rating${ratings.length===1?"":"s"}`:"No ratings yet";}
-    render(Number(localStorage.getItem(MY_KEY)||0));
-    stars.forEach(star=>star.addEventListener("click",()=>{const selected=Number(star.dataset.rating),previous=Number(localStorage.getItem(MY_KEY)||0),ratings=readRatings();if(localStorage.getItem(MY_KEY)!==null){const i=ratings.indexOf(previous);if(i>=0)ratings.splice(i,1)}ratings.push(selected);localStorage.setItem(KEY,JSON.stringify(ratings));localStorage.setItem(MY_KEY,String(selected));render(selected);thanks.textContent="Thank you for rating CBE Nexus!";}));
+    function renderStars(selected){stars.forEach(star=>star.classList.toggle("selected",Number(star.dataset.rating)<=selected));value.textContent=`${selected}/5`;}
+    function renderSummary(data){
+      const count=Number(data?.count||0),average=Number(data?.average||0);
+      summary.textContent=count?`${average.toFixed(1)}/5 • ${count} rating${count===1?"":"s"}`:"No ratings yet";
+    }
+    async function loadRatings(){
+      try{
+        const response=await fetch("/api/ratings?_="+Date.now(),{credentials:"same-origin",cache:"no-store"});
+        const data=await response.json().catch(()=>({}));
+        if(response.ok&&data.ok){
+          renderSummary(data);
+          if(Number(data.myRating||0)){localStorage.setItem(MY_KEY,String(data.myRating));renderStars(Number(data.myRating));}
+          return;
+        }
+      }catch{}
+      const local=readLocal(),mine=Number(localStorage.getItem(MY_KEY)||0);
+      renderSummary({count:local.length,average:local.length?local.reduce((s,n)=>s+n,0)/local.length:0});
+      renderStars(mine);
+    }
+    async function saveRating(selected){
+      renderStars(selected);
+      localStorage.setItem(MY_KEY,String(selected));
+      try{
+        const response=await fetch("/api/ratings",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({rating:selected,visitorId})});
+        const data=await response.json().catch(()=>({}));
+        if(!response.ok||!data.ok)throw new Error(data.error||"Rating could not be saved.");
+        renderSummary(data);
+        thanks.textContent="Thank you for rating CBE Nexus!";
+      }catch(error){
+        const local=readLocal(),previous=Number(localStorage.getItem(MY_KEY+"_previous")||0);
+        if(previous){const i=local.indexOf(previous);if(i>=0)local.splice(i,1);}
+        local.push(selected);localStorage.setItem(KEY,JSON.stringify(local));localStorage.setItem(MY_KEY+"_previous",String(selected));
+        renderSummary({count:local.length,average:local.reduce((s,n)=>s+n,0)/local.length});
+        thanks.textContent="Thank you for rating CBE Nexus!";
+      }
+    }
+    stars.forEach(star=>star.addEventListener("click",()=>saveRating(Number(star.dataset.rating))));
+    loadRatings();
   }
 
   const launcher=root.querySelector(".cc-launcher"),panel=root.querySelector(".cc-panel"),close=root.querySelector(".cc-close"),messages=root.querySelector(".cc-messages"),form=root.querySelector(".cc-form"),input=root.querySelector(".cc-input");
