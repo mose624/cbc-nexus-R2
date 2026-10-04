@@ -24,5 +24,5 @@ function renderLatest(){const latest=[...rows].sort((a,b)=>dateVal(b.created_at)
 function share(title){window.open("https://wa.me/?text="+encodeURIComponent("🎓 "+title+"\n\nFind it on CBE Nexus: "+location.href),"_blank","noopener,noreferrer")}
 async function load(){try{const r=await fetch("/api/opportunities?_="+Date.now());const d=await r.json();if(!r.ok||!d.ok)throw Error(d.error||"Could not load opportunities.");rows=d.opportunities||[];renderLatest();render()}catch(e){document.getElementById("list").innerHTML='<div class="empty">'+esc(e.message)+'</div>'}}
 ["search","region","type","level","country","funding","sort"].forEach(id=>document.getElementById(id).addEventListener("input",render));load();
-</script><script src="section-shell.js?v=20261004-3" defer></script><script src="customer-care.js?v=20261004-2" defer></script>
+</script><script src="section-shell.js?v=20261004-5" defer></script><script src="customer-care.js?v=20261004-2" defer></script>
 </body></html>
