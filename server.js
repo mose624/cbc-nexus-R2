@@ -1131,6 +1131,45 @@ async function getKuccpsProgrammes(institutionName){
   return value;
 }
 
+const tvetaCourseCache=new Map();
+async function getTvetaCourses(){
+  const cached=tvetaCourseCache.get("courses");
+  if(cached && Date.now()-cached.at<6*60*60*1000) return cached.value;
+  const sourceUrl="https://www.tveta.go.ke/tvet-courses/";
+  const response=await fetch(sourceUrl,{headers:{"User-Agent":"CBE-Nexus-Education-Directory/1.0"}});
+  if(!response.ok) throw new Error("TVETA returned "+response.status);
+  const html=await response.text();
+  const rows=[];
+  const trRe=/<tr[^>]*>([\\s\\S]*?)<\\/tr>/gi;
+  const tdRe=/<t[dh][^>]*>([\\s\\S]*?)<\\/t[dh]>/gi;
+  const strip=s=>String(s).replace(/<[^>]+>/g," ").replace(/&amp;/g,"&").replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/&nbsp;/g," ").replace(/\\s+/g," ").trim();
+  let m;
+  while((m=trRe.exec(html))){
+    const cells=[];let d;
+    while((d=tdRe.exec(m[1]))) cells.push(strip(d[1]));
+    if(cells.length>=4 && /^\\d+$/.test(cells[0]) && cells[1]){
+      rows.push({number:Number(cells[0]),name:cells[1],level:cells[2],examBody:cells[3]});
+    }
+  }
+  const value={ok:true,count:rows.length,courses:rows,source:"TVETA",sourceUrl,fetchedAt:new Date().toISOString()};
+  tvetaCourseCache.set("courses",{at:Date.now(),value});
+  return value;
+}
+
+  if(req.method==="GET"&&url.pathname==="/api/tveta/courses"){
+    try{
+      const data=await getTvetaCourses();
+      const q=String(url.searchParams.get("q")||"").trim().toLowerCase();
+      const level=String(url.searchParams.get("level")||"").trim().toLowerCase();
+      const body=String(url.searchParams.get("examBody")||"").trim().toLowerCase();
+      const courses=data.courses.filter(x=>(!q||(`${x.name} ${x.level} ${x.examBody}`).toLowerCase().includes(q))&&(!level||x.level.toLowerCase()===level)&&(!body||x.examBody.toLowerCase()===body));
+      sendJson(res,200,{...data,courses,count:courses.length});
+    }catch(error){
+      console.error("TVETA course lookup error:",error);
+      sendJson(res,502,{ok:false,courses:[],count:0,source:"TVETA",sourceUrl:"https://www.tveta.go.ke/tvet-courses/",error:"TVETA course register could not be loaded right now."});
+    }
+    return true;
+  }
   if(req.method==="GET"&&url.pathname==="/api/kuccps/university-programmes"){
     const institutionName=String(url.searchParams.get("institution")||"").trim();
     if(!institutionName){sendJson(res,400,{ok:false,error:"University name is required."});return true;}
