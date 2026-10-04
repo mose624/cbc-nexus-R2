@@ -419,10 +419,18 @@ function renderAdminControlCentre(data) {
   const summary=document.getElementById("adminResourceSummary");
   if(summary) summary.textContent=`${pending} pending · ${approved} online · ${rejected} rejected`;
 }
+function checkAIAcademyIntegrations(){
+  const sup=document.getElementById("aiSupabaseStatus"), r2=document.getElementById("aiR2Status"), gh=document.getElementById("aiGithubStatus"), render=document.getElementById("aiRenderStatus");
+  if(gh) gh.textContent="Connected source";
+  if(render) render.textContent="Live application server";
+  fetch("/api/supabase/status",{credentials:"same-origin",cache:"no-store"}).then(r=>r.json()).then(d=>{if(sup)sup.textContent=d.supabaseConfigured?"Connected ✓":"Not configured";}).catch(()=>{if(sup)sup.textContent="Connection error";});
+  fetch("/api/r2/status",{credentials:"same-origin",cache:"no-store"}).then(r=>r.json()).then(d=>{if(r2)r2.textContent=d.r2Configured?"Connected ✓":"Not configured";}).catch(()=>{if(r2)r2.textContent="Connection error";});
+}
 function initAICourseNotesAdmin(){
   const courseSelect=document.getElementById("aiNotesCourseInput"), moduleSelect=document.getElementById("aiNotesModuleInput"), levelSelect=document.getElementById("aiNotesLevelInput"), statusSelect=document.getElementById("aiNotesStatusInput");
   const form=document.getElementById("aiNotesAdminForm"); if(!courseSelect||!moduleSelect||!form||courseSelect.dataset.ready==="1") return;
   courseSelect.dataset.ready="1";
+  checkAIAcademyIntegrations();
   const courses=window.CBENexusAICourses||{};
   courseSelect.innerHTML=Object.keys(courses).map(s=>'<option value="'+escapeHtml(s)+'">'+escapeHtml(courses[s].title)+'</option>').join("");
   function refreshModules(){const c=courses[courseSelect.value];moduleSelect.innerHTML=(c?.modules||[]).map((m,i)=>'<option value="'+(i+1)+'">Module '+(i+1)+': '+escapeHtml(m[0])+'</option>').join("");document.getElementById("aiNotesModuleTitleInput").value=c?.modules?.[Number(moduleSelect.value)-1]?.[0]||"";}
