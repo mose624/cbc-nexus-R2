@@ -387,7 +387,7 @@ async function syncPublicResourcesFromServer() {
         previewKey: r.previewKey || r.preview_key || "",
         file: r.file || ((r.r2Key || r.r2_key) ? "/api/r2/file?key=" + encodeURIComponent(r.r2Key || r.r2_key) : "")
       }))
-      .filter((r) => r.id && r.status === "approved");
+      .filter((r) => r.id && r.status === "approved" && !["IGCSE","IB","O Level","A Level","Pearson"].includes(String(r.grade || "").trim()));
 
     serverResources = remote;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(remote));
