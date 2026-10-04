@@ -1140,8 +1140,8 @@ async function getTvetaCourses(){
   if(!response.ok) throw new Error("TVETA returned "+response.status);
   const html=await response.text();
   const rows=[];
-  const trRe=/<tr[^>]*>([\\s\\S]*?)<\\/tr>/gi;
-  const tdRe=/<t[dh][^>]*>([\\s\\S]*?)<\\/t[dh]>/gi;
+  const trRe=/<tr[^>]*>([\s\S]*?)<\/tr>/gi;
+  const tdRe=/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi;
   const strip=s=>String(s).replace(/<[^>]+>/g," ").replace(/&amp;/g,"&").replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/&nbsp;/g," ").replace(/\\s+/g," ").trim();
   let m;
   while((m=trRe.exec(html))){
