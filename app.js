@@ -407,7 +407,8 @@ function renderAdminControlCentre(data) {
     ];
     elements.adminStatsGrid.innerHTML=cards.map(c=>`<div class="admin-kpi-card"><span>${escapeHtml(c[0])}</span><strong>${Number(c[1]||0).toLocaleString("en-KE")}</strong><small>${escapeHtml(c[2])}</small></div>`).join("");
   }
-  renderAdminModuleDetails(data);\n  auditAdminExportButtons();\n  if(elements.adminResourceBadge) elements.adminResourceBadge.textContent=resources.length;
+  renderAdminModuleDetails(data);
+  auditAdminExportButtons();\n  if(elements.adminResourceBadge) elements.adminResourceBadge.textContent=resources.length;
   if(elements.adminSellerBadge) elements.adminSellerBadge.textContent=sellers.length;
   if(elements.adminPaymentBadge) elements.adminPaymentBadge.textContent=payments.length;
   if(elements.adminSalesBadge) elements.adminSalesBadge.textContent=sales.length;
@@ -447,7 +448,8 @@ function downloadAdminJson(filename,data){
   setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 function auditAdminExportButtons(){
-  const salesButton=document.getElementById("adminExportSales");\n  if(salesButton) salesButton.onclick=()=>{
+  const salesButton=document.getElementById("adminExportSales");
+  if(salesButton) salesButton.onclick=()=>{
     downloadAdminJson("cbe-nexus-sales.json",adminDashboardData?.sales||[]);
     showToast("Sales export downloaded.");
   });
@@ -1022,7 +1024,8 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
     renderResources();
   });
 
-  // ADMIN UPLOAD: curriculum controls the available grade/subject choices.\n  function refreshAdminUploadSubjects() {\n    if (!elements.adminCurriculum || !elements.adminGrade || !elements.adminSubject) return;\n    const curriculum = String(elements.adminCurriculum.value || "CBC/CBE");\n    const international = ["IGCSE","IB","O Level","A Level","Pearson"].includes(curriculum);\n    if (international) {\n      optionList(elements.adminGrade, [curriculum], curriculum);\n      optionList(elements.adminSubject, gradeSubjects[curriculum] || [], "");\n    } else {\n      const grades = Object.keys(gradeSubjects).filter((value) => !["IGCSE","IB","O Level","A Level","Pearson"].includes(value));\n      optionList(elements.adminGrade, grades, "Grade 1");\n      const subjects = gradeSubjects["Grade 1"] || allCbeSubjects;\n      optionList(elements.adminSubject, subjects, subjects[0] || "");\n    }\n  }\n\n  safeOn(elements.adminCurriculum, "change", () => {\n    refreshAdminUploadSubjects();\n    const selected = String(elements.adminCurriculum?.value || "CBC/CBE");\n    if (elements.formStatus) elements.formStatus.textContent = selected === "CBC/CBE" ? "CBC / CBE upload selected." : selected + " upload selected. This resource will appear only on its dedicated international curriculum page.";\n  });\n\n  safeOn(elements.adminGrade, "change", (event) => {\n    const grade = String(event.target.value || "").trim();\n    const subjects = gradeSubjects[grade] || [];\n    const current = canonicalSubjectName(elements.adminSubject?.value || "");\n    const selected = subjects.find((subject) => canonicalSubjectName(subject) === current) || subjects[0] || "";\n    optionList(elements.adminSubject, subjects, selected);\n  });
+  // ADMIN UPLOAD: curriculum controls the available grade/subject choices.
+  function refreshAdminUploadSubjects() {\n    if (!elements.adminCurriculum || !elements.adminGrade || !elements.adminSubject) return;\n    const curriculum = String(elements.adminCurriculum.value || "CBC/CBE");\n    const international = ["IGCSE","IB","O Level","A Level","Pearson"].includes(curriculum);\n    if (international) {\n      optionList(elements.adminGrade, [curriculum], curriculum);\n      optionList(elements.adminSubject, gradeSubjects[curriculum] || [], "");\n    } else {\n      const grades = Object.keys(gradeSubjects).filter((value) => !["IGCSE","IB","O Level","A Level","Pearson"].includes(value));\n      optionList(elements.adminGrade, grades, "Grade 1");\n      const subjects = gradeSubjects["Grade 1"] || allCbeSubjects;\n      optionList(elements.adminSubject, subjects, subjects[0] || "");\n    }\n  }\n\n  safeOn(elements.adminCurriculum, "change", () => {\n    refreshAdminUploadSubjects();\n    const selected = String(elements.adminCurriculum?.value || "CBC/CBE");\n    if (elements.formStatus) elements.formStatus.textContent = selected === "CBC/CBE" ? "CBC / CBE upload selected." : selected + " upload selected. This resource will appear only on its dedicated international curriculum page.";\n  });\n\n  safeOn(elements.adminGrade, "change", (event) => {\n    const grade = String(event.target.value || "").trim();\n    const subjects = gradeSubjects[grade] || [];\n    const current = canonicalSubjectName(elements.adminSubject?.value || "");\n    const selected = subjects.find((subject) => canonicalSubjectName(subject) === current) || subjects[0] || "";\n    optionList(elements.adminSubject, subjects, selected);\n  });
 
   safeOn(elements.sellerGrade, "change", (event) => {
     const subjects = gradeSubjects[event.target.value];
@@ -1237,6 +1240,7 @@ function injectContactInfo() {
 function initializePaymentCheckoutFromUrl(){const p=new URLSearchParams(location.search);const resource=p.get("resource");const amount=p.get("amount");if(resource&&elements.selectedResource){elements.selectedResource.value=resource;}if(amount&&elements.amount&&Number(amount)>0){elements.amount.value=amount;}if(resource&&elements.paymentStatus){elements.paymentStatus.textContent="You are purchasing: "+resource+" — Amount: KSh "+Number(amount||0).toLocaleString()+". Enter the M-Pesa phone number you will use, then select Pay with M-Pesa. An STK Push will be sent to that phone when Daraja is configured.";elements.paymentStatus.className="form-status";}if((resource||amount)&&location.hash==="#payments"){setTimeout(()=>document.getElementById("payments")?.scrollIntoView({behavior:"smooth",block:"start"}),50);}}
 renderGradeDashboard();
 setupFilters();
+refreshAdminUploadSubjects();
 applyGradeSubjectFromLink(false);
 renderQuickTypes();
 restoreAdminAccess();
@@ -1431,4 +1435,105 @@ async function initVacancies(){loadVacancies("homeVacancyGrid",true);loadVacanci
   document.addEventListener('DOMContentLoaded',paint);
   if(document.readyState!=='loading')paint();
 })();
-\n
+\async function handleFormSubmit(event) {
+  event.preventDefault();
+  const uploadedFile = elements.fileInput.files[0];
+  const title = document.querySelector("#titleInput").value.trim();
+  const description = document.querySelector("#descriptionInput").value.trim();
+  const notes = elements.notesContent.value.trim();
+  const price = Number(document.querySelector("#priceInput").value || 0);
+  const discount = Number(document.querySelector("#discountInput").value || 0);
+  const grade = elements.adminGrade.value;
+  const curriculum = elements.adminCurriculum ? elements.adminCurriculum.value : "CBC/CBE";
+  const subject = elements.adminSubject.value;
+  const type = elements.adminType.value;
+  let fileName = document.querySelector("#fileNameInput").value.trim();
+
+  if (!uploadedFile) {
+    elements.formStatus.textContent = "Please choose the resource file before publishing.";
+    showToast("Select a resource file first.");
+    return;
+  }
+
+  fileName = fileName || uploadedFile.name;
+  const resourceId = `admin-${Date.now()}`;
+
+  try {
+    elements.formStatus.textContent = "Uploading resource to Cloudflare R2...";
+    const uploadResponse = await fetch("/api/r2/upload", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": uploadedFile.type || "application/octet-stream",
+        "Content-Length": String(uploadedFile.size),
+        "X-CBE-Role": "admin",
+        "X-CBE-Grade": grade,
+        "X-CBE-Subject": subject,
+        "X-CBE-Type": type,
+        "X-CBE-Filename": fileName,
+        "X-CBE-Resource-Id": resourceId
+      },
+      body: uploadedFile
+    });
+    const uploadData = await uploadResponse.json().catch(() => ({}));
+    if (!uploadResponse.ok || !uploadData.ok) throw new Error(uploadData.error || "Resource file could not be uploaded to R2.");
+
+    elements.formStatus.textContent = "Saving resource details to Supabase...";
+    const resourceResponse = await fetch("/api/resources", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({
+        id: resourceId,
+        role: "admin",
+        title,
+        grade,
+        curriculum,
+        subject,
+        type,
+        description,
+        notes,
+        price,
+        discount,
+        term: elements.termInput.value,
+        isFreeSample: elements.freeSample.value === "true",
+        popularity: 1,
+        fileName,
+        r2Key: uploadData.r2Key || uploadData.key,
+        previewKey: uploadData.previewKey || ""
+      })
+    });
+    const resourceData = await resourceResponse.json().catch(() => ({}));
+    if (!resourceResponse.ok || !resourceData.ok) throw new Error(resourceData.error || "Resource metadata could not be saved to Supabase.");
+
+    const saved = resourceData.saved || {
+      ...resourceData.resource,
+      id: resourceId, title, grade, subject, type, description, price, discount, term: elements.termInput.value,
+      isFreeSample: elements.freeSample.value === "true", fileName,
+      r2Key: uploadData.r2Key || uploadData.key
+    };
+    const local = readSavedResources().filter((r) => String(r.id) !== String(saved.id));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([...local, normalizeResourceForLibrary(saved)]));
+
+    elements.form.reset();
+    document.querySelector("#priceInput").value = "";
+    document.querySelector("#discountInput").value = 0;
+    elements.termInput.value = "Term 1";
+    elements.freeSample.value = "false";
+    elements.notesContent.value = "";
+    elements.adminGrade.value = "Grade 1";
+    refreshSubjectFilters();
+    optionList(elements.adminSubject, allCbeSubjects, "Mathematics Activities");
+    elements.fileHelp.textContent = "Choose a PDF, Word document, PowerPoint, Excel file, text file, or ZIP.";
+    elements.formStatus.textContent = "Resource uploaded to R2 and saved to Supabase successfully.";
+    showToast("Resource uploaded successfully.");
+    await syncPublicResourcesFromServer();
+    if (typeof loadAdminDashboard === "function") await loadAdminDashboard();
+  } catch (error) {
+    console.error("CBE Nexus resource publish error:", error);
+    elements.formStatus.textContent = error.message || "Resource could not be published.";
+    showToast(error.message || "Resource could not be published.");
+  }
+}
+
+n
