@@ -1170,6 +1170,33 @@ async function getTvetaCourses(){
     }
     return true;
   }
+  if(req.method==="GET"&&url.pathname==="/api/tveta/institution"){
+    const institutionName=String(url.searchParams.get("institution")||"").trim();
+    if(!institutionName){sendJson(res,400,{ok:false,error:"Institution name is required."});return true;}
+    try{
+      const source="https://www.tveta.go.ke/accredited-tvet-institutions/";
+      const response=await fetch(source,{headers:{"User-Agent":"CBE-Nexus-Education-Directory/1.0"}});
+      if(!response.ok) throw new Error("TVETA returned "+response.status);
+      const html=await response.text();
+      const clean=s=>String(s).replace(/<[^>]+>/g," ").replace(/&amp;/g,"&").replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/&nbsp;/g," ").replace(/\s+/g," ").trim();
+      const wanted=institutionName.toLowerCase();
+      const linkRe=/<a[^>]+href=["']([^"']*institution-details[^"']*)["'][^>]*>([\\s\\S]*?)<\\/a>/gi;
+      let m,detailUrl="";
+      while((m=linkRe.exec(html))){if(clean(m[2]).toLowerCase().includes(wanted)){detailUrl=new URL(m[1],source).href;break;}}
+      if(!detailUrl){
+        sendJson(res,404,{ok:false,institutionName,courses:[],source:"TVETA",sourceUrl:source,error:"Institution details were not found in the current TVETA register."});return true;
+      }
+      const dres=await fetch(detailUrl,{headers:{"User-Agent":"CBE-Nexus-Education-Directory/1.0"}});
+      if(!dres.ok) throw new Error("TVETA details returned "+dres.status);
+      const page=await dres.text();
+      const rows=[];const trRe=/<tr[^>]*>([\\s\\S]*?)<\\/tr>/gi;const tdRe=/<t[dh][^>]*>([\\s\\S]*?)<\\/t[dh]>/gi;let tr;
+      while((tr=trRe.exec(page))){const cells=[];let td;while((td=tdRe.exec(tr[1])))cells.push(clean(td[1]));if(cells.length>=3&&!/^#?$/.test(cells[0])&&cells[1]&&cells[2])rows.push({courseName:cells[1]||cells[0],level:cells[2],examBody:cells[3]||""});}
+      const textPage=clean(page);
+      const pick=(label,next)=>{const i=textPage.toLowerCase().indexOf(label.toLowerCase());return i>=0?textPage.slice(i+label.length,(next?textPage.toLowerCase().indexOf(next.toLowerCase(),i+label.length):i+label.length+180)).trim():"";};
+      sendJson(res,200,{ok:true,institutionName, courses:rows, source:"TVETA", sourceUrl:detailUrl, fetchedAt:new Date().toISOString(),detailsPage:detailUrl});
+    }catch(error){console.error("TVETA institution lookup error:",error);sendJson(res,502,{ok:false,institutionName,courses:[],source:"TVETA",sourceUrl:"https://www.tveta.go.ke/accredited-tvet-institutions/",error:"TVETA institution data could not be loaded right now."});}
+    return true;
+  }
   if(req.method==="GET"&&url.pathname==="/api/kuccps/university-programmes"){
     const institutionName=String(url.searchParams.get("institution")||"").trim();
     if(!institutionName){sendJson(res,400,{ok:false,error:"University name is required."});return true;}
