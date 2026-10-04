@@ -28,3 +28,11 @@ create index if not exists ai_course_notes_public_idx on public.ai_course_notes(
 alter table public.ai_course_notes enable row level security;
 create policy "Public published AI notes read" on public.ai_course_notes for select to anon,authenticated using(status='published');
 create policy "Service role manages AI course notes" on public.ai_course_notes for all to service_role using(true) with check(true);
+
+
+-- AI Academy PDF notes storage metadata (safe to run after the table already exists)
+alter table public.ai_course_notes
+  add column if not exists pdf_r2_key text,
+  add column if not exists pdf_filename text,
+  add column if not exists pdf_size bigint,
+  add column if not exists pdf_content_type text default 'application/pdf';
