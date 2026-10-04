@@ -1058,6 +1058,8 @@ function normKuccpsName(v){
 async function kuccpsFindInstitutionId(name){
   const wanted=normKuccpsName(name);
   const directoryUrls=[
+    "https://students.kuccps.net/institutions/",
+    "https://students.kuccps.net/institutions/?category=university",
     "https://students.kuccps.net/institutions/?category=university&sponsor=public",
     "https://students.kuccps.net/institutions/?category=university&sponsor=private"
   ];
