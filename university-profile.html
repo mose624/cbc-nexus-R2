@@ -45,7 +45,7 @@ body{background:#f8fafc}.up{max-width:1180px;margin:auto;padding:25px 16px 55px}
 <a class="btn" id="kuccps" target="_blank" rel="noopener">Open KUCCPS Institution ↗</a>
 <a class="btn alt" href="https://www.cue.or.ke/index.php?Itemid=253&catid=13&id=22%3Aapproved-academic-programmes&option=com_content&view=article" target="_blank" rel="noopener">CUE Approved Programmes ↗</a>
 <a class="btn alt" id="website" target="_blank" rel="noopener">University Official Website ↗</a>
-<a class="btn alt" href="public-universities.html">← Universities Directory</a>
+<a class="btn alt" id="backDirectory">← Universities Directory</a>
 </div>
 </section>
 </main>
@@ -56,7 +56,7 @@ body{background:#f8fafc}.up{max-width:1180px;margin:auto;padding:25px 16px 55px}
   const name=p.get("name")||"University Course Profile";
   const county=p.get("county")||"";
   const area=p.get("area")||"";
-  const site=p.get("website")||"";
+  const site=p.get("website")||"";\n  const type=p.get("type")||"public";
   const legacyId=p.get("kuccps")||"";
   const esc=v=>String(v??"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[m]));
   document.title=name+" | CBE Nexus";
@@ -66,7 +66,7 @@ body{background:#f8fafc}.up{max-width:1180px;margin:auto;padding:25px 16px 55px}
   const website=document.querySelector("#website");
   if(site)website.href=site;else website.remove();
 
-  const k=document.querySelector("#kuccps");
+  const back=document.querySelector("#backDirectory");\n  back.href=type==="private"?"private-universities.html":"public-universities.html";\n  const k=document.querySelector("#kuccps");
   if(legacyId)k.href="https://students.kuccps.net/institutions/"+encodeURIComponent(legacyId)+"/";
   else k.href="https://students.kuccps.net/institutions/";
 
