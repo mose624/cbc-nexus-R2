@@ -690,13 +690,16 @@ function saveLocalList(key, item) {
 
 function refreshAdminUploadSubjects() {
   if (!elements.adminCurriculum || !elements.adminGrade || !elements.adminSubject) return;
-  const curriculum = String(elements.adminCurriculum.value || "CBC/CBE");
-  const international = ["IGCSE","IB","O Level","A Level","Pearson"].includes(curriculum);
+  const curriculum = String(elements.adminCurriculum.value || "CBC/CBE").trim();
+  const internationalCurricula = ["IGCSE","IB","O Level","A Level","Pearson"];
+  const international = internationalCurricula.includes(curriculum);
   if (international) {
     optionList(elements.adminGrade, [curriculum], curriculum);
-    optionList(elements.adminSubject, gradeSubjects[curriculum] || [], "");
+    const subjects = gradeSubjects[curriculum] || [];
+    optionList(elements.adminSubject, subjects, subjects[0] || "");
+    if (elements.formStatus) elements.formStatus.textContent = curriculum + " selected — choose a " + curriculum + " subject below, then upload and publish.";
   } else {
-    const grades = Object.keys(gradeSubjects).filter((value) => !["IGCSE","IB","O Level","A Level","Pearson"].includes(value));
+    const grades = Object.keys(gradeSubjects).filter((value) => !internationalCurricula.includes(value));
     optionList(elements.adminGrade, grades, "Grade 1");
     const subjects = gradeSubjects["Grade 1"] || allCbeSubjects;
     optionList(elements.adminSubject, subjects, subjects[0] || "");
@@ -716,6 +719,20 @@ async function handleFormSubmit(event) {
   const subject = elements.adminSubject.value;
   const type = elements.adminType.value;
   let fileName = document.querySelector("#fileNameInput").value.trim();
+  const internationalCurricula = ["IGCSE","IB","O Level","A Level","Pearson"];
+  const isInternationalUpload = internationalCurricula.includes(curriculum);
+
+  if (!title || !description || !subject || !type || !price && price !== 0) {
+    elements.formStatus.textContent = "Complete the resource title, description, subject, material type and price before publishing.";
+    showToast("Please complete all required resource details.");
+    return;
+  }
+
+  if (isInternationalUpload && (!grade || grade !== curriculum)) {
+    elements.formStatus.textContent = "Select the international curriculum and its subject before publishing.";
+    showToast("Choose a valid international curriculum and subject.");
+    return;
+  }
 
   if (!uploadedFile) {
     elements.formStatus.textContent = "Please choose the resource file before publishing.";
@@ -727,8 +744,6 @@ async function handleFormSubmit(event) {
   const resourceId = `admin-${Date.now()}`;
 
   try {
-    const internationalCurricula = ["IGCSE", "IB", "O Level", "A Level", "Pearson"];
-    const isInternationalUpload = internationalCurricula.includes(curriculum);
     elements.formStatus.textContent = isInternationalUpload
       ? `Uploading ${curriculum} resource to its dedicated international library...`
       : "Uploading resource to Cloudflare R2...";
