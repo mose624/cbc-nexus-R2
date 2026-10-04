@@ -185,13 +185,13 @@ async function handleApi(req,res,url){
   if(req.method==="POST"&&url.pathname==="/api/admin/vacancy-delete"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"").trim();if(!id){sendJson(res,400,{ok:false,error:"Vacancy ID is required."});return true;}if(supabaseConfigured){try{const {error}=await supabase.from("teaching_vacancies").update({status:"deleted",updated_at:new Date().toISOString()}).eq("id",id);if(!error){sendJson(res,200,{ok:true,deletedId:id});return true;}}catch(error){console.warn("Supabase vacancy delete failed:",error.message||error);}}const items=await readJsonStore("teaching-vacancies.json"),next=items.map(x=>x.id===id?{...x,status:"deleted",updatedAt:new Date().toISOString()}:x);await fs.writeFile(path.join(DATA_DIR,"teaching-vacancies.json"),JSON.stringify(next,null,2));sendJson(res,200,{ok:true,deletedId:id});return true;}
   // ---------------- BLOG PUBLISHING SYSTEM ----------------
   function blogSlug(value){
-    return String(value||"").trim().toLowerCase().normalize("NFKD").replace(/[^\\w\\s-]/g,"").replace(/[\\s_-]+/g,"-").replace(/^-+|-+$/g,"").slice(0,140);
+    return String(value||"").trim().toLowerCase().normalize("NFKD").replace(/[^\w\s-]/g,"").replace(/[\s_-]+/g,"-").replace(/^-+|-+$/g,"").slice(0,140);
   }
   function cleanBlogHtml(value){
     let html=String(value||"").trim().slice(0,120000);
-    html=html.replace(/<\\s*(script|style|iframe|object|embed|form|input|button|textarea|select)[^>]*>[\\s\\S]*?<\\s*\\/\\s*\\1\\s*>/gi,"");
-    html=html.replace(/\\son[a-z]+\\s*=\\s*(["']).*?\\1/gi,"");
-    html=html.replace(/javascript\\s*:/gi,"");
+    html=html.replace(/<\s*(script|style|iframe|object|embed|form|input|button|textarea|select)[^>]*>[\s\S]*?<\s*\/\s*\1\s*>/gi,"");
+    html=html.replace(/\son[a-z]+\s*=\s*(["']).*?\1/gi,"");
+    html=html.replace(/javascript\s*:/gi,"");
     return html;
   }
   function blogRowFromPayload(p, existing=null){
