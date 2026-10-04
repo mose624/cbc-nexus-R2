@@ -1466,7 +1466,7 @@ View vacancy: "+shareUrl.href)," _blank","noopener,noreferrer");}else{window.ope
   document.addEventListener('DOMContentLoaded',paint);
   if(document.readyState!=='loading')paint();
 })();
-\async function handleFormSubmit(event) {
+async function handleFormSubmit(event) {
   event.preventDefault();
   const uploadedFile = elements.fileInput.files[0];
   const title = document.querySelector("#titleInput").value.trim();
