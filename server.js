@@ -1092,7 +1092,7 @@ function parseKuccpsProgrammes(html){
   while((tr=trRe.exec(html))){
     const cells=[]; const tdRe=/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi; let td;
     while((td=tdRe.exec(tr[1]))){
-      const value=htmlText(td[1]).replace(/\\s+/g," ").trim();
+      const value=htmlText(td[1]).replace(/\s+/g," ").trim();
       if(value) cells.push(value);
     }
     if(cells.length>=4){
@@ -1147,7 +1147,7 @@ async function getTvetaCourses(){
   while((m=trRe.exec(html))){
     const cells=[];let d;
     while((d=tdRe.exec(m[1]))) cells.push(strip(d[1]));
-    if(cells.length>=4 && /^\\d+$/.test(cells[0]) && cells[1]){
+    if(cells.length>=4 && /^\d+$/.test(cells[0]) && cells[1]){
       rows.push({number:Number(cells[0]),name:cells[1],level:cells[2],examBody:cells[3]});
     }
   }
