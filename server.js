@@ -1084,18 +1084,34 @@ async function kuccpsFindInstitutionId(name){
 }
 function parseKuccpsProgrammes(html){
   const rows=[];
-  const trRe=/<tr[^>]*>([\s\S]*?)<\/tr>/gi;
+  const seen=new Set();
+  const trRe=/<tr[^>]*>([\\s\\S]*?)<\\/tr>/gi;
+  // KUCCPS programme codes can be numeric or alphanumeric (for example 1103B55).
+  const codeRe=/^(?:\\d{6,10}|\\d{4,7}[A-Za-z][A-Za-z0-9]{1,6})$/;
   let tr;
   while((tr=trRe.exec(html))){
-    const cells=[]; const tdRe=/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi; let td;
-    while((td=tdRe.exec(tr[1]))) cells.push(htmlText(td[1]));
+    const cells=[]; const tdRe=/<t[dh][^>]*>([\\s\\S]*?)<\\/t[dh]>/gi; let td;
+    while((td=tdRe.exec(tr[1]))){
+      const value=htmlText(td[1]).replace(/\\s+/g," ").trim();
+      if(value) cells.push(value);
+    }
     if(cells.length>=4){
-      const code=cells.find(x=>/^\d{6,10}$/.test(x))||"";
-      const codeIndex=code?cells.indexOf(code):-1;
+      const codeIndex=cells.findIndex(x=>codeRe.test(x));
+      const code=codeIndex>=0?cells[codeIndex]:"";
       if(codeIndex>=0 && cells[codeIndex+1]){
         const name=cells[codeIndex+1];
-        if(!/^programme name$/i.test(name) && !/^programmes? on offer/i.test(name)){
-          rows.push({code,name,institutionType:cells[codeIndex+2]||"",cutoff2025:cells[codeIndex+3]||"-",cutoff2024:cells[codeIndex+4]||"-",cutoff2023:cells[codeIndex+5]||"-",level:"Bachelor's Degree"});
+        const key=code+"|"+name;
+        if(!seen.has(key) && !/^programme name$/i.test(name) && !/^programmes? on offer/i.test(name)){
+          seen.add(key);
+          rows.push({
+            code,
+            name,
+            institutionType:cells[codeIndex+2]||"",
+            cutoff2025:cells[codeIndex+3]||"-",
+            cutoff2024:cells[codeIndex+4]||"-",
+            cutoff2023:cells[codeIndex+5]||"-",
+            level:"Bachelor's Degree"
+          });
         }
       }
     }
