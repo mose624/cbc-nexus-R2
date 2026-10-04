@@ -5621,3 +5621,575 @@ html[data-grade-theme="international"]{--grade-accent:#00838f;--grade-accent-2:#
 .international-admin-help{display:flex;flex-direction:column;justify-content:center;gap:5px;padding:12px 14px;border-radius:10px;background:#eaf0f8;color:#10213f;line-height:1.4}
 .international-admin-help strong{color:#061a3a}
 @media (max-width:700px){.international-admin-upload-heading{flex-direction:column}.international-admin-badge{align-self:flex-start}}
+
+
+/* =========================================================
+   CBE NEXUS — MOBILE-ONLY PRESENTATION
+   Applies below 768px only. Desktop/tablet styles remain untouched.
+   ========================================================= */
+@media (max-width: 767px) {
+  html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  img, svg, video, canvas, iframe {
+    max-width: 100%;
+  }
+
+  img {
+    height: auto;
+  }
+
+  /* Compact mobile header — existing links/functionality preserved. */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .top-strip {
+    display: none;
+  }
+
+  .main-nav {
+    min-height: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 10px 12px;
+  }
+
+  .brand {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .brand-mark {
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+  }
+
+  .brand strong {
+    font-size: 17px;
+  }
+
+  .brand small {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+
+  .nav-menu {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    width: 100%;
+    overflow: visible;
+  }
+
+  .nav-link,
+  .nav-dropdown summary {
+    min-height: 44px;
+    width: 100%;
+    padding: 9px 7px;
+    justify-content: center;
+    text-align: center;
+    white-space: normal;
+    line-height: 1.2;
+    font-size: 11px;
+  }
+
+  .nav-dropdown {
+    min-width: 0;
+  }
+
+  .dropdown-panel {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    right: 0;
+    width: min(94vw, 420px);
+    max-height: 70vh;
+    overflow-y: auto;
+    padding: 8px;
+  }
+
+  .dropdown-panel a,
+  .dropdown-panel button {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    font-size: 13px;
+    line-height: 1.25;
+  }
+
+  .nav-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    gap: 7px;
+  }
+
+  .nav-actions > a,
+  .nav-actions > button {
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 8px;
+    font-size: 12px;
+  }
+
+  /* Main content containers */
+  .main-nav,
+  .dashboard-shell,
+  .content-band,
+  .admin-band,
+  .site-footer,
+  .info-band {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .dashboard-shell {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding-top: 14px;
+    padding-bottom: 18px;
+  }
+
+  .intro-panel {
+    min-height: 430px;
+    padding: 24px 18px;
+    border-radius: 10px;
+    background-position: center;
+  }
+
+  .intro-panel h1 {
+    font-size: clamp(30px, 9vw, 46px);
+    line-height: 1.04;
+  }
+
+  .intro-panel p {
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .hero-resource-buttons {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .hero-resource-buttons a,
+  .hero-resource-buttons button {
+    width: 100%;
+    min-height: 48px;
+    padding: 11px 12px;
+    font-size: 13px;
+  }
+
+  .summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .summary-grid div {
+    padding: 12px;
+  }
+
+  .summary-grid strong {
+    font-size: 20px;
+  }
+
+  .summary-grid span {
+    font-size: 11px;
+  }
+
+  /* Existing three-column portal becomes one column on phones. */
+  .portal-dashboard {
+    width: calc(100% - 20px);
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .portal-main,
+  .portal-sidebar,
+  .portal-rightbar {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .portal-main {
+    order: 1;
+  }
+
+  .portal-sidebar {
+    order: 2;
+  }
+
+  .portal-rightbar {
+    order: 3;
+  }
+
+  .portal-welcome {
+    padding: 16px;
+  }
+
+  .portal-welcome h1 {
+    font-size: 25px;
+    line-height: 1.15;
+  }
+
+  .portal-welcome p {
+    font-size: 14px;
+  }
+
+  .portal-search-shortcut {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .portal-search-shortcut a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .portal-category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-category-grid a {
+    min-height: 62px;
+    padding: 12px;
+  }
+
+  .portal-menu-group > a,
+  .portal-side-link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Grade and subject resource centre */
+  .grade-panel {
+    padding: 14px;
+  }
+
+  .grade-list {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .grade-toggle {
+    min-height: 48px;
+    padding: 12px;
+  }
+
+  .subject-menu {
+    display: none;
+    flex-direction: column;
+    padding: 8px 10px 12px;
+  }
+
+  .grade-card.open .subject-menu {
+    display: flex;
+  }
+
+  .subject-chip {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    text-align: left;
+  }
+
+  .subject-dropdown {
+    min-height: 46px;
+    font-size: 16px;
+  }
+
+  /* General sections/cards */
+  .content-band,
+  .admin-band,
+  .payment-band,
+  .competitive-band,
+  .seller-band,
+  .urgent-band {
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
+
+  .section-heading {
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  .section-heading h2,
+  .panel-heading h2,
+  .admin-copy h2,
+  .info-layout h2 {
+    font-size: 23px;
+    line-height: 1.2;
+  }
+
+  .trust-grid,
+  .feature-grid,
+  .download-grid,
+  .landing-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .seller-layout,
+  .payment-layout,
+  .admin-login-card,
+  .promo-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .seller-panel,
+  .payment-form,
+  .payment-card,
+  .admin-login-card {
+    padding: 16px;
+  }
+
+  .refer-form,
+  .filters {
+    grid-template-columns: 1fr;
+  }
+
+  .filters {
+    gap: 9px;
+  }
+
+  input,
+  select,
+  textarea {
+    min-height: 46px;
+    font-size: 16px;
+  }
+
+  textarea {
+    min-height: 120px;
+  }
+
+  .resource-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .resource-card {
+    min-height: 0;
+    padding: 15px;
+  }
+
+  .resource-card h3 {
+    font-size: 18px;
+    line-height: 1.3;
+  }
+
+  .price-row,
+  .payment-actions,
+  .card-actions,
+  .approval-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .price-row > *,
+  .payment-actions > *,
+  .card-actions > *,
+  .approval-actions > * {
+    width: 100%;
+  }
+
+  .primary-button,
+  .ghost-button,
+  .download-button,
+  .secondary-button,
+  .whatsapp-button,
+  .mpesa-header-button,
+  .cart-button,
+  .danger-blink-button {
+    min-height: 48px;
+    padding: 11px 13px;
+  }
+
+  .quick-types,
+  .trending-list {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .quick-types button,
+  .trending-item {
+    width: 100%;
+    min-height: 46px;
+  }
+
+  /* Admin controls remain functional but become easy to tap. */
+  .admin-module-tabs {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+  }
+
+  .admin-module-tab {
+    width: 100%;
+    min-height: 46px;
+  }
+
+  .ai-academy-integrations {
+    grid-template-columns: 1fr !important;
+  }
+
+  .ai-notes-admin-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .admin-resource-quick-actions {
+    display: grid !important;
+    grid-template-columns: 1fr;
+  }
+
+  .admin-resource-quick-actions a {
+    width: 100%;
+    min-height: 46px;
+  }
+
+  /* Tables: preserve data, allow intentional horizontal scrolling. */
+  table {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+
+  th,
+  td {
+    min-width: 110px;
+  }
+
+  /* Modals and drawers fit phone screens. */
+  .cart-drawer {
+    width: 100vw;
+    max-width: 100vw;
+    padding: 14px;
+  }
+
+  .viewer-modal,
+  .viewer-dialog {
+    max-width: 100vw;
+  }
+
+  .viewer-dialog {
+    width: calc(100vw - 16px);
+    max-height: 94vh;
+  }
+
+  .viewer-head {
+    gap: 8px;
+  }
+
+  .viewer-head h2 {
+    font-size: 16px;
+    overflow-wrap: anywhere;
+  }
+
+  .viewer-frame,
+  .pdf-viewer {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Footer and long text */
+  .site-footer {
+    overflow-wrap: anywhere;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .footer-links a {
+    min-height: 42px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Never let long labels force the viewport wider. */
+  h1, h2, h3, h4, h5, h6, p, a, button, label, span, strong {
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 420px) {
+  .main-nav {
+    padding: 8px 10px;
+  }
+
+  .nav-menu {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .nav-link,
+  .nav-dropdown summary {
+    font-size: 10px;
+    min-height: 44px;
+  }
+
+  .nav-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .brand strong {
+    font-size: 16px;
+  }
+
+  .brand small {
+    font-size: 10px;
+  }
+
+  .intro-panel {
+    min-height: 400px;
+    padding: 20px 15px;
+  }
+
+  .intro-panel h1 {
+    font-size: 31px;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .portal-dashboard {
+    width: calc(100% - 14px);
+  }
+
+  .portal-welcome h1 {
+    font-size: 22px;
+  }
+
+  .admin-module-tabs {
+    grid-template-columns: 1fr !important;
+  }
+}
