@@ -302,7 +302,7 @@ async function handleApi(req,res,url){
   }
   if(req.method==="GET"&&url.pathname==="/api/blog/image"){
     const key=String(url.searchParams.get("key")||"").trim();
-    if(!key||!key.startsWith("Blog/")){sendJson(res,400,{ok:false,error:"Invalid blog image key."});return true;}
+    if(!key||!key.startsWith("resources/Blog/")){sendJson(res,400,{ok:false,error:"Invalid blog image key."});return true;}
     try{const target=await createDownloadUrl(key);res.writeHead(302,{Location:target,"Cache-Control":"public, max-age=300"});res.end();}
     catch(error){sendJson(res,404,{ok:false,error:"Blog image could not be opened."});}
     return true;
