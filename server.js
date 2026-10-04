@@ -298,6 +298,27 @@ async function handleApi(req,res,url){
       const rows=await readJsonStore("schools.json"),next=rows.map(x=>String(x.id)===id?{...x,status,updated_at:new Date().toISOString()}:x);await fs.writeFile(path.join(DATA_DIR,"schools.json"),JSON.stringify(next,null,2));sendJson(res,200,{ok:true});
     }catch(error){sendJson(res,400,{ok:false,error:error.message||"Status update failed."});}return true;
   }
+  if(req.method==="POST"&&url.pathname==="/api/admin/school-vacancy-status"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin authentication required."});return true;}
+    try{const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||""),status=["pending","published","rejected"].includes(String(p.status))?String(p.status):"pending";if(!id)throw new Error("Vacancy id is required.");
+      if(supabaseConfigured){const {error}=await supabase.from("school_vacancies").update({status,updated_at:new Date().toISOString()}).eq("id",id);if(error)throw error;sendJson(res,200,{ok:true});return true;}
+      const rows=await readJsonStore("school-vacancies.json"),next=rows.map(x=>String(x.id)===id?{...x,status,updated_at:new Date().toISOString()}:x);await fs.writeFile(path.join(DATA_DIR,"school-vacancies.json"),JSON.stringify(next,null,2));sendJson(res,200,{ok:true});
+    }catch(error){sendJson(res,400,{ok:false,error:error.message||"Vacancy status update failed."});}return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/school-delete"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin authentication required."});return true;}
+    try{const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"");if(!id)throw new Error("School id is required.");
+      if(supabaseConfigured){const {error}=await supabase.from("schools").delete().eq("id",id);if(error)throw error;sendJson(res,200,{ok:true});return true;}
+      const schools=await readJsonStore("schools.json"),vacancies=await readJsonStore("school-vacancies.json");await fs.writeFile(path.join(DATA_DIR,"schools.json"),JSON.stringify(schools.filter(x=>String(x.id)!==id),null,2));await fs.writeFile(path.join(DATA_DIR,"school-vacancies.json"),JSON.stringify(vacancies.filter(x=>String(x.school_id)!==id),null,2));sendJson(res,200,{ok:true});
+    }catch(error){sendJson(res,400,{ok:false,error:error.message||"School deletion failed."});}return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/school-vacancy-delete"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin authentication required."});return true;}
+    try{const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"");if(!id)throw new Error("Vacancy id is required.");
+      if(supabaseConfigured){const {error}=await supabase.from("school_vacancies").delete().eq("id",id);if(error)throw error;sendJson(res,200,{ok:true});return true;}
+      const rows=await readJsonStore("school-vacancies.json");await fs.writeFile(path.join(DATA_DIR,"school-vacancies.json"),JSON.stringify(rows.filter(x=>String(x.id)!==id),null,2));sendJson(res,200,{ok:true});
+    }catch(error){sendJson(res,400,{ok:false,error:error.message||"Vacancy deletion failed."});}return true;
+  }
   if(req.method==="POST"&&url.pathname==="/api/cv/refine"){
     try{
       const payload=JSON.parse((await readBody(req))||"{}");
