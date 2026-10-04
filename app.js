@@ -453,7 +453,7 @@ function auditAdminExportButtons(){
   if(salesButton) salesButton.onclick=()=>{
     downloadAdminJson("cbe-nexus-sales.json",adminDashboardData?.sales||[]);
     showToast("Sales export downloaded.");
-  });
+  };
   safeOn(document.getElementById("adminExportResources"),"click",()=>{
     downloadAdminJson("cbe-nexus-resources.json",adminDashboardData?.resources||[]);
     showToast("Resources export downloaded.");
