@@ -54,6 +54,20 @@
 .admin-module-tab.ai-academy-notes-tab{background:#facc15!important;color:#111827!important;border:2px solid #eab308!important;font-weight:800!important;box-shadow:0 3px 10px rgba(234,179,8,.25)}
 .admin-module-tab.ai-academy-notes-tab:hover{background:#fde047!important;color:#111827!important;transform:translateY(-1px)}
 .admin-module-tab.ai-academy-notes-tab.active{background:#f59e0b!important;color:#111827!important;border-color:#d97706!important;box-shadow:0 0 0 3px rgba(250,204,21,.25)}
+</style><style id="admin-dashboard-colors-responsive">
+.admin-module-tabs{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch}
+.admin-module-tab{cursor:pointer;transition:transform .16s ease,filter .16s ease,box-shadow .16s ease;border-radius:10px!important;font-weight:800!important;border:2px solid transparent!important}
+.admin-module-tab:hover{transform:translateY(-2px);filter:brightness(1.04);box-shadow:0 5px 14px rgba(15,23,42,.12)}
+.admin-module-tab:nth-child(1){background:#2563eb!important;color:#fff!important}.admin-module-tab:nth-child(2){background:#7c3aed!important;color:#fff!important}.admin-module-tab:nth-child(3){background:#059669!important;color:#fff!important}.admin-module-tab:nth-child(4){background:#db2777!important;color:#fff!important}.admin-module-tab:nth-child(5){background:#0891b2!important;color:#fff!important}.admin-module-tab:nth-child(6){background:#f97316!important;color:#fff!important}.admin-module-tab:nth-child(7){background:#facc15!important;color:#111827!important;border-color:#eab308!important}.admin-module-tab:nth-child(8){background:#475569!important;color:#fff!important}
+.admin-module-tab.active{box-shadow:0 0 0 3px rgba(15,23,42,.15),0 5px 14px rgba(15,23,42,.16);transform:translateY(-1px)}
+.ai-academy-integrations{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 18px}
+.integration-card{border:1px solid #d7e2ed;border-radius:12px;padding:14px;background:#fff;display:flex;flex-direction:column;gap:5px;min-width:0;box-shadow:0 2px 8px rgba(15,23,42,.06)}
+.integration-card strong{font-size:.98rem}.integration-card span{font-weight:800;color:#0f766e}.integration-card small{color:#64748b}
+.ai-notes-admin-grid{grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr)!important}
+.ai-notes-admin-grid .admin-form{min-width:0}.ai-notes-admin-grid input,.ai-notes-admin-grid select,.ai-notes-admin-grid textarea{box-sizing:border-box}
+.ai-notes-admin-grid button{cursor:pointer;min-height:42px}
+@media(max-width:1000px){.ai-academy-integrations{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.admin-module-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.admin-module-tab{width:100%;min-height:46px}.ai-academy-integrations{grid-template-columns:1fr}.ai-notes-admin-grid{grid-template-columns:1fr!important}.ai-notes-admin-grid .form-row{grid-template-columns:1fr!important}.ai-notes-admin-grid textarea{font-size:16px}}
 </style></head>
   <body>
     <header class="site-header">
@@ -1094,7 +1108,13 @@
           </div>
           <div class="admin-module-panel" data-admin-module-panel="ai-notes">
   <div class="admin-module-heading"><div><h3>🤖 AI Academy Notes Publisher</h3><span>Create, edit, preview and publish comprehensive notes for any of the 23 AI courses.</span></div><span id="aiNotesAdminSummary" class="admin-module-summary"></span></div>
-  <div class="ai-notes-admin-grid">
+  <div class="ai-academy-integrations" id="aiAcademyIntegrationStatus">
+  <div class="integration-card"><strong>🐙 GitHub</strong><span id="aiGithubStatus">Connected source</span><small>main → Render auto-deploy</small></div>
+  <div class="integration-card"><strong>☁️ Supabase</strong><span id="aiSupabaseStatus">Checking...</span><small>AI notes database</small></div>
+  <div class="integration-card"><strong>🗄️ Cloudflare R2</strong><span id="aiR2Status">Checking...</span><small>Resource file storage</small></div>
+  <div class="integration-card"><strong>🚀 Render</strong><span id="aiRenderStatus">Connected</span><small>Live application server</small></div>
+</div>
+<div class="ai-notes-admin-grid">
     <form id="aiNotesAdminForm" class="admin-form">
       <div class="form-row">
         <label>Course<select id="aiNotesCourseInput" required></select></label>
