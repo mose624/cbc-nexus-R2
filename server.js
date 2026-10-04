@@ -171,22 +171,33 @@ function normalizeOpportunityPayload(p, existing=null){
   };
 }
 async function getOpportunities(admin=false){
-  if(supabaseConfigured){try{
-    let q=supabase.from("scholarship_opportunities").select("*").order("featured",{ascending:false}).order("created_at",{ascending:false});
-    if(!admin)q=q.eq("status","published");
-    const {data,error}=await q;if(!error)return data||[];
-    console.warn("Supabase opportunities lookup failed:",error.message||error);
-  }catch(error){console.warn("Supabase opportunities lookup failed:",error.message||error);}}
+  if(supabaseConfigured){
+    try{
+      let q=supabase.from("scholarship_opportunities").select("*").order("featured",{ascending:false}).order("created_at",{ascending:false});
+      if(!admin)q=q.eq("status","published");
+      const {data,error}=await q;
+      if(error)throw error;
+      return data||[];
+    }catch(error){
+      console.error("Supabase opportunities lookup failed:",error);
+      throw new Error("Scholarships database could not be read from Supabase. Check the scholarship table and Supabase connection.");
+    }
+  }
   const rows=await readJsonStore("scholarship-opportunities.json");
   return admin?rows:rows.filter(x=>String(x.status||"published")==="published");
 }
 async function saveOpportunity(payload){
   const item=normalizeOpportunityPayload(payload,payload);
-  if(supabaseConfigured){try{
-    const {data,error}=await supabase.from("scholarship_opportunities").upsert(item,{onConflict:"id"}).select("*").single();
-    if(!error)return data;
-    console.warn("Supabase opportunity save failed:",error.message||error);
-  }catch(error){console.warn("Supabase opportunity save failed:",error.message||error);}}
+  if(supabaseConfigured){
+    try{
+      const {data,error}=await supabase.from("scholarship_opportunities").upsert(item,{onConflict:"id"}).select("*").single();
+      if(error)throw error;
+      return data;
+    }catch(error){
+      console.error("Supabase opportunity save failed:",error);
+      throw new Error("Scholarship could not be saved to Supabase.");
+    }
+  }
   const rows=await readJsonStore("scholarship-opportunities.json");
   await fs.writeFile(path.join(DATA_DIR,"scholarship-opportunities.json"),JSON.stringify([item,...rows.filter(x=>String(x.id)!==item.id)],null,2));
   return item;
@@ -280,7 +291,7 @@ async function handleApi(req,res,url){
   }
   if(req.method==="GET"&&url.pathname==="/api/admin/opportunities"){
     if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
-    try{sendJson(res,200,{ok:true,opportunities:await getOpportunities(true)});}
+    try{sendJson(res,200,{ok:true,opportunities:await getOpportunities(true),storage:supabaseConfigured?"supabase":"local"});}
     catch(error){sendJson(res,500,{ok:false,error:"Opportunities could not be loaded."});} return true;
   }
   if(req.method==="POST"&&url.pathname==="/api/admin/opportunity"){
