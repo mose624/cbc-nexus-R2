@@ -97,6 +97,51 @@ async function savePayment(row){if(!supabaseConfigured)throw new Error("Supabase
 async function updatePaymentByCheckout(checkoutRequestId,patch){if(!supabaseConfigured)throw new Error("Supabase is required for server-side M-Pesa verification.");const {data,error}=await supabase.from("purchases").update(patch).eq("checkout_request_id",checkoutRequestId).select("*").single();if(error)throw error;return data;}
 function callbackMetadataToObject(items){const out={};for(const item of Array.isArray(items)?items:[]){if(item?.Name)out[item.Name]=item.Value??null;}return out;}
 async function verifyMpesaPaymentByQuery(checkoutRequestId){const c=getMpesaConfig();if(!checkoutRequestId||!c.shortCode||!c.passkey)return null;const token=await getMpesaAccessToken(),timestamp=mpesaTimestamp(),response=await darajaPost("/mpesa/stkpushquery/v1/query",{BusinessShortCode:c.shortCode,Password:mpesaPassword(c.shortCode,c.passkey,timestamp),Timestamp:timestamp,CheckoutRequestID:checkoutRequestId},token);const d=response.data||{};if(Number(d.ResponseCode)===0&&String(d.ResultCode)==="0"){return updatePaymentByCheckout(checkoutRequestId,{status:"paid",result_code:0,result_desc:String(d.ResultDesc||"Success"),verified_at:new Date().toISOString()});}if(d.ResultCode!==undefined){return updatePaymentByCheckout(checkoutRequestId,{status:"failed",result_code:Number(d.ResultCode),result_desc:String(d.ResultDesc||"Payment failed"),verified_at:new Date().toISOString()});}return null;}
+function cleanAICourseText(v,max=5000){return String(v??"").trim().slice(0,max);}
+function normalizeAICoursePayload(p){
+  const title=cleanAICourseText(p.title,180), slug=cleanAICourseText(p.slug,100).toLowerCase().replace(/[^a-z0-9-]+/g,"-").replace(/^-+|-+$/g,"");
+  const courseSlug=slug||title.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,90);
+  const courseUrl=cleanAICourseText(p.courseUrl||p.course_url,1000);
+  if(!title||!courseUrl) throw new Error("Course title and course link are required.");
+  let parsed;try{parsed=new URL(courseUrl,process.env.PUBLIC_BASE_URL||"http://localhost");}catch{throw new Error("Course link is not valid.");}
+  if(!/^https?:$/.test(parsed.protocol)) throw new Error("Course link must use http or https.");
+  return {
+    id:cleanAICourseText(p.id,120)||"ai-course-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),
+    slug:courseSlug,title,short:cleanAICourseText(p.short,500),description:cleanAICourseText(p.description,3000),
+    provider:cleanAICourseText(p.provider,180),category:cleanAICourseText(p.category,120),
+    level:cleanAICourseText(p.level,80)||"Beginner",duration:cleanAICourseText(p.duration,100),
+    course_url:courseUrl,featured:!!p.featured,status:String(p.status||"published")==="draft"?"draft":"published"
+  };
+}
+async function getAICourses(admin=false){
+  if(supabaseConfigured){
+    try{
+      let q=supabase.from("ai_courses").select("*").order("featured",{ascending:false}).order("created_at",{ascending:false});
+      if(!admin)q=q.eq("status","published");
+      const {data,error}=await q;if(!error)return data||[];
+      console.warn("Supabase AI courses lookup failed:",error.message||error);
+    }catch(error){console.warn("Supabase AI courses lookup failed:",error.message||error);}
+  }
+  const rows=await readJsonStore("ai-courses.json");
+  return admin?rows:rows.filter(x=>String(x.status||"published")==="published");
+}
+async function saveAICourse(payload){
+  const item=normalizeAICoursePayload(payload);
+  const now=new Date().toISOString();
+  if(supabaseConfigured){
+    try{
+      const row={...item,created_at:payload.created_at||now,updated_at:now};
+      const {data,error}=await supabase.from("ai_courses").upsert(row,{onConflict:"id"}).select("*").single();
+      if(!error)return data;
+      console.warn("Supabase AI course save failed:",error.message||error);
+    }catch(error){console.warn("Supabase AI course save failed:",error.message||error);}
+  }
+  const rows=await readJsonStore("ai-courses.json");
+  const old=rows.find(x=>String(x.id)===String(item.id));
+  const stored={...item,created_at:old?.created_at||now,updated_at:now};
+  await fs.writeFile(path.join(DATA_DIR,"ai-courses.json"),JSON.stringify([stored,...rows.filter(x=>String(x.id)!==String(item.id))],null,2));
+  return stored;
+}
 async function getTeachingVacancies(){if(supabaseConfigured){try{const {data,error}=await supabase.from("teaching_vacancies").select("*").eq("status","published").order("featured",{ascending:false}).order("created_at",{ascending:false});if(!error)return data||[];}catch(error){console.warn("Supabase teaching vacancies lookup failed:",error.message||error);}}return (await readJsonStore("teaching-vacancies.json")).filter(v=>v.status!=="deleted"&&v.status!=="draft");}
 async function saveTeachingVacancy(p){const clean=(v,max=4000)=>String(v??"").trim().slice(0,max);const item={id:String(p.id||"vacancy-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex")),title:clean(p.title,180),school:clean(p.school,180),country:clean(p.country,100),region:clean(p.region,100),subject:clean(p.subject,160),level:clean(p.level,160),employment:clean(p.employment,80),salary:clean(p.salary,160),deadline:clean(p.deadline,40),description:clean(p.description,5000),requirements:clean(p.requirements,5000),apply_url:clean(p.applyUrl||p.apply_url,1000),featured:!!p.featured,status:"published",created_at:new Date().toISOString(),updated_at:new Date().toISOString()};if(!item.title||!item.school||!item.country||!item.subject||!item.level||!item.apply_url)throw new Error("Title, school, country, subject, level and application link are required.");if(supabaseConfigured){try{const {data,error}=await supabase.from("teaching_vacancies").upsert(item,{onConflict:"id"}).select("*").single();if(!error)return data;console.warn("Supabase vacancy save failed:",error.message||error);}catch(error){console.warn("Supabase vacancy save failed:",error.message||error);}}const items=await readJsonStore("teaching-vacancies.json");await fs.writeFile(path.join(DATA_DIR,"teaching-vacancies.json"),JSON.stringify([item,...items.filter(x=>x.id!==item.id)],null,2));return item;}
 async function refineCvWithSmartEditor(payload){
@@ -183,6 +228,36 @@ async function handleApi(req,res,url){
   if(req.method==="GET"&&url.pathname==="/api/vacancies"){try{sendJson(res,200,{ok:true,vacancies:await getTeachingVacancies()});}catch(error){console.error("Teaching vacancies lookup error:",error);sendJson(res,500,{ok:false,error:"Teaching vacancies could not be loaded."});}return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/vacancy"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}try{const item=await saveTeachingVacancy(JSON.parse((await readBody(req))||"{}"));sendJson(res,201,{ok:true,vacancy:item});}catch(error){sendJson(res,400,{ok:false,error:error.message||"Vacancy could not be saved."});}return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/vacancy-delete"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"").trim();if(!id){sendJson(res,400,{ok:false,error:"Vacancy ID is required."});return true;}if(supabaseConfigured){try{const {error}=await supabase.from("teaching_vacancies").update({status:"deleted",updated_at:new Date().toISOString()}).eq("id",id);if(!error){sendJson(res,200,{ok:true,deletedId:id});return true;}}catch(error){console.warn("Supabase vacancy delete failed:",error.message||error);}}const items=await readJsonStore("teaching-vacancies.json"),next=items.map(x=>x.id===id?{...x,status:"deleted",updatedAt:new Date().toISOString()}:x);await fs.writeFile(path.join(DATA_DIR,"teaching-vacancies.json"),JSON.stringify(next,null,2));sendJson(res,200,{ok:true,deletedId:id});return true;}
+  if(req.method==="GET"&&url.pathname==="/api/ai-courses"){
+    try{sendJson(res,200,{ok:true,courses:await getAICourses(false)});}
+    catch(error){console.error("AI courses lookup error:",error);sendJson(res,500,{ok:false,error:"AI courses could not be loaded."});}
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/admin/ai-courses"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{sendJson(res,200,{ok:true,courses:await getAICourses(true)});}
+    catch(error){console.error("Admin AI courses lookup error:",error);sendJson(res,500,{ok:false,error:"AI courses could not be loaded."});}
+    return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/ai-course"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{const item=await saveAICourse(JSON.parse((await readBody(req))||"{}"));sendJson(res,201,{ok:true,course:item});}
+    catch(error){sendJson(res,400,{ok:false,error:error.message||"AI course could not be saved."});}
+    return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/ai-course-delete"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"").trim();
+    if(!id){sendJson(res,400,{ok:false,error:"Course ID is required."});return true;}
+    if(supabaseConfigured){
+      try{const {error}=await supabase.from("ai_courses").delete().eq("id",id);if(!error){sendJson(res,200,{ok:true,deletedId:id});return true;}}
+      catch(error){console.warn("Supabase AI course delete failed:",error.message||error);}
+    }
+    const rows=await readJsonStore("ai-courses.json");
+    await fs.writeFile(path.join(DATA_DIR,"ai-courses.json"),JSON.stringify(rows.filter(x=>String(x.id)!==id),null,2));
+    sendJson(res,200,{ok:true,deletedId:id});return true;
+  }
+
   // ---------------- BLOG PUBLISHING SYSTEM ----------------
   function blogSlug(value){
     return String(value||"").trim().toLowerCase().normalize("NFKD").replace(/[^\w\s-]/g,"").replace(/[\s_-]+/g,"-").replace(/^-+|-+$/g,"").slice(0,140);
