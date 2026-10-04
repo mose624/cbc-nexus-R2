@@ -1085,12 +1085,12 @@ async function kuccpsFindInstitutionId(name){
 function parseKuccpsProgrammes(html){
   const rows=[];
   const seen=new Set();
-  const trRe=/<tr[^>]*>([\\s\\S]*?)<\\/tr>/gi;
+  const trRe=/<tr[^>]*>([\s\S]*?)<\/tr>/gi;
   // KUCCPS programme codes can be numeric or alphanumeric (for example 1103B55).
-  const codeRe=/^(?:\\d{6,10}|\\d{4,7}[A-Za-z][A-Za-z0-9]{1,6})$/;
+  const codeRe=/^(?:\d{6,10}|\d{4,7}[A-Za-z][A-Za-z0-9]{1,6})$/;
   let tr;
   while((tr=trRe.exec(html))){
-    const cells=[]; const tdRe=/<t[dh][^>]*>([\\s\\S]*?)<\\/t[dh]>/gi; let td;
+    const cells=[]; const tdRe=/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi; let td;
     while((td=tdRe.exec(tr[1]))){
       const value=htmlText(td[1]).replace(/\\s+/g," ").trim();
       if(value) cells.push(value);
