@@ -31,7 +31,7 @@
     return j.featuredImage;
   }
   async function save(e){
-    e.preventDefault();const button=e.submitter||$("adminBlogForm").querySelector("button[type=submit");button?.setAttribute("disabled","disabled");setMessage("Saving article...");
+    e.preventDefault();const button=e.submitter||$("adminBlogForm").querySelector('button[type="submit"]');button?.setAttribute("disabled","disabled");setMessage("Saving article...");
     try{
       let image=$("adminBlogFeaturedImage").value.trim();
       const file=$("adminBlogImage").files?.[0];if(file)image=await uploadImage(file);
