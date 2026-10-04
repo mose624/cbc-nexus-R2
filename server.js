@@ -183,6 +183,130 @@ async function handleApi(req,res,url){
   if(req.method==="GET"&&url.pathname==="/api/vacancies"){try{sendJson(res,200,{ok:true,vacancies:await getTeachingVacancies()});}catch(error){console.error("Teaching vacancies lookup error:",error);sendJson(res,500,{ok:false,error:"Teaching vacancies could not be loaded."});}return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/vacancy"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}try{const item=await saveTeachingVacancy(JSON.parse((await readBody(req))||"{}"));sendJson(res,201,{ok:true,vacancy:item});}catch(error){sendJson(res,400,{ok:false,error:error.message||"Vacancy could not be saved."});}return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/vacancy-delete"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"").trim();if(!id){sendJson(res,400,{ok:false,error:"Vacancy ID is required."});return true;}if(supabaseConfigured){try{const {error}=await supabase.from("teaching_vacancies").update({status:"deleted",updated_at:new Date().toISOString()}).eq("id",id);if(!error){sendJson(res,200,{ok:true,deletedId:id});return true;}}catch(error){console.warn("Supabase vacancy delete failed:",error.message||error);}}const items=await readJsonStore("teaching-vacancies.json"),next=items.map(x=>x.id===id?{...x,status:"deleted",updatedAt:new Date().toISOString()}:x);await fs.writeFile(path.join(DATA_DIR,"teaching-vacancies.json"),JSON.stringify(next,null,2));sendJson(res,200,{ok:true,deletedId:id});return true;}
+  // ---------------- BLOG PUBLISHING SYSTEM ----------------
+  function blogSlug(value){
+    return String(value||"").trim().toLowerCase().normalize("NFKD").replace(/[^\\w\\s-]/g,"").replace(/[\\s_-]+/g,"-").replace(/^-+|-+$/g,"").slice(0,140);
+  }
+  function cleanBlogHtml(value){
+    let html=String(value||"").trim().slice(0,120000);
+    html=html.replace(/<\\s*(script|style|iframe|object|embed|form|input|button|textarea|select)[^>]*>[\\s\\S]*?<\\s*\\/\\s*\\1\\s*>/gi,"");
+    html=html.replace(/\\son[a-z]+\\s*=\\s*(["']).*?\\1/gi,"");
+    html=html.replace(/javascript\\s*:/gi,"");
+    return html;
+  }
+  function blogRowFromPayload(p, existing=null){
+    const title=String(p.title||existing?.title||"").trim().slice(0,220);
+    const slug=blogSlug(p.slug||existing?.slug||title);
+    const status=["draft","published"].includes(String(p.status||existing?.status||"draft").toLowerCase())?String(p.status||existing?.status||"draft").toLowerCase():"draft";
+    const now=new Date().toISOString();
+    return {
+      id:String(p.id||existing?.id||"BLOG-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex").toUpperCase()),
+      title,slug,category:String(p.category||existing?.category||"CBC/CBE").trim().slice(0,80),
+      excerpt:String(p.excerpt||existing?.excerpt||"").trim().slice(0,500),
+      content:cleanBlogHtml(p.content||existing?.content||""),
+      featured_image:String(p.featuredImage||p.featured_image||existing?.featured_image||existing?.featuredImage||"").trim().slice(0,1000),
+      keywords:String(p.keywords||existing?.keywords||"").trim().slice(0,1000),
+      seo_title:String(p.seoTitle||p.seo_title||existing?.seo_title||existing?.seoTitle||title).trim().slice(0,220),
+      meta_description:String(p.metaDescription||p.meta_description||existing?.meta_description||existing?.metaDescription||p.excerpt||existing?.excerpt||"").trim().slice(0,320),
+      author:String(p.author||existing?.author||"CBE Nexus").trim().slice(0,120),
+      status,
+      published_at:status==="published"?(existing?.published_at||existing?.publishedAt||now):null,
+      created_at:existing?.created_at||existing?.createdAt||now,
+      updated_at:now
+    };
+  }
+  function blogPayloadFromRow(r){
+    return {id:r.id,title:r.title,slug:r.slug,category:r.category||"CBC/CBE",excerpt:r.excerpt||"",content:r.content||"",
+      featuredImage:r.featured_image||r.featuredImage||"",keywords:r.keywords||"",seoTitle:r.seo_title||r.seoTitle||r.title,
+      metaDescription:r.meta_description||r.metaDescription||r.excerpt||"",author:r.author||"CBE Nexus",status:r.status||"draft",
+      publishedAt:r.published_at||r.publishedAt||null,createdAt:r.created_at||r.createdAt||null,updatedAt:r.updated_at||r.updatedAt||null};
+  }
+  async function getBlogPosts(includeDrafts=false){
+    if(supabaseConfigured){
+      try{
+        let q=supabase.from("blog_posts").select("*").order("created_at",{ascending:false}).limit(500);
+        if(!includeDrafts)q=q.eq("status","published");
+        const {data,error}=await q;if(error)throw error;
+        return (data||[]).map(blogPayloadFromRow);
+      }catch(error){console.warn("Supabase blog lookup failed:",error.message||error);}
+    }
+    const rows=await readJsonStore("blog-posts.json");
+    return rows.filter(x=>includeDrafts||x.status==="published").map(blogPayloadFromRow);
+  }
+  if(req.method==="GET"&&url.pathname==="/api/blog/posts"){
+    try{sendJson(res,200,{ok:true,posts:await getBlogPosts(false)});}
+    catch(error){console.error("Public blog lookup error:",error);sendJson(res,500,{ok:false,error:"Blog posts could not be loaded."});}
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname.startsWith("/api/blog/post/")){
+    const slug=decodeURIComponent(url.pathname.slice("/api/blog/post/".length)).trim();
+    if(!slug){sendJson(res,400,{ok:false,error:"Article slug is required."});return true;}
+    try{
+      let post=null;
+      if(supabaseConfigured){const {data,error}=await supabase.from("blog_posts").select("*").eq("slug",slug).eq("status","published").maybeSingle();if(error)throw error;post=data?blogPayloadFromRow(data):null;}
+      else {const row=(await readJsonStore("blog-posts.json")).find(x=>x.slug===slug&&x.status==="published");post=row?blogPayloadFromRow(row):null;}
+      if(!post){sendJson(res,404,{ok:false,error:"Article not found."});return true;}
+      sendJson(res,200,{ok:true,post});
+    }catch(error){console.error("Public blog article error:",error);sendJson(res,500,{ok:false,error:"Article could not be loaded."});}
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/admin/blog/posts"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{sendJson(res,200,{ok:true,posts:await getBlogPosts(true),storage:supabaseConfigured?"supabase":"local"});}
+    catch(error){sendJson(res,500,{ok:false,error:"Blog articles could not be loaded."});}
+    return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/blog/post"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{
+      const p=JSON.parse((await readBody(req))||"{}");
+      if(String(p.title||"").trim().length<3||String(p.content||"").trim().length<20){sendJson(res,400,{ok:false,error:"Article title and content are required."});return true;}
+      let existing=null;
+      if(p.id&&supabaseConfigured){const {data,error}=await supabase.from("blog_posts").select("*").eq("id",String(p.id)).maybeSingle();if(error)throw error;existing=data;}
+      else if(p.id)existing=(await readJsonStore("blog-posts.json")).find(x=>String(x.id)===String(p.id))||null;
+      const row=blogRowFromPayload(p,existing);
+      if(supabaseConfigured){
+        const {data,error}=await supabase.from("blog_posts").upsert(row,{onConflict:"id"}).select("*").single();
+        if(error)throw error;
+        sendJson(res,200,{ok:true,post:blogPayloadFromRow(data),storage:"supabase"});return true;
+      }
+      const rows=await readJsonStore("blog-posts.json");
+      await fs.writeFile(path.join(DATA_DIR,"blog-posts.json"),JSON.stringify([row,...rows.filter(x=>x.id!==row.id)],null,2));
+      sendJson(res,200,{ok:true,post:blogPayloadFromRow(row),storage:"local"});
+    }catch(error){console.error("Admin blog save error:",error);sendJson(res,500,{ok:false,error:error.message||"Article could not be saved. If Supabase is enabled, run the blog schema SQL first."});}
+    return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/blog/delete"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{
+      const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"").trim();
+      if(!id){sendJson(res,400,{ok:false,error:"Article ID is required."});return true;}
+      if(supabaseConfigured){const {error}=await supabase.from("blog_posts").delete().eq("id",id);if(error)throw error;sendJson(res,200,{ok:true,deletedId:id});return true;}
+      const rows=await readJsonStore("blog-posts.json");await fs.writeFile(path.join(DATA_DIR,"blog-posts.json"),JSON.stringify(rows.filter(x=>String(x.id)!==id),null,2));sendJson(res,200,{ok:true,deletedId:id});
+    }catch(error){console.error("Admin blog delete error:",error);sendJson(res,500,{ok:false,error:"Article could not be deleted."});}
+    return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/blog/image"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    const fileName=String(req.headers["x-blog-file-name"]||"blog-image").trim(),contentType=String(req.headers["content-type"]||"application/octet-stream").trim();
+    const allowed=["image/jpeg","image/png","image/webp","image/gif"];
+    if(!allowed.includes(contentType)){sendJson(res,400,{ok:false,error:"Only JPG, PNG, WebP or GIF images are allowed."});return true;}
+    if(Number(req.headers["content-length"]||0)>8*1024*1024){sendJson(res,413,{ok:false,error:"Blog image is too large. Maximum size is 8 MB."});return true;}
+    try{
+      const body=await readBinaryBody(req,8*1024*1024);if(!body.length){sendJson(res,400,{ok:false,error:"Image file is empty."});return true;}
+      const id="BLOGIMG-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex");
+      const uploaded=await uploadObject({grade:"Blog",subject:"CBE Nexus Blog",type:"Featured Image",fileName:Date.now()+"-"+fileName,resourceId:id,contentType},body);
+      sendJson(res,200,{ok:true,key:uploaded.key,featuredImage:"/api/blog/image?key="+encodeURIComponent(uploaded.key)});
+    }catch(error){console.error("Blog image upload error:",error);sendJson(res,500,{ok:false,error:"Blog image upload failed."});}
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/blog/image"){
+    const key=String(url.searchParams.get("key")||"").trim();
+    if(!key||!key.startsWith("Blog/")){sendJson(res,400,{ok:false,error:"Invalid blog image key."});return true;}
+    try{const target=await createDownloadUrl(key);res.writeHead(302,{Location:target,"Cache-Control":"public, max-age=300"});res.end();}
+    catch(error){sendJson(res,404,{ok:false,error:"Blog image could not be opened."});}
+    return true;
+  }
   if(req.method==="GET"&&url.pathname==="/api/admin/dashboard"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}let resources=await readJsonStore("resources.json");const [localSellerAccounts,payments,mpesaRequests,tuition,localUsers]=await Promise.all([readJsonStore("seller-accounts.json"),readJsonStore("payments.json"),readJsonStore("mpesa-requests.json"),readJsonStore("tuition-registrations.json"),readJsonStore("admin-users.json")]);if(supabaseConfigured){try{const {data:resourceData,error:resourceError}=await supabase.from("resources").select("*").eq("status","approved").order("created_at",{ascending:false});if(resourceError)throw resourceError;resources=(resourceData||[]).map(resourcePayloadFromRow);}catch(error){console.error("Supabase resource dashboard lookup error:",error);}}let sellerAccounts=localSellerAccounts,users=localUsers,verifiedPurchases=[];if(supabaseConfigured){try{const {data,error}=await supabase.from("purchases").select("*").order("created_at",{ascending:false}).limit(100);if(error)throw error;verifiedPurchases=(data||[]).map(p=>({...p,id:p.id,resource:p.resource_id,resourceId:p.resource_id,customerPhone:p.customer_phone,checkoutRequestID:p.checkout_request_id,merchantRequestID:p.merchant_request_id,mpesaReceipt:p.mpesa_receipt,createdAt:p.created_at}));}catch(error){console.error("Supabase payment dashboard lookup error:",error);}}if(supabaseConfigured){try{const [{data:sellersData,error:sellersError},{data:usersData,error:usersError}]=await Promise.all([supabase.from("sellers").select("id,user_id,phone,username,status,created_at"),supabase.from("users").select("id,name,phone,role,status,created_at")]);if(sellersError)throw sellersError;if(usersError)throw usersError;sellerAccounts=sellersData||[];users=usersData||[];}catch(error){console.error("Supabase admin dashboard lookup error:",error);}}const userMap=new Map();[...users].forEach(u=>userMap.set(u.phone||u.username||u.id,u));[...payments,...mpesaRequests,...tuition].forEach(item=>{const phone=item.customerPhone||item.phone;if(phone&&!userMap.has(phone))userMap.set(phone,{id:"user-"+phone,name:item.learner||item.name||"Customer",phone,status:"active",source:"transaction"});});const allUsers=[...userMap.values()],sales=payments.filter(p=>["paid","completed","success"].includes(String(p.status||"").toLowerCase())),totalDownloads=resources.reduce((s,r)=>s+Number(r.downloads||0),0),popularResources=[...resources].map(r=>({...r,downloads:Number(r.downloads||0),purchases:Number(r.purchases||0)})).sort((a,b)=>(b.downloads+b.purchases*3)-(a.downloads+a.purchases*3)).slice(0,10);const dashboardPayments=[...payments,...mpesaRequests,...verifiedPurchases];const dashboardSales=[...payments,...verifiedPurchases].filter(p=>["paid","completed","success"].includes(String(p.status||"").toLowerCase()));sendJson(res,200,{ok:true,stats:{sellers:sellerAccounts.length,pendingSellers:sellerAccounts.filter(x=>x.status==="pending").length,resources:resources.length,pendingResources:resources.filter(x=>x.status==="pending").length,users:allUsers.length,sales:dashboardSales.length,purchases:dashboardSales.length,revenue:dashboardSales.reduce((s,x)=>s+Number(x.amount||0),0),downloads:totalDownloads},popularResources,sellers:sellerAccounts,resources,users:allUsers,sales:dashboardSales,payments:dashboardPayments.slice(0,100)});return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/resource"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const p=JSON.parse((await readBody(req))||"{}"),items=await readJsonStore("resources.json"),item={...p,status:p.status||"approved",updatedAt:new Date().toISOString()};await fs.writeFile(path.join(DATA_DIR,"resources.json"),JSON.stringify([item,...items.filter(x=>x.id!==item.id)],null,2));sendJson(res,200,{ok:true,resource:item});return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/resource-delete"){
