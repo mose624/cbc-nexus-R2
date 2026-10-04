@@ -77,6 +77,23 @@
       ["What makes an AI skill transferable across tools?", "Understanding problem framing, prompting, evaluation, verification, ethics and workflow design rather than memorising one interface."],
       ["A professional must choose between two AI workflows. What is the best basis for the decision?", "Compare evidence of quality, risk, privacy, cost, reliability, human oversight and measurable value against the actual task."]
     ];
+    base.push(
+      ["What should happen when an AI workflow produces a result outside its defined scope?", "Stop or escalate the workflow and require human review rather than forcing an action."],
+      ["Why is a clear output format useful in a professional prompt?", "It makes the response easier to inspect, compare, reuse and validate."],
+      ["What is the safest response to an unsupported AI citation?", "Treat it as unverified and locate the actual source before using the claim."],
+      ["Why should sensitive information be excluded unless genuinely necessary?", "It reduces privacy, security and compliance risk."],
+      ["What is a useful purpose of a pilot before full AI deployment?", "It allows the organisation to discover errors, user needs, risks and costs on a limited scale."],
+      ["How should an AI workflow handle an ambiguous request?", "Ask clarifying questions or define assumptions explicitly before taking consequential action."],
+      ["What does reproducibility mean in an AI-assisted process?", "Another person can understand the inputs, method, checks and decision well enough to repeat or audit the work."],
+      ["Why should human oversight be stronger for high-impact decisions?", "Errors can cause significant harm and may be difficult to reverse."],
+      ["What is prompt injection in practical terms?", "Untrusted input attempts to manipulate an AI system into ignoring its intended instructions or controls."],
+      ["What is the best defence against overreliance on AI?", "Use clear responsibility, evidence checks, independent reasoning and appropriate human approval."],
+      ["Why should learners keep a record of important AI-assisted work?", "It supports reflection, accountability, troubleshooting and demonstration of authentic learning."],
+      ["What should a quality improvement cycle include?", "Test, measure, identify failures, revise the workflow and test again."],
+      ["Why is accessibility part of responsible AI design?", "A useful system should not unnecessarily exclude people with different abilities or needs."],
+      ["What should happen if an AI recommendation conflicts with reliable evidence?", "Pause the decision, investigate the discrepancy and rely on verified evidence rather than confidence."],
+      ["What is the strongest reason to avoid blindly automating a process?", "Automation can scale mistakes and remove useful human judgement if the process is not understood and controlled."]
+    );
     return base.map((x,i)=>({q:x[0]+"\nScenario: You are applying this in "+p[0]+" and must justify your decision.",a:x[1],w:[
       "Choose the most impressive-looking output and skip verification.",
       "Let the AI make the final decision because it is faster.",
@@ -89,7 +106,7 @@
     c.internationalAlignment={
       framework:"UNESCO AI competency frameworks (2024) + European DigComp reference",
       progression:"Understand / Apply / Create",
-      assessment:"25 scenario-based questions per module; 70% module pass threshold",
+      assessment:"40 scenario-based questions per module; 70% module pass threshold",
       credential:"CBE Nexus Certificate of Completion — internationally aligned, not an accreditation claim"
     };
     c.modules=c.modules.map(function(m){
