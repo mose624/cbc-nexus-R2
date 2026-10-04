@@ -1140,8 +1140,8 @@ async function getTvetaCourses(){
   if(!response.ok) throw new Error("TVETA returned "+response.status);
   const html=await response.text();
   const rows=[];
-  const trRe=/<tr[^>]*>([\s\S]*?)<\/tr>/gi;
-  const tdRe=/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi;
+  const trRe=new RegExp("<tr[^>]*>([\\s\\S]*?)</tr>","gi");
+  const tdRe=new RegExp("<t[dh][^>]*>([\\s\\S]*?)</t[dh]>","gi");
   const strip=s=>String(s).replace(/<[^>]+>/g," ").replace(/&amp;/g,"&").replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/&nbsp;/g," ").replace(/\s+/g," ").trim();
   let m;
   while((m=trRe.exec(html))){
@@ -1189,7 +1189,7 @@ async function getTvetaCourses(){
       const dres=await fetch(detailUrl,{headers:{"User-Agent":"CBE-Nexus-Education-Directory/1.0"}});
       if(!dres.ok) throw new Error("TVETA details returned "+dres.status);
       const page=await dres.text();
-      const rows=[];const trRe=/<tr[^>]*>([\\s\\S]*?)<\\/tr>/gi;const tdRe=/<t[dh][^>]*>([\\s\\S]*?)<\\/t[dh]>/gi;let tr;
+      const rows=[];const trRe=new RegExp("<tr[^>]*>([\\s\\S]*?)</tr>","gi");const tdRe=new RegExp("<t[dh][^>]*>([\\s\\S]*?)</t[dh]>","gi");let tr;
       while((tr=trRe.exec(page))){const cells=[];let td;while((td=tdRe.exec(tr[1])))cells.push(clean(td[1]));if(cells.length>=3&&!/^#?$/.test(cells[0])&&cells[1]&&cells[2])rows.push({courseName:cells[1]||cells[0],level:cells[2],examBody:cells[3]||""});}
       const textPage=clean(page);
       const pick=(label,next)=>{const i=textPage.toLowerCase().indexOf(label.toLowerCase());return i>=0?textPage.slice(i+label.length,(next?textPage.toLowerCase().indexOf(next.toLowerCase(),i+label.length):i+label.length+180)).trim():"";};
