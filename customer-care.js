@@ -1,3 +1,11 @@
+(function(){
+  const p=(location.pathname||'').toLowerCase();
+  const sectionPages=['schools-institutions','school-directory','scholarships-opportunities','resources','free-resources','lesson-planning-assessment','professional-cv-writing','grade-10-school-finder','international-teaching-jobs','learning-hub','blog','blog-article','ai-training','ai-for-teachers','ai-for-students','generative-ai','chatgpt','gemini'];
+  if(sectionPages.some(x=>p.includes(x))&&!document.querySelector('script[data-section-shell]')){
+    const s=document.createElement('script');s.src='/section-shell.js?v=20261004-1';s.defer=true;s.dataset.sectionShell='1';document.head.appendChild(s);
+  }
+})();
+
 (function () {
   "use strict";
 
@@ -63,30 +71,11 @@
   form.addEventListener("submit",e=>{e.preventDefault();const v=input.value.trim();if(!v)return;addMessage(v,"user");input.value="";reply(answer(v))});
 })();
 
-/* Public resource sync. The API returns the full Supabase resource table; only resources that are explicitly live are copied into the public browser library. */
 (function syncPublishedResources(){
   "use strict";
   const STORAGE_KEY="cbeResources";
   const LIVE_STATUSES=new Set(["approved","published","active","live","available"]);
   async function sync(){
-    try{
-      const response=await fetch("/api/resources",{credentials:"same-origin",cache:"no-store"});
-      if(!response.ok)return;
-      const data=await response.json();
-      if(!data.ok||!Array.isArray(data.resources))return;
-      const live=data.resources.filter(r=>{
-        const status=String(r.status||"").trim().toLowerCase();
-        return LIVE_STATUSES.has(status);
-      });
-      const local=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");
-      const merged=new Map(local.map(r=>[String(r.id),r]));
-      live.forEach(r=>merged.set(String(r.id),r));
-      localStorage.setItem(STORAGE_KEY,JSON.stringify([...merged.values()]));
-      if(typeof window.renderResources==="function")window.renderResources();
-      if(typeof window.renderTrending==="function")window.renderTrending();
-      document.dispatchEvent(new CustomEvent("cbe:resources-synced",{detail:{count:live.length}}));
-    }catch(error){console.warn("Published resource sync failed:",error)}
-  }
-  window.setTimeout(sync,150);
-  window.addEventListener("pageshow",sync);
+    try{const response=await fetch("/api/resources",{credentials:"same-origin",cache:"no-store"});if(!response.ok)return;const data=await response.json();if(!data.ok||!Array.isArray(data.resources))return;const live=data.resources.filter(r=>LIVE_STATUSES.has(String(r.status||"").trim().toLowerCase()));const local=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");const merged=new Map(local.map(r=>[String(r.id),r]));live.forEach(r=>merged.set(String(r.id),r));localStorage.setItem(STORAGE_KEY,JSON.stringify([...merged.values()]));if(typeof window.renderResources==="function")window.renderResources();if(typeof window.renderTrending==="function")window.renderTrending();document.dispatchEvent(new CustomEvent("cbe:resources-synced",{detail:{count:live.length}}));}catch(error){console.warn("Published resource sync failed:",error)}}
+  window.setTimeout(sync,150);window.addEventListener("pageshow",sync);
 })();
