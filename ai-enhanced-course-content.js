@@ -1,0 +1,101 @@
+/* CBE Nexus AI Academy — enhanced international course layer.
+   Adds comprehensive applied notes, real-world cases, prompt labs and 25 scenario-based questions.
+   The content is generated from the course/module metadata so all 23 courses stay consistent. */
+(function(){
+  const A=window.CBENexusAICourses||{};
+  const profiles={
+    "chatgpt-mastery":["professional knowledge work","a teacher or office professional needs to turn an unclear task into a reliable AI workflow","Use this prompt: Act as a senior productivity coach. My goal is [goal]. Context: [context]. Constraints: [constraints]. Produce [format], state assumptions, identify risks, and finish with a verification checklist."],
+    "gemini-mastery":["multimodal productivity","a user receives a document, image and notes and needs one coherent decision-ready summary","Use this prompt: Analyse the supplied text and visual information. Separate observations from inferences, identify missing information, produce a structured summary, and list what a human must verify before acting."],
+    "ai-agents":["agentic workflows","a school or business wants repetitive tasks routed through tools while keeping a human approval point","Use this prompt: Design a bounded AI agent for [task]. Define goal, allowed tools, inputs, outputs, permissions, approval gates, failure states, audit log and stop conditions. Do not execute actions."],
+    "generative-ai":["multimodal content generation","a communications team must create a campaign across text, images, audio or video while keeping facts and brand identity consistent","Use this prompt: Create a production brief for [asset]. Include audience, message, facts that must remain unchanged, visual/audio direction, exclusions, accessibility requirements and a human review checklist."],
+    "ai-automation":["workflow automation","an organisation repeatedly copies information between forms, spreadsheets, email and a database","Use this prompt: Map [process] as trigger → validation → transformation → AI step → human approval → action → logging. Identify failure points, sensitive data and retry rules before suggesting automation."],
+    "ai-content-creation":["digital content production","a creator has one expert idea and needs a researched article, short posts, a video script and a newsletter","Use this prompt: Turn my source material into a content system for [audience]. Preserve verified facts, mark claims needing evidence, create platform-specific versions, and include a final editorial checklist. Do not invent sources."],
+    "ai-digital-marketing":["evidence-based digital marketing","a small organisation has a limited budget and must choose an audience, message, channel and measurable campaign","Use this prompt: Act as a digital marketing strategist. Product: [product]. Audience: [audience]. Goal: [goal]. Budget: [budget]. Create hypotheses, campaign variants, KPIs, test plan and risks. Distinguish assumptions from evidence."],
+    "ai-business":["entrepreneurship and small-business operations","an entrepreneur must test a business idea before spending scarce money","Use this prompt: Challenge my business idea [idea]. Identify customer problem, assumptions, competitors, value proposition, minimum viable test, costs, risks and evidence required. Give me the five cheapest experiments first."],
+    "ai-data-analytics":["data-informed decision making","a manager has a spreadsheet and needs to understand trends without confusing correlation with causation","Use this prompt: Analyse the supplied dataset. First describe data quality and missing values, then identify patterns, alternative explanations and appropriate calculations. Never infer causation unless supported. Show assumptions and checks."],
+    "ai-excel":["office productivity and spreadsheet analysis","an administrator receives a messy workbook and must clean it, calculate results and produce a management report","Use this prompt: Help me solve this spreadsheet task [task]. Explain each formula, expected result, edge cases and validation check. Never change source data silently. Give a test row or independent calculation."],
+    "ai-for-students":["learning and academic study","a student is struggling with a difficult topic and needs guided practice rather than answers to submit","Use this prompt: Be my Socratic tutor for [topic]. Diagnose my current understanding with three questions, explain only what I need next, give one worked example, then create progressively harder practice. Do not complete assessed work for me."],
+    "ai-for-schools":["institutional AI adoption","a school leadership team wants to introduce AI while protecting learners, staff, privacy and educational quality","Use this prompt: Act as an education AI implementation adviser. For [school context], create a phased plan covering learning outcomes, staff capability, policy, privacy, safeguarding, procurement, assessment integrity, accessibility, monitoring and escalation."],
+    "ai-cybersecurity":["defensive cybersecurity","an organisation receives suspicious messages and wants staff to detect and report them safely","Use this prompt: Build a defensive awareness exercise for [scenario]. Identify indicators, verification steps, reporting route, containment actions and lessons learned. Keep the exercise defensive and do not provide instructions for attacking systems."],
+    "ai-design":["creative design and visual communication","a designer must turn a client brief into several concepts while preserving hierarchy, accessibility and brand consistency","Use this prompt: Convert this design brief into three concept directions. For each give audience, message hierarchy, composition, typography direction, accessibility checks, image requirements and what should never be generated or altered."],
+    "ai-video":["video production","a teacher, creator or business has a topic and needs a clear short educational or promotional video","Use this prompt: Create a video production plan for [topic] and [audience]. Give hook, learning/message objective, scene-by-scene storyboard, narration, on-screen text, visual prompts, accessibility and fact-check checkpoints."],
+    "ai-research":["research and academic writing","a researcher needs to move from a broad topic to a defensible question and evidence-based argument","Use this prompt: Help me refine this research problem [problem]. Propose questions, concepts, search terms and an evidence matrix. Never invent references. Label suggestions as hypotheses until verified against real sources."],
+    "ai-career":["career development and job search","a job seeker must tailor an application to a real vacancy without exaggerating qualifications","Use this prompt: Compare my CV [CV] with this vacancy [vacancy]. Extract required competencies, map only evidence actually present, identify gaps, and draft truthful improvements. Never invent experience, qualifications or employers."],
+    "ai-foundations":["AI literacy and responsible use","a learner encounters an AI system making a confident recommendation and must decide whether to trust it","Use this prompt: Explain [AI output] for a non-specialist. Separate what is known, inferred and uncertain; identify possible bias, privacy concerns and failure modes; then give a human verification procedure."],
+    "prompt-engineering":["prompt design and evaluation","a professional gets inconsistent answers from the same AI tool and needs a reproducible prompt","Use this prompt: Improve my prompt [prompt]. State the task, context, audience, constraints, output schema, examples, quality criteria and verification steps. Explain why each change should improve reliability."],
+    "ai-for-teachers":["AI-enhanced teaching and pedagogy","a teacher must create differentiated learning activities without outsourcing professional judgement to AI","Use this prompt: Act as an instructional design assistant. Class: [level]. Topic: [topic]. Learning outcome: [outcome]. Create differentiated activities for three readiness levels, misconceptions to watch for, formative assessment and a teacher verification checklist."],
+    "ai-productivity-business":["AI productivity and digital work","a professional has a long list of repetitive tasks and wants to decide which ones are safe and valuable to augment","Use this prompt: Audit these tasks [list]. Score each by frequency, time saved, error risk, data sensitivity and need for human judgement. Recommend what to automate, assist or keep human-only, with reasons."],
+    "responsible-ai":["responsible AI and digital citizenship","an organisation is deciding whether to use an AI tool that processes personal or sensitive information","Use this prompt: Conduct a responsible-use review of [tool/use case]. Assess purpose, data, consent, bias, security, transparency, accessibility, human oversight, retention, failure impact and an approval checklist."],
+    "build-with-ai":["building AI-powered solutions","a developer or non-technical builder wants to turn a real problem into a small AI prototype with measurable success criteria","Use this prompt: Turn [problem] into an AI product brief. Define user, job-to-be-done, inputs, outputs, model/tool options, evaluation dataset, success metrics, failure modes, privacy controls, human fallback and a smallest useful prototype."]
+  };
+  function profile(slug,course){return profiles[slug]||[course.title, "a real organisation or learner must solve a practical problem using the skills in this module", "Use this prompt: Act as a specialist in "+course.title+". For [real task], first clarify the objective and constraints, then produce a structured solution, state assumptions, identify risks, and finish with a human verification checklist."];}
+
+  function makeLongNotes(slug,course,m,level){
+    const p=profile(slug,course), title=m[0], focus=m[1], levelText=m[level==="basic"?2:level==="medium"?3:4];
+    const depth=level==="basic"?"Build a reliable mental model before using the tool.":level==="medium"?"Move from knowing the concept to applying it repeatedly and evaluating the quality of results.":"Treat the skill as a professional capability: design the workflow, test alternatives, measure outcomes, manage risks and explain your decisions.";
+    return [
+      "LEARNING OBJECTIVE\nBy the end of this lesson, you should be able to explain "+title+" in your own words, apply it to "+p[0]+", evaluate an AI-assisted result, and decide when human judgement must remain in control.",
+      "CORE CONCEPT\nThis module focuses on "+focus+". At the "+level+" level, "+levelText+" "+depth+" The important distinction is between producing an output and producing a trustworthy outcome. AI can generate, classify, summarise, transform or recommend, but the learner remains responsible for defining the goal, checking important claims and deciding whether the result is fit for purpose.",
+      "HOW THE WORKFLOW OPERATES\nStart with the real problem, not the AI tool. Define the user, desired outcome, context, constraints, available evidence and acceptable risk. Give the AI only the information it needs and clearly identify what is source material versus what is a request for generation. Ask for a structured output. Then inspect the result for accuracy, relevance, completeness, bias, privacy and unintended consequences. Where the task affects a person, money, education, employment, safety or reputation, add a deliberate human approval step.",
+      "REAL-LIFE SITUATION\nImagine "+p[1]+". The weak approach is to open an AI tool and ask for an impressive answer. The professional approach is to define the problem, provide verified context, request a useful format, test the output against the original evidence, correct errors and document the final decision. A strong learner can explain not only what the AI produced, but why the workflow was designed that way, what failed, what was verified and what should never be delegated.",
+      "PRACTICAL METHOD\n1. Define the outcome. 2. Gather trustworthy inputs. 3. Write a precise instruction. 4. Request assumptions and uncertainties. 5. Review the first output. 6. Test it against evidence or a second method. 7. Revise the instruction. 8. Apply the final human decision. 9. Record the prompt, evidence, result and limitations so the process can be repeated.",
+      "PROMPT LAB\n"+p[2]+"\nA strong prompt normally contains ROLE or TASK + CONTEXT + INPUTS + CONSTRAINTS + OUTPUT FORMAT + QUALITY CRITERIA + VERIFICATION. Do not assume a longer prompt is automatically better. Precision matters more than decoration. For high-stakes work, ask the model to expose uncertainty and list what must be checked.",
+      "PROMPT ITERATION\nVersion 1 should solve the task. Version 2 should add constraints and an output structure. Version 3 should add examples or a quality rubric. Version 4 should add verification and failure handling. Compare the four results rather than assuming the latest answer is best. Save prompts that repeatedly work, but retest them when the tool, data or task changes.",
+      "EVALUATION\nAssess the result using five questions: Is it factually correct? Is it complete for the stated goal? Is it appropriate for the audience? Is it safe and ethical? Can another person reproduce or verify the important parts? A fluent answer can still fail one or more of these tests.",
+      "COMMON FAILURES\nWatch for fabricated facts, unsupported citations, hidden assumptions, overconfident language, outdated information, biased recommendations, leakage of personal data, poor instructions, ambiguous outputs and automation without a recovery path. When an error is expensive, increase verification rather than simply asking the AI to sound more confident.",
+      "ADVANCED PROFESSIONAL PRACTICE\nCreate a small evaluation rubric before you start. Define what a successful answer looks like, test multiple cases, include difficult edge cases and keep a record of failures. Where possible, use structured outputs, independent checks and human approval gates. The goal is not maximum AI usage; it is maximum useful and responsible performance.",
+      "TAKEAWAY\nThe transferable skill is disciplined AI use: problem framing, precise prompting, critical evaluation, iteration, responsible judgement and measurable improvement. Master these and you can adapt to new AI tools instead of depending on one brand or interface."
+    ].join("\n\n");
+  }
+
+  function makeQuestions(slug,course,m){
+    const p=profile(slug,course), title=m[0], focus=m[1];
+    const base=[
+      ["A school team wants to use "+title+" but has not defined success. What should happen first?", "Define the real outcome, users, constraints and success criteria before selecting an AI workflow."],
+      ["Which approach best reflects responsible use of "+title+"?", "Use AI to assist the task while keeping human responsibility for verification and consequential decisions."],
+      ["A generated result sounds confident but contains a claim that matters. What is the strongest response?", "Trace the claim to trustworthy evidence and correct or remove it if it cannot be verified."],
+      ["Why should a professional distinguish source material from generated content?", "It prevents generated statements from being mistaken for verified evidence and makes review easier."],
+      ["Which prompt is most likely to produce a reliable result?", "A prompt that specifies the task, context, constraints, output format, quality criteria and verification requirements."],
+      ["A workflow saves time but exposes unnecessary personal data. What should be changed?", "Minimise the data, review privacy requirements and redesign the workflow before deployment."],
+      ["What is the main weakness of judging an AI answer only by how fluent it sounds?", "Fluency does not establish factual accuracy, completeness, safety or suitability."],
+      ["A first prompt produces inconsistent results. What is the best next step?", "Add precise constraints, examples or an output schema and test the revised prompt on several cases."],
+      ["Why are edge cases important in professional AI workflows?", "They reveal failure modes that ordinary examples may hide and help define safe boundaries."],
+      ["What should a human verification checklist contain?", "Accuracy, evidence, relevance, completeness, bias or safety risks and any decision requiring human approval."],
+      ["When is automation least appropriate?", "When the action is high-impact, difficult to reverse, poorly understood or cannot be meaningfully supervised."],
+      ["What does a good evaluation rubric provide?", "Explicit criteria that allow outputs to be compared consistently against the intended goal."],
+      ["Why should prompts be tested on more than one example?", "A prompt can appear successful on one case while failing on different users, inputs or edge cases."],
+      ["What is a useful reason to request uncertainty from an AI system?", "It helps the user identify claims or decisions that require additional evidence or review."],
+      ["A manager wants AI to make a final employment decision. What is the strongest principle?", "AI may support analysis, but a qualified human must retain responsibility and assess fairness and evidence."],
+      ["What should be documented for a repeatable AI workflow?", "The goal, inputs, prompt or procedure, output, checks, decision, limitations and relevant version or date."],
+      ["Why is minimising input data a good practice?", "It reduces unnecessary privacy exposure and limits the consequences of accidental disclosure."],
+      ["A user discovers that an AI tool has outdated information. What should they do?", "Supply or consult current authoritative evidence and verify time-sensitive claims before acting."],
+      ["What is the difference between an AI output and a trustworthy outcome?", "An output is generated content; a trustworthy outcome is an output that has been evaluated against the real goal and evidence."],
+      ["Which change most improves prompt reliability?", "Explicitly define the task, audience, constraints, expected structure and quality criteria."],
+      ["A learner copies an AI answer into assessed work without understanding it. What is the core problem?", "The learner has replaced authentic learning and judgement with unverified generated content."],
+      ["What is a human-in-the-loop control?", "A deliberate point where a person reviews, approves, rejects or modifies an AI-supported action before it has important consequences."],
+      ["Why should important AI workflows include failure handling?", "AI systems and connected tools can fail, so the process needs safe recovery, escalation and stopping conditions."],
+      ["What makes an AI skill transferable across tools?", "Understanding problem framing, prompting, evaluation, verification, ethics and workflow design rather than memorising one interface."],
+      ["A professional must choose between two AI workflows. What is the best basis for the decision?", "Compare evidence of quality, risk, privacy, cost, reliability, human oversight and measurable value against the actual task."]
+    ];
+    return base.map((x,i)=>({q:x[0]+"\nScenario: You are applying this in "+p[0]+" and must justify your decision.",a:x[1],w:[
+      "Choose the most impressive-looking output and skip verification.",
+      "Let the AI make the final decision because it is faster.",
+      "Use a vague prompt and correct problems only after publication."
+    ].filter(v=>v!==x[1])}));
+  }
+
+  Object.keys(A).forEach(function(slug){
+    const c=A[slug];
+    c.internationalAlignment={
+      framework:"UNESCO AI competency frameworks (2024) + European DigComp reference",
+      progression:"Understand / Apply / Create",
+      assessment:"25 scenario-based questions per module; 70% module pass threshold",
+      credential:"CBE Nexus Certificate of Completion — internationally aligned, not an accreditation claim"
+    };
+    c.modules=c.modules.map(function(m){
+      return m;
+    });
+    c._enhanced=true;
+  });
+  window.CBENexusAIEnhanced={makeLongNotes,makeQuestions,profiles};
+})();
