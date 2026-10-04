@@ -9,6 +9,7 @@ const SUBJECTS={
 "10":["Core Mathematics","English","Kiswahili","Biology","Chemistry","Physics","Business Studies","Geography","History and Citizenship","Agriculture","Computer Studies"],
 "11":["Core Mathematics","English","Kiswahili","Biology","Chemistry","Physics","Business Studies","Geography","History and Citizenship","Agriculture","Computer Studies"],
 "12":["Core Mathematics","English","Kiswahili","Biology","Chemistry","Physics","Business Studies","Geography","History and Citizenship","Agriculture","Computer Studies"]};
+const KENYA_COUNTIES=["Baringo","Bomet","Bungoma","Busia","Elgeyo Marakwet","Embu","Garissa","Homa Bay","Isiolo","Kajiado","Kakamega","Kericho","Kiambu","Kilifi","Kirinyaga","Kisii","Kisumu","Kitui","Kwale","Laikipia","Lamu","Machakos","Makueni","Mandera","Marsabit","Meru","Migori","Mombasa","Murang'a","Nairobi","Nakuru","Nandi","Narok","Nyamira","Nyandarua","Nyeri","Samburu","Siaya","Taita Taveta","Tana River","Tharaka Nithi","Trans Nzoia","Turkana","Uasin Gishu","Vihiga","Wajir","West Pokot"];
 const LANDINGS={
 "/cbc-notes-kenya":["CBC Notes Kenya","CBC and CBE notes for Kenyan learners and teachers. Find Grade 7–12 subject resources, revision materials and learning support from CBE Nexus."],
 "/cbc-exams-kenya":["CBC Exams Kenya & Marking Schemes","Find CBC exams, revision questions and marking schemes for Kenyan Grade 7–12 learners and teachers."],
@@ -27,6 +28,22 @@ function gradePage(req,g,sub){
  const subjects=SUBJECTS[g]||[], links=subjects.map(s=>({url:"/grade-"+g+"/"+slug(s),label:"Grade "+g+" "+s+" Resources"}));
  if(sub){const name=sub.replace(/-/g," ").replace(/\b\w/g,c=>c.toUpperCase());return page(req,name+" Grade "+g+" Resources Kenya | CBE Nexus","Find "+name+" Grade "+g+" CBC/CBE notes, exams, revision questions and marking schemes for Kenyan learners and teachers.","/grade-"+g+"/"+sub,"Grade "+g+" "+name+" Resources","Explore "+name+" learning and revision resources for Grade "+g+" in Kenya, including notes, practice questions, exams and marking schemes.",links);}
  return page(req,"Grade "+g+" CBC Resources Kenya | CBE Nexus","Grade "+g+" CBC/CBE notes, exams, revision questions, marking schemes and teacher resources for Kenya.","/grade-"+g,"Grade "+g+" CBC Resources Kenya","Browse Grade "+g+" subjects and discover CBC/CBE notes, exams, revision questions, marking schemes and teacher resources.",links);
+}
+function countyPage(req,county){
+ const label=county.replace(/-/g," ").replace(/\\b\\w/g,c=>c.toUpperCase());
+ const links=[
+  {url:"/kenya-universities-colleges.html?county="+encodeURIComponent(label),label:label+" universities and colleges"},
+  {url:"/tvet-colleges.html?county="+encodeURIComponent(label),label:label+" TVET colleges"},
+  {url:"/teacher-training-colleges.html?county="+encodeURIComponent(label),label:label+" teacher training colleges"},
+  {url:"/kmtc.html?county="+encodeURIComponent(label),label:label+" KMTC campuses"},
+  {url:"/technical-institutions.html?county="+encodeURIComponent(label),label:label+" technical institutions"},
+  {url:"/scholarships-opportunities.html",label:"Scholarships and opportunities in Kenya"},
+  {url:"/higher-education-jobs.html",label:"Higher education jobs in Kenya"}
+ ];
+ return page(req,label+" County Education Guide | Universities, TVET & Opportunities | CBE Nexus",
+ "Education guide for "+label+" County, Kenya: universities, colleges, TVET institutions, KMTC, technical training, scholarships, courses and education opportunities.",
+ "/kenya-education-county/"+slug(label),label+" County Education Guide",
+ "Explore education opportunities in "+label+" County, Kenya. Find higher-education institutions, TVET and technical training options, teacher training, KMTC and related opportunities. Confirm current programmes and admissions with the official institution or regulator.",links);
 }
 async function resourcePage(req,id){
  try{
@@ -99,7 +116,7 @@ async function blogArticlePage(req,slugValue){
 function xml(v){return String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&apos;");}
 async function sitemap(req){
  const b=base(req),urls=["/","/resources.html","/free-resources.html","/quizzes.html","/projects.html","/tuition.html","/blog.html","/learning-hub.html","/answer-hub.html","/cbc-notes-kenya","/cbc-exams-kenya","/kjsea-revision","/cbc-exam-generator","/grade-10-school-finder.html","/kenya-universities-colleges.html","/public-universities.html","/private-universities.html","/specialized-universities.html","/university-constituent-colleges.html","/interim-universities.html","/university-course-catalogue.html","/technical-vocational-catalogue.html","/tvet-colleges.html","/teacher-training-colleges.html","/kmtc.html","/technical-institutions.html","/higher-education-jobs.html","/scholarships-opportunities.html","/international-teaching-jobs.html","/professional-cv-writing.html","/ai-training.html","/school-directory.html","/international-curriculum.html","/igcse.html","/cambridge-international.html","/ib.html","/pearson-edexcel.html","/a-levels.html","/o-levels.html"];
- GRADES.forEach(g=>{urls.push("/grade-"+g);(SUBJECTS[g]||[]).forEach(s=>urls.push("/grade-"+g+"/"+slug(s)));});
+ KENYA_COUNTIES.forEach(c=>urls.push("/kenya-education-county/"+slug(c)));\n GRADES.forEach(g=>{urls.push("/grade-"+g);(SUBJECTS[g]||[]).forEach(s=>urls.push("/grade-"+g+"/"+slug(s)));});
  if(supabaseConfigured){try{const {data}=await supabase.from("resources").select("id").eq("status","approved").limit(5000);(data||[]).forEach(r=>urls.push("/resource/"+encodeURIComponent(r.id)));}catch(e){console.warn("SEO sitemap resource lookup failed:",e.message||e);}}
  if(supabaseConfigured){try{const {data}=await supabase.from("blog_posts").select("slug,updated_at,published_at").eq("status","published").limit(5000);(data||[]).forEach(p=>urls.push("/blog-article.html?slug="+encodeURIComponent(String(p.slug||""))));}catch(e){console.warn("SEO sitemap blog lookup failed:",e.message||e);}}
  return '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+[...new Set(urls)].map(u=>'<url><loc>'+xml(b+u)+'</loc></url>').join("")+"</urlset>";
