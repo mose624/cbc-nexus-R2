@@ -56,7 +56,8 @@ body{background:#f8fafc}.up{max-width:1180px;margin:auto;padding:25px 16px 55px}
   const name=p.get("name")||"University Course Profile";
   const county=p.get("county")||"";
   const area=p.get("area")||"";
-  const site=p.get("website")||"";\n  const type=p.get("type")||"public";
+  const site=p.get("website")||"";
+  const type=p.get("type")||"public";
   const legacyId=p.get("kuccps")||"";
   const esc=v=>String(v??"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[m]));
   document.title=name+" | CBE Nexus";
@@ -66,7 +67,10 @@ body{background:#f8fafc}.up{max-width:1180px;margin:auto;padding:25px 16px 55px}
   const website=document.querySelector("#website");
   if(site)website.href=site;else website.remove();
 
-  const back=document.querySelector("#backDirectory");\n  back.href=type==="private"?"private-universities.html":"public-universities.html";\n  const k=document.querySelector("#kuccps");
+  const back=document.querySelector("#backDirectory");
+  const dirs={private:"private-universities.html",specialized:"specialized-universities.html",colleges:"university-constituent-colleges.html",interim:"interim-universities.html",public:"public-universities.html"};
+  back.href=dirs[type]||"kenya-universities-colleges.html";
+  const k=document.querySelector("#kuccps");
   if(legacyId)k.href="https://students.kuccps.net/institutions/"+encodeURIComponent(legacyId)+"/";
   else k.href="https://students.kuccps.net/institutions/";
 
