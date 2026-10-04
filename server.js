@@ -282,6 +282,10 @@ async function submitSchoolDirectory(payload){
 }
 
 async function handleApi(req,res,url){
+  if(req.method==="GET"&&url.pathname==="/api/analytics/config"){
+    sendJson(res,200,{ok:true,googleAnalyticsId:String(process.env.GA_MEASUREMENT_ID||"").trim(),clarityProjectId:String(process.env.CLARITY_PROJECT_ID||"").trim()});
+    return true;
+  }
   if(req.method==="GET"&&url.pathname==="/api/schools"){
     try{sendJson(res,200,{ok:true,schools:await getSchoolDirectory(false)});}catch(error){console.error("School directory lookup error:",error);sendJson(res,500,{ok:false,error:"School directory could not be loaded."});}return true;
   }
