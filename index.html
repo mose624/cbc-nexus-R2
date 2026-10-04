@@ -1406,5 +1406,63 @@
     <script src="customer-care.js?v=20260929-4" defer></script>
     <script src="assessment-cbc-banks.js?v=20260928-6" defer></script>\n    <script src="kicd-curriculum-content.js?v=20260928-8" defer></script>\n    <script src="assessment.js?v=20260928-9" defer></script>
   <script src="admin-module-fix.js" defer></script>
+
+<!-- CBE NEXUS ADMIN DIRECT TAB CONTROLLER -->
+<style>
+#admin .admin-module-tabs{position:relative!important;z-index:99999!important;pointer-events:auto!important;}
+#admin .admin-module-tabs .admin-module-tab{position:relative!important;z-index:100000!important;pointer-events:auto!important;cursor:pointer!important;}
+#admin.admin-tab-controller-ready .admin-module-panel{display:none;}
+#admin.admin-tab-controller-ready .admin-module-panel.active{display:block;}
+</style>
+<script>
+(function(){
+  function boot(){
+    const root=document.getElementById('admin');
+    if(!root)return;
+    root.classList.add('admin-tab-controller-ready');
+    const tabs=[...root.querySelectorAll('.admin-module-tab[data-admin-module]')];
+    const panels=[...root.querySelectorAll('.admin-module-panel[data-admin-module-panel]')];
+    function openModule(name){
+      name=String(name||'resources');
+      root.classList.remove('is-loading');
+      root.style.pointerEvents='auto';
+      tabs.forEach(function(tab){
+        const on=tab.getAttribute('data-admin-module')===name;
+        tab.classList.toggle('active',on);
+        tab.setAttribute('aria-selected',String(on));
+      });
+      panels.forEach(function(panel){
+        const on=panel.getAttribute('data-admin-module-panel')===name;
+        panel.hidden=!on;
+        panel.classList.toggle('active',on);
+        panel.setAttribute('aria-hidden',String(!on));
+        if(on)panel.style.display='block'; else panel.style.display='none';
+      });
+      const panel=panels.find(p=>p.getAttribute('data-admin-module-panel')===name);
+      if(panel){
+        panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+        if(name==='resources')document.getElementById('resourceForm')?.scrollIntoView({behavior:'smooth',block:'start'});
+        if(name==='ai-notes')document.getElementById('aiNotesAdminForm')?.scrollIntoView({behavior:'smooth',block:'start'});
+        if(name==='vacancies')document.getElementById('adminVacancyForm')?.scrollIntoView({behavior:'smooth',block:'start'});
+      }
+      if(name==='resources' && typeof window.loadAdminResourceModeration==='function')window.loadAdminResourceModeration();
+      if(name==='ai-notes' && typeof window.initAICourseNotesAdmin==='function')window.initAICourseNotesAdmin();
+    }
+    window.CBENexusOpenAdminModule=openModule;
+    tabs.forEach(function(tab){
+      tab.onclick=function(e){e.preventDefault();e.stopImmediatePropagation();openModule(tab.getAttribute('data-admin-module'));};
+      tab.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();openModule(tab.getAttribute('data-admin-module'));}};
+    });
+    document.addEventListener('click',function(e){
+      const tab=e.target.closest('#admin .admin-module-tab[data-admin-module]');
+      if(tab){e.preventDefault();e.stopPropagation();openModule(tab.getAttribute('data-admin-module'));}
+      const upload=e.target.closest('#admin [data-admin-upload-link]');
+      if(upload){e.preventDefault();openModule('resources');document.getElementById('resourceForm')?.scrollIntoView({behavior:'smooth',block:'start'});}
+    },true);
+    openModule('resources');
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();
+</script>
 </body>
 </html>
