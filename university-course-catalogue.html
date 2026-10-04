@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kenya University Course Catalogue | CBE Nexus</title>
+<meta name="description" content="Search Kenya university courses by institution and qualification level. CBE Nexus connects users to KUCCPS placement programmes and the official CUE approved academic programme register.">
+<link rel="stylesheet" href="styles.css?v=20261004-compact2">
+<style>
+body{background:#f8fafc}.cc{max-width:1200px;margin:auto;padding:24px 16px 60px}
+.hero{background:linear-gradient(135deg,#166534,#14532d);color:#fff;border-radius:18px;padding:34px 24px;text-align:center}.hero h1{margin:8px 0;font-size:2.25rem}.hero p{max-width:900px;margin:auto;line-height:1.6}
+.nav{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:16px 0}.nav a{background:#fff;border:1px solid #dbe3ea;border-radius:999px;padding:9px 13px;text-decoration:none;font-weight:800;color:#123447;font-size:.84rem}.nav a:hover{background:#166534;color:#fff}
+.panel{background:#fff;border:1px solid #e2e8f0;border-radius:15px;padding:20px;margin-top:18px;box-shadow:0 5px 18px #0000000a}.panel h2{text-align:center;margin-top:0}
+.filters{display:grid;grid-template-columns:2fr 1.2fr 1fr;gap:10px}.filters input,.filters select{width:100%;box-sizing:border-box;padding:12px;border:1px solid #cbd5e1;border-radius:9px;background:#fff}
+.levels{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:14px 0}.level{border:1px solid #cbd5e1;background:#f8fafc;color:#123447;border-radius:999px;padding:9px 13px;font-weight:800;cursor:pointer}.level.active{background:#166534;color:#fff;border-color:#166534}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:16px}.inst{border:1px solid #e2e8f0;border-radius:13px;padding:16px;background:#fff}.inst h3{margin:0 0 6px;font-size:1rem}.meta{font-size:.8rem;color:#64748b}.areas{font-size:.82rem;line-height:1.5;color:#475569;margin:9px 0}.actions{display:flex;gap:7px;flex-wrap:wrap}.btn{display:inline-block;padding:8px 10px;border-radius:8px;background:#166534;color:#fff;text-decoration:none;font-weight:800;font-size:.78rem}.btn.alt{background:#fff;color:#166534;border:1px solid #86efac}
+.results{overflow:auto}.programmes{width:100%;border-collapse:collapse;min-width:720px}.programmes th,.programmes td{padding:10px;border-bottom:1px solid #e2e8f0;text-align:left;font-size:.83rem}.programmes th{background:#f1f5f9;color:#166534}.empty{text-align:center;padding:24px;color:#64748b}.status{padding:10px;border-radius:9px;background:#f0fdf4;color:#166534;text-align:center;font-weight:700}.source{background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af;padding:13px;border-radius:10px;line-height:1.5;font-size:.86rem}
+.count{font-size:.82rem;color:#64748b;text-align:center;margin-top:12px}
+@media(max-width:850px){.filters{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr 1fr}}@media(max-width:560px){.filters{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.hero h1{font-size:1.65rem}}
+</style>
+</head>
+<body>
+<main class="cc">
+<section class="hero"><div>🎓 CBE NEXUS • KENYA HIGHER EDUCATION</div><h1>University Course Catalogue</h1><p>Search universities, explore qualification levels and open current programme records. CBE Nexus separates <strong>KUCCPS placement programmes</strong> from the wider <strong>CUE-approved academic programme register</strong>.</p></section>
+<nav class="nav"><a href="kenya-universities-colleges.html">Higher Education Hub</a><a href="public-universities.html">Public Universities</a><a href="private-universities.html">Private Universities</a><a href="specialized-universities.html">Specialized</a><a href="university-constituent-colleges.html">Constituent Colleges</a><a href="interim-universities.html">Interim Authority</a></nav>
+
+<section class="panel">
+<h2>🔎 Find an Institution</h2>
+<div class="filters"><input id="search" placeholder="Search university, county or field…"><select id="type"><option value="all">All institution categories</option><option value="public">Public Universities</option><option value="private">Private Universities</option><option value="specialized">Specialized Public</option><option value="colleges">Constituent Colleges</option><option value="interim">Interim Authority</option></select><select id="county"><option value="all">All counties</option></select></div>
+<div class="levels" aria-label="Qualification level"><button class="level active" data-level="all">All Levels</button><button class="level" data-level="phd">PhD / Doctoral</button><button class="level" data-level="master">Master's</button><button class="level" data-level="pgd">Postgraduate Diploma</button><button class="level" data-level="degree">Bachelor's</button><button class="level" data-level="diploma">Diploma</button><button class="level" data-level="certificate">Certificate</button></div>
+<div id="grid" class="grid"></div><div id="count" class="count"></div>
+</section>
+
+<section class="panel">
+<h2>📚 Selected Institution — Live Programme Search</h2>
+<div id="selected" class="status">Select “View programmes” on an institution card.</div>
+<div id="programmeBox" style="display:none">
+<div class="filters" style="grid-template-columns:2fr 1fr;margin:14px 0"><input id="pq" placeholder="Search programme name or code…"><select id="pl"><option value="all">All returned levels</option><option value="degree">Bachelor's</option><option value="diploma">Diploma</option><option value="certificate">Certificate</option><option value="postgraduate">Postgraduate / Other</option></select></div>
+<div class="results"><table class="programmes"><thead><tr><th>Code</th><th>Programme</th><th>Level</th><th>KCSE 2025</th><th>KCSE 2024</th><th>KCSE 2023</th></tr></thead><tbody id="prows"></tbody></table></div>
+</div>
+</section>
+
+<section class="panel">
+<h2>🏛️ Official Programme Verification</h2>
+<div class="source"><strong>CUE is the authority for the wider university academic programme register.</strong> Its programme search covers bachelor's, master's, doctoral, postgraduate diplomas/certificates, diplomas and certificates. The current published register is dated <strong>31 July 2026</strong>. KUCCPS remains the placement-focused source for current placement programmes and requirements.</div>
+<div class="actions" style="justify-content:center;margin-top:14px"><a class="btn" href="https://www.cue.or.ke/index.php?Itemid=253&catid=13&id=22%3Aapproved-academic-programmes&option=com_content&view=article" target="_blank" rel="noopener">CUE Academic Programmes ↗</a><a class="btn alt" href="https://students.kuccps.net/programmes/" target="_blank" rel="noopener">KUCCPS Programmes ↗</a><a class="btn alt" href="https://students.kuccps.net/institutions/" target="_blank" rel="noopener">KUCCPS Institutions ↗</a></div>
+</section>
+</main>
+<script src="kenya-higher-institutions.js?v=20261005-1"></script>
+<script>
+(function(){
+const DATA=window.CBE_INSTITUTIONS||{};
+const esc=v=>String(v??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+const search=document.querySelector('#search'),type=document.querySelector('#type'),county=document.querySelector('#county'),grid=document.querySelector('#grid'),count=document.querySelector('#count');
+const levels=[...document.querySelectorAll('.level')];let selectedLevel='all',selectedInst=null,allPrograms=[];
+const cats=['public','private','specialized','colleges','interim'];
+const institutions=cats.flatMap(c=>(DATA[c]||[]).map(x=>({name:x[0],county:x[1],type:c,label:x[2],website:x[3],areas:x[4]})));
+[...new Set(institutions.map(x=>x.county).filter(Boolean))].sort().forEach(c=>county.insertAdjacentHTML('beforeend','<option>'+esc(c)+'</option>'));
+function levelText(l){return l==='phd'?'PhD / Doctoral':l==='master'?"Master's":l==='pgd'?'Postgraduate Diploma':l==='degree'?"Bachelor's":l==='diploma'?'Diploma':l==='certificate'?'Certificate':'All Levels'}
+function card(x){
+ const q=encodeURIComponent(x.name), site=x.website||'#';
+ return '<article class="inst"><h3>'+esc(x.name)+'</h3><div class="meta">📍 '+esc(x.county)+' • '+esc(x.label)+'</div><div class="areas">'+esc(x.areas||'')+'</div><div class="actions"><button class="btn" data-name="'+esc(x.name)+'" data-county="'+esc(x.county)+'" data-area="'+esc(x.areas||'')+'" data-website="'+esc(site)+'">View programmes</button><a class="btn alt" href="university-profile.html?name='+q+'&county='+encodeURIComponent(x.county)+'&area='+encodeURIComponent(x.areas||'')+'&website='+encodeURIComponent(site)+'&type='+encodeURIComponent(x.type)+'">Profile</a></div></article>';
+}
+function render(){
+ const q=search.value.toLowerCase().trim(),t=type.value,c=county.value;
+ const list=institutions.filter(x=>(t==='all'||x.type===t)&&(c==='all'||x.county===c)&&(!q||(x.name+' '+x.county+' '+x.areas).toLowerCase().includes(q)));
+ grid.innerHTML=list.map(card).join('')||'<div class="empty" style="grid-column:1/-1">No institutions match your search.</div>';
+ count.textContent=list.length+' institution(s) shown'+(selectedLevel!=='all'?' • exploring '+levelText(selectedLevel):'');
+ grid.querySelectorAll('button[data-name]').forEach(b=>b.addEventListener('click',()=>loadPrograms(b.dataset)));
+}
+async function loadPrograms(x){
+ selectedInst=x;document.querySelector('#programmeBox').style.display='block';document.querySelector('#selected').textContent='Loading current KUCCPS programmes for '+x.name+'…';allPrograms=[];document.querySelector('#prows').innerHTML='<tr><td colspan="6" class="empty">Loading…</td></tr>';
+ try{
+  const r=await fetch('/api/kuccps/university-programmes?institution='+encodeURIComponent(x.name),{cache:'no-store'}),d=await r.json();
+  if(!r.ok||!d.ok)throw new Error(d.error||'No live programme record');
+  allPrograms=(d.programmes||[]).map(p=>({...p,level:p.level||infer(p)}));
+  document.querySelector('#selected').textContent=allPrograms.length+' KUCCPS programme(s) found for '+x.name+' • 2026/2027 cycle.';
+  renderPrograms();
+ }catch(e){document.querySelector('#selected').textContent='Live KUCCPS data is temporarily unavailable for '+x.name+'. Use the official CUE/KUCCPS links above or open the university profile.';document.querySelector('#prows').innerHTML='<tr><td colspan="6" class="empty">No live results returned.</td></tr>';}
+ document.querySelector('#programmeBox').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function infer(p){const n=String(p.name||'').toLowerCase();if(/phd|doctor of philosophy|doctoral|master|mba|postgraduate/.test(n))return'Postgraduate / Other';if(/diploma/.test(n))return'Diploma';if(/certificate/.test(n))return'Certificate';return"Bachelor's Degree";}
+function renderPrograms(){
+ const q=document.querySelector('#pq').value.toLowerCase().trim(),lv=document.querySelector('#pl').value;
+ const a=allPrograms.filter(p=>(!q||(String(p.code)+' '+String(p.name)).toLowerCase().includes(q))&&(lv==='all'||String(p.level||'').toLowerCase().includes(lv==='degree'?'bachelor':lv)));
+ document.querySelector('#prows').innerHTML=a.map(p=>'<tr><td><strong>'+esc(p.code||'—')+'</strong></td><td>'+esc(p.name||'')+'</td><td>'+esc(p.level||'')+'</td><td>'+esc(p.cutoff2025||'-')+'</td><td>'+esc(p.cutoff2024||'-')+'</td><td>'+esc(p.cutoff2023||'-')+'</td></tr>').join('')||'<tr><td colspan="6" class="empty">No matching programme.</td></tr>';
+}
+search.addEventListener('input',render);type.addEventListener('change',render);county.addEventListener('change',render);document.querySelector('#pq').addEventListener('input',renderPrograms);document.querySelector('#pl').addEventListener('change',renderPrograms);
+levels.forEach(b=>b.addEventListener('click',()=>{levels.forEach(x=>x.classList.remove('active'));b.classList.add('active');selectedLevel=b.dataset.level;render();}));
+render();
+})();
+</script>
+<script src="section-shell.js?v=20261004-5" defer></script><script src="customer-care.js?v=20261004-2" defer></script>
+</body></html>
