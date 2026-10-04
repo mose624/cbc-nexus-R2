@@ -485,8 +485,35 @@ async function handleApi(req,res,url){
     const moduleNumber=Number(url.searchParams.get("module")||0);
     const level=String(url.searchParams.get("level")||"basic").trim().toLowerCase();
     if(!courseSlug||!Number.isInteger(moduleNumber)||moduleNumber<1||moduleNumber>6||!["basic","medium","advanced"].includes(level)){sendJson(res,400,{ok:false,error:"Course, module and level are required."});return true;}
-    if(supabaseConfigured){try{const {data,error}=await supabase.from("ai_course_notes").select("*").eq("course_slug",courseSlug).eq("module_number",moduleNumber).eq("level",level).eq("status","published").maybeSingle();if(error)throw error;if(data){sendJson(res,200,{ok:true,notes:data,source:"supabase"});return true;}}catch(error){console.warn("Published AI notes lookup failed:",error.message||error);}}
+    if(supabaseConfigured){try{const {data,error}=await supabase.from("ai_course_notes").select("*").eq("course_slug",courseSlug).eq("module_number",moduleNumber).eq("level",level).eq("status","published").maybeSingle();if(error)throw error;if(data){if(data.pdf_r2_key){try{data.pdfUrl=await createDownloadUrl(data.pdf_r2_key);}catch{data.pdfUrl=null;}}sendJson(res,200,{ok:true,notes:data,source:"supabase"});return true;}}catch(error){console.warn("Published AI notes lookup failed:",error.message||error);}}
     const rows=await readJsonStore("ai-course-notes.json");const found=rows.find(x=>x.course_slug===courseSlug&&Number(x.module_number)===moduleNumber&&x.level===level&&x.status==="published");sendJson(res,200,{ok:true,notes:found||null,source:"local"});return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/ai-course-note-pdf"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    const courseSlug=String(req.headers["x-ai-course-slug"]||"").trim();
+    const moduleNumber=Number(req.headers["x-ai-module-number"]||0);
+    const level=String(req.headers["x-ai-level"]||"basic").trim().toLowerCase();
+    const fileName=String(req.headers["x-ai-file-name"]||"ai-course-notes.pdf").trim();
+    if(!courseSlug||!Number.isInteger(moduleNumber)||moduleNumber<1||moduleNumber>6||!["basic","medium","advanced"].includes(level)){sendJson(res,400,{ok:false,error:"Course, module and level are required."});return true;}
+    if(!/\.pdf$/i.test(fileName)){sendJson(res,400,{ok:false,error:"Only PDF files are allowed."});return true;}
+    const length=Number(req.headers["content-length"]||0);if(length>50*1024*1024){sendJson(res,413,{ok:false,error:"PDF is too large. Maximum file size is 50 MB."});return true;}
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Supabase is required for AI PDF note metadata."});return true;}
+      const body=await readBinaryBody(req,50*1024*1024);
+      if(!body.length){sendJson(res,400,{ok:false,error:"The PDF file is empty."});return true;}
+      const noteId="AIN-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex").toUpperCase();
+      const uploaded=await uploadObject({grade:"AI Academy",subject:courseSlug,type:"PDF Notes",fileName,resourceId:noteId,contentType:"application/pdf"},body);
+      const {data:existing,error:findError}=await supabase.from("ai_course_notes").select("id").eq("course_slug",courseSlug).eq("module_number",moduleNumber).eq("level",level).maybeSingle();
+      if(findError)throw findError;
+      if(!existing){sendJson(res,404,{ok:false,error:"Save the AI course note first, then upload its PDF."});return true;}
+      const {data,error}=await supabase.from("ai_course_notes").update({pdf_r2_key:uploaded.key,pdf_filename:fileName,pdf_size:body.length,pdf_content_type:"application/pdf",updated_at:new Date().toISOString()}).eq("id",existing.id).select("*").single();
+      if(error)throw error;
+      sendJson(res,200,{ok:true,note:data,pdf:{key:uploaded.key,fileName,bytes:body.length}});
+    }catch(error){
+      console.error("AI course PDF upload error:",error);
+      sendJson(res,500,{ok:false,error:error.message||"AI course PDF upload failed. Make sure the AI PDF columns have been added to Supabase."});
+    }
+    return true;
   }
   if(req.method==="GET"&&url.pathname==="/api/admin/ai-course-notes"){
     if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
@@ -499,7 +526,7 @@ async function handleApi(req,res,url){
     const courseSlug=String(p.courseSlug||"").trim(),courseTitle=String(p.courseTitle||"").trim(),moduleNumber=Number(p.moduleNumber),moduleTitle=String(p.moduleTitle||"").trim(),level=String(p.level||"basic").trim().toLowerCase(),status=String(p.status||"draft").trim().toLowerCase();
     const content=String(p.content||"").trim(),objectives=String(p.objectives||"").trim(),examples=String(p.examples||"").trim(),activity=String(p.activity||"").trim(),questions=String(p.questions||"").trim();
     if(!courseSlug||!courseTitle||!Number.isInteger(moduleNumber)||moduleNumber<1||moduleNumber>6||!moduleTitle||!["basic","medium","advanced"].includes(level)||!["draft","published"].includes(status)||content.length<20){sendJson(res,400,{ok:false,error:"Course, module, level, status and comprehensive notes are required."});return true;}
-    const row={id:String(p.id||"AIN-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex").toUpperCase()),course_slug:courseSlug,course_title:courseTitle,module_number:moduleNumber,module_title:moduleTitle,level,status,content:content.slice(0,50000),objectives:objectives.slice(0,10000),examples:examples.slice(0,15000),activity:activity.slice(0,15000),questions:questions.slice(0,30000),updated_at:new Date().toISOString(),created_at:p.createdAt||new Date().toISOString()};
+    const row={id:String(p.id||"AIN-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex").toUpperCase()),course_slug:courseSlug,course_title:courseTitle,module_number:moduleNumber,module_title:moduleTitle,level,status,content:content.slice(0,50000),objectives:objectives.slice(0,10000),examples:examples.slice(0,15000),activity:activity.slice(0,15000),questions:questions.slice(0,30000),pdf_r2_key:String(p.pdfR2Key||"").trim(),pdf_filename:String(p.pdfFilename||"").trim(),pdf_size:Number(p.pdfSize||0),pdf_content_type:"application/pdf",updated_at:new Date().toISOString(),created_at:p.createdAt||new Date().toISOString()};
     if(supabaseConfigured){try{const {data,error}=await supabase.from("ai_course_notes").upsert(row,{onConflict:"course_slug,module_number,level"}).select("*").single();if(error)throw error;sendJson(res,200,{ok:true,notes:data,storage:"supabase"});return true;}catch(error){console.error("AI notes save error:",error);sendJson(res,500,{ok:false,error:"AI course notes could not be saved. Run the supplied Supabase schema first."});return true;}}
     const rows=await readJsonStore("ai-course-notes.json");const next=[row,...rows.filter(x=>!(x.course_slug===courseSlug&&Number(x.module_number)===moduleNumber&&x.level===level))];await fs.writeFile(path.join(DATA_DIR,"ai-course-notes.json"),JSON.stringify(next,null,2));sendJson(res,200,{ok:true,notes:row,storage:"local"});return true;
   }
