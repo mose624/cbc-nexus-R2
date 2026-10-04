@@ -364,20 +364,30 @@ function openAdminLogin(event) {
   setTimeout(()=>document.getElementById("adminUsernameInput")?.focus(),120);
 }
 function setAdminModule(module) {
-  activeAdminModule = module || "resources";
+  activeAdminModule = String(module || "resources").trim();
   document.querySelectorAll("[data-admin-module]").forEach((button)=>{
     const active=button.dataset.adminModule===activeAdminModule;
     button.classList.toggle("active",active);
     button.setAttribute("aria-selected",String(active));
+    button.setAttribute("aria-current",active ? "page" : "false");
   });
   document.querySelectorAll("[data-admin-module-panel]").forEach((panel)=>{
     const active=panel.dataset.adminModulePanel===activeAdminModule;
     panel.classList.toggle("active",active);
     panel.hidden=!active;
+    panel.setAttribute("aria-hidden",String(!active));
   });
-  if (activeAdminModule==="ai-notes") initAICourseNotesAdmin();
-  if (activeAdminModule==="resources" && typeof window.loadAdminResourceModeration==="function") {
-    window.loadAdminResourceModeration();
+  const panel=document.querySelector('[data-admin-module-panel="'+CSS.escape(activeAdminModule)+'"]');
+  if(panel){
+    panel.hidden=false;
+    panel.classList.add("active");
+    setTimeout(()=>panel.scrollIntoView({behavior:"smooth",block:"nearest"}),0);
+  }
+  if(activeAdminModule==="ai-notes" && typeof initAICourseNotesAdmin==="function") initAICourseNotesAdmin();
+  if(activeAdminModule==="resources"){
+    if(typeof window.loadAdminResourceModeration==="function") window.loadAdminResourceModeration();
+    const form=document.getElementById("resourceForm");
+    if(form) setTimeout(()=>form.scrollIntoView({behavior:"smooth",block:"start"}),120);
   }
 }
 /* Robust admin tab navigation: works for every coloured dashboard button even if another listener intercepts the click. */
