@@ -40,6 +40,9 @@
       if(value==="vacancies"){
         document.getElementById("adminVacancyForm")?.scrollIntoView({behavior:"smooth",block:"start"});
       }
+      if(value==="ai-courses"){
+        document.getElementById("adminAICourseForm")?.scrollIntoView({behavior:"smooth",block:"start"});
+      }
     }
 
     tabs.forEach(tab=>{
