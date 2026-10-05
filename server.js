@@ -82,8 +82,8 @@ function normaliseCueProgramme(p){
   return {institutionName:String(p.institutionName||p.university||"").trim(),institutionCode:String(p.institutionCode||p.code||"").trim(),county:String(p.county||"").trim(),programmeCode:String(p.programmeCode||p.programCode||"").trim(),programmeName:String(p.programmeName||p.name||"").trim(),qualificationLevel:String(p.qualificationLevel||p.level||"").trim(),field:String(p.field||"").trim(),accreditationStatus:String(p.accreditationStatus||p.status||"").trim(),sourceDate:String(p.sourceDate||"2026-07-31").trim()};
 }
 async function readCueProgrammes(){
-  const d=await readJsonStore("cue-programmes.json");
-  return Array.isArray(d)?d:(Array.isArray(d.records)?d.records:[]);
+  await ensureDataDir();
+  try{const d=JSON.parse(await fs.readFile(path.join(DATA_DIR,"cue-programmes.json"),"utf8"));return Array.isArray(d)?d:(Array.isArray(d.records)?d.records:[]);}catch{return [];}
 }
 // Matches the actual Supabase resources table. preview_text is intentionally omitted because it is not present in the live schema.
 function resourceRowFromPayload(p,sellerId=null,previewKey=""){return {seller_id:sellerId,title:String(p.title||"").trim(),description:String(p.description||"").trim(),grade:String(p.grade||"").trim(),subject:String(p.subject||"").trim(),resource_type:String(p.type||"").trim(),filename:String(p.fileName||"").trim(),r2_key:String(p.r2Key||"").trim(),preview_key:String(previewKey||p.previewKey||"").trim(),price:Math.max(0,Number(p.price||0)),discount_price:Math.max(0,Number(p.discountPrice||0)),status:String(p.status||"pending")};}
