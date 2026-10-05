@@ -1270,6 +1270,71 @@ async function getTvetaCourses(){
     return true;
   }
   if(req.method==="POST"&&stores[url.pathname]){const p=JSON.parse((await readBody(req))||"{}");sendJson(res,201,{ok:true,saved:await appendJsonStore(stores[url.pathname],p)});return true;}
+  if(req.method==="GET"&&url.pathname==="/api/international-countries"){
+    try{
+      let rows=[];
+      if(supabaseConfigured){
+        try{const {data,error}=await supabase.from("international_country_guides").select("*").eq("status","published").order("country",{ascending:true});if(!error)rows=data||[];}catch(error){console.warn("Supabase country guides lookup failed:",error.message||error);}
+      }
+      if(!rows.length)rows=(await readJsonStore("international-country-guides.json")).filter(x=>x.status!=="deleted"&&x.status!=="draft");
+      sendJson(res,200,{ok:true,countries:rows});
+    }catch(error){console.error("International country guides lookup error:",error);sendJson(res,500,{ok:false,error:"Country guides could not be loaded."});}
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/admin/international-countries"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{
+      let rows=[];
+      if(supabaseConfigured){
+        try{const {data,error}=await supabase.from("international_country_guides").select("*").order("country",{ascending:true});if(!error)rows=data||[];}catch(error){console.warn("Supabase admin country guides lookup failed:",error.message||error);}
+      }
+      if(!rows.length)rows=await readJsonStore("international-country-guides.json");
+      sendJson(res,200,{ok:true,countries:rows});
+    }catch(error){sendJson(res,500,{ok:false,error:"Country guides could not be loaded."});}
+    return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/international-country"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{
+      const p=JSON.parse((await readBody(req))||"{}"),clean=(v,max=5000)=>String(v??"").trim().slice(0,max);
+      const country=clean(p.country,120); if(!country)throw new Error("Country is required.");
+      const item={
+        id:clean(p.id,120)||"country-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),
+        country,flag:clean(p.flag,10),currency:clean(p.currency,30),region:clean(p.region,100),
+        average_salary:clean(p.average_salary,180),salary_period:clean(p.salary_period,60),
+        cost_of_living:clean(p.cost_of_living,500),rent:clean(p.rent,500),food:clean(p.food,500),
+        transport:clean(p.transport,500),healthcare:clean(p.healthcare,500),estimated_savings:clean(p.estimated_savings,500),
+        housing_benefit:clean(p.housing_benefit,300),flight_benefit:clean(p.flight_benefit,300),
+        visa:clean(p.visa,2000),work_permit:clean(p.work_permit,2000),qualifications:clean(p.qualifications,2000),
+        teacher_registration:clean(p.teacher_registration,2000),experience:clean(p.experience,500),
+        language:clean(p.language,500),curricula:clean(p.curricula,1000),subjects_in_demand:clean(p.subjects_in_demand,1000),
+        recruitment_period:clean(p.recruitment_period,500),required_documents:clean(p.required_documents,2500),
+        official_links:clean(p.official_links,3000),notes:clean(p.notes,4000),
+        last_verified:clean(p.last_verified,40),status:["draft","published"].includes(String(p.status))?String(p.status):"published",
+        updated_at:new Date().toISOString(),created_at:clean(p.created_at,60)||new Date().toISOString()
+      };
+      if(supabaseConfigured){
+        try{const {data,error}=await supabase.from("international_country_guides").upsert(item,{onConflict:"id"}).select("*").single();if(!error){sendJson(res,200,{ok:true,country:data,storage:"supabase"});return true;}console.warn("Supabase country guide save failed:",error.message||error);}catch(error){console.warn("Supabase country guide save failed:",error.message||error);}
+      }
+      const rows=await readJsonStore("international-country-guides.json");
+      await fs.writeFile(path.join(DATA_DIR,"international-country-guides.json"),JSON.stringify([item,...rows.filter(x=>String(x.id)!==String(item.id))],null,2));
+      sendJson(res,200,{ok:true,country:item,storage:"local"});
+    }catch(error){sendJson(res,400,{ok:false,error:error.message||"Country guide could not be saved."});}
+    return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/international-country/delete"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{
+      const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"").trim();if(!id)throw new Error("Country guide ID is required.");
+      if(supabaseConfigured){
+        try{const {error}=await supabase.from("international_country_guides").delete().eq("id",id);if(!error){sendJson(res,200,{ok:true,storage:"supabase"});return true;}console.warn("Supabase country guide delete failed:",error.message||error);}catch(error){console.warn("Supabase country guide delete failed:",error.message||error);}
+      }
+      const rows=await readJsonStore("international-country-guides.json");
+      await fs.writeFile(path.join(DATA_DIR,"international-country-guides.json"),JSON.stringify(rows.filter(x=>String(x.id)!==id),null,2));
+      sendJson(res,200,{ok:true,storage:"local"});
+    }catch(error){sendJson(res,400,{ok:false,error:error.message||"Country guide could not be deleted."});}
+    return true;
+  }
   if(url.pathname.startsWith("/api/")){sendJson(res,404,{ok:false,error:"API route not found."});return true;}return false;
 }
 
