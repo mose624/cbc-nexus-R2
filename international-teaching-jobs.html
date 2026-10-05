@@ -182,6 +182,41 @@ $('sampleCv').addEventListener('click',()=>{$('cvName').value='Your Full Name';$
 const input=$('jobSearchInput'),region=$('regionFilter'),level=$('levelFilter'),cards=[...document.querySelectorAll('.job-card')];function filterJobs(){let q=(input.value||'').toLowerCase().trim(),r=region.value,l=level.value;let shown=0;cards.forEach(c=>{let okQ=!q||c.dataset.keywords.includes(q),okR=r==='all'||c.dataset.region===r,okL=l==='all'||c.dataset.level.includes(l);c.classList.toggle('hidden',!(okQ&&okR&&okL));if(okQ&&okR&&okL)shown++});$('jobEmpty').classList.toggle('hidden',shown>0)}[input,region,level].forEach(x=>x.addEventListener('input',filterJobs));$('clearJobFilters').addEventListener('click',()=>{input.value='';region.value='all';level.value='all';filterJobs()});score();
 })();
 </script>
+<section class="section" id="countryGuides"><div class="section-head"><div><h2>💰 Country Application & Cost-of-Living Guides</h2><p>Compare salary, living costs, savings potential, visa requirements, qualifications and other application information before applying.</p></div></div><div id="countryGuideGrid" class="grid"><p class="muted">Loading country guides...</p></div><div class="card" style="margin-top:16px"><h3>🧮 Salary vs Cost-of-Living Calculator</h3><div class="form-grid" style="margin-top:12px"><div><label>Monthly salary</label><input id="calcSalary" type="number" min="0" placeholder="e.g. 15000"></div><div><label>Monthly living costs</label><input id="calcLiving" type="number" min="0" placeholder="e.g. 7000"></div><div><label>Housing provided?</label><select id="calcHousing"><option value="0">No</option><option value="1">Yes</option></select></div><div><label>Housing cost if not provided</label><input id="calcRent" type="number" min="0" placeholder="e.g. 3000"></div></div><p id="calcResult" class="muted" style="margin-top:12px">Enter figures to estimate monthly savings.</p></div></section>
+<style>
+.country-guide-card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.035)}
+.country-guide-card h3{margin:0 0 8px}.guide-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px}.guide-item{margin:8px 0;font-size:12px;color:#4b5563}.guide-item strong{color:#18202b}.official-links a{display:block;font-size:12px;margin-top:4px}@media(max-width:900px){.guide-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:650px){.guide-grid{grid-template-columns:1fr}}
+</style>
+<script>
+(async function(){
+const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]));
+const grid=document.getElementById("countryGuideGrid");
+try{
+ const r=await fetch("/api/international-countries?_="+Date.now()),d=await r.json(); if(!r.ok||!d.ok)throw Error(d.error||"Could not load country guides.");
+ const rows=d.countries||[];
+ grid.innerHTML=rows.length?'<div class="guide-grid">'+rows.map(x=>{
+  const links=String(x.official_links||"").split(/\n+/).filter(Boolean).map(u=>{let safe="";try{const q=new URL(u);if(/^https?:$/.test(q.protocol))safe=q.href}catch{}return safe?'<a href="'+esc(safe)+'" target="_blank" rel="noopener">'+esc(safe)+'</a>':""}).join("");
+  return '<article class="country-guide-card"><h3>'+(esc(x.flag||"🌍"))+' '+esc(x.country)+'</h3><p class="muted">'+esc(x.region||"International")+(x.currency?' · '+esc(x.currency):"")+'</p>'+
+  (x.average_salary?'<div class="guide-item"><strong>💰 Salary:</strong> '+esc(x.average_salary)+' '+esc(x.salary_period||"")+'</div>':"")+
+  (x.cost_of_living?'<div class="guide-item"><strong>🏠 Cost of living:</strong> '+esc(x.cost_of_living)+'</div>':"")+
+  (x.rent?'<div class="guide-item"><strong>🏡 Rent:</strong> '+esc(x.rent)+'</div>':"")+
+  (x.food?'<div class="guide-item"><strong>🍽️ Food:</strong> '+esc(x.food)+'</div>':"")+
+  (x.transport?'<div class="guide-item"><strong>🚕 Transport:</strong> '+esc(x.transport)+'</div>':"")+
+  (x.estimated_savings?'<div class="guide-item"><strong>💵 Estimated savings:</strong> '+esc(x.estimated_savings)+'</div>':"")+
+  (x.visa?'<div class="guide-item"><strong>🛂 Visa:</strong> '+esc(x.visa)+'</div>':"")+
+  (x.qualifications?'<div class="guide-item"><strong>🎓 Qualifications:</strong> '+esc(x.qualifications)+'</div>':"")+
+  (x.teacher_registration?'<div class="guide-item"><strong>👨‍🏫 Registration:</strong> '+esc(x.teacher_registration)+'</div>':"")+
+  (x.subjects_in_demand?'<div class="guide-item"><strong>📚 Subjects in demand:</strong> '+esc(x.subjects_in_demand)+'</div>':"")+
+  (x.recruitment_period?'<div class="guide-item"><strong>📅 Recruitment:</strong> '+esc(x.recruitment_period)+'</div>':"")+
+  (x.last_verified?'<div class="guide-item"><strong>✓ Last verified:</strong> '+esc(x.last_verified)+'</div>':"")+
+  (links?'<div class="guide-item official-links"><strong>🔗 Official links:</strong>'+links+'</div>':"")+
+  (x.notes?'<div class="guide-item"><strong>⚠️ Notes:</strong> '+esc(x.notes)+'</div>':"")+'</article>'
+ }).join("")+'</div>':'<div class="card"><p>Country guides are being prepared. Check back soon.</p></div>';
+}catch(e){grid.innerHTML='<div class="card"><p>'+esc(e.message)+'</p></div>'}
+function calc(){const s=Number(document.getElementById("calcSalary").value||0),l=Number(document.getElementById("calcLiving").value||0),h=document.getElementById("calcHousing").value==="1",rent=Number(document.getElementById("calcRent").value||0),cost=l+(h?0:rent),save=s-cost;document.getElementById("calcResult").innerHTML=s?'Estimated monthly balance: <strong>'+save.toLocaleString()+'</strong> (before taxes and other deductions).':''}
+["calcSalary","calcLiving","calcHousing","calcRent"].forEach(id=>document.getElementById(id).addEventListener("input",calc));document.getElementById("calcHousing").addEventListener("change",calc);
+})();
+</script>
 <section id="internationalVacanciesPublic" class="content-band international-vacancies-band"><div class="section-heading"><div><p class="eyebrow">Live vacancy board</p><h2>Teaching Vacancies Abroad</h2><p>Published opportunities are added and managed by CBE Nexus admin.</p></div></div><div id="internationalVacancyGrid" class="vacancy-grid"><p class="form-status">Loading vacancies...</p></div></section><script src="app.js"></script><script src="section-shell.js?v=20261004-3" defer></script><script src="customer-care.js?v=20261004-2" defer></script>
 </body>
 </html>
