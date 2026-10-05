@@ -78,6 +78,13 @@ const stores={"/api/projects":"projects.json","/api/tuition":"tuition-registrati
 async function ensureDataDir(){await fs.mkdir(DATA_DIR,{recursive:true});}
 async function readJsonStore(f){await ensureDataDir();try{return JSON.parse(await fs.readFile(path.join(DATA_DIR,f),"utf8"));}catch{return [];}}
 async function appendJsonStore(f,item){const c=await readJsonStore(f),s={id:item.id||`${Date.now()}`,...item,receivedAt:new Date().toISOString()};c.unshift(s);await fs.writeFile(path.join(DATA_DIR,f),JSON.stringify(c,null,2));return s;}
+function normaliseCueProgramme(p){
+  return {institutionName:String(p.institutionName||p.university||"").trim(),institutionCode:String(p.institutionCode||p.code||"").trim(),county:String(p.county||"").trim(),programmeCode:String(p.programmeCode||p.programCode||"").trim(),programmeName:String(p.programmeName||p.name||"").trim(),qualificationLevel:String(p.qualificationLevel||p.level||"").trim(),field:String(p.field||"").trim(),accreditationStatus:String(p.accreditationStatus||p.status||"").trim(),sourceDate:String(p.sourceDate||"2026-07-31").trim()};
+}
+async function readCueProgrammes(){
+  const d=await readJsonStore("cue-programmes.json");
+  return Array.isArray(d)?d:(Array.isArray(d.records)?d.records:[]);
+}
 // Matches the actual Supabase resources table. preview_text is intentionally omitted because it is not present in the live schema.
 function resourceRowFromPayload(p,sellerId=null,previewKey=""){return {seller_id:sellerId,title:String(p.title||"").trim(),description:String(p.description||"").trim(),grade:String(p.grade||"").trim(),subject:String(p.subject||"").trim(),resource_type:String(p.type||"").trim(),filename:String(p.fileName||"").trim(),r2_key:String(p.r2Key||"").trim(),preview_key:String(previewKey||p.previewKey||"").trim(),price:Math.max(0,Number(p.price||0)),discount_price:Math.max(0,Number(p.discountPrice||0)),status:String(p.status||"pending")};}
 function resourcePayloadFromRow(r){const internationalCurricula=["IGCSE","IB","O Level","A Level","Pearson"];const curriculum=internationalCurricula.includes(String(r.grade||"").trim())?String(r.grade||"").trim():"CBC/CBE";return {id:r.id,title:r.title,grade:r.grade,subject:r.subject,type:r.resource_type||"",description:r.description||"",curriculum,price:Number(r.price||0),discount:Number(r.discount_price||0),term:"",isFreeSample:false,popularity:0,fileName:r.filename||"",r2Key:r.r2_key||"",previewKey:r.preview_key||"",previewText:"",createdAt:r.created_at||"",updatedAt:r.updated_at||"",file:r.r2_key?"/api/r2/file?key="+encodeURIComponent(r.r2_key):"",status:r.status||"pending",downloads:0,purchases:0,sellerId:r.seller_id||null,createdAt:r.created_at||null,updatedAt:r.updated_at||null};}
@@ -1234,6 +1241,20 @@ async function getTvetaCourses(){
       const pick=(label,next)=>{const i=textPage.toLowerCase().indexOf(label.toLowerCase());return i>=0?textPage.slice(i+label.length,(next?textPage.toLowerCase().indexOf(next.toLowerCase(),i+label.length):i+label.length+180)).trim():"";};
       sendJson(res,200,{ok:true,institutionName, courses:rows, source:"TVETA", sourceUrl:detailUrl, fetchedAt:new Date().toISOString(),detailsPage:detailUrl});
     }catch(error){console.error("TVETA institution lookup error:",error);sendJson(res,502,{ok:false,institutionName,courses:[],source:"TVETA",sourceUrl:"https://www.tveta.go.ke/accredited-tvet-institutions/",error:"TVETA institution data could not be loaded right now."});}
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/cue/programmes"){
+    const q=String(url.searchParams.get("q")||"").trim().toLowerCase();
+    const institution=String(url.searchParams.get("institution")||"").trim().toLowerCase();
+    const county=String(url.searchParams.get("county")||"").trim().toLowerCase();
+    const level=String(url.searchParams.get("level")||"").trim().toLowerCase();
+    const rows=(await readCueProgrammes()).map(normaliseCueProgramme).filter(p=>
+      (!q||[p.programmeName,p.programmeCode,p.field,p.institutionName].join(" ").toLowerCase().includes(q))&&
+      (!institution||p.institutionName.toLowerCase()===institution)&&
+      (!county||p.county.toLowerCase()===county)&&
+      (!level||p.qualificationLevel.toLowerCase()===level)
+    );
+    sendJson(res,200,{ok:true,source:"CUE",sourceDate:"2026-07-31",imported:Boolean(rows.length),programmes:rows,total:rows.length});
     return true;
   }
   if(req.method==="GET"&&url.pathname==="/api/kuccps/university-programmes"){
