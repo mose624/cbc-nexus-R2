@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node server.js",
-    "prestart": "node scripts/ensure-admin-physics.js",
+    "prestart": "node scripts/ensure-admin-physics.js && node scripts/ensure-free-downloads.js",
     "import:cue": "node scripts/import-cue-data.js"
   },
   "dependencies": {
