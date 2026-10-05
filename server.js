@@ -802,6 +802,33 @@ async function handleApi(req,res,url){
     if(supabaseConfigured){try{const {data,error}=await supabase.from("download_approvals").select("*").order("created_at",{ascending:false}).limit(100);if(error)throw error;sendJson(res,200,{ok:true,approvals:data||[],storage:"supabase"});return true;}catch(error){console.error("Download approvals lookup error:",error);sendJson(res,500,{ok:false,error:"Download approvals could not be loaded."});return true;}}
     sendJson(res,200,{ok:true,approvals:(await readJsonStore("download-approvals.json")).slice(0,100),storage:"local"});return true;
   }
+  // CBE_NEXUS_FREE_DOWNLOAD_V2
+  if(req.method==="GET"&&url.pathname==="/api/r2/free-download"){
+    const resourceId=String(url.searchParams.get("resourceId")||"").trim();
+    if(!resourceId){sendJson(res,400,{ok:false,error:"Resource ID is required."});return true;}
+    try{
+      let resource=null;
+      if(supabaseConfigured){
+        const {data,error}=await supabase.from("resources").select("id,r2_key,status,filename,title,price,discount_price").eq("id",resourceId).maybeSingle();
+        if(error)throw error; resource=data;
+      } else {
+        resource=(await readJsonStore("resources.json")).find(x=>String(x.id)===resourceId);
+      }
+      if(!resource||!resource.r2_key||String(resource.status||"approved").toLowerCase()!=="approved"){
+        sendJson(res,404,{ok:false,error:"This resource is not available for download."});return true;
+      }
+      const effectivePrice=resourcePrice(resource);
+      if(effectivePrice!==0){
+        sendJson(res,402,{ok:false,error:"This resource requires payment before download."});return true;
+      }
+      const downloadUrl=await createDownloadUrl(resource.r2_key);
+      sendJson(res,200,{ok:true,downloadUrl,expiresIn:300,fileName:resource.filename||"",title:resource.title||"",free:true});
+    }catch(error){
+      console.error("Free resource download error:",error);
+      sendJson(res,500,{ok:false,error:"Free resource download could not be prepared."});
+    }
+    return true;
+  }
   if(req.method==="GET"&&url.pathname==="/api/r2/view"){
     const resourceId=String(url.searchParams.get("resourceId")||"").trim();
     if(!resourceId){sendJson(res,400,{ok:false,error:"Resource ID is required."});return true;}
