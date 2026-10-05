@@ -1633,5 +1633,40 @@
 })();
 </script>
 <script src="/ad-revenue.js?v=20261005-1" defer></script>
+<!-- CBE_NEXUS_FREE_DOWNLOAD_UI_V2 -->
+<script>
+(function(){
+  const MARK="CBE_NEXUS_FREE_DOWNLOAD_UI_V2";
+  const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]));
+  function resources(){
+    try{return JSON.parse(localStorage.getItem("cbeResources")||"[]").concat(JSON.parse(localStorage.getItem("cbeSellerResources")||"[]"));}catch{return [];}
+  }
+  function price(r){const p=Number(r?.price||0),d=Math.max(0,Math.min(100,Number(r?.discount||r?.discount_price||0)));return Math.max(0,Math.round(p*(1-d/100)));}
+  async function download(id,btn){
+    btn.disabled=true; const old=btn.innerHTML; btn.innerHTML="⏳ Preparing…";
+    try{
+      const r=await fetch("/api/r2/free-download?resourceId="+encodeURIComponent(id),{credentials:"same-origin",cache:"no-store"});
+      const d=await r.json().catch(()=>({}));
+      if(!r.ok||!d.ok) throw new Error(d.error||"Free download is unavailable.");
+      const a=document.createElement("a");a.href=d.downloadUrl;a.target="_blank";a.rel="noopener";a.download=d.fileName||"";
+      document.body.appendChild(a);a.click();a.remove();
+      if(typeof showToast==="function")showToast("✓ Free resource download started.");
+    }catch(e){if(typeof showToast==="function")showToast(e.message||"Download failed.");else alert(e.message||"Download failed.");}
+    finally{btn.disabled=false;btn.innerHTML=old;}
+  }
+  function inject(){
+    document.querySelectorAll("#resourceGrid [data-pay]").forEach(pay=>{
+      const card=pay.closest("article, .resource-card, .card, li, div"); if(!card||card.querySelector("[data-free-download]"))return;
+      const id=pay.dataset.pay; const r=resources().find(x=>String(x.id)===String(id));
+      if(!r||price(r)!==0)return;
+      const b=document.createElement("button");b.type="button";b.className="primary-button free-download-button";b.dataset.freeDownload=id;b.textContent="⬇ Download FREE";
+      b.addEventListener("click",()=>download(id,b));
+      pay.insertAdjacentElement("afterend",b);
+    });
+  }
+  function boot(){inject();const grid=document.getElementById("resourceGrid");if(grid)new MutationObserver(inject).observe(grid,{childList:true,subtree:true});window.addEventListener("cbe:resources-synced",()=>setTimeout(inject,50));}
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot,{once:true});else boot();
+})();
+</script>
 </body>
 </html>
