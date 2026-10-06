@@ -1539,7 +1539,7 @@ async function requestMpesaPayment(event){
       if(status)status.textContent="Waiting for M-Pesa confirmation… ("+(attempt+1)+"/30)";
     }
     if(!paid)throw new Error("Payment confirmation is taking longer than expected. Please check your M-Pesa message and use the Download button again after confirmation.");
-    if(status)status.textContent="Payment confirmed. Preparing your secure download…";
+    if(status){status.innerHTML="<strong style=\"color:#166534;font-size:18px;\">✅ PAYMENT SUCCESSFUL</strong><br><span>Your payment has been received successfully. Preparing your secure download…</span>";status.className="form-status payment-success";}
     const approval=await fetch("/api/download-approval/request",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({resourceId,customerPhone:phone,paymentReference:checkoutRequestID})});
     const approvalData=await approval.json().catch(()=>({}));
     if(!approval.ok||!approvalData.ok)throw new Error(approvalData.error||"Payment was confirmed but download access could not be prepared.");
