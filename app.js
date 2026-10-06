@@ -354,6 +354,27 @@ function restoreAdminAccess() {
     }
   } catch (_) {}
 }
+const ADMIN_EXTENSION_SCRIPTS = [
+  "/r2-browser.js",
+  "/ai-course-admin.js?v=20261004-1",
+  "/scholarships-admin.js?v=20261004-1",
+  "/school-directory-admin.js?v=20261004-1",
+  "/admin-blog.js?v=20261004-1",
+  "/ad-revenue.js?v=20261005-1"
+];
+let adminExtensionsPromise = null;
+function loadAdminExtensions(){
+  if(adminExtensionsPromise) return adminExtensionsPromise;
+  adminExtensionsPromise = Promise.all(ADMIN_EXTENSION_SCRIPTS.map(src=>new Promise(resolve=>{
+    if(document.querySelector('script[data-cbe-admin-extension="'+src+'"]')) return resolve();
+    const s=document.createElement("script");
+    s.src=src; s.defer=true; s.dataset.cbeAdminExtension=src;
+    s.onload=resolve; s.onerror=resolve;
+    document.head.appendChild(s);
+  })));
+  return adminExtensionsPromise;
+}
+
 function openAdminLogin(event) {
   event?.preventDefault();
   const section=document.getElementById("adminLogin");
@@ -559,6 +580,7 @@ async function unlockAdmin(event) {
     const d=await r.json().catch(()=>({}));
     if(!r.ok||!d.ok) throw new Error(d.error||"Invalid admin credentials.");
     sessionStorage.setItem("cbeAdminUnlocked","true");
+    await loadAdminExtensions();
     document.body.classList.add("admin-unlocked");
     const login=document.getElementById("adminLogin");
     if(login){login.classList.remove("open");login.setAttribute("aria-hidden","true");}
