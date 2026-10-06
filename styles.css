@@ -6261,980 +6261,160 @@ html[data-grade-theme="international"]{--grade-accent:#00838f;--grade-accent-2:#
   }
 }
 
-
-/* MOBILE-ONLY FINAL RESPONSIVE PASS — 2026-10-06 */
-/* IMPORTANT: These rules apply only to screens 767px and below. Desktop is untouched. */
-
-@media (max-width: 767px) {
-  html, body {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
+/* DESKTOP-ONLY LOCK — 2026-10-06 */
+/* One presentation across phones, tablets and desktops. No mobile redesign. */
+@media (max-width: 1099px) {
+  html {
+    width: 1100px !important;
+    min-width: 1100px !important;
+    max-width: none !important;
   }
 
   body {
-    font-size: 14px;
+    width: 1100px !important;
+    min-width: 1100px !important;
+    max-width: none !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
   }
 
-  .top-strip {
-    padding: 7px 10px;
-    gap: 6px;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .top-strip a {
-    flex: 0 0 auto;
-    min-height: 34px;
-    padding: 7px 9px;
-    font-size: 11px;
-  }
-
-  .main-nav {
-    min-height: auto;
-    padding: 9px 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-  }
-
-  .brand {
-    width: 100%;
-    justify-content: center;
-    gap: 8px;
-    text-align: center;
-  }
-
-  .brand-mark {
-    width: 38px;
-    height: 38px;
-    min-width: 38px;
-    font-size: 12px;
-  }
-
-  .brand strong {
-    font-size: 15px;
-  }
-
-  .brand small {
-    font-size: 10px;
-  }
-
-  .nav-menu,
-  .nav-actions {
-    width: 100%;
-    display: flex !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    gap: 5px !important;
-    overflow: visible !important;
-  }
-
-  .nav-menu .nav-link,
-  .nav-menu .nav-dropdown > summary,
-  .nav-actions > a,
-  .nav-actions > button {
-    min-height: 38px !important;
-    padding: 8px 9px !important;
-    font-size: 11px !important;
-    line-height: 1.15 !important;
-    white-space: normal !important;
-    text-align: center !important;
-  }
-
-  .dashboard-shell {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 14px 10px;
-  }
-
-  .intro-panel {
-    min-height: 430px;
-    padding: 22px 16px;
-    border-radius: 10px;
-  }
-
-  .intro-panel h1 {
-    font-size: clamp(30px, 9vw, 44px);
-    line-height: 1.05;
-  }
-
-  .intro-panel p {
-    font-size: 14px;
-    line-height: 1.5;
-  }
-
-  .hero-resource-buttons {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 8px;
-    width: 100%;
-  }
-
-  .hero-resource-buttons a,
-  .hero-resource-buttons button {
-    width: 100%;
-    min-height: 44px;
-    font-size: 13px;
-  }
-
-  .summary-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 7px;
-    margin-top: 18px;
-  }
-
-  .summary-grid div {
-    padding: 11px;
-  }
-
-  .summary-grid strong {
-    font-size: 19px;
-  }
-
-  .summary-grid span {
-    font-size: 11px;
-  }
-
-  .grade-panel {
-    padding: 14px 10px;
-    border-radius: 10px;
-  }
-
-  .panel-heading h2,
-  .section-heading h2,
-  .admin-copy h2 {
-    font-size: 22px;
-  }
-
-  .grade-list {
-    max-height: none;
-    overflow: visible;
-    gap: 7px;
-  }
-
-  .grade-toggle {
-    min-height: 46px;
-    padding: 11px 12px;
-    font-size: 14px;
-  }
-
-  .subject-menu {
-    display: none;
-    flex-direction: column;
-    gap: 7px;
-    padding: 9px 10px 11px;
-  }
-
-  .grade-card.open .subject-menu {
-    display: flex;
-  }
-
-  .subject-dropdown {
-    min-height: 44px;
-    font-size: 13px;
-  }
-
-  .subject-chip {
-    width: 100%;
-    min-height: 42px;
-    padding: 9px 10px;
-    font-size: 13px;
-    text-align: left;
-  }
-
+  .site-header,
+  .top-strip,
+  .main-nav,
+  .dashboard-shell,
   .content-band,
   .admin-band,
-  .payment-band,
-  .competitive-band,
-  .seller-band,
-  .urgent-band,
-  .admin-login-band,
   .trust-band,
   .promo-band,
-  .seo-band,
-  .landing-band {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-
-  .content-band,
-  .admin-band,
   .seller-band,
+  .urgent-band,
   .competitive-band,
+  .seo-band,
+  .landing-band,
   .payment-band,
-  .admin-login-band {
-    padding-top: 26px;
-    padding-bottom: 26px;
+  .admin-login-band,
+  .site-footer,
+  .info-band {
+    min-width: 1100px !important;
   }
 
-  .section-heading {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
+  .main-nav {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
   }
 
-  .filters {
-    grid-template-columns: 1fr;
-    gap: 9px;
+  .nav-actions,
+  .nav-menu {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
   }
 
-  .resource-grid,
-  .feature-grid,
-  .trust-grid,
-  .landing-grid {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .resource-card {
-    min-height: auto;
-    padding: 14px;
-  }
-
-  .resource-card h3 {
-    font-size: 18px;
-  }
-
-  .resource-card p {
-    font-size: 13px;
-  }
-
-  .price-row {
-    flex-wrap: wrap;
-    align-items: stretch;
-  }
-
-  .price-row .primary-button,
-  .price-row .download-button,
-  .price-row button,
-  .price-row a {
-    width: 100%;
-  }
-
-  .seller-layout,
+  .dashboard-shell,
+  .admin-layout,
   .payment-layout,
+  .seller-layout,
+  .info-layout,
   .admin-login-card,
   .promo-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .refer-form {
-    grid-template-columns: 1fr;
-  }
-
-  .download-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  input,
-  select,
-  textarea {
-    min-height: 44px;
-    font-size: 14px;
-  }
-
-  button,
-  .primary-button,
-  .ghost-button,
-  .download-button,
-  .secondary-button,
-  .whatsapp-button,
-  .mpesa-header-button,
-  .cart-button,
-  .danger-blink-button {
-    min-height: 42px;
-  }
-
-  .approval-actions {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-
-  .approval-actions button {
-    width: 100%;
-  }
-
-  /* Mobile portal: one readable column instead of the previous 3-column squeeze. */
-  #dashboard.portal-dashboard {
-    width: calc(100% - 12px) !important;
-    max-width: none !important;
-    margin: 6px auto !important;
-    padding: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 8px !important;
-  }
-
-  #dashboard.portal-dashboard > .portal-sidebar,
-  #dashboard.portal-dashboard > .portal-main,
-  #dashboard.portal-dashboard > .portal-rightbar {
-    width: 100% !important;
-    min-width: 0 !important;
-    min-height: 0 !important;
-    padding: 10px !important;
-    overflow: visible !important;
-  }
-
-  #dashboard.portal-dashboard .portal-welcome h1 {
-    font-size: 20px !important;
-    line-height: 1.2 !important;
-  }
-
-  #dashboard.portal-dashboard .portal-welcome p {
-    font-size: 12px !important;
-    line-height: 1.45 !important;
-  }
-
-  #dashboard.portal-dashboard .portal-category-grid {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 7px !important;
-  }
-
-  #dashboard.portal-dashboard .portal-category-grid a {
-    padding: 9px !important;
-  }
-
-  #dashboard.portal-dashboard .portal-category-grid strong {
-    font-size: 11px !important;
-  }
-
-  #dashboard.portal-dashboard .portal-category-grid span {
-    font-size: 9px !important;
-  }
-
-  #dashboard.portal-dashboard .portal-side-link {
-    min-height: 40px !important;
-    padding: 9px 8px !important;
-    font-size: 11px !important;
-  }
-
-  #dashboard.portal-dashboard .portal-card {
-    padding: 10px !important;
-  }
-
-  #holidayTuition,
-  #quizCentre,
-  #about,
-  #privacy,
-  #educationHubHome {
-    width: calc(100% - 12px) !important;
-    max-width: none !important;
-    margin: 7px auto !important;
-    padding: 14px !important;
-  }
-
-  #holidayTuition h2,
-  #quizCentre h2,
-  #about h2,
-  #privacy h2 {
-    font-size: 18px !important;
-  }
-
-  #holidayTuition p,
-  #quizCentre p,
-  #about p,
-  #privacy p,
-  #holidayTuition li,
-  #quizCentre li,
-  #about li,
-  #privacy li {
-    font-size: 12px !important;
-    line-height: 1.5 !important;
-  }
-
-  #educationHubHome .education-hub-heading {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-  }
-
-  #educationHubHome .education-hub-heading h2 {
-    font-size: 18px !important;
-  }
-
-  #educationHubHome .education-hub-heading p {
-    font-size: 12px !important;
-  }
-
-  #educationHubHome .education-hub-home-grid {
-    grid-template-columns: 1fr !important;
-    gap: 9px !important;
-  }
-
-  #educationHubHome .education-hub-card {
-    padding: 12px !important;
-  }
-
-  #educationHubHome .education-hub-card h3 {
-    font-size: 15px !important;
-  }
-
-  #educationHubHome .education-hub-card p,
-  #educationHubHome .education-hub-card a {
-    font-size: 12px !important;
-  }
-
-  .site-footer {
-    padding: 16px 10px !important;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    text-align: center;
-  }
-
-  .footer-office-image-wrap {
-    width: min(180px, 100%) !important;
-    max-width: 100% !important;
-    margin: 0 auto;
-  }
-
-  .footer-office-image {
-    height: 90px !important;
-  }
-
-  .site-footer .footer-links {
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .site-footer .footer-links a {
-    min-height: 36px;
-    font-size: 10px !important;
-  }
-
-  .whatsapp-floating-footer {
-    right: 12px !important;
-    left: auto !important;
-    bottom: 12px !important;
-    transform: none !important;
-    min-width: 0 !important;
-    padding: 11px 14px !important;
-    font-size: 12px !important;
-  }
-
-  .whatsapp-floating-footer:hover {
-    transform: translateY(-2px) !important;
-  }
-
-  #customerCareWidget,
-  #customerCareButton,
-  #customer-care-widget,
-  #customer-care-button {
-    left: 10px !important;
-    right: auto !important;
-    bottom: 12px !important;
-  }
-
-  .viewer-modal,
-  .resource-preview-modal {
-    padding: 4px !important;
-  }
-
-  .viewer-dialog,
-  .resource-preview-dialog {
-    width: 100% !important;
-    max-width: 100% !important;
-    height: 94vh !important;
-    max-height: 94vh !important;
-    border-radius: 8px !important;
-  }
-
-  img,
-  video,
-  iframe,
-  canvas {
-    max-width: 100%;
-    height: auto;
-  }
-}
-
-@media (max-width: 380px) {
-  .main-nav {
-    padding-left: 7px;
-    padding-right: 7px;
-  }
-
-  .nav-menu .nav-link,
-  .nav-menu .nav-dropdown > summary,
-  .nav-actions > a,
-  .nav-actions > button {
-    font-size: 10px !important;
-    padding: 7px !important;
-  }
-
-  .summary-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .intro-panel {
-    min-height: 400px;
-    padding: 18px 13px;
-  }
-
-  .intro-panel h1 {
-    font-size: 29px;
-  }
-
-  #dashboard.portal-dashboard {
-    width: calc(100% - 8px) !important;
-  }
-
-  #dashboard.portal-dashboard .portal-category-grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  .download-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-
-/* MOBILE DESKTOP-DESIGN CONSISTENCY PASS — 2026-10-06 */
-/* Mobile-only: preserve the site's desktop visual hierarchy while making content fit. */
-@media (max-width: 760px) {
-  body {
-    background: #f4f8f9;
-    color: #17202a;
-    line-height: 1.45;
-  }
-
-  /* Consistent page surfaces for pages that previously appeared plain/uncoloured. */
-  main,
-  .page,
-  .page-container,
-  .page-content,
-  .main-content,
-  .content-page,
-  .dashboard-page {
-    background: #f4f8f9;
-    color: #17202a;
-  }
-
-  /* Keep the main brand/header treatment consistent across every page. */
-  .site-header,
-  .site-header .main-nav,
-  .main-nav {
-    background: #c62828;
-    color: #fff;
-  }
-
-  .site-header {
-    border-bottom: 0;
-  }
-
-  .main-nav {
-    box-shadow: 0 2px 10px rgba(18,52,71,.12);
-  }
-
-  /* Long page titles: compact, readable, never oversized. */
-  h1 {
-    font-size: clamp(24px, 7vw, 34px);
-    line-height: 1.12;
-    overflow-wrap: anywhere;
-    word-break: normal;
-  }
-
-  h2 {
-    font-size: clamp(19px, 5.5vw, 27px);
-    line-height: 1.18;
-    overflow-wrap: anywhere;
-  }
-
-  h3 {
-    font-size: clamp(16px, 4.6vw, 21px);
-    line-height: 1.22;
-    overflow-wrap: anywhere;
-  }
-
-  h4 {
-    font-size: 15px;
-    line-height: 1.25;
-  }
-
-  p,
-  li,
-  td,
-  th,
-  label,
-  small {
-    font-size: 12px;
-    line-height: 1.5;
-  }
-
-  .long-text,
-  .description,
-  .page-description,
-  .intro-text,
-  .article-content,
-  .article-body,
-  .blog-content,
-  .institution-description,
-  .course-description,
-  .scholarship-description,
-  .job-description {
-    font-size: 12px;
-    line-height: 1.55;
-    overflow-wrap: anywhere;
-  }
-
-  /* Professional desktop-style cards on mobile: clean, consistent surfaces. */
-  .card,
-  .panel,
-  .section-card,
-  .content-card,
-  .info-card,
-  .resource-card,
-  .institution-card,
-  .job-card,
-  .scholarship-card,
-  .course-card,
-  .blog-card,
-  .feature-card,
-  .directory-card,
-  .admin-card,
-  .stat-card {
-    background: #fff;
-    border: 1px solid #d9e2e6;
-    border-radius: 8px;
-    box-shadow: 0 5px 18px rgba(18,52,71,.07);
-  }
-
-  /* Avoid giant unstructured blocks. */
-  .card,
-  .panel,
-  .section-card,
-  .content-card,
-  .info-card,
-  .resource-card,
-  .institution-card,
-  .job-card,
-  .scholarship-card,
-  .course-card,
-  .blog-card,
-  .feature-card,
-  .directory-card,
-  .admin-card,
-  .stat-card {
-    padding: 12px;
-  }
-
-  /* Tables remain desktop-like but become horizontally scrollable instead of breaking. */
-  table {
-    width: 100%;
-    min-width: 560px;
-    border-collapse: collapse;
-    font-size: 11px;
-  }
-
-  .table-wrap,
-  .table-responsive,
-  .responsive-table,
-  .data-table-wrap {
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  th,
-  td {
-    padding: 7px 8px;
-    vertical-align: top;
-  }
-
-  /* Long institution, scholarship and vacancy names stay compact and readable. */
-  .institution-name,
-  .job-title,
-  .scholarship-title,
-  .course-title,
-  .resource-title,
-  .page-title,
-  .card-title {
-    font-size: 15px;
-    line-height: 1.25;
-    overflow-wrap: anywhere;
-  }
-
-  /* Buttons: consistent colours, compact text, no ambiguous empty-looking controls. */
-  button,
-  a.primary-button,
-  a.secondary-button,
-  a.download-button,
-  a.ghost-button,
-  a.apply-button,
-  a.view-button,
-  a.action-button {
-    min-height: 36px;
-    border-radius: 6px;
-    font-size: 11px;
-    line-height: 1.2;
-    padding: 8px 10px;
-  }
-
-  .primary-button,
-  .download-button,
-  .apply-button {
-    background: #2f7d57;
-    color: #fff;
-  }
-
-  .secondary-button,
-  .view-button {
-    background: #123447;
-    color: #fff;
-  }
-
-  .ghost-button {
-    background: #eef5f6;
-    color: #123447;
-    border: 1px solid #d9e2e6;
-  }
-
-  /* Form controls share one clean visual language. */
-  input,
-  select,
-  textarea {
-    min-height: 38px;
-    border: 1px solid #cbd7dc;
-    border-radius: 6px;
-    background: #fff;
-    color: #17202a;
-    font-size: 12px;
-    padding: 8px 10px;
-  }
-
-  /* Lists/grids on all named pages become orderly rather than squeezed. */
-  .cards-grid,
-  .card-grid,
-  .grid,
-  .directory-grid,
-  .institution-grid,
-  .jobs-grid,
-  .scholarships-grid,
-  .courses-grid,
-  .blog-grid {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 9px !important;
-  }
-
-  /* Page headers remain visually distinct and centred. */
-  .page-header,
-  .page-hero,
-  .section-header,
-  .page-heading {
-    text-align: center;
-    padding: 18px 10px;
-  }
-
-  .page-header h1,
-  .page-hero h1,
-  .section-header h1,
-  .section-header h2,
-  .page-heading h1 {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  /* Prevent extremely long labels from creating horizontal overflow. */
-  a,
-  button,
-  span,
-  strong,
-  label {
-    overflow-wrap: anywhere;
-  }
-
-  /* Keep navigation and footer visually consistent across every page. */
-  .site-footer {
-    background: #c62828;
-    color: #fff;
-    border-top: 0;
-  }
-
-  .site-footer a {
-    color: #fff;
-  }
-
-  /* Hide decorative clutter before shrinking useful content. */
-  .decorative,
-  .desktop-only-decoration {
-    max-width: 100%;
-  }
-
-  /* Very narrow phones: one card per row for clarity. */
-  @media (max-width: 420px) {
-    .cards-grid,
-    .card-grid,
-    .grid,
-    .directory-grid,
-    .institution-grid,
-    .jobs-grid,
-    .scholarships-grid,
-    .courses-grid,
-    .blog-grid {
-      grid-template-columns: 1fr !important;
-    }
-
-    h1 {
-      font-size: 25px;
-    }
-
-    h2 {
-      font-size: 20px;
-    }
-
-    h3 {
-      font-size: 16px;
-    }
-
-    p,
-    li,
-    td,
-    th,
-    label,
-    small {
-      font-size: 11.5px;
-    }
-  }
-}
-
-
-/* DESKTOP-ONLY PRESENTATION MODE — 2026-10-06 */
-/* The site uses one consistent desktop presentation. On narrow screens the desktop
-   layout is retained rather than switching to a separate mobile visual design. */
-@media (max-width: 760px) {
-  html {
-    min-width: 1100px;
-  }
-
-  body {
-    min-width: 1100px;
-    overflow-x: auto;
-    background: var(--wash);
-  }
-
-  .main-nav {
-    min-height: 78px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 18px;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-
-  .nav-actions {
-    display: flex;
-    width: auto;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 10px;
-  }
-
-  .nav-actions > a,
-  .nav-actions > button {
-    width: auto;
-    min-height: 42px;
-    padding: 10px 14px;
-    font-size: inherit;
+    display: grid !important;
   }
 
   .dashboard-shell {
-    grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr);
-  }
-
-  .admin-layout {
-    grid-template-columns: minmax(260px, .75fr) minmax(0, 1.25fr);
-  }
-
-  .payment-layout {
-    grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr);
-  }
-
-  .seller-layout {
-    grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr);
-  }
-
-  .info-layout {
-    grid-template-columns: minmax(0, 1fr) minmax(260px, .55fr);
-  }
-
-  .admin-login-card {
-    grid-template-columns: minmax(0, .8fr) minmax(280px, .6fr);
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr) !important;
   }
 
   .resource-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   }
 
   .feature-grid,
   .trust-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
   }
 
   .landing-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   }
 
   .download-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
   }
 
   .filters {
-    grid-template-columns: repeat(7, minmax(130px, 1fr));
-  }
-
-  .form-row {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .refer-form {
-    grid-template-columns: minmax(140px, 1fr) minmax(140px, 1fr) auto;
+    grid-template-columns: repeat(7, minmax(130px, 1fr)) !important;
   }
 
   .summary-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   }
 
   .hero-resource-buttons {
-    display: flex;
-    flex-wrap: wrap;
+    display: flex !important;
+    flex-wrap: wrap !important;
   }
 
   .hero-resource-buttons a,
   .hero-resource-buttons button {
-    width: auto;
+    width: auto !important;
+  }
+
+  .section-heading {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: end !important;
   }
 
   .site-footer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
   }
 
-  /* Preserve desktop typography rather than introducing a separate mobile scale. */
   h1 {
-    font-size: clamp(36px, 5vw, 68px);
+    font-size: clamp(36px, 5vw, 68px) !important;
   }
 
   h2 {
-    font-size: clamp(24px, 3vw, 36px);
+    font-size: clamp(24px, 3vw, 36px) !important;
   }
 
   h3 {
-    font-size: 20px;
+    font-size: 20px !important;
   }
 
-  p,
-  li,
-  td,
-  th,
-  label,
-  small {
-    font-size: inherit;
+  .card-title,
+  .page-title,
+  .institution-name,
+  .job-title,
+  .scholarship-title,
+  .course-title,
+  .resource-title {
+    font-size: 20px !important;
+    line-height: 1.25 !important;
+  }
+}
+
+/* Desktop-width viewport hint for mobile browsers: retain the desktop canvas. */
+@media (max-width: 1099px) {
+  .main-nav,
+  .content-band,
+  .admin-band,
+  .site-footer,
+  .info-band,
+  .trust-band,
+  .promo-band,
+  .seller-band,
+  .urgent-band,
+  .competitive-band,
+  .seo-band,
+  .landing-band,
+  .payment-band,
+  .admin-login-band {
+    padding-left: clamp(16px, 4vw, 48px) !important;
+    padding-right: clamp(16px, 4vw, 48px) !important;
   }
 }
