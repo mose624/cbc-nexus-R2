@@ -1723,19 +1723,20 @@
     background:#1f4e5f!important;
     color:#fff!important;
     border:1px solid #1f4e5f!important;
-    border-radius:5px!important;
-    min-height:28px!important;
-    height:28px!important;
-    padding:4px 7px!important;
-    font-size:9.5px!important;
-    line-height:1.05!important;
+    border-radius:4px!important;
+    min-height:27px!important;
+    height:27px!important;
+    padding:3px 6px!important;
+    font-size:9px!important;
+    line-height:1!important;
     font-weight:600!important;
-    letter-spacing:.05px!important;
+    letter-spacing:0!important;
     box-shadow:none!important;
+    margin:0!important;
   }
-  .site-header .top-strip{gap:4px!important;}
-  .site-header .main-nav .nav-menu{gap:4px!important;}
-  .site-header .main-nav .nav-actions{gap:4px!important;}
+  .site-header .top-strip{gap:0!important;}
+  .site-header .main-nav .nav-menu{gap:0!important;}
+  .site-header .main-nav .nav-actions{gap:0!important;}
   .site-header .top-strip a:hover,
   .site-header .main-nav .nav-link:hover,
   .site-header .main-nav .nav-dropdown > summary:hover,
@@ -1744,6 +1745,12 @@
     background:#1f4e5f!important;
     color:#fff!important;
     border-color:#1f4e5f!important;
+  }
+  /* Save phone header space by hiding only Marking Scheme */
+  .site-header .top-strip a[href*="Marking%20Schemes"],
+  .site-header .top-strip a[href*="Marking+Schemes"],
+  .site-header .top-strip a[href*="type=Marking"]{
+    display:none!important;
   }
 }
 </style>
