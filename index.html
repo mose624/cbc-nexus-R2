@@ -1555,7 +1555,7 @@
       setStatus('clarityAdminStatus','Analytics configuration could not be loaded.');
     }
   }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initAnalytics);else initAnalytics();
+  function scheduleAnalytics(){var run=function(){initAnalytics();};if('requestIdleCallback' in window)requestIdleCallback(run,{timeout:4000});else setTimeout(run,2500);} if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',scheduleAnalytics);else scheduleAnalytics();
 })();
 </script>
 <script src="app.js?v=20261004-2" defer></script>
@@ -1567,10 +1567,13 @@
       }
     </script>
     
-    <script src="customer-care.js?v=20260929-4" defer></script>
-    \n    \n    
-  <script src="admin-module-fix.js" defer></script>\n  
-  <script src="education-hub-home.js?v=20261004-1" defer></script>
+    <script id="cbe-home-idle-extensions">
+(function(){
+  function load(src){var s=document.createElement("script");s.src=src;s.defer=true;document.body.appendChild(s);}
+  function schedule(){var run=function(){load("customer-care.js?v=20261006-2");load("education-hub-home.js?v=20261006-2");};if("requestIdleCallback" in window)requestIdleCallback(run,{timeout:3000});else setTimeout(run,1800);}
+  if(document.readyState==="loading")window.addEventListener("load",schedule,{once:true});else schedule();
+})();
+</script>
 
 <!-- CBE NEXUS ADMIN DIRECT TAB CONTROLLER -->
 <style>
