@@ -37,6 +37,8 @@ header{border-bottom:4px solid var(--grade-accent)!important}
 /* Phone keeps the desktop canvas, but the Resource Centre header is intentionally rebalanced:
    Dashboard stays on the left and the Resource Centre identity sits centrally. */
 @media (max-width:767px){
+  html,body{min-width:1200px!important;width:1200px!important;max-width:none!important;overflow-x:auto!important}
+  main{max-width:1200px!important;margin:0 auto!important}
   header{position:relative!important;display:flex!important;justify-content:center!important;align-items:center!important;min-height:72px!important;padding:10px 130px 10px 150px!important;flex-wrap:nowrap!important}
   header .brand{position:relative!important;left:auto!important;right:auto!important;text-align:center!important;white-space:nowrap!important;font-size:20px!important;line-height:1.15!important}
   header .brand small{text-align:center!important}
