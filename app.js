@@ -977,14 +977,14 @@ function setActiveMaterialLink() {
 
   safeOn(elements.cartButton, "click", () => {
     renderCart();
+    elements.cartDrawer.hidden = false;
     elements.cartDrawer.classList.add("open");
-    elements.cartDrawer.setAttribute("aria-hidden", "false");
   });
 
   safeOn(elements.closeResourcePreview, "click", closeResourcePreview);
   safeOn(elements.closeCartButton, "click", () => {
     elements.cartDrawer.classList.remove("open");
-    elements.cartDrawer.setAttribute("aria-hidden", "true");
+    elements.cartDrawer.hidden = true;
   });
 
   safeOn(elements.cartItems, "click", (event) => {
@@ -1337,15 +1337,15 @@ async function openResourcePreview(resourceId) {
     elements.resourcePreviewTitle.textContent = resource.title;
     elements.resourcePreviewInfo.textContent = "Showing the first 3 pages only. The full file is protected until payment.";
     elements.resourcePreviewFrame.src = data.previewUrl;
+    elements.resourcePreviewModal.hidden = false;
     elements.resourcePreviewModal.classList.add("open");
-    elements.resourcePreviewModal.setAttribute("aria-hidden", "false");
   } catch (error) { showToast(error.message || "Preview could not be opened."); }
 }
 
 function closeResourcePreview() {
   if (!elements.resourcePreviewModal) return;
   elements.resourcePreviewModal.classList.remove("open");
-  elements.resourcePreviewModal.setAttribute("aria-hidden", "true");
+  elements.resourcePreviewModal.hidden = true;
   elements.resourcePreviewFrame.src = "about:blank";
 }
 
