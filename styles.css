@@ -6790,3 +6790,312 @@ html[data-grade-theme="international"]{--grade-accent:#00838f;--grade-accent-2:#
     grid-template-columns: 1fr;
   }
 }
+
+
+/* MOBILE DESKTOP-DESIGN CONSISTENCY PASS — 2026-10-06 */
+/* Mobile-only: preserve the site's desktop visual hierarchy while making content fit. */
+@media (max-width: 760px) {
+  body {
+    background: #f4f8f9;
+    color: #17202a;
+    line-height: 1.45;
+  }
+
+  /* Consistent page surfaces for pages that previously appeared plain/uncoloured. */
+  main,
+  .page,
+  .page-container,
+  .page-content,
+  .main-content,
+  .content-page,
+  .dashboard-page {
+    background: #f4f8f9;
+    color: #17202a;
+  }
+
+  /* Keep the main brand/header treatment consistent across every page. */
+  .site-header,
+  .site-header .main-nav,
+  .main-nav {
+    background: #c62828;
+    color: #fff;
+  }
+
+  .site-header {
+    border-bottom: 0;
+  }
+
+  .main-nav {
+    box-shadow: 0 2px 10px rgba(18,52,71,.12);
+  }
+
+  /* Long page titles: compact, readable, never oversized. */
+  h1 {
+    font-size: clamp(24px, 7vw, 34px);
+    line-height: 1.12;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  h2 {
+    font-size: clamp(19px, 5.5vw, 27px);
+    line-height: 1.18;
+    overflow-wrap: anywhere;
+  }
+
+  h3 {
+    font-size: clamp(16px, 4.6vw, 21px);
+    line-height: 1.22;
+    overflow-wrap: anywhere;
+  }
+
+  h4 {
+    font-size: 15px;
+    line-height: 1.25;
+  }
+
+  p,
+  li,
+  td,
+  th,
+  label,
+  small {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .long-text,
+  .description,
+  .page-description,
+  .intro-text,
+  .article-content,
+  .article-body,
+  .blog-content,
+  .institution-description,
+  .course-description,
+  .scholarship-description,
+  .job-description {
+    font-size: 12px;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+  }
+
+  /* Professional desktop-style cards on mobile: clean, consistent surfaces. */
+  .card,
+  .panel,
+  .section-card,
+  .content-card,
+  .info-card,
+  .resource-card,
+  .institution-card,
+  .job-card,
+  .scholarship-card,
+  .course-card,
+  .blog-card,
+  .feature-card,
+  .directory-card,
+  .admin-card,
+  .stat-card {
+    background: #fff;
+    border: 1px solid #d9e2e6;
+    border-radius: 8px;
+    box-shadow: 0 5px 18px rgba(18,52,71,.07);
+  }
+
+  /* Avoid giant unstructured blocks. */
+  .card,
+  .panel,
+  .section-card,
+  .content-card,
+  .info-card,
+  .resource-card,
+  .institution-card,
+  .job-card,
+  .scholarship-card,
+  .course-card,
+  .blog-card,
+  .feature-card,
+  .directory-card,
+  .admin-card,
+  .stat-card {
+    padding: 12px;
+  }
+
+  /* Tables remain desktop-like but become horizontally scrollable instead of breaking. */
+  table {
+    width: 100%;
+    min-width: 560px;
+    border-collapse: collapse;
+    font-size: 11px;
+  }
+
+  .table-wrap,
+  .table-responsive,
+  .responsive-table,
+  .data-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  th,
+  td {
+    padding: 7px 8px;
+    vertical-align: top;
+  }
+
+  /* Long institution, scholarship and vacancy names stay compact and readable. */
+  .institution-name,
+  .job-title,
+  .scholarship-title,
+  .course-title,
+  .resource-title,
+  .page-title,
+  .card-title {
+    font-size: 15px;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+
+  /* Buttons: consistent colours, compact text, no ambiguous empty-looking controls. */
+  button,
+  a.primary-button,
+  a.secondary-button,
+  a.download-button,
+  a.ghost-button,
+  a.apply-button,
+  a.view-button,
+  a.action-button {
+    min-height: 36px;
+    border-radius: 6px;
+    font-size: 11px;
+    line-height: 1.2;
+    padding: 8px 10px;
+  }
+
+  .primary-button,
+  .download-button,
+  .apply-button {
+    background: #2f7d57;
+    color: #fff;
+  }
+
+  .secondary-button,
+  .view-button {
+    background: #123447;
+    color: #fff;
+  }
+
+  .ghost-button {
+    background: #eef5f6;
+    color: #123447;
+    border: 1px solid #d9e2e6;
+  }
+
+  /* Form controls share one clean visual language. */
+  input,
+  select,
+  textarea {
+    min-height: 38px;
+    border: 1px solid #cbd7dc;
+    border-radius: 6px;
+    background: #fff;
+    color: #17202a;
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+
+  /* Lists/grids on all named pages become orderly rather than squeezed. */
+  .cards-grid,
+  .card-grid,
+  .grid,
+  .directory-grid,
+  .institution-grid,
+  .jobs-grid,
+  .scholarships-grid,
+  .courses-grid,
+  .blog-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 9px !important;
+  }
+
+  /* Page headers remain visually distinct and centred. */
+  .page-header,
+  .page-hero,
+  .section-header,
+  .page-heading {
+    text-align: center;
+    padding: 18px 10px;
+  }
+
+  .page-header h1,
+  .page-hero h1,
+  .section-header h1,
+  .section-header h2,
+  .page-heading h1 {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Prevent extremely long labels from creating horizontal overflow. */
+  a,
+  button,
+  span,
+  strong,
+  label {
+    overflow-wrap: anywhere;
+  }
+
+  /* Keep navigation and footer visually consistent across every page. */
+  .site-footer {
+    background: #c62828;
+    color: #fff;
+    border-top: 0;
+  }
+
+  .site-footer a {
+    color: #fff;
+  }
+
+  /* Hide decorative clutter before shrinking useful content. */
+  .decorative,
+  .desktop-only-decoration {
+    max-width: 100%;
+  }
+
+  /* Very narrow phones: one card per row for clarity. */
+  @media (max-width: 420px) {
+    .cards-grid,
+    .card-grid,
+    .grid,
+    .directory-grid,
+    .institution-grid,
+    .jobs-grid,
+    .scholarships-grid,
+    .courses-grid,
+    .blog-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    h1 {
+      font-size: 25px;
+    }
+
+    h2 {
+      font-size: 20px;
+    }
+
+    h3 {
+      font-size: 16px;
+    }
+
+    p,
+    li,
+    td,
+    th,
+    label,
+    small {
+      font-size: 11.5px;
+    }
+  }
+}
