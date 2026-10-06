@@ -4622,3 +4622,49 @@ textarea:focus{
     box-shadow:0 0 0 1px rgba(246,231,168,.35)!important;
   }
 }
+
+
+/* Resources page — compact uploaded-file cards on desktop */
+@media(min-width:761px){
+  .resource-grid .resource-card,
+  .resources-grid .resource-card,
+  .resource-card{
+    padding:12px!important;
+    margin:0!important;
+    min-height:0!important;
+  }
+
+  .resource-grid .resource-card h3,
+  .resources-grid .resource-card h3,
+  .resource-card h3{
+    font-size:16px!important;
+    line-height:1.25!important;
+    margin:6px 0!important;
+  }
+
+  .resource-grid .resource-card p,
+  .resources-grid .resource-card p,
+  .resource-card p{
+    font-size:13px!important;
+    line-height:1.35!important;
+    margin:4px 0!important;
+  }
+
+  .resource-grid .resource-card .resource-actions,
+  .resources-grid .resource-card .resource-actions,
+  .resource-card .resource-actions{
+    gap:6px!important;
+    margin-top:8px!important;
+  }
+
+  .resource-grid .resource-card .resource-actions a,
+  .resource-grid .resource-card .resource-actions button,
+  .resources-grid .resource-card .resource-actions a,
+  .resources-grid .resource-card .resource-actions button,
+  .resource-card .resource-actions a,
+  .resource-card .resource-actions button{
+    min-height:34px!important;
+    padding:7px 10px!important;
+    font-size:12px!important;
+  }
+}
