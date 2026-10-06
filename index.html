@@ -1671,5 +1671,44 @@
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot,{once:true});else boot();
 })();
 </script>
+<!-- CBE NEXUS RESOURCE CENTRE DASHBOARD GRADE CONTROLS -->
+<script>
+(function(){
+  function initCbeGradeDashboard(){
+    const list=document.getElementById("gradeList");
+    if(!list || list.dataset.gradeControlsReady==="1") return;
+    list.dataset.gradeControlsReady="1";
+    const cards=Array.from(list.querySelectorAll(".grade-card"));
+    cards.forEach(card=>{
+      const toggle=card.querySelector(".grade-toggle,[data-grade-toggle]");
+      const menu=card.querySelector(".subject-menu");
+      const select=card.querySelector("[data-grade-subject-select]");
+      if(!toggle || !menu || !select) return;
+      toggle.addEventListener("click",function(event){
+        event.preventDefault(); event.stopPropagation();
+        const open=!card.classList.contains("open");
+        cards.forEach(other=>{if(other!==card){other.classList.remove("open");other.querySelector(".grade-toggle,[data-grade-toggle]")?.setAttribute("aria-expanded","false");const m=other.querySelector(".subject-menu");if(m)m.hidden=true;}});
+        card.classList.toggle("open",open);
+        toggle.setAttribute("aria-expanded",String(open));
+        menu.hidden=!open;
+      },false);
+      select.addEventListener("change",function(event){
+        event.stopPropagation();
+        const grade=String(select.dataset.grade||card.dataset.gradeCard||"").trim();
+        const subject=String(select.value||"").trim();
+        if(!grade)return;
+        const url=new URL("resource-category.html",window.location.href);
+        url.searchParams.set("grade",grade);
+        if(subject && subject!=="All Subjects" && subject!=="Select subject")url.searchParams.set("subject",subject);
+        window.location.assign(url.toString());
+      },false);
+      const open=card.classList.contains("open");
+      toggle.setAttribute("aria-expanded",String(open));
+      menu.hidden=!open;
+    });
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initCbeGradeDashboard,{once:true});else initCbeGradeDashboard();
+})();
+</script>
 </body>
 </html>
