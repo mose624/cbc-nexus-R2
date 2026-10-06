@@ -82,3 +82,17 @@ header{border-bottom:4px solid var(--grade-accent)!important}
 <section id="results" class="resource-grid" aria-live="polite" aria-busy="true" aria-label="Approved learning resources"><div class="empty">Loading approved resources…</div></section></main><div id="viewerModal" class="viewer-modal" hidden><div class="viewer-dialog" role="dialog" aria-modal="true" aria-labelledby="viewerTitle"><div class="viewer-head"><h2 id="viewerTitle">Resource Viewer</h2><button id="viewerClose" class="viewer-close" type="button">Close</button></div><div class="viewer-note">Document viewer — PDF, Word and PowerPoint files are opened in a secure temporary viewing session.</div><div id="viewerContent" class="viewer-content"><iframe id="viewerFrame" class="viewer-frame" title="Resource document viewer"></iframe><div id="pdfViewer" class="pdf-viewer"></div></div></div></div>
 <script src="resource-category.js?v=20261006-3" defer></script><script src="customer-care.js?v=20261004-2" defer></script>
 </body></html>
+<style id="cbe-resource-final-desktop-lock">
+/* Resource Centre: phone keeps desktop canvas; Dashboard stays left and identity stays centred. */
+html,body{min-width:1200px!important;width:1200px!important;max-width:none!important;overflow-x:auto!important}
+@media(max-width:767px){
+  html,body{min-width:1200px!important;width:1200px!important;max-width:none!important;overflow-x:auto!important}
+  header{position:relative!important;display:flex!important;justify-content:center!important;align-items:center!important;flex-wrap:nowrap!important;min-width:1200px!important;min-height:78px!important;padding:10px 160px!important}
+  header .brand{position:relative!important;left:auto!important;right:auto!important;flex:0 0 auto!important;text-align:center!important;white-space:nowrap!important;min-width:0!important;font-size:22px!important}
+  header .brand small{text-align:center!important}
+  header .home{position:absolute!important;left:32px!important;top:50%!important;transform:translateY(-50%)!important;z-index:5!important;white-space:nowrap!important}
+  main{width:1200px!important;max-width:1200px!important;margin:0 auto!important;padding-left:32px!important;padding-right:32px!important}
+  .filters{display:grid!important;grid-template-columns:repeat(4,minmax(160px,1fr))!important}
+  .resource-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+</style>
