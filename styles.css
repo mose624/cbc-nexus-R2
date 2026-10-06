@@ -6260,3 +6260,533 @@ html[data-grade-theme="international"]{--grade-accent:#00838f;--grade-accent-2:#
     font-size:8px!important;
   }
 }
+
+
+/* MOBILE-ONLY FINAL RESPONSIVE PASS — 2026-10-06 */
+/* IMPORTANT: These rules apply only to screens 767px and below. Desktop is untouched. */
+
+@media (max-width: 767px) {
+  html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    font-size: 14px;
+  }
+
+  .top-strip {
+    padding: 7px 10px;
+    gap: 6px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .top-strip a {
+    flex: 0 0 auto;
+    min-height: 34px;
+    padding: 7px 9px;
+    font-size: 11px;
+  }
+
+  .main-nav {
+    min-height: auto;
+    padding: 9px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .brand {
+    width: 100%;
+    justify-content: center;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .brand-mark {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    font-size: 12px;
+  }
+
+  .brand strong {
+    font-size: 15px;
+  }
+
+  .brand small {
+    font-size: 10px;
+  }
+
+  .nav-menu,
+  .nav-actions {
+    width: 100%;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 5px !important;
+    overflow: visible !important;
+  }
+
+  .nav-menu .nav-link,
+  .nav-menu .nav-dropdown > summary,
+  .nav-actions > a,
+  .nav-actions > button {
+    min-height: 38px !important;
+    padding: 8px 9px !important;
+    font-size: 11px !important;
+    line-height: 1.15 !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
+
+  .dashboard-shell {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px 10px;
+  }
+
+  .intro-panel {
+    min-height: 430px;
+    padding: 22px 16px;
+    border-radius: 10px;
+  }
+
+  .intro-panel h1 {
+    font-size: clamp(30px, 9vw, 44px);
+    line-height: 1.05;
+  }
+
+  .intro-panel p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .hero-resource-buttons {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .hero-resource-buttons a,
+  .hero-resource-buttons button {
+    width: 100%;
+    min-height: 44px;
+    font-size: 13px;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+    margin-top: 18px;
+  }
+
+  .summary-grid div {
+    padding: 11px;
+  }
+
+  .summary-grid strong {
+    font-size: 19px;
+  }
+
+  .summary-grid span {
+    font-size: 11px;
+  }
+
+  .grade-panel {
+    padding: 14px 10px;
+    border-radius: 10px;
+  }
+
+  .panel-heading h2,
+  .section-heading h2,
+  .admin-copy h2 {
+    font-size: 22px;
+  }
+
+  .grade-list {
+    max-height: none;
+    overflow: visible;
+    gap: 7px;
+  }
+
+  .grade-toggle {
+    min-height: 46px;
+    padding: 11px 12px;
+    font-size: 14px;
+  }
+
+  .subject-menu {
+    display: none;
+    flex-direction: column;
+    gap: 7px;
+    padding: 9px 10px 11px;
+  }
+
+  .grade-card.open .subject-menu {
+    display: flex;
+  }
+
+  .subject-dropdown {
+    min-height: 44px;
+    font-size: 13px;
+  }
+
+  .subject-chip {
+    width: 100%;
+    min-height: 42px;
+    padding: 9px 10px;
+    font-size: 13px;
+    text-align: left;
+  }
+
+  .content-band,
+  .admin-band,
+  .payment-band,
+  .competitive-band,
+  .seller-band,
+  .urgent-band,
+  .admin-login-band,
+  .trust-band,
+  .promo-band,
+  .seo-band,
+  .landing-band {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .content-band,
+  .admin-band,
+  .seller-band,
+  .competitive-band,
+  .payment-band,
+  .admin-login-band {
+    padding-top: 26px;
+    padding-bottom: 26px;
+  }
+
+  .section-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .filters {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+
+  .resource-grid,
+  .feature-grid,
+  .trust-grid,
+  .landing-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .resource-card {
+    min-height: auto;
+    padding: 14px;
+  }
+
+  .resource-card h3 {
+    font-size: 18px;
+  }
+
+  .resource-card p {
+    font-size: 13px;
+  }
+
+  .price-row {
+    flex-wrap: wrap;
+    align-items: stretch;
+  }
+
+  .price-row .primary-button,
+  .price-row .download-button,
+  .price-row button,
+  .price-row a {
+    width: 100%;
+  }
+
+  .seller-layout,
+  .payment-layout,
+  .admin-login-card,
+  .promo-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .refer-form {
+    grid-template-columns: 1fr;
+  }
+
+  .download-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  input,
+  select,
+  textarea {
+    min-height: 44px;
+    font-size: 14px;
+  }
+
+  button,
+  .primary-button,
+  .ghost-button,
+  .download-button,
+  .secondary-button,
+  .whatsapp-button,
+  .mpesa-header-button,
+  .cart-button,
+  .danger-blink-button {
+    min-height: 42px;
+  }
+
+  .approval-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .approval-actions button {
+    width: 100%;
+  }
+
+  /* Mobile portal: one readable column instead of the previous 3-column squeeze. */
+  #dashboard.portal-dashboard {
+    width: calc(100% - 12px) !important;
+    max-width: none !important;
+    margin: 6px auto !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  #dashboard.portal-dashboard > .portal-sidebar,
+  #dashboard.portal-dashboard > .portal-main,
+  #dashboard.portal-dashboard > .portal-rightbar {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 10px !important;
+    overflow: visible !important;
+  }
+
+  #dashboard.portal-dashboard .portal-welcome h1 {
+    font-size: 20px !important;
+    line-height: 1.2 !important;
+  }
+
+  #dashboard.portal-dashboard .portal-welcome p {
+    font-size: 12px !important;
+    line-height: 1.45 !important;
+  }
+
+  #dashboard.portal-dashboard .portal-category-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 7px !important;
+  }
+
+  #dashboard.portal-dashboard .portal-category-grid a {
+    padding: 9px !important;
+  }
+
+  #dashboard.portal-dashboard .portal-category-grid strong {
+    font-size: 11px !important;
+  }
+
+  #dashboard.portal-dashboard .portal-category-grid span {
+    font-size: 9px !important;
+  }
+
+  #dashboard.portal-dashboard .portal-side-link {
+    min-height: 40px !important;
+    padding: 9px 8px !important;
+    font-size: 11px !important;
+  }
+
+  #dashboard.portal-dashboard .portal-card {
+    padding: 10px !important;
+  }
+
+  #holidayTuition,
+  #quizCentre,
+  #about,
+  #privacy,
+  #educationHubHome {
+    width: calc(100% - 12px) !important;
+    max-width: none !important;
+    margin: 7px auto !important;
+    padding: 14px !important;
+  }
+
+  #holidayTuition h2,
+  #quizCentre h2,
+  #about h2,
+  #privacy h2 {
+    font-size: 18px !important;
+  }
+
+  #holidayTuition p,
+  #quizCentre p,
+  #about p,
+  #privacy p,
+  #holidayTuition li,
+  #quizCentre li,
+  #about li,
+  #privacy li {
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+  }
+
+  #educationHubHome .education-hub-heading {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  #educationHubHome .education-hub-heading h2 {
+    font-size: 18px !important;
+  }
+
+  #educationHubHome .education-hub-heading p {
+    font-size: 12px !important;
+  }
+
+  #educationHubHome .education-hub-home-grid {
+    grid-template-columns: 1fr !important;
+    gap: 9px !important;
+  }
+
+  #educationHubHome .education-hub-card {
+    padding: 12px !important;
+  }
+
+  #educationHubHome .education-hub-card h3 {
+    font-size: 15px !important;
+  }
+
+  #educationHubHome .education-hub-card p,
+  #educationHubHome .education-hub-card a {
+    font-size: 12px !important;
+  }
+
+  .site-footer {
+    padding: 16px 10px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .footer-office-image-wrap {
+    width: min(180px, 100%) !important;
+    max-width: 100% !important;
+    margin: 0 auto;
+  }
+
+  .footer-office-image {
+    height: 90px !important;
+  }
+
+  .site-footer .footer-links {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .site-footer .footer-links a {
+    min-height: 36px;
+    font-size: 10px !important;
+  }
+
+  .whatsapp-floating-footer {
+    right: 12px !important;
+    left: auto !important;
+    bottom: 12px !important;
+    transform: none !important;
+    min-width: 0 !important;
+    padding: 11px 14px !important;
+    font-size: 12px !important;
+  }
+
+  .whatsapp-floating-footer:hover {
+    transform: translateY(-2px) !important;
+  }
+
+  #customerCareWidget,
+  #customerCareButton,
+  #customer-care-widget,
+  #customer-care-button {
+    left: 10px !important;
+    right: auto !important;
+    bottom: 12px !important;
+  }
+
+  .viewer-modal,
+  .resource-preview-modal {
+    padding: 4px !important;
+  }
+
+  .viewer-dialog,
+  .resource-preview-dialog {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 94vh !important;
+    max-height: 94vh !important;
+    border-radius: 8px !important;
+  }
+
+  img,
+  video,
+  iframe,
+  canvas {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-width: 380px) {
+  .main-nav {
+    padding-left: 7px;
+    padding-right: 7px;
+  }
+
+  .nav-menu .nav-link,
+  .nav-menu .nav-dropdown > summary,
+  .nav-actions > a,
+  .nav-actions > button {
+    font-size: 10px !important;
+    padding: 7px !important;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .intro-panel {
+    min-height: 400px;
+    padding: 18px 13px;
+  }
+
+  .intro-panel h1 {
+    font-size: 29px;
+  }
+
+  #dashboard.portal-dashboard {
+    width: calc(100% - 8px) !important;
+  }
+
+  #dashboard.portal-dashboard .portal-category-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .download-grid {
+    grid-template-columns: 1fr;
+  }
+}
