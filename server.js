@@ -1547,7 +1547,39 @@ function injectAnalyticsTags(html){
   return out;
 }
 
+let homepageHtmlCache=null;
+let homepageHtmlCacheTime=0;
+const HOMEPAGE_CACHE_TTL_MS=5*60*1000;
+
+async function getHomepageHtml(req){
+  const now=Date.now();
+  if(homepageHtmlCache && now-homepageHtmlCacheTime<HOMEPAGE_CACHE_TTL_MS) return homepageHtmlCache;
+  const filePath=path.join(ROOT,"index.html");
+  let data=await fs.readFile(filePath,"utf8");
+  const b=seo.base(req);
+  data=data
+    .replaceAll("https://example.com/",b+"/")
+    .replace("<title>CBE E-Learning Resources</title>","<title>CBE Nexus | CBC & CBE Learning Resources Kenya</title>")
+    .replace("CBE E-Learning Resources for Grades 1-12","CBE Nexus | CBC & CBE Learning Resources for Grades 1-12 in Kenya");
+  const bridgeScript='<script src="/resource-centre-bridge.js?v=20260930-4" defer></script><script src="/admin-fallback.js?v=20260930-4" defer></script>';
+  if(!data.includes("resource-centre-bridge.js")) data=data.replace("</body>",bridgeScript+"</body>");
+  data=injectAdSenseTags(injectAnalyticsTags(data),"/");
+  homepageHtmlCache=Buffer.from(data);
+  homepageHtmlCacheTime=now;
+  return homepageHtmlCache;
+}
+
+function invalidateHomepageHtmlCache(){
+  homepageHtmlCache=null;
+  homepageHtmlCacheTime=0;
+}
+
 async function serveStatic(req,res,url){
+  if(req.method==="GET" && url.pathname==="/health"){
+    res.writeHead(200,{"Content-Type":"text/plain; charset=utf-8","Cache-Control":"no-store"});
+    res.end("ok");
+    return;
+  }
   if(req.method==="GET" && url.pathname==="/rss.xml"){
     try{
       res.writeHead(200,{"Content-Type":"application/rss+xml; charset=utf-8","Cache-Control":"public, max-age=900"});
@@ -1578,6 +1610,15 @@ async function serveStatic(req,res,url){
     const base=seo.base(req);
     res.writeHead(200,{"Content-Type":"text/plain; charset=utf-8","Cache-Control":"public, max-age=3600"});
     res.end("User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /admin\nDisallow: /upload.html\nDisallow: /backend-data/\nSitemap: "+base+"/sitemap.xml\n");
+    return;
+  }
+  if(req.method==="GET" && url.pathname==="/"){
+    const data=await getHomepageHtml(req);
+    res.writeHead(200,{
+      "Content-Type":"text/html; charset=utf-8",
+      "Cache-Control":"public, max-age=300, must-revalidate"
+    });
+    res.end(data);
     return;
   }
   const seoPage=await seo.match(req);
