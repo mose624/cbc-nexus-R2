@@ -7099,3 +7099,142 @@ html[data-grade-theme="international"]{--grade-accent:#00838f;--grade-accent-2:#
     }
   }
 }
+
+
+/* DESKTOP-ONLY PRESENTATION MODE — 2026-10-06 */
+/* The site uses one consistent desktop presentation. On narrow screens the desktop
+   layout is retained rather than switching to a separate mobile visual design. */
+@media (max-width: 760px) {
+  html {
+    min-width: 1100px;
+  }
+
+  body {
+    min-width: 1100px;
+    overflow-x: auto;
+    background: var(--wash);
+  }
+
+  .main-nav {
+    min-height: 78px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .nav-actions {
+    display: flex;
+    width: auto;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .nav-actions > a,
+  .nav-actions > button {
+    width: auto;
+    min-height: 42px;
+    padding: 10px 14px;
+    font-size: inherit;
+  }
+
+  .dashboard-shell {
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr);
+  }
+
+  .admin-layout {
+    grid-template-columns: minmax(260px, .75fr) minmax(0, 1.25fr);
+  }
+
+  .payment-layout {
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr);
+  }
+
+  .seller-layout {
+    grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr);
+  }
+
+  .info-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(260px, .55fr);
+  }
+
+  .admin-login-card {
+    grid-template-columns: minmax(0, .8fr) minmax(280px, .6fr);
+  }
+
+  .resource-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .feature-grid,
+  .trust-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .landing-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .download-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .filters {
+    grid-template-columns: repeat(7, minmax(130px, 1fr));
+  }
+
+  .form-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .refer-form {
+    grid-template-columns: minmax(140px, 1fr) minmax(140px, 1fr) auto;
+  }
+
+  .summary-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .hero-resource-buttons {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .hero-resource-buttons a,
+  .hero-resource-buttons button {
+    width: auto;
+  }
+
+  .site-footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Preserve desktop typography rather than introducing a separate mobile scale. */
+  h1 {
+    font-size: clamp(36px, 5vw, 68px);
+  }
+
+  h2 {
+    font-size: clamp(24px, 3vw, 36px);
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  p,
+  li,
+  td,
+  th,
+  label,
+  small {
+    font-size: inherit;
+  }
+}
