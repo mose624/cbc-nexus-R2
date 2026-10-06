@@ -113,7 +113,40 @@ function esc(v){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",
 fillSubjects();paintCachedResources();rebuildGradeOptionsFromResources();rebuildTypeOptionsFromResources();refreshResourcesInBackground();
 
 
-document.addEventListener("click",async event=>{const b=event.target.closest("[data-download-resource]");if(!b)return;event.preventDefault();if(b.disabled||b.getAttribute("aria-busy")==="true")return;const id=b.dataset.downloadResource;const resource=resources.find(r=>String(r.id||r._id||r.key||"")===String(id));if(!resource)return;const old=b.innerHTML;b.disabled=true;b.setAttribute("aria-busy","true");b.innerHTML="⏳ Preparing…";try{if(Number(resource.price||0)===0){const response=await fetch("/api/r2/free-download?resourceId="+encodeURIComponent(id),{credentials:"same-origin",cache:"no-store"});const data=await response.json().catch(()=>({}));if(!response.ok||!data.ok)throw new Error(data.error||"Free download is unavailable.");const a=document.createElement("a");a.href=data.downloadUrl;a.download=data.fileName||"resource";a.rel="noopener";document.body.appendChild(a);a.click();a.remove();}else{const amount=Number(resource.discount)>0?Number(resource.discount):Number(resource.price)||0;const params=new URLSearchParams({resource:resource.title||"Untitled resource",resourceId:String(resource.id||resource._id||resource.key||""),amount:String(amount),grade:resource.grade||"",subject:resource.subject||"",type:resource.type||""});window.location.href="index.html?"+params.toString()+"#payments";}}catch(error){alert(error.message||"Download could not be started.");}finally{b.disabled=false;b.removeAttribute("aria-busy");b.innerHTML=old;}});
+async function startDirectMpesaPurchase(resource,b){
+  const phone=window.prompt("Enter the M-Pesa phone number to receive the STK Push (e.g. 0712345678):","");
+  if(!phone)return;
+  const id=String(resource.id||resource._id||resource.key||"").trim();
+  if(!id)throw new Error("This resource has no valid ID.");
+  const start=await fetch("/api/mpesa/stk-push",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({customerPhone:phone,resourceId:id})});
+  const data=await start.json().catch(()=>({}));
+  if(!start.ok||!data.ok)throw new Error(data.error||"M-Pesa STK Push could not be started.");
+  const checkoutRequestID=String(data.CheckoutRequestID||"").trim();
+  if(!checkoutRequestID)throw new Error("Daraja did not return a checkout request.");
+  b.innerHTML="📲 STK Sent — Check Phone";
+  for(let attempt=0;attempt<30;attempt++){
+    await new Promise(resolve=>setTimeout(resolve,2000));
+    const check=await fetch("/api/mpesa/status?checkoutRequestID="+encodeURIComponent(checkoutRequestID)+"&phone="+encodeURIComponent(phone),{credentials:"same-origin",cache:"no-store"});
+    const result=await check.json().catch(()=>({}));
+    if(result.status==="failed")throw new Error(result.payment?.resultDesc||"M-Pesa payment was cancelled or failed.");
+    if(result.status==="paid"){
+      const approval=await fetch("/api/download-approval/request",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({resourceId:id,customerPhone:phone,paymentReference:checkoutRequestID})});
+      const approvalData=await approval.json().catch(()=>({}));
+      if(!approval.ok||!approvalData.ok)throw new Error(approvalData.error||"Payment confirmed but download access could not be prepared.");
+      const key=String(resource.r2Key||resource.r2_key||"").trim();
+      if(!key)throw new Error("The protected resource file is unavailable.");
+      const download=await fetch("/api/r2/file?key="+encodeURIComponent(key)+"&resourceId="+encodeURIComponent(id)+"&phone="+encodeURIComponent(phone),{credentials:"same-origin",cache:"no-store"});
+      const downloadData=await download.json().catch(()=>({}));
+      if(!download.ok||!downloadData.ok)throw new Error(downloadData.error||"Secure download is unavailable.");
+      window.location.href=downloadData.downloadUrl;
+      return;
+    }
+    b.innerHTML="⏳ Waiting for M-Pesa ("+(attempt+1)+"/30)…";
+  }
+  throw new Error("Payment confirmation timed out. If you completed payment, wait for the confirmation SMS and try Download again.");
+}
+
+document.addEventListener("click",async event=>{const b=event.target.closest("[data-download-resource]");if(!b)return;event.preventDefault();if(b.disabled||b.getAttribute("aria-busy")==="true")return;const id=b.dataset.downloadResource;const resource=resources.find(r=>String(r.id||r._id||r.key||"")===String(id));if(!resource)return;const old=b.innerHTML;b.disabled=true;b.setAttribute("aria-busy","true");b.innerHTML="⏳ Preparing…";try{if(Number(resource.price||0)===0){const response=await fetch("/api/r2/free-download?resourceId="+encodeURIComponent(id),{credentials:"same-origin",cache:"no-store"});const data=await response.json().catch(()=>({}));if(!response.ok||!data.ok)throw new Error(data.error||"Free download is unavailable.");const a=document.createElement("a");a.href=data.downloadUrl;a.download=data.fileName||"resource";a.rel="noopener";document.body.appendChild(a);a.click();a.remove();}else{await startDirectMpesaPurchase(resource,b);}}catch(error){alert(error.message||"Download could not be started.");}finally{b.disabled=false;b.removeAttribute("aria-busy");b.innerHTML=old;}});
 
 const PDFJS_URL="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs";
 let pdfjsPromise=null;
