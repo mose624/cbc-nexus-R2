@@ -60,3 +60,7 @@ create index if not exists purchases_customer_phone_idx on public.purchases(cust
 -- Tie each admin download approval to the exact verified M-Pesa purchase.
 alter table public.download_approvals add column if not exists purchase_id uuid references public.purchases(id) on delete set null;
 create index if not exists download_approvals_purchase_idx on public.download_approvals(purchase_id);
+
+
+-- Refresh PostgREST after applying payment schema changes.
+NOTIFY pgrst, 'reload schema';
