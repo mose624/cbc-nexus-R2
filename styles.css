@@ -6418,3 +6418,9 @@ html[data-grade-theme="international"]{--grade-accent:#00838f;--grade-accent-2:#
     padding-right: clamp(16px, 4vw, 48px) !important;
   }
 }
+
+
+/* Accessibility improvements: visible keyboard focus, touch targets and reduced motion. */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #005fcc!important;outline-offset:3px!important}
+button,a,.primary-button,.ghost-button,.download-button,.secondary-button,.whatsapp-button,.mpesa-header-button,.cart-button,.danger-blink-button{min-height:44px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
