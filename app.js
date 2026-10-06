@@ -1491,8 +1491,10 @@ async function requestMpesaPayment(event){
   const resourceIdInput=document.getElementById("selectedResourceIdInput");
   const status=document.getElementById("paymentStatus");
   const phone=String(phoneInput?.value||"").trim();
-  const resourceId=String(resourceIdInput?.value||"").trim();
+  let resourceId=String(resourceIdInput?.value||"").trim();
   const resourceTitle=String(resourceInput?.value||"").trim();
+  const matchedResource=(getAllResources()||[]).find(r=>String(r.title||"").trim()===resourceTitle);
+  if(!resourceId&&matchedResource)resourceId=String(matchedResource.id||"");
   const amount=Number(amountInput?.value||0);
   if(!phone||!resourceId||!resourceTitle||amount<1){
     if(status)status.textContent="Select a paid resource and enter a valid M-Pesa phone number.";
