@@ -6655,3 +6655,119 @@ button,a,input,select,textarea{max-width:100%;}
   .summary-grid span{font-size:8px!important;}
   .card-actions,.payment-actions,.approval-actions{grid-template-columns:1fr!important;}
 }
+
+/* CBE Nexus — phone uses the desktop canvas only. */
+/* No mobile redesign, stacking, shrinking or alternate phone UI. */
+html,body{
+  min-width:1200px!important;
+  width:1200px!important;
+  max-width:none!important;
+  overflow-x:auto!important;
+}
+@media(max-width:1199px){
+  html,body{
+    min-width:1200px!important;
+    width:1200px!important;
+    max-width:none!important;
+    overflow-x:auto!important;
+  }
+  .top-strip,.main-nav,.dashboard-shell,.content-band,.admin-band,.site-footer,.info-band,
+  .trust-band,.promo-band,.seller-band,.urgent-band,.competitive-band,.payment-band,
+  .admin-login-band,.landing-band,.seo-band{
+    padding-left:32px!important;
+    padding-right:32px!important;
+  }
+  .main-nav{
+    flex-direction:row!important;
+    align-items:center!important;
+    min-height:78px!important;
+  }
+  .nav-menu{
+    display:flex!important;
+    width:auto!important;
+    overflow:visible!important;
+  }
+  .nav-actions{
+    display:flex!important;
+    width:auto!important;
+    justify-content:flex-end!important;
+  }
+  .dashboard-shell{
+    grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr)!important;
+  }
+  .admin-layout,.payment-layout,.promo-layout,.seller-layout,.info-layout{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  .resource-grid,.feature-grid,.trust-grid,.landing-grid,.download-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+  .filters{
+    grid-template-columns:repeat(4,minmax(160px,1fr))!important;
+  }
+  .form-row,.refer-form{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+/* Prevent page-specific mobile media rules from changing the shared desktop canvas. */
+@media(max-width:760px){
+  .top-strip{display:flex!important;white-space:nowrap!important;overflow:visible!important;}
+  .top-strip>a{width:auto!important;min-width:auto!important;font-size:inherit!important;}
+  .main-nav{padding-top:14px!important;padding-bottom:14px!important;}
+  .nav-menu{grid-template-columns:none!important;}
+  .nav-actions{grid-template-columns:none!important;}
+  .resource-grid,.feature-grid,.trust-grid,.landing-grid,.download-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+  .filters{grid-template-columns:repeat(4,minmax(160px,1fr))!important;}
+  .form-row,.refer-form{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  .summary-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;}
+  .card-actions,.payment-actions,.approval-actions{
+    display:flex!important;
+    grid-template-columns:none!important;
+  }
+  .site-footer{flex-direction:row!important;align-items:flex-start!important;}
+  .portal-dashboard{
+    grid-template-columns:260px minmax(0,1fr) 300px!important;
+  }
+  .portal-rightbar{grid-template-columns:1fr!important;}
+}
+/* Keep AI Academy on its desktop layout even when opened from a phone. */
+@media(max-width:900px){
+  .ai-hero,.course-hero,.assessment-hero{grid-template-columns:1fr 260px!important;}
+  .course-grid{grid-template-columns:repeat(3,1fr)!important;}
+  .ai-info-strip,.steps{grid-template-columns:repeat(4,1fr)!important;}
+  .level-grid{grid-template-columns:repeat(3,1fr)!important;}
+  .answer-options{grid-template-columns:1fr 1fr!important;}
+  .project-steps{grid-template-columns:repeat(5,1fr)!important;}
+  .project-form-grid{grid-template-columns:1fr 1fr!important;}
+}
+@media(max-width:600px){
+  .ai-nav{flex-direction:row!important;align-items:center!important;padding:0 5%!important;}
+  .ai-nav nav{display:flex!important;width:auto!important;grid-template-columns:none!important;}
+  .ai-nav nav a{padding:24px 14px!important;min-height:0!important;width:auto!important;font-size:.88rem!important;}
+  .ai-hero,.course-hero,.notes-hero{grid-template-columns:1fr 260px!important;margin-left:-20px!important;margin-right:-20px!important;padding:64px max(6%,40px)!important;}
+  .course-grid,.ai-info-strip,.steps,.level-grid{grid-template-columns:repeat(3,1fr)!important;}
+  .answer-options{grid-template-columns:1fr 1fr!important;margin-left:60px!important;}
+  .project-steps{grid-template-columns:repeat(5,1fr)!important;}
+  .project-form-grid{grid-template-columns:1fr 1fr!important;}
+  .assessment-section-head{flex-direction:row!important;align-items:center!important;}
+  .assessment-progress{width:auto!important;}
+  .notes-nav{flex-direction:row!important;}
+}
+/* Resource Centre has its own inline mobile CSS; override it globally. */
+@media(max-width:767px){
+  header{padding:18px 5%!important;gap:15px!important;flex-wrap:wrap!important;}
+  header .brand{font-size:22px!important;min-width:0!important;}
+  header .home{min-height:0!important;padding:10px 15px!important;font-size:inherit!important;}
+  main{width:auto!important;max-width:1200px!important;padding:30px 18px!important;}
+  .hero{padding:25px!important;margin-bottom:0!important;}
+  .hero h1{font-size:inherit!important;line-height:normal!important;}
+  .hero p{font-size:inherit!important;line-height:normal!important;}
+  .filters{display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:14px!important;padding:0!important;}
+  .resource-grid{grid-template-columns:repeat(3,1fr)!important;gap:16px!important;}
+  .card{padding:18px!important;}
+  .card h3{font-size:inherit!important;line-height:normal!important;}
+  .actions{display:flex!important;grid-template-columns:none!important;}
+  .actions .btn{width:auto!important;min-height:36px!important;}
+  .viewer-dialog{width:min(1200px,96vw)!important;max-width:none!important;}
+}
