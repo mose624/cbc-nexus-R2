@@ -154,3 +154,33 @@ main{max-width:1280px;margin:auto;padding:0 20px 70px}
 .assessment-instruction strong,.assessment-instruction span{text-transform:none}
 .assessment-meta span{text-transform:none}
 .assessment-section-head h2,.assessment-section-head p{ text-transform:none }
+
+/* CBE Nexus FINAL AI ACADEMY DESKTOP CANVAS LOCK */
+html,body{min-width:1200px!important;width:1200px!important;max-width:none!important;overflow-x:auto!important}
+@media(max-width:1199px){
+  html,body{min-width:1200px!important;width:1200px!important;max-width:none!important;overflow-x:auto!important}
+  .ai-nav{display:flex!important;flex-direction:row!important;align-items:center!important;flex-wrap:nowrap!important}
+  .ai-nav nav{display:flex!important;flex-direction:row!important;width:auto!important;grid-template-columns:none!important;overflow:visible!important}
+  .ai-hero,.course-hero,.assessment-hero,.notes-hero{grid-template-columns:minmax(0,1fr) 260px!important}
+  .course-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .ai-info-strip,.steps{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  .level-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .answer-options{grid-template-columns:1fr 1fr!important}
+  .project-steps{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+  .project-form-grid{grid-template-columns:1fr 1fr!important}
+  .assessment-section-head{flex-direction:row!important;align-items:center!important}
+  .assessment-progress{width:auto!important}
+  .notes-nav{flex-direction:row!important}
+}
+@media(max-width:760px){
+  html,body{min-width:1200px!important;width:1200px!important;max-width:none!important;overflow-x:auto!important}
+  .ai-nav{display:flex!important;flex-direction:row!important;align-items:center!important;flex-wrap:nowrap!important}
+  .ai-nav nav{display:flex!important;flex-direction:row!important;width:auto!important;grid-template-columns:none!important;overflow:visible!important}
+  .ai-hero,.course-hero,.assessment-hero,.notes-hero{grid-template-columns:minmax(0,1fr) 260px!important;margin-left:0!important;margin-right:0!important}
+  .course-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .ai-info-strip,.steps{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  .level-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .answer-options{grid-template-columns:1fr 1fr!important;margin-left:0!important}
+  .project-steps{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+  .project-form-grid{grid-template-columns:1fr 1fr!important}
+}
