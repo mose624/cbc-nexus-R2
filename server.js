@@ -704,7 +704,7 @@ async function handleApi(req,res,url){
       if(stk.status<200||stk.status>=300||!d.CheckoutRequestID){sendJson(res,502,{ok:false,error:String(d.errorMessage||d.ResponseDescription||"M-Pesa payment request was not accepted.")});return true;}
       const saved=await savePayment({resource_id:resourceId,customer_phone:phone,amount,status:"pending",payment_reference:String(d.CheckoutRequestID),checkout_request_id:String(d.CheckoutRequestID),merchant_request_id:String(d.MerchantRequestID||""),result_code:null,result_desc:String(d.ResponseDescription||"STK Push sent"),mpesa_receipt:null,transaction_time:null});
       sendJson(res,200,{ok:true,CheckoutRequestID:d.CheckoutRequestID,MerchantRequestID:d.MerchantRequestID,amount,resourceId:resourceId,paymentId:saved.id,status:saved.status});
-    }catch(error){console.error("M-Pesa STK Push error:",error);sendJson(res,500,{ok:false,error:"M-Pesa payment request could not be started securely."});}
+    }catch(error){console.error("M-Pesa STK Push error:",error);const msg=String(error?.message||error||"Unknown error");let code="MPESA_STK_START_FAILED";if(/customer_phone|schema cache|PGRST/i.test(msg))code="SUPABASE_PAYMENT_SCHEMA_ERROR";else if(/credential|consumer|configured|token|oauth/i.test(msg))code="MPESA_CREDENTIAL_ERROR";else if(/R2|resource/i.test(msg))code="RESOURCE_LOOKUP_ERROR";sendJson(res,500,{ok:false,error:"M-Pesa payment request could not be started securely.",diagnosticCode:code});}
     return true;
   }
   if(req.method==="POST"&&url.pathname==="/api/mpesa/callback"){
