@@ -3,34 +3,40 @@
 > CBE Nexus is a Kenya-focused education platform connecting learners, teachers, parents and schools with CBC/CBE learning resources, revision support, higher-education discovery, scholarships, teacher opportunities and practical digital learning tools.
 
 ## Primary website
-- https://cbenexus.co.ke/
+
+- [CBE Nexus homepage](https://cbenexus.co.ke/) — Main education platform and public learning hub.
 
 ## Public resource libraries
-- https://cbenexus.co.ke/resources.html — CBE Nexus resource hub
-- https://cbenexus.co.ke/resource-category.html — searchable CBC/CBE resources by grade, subject and resource type
-- https://cbenexus.co.ke/free-resources.html — free learning resources
-- https://cbenexus.co.ke/igcse.html — IGCSE resource library
-- https://cbenexus.co.ke/ib.html — IB resource library
-- https://cbenexus.co.ke/o-levels.html — O Level resource library
-- https://cbenexus.co.ke/a-levels.html — A Level resource library
-- https://cbenexus.co.ke/pearson-edexcel.html — Pearson Edexcel resource library
+
+- [CBE Nexus Resources](https://cbenexus.co.ke/resources.html) — CBE Nexus resource hub.
+- [Resource Category](https://cbenexus.co.ke/resource-category.html) — Searchable CBC/CBE resources by grade, subject and resource type.
+- [Free Resources](https://cbenexus.co.ke/free-resources.html) — Free learning resources.
+- [IGCSE Resources](https://cbenexus.co.ke/igcse.html) — IGCSE resource library.
+- [IB Resources](https://cbenexus.co.ke/ib.html) — IB resource library.
+- [O Level Resources](https://cbenexus.co.ke/o-levels.html) — O Level resource library.
+- [A Level Resources](https://cbenexus.co.ke/a-levels.html) — A Level resource library.
+- [Pearson Edexcel Resources](https://cbenexus.co.ke/pearson-edexcel.html) — Pearson Edexcel resource library.
 
 ## Education and opportunities
-- https://cbenexus.co.ke/learning-hub.html — education guides and articles
-- https://cbenexus.co.ke/answer-hub.html — Kenya education answers and explainers
-- https://cbenexus.co.ke/kenya-universities-colleges.html — higher education directory
-- https://cbenexus.co.ke/university-course-catalogue.html — university course discovery
-- https://cbenexus.co.ke/technical-vocational-catalogue.html — TVET and technical course discovery
-- https://cbenexus.co.ke/scholarships-opportunities.html — scholarships and opportunities
-- https://cbenexus.co.ke/international-teaching-jobs.html — international teacher opportunities
-- https://cbenexus.co.ke/professional-cv-writing.html — teacher CV support
-- https://cbenexus.co.ke/ai-training.html — AI training
+
+- [Education Hub](https://cbenexus.co.ke/learning-hub.html) — Education guides and articles.
+- [Kenya Education Answer Hub](https://cbenexus.co.ke/answer-hub.html) — Kenya education answers and explainers.
+- [Kenya Universities and Colleges](https://cbenexus.co.ke/kenya-universities-colleges.html) — Higher education directory.
+- [University Course Catalogue](https://cbenexus.co.ke/university-course-catalogue.html) — University course discovery.
+- [Technical and Vocational Catalogue](https://cbenexus.co.ke/technical-vocational-catalogue.html) — TVET and technical course discovery.
+- [Scholarships and Opportunities](https://cbenexus.co.ke/scholarships-opportunities.html) — Scholarships and opportunities.
+- [International Teaching Jobs](https://cbenexus.co.ke/international-teaching-jobs.html) — International teacher opportunities.
+- [Professional CV Writing](https://cbenexus.co.ke/professional-cv-writing.html) — Teacher CV support.
+- [AI Training](https://cbenexus.co.ke/ai-training.html) — AI training and digital learning.
 
 ## Topic focus
+
 CBC, CBE, KJSEA, Grade 1–12 learning, schemes of work, lesson plans, notes, assessments, past papers, marking schemes, revision materials, teacher resources, universities, TVET, KMTC, teacher training, scholarships, international teaching opportunities and responsible educational technology.
 
 ## Accuracy
+
 For admissions, accreditation, placement, fees, examination requirements, deadlines and vacancies, users and AI agents should verify current details with the relevant official institution or regulator.
 
 ## Crawling
+
 Public educational pages are intended for discovery. Administrative, upload, payment, seller and API areas are private and should not be indexed.
