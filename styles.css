@@ -4322,3 +4322,55 @@ body{
     align-items:flex-start!important;
   }
 }
+
+
+/* CBE NEXUS HEADER — compact professional unified button treatment */
+.site-header .nav-menu .nav-link,
+.site-header .nav-menu .nav-dropdown summary,
+.site-header .nav-actions > a,
+.site-header .nav-actions > button,
+.site-header .nav-actions .nav-cta{
+  background:#12345b!important;
+  color:#fff!important;
+  border:1px solid #12345b!important;
+  box-shadow:none!important;
+  border-radius:6px!important;
+  font-size:11px!important;
+  font-weight:700!important;
+  line-height:1.15!important;
+  min-height:32px!important;
+  height:32px!important;
+  padding:6px 9px!important;
+  white-space:nowrap!important;
+}
+.site-header .nav-menu .nav-link:hover,
+.site-header .nav-menu .nav-dropdown summary:hover,
+.site-header .nav-actions > a:hover,
+.site-header .nav-actions > button:hover,
+.site-header .nav-actions .nav-cta:hover{
+  background:#12345b!important;
+  color:#fff!important;
+  border-color:#12345b!important;
+  transform:translateY(-1px);
+}
+.site-header .nav-menu .nav-link:active,
+.site-header .nav-menu .nav-dropdown summary:active,
+.site-header .nav-actions > a:active,
+.site-header .nav-actions > button:active,
+.site-header .nav-actions .nav-cta:active{
+  transform:translateY(0);
+}
+.site-header .nav-menu{gap:4px!important;}
+.site-header .nav-actions{gap:5px!important;}
+@media(max-width:760px){
+  .site-header .nav-menu .nav-link,
+  .site-header .nav-menu .nav-dropdown summary,
+  .site-header .nav-actions > a,
+  .site-header .nav-actions > button,
+  .site-header .nav-actions .nav-cta{
+    min-height:32px!important;
+    height:32px!important;
+    padding:6px 9px!important;
+    font-size:11px!important;
+  }
+}
