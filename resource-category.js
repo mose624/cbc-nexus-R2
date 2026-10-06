@@ -29,26 +29,45 @@ function fillSubjects(){const g=grade.value;subject.innerHTML='<option value="Al
 typeSelect.addEventListener("change",()=>{renderLimit=60;updateContext();updateUrl();render()});grade.addEventListener("change",()=>{renderLimit=60;fillSubjects();updateUrl()});subject.addEventListener("change",()=>{renderLimit=60;updateContext();updateUrl();render()});search.addEventListener("input",()=>{clearTimeout(searchTimer);renderLimit=60;searchTimer=setTimeout(render,120);});
 function updateUrl(){const p=new URLSearchParams();if(typeSelect.value!=="All Materials")p.set("type",typeSelect.value);if(grade.value!=="All Grades")p.set("grade",grade.value);if(subject.value!=="All Subjects")p.set("subject",subject.value);history.replaceState(null,"","resource-category.html"+(p.toString()?"?"+p.toString():""));}
 const RESOURCE_CACHE_KEY="cbeNexusPublicResourcesV1",RESOURCE_CACHE_TTL=60000;
-async function getResources(){
-  const now=Date.now();
+const APPROVED_STATUSES=new Set(["approved","published","active"]);
+function filterApproved(list){return Array.isArray(list)?list.map(normalizeResource).filter(r=>APPROVED_STATUSES.has(r.status)):[];}
+function readResourceCache(){
   try{
     const cached=JSON.parse(sessionStorage.getItem(RESOURCE_CACHE_KEY)||"null");
-    if(cached&&Array.isArray(cached.resources)&&now-Number(cached.time||0)<RESOURCE_CACHE_TTL){
-      return cached.resources.map(normalizeResource).filter(r=>["approved","published","active"].includes(r.status));
-    }
+    if(cached&&Array.isArray(cached.resources))return {resources:filterApproved(cached.resources),time:Number(cached.time||0)};
   }catch{}
+  try{
+    const fallback=JSON.parse(localStorage.getItem("cbeResources")||"[]");
+    if(Array.isArray(fallback)&&fallback.length)return {resources:filterApproved(fallback),time:0};
+  }catch{}
+  return {resources:[],time:0};
+}
+function paintCachedResources(){
+  const cached=readResourceCache();
+  if(cached.resources.length){resources=cached.resources;render();}
+  return cached;
+}
+async function refreshResourcesInBackground(){
   try{
     const response=await fetch("/api/resources",{credentials:"same-origin",cache:"no-store"});
     if(!response.ok)throw new Error("Resource API returned "+response.status);
     const data=await response.json();
     if(!data.ok||!Array.isArray(data.resources))throw new Error("Invalid resource API response");
-    const normalized=data.resources.map(normalizeResource).filter(r=>["approved","published","active"].includes(r.status));
-    try{sessionStorage.setItem(RESOURCE_CACHE_KEY,JSON.stringify({time:now,resources:normalized}));}catch{}
+    const normalized=filterApproved(data.resources);
+    const previousSignature=resources.map(r=>String(r.id||r._id||r.key||"")+"|"+r.updatedAt+"|"+r.status).join("\n");
+    const nextSignature=normalized.map(r=>String(r.id||r._id||r.key||"")+"|"+r.updatedAt+"|"+r.status).join("\n");
+    try{sessionStorage.setItem(RESOURCE_CACHE_KEY,JSON.stringify({time:Date.now(),resources:normalized}));}catch{}
+    if(previousSignature!==nextSignature){resources=normalized;render();}
     return normalized;
   }catch(error){
     console.warn("CBE Nexus Resource Centre API unavailable:",error);
-    try{return JSON.parse(localStorage.getItem("cbeResources")||"[]").map(normalizeResource).filter(r=>["approved","published","active"].includes(r.status));}catch{return[]}
+    return resources;
   }
+}
+async function getResources(){
+  const cached=readResourceCache();
+  if(cached.resources.length&&Date.now()-cached.time<RESOURCE_CACHE_TTL)return cached.resources;
+  return refreshResourcesInBackground();
 }function normalizeResource(r){return {...r,id:r.id??r.resource_id,title:r.title||"Untitled resource",grade:String(r.grade||"").trim(),subject:canonicalSubjectName(r.subject||""),type:canonicalTypeName(r.type||r.resource_type||""),description:r.description||"",price:Number(r.price??0),discount:Number(r.discount??r.discount_price??0),fileName:r.fileName||r.filename||"",r2Key:r.r2Key||r.r2_key||"",previewKey:r.previewKey||r.preview_key||"",file:r.file||(r.r2_key?"/api/r2/file?key="+encodeURIComponent(r.r2_key):""),status:String(r.status||"approved").toLowerCase(),createdAt:r.createdAt||r.created_at||"",updatedAt:r.updatedAt||r.updated_at||""};}
 let resources=[];
 function norm(v){return canonicalSubjectName(String(v||"").trim());}
@@ -63,7 +82,7 @@ function render(){
   results.setAttribute("aria-busy","false");
 }
 function esc(v){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
-fillSubjects();getResources().then(r=>{resources=r;render()});
+fillSubjects();paintCachedResources();refreshResourcesInBackground();
 
 
 document.addEventListener("click",async event=>{const b=event.target.closest("[data-download-resource]");if(!b)return;event.preventDefault();const id=b.dataset.downloadResource;const resource=resources.find(r=>String(r.id||r._id||r.key||"")===String(id));if(!resource)return;const old=b.innerHTML;b.disabled=true;b.innerHTML="⏳ Preparing…";try{if(Number(resource.price||0)===0){const response=await fetch("/api/r2/free-download?resourceId="+encodeURIComponent(id),{credentials:"same-origin",cache:"no-store"});const data=await response.json().catch(()=>({}));if(!response.ok||!data.ok)throw new Error(data.error||"Free download is unavailable.");const a=document.createElement("a");a.href=data.downloadUrl;a.download=data.fileName||"resource";a.rel="noopener";document.body.appendChild(a);a.click();a.remove();}else{const amount=Number(resource.discount)>0?Number(resource.discount):Number(resource.price)||0;const params=new URLSearchParams({resource:resource.title||"Untitled resource",amount:String(amount),grade:resource.grade||"",subject:resource.subject||"",type:resource.type||""});window.location.href="index.html?"+params.toString()+"#payments";}}catch(error){alert(error.message||"Download could not be started.");}finally{b.disabled=false;b.innerHTML=old;}});
