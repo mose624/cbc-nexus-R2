@@ -26,23 +26,42 @@ function updateContext(){if(!filterContext)return;const parts=[];if(grade.value!
 const initialGrade=params.get("grade")||"All Grades",initialSubject=subjectForFilter(params.get("subject")||"All Subjects");
 grade.value=initialGrade;
 function fillSubjects(){const g=grade.value;subject.innerHTML='<option value="All Subjects">All Subjects</option>';(g==="All Grades"?[...new Set(Object.values(gradeSubjects).flat())]:gradeSubjects[g]||[]).forEach(s=>subject.add(new Option(s,s)));if(g===initialGrade&&grade.value!=="All Grades"&&gradeSubjects[g]?.includes(initialSubject))subject.value=initialSubject;updateContext();render()}
-typeSelect.addEventListener("change",()=>{updateContext();updateUrl();render()});grade.addEventListener("change",()=>{fillSubjects();updateUrl()});subject.addEventListener("change",()=>{updateContext();updateUrl();render()});search.addEventListener("input",render);
+typeSelect.addEventListener("change",()=>{renderLimit=60;updateContext();updateUrl();render()});grade.addEventListener("change",()=>{renderLimit=60;fillSubjects();updateUrl()});subject.addEventListener("change",()=>{renderLimit=60;updateContext();updateUrl();render()});let renderLimit=60,searchTimer=null;search.addEventListener("input",()=>{clearTimeout(searchTimer);renderLimit=60;searchTimer=setTimeout(render,120);});
 function updateUrl(){const p=new URLSearchParams();if(typeSelect.value!=="All Materials")p.set("type",typeSelect.value);if(grade.value!=="All Grades")p.set("grade",grade.value);if(subject.value!=="All Subjects")p.set("subject",subject.value);history.replaceState(null,"","resource-category.html"+(p.toString()?"?"+p.toString():""));}
+const RESOURCE_CACHE_KEY="cbeNexusPublicResourcesV1",RESOURCE_CACHE_TTL=60000;
 async function getResources(){
+  const now=Date.now();
   try{
-    const response=await fetch("/api/resources?_public="+Date.now(),{credentials:"same-origin",cache:"no-store",headers:{"Cache-Control":"no-cache"}});
+    const cached=JSON.parse(sessionStorage.getItem(RESOURCE_CACHE_KEY)||"null");
+    if(cached&&Array.isArray(cached.resources)&&now-Number(cached.time||0)<RESOURCE_CACHE_TTL){
+      return cached.resources.map(normalizeResource).filter(r=>["approved","published","active"].includes(r.status));
+    }
+  }catch{}
+  try{
+    const response=await fetch("/api/resources",{credentials:"same-origin",cache:"no-store"});
     if(!response.ok)throw new Error("Resource API returned "+response.status);
     const data=await response.json();
     if(!data.ok||!Array.isArray(data.resources))throw new Error("Invalid resource API response");
-    return data.resources.map(normalizeResource).filter(r=>["approved","published","active"].includes(r.status));
+    const normalized=data.resources.map(normalizeResource).filter(r=>["approved","published","active"].includes(r.status));
+    try{sessionStorage.setItem(RESOURCE_CACHE_KEY,JSON.stringify({time:now,resources:normalized}));}catch{}
+    return normalized;
   }catch(error){
     console.warn("CBE Nexus Resource Centre API unavailable:",error);
     try{return JSON.parse(localStorage.getItem("cbeResources")||"[]").map(normalizeResource).filter(r=>["approved","published","active"].includes(r.status));}catch{return[]}
   }
-}
-function normalizeResource(r){return {...r,id:r.id??r.resource_id,title:r.title||"Untitled resource",grade:String(r.grade||"").trim(),subject:canonicalSubjectName(r.subject||""),type:canonicalTypeName(r.type||r.resource_type||""),description:r.description||"",price:Number(r.price??0),discount:Number(r.discount??r.discount_price??0),fileName:r.fileName||r.filename||"",r2Key:r.r2Key||r.r2_key||"",previewKey:r.previewKey||r.preview_key||"",file:r.file||(r.r2_key?"/api/r2/file?key="+encodeURIComponent(r.r2_key):""),status:String(r.status||"approved").toLowerCase(),createdAt:r.createdAt||r.created_at||"",updatedAt:r.updatedAt||r.updated_at||""};}
+}function normalizeResource(r){return {...r,id:r.id??r.resource_id,title:r.title||"Untitled resource",grade:String(r.grade||"").trim(),subject:canonicalSubjectName(r.subject||""),type:canonicalTypeName(r.type||r.resource_type||""),description:r.description||"",price:Number(r.price??0),discount:Number(r.discount??r.discount_price??0),fileName:r.fileName||r.filename||"",r2Key:r.r2Key||r.r2_key||"",previewKey:r.previewKey||r.preview_key||"",file:r.file||(r.r2_key?"/api/r2/file?key="+encodeURIComponent(r.r2_key):""),status:String(r.status||"approved").toLowerCase(),createdAt:r.createdAt||r.created_at||"",updatedAt:r.updatedAt||r.updated_at||""};}
 let resources=[];
-function norm(v){return canonicalSubjectName(String(v||"").trim());} function render(){updateContext();const g=grade.value,s=subject.value,t=typeSelect.value,q=search.value.trim().toLowerCase();let list=resources.filter(r=>(g==="All Grades"||String(r.grade||"").trim()===g)&&(s==="All Subjects"||norm(r.subject)===s)&&(t==="All Materials"||String(r.type||"").trim()===t)&&(!q||[r.title,r.description,r.grade,r.subject,r.type].join(" ").toLowerCase().includes(q)));results.innerHTML=list.length?list.map(r=>`<article class="card" data-resource-id="${esc(r.id||r._id||r.key||"")}"><div class="tags"><span class="tag grade-tag">${r.grade||""}</span><span class="tag subject-tag">${displaySubject(r.subject)}</span><span class="tag">${r.type||""}</span></div><h3>${esc(r.title||"Untitled resource")}</h3><div class="price-box">${Number(r.discount)>0&&Number(r.discount)<Number(r.price)?`<span class="old-price">KSh ${Number(r.price).toLocaleString()}</span><span class="sale-price">KSh ${Number(r.discount).toLocaleString()}</span><span class="discount-label">DISCOUNT</span>`:`<span class="sale-price">KSh ${Number(r.price||0).toLocaleString()}</span>`}</div><p>${esc(r.description||"Approved CBE Nexus resource.")}</p><div class="actions"><a class="btn preview" href="#" data-resource-view title="Open resource">View</a>${`<button type="button" class="btn download-resource" data-download-resource="${esc(r.id||r._id||r.key||"")}" title="${Number(r.price||0)===0?"Download this free resource":"Download this resource"}">⬇ Download</button><a class="btn whatsapp" target="_blank" rel="noopener" href="https://wa.me/254798462815?text=${encodeURIComponent("CBE NEXUS RESOURCE PURCHASE\\n\\nResource: "+(r.title||"Untitled resource")+"\\nGrade: "+(r.grade||"Not specified")+"\\nSubject: "+(r.subject||"Not specified")+"\\nType: "+(r.type||"Not specified")+"\\nPrice: KSh "+((Number(r.discount)>0?Number(r.discount):Number(r.price)||0).toLocaleString())+"\\n\\nI would like to buy this resource. Please send me the payment instructions and access details.")}">Buy with WhatsApp</a>`}</div></article>`).join(""):'<div class="empty">No approved resources match Grade, Subject and Resource Type yet.</div>'}
+function norm(v){return canonicalSubjectName(String(v||"").trim());}
+function render(){
+  updateContext();
+  results.setAttribute("aria-busy","true");
+  const g=grade.value,s=subject.value,t=typeSelect.value,q=search.value.trim().toLowerCase();
+  const list=resources.filter(r=>(g==="All Grades"||String(r.grade||"").trim()===g)&&(s==="All Subjects"||norm(r.subject)===s)&&(t==="All Materials"||String(r.type||"").trim()===t)&&(!q||[r.title,r.description,r.grade,r.subject,r.type].join(" ").toLowerCase().includes(q)));
+  const visible=list.slice(0,renderLimit);
+  results.innerHTML=visible.length?visible.map(r=>`<article class="card" data-resource-id="${esc(r.id||r._id||r.key||"")}"><div class="tags"><span class="tag grade-tag">${r.grade||""}</span><span class="tag subject-tag">${displaySubject(r.subject)}</span><span class="tag">${r.type||""}</span></div><h3>${esc(r.title||"Untitled resource")}</h3><div class="price-box">${Number(r.discount)>0&&Number(r.discount)<Number(r.price)?`<span class="old-price">KSh ${Number(r.price).toLocaleString()}</span><span class="sale-price">KSh ${Number(r.discount).toLocaleString()}</span><span class="discount-label">DISCOUNT</span>`:`<span class="sale-price">KSh ${Number(r.price||0).toLocaleString()}</span>`}</div><p>${esc(r.description||"Approved CBE Nexus resource.")}</p><div class="actions"><a class="btn preview" href="#" data-resource-view title="Open resource">View</a><button type="button" class="btn download-resource" data-download-resource="${esc(r.id||r._id||r.key||"")}" title="${Number(r.price||0)===0?"Download this free resource":"Download this resource"}">⬇ Download</button><a class="btn whatsapp" target="_blank" rel="noopener" href="https://wa.me/254798462815?text=${encodeURIComponent("CBE NEXUS RESOURCE PURCHASE\\n\\nResource: "+(r.title||"Untitled resource")+"\\nGrade: "+(r.grade||"Not specified")+"\\nSubject: "+(r.subject||"Not specified")+"\\nType: "+(r.type||"Not specified")+"\\nPrice: KSh "+((Number(r.discount)>0?Number(r.discount):Number(r.price)||0).toLocaleString())+"\\n\\nI would like to buy this resource. Please send me the payment instructions and access details.")}">Buy with WhatsApp</a></div></article>`).join(""):`<div class="empty">No approved resources match Grade, Subject and Resource Type yet.</div>`;
+  if(list.length>renderLimit)results.innerHTML+=`<div class="empty" style="padding:14px"><button type="button" class="btn preview" data-load-more aria-label="Load more resources">Load more resources (${list.length-renderLimit} remaining)</button></div>`;
+  results.setAttribute("aria-busy","false");
+}
 function esc(v){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
 fillSubjects();getResources().then(r=>{resources=r;render()});
 
@@ -137,3 +156,6 @@ function applyResourceGradeTheme(value){
 const originalResourceFillSubjects=fillSubjects;
 fillSubjects=function(){originalResourceFillSubjects();applyResourceGradeTheme(grade.value);};
 applyResourceGradeTheme(grade.value);
+
+
+document.addEventListener("click",event=>{const more=event.target.closest("[data-load-more]");if(!more)return;renderLimit+=60;render();});
