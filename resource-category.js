@@ -89,7 +89,7 @@ async function renderPdfWithoutToolbar(url){
  }catch(e){box.innerHTML='<div class="pdf-error">This document preview could not be displayed.</div>';console.warn("PDF preview error",e);}
 }
 const viewerModal=document.getElementById("viewerModal"),viewerFrame=document.getElementById("viewerFrame"),viewerTitle=document.getElementById("viewerTitle"),viewerClose=document.getElementById("viewerClose");
-function closeViewer(){if(!viewerModal)return;viewerModal.classList.remove("open");viewerModal.setAttribute("aria-hidden","true");if(viewerFrame){viewerFrame.src="";viewerFrame.style.display="block";}const box=document.getElementById("pdfViewer");if(box){box.classList.remove("active");box.innerHTML="";}}
+function closeViewer(){if(!viewerModal)return;viewerModal.classList.remove("open");viewerModal.hidden=true;if(viewerFrame){viewerFrame.src="";viewerFrame.style.display="block";}const box=document.getElementById("pdfViewer");if(box){box.classList.remove("active");box.innerHTML="";}}
 viewerClose?.addEventListener("click",closeViewer);
 viewerModal?.addEventListener("click",event=>{if(event.target===viewerModal)closeViewer();});
 document.addEventListener("keydown",event=>{if(event.key==="Escape")closeViewer();});
