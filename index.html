@@ -1710,5 +1710,52 @@
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initCbeGradeDashboard,{once:true});else initCbeGradeDashboard();
 })();
 </script>
+
+<!-- CBE NEXUS HOMEPAGE HEADER COMPACT BUTTONS -->
+<style>
+/* Homepage only: compact, professional, single-colour header controls */
+.site-header .top-strip a,
+.site-header .main-nav .nav-link,
+.site-header .main-nav .nav-dropdown > summary,
+.site-header .main-nav .nav-actions a,
+.site-header .main-nav .nav-actions button{
+  background:#12345b!important;
+  color:#fff!important;
+  border:1px solid #12345b!important;
+  border-radius:5px!important;
+  min-height:30px!important;
+  height:30px!important;
+  padding:5px 8px!important;
+  font-size:10.5px!important;
+  line-height:1.1!important;
+  font-weight:700!important;
+  box-shadow:none!important;
+}
+.site-header .top-strip{gap:5px!important;}
+.site-header .main-nav .nav-menu{gap:4px!important;}
+.site-header .main-nav .nav-actions{gap:5px!important;}
+.site-header .top-strip a:hover,
+.site-header .main-nav .nav-link:hover,
+.site-header .main-nav .nav-dropdown > summary:hover,
+.site-header .main-nav .nav-actions a:hover,
+.site-header .main-nav .nav-actions button:hover{
+  background:#12345b!important;
+  color:#fff!important;
+  border-color:#12345b!important;
+  transform:translateY(-1px);
+}
+@media(max-width:760px){
+  .site-header .top-strip a,
+  .site-header .main-nav .nav-link,
+  .site-header .main-nav .nav-dropdown > summary,
+  .site-header .main-nav .nav-actions a,
+  .site-header .main-nav .nav-actions button{
+    min-height:30px!important;
+    height:30px!important;
+    padding:5px 8px!important;
+    font-size:10.5px!important;
+  }
+}
+</style>
 </body>
 </html>
