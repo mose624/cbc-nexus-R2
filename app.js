@@ -1483,7 +1483,64 @@ function injectContactInfo() {
   });
 }
 
-function initializePaymentCheckoutFromUrl(){const p=new URLSearchParams(location.search);const resource=p.get("resource");const amount=p.get("amount");if(resource&&elements.selectedResource){elements.selectedResource.value=resource;}if(amount&&elements.amount&&Number(amount)>0){elements.amount.value=amount;}if(resource&&elements.paymentStatus){elements.paymentStatus.textContent="You are purchasing: "+resource+" — Amount: KSh "+Number(amount||0).toLocaleString()+". Enter the M-Pesa phone number you will use, then select Pay with M-Pesa. An STK Push will be sent to that phone when Daraja is configured.";elements.paymentStatus.className="form-status";}if((resource||amount)&&location.hash==="#payments"){setTimeout(()=>document.getElementById("payments")?.scrollIntoView({behavior:"smooth",block:"start"}),50);}}
+async function requestMpesaPayment(event){
+  event.preventDefault();
+  const phoneInput=document.getElementById("customerPhoneInput");
+  const amountInput=document.getElementById("amountInput");
+  const resourceInput=document.getElementById("selectedResourceInput");
+  const resourceIdInput=document.getElementById("selectedResourceIdInput");
+  const status=document.getElementById("paymentStatus");
+  const phone=String(phoneInput?.value||"").trim();
+  const resourceId=String(resourceIdInput?.value||"").trim();
+  const resourceTitle=String(resourceInput?.value||"").trim();
+  const amount=Number(amountInput?.value||0);
+  if(!phone||!resourceId||!resourceTitle||amount<1){
+    if(status)status.textContent="Select a paid resource and enter a valid M-Pesa phone number.";
+    return;
+  }
+  const button=event.submitter||document.querySelector("#paymentForm button[type=submit]");
+  if(button)button.disabled=true;
+  if(status)status.textContent="Starting secure M-Pesa STK Push…";
+  try{
+    const start=await fetch("/api/mpesa/stk-push",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({customerPhone:phone,resourceId})});
+    const data=await start.json().catch(()=>({}));
+    if(!start.ok||!data.ok)throw new Error(data.error||"M-Pesa payment could not be started.");
+    const checkoutRequestID=String(data.CheckoutRequestID||"");
+    if(!checkoutRequestID)throw new Error("M-Pesa did not return a checkout request.");
+    if(status)status.textContent="STK Push sent. Complete the payment on your phone…";
+    let paid=null;
+    for(let attempt=0;attempt<30;attempt++){
+      await new Promise(resolve=>setTimeout(resolve,2000));
+      const check=await fetch("/api/mpesa/status?checkoutRequestID="+encodeURIComponent(checkoutRequestID)+"&phone="+encodeURIComponent(phone),{credentials:"same-origin",cache:"no-store"});
+      const result=await check.json().catch(()=>({}));
+      if(result.status==="paid"){paid=result;break;}
+      if(result.status==="failed"){throw new Error(result.payment?.resultDesc||"M-Pesa payment failed or was cancelled.");}
+      if(status)status.textContent="Waiting for M-Pesa confirmation… ("+(attempt+1)+"/30)";
+    }
+    if(!paid)throw new Error("Payment confirmation is taking longer than expected. Please check your M-Pesa message and use the Download button again after confirmation.");
+    if(status)status.textContent="Payment confirmed. Preparing your secure download…";
+    const approval=await fetch("/api/download-approval/request",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({resourceId,customerPhone:phone,paymentReference:checkoutRequestID})});
+    const approvalData=await approval.json().catch(()=>({}));
+    if(!approval.ok||!approvalData.ok)throw new Error(approvalData.error||"Payment was confirmed but download access could not be prepared.");
+    if(approvalData.approval?.status!=="approved"){
+      if(status)status.textContent="Payment confirmed. Download access is awaiting final approval.";
+      return;
+    }
+    const resource=(getAllResources()||[]).find(r=>String(r.id)===resourceId);
+    const key=resource?.r2Key||resource?.r2_key;
+    if(!key)throw new Error("The protected resource file is unavailable.");
+    const download=await fetch("/api/r2/file?key="+encodeURIComponent(key)+"&resourceId="+encodeURIComponent(resourceId)+"&phone="+encodeURIComponent(phone),{credentials:"same-origin",cache:"no-store"});
+    const result=await download.json().catch(()=>({}));
+    if(!download.ok||!result.ok)throw new Error(result.error||"Secure download is not available.");
+    window.location.href=result.downloadUrl;
+  }catch(error){
+    if(status)status.textContent=error.message||"Payment could not be completed.";
+  }finally{
+    if(button)button.disabled=false;
+  }
+}
+
+function initializePaymentCheckoutFromUrl(){const p=new URLSearchParams(location.search);const resource=p.get("resource");const amount=p.get("amount");const resourceId=p.get("resourceId");if(resource&&elements.selectedResource){elements.selectedResource.value=resource;}if(resourceId&&document.getElementById("selectedResourceIdInput"))document.getElementById("selectedResourceIdInput").value=resourceId;if(amount&&elements.amount&&Number(amount)>0){elements.amount.value=amount;}if(resource&&elements.paymentStatus){elements.paymentStatus.textContent="You are purchasing: "+resource+" — Amount: KSh "+Number(amount||0).toLocaleString()+". Enter the M-Pesa phone number you will use, then select Pay with M-Pesa. An STK Push will be sent to that phone when Daraja is configured.";elements.paymentStatus.className="form-status";}if((resource||amount)&&location.hash==="#payments"){setTimeout(()=>document.getElementById("payments")?.scrollIntoView({behavior:"smooth",block:"start"}),50);}}
 renderGradeDashboard();
 setupFilters();
 applyGradeSubjectFromLink(false);
