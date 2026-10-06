@@ -34,7 +34,18 @@ header{border-bottom:4px solid var(--grade-accent)!important}
 .card .grade-tag{background:var(--grade-soft)!important;border-color:var(--grade-accent-2)!important;color:var(--grade-accent)!important}
 .card .subject-tag{border-color:var(--grade-accent-2)!important}
 </style><style id="cbe-mobile-resource-centre">
+/* Phone keeps the desktop canvas, but the Resource Centre header is intentionally rebalanced:
+   Dashboard stays on the left and the Resource Centre identity sits centrally. */
 @media (max-width:767px){
+  header{position:relative!important;display:flex!important;justify-content:center!important;align-items:center!important;min-height:72px!important;padding:10px 130px 10px 150px!important;flex-wrap:nowrap!important}
+  header .brand{position:relative!important;left:auto!important;right:auto!important;text-align:center!important;white-space:nowrap!important;font-size:20px!important;line-height:1.15!important}
+  header .brand small{text-align:center!important}
+  header .home{position:absolute!important;left:12px!important;top:50%!important;transform:translateY(-50%)!important;white-space:nowrap!important;z-index:2!important}
+  .hero .eyebrow{text-align:left!important}
+  .hero h1{text-align:left!important}
+  .hero p{text-align:left!important}
+}
+@media (min-width:768px){
   html,body{width:100%;max-width:100%;overflow-x:hidden}
   header{padding:10px 12px!important;gap:8px!important;min-height:58px!important}
   header .brand{font-size:18px!important;min-width:0}
@@ -58,6 +69,8 @@ header{border-bottom:4px solid var(--grade-accent)!important}
   .viewer-close{min-height:44px!important}
   .viewer-content{min-width:0!important}
   .viewer-frame,.pdf-viewer{width:100%!important;max-width:100%!important}
+}
+  /* Desktop/tablet keeps the existing Resource Centre arrangement. */
 }
 </style><link rel="stylesheet" href="customer-care.css?v=20261004-2">
 </head><body>
