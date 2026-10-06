@@ -31,7 +31,9 @@ const initialGrade=params.get("grade")||"All Grades",initialSubject=subjectForFi
 let resources=[];
 grade.value=initialGrade;
 function fillSubjects(){const g=grade.value;subject.innerHTML='<option value="All Subjects">All Subjects</option>';const configured=g==="All Grades"?[...new Set(Object.values(gradeSubjects).flat())]:(gradeSubjects[g]||[]);const live=resources.filter(r=>g==="All Grades"||String(r.grade||"").trim()===g).map(r=>canonicalSubjectName(r.subject)).filter(Boolean);[...new Set([...configured,...live])].sort((a,b)=>a.localeCompare(b)).forEach(s=>subject.add(new Option(s,s)));if(g===initialGrade&&grade.value!=="All Grades"&&[...subject.options].some(o=>o.value===initialSubject))subject.value=initialSubject;updateContext();render()}
-typeSelect.addEventListener("change",()=>{renderLimit=60;updateContext();updateUrl();render()});grade.addEventListener("change",()=>{renderLimit=60;fillSubjects();updateUrl()});subject.addEventListener("change",()=>{renderLimit=60;updateContext();updateUrl();render()});search.addEventListener("input",()=>{clearTimeout(searchTimer);renderLimit=60;searchTimer=setTimeout(render,120);});
+typeSelect.addEventListener("change",()=>{renderLimit=60;updateContext();updateUrl();render();});
+grade.addEventListener("change",()=>{renderLimit=60;fillSubjects();updateContext();updateUrl();render();});
+subject.addEventListener("change",()=>{renderLimit=60;updateContext();updateUrl();render();});search.addEventListener("input",()=>{clearTimeout(searchTimer);renderLimit=60;searchTimer=setTimeout(render,120);});
 function updateUrl(){const p=new URLSearchParams();if(typeSelect.value!=="All Materials")p.set("type",typeSelect.value);if(grade.value!=="All Grades")p.set("grade",grade.value);if(subject.value!=="All Subjects")p.set("subject",subject.value);history.replaceState(null,"","resource-category.html"+(p.toString()?"?"+p.toString():""));}
 const RESOURCE_CACHE_KEY="cbeNexusPublicResourcesV1",RESOURCE_CACHE_TTL=60000;
 const APPROVED_STATUSES=new Set(["approved","published","active"]);
@@ -204,3 +206,34 @@ applyResourceGradeTheme(grade.value);
 
 
 document.addEventListener("click",event=>{const more=event.target.closest("[data-load-more]");if(!more)return;renderLimit+=60;render();});
+/* Direct links from the Resource Material Pages navigation always resolve to the
+   same filtered Resource Centre and rebuild the correct grade/subject options. */
+document.addEventListener("click",event=>{
+  const link=event.target.closest(".resource-navigation a");
+  if(!link)return;
+  const href=link.getAttribute("href");
+  if(!href)return;
+  event.preventDefault();
+  const target=new URL(href,location.href);
+  const p=target.searchParams;
+  const nextGrade=p.get("grade");
+  const nextType=p.get("type");
+  if(nextGrade){
+    const options=[...grade.options].map(o=>o.value);
+    grade.value=options.includes(nextGrade)?nextGrade:"All Grades";
+    fillSubjects();
+    if(options.includes(nextGrade)) grade.value=nextGrade;
+    const wanted=p.get("subject");
+    if(wanted){
+      const canonical=subjectForFilter(wanted);
+      if([...subject.options].some(o=>o.value===canonical)) subject.value=canonical;
+    }else subject.value="All Subjects";
+  }
+  if(nextType){
+    const canonical=canonicalTypeName(nextType);
+    if([...typeSelect.options].some(o=>o.value===canonical))typeSelect.value=canonical;
+  }
+  updateContext();updateUrl();render();
+  history.replaceState(null,"",target.pathname+"?"+p.toString());
+  window.scrollTo({top:0,behavior:"smooth"});
+});
