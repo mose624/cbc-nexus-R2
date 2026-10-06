@@ -4374,3 +4374,238 @@ body{
     font-size:11px!important;
   }
 }
+
+
+/* =========================================================
+   CBE NEXUS — FINAL PROFESSIONAL DESIGN POLISH
+   Keeps the existing structure, colours and desktop canvas.
+   ========================================================= */
+
+:root{
+  --nexus-radius:10px;
+  --nexus-soft-shadow:0 8px 24px rgba(18,52,71,.08);
+}
+
+body{
+  letter-spacing:.005em;
+}
+
+h1,h2,h3,h4{
+  overflow-wrap:break-word;
+  word-break:normal;
+}
+
+.info-band > h1,
+.info-band > .eyebrow,
+.info-band > p{
+  text-align:center;
+}
+
+.info-band > h1{
+  max-width:1100px;
+  margin:0 auto 10px;
+  font-size:clamp(30px,3.2vw,46px);
+  line-height:1.12;
+  color:var(--navy);
+}
+
+.info-band > p:not(.eyebrow){
+  max-width:900px;
+  margin:0 auto 18px;
+  color:var(--muted);
+  font-size:15px;
+}
+
+.info-band > .eyebrow{
+  margin-bottom:7px;
+}
+
+.section-heading{
+  max-width:1200px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.section-heading h2,
+.panel-heading h2{
+  line-height:1.15;
+  color:var(--navy);
+}
+
+.seo-band,
+.landing-band,
+.competitive-band,
+.trust-band{
+  position:relative;
+}
+
+.seo-band > *,
+.landing-band > *,
+.competitive-band > *,
+.trust-band > *{
+  max-width:1200px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.filters{
+  max-width:1200px;
+  margin-left:auto;
+  margin-right:auto;
+  align-items:end;
+}
+
+.filters label{
+  color:#475569;
+}
+
+.filters input,
+.filters select{
+  min-height:44px;
+  border-radius:8px;
+  background:#fff;
+}
+
+.filters input:hover,
+.filters select:hover{
+  border-color:#b8c7d0;
+}
+
+.resource-grid{
+  max-width:1200px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.resource-card{
+  border-radius:10px;
+  box-shadow:var(--nexus-soft-shadow);
+  transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;
+}
+
+.resource-card:hover{
+  transform:translateY(-2px);
+  border-color:#c4d4dc;
+  box-shadow:0 12px 30px rgba(18,52,71,.11);
+}
+
+.resource-card h3{
+  color:var(--navy);
+  line-height:1.25;
+  font-size:18px;
+}
+
+.resource-meta .tag{
+  border-radius:999px;
+  padding:5px 9px;
+}
+
+.download-tile{
+  border-radius:10px;
+  box-shadow:0 3px 12px rgba(18,52,71,.06);
+  transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;
+}
+
+.download-tile:hover{
+  transform:translateY(-2px);
+  border-color:#b9cbd4;
+  box-shadow:0 8px 20px rgba(18,52,71,.10);
+}
+
+.trust-grid article,
+.feature-grid article,
+.info-card,
+.grade-panel,
+.admin-form,
+.payment-form,
+.payment-card{
+  border-radius:10px;
+}
+
+.site-footer{
+  min-height:82px;
+}
+
+.footer-links{
+  align-items:center;
+}
+
+.footer-links a{
+  transition:background .16s ease,transform .16s ease;
+}
+
+.footer-links a:hover{
+  transform:translateY(-1px);
+}
+
+.site-header{
+  box-shadow:0 2px 10px rgba(18,52,71,.06);
+}
+
+.top-strip{
+  min-height:38px;
+  align-items:center;
+}
+
+.brand strong{
+  font-size:18px;
+  line-height:1.1;
+}
+
+.brand small{
+  line-height:1.25;
+}
+
+.main-nav{
+  box-shadow:inset 0 -1px rgba(255,255,255,.08);
+}
+
+.grade-panel{
+  box-shadow:var(--nexus-soft-shadow);
+}
+
+.grade-card{
+  border-radius:9px;
+}
+
+.grade-toggle{
+  min-height:46px;
+  font-size:14px;
+}
+
+.subject-dropdown{
+  min-height:42px;
+  border-radius:8px;
+}
+
+.primary-button,
+.secondary-button,
+.ghost-button,
+.download-button{
+  border-radius:7px;
+}
+
+input,
+select,
+textarea{
+  border-radius:8px;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:#177e89;
+}
+
+.empty-state{
+  text-align:center;
+  min-height:120px;
+  display:grid;
+  place-items:center;
+}
+
+@media(max-width:1199px){
+  .info-band > h1{
+    font-size:36px;
+  }
+}
