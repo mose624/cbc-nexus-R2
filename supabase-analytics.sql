@@ -58,23 +58,9 @@ create unique index if not exists purchases_checkout_request_id_uidx on public.p
 create index if not exists purchases_customer_phone_idx on public.purchases(customer_phone);
 
 -- Tie each admin download approval to the exact verified M-Pesa purchase.
-create table if not exists public.download_approvals (
-  id text primary key,
-  resource_id text not null,
-  customer_phone text not null,
-  payment_reference text,
-  status text not null default 'pending',
-  created_at timestamptz not null default now(),
-  approved_at timestamptz,
-  purchase_id uuid references public.purchases(id) on delete set null
-);
+alter table public.download_approvals
+  add column if not exists purchase_id uuid references public.purchases(id) on delete set null;
 
-create index if not exists download_approvals_resource_idx on public.download_approvals(resource_id);
-create index if not exists download_approvals_phone_idx on public.download_approvals(customer_phone);
-create index if not exists download_approvals_status_idx on public.download_approvals(status);
-create index if not exists download_approvals_purchase_idx on public.download_approvals(purchase_id);
-
-alter table public.download_approvals enable row level security;
 create index if not exists download_approvals_purchase_idx on public.download_approvals(purchase_id);
 
 
