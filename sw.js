@@ -1,9 +1,30 @@
-const CACHE_NAME = "cbe-nexus-static-v12";
+const CACHE_NAME = "cbe-nexus-speed-v13";
 const STATIC_EXTENSIONS = /\.(?:css|js|png|jpg|jpeg|webp|svg|ico|woff2?)$/i;
+const HTML_CACHE = "cbe-nexus-pages-v13";
+const PUBLIC_PAGE_CACHE = [
+  "/",
+  "/index.html"
+];
 
-self.addEventListener("install", () => self.skipWaiting());
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(PUBLIC_PAGE_CACHE))
+      .catch(() => {})
+      .then(() => self.skipWaiting())
+  );
+});
+
 self.addEventListener("activate", (event) => {
-  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key)))).then(() => self.clients.claim()));
+  event.waitUntil(
+    caches.keys()
+      .then(keys => Promise.all(
+        keys
+          .filter(key => key !== CACHE_NAME && key !== HTML_CACHE)
+          .map(key => caches.delete(key))
+      ))
+      .then(() => self.clients.claim())
+  );
 });
 
 async function getQuizFixedResponse(request) {
@@ -29,12 +50,72 @@ async function getDashboardResponse(request) {
   return new Response(fixed, { status: response.status, statusText: response.statusText, headers: response.headers });
 }
 
+function isPrivateOrDynamic(url) {
+  const p = url.pathname.toLowerCase();
+  return p.startsWith("/api/") ||
+    p.startsWith("/admin") ||
+    p.includes("login") ||
+    p.includes("checkout") ||
+    p.includes("payment") ||
+    p.includes("upload") ||
+    p.includes("dashboard") ||
+    p.includes("seller");
+}
+
+async function cachePublicPage(request) {
+  const cache = await caches.open(HTML_CACHE);
+  const cached = await cache.match(request);
+  const network = fetch(request, { cache: "no-store" })
+    .then(response => {
+      if (response.ok && response.type === "basic") cache.put(request, response.clone());
+      return response;
+    })
+    .catch(() => cached);
+
+  // Return cached HTML immediately for repeat visits while refreshing it in the background.
+  return cached || network;
+}
+
+async function cacheStaticAsset(request) {
+  const cached = await caches.match(request);
+  if (cached) {
+    fetch(request, { cache: "no-store" })
+      .then(response => {
+        if (response.ok) caches.open(CACHE_NAME).then(cache => cache.put(request, response));
+      })
+      .catch(() => {});
+    return cached;
+  }
+  const response = await fetch(request);
+  if (response.ok) {
+    const copy = response.clone();
+    caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
+  }
+  return response;
+}
+
 self.addEventListener("fetch", (event) => {
   const request = event.request;
   if (request.method !== "GET" || new URL(request.url).origin !== self.location.origin) return;
+
   const url = new URL(request.url);
-  if (url.pathname.endsWith("/assessment.js")) { event.respondWith(getQuizFixedResponse(request)); return; }
-  if (url.pathname === "/" || url.pathname.endsWith("/index.html")) { event.respondWith(getDashboardResponse(request)); return; }
-  if (!STATIC_EXTENSIONS.test(url.pathname)) return;
-  event.respondWith(caches.match(request).then(cached => { const network = fetch(request).then(response => { if (response.ok) { const copy=response.clone(); caches.open(CACHE_NAME).then(cache=>cache.put(request,copy)); } return response; }); return cached || network; }));
+
+  if (url.pathname.endsWith("/assessment.js")) {
+    event.respondWith(getQuizFixedResponse(request));
+    return;
+  }
+
+  if (url.pathname === "/" || url.pathname.endsWith("/index.html")) {
+    event.respondWith(getDashboardResponse(request));
+    return;
+  }
+
+  if (request.mode === "navigate" && !isPrivateOrDynamic(url) && url.pathname.endsWith(".html")) {
+    event.respondWith(cachePublicPage(request));
+    return;
+  }
+
+  if (STATIC_EXTENSIONS.test(url.pathname)) {
+    event.respondWith(cacheStaticAsset(request));
+  }
 });
