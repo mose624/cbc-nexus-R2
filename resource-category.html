@@ -60,12 +60,12 @@ header{border-bottom:4px solid var(--grade-accent)!important}
   .filters{display:grid!important;grid-template-columns:1fr!important;gap:9px!important;padding:12px!important}
   .filters label{font-size:12px}
   .filters input,.filters select{min-height:46px;font-size:16px!important}
-  .resource-grid{grid-template-columns:1fr!important;gap:10px!important}
-  .card{min-width:0!important;padding:15px!important}
+  .resource-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important}
+  .card{min-width:0!important;padding:14px!important;min-height:0!important}
   .card h3{font-size:18px!important;line-height:1.3}
   .tags{gap:6px!important}
-  .actions{display:grid!important;grid-template-columns:1fr!important;gap:8px!important}
-  .actions .btn{width:100%!important;min-height:48px!important;display:flex!important;align-items:center!important;justify-content:center!important}
+  .actions{display:flex!important;gap:7px!important;flex-wrap:wrap!important}
+  .actions .btn{width:auto!important;min-height:38px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important}
   .viewer-dialog{width:calc(100vw - 12px)!important;max-width:none!important}
   .viewer-head{padding:10px!important}
   .viewer-close{min-height:44px!important}
