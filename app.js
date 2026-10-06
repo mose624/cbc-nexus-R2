@@ -1483,6 +1483,25 @@ function injectContactInfo() {
   });
 }
 
+function selectResourceForPayment(resourceId){
+  const id=String(resourceId||"").trim();
+  const resource=(getAllResources()||[]).find(r=>String(r.id)===id);
+  if(!resource){showToast("This resource is not available. Please refresh and try again.");return;}
+  const price=discountedPrice(resource);
+  if(price<1){showToast("This resource is free and does not require M-Pesa payment.");return;}
+  const titleInput=document.getElementById("selectedResourceInput");
+  const idInput=document.getElementById("selectedResourceIdInput");
+  const amountInput=document.getElementById("amountInput");
+  const phoneInput=document.getElementById("customerPhoneInput");
+  if(titleInput)titleInput.value=resource.title||"";
+  if(idInput)idInput.value=id;
+  if(amountInput)amountInput.value=String(price);
+  const phone=window.prompt("Enter the M-Pesa phone number to receive the STK Push (e.g. 0712345678):",phoneInput?.value||"");
+  if(!phone)return;
+  if(phoneInput)phoneInput.value=phone;
+  requestMpesaPayment({preventDefault(){},submitter:document.querySelector("#paymentForm button[type=submit]")});
+}
+
 async function requestMpesaPayment(event){
   event.preventDefault();
   const phoneInput=document.getElementById("customerPhoneInput");
