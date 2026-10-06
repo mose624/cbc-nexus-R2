@@ -1124,7 +1124,7 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
     window.location.assign(target);
   }
 
-  // Main dashboard subject links: open the Resource Centre directly for the selected grade + subject.
+  // Keep every Grade 1-12 subject dropdown independently functional.\n  function setGradeSubject(gradeName, subjectName = "All Subjects") {\n    const cards = elements.gradeList?.querySelectorAll(".grade-card") || [];\n    const targetCard = Array.from(cards).find(card => card.dataset.gradeCard === gradeName);\n    if (!targetCard) return;\n    const select = targetCard.querySelector("[data-grade-subject-select]");\n    if (!select) return;\n    const subjects = gradeSubjects[gradeName] || [];\n    const current = String(subjectName || "All Subjects");\n    select.innerHTML = "";\n    const placeholder = document.createElement("option");\n    placeholder.value = "All Subjects";\n    placeholder.textContent = "Select subject";\n    select.appendChild(placeholder);\n    subjects.forEach(subjectName => {\n      const option = document.createElement("option");\n      option.value = subjectName;\n      option.textContent = subjectName;\n      select.appendChild(option);\n    });\n    select.value = subjects.includes(current) ? current : "All Subjects";\n  }\n\n  // Main dashboard subject links: open the Resource Centre directly for the selected grade + subject.
   // Capture the click so no older navigation handler can redirect the user elsewhere.
   safeOn(elements.gradeList, "click", (event) => {
     const subjectLink = event.target.closest(".dropdown-grade-subjects a[href*=\"resource-category.html?grade=\"]");
