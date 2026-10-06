@@ -1,4 +1,6 @@
 const gradeSubjects={
+"PP1":["Creative Activities","Language Activities","Mathematics Activities","Environmental Activities","Religious Activities"],
+"PP2":["Creative Activities","Language Activities","Mathematics Activities","Environmental Activities","Religious Activities"],
 "Grade 1":["Creative Activities","CRE","English Activities","Environmental Activities","HRE","Indigenous Languages","IRE","Kiswahili","Mathematics"],
 "Grade 2":["Creative Activities","CRE","English Activities","Environmental Activities","HRE","Indigenous Languages","IRE","Kiswahili","Mathematics"],
 "Grade 3":["Creative Activities","CRE","English Activities","Environmental Activities","HRE","Indigenous Languages","IRE","Kiswahili","Mathematics"],
@@ -13,7 +15,8 @@ const gradeSubjects={
 "Grade 12":["Agriculture","Aviation","Biology","Building & Construction","Business Studies","Chemistry","CRE","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","IRE","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","HRE","Mandarin Chinese"]};
 const params=new URLSearchParams(location.search),typeSelect=document.getElementById("type"),grade=document.getElementById("grade"),subject=document.getElementById("subject"),search=document.getElementById("search"),results=document.getElementById("results"),filterContext=document.getElementById("filterContext");\nlet renderLimit=60,searchTimer=null;
 const resourceTypes=["Notes","Schemes of Work","Lesson Plan","Records of Work","Assessment Test","Topical Questions","Holiday Workbooks","Past Papers","Marking Schemes","Quizzes","Study Guides","Projects","KNEC Rubrics","Assignments","Bookshop"];
-typeSelect.add(new Option("All Resources","All Materials"));resourceTypes.forEach(t=>typeSelect.add(new Option(t,t)));
+/* The HTML already contains the All Resources option; add each real material type only once. */
+resourceTypes.forEach(t=>typeSelect.add(new Option(t,t)));
 Object.keys(gradeSubjects).forEach(g=>grade.add(new Option(g,g)));
 typeSelect.value=params.get("type")||"All Materials";
 const subjectAliases={"Christian Religious Education (CRE)":"CRE","Hindu Religious Education (HRE)":"HRE","Islamic Religious Education (IRE)":"IRE","Kiswahili Activities":"Kiswahili","Mathematics Activities":"Mathematics","Indigenous Language":"Indigenous Languages","Science and Technology":"Science & Technology","History & Citizenship":"History and Citizenship","Building and Construction":"Building & Construction","Metal Work":"Metalwork","Woodwork":"Wood Technology","Marine & Fisheries":"Marine and Fisheries Technology","Marine & Fisheries Technology":"Marine and Fisheries Technology","Community Service Learning":"Community Service Learning (CSL)","Community Service Learning (CSL)":"Community Service Learning (CSL)","Kenya Sign Language (KSL)":"Sign Language"};
@@ -25,7 +28,7 @@ function displaySubject(s){return String(s||"").trim();}
 function updateContext(){if(!filterContext)return;const parts=[];if(grade.value!=="All Grades")parts.push(`<span class="context-badge grade-badge">Grade: ${esc(grade.value)}</span>`);if(subject.value!=="All Subjects")parts.push(`<span class="context-badge subject-badge">Subject: ${esc(subject.value)}</span>`);if(typeSelect.value!=="All Materials")parts.push(`<span class="context-badge">Type: ${esc(typeSelect.value)}</span>`);filterContext.innerHTML=parts.join("");}
 const initialGrade=params.get("grade")||"All Grades",initialSubject=subjectForFilter(params.get("subject")||"All Subjects");
 grade.value=initialGrade;
-function fillSubjects(){const g=grade.value;subject.innerHTML='<option value="All Subjects">All Subjects</option>';(g==="All Grades"?[...new Set(Object.values(gradeSubjects).flat())]:gradeSubjects[g]||[]).forEach(s=>subject.add(new Option(s,s)));if(g===initialGrade&&grade.value!=="All Grades"&&gradeSubjects[g]?.includes(initialSubject))subject.value=initialSubject;updateContext();render()}
+function fillSubjects(){const g=grade.value;subject.innerHTML='<option value="All Subjects">All Subjects</option>';const configured=g==="All Grades"?[...new Set(Object.values(gradeSubjects).flat())]:(gradeSubjects[g]||[]);const live=resources.filter(r=>g==="All Grades"||String(r.grade||"").trim()===g).map(r=>canonicalSubjectName(r.subject)).filter(Boolean);[...new Set([...configured,...live])].sort((a,b)=>a.localeCompare(b)).forEach(s=>subject.add(new Option(s,s)));if(g===initialGrade&&grade.value!=="All Grades"&&[...subject.options].some(o=>o.value===initialSubject))subject.value=initialSubject;updateContext();render()}
 typeSelect.addEventListener("change",()=>{renderLimit=60;updateContext();updateUrl();render()});grade.addEventListener("change",()=>{renderLimit=60;fillSubjects();updateUrl()});subject.addEventListener("change",()=>{renderLimit=60;updateContext();updateUrl();render()});search.addEventListener("input",()=>{clearTimeout(searchTimer);renderLimit=60;searchTimer=setTimeout(render,120);});
 function updateUrl(){const p=new URLSearchParams();if(typeSelect.value!=="All Materials")p.set("type",typeSelect.value);if(grade.value!=="All Grades")p.set("grade",grade.value);if(subject.value!=="All Subjects")p.set("subject",subject.value);history.replaceState(null,"","resource-category.html"+(p.toString()?"?"+p.toString():""));}
 const RESOURCE_CACHE_KEY="cbeNexusPublicResourcesV1",RESOURCE_CACHE_TTL=60000;
@@ -47,6 +50,24 @@ function paintCachedResources(){
   if(cached.resources.length){resources=cached.resources;render();}
   return cached;
 }
+function rebuildGradeOptionsFromResources(){
+  const current=grade.value;
+  const live=[...new Set(resources.map(r=>String(r.grade||"").trim()).filter(Boolean))];
+  const configured=Object.keys(gradeSubjects);
+  const grades=[...new Set([...configured,...live])];
+  grade.innerHTML='<option value="All Grades">All Grades</option>';
+  grades.forEach(g=>grade.add(new Option(g,g)));
+  grade.value=grades.includes(current)?current:"All Grades";
+  fillSubjects();
+}
+function rebuildTypeOptionsFromResources(){
+  const current=typeSelect.value;
+  const live=[...new Set(resources.map(r=>canonicalTypeName(r.type)).filter(Boolean))];
+  const types=[...new Set([...resourceTypes,...live])];
+  typeSelect.innerHTML='<option value="All Materials">All Resources</option>';
+  types.forEach(t=>typeSelect.add(new Option(t,t)));
+  typeSelect.value=types.includes(current)?current:"All Materials";
+}
 async function refreshResourcesInBackground(){
   try{
     const response=await fetch("/api/resources",{credentials:"same-origin",cache:"no-store"});
@@ -57,10 +78,14 @@ async function refreshResourcesInBackground(){
     const previousSignature=resources.map(r=>String(r.id||r._id||r.key||"")+"|"+r.updatedAt+"|"+r.status).join("\n");
     const nextSignature=normalized.map(r=>String(r.id||r._id||r.key||"")+"|"+r.updatedAt+"|"+r.status).join("\n");
     try{sessionStorage.setItem(RESOURCE_CACHE_KEY,JSON.stringify({time:Date.now(),resources:normalized}));}catch{}
-    if(previousSignature!==nextSignature){resources=normalized;render();}
+    if(previousSignature!==nextSignature){resources=normalized;rebuildGradeOptionsFromResources();rebuildTypeOptionsFromResources();render();}
     return normalized;
   }catch(error){
     console.warn("CBE Nexus Resource Centre API unavailable:",error);
+    if(!resources.length){
+      results.innerHTML='<div class="empty"><strong>Resources are temporarily unavailable.</strong><br>Refresh this page in a moment. Approved resources will appear automatically here.</div>';
+      results.setAttribute("aria-busy","false");
+    }
     return resources;
   }
 }
@@ -82,7 +107,7 @@ function render(){
   results.setAttribute("aria-busy","false");
 }
 function esc(v){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
-fillSubjects();paintCachedResources();refreshResourcesInBackground();
+fillSubjects();paintCachedResources();rebuildGradeOptionsFromResources();rebuildTypeOptionsFromResources();refreshResourcesInBackground();
 
 
 document.addEventListener("click",async event=>{const b=event.target.closest("[data-download-resource]");if(!b)return;event.preventDefault();const id=b.dataset.downloadResource;const resource=resources.find(r=>String(r.id||r._id||r.key||"")===String(id));if(!resource)return;const old=b.innerHTML;b.disabled=true;b.innerHTML="⏳ Preparing…";try{if(Number(resource.price||0)===0){const response=await fetch("/api/r2/free-download?resourceId="+encodeURIComponent(id),{credentials:"same-origin",cache:"no-store"});const data=await response.json().catch(()=>({}));if(!response.ok||!data.ok)throw new Error(data.error||"Free download is unavailable.");const a=document.createElement("a");a.href=data.downloadUrl;a.download=data.fileName||"resource";a.rel="noopener";document.body.appendChild(a);a.click();a.remove();}else{const amount=Number(resource.discount)>0?Number(resource.discount):Number(resource.price)||0;const params=new URLSearchParams({resource:resource.title||"Untitled resource",amount:String(amount),grade:resource.grade||"",subject:resource.subject||"",type:resource.type||""});window.location.href="index.html?"+params.toString()+"#payments";}}catch(error){alert(error.message||"Download could not be started.");}finally{b.disabled=false;b.innerHTML=old;}});
