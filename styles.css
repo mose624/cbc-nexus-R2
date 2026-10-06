@@ -4903,3 +4903,37 @@ textarea:focus{
     box-shadow:0 0 0 1px rgba(20,83,45,.25)!important;
   }
 }
+
+
+/* Apply dark green styling to all clickable header buttons/links, including top resource links. */
+.site-header .top-strip > a,
+.site-header .nav-menu .nav-link,
+.site-header .nav-menu .nav-dropdown summary,
+.site-header .nav-actions > a,
+.site-header .nav-actions > button,
+.site-header .nav-actions .nav-cta{
+  background:#14532d!important;
+  color:#fff!important;
+  border-color:#14532d!important;
+}
+.site-header .top-strip > a:hover,
+.site-header .nav-menu .nav-link:hover,
+.site-header .nav-menu .nav-dropdown summary:hover,
+.site-header .nav-actions > a:hover,
+.site-header .nav-actions > button:hover,
+.site-header .nav-actions .nav-cta:hover{
+  background:#166534!important;
+  color:#fff!important;
+  border-color:#166534!important;
+}
+@media(max-width:760px){
+  .site-header .top-strip > a,
+  .site-header .nav-menu .nav-link,
+  .site-header .nav-menu .nav-dropdown summary,
+  .site-header .nav-actions > a,
+  .site-header .nav-actions > button,
+  .site-header .nav-actions .nav-cta{
+    border:2px solid #14532d!important;
+    box-shadow:0 0 0 1px rgba(20,83,45,.22)!important;
+  }
+}
