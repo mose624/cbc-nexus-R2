@@ -4609,3 +4609,16 @@ textarea:focus{
     font-size:36px;
   }
 }
+
+
+/* Mobile header buttons — light-yellow boundary only */
+@media(max-width:760px){
+  .site-header .nav-menu .nav-link,
+  .site-header .nav-menu .nav-dropdown summary,
+  .site-header .nav-actions > a,
+  .site-header .nav-actions > button,
+  .site-header .nav-actions .nav-cta{
+    border:2px solid #f6e7a8!important;
+    box-shadow:0 0 0 1px rgba(246,231,168,.35)!important;
+  }
+}
