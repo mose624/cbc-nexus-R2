@@ -120,7 +120,7 @@ async function startDirectMpesaPurchase(resource,b){
   if(!id)throw new Error("This resource has no valid ID.");
   const start=await fetch("/api/mpesa/stk-push",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({customerPhone:phone,resourceId:id})});
   const data=await start.json().catch(()=>({}));
-  if(!start.ok||!data.ok)throw new Error(data.error||"M-Pesa STK Push could not be started.");
+  if(!start.ok||!data.ok){const diagnostic=data.diagnosticCode?` [${data.diagnosticCode}]`:"";throw new Error((data.error||"M-Pesa STK Push could not be started.")+diagnostic);}
   const checkoutRequestID=String(data.CheckoutRequestID||"").trim();
   if(!checkoutRequestID)throw new Error("Daraja did not return a checkout request.");
   b.innerHTML="📲 STK Sent — Check Phone";
