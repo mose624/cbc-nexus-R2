@@ -4668,3 +4668,104 @@ textarea:focus{
     font-size:12px!important;
   }
 }
+
+
+/* Compact mobile footer — keep the desktop canvas but make the footer short and balanced. */
+@media (max-width:760px){
+  .site-footer{
+    flex-direction:row!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    flex-wrap:nowrap!important;
+    gap:10px!important;
+    padding:10px 12px!important;
+    min-height:0!important;
+  }
+
+  .footer-office-image-wrap{
+    flex:0 0 105px!important;
+    width:105px!important;
+    max-width:105px!important;
+    height:62px!important;
+    border-radius:6px!important;
+    box-shadow:0 2px 8px rgba(0,0,0,.12)!important;
+  }
+
+  .footer-office-image{
+    width:105px!important;
+    height:62px!important;
+    object-fit:cover!important;
+  }
+
+  .site-footer > div:nth-child(2){
+    flex:0 0 205px!important;
+    min-width:205px!important;
+  }
+
+  .site-footer > div:nth-child(2) strong{
+    font-size:12px!important;
+    line-height:1.2!important;
+    white-space:nowrap!important;
+  }
+
+  .site-footer > div:nth-child(2) .footer-address{
+    font-size:10px!important;
+    line-height:1.25!important;
+    margin-top:3px!important;
+    white-space:normal!important;
+  }
+
+  .footer-quality-badges{
+    display:flex!important;
+    align-items:center!important;
+    gap:6px!important;
+    flex-wrap:wrap!important;
+    flex:1 1 auto!important;
+    min-width:0!important;
+  }
+
+  .footer-quality-badge{
+    display:inline-flex!important;
+    align-items:center!important;
+    gap:3px!important;
+    margin:0!important;
+    font-size:9px!important;
+    line-height:1.15!important;
+    white-space:nowrap!important;
+  }
+
+  .footer-quality-badge small{
+    font-size:8px!important;
+  }
+
+  .footer-links{
+    flex:0 0 auto!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-end!important;
+    gap:4px!important;
+    flex-wrap:wrap!important;
+    max-width:360px!important;
+  }
+
+  .footer-links a{
+    padding:4px 6px!important;
+    font-size:9px!important;
+    line-height:1.1!important;
+    border-radius:4px!important;
+  }
+
+  .site-footer > p{
+    flex:0 0 auto!important;
+    margin:0!important;
+    font-size:9px!important;
+    line-height:1.2!important;
+    white-space:nowrap!important;
+    opacity:.75!important;
+  }
+
+  .footer-admin-dot{
+    transform:scale(.75)!important;
+    transform-origin:center!important;
+  }
+}
