@@ -117,11 +117,40 @@ async function blogArticlePage(req,slugValue){
 }
 function xml(v){return String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&apos;");}
 async function sitemap(req){
- const b=base(req),urls=["/","/kenya-education-counties.html","/resources.html","/free-resources.html","/quizzes.html","/projects.html","/tuition.html","/blog.html","/learning-hub.html","/answer-hub.html","/cbc-notes-kenya","/cbc-exams-kenya","/kjsea-revision","/cbc-exam-generator","/grade-10-school-finder.html","/kenya-universities-colleges.html","/public-universities.html","/private-universities.html","/specialized-universities.html","/university-constituent-colleges.html","/interim-universities.html","/university-course-catalogue.html","/technical-vocational-catalogue.html","/tvet-colleges.html","/teacher-training-colleges.html","/kmtc.html","/technical-institutions.html","/higher-education-jobs.html","/scholarships-opportunities.html","/international-teaching-jobs.html","/professional-cv-writing.html","/ai-training.html","/school-directory.html","/international-curriculum.html","/igcse.html","/cambridge-international.html","/ib.html","/pearson-edexcel.html","/a-levels.html","/o-levels.html"];
- KENYA_COUNTIES.forEach(c=>urls.push("/kenya-education-county/"+slug(c)));
- GRADES.forEach(g=>{urls.push("/grade-"+g);(SUBJECTS[g]||[]).forEach(s=>urls.push("/grade-"+g+"/"+slug(s)));});
- if(supabaseConfigured){try{const {data}=await supabase.from("resources").select("id").eq("status","approved").limit(5000);(data||[]).forEach(r=>urls.push("/resource/"+encodeURIComponent(r.id)));}catch(e){console.warn("SEO sitemap resource lookup failed:",e.message||e);}}
- if(supabaseConfigured){try{const {data}=await supabase.from("blog_posts").select("slug,updated_at,published_at").eq("status","published").limit(5000);(data||[]).forEach(p=>urls.push("/blog-article.html?slug="+encodeURIComponent(String(p.slug||""))));}catch(e){console.warn("SEO sitemap blog lookup failed:",e.message||e);}}
- return '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+[...new Set(urls)].map(u=>'<url><loc>'+xml(b+u)+'</loc></url>').join("")+"</urlset>";
+ const b="https://cbenexus.co.ke";
+ const urls=[
+  "/","/resources.html","/free-resources.html","/quizzes.html","/projects.html","/tuition.html",
+  "/blog.html","/learning-hub.html","/answer-hub.html","/grade-10-school-finder.html",
+  "/kenya-universities-colleges.html","/public-universities.html","/private-universities.html",
+  "/specialized-universities.html","/university-constituent-colleges.html","/interim-universities.html",
+  "/university-course-catalogue.html","/technical-vocational-catalogue.html","/tvet-colleges.html",
+  "/teacher-training-colleges.html","/kmtc.html","/technical-institutions.html","/higher-education-jobs.html",
+  "/scholarships-opportunities.html","/international-teaching-jobs.html","/professional-cv-writing.html",
+  "/ai-training.html","/school-directory.html","/international-curriculum.html","/igcse.html",
+  "/cambridge-international.html","/ib.html","/pearson-edexcel.html","/a-levels.html","/o-levels.html",
+  "/cbc-notes-kenya","/cbc-exams-kenya","/kjsea-revision"
+ ];
+ try{
+  if(Array.isArray(KENYA_COUNTIES)) KENYA_COUNTIES.forEach(c=>urls.push("/kenya-education-county/"+slug(c)));
+ }catch(e){console.warn("SEO sitemap county lookup failed:",e.message||e);}
+ try{
+  if(Array.isArray(GRADES)) GRADES.forEach(g=>{
+   urls.push("/grade-"+g);
+   (SUBJECTS[g]||[]).forEach(s=>urls.push("/grade-"+g+"/"+slug(s)));
+  });
+ }catch(e){console.warn("SEO sitemap grade lookup failed:",e.message||e);}
+ if(supabaseConfigured){
+  try{
+   const {data,error}=await supabase.from("resources").select("id").eq("status","approved").limit(5000);
+   if(!error) (data||[]).forEach(r=>{if(r&&r.id) urls.push("/resource/"+encodeURIComponent(String(r.id)));});
+  }catch(e){console.warn("SEO sitemap resource lookup failed:",e.message||e);}
+  try{
+   const {data,error}=await supabase.from("blog_posts").select("slug").eq("status","published").limit(5000);
+   if(!error) (data||[]).forEach(p=>{if(p&&p.slug) urls.push("/blog-article.html?slug="+encodeURIComponent(String(p.slug)));});
+  }catch(e){console.warn("SEO sitemap blog lookup failed:",e.message||e);}
+ }
+ const unique=[...new Set(urls)].filter(u=>typeof u==="string"&&u.startsWith("/"));
+ const body=unique.map(u=>"<url><loc>"+xml(b+u)+"</loc></url>").join("");
+ return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+body+"\n</urlset>";
 }
 module.exports={match,sitemap,base};
