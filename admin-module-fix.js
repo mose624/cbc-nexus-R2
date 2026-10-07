@@ -59,7 +59,7 @@
      try{
        const r=await fetch("/api/vacancies?_="+Date.now(),{credentials:"same-origin",cache:"no-store"}),d=await r.json();
        if(!r.ok||!d.ok)throw new Error(d.error||"Could not load jobs.");
-       const rows=(d.vacancies||[]).filter(v=>String(v.region||"").startsWith("Higher Education"));
+       const rows=(d.vacancies||[]).filter(v=>{const region=String(v.region||"").trim(); const type=String(v.institution_type||v.institutionType||"").trim(); return /^higher\s*education/i.test(region)||/^(university|TVET college|teacher training college|KMTC|technical institution|other higher education)$/i.test(type);});
        list.innerHTML=rows.length?rows.map(v=>'<article style="background:#fff;border:1px solid #dbe5ef;border-radius:10px;padding:12px;margin:8px 0"><strong>'+esc(v.title)+'</strong><div style="color:#64748b;font-size:.84rem;margin:4px 0">'+esc(v.school)+' • '+esc(v.region)+'</div><button type="button" class="secondary-button" data-hej-edit="'+esc(v.id)+'">✏ Edit</button> <button type="button" class="ghost-button" data-hej-delete="'+esc(v.id)+'">Delete</button></article>').join(""):'<p class="help">No higher education jobs published yet.</p>';
      }catch(e){list.innerHTML='<p class="form-status error">'+esc(e.message)+'</p>';}
    }
