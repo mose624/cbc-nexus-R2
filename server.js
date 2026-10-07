@@ -849,9 +849,6 @@ async function handleApi(req,res,url){
       if(!resource||!resource.r2_key||String(resource.status||"approved").toLowerCase()!=="approved"){
         sendJson(res,403,{ok:false,error:"This resource is not available for viewing."});return true;
       }
-      if(resourcePrice(resource)>0){
-        sendJson(res,402,{ok:false,error:"Paid resources cannot be viewed before payment."});return true;
-      }
       const viewUrl=await createDownloadUrl(resource.r2_key);
       sendJson(res,200,{ok:true,viewUrl,expiresIn:300,fileName:resource.filename||"",title:resource.title||""});
     }catch(error){
