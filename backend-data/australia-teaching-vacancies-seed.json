@@ -1585,5 +1585,28 @@
     "documents": "Passport; CV; degree certificates/transcripts; teaching licence; experience letters; references; police/background checks; teacher-registration assessment; English-language evidence and visa documents where required.",
     "visa_model": "Employer-sponsored / skilled migration route may apply — verify",
     "vacancy_status": "Recruitment target — current vacancy and sponsorship must be verified"
+  },
+  {
+    "id": "au27-70",
+    "title": "Remote and Regional Teachers WA and NT",
+    "school": "Inspired Recruitment",
+    "country": "Australia",
+    "region": "Western Australia / Northern Territory",
+    "subject": "Primary & Secondary",
+    "level": "Primary / Secondary",
+    "employment": "Full-time",
+    "salary": "Varies by role; regional benefits may apply",
+    "deadline": "Ongoing / verify",
+    "description": "Current recruitment route for primary and secondary teachers seeking regional and remote opportunities in Western Australia and the Northern Territory. Confirm the specific school vacancy, registration requirements and visa sponsorship before applying.",
+    "requirements": "Recognised teaching qualification; relevant experience; teacher registration/eligibility in the relevant state or territory; English-language evidence where required; Working With Children/police checks; and Australian work rights or employer-supported visa where offered.",
+    "apply_url": "https://inspired.edu.au/",
+    "featured": false,
+    "status": "published",
+    "source": "Inspired Recruitment",
+    "verified_date": "2026-10-07",
+    "why_match": "Potential match for internationally trained teachers willing to work in regional or remote Australia, subject to vacancy and sponsorship eligibility.",
+    "documents": "Passport; CV; degree certificates/transcripts; teaching licence; experience letters; references; police/background checks; registration assessment; English-language evidence and visa documents where required.",
+    "visa_model": "Visa support may be available for eligible roles — verify",
+    "vacancy_status": "Current recruitment route — specific vacancy and sponsorship must be verified"
   }
 ]
