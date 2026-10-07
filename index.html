@@ -1010,6 +1010,7 @@
             <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="sales">Sales <span id="adminSalesBadge">0</span></button>
             <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="cv-writing">CV Writing</button>
             <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="vacancies">Teaching Jobs</button>
+            <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="higher-education-jobs">🎓 Higher Education Jobs</button>
           <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="ai-courses">🤖 Free AI Courses</button>
             <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="scholarships">🎓 Scholarships & Opportunities</button>
           <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="prices">Prices</button>
@@ -1307,6 +1308,26 @@
               <div id="schoolDirectoryAdminList" class="admin-management-list"></div>
             </div>
           </div>
+          <div class="admin-module-panel" data-admin-module-panel="higher-education-jobs">
+            <div class="admin-management-card admin-higher-jobs-card">
+              <div class="admin-management-heading"><div><p class="eyebrow">Kenya higher education</p><h3>🎓 Higher Education Jobs</h3><p>Publish jobs for universities, TVET colleges, teacher training colleges, KMTC and technical institutions. These appear on the Kenya Higher Education Jobs page.</p></div><span class="price-pill">Admin publishing</span></div>
+              <form id="adminHigherJobForm" class="admin-form feature-form">
+                <div class="form-row"><label>Job Title<input id="hejAdminTitle" required placeholder="Lecturer / ICT Officer / Finance Officer"></label><label>Institution<input id="hejAdminInstitution" required placeholder="University or college"></label></div>
+                <div class="form-row"><label>Institution Type<select id="hejAdminType"><option>University</option><option>TVET College</option><option>Teacher Training College</option><option>KMTC</option><option>Technical Institution</option><option>Other Higher Education</option></select></label><label>County<select id="hejAdminCounty"><option>National</option><option>Nairobi</option><option>Mombasa</option><option>Kisumu</option><option>Kiambu</option><option>Nakuru</option><option>Uasin Gishu</option><option>Kakamega</option><option>Machakos</option><option>Meru</option><option>Nyeri</option><option>Other County</option></select></label></div>
+                <div class="form-row"><label>Job / Role Area<input id="hejAdminSubject" required placeholder="Lecturer / Laboratory / ICT / Finance"></label><label>Qualification / Level<input id="hejAdminLevel" required placeholder="PhD / Master's / Diploma / Artisan"></label></div>
+                <div class="form-row"><label>Employment Type<select id="hejAdminEmployment"><option>Full-time</option><option>Part-time</option><option>Contract</option><option>Temporary</option><option>Permanent & Pensionable</option></select></label><label>Salary / Package<input id="hejAdminSalary"></label></div>
+                <div class="form-row"><label>Closing Date<input id="hejAdminDeadline" type="date"></label><label>Official Application Link<input id="hejAdminApplyUrl" type="url" required placeholder="https://official-institution-site..."></label></div>
+                <label>Job Description<textarea id="hejAdminDescription" rows="4"></textarea></label>
+                <label>Requirements<textarea id="hejAdminRequirements" rows="4"></textarea></label>
+                <label class="checkbox-label"><input id="hejAdminFeatured" type="checkbox"> Feature this vacancy</label>
+                <div class="quiz-actions"><button class="primary-button" type="submit">➕ Publish Higher Education Job</button><button class="ghost-button" id="hejAdminClear" type="button">Clear</button></div>
+                <p id="hejAdminStatus" class="form-status" aria-live="polite"></p>
+              </form>
+              <div class="admin-management-heading" style="margin-top:18px"><div><h4>Published Higher Education Jobs</h4><p>Edit or delete vacancies already published on the jobs board.</p></div></div>
+              <div id="adminHigherJobList" class="admin-management-list"></div>
+            </div>
+          </div>
+
           <div class="admin-module-panel" data-admin-module-panel="vacancies">
             <div class="admin-management-card admin-vacancies-card">
               <div class="admin-management-heading"><div><p class="eyebrow">International careers</p><h3>Teaching Vacancies Abroad</h3><p>Add and publish overseas teaching opportunities. Published vacancies appear automatically on the International Teaching Jobs page.</p></div><span class="price-pill">Admin publishing</span></div>
