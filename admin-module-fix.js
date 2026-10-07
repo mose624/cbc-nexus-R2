@@ -20,7 +20,7 @@
    injectHigherEducationJobs(activate);
  }
  function injectHigherEducationJobs(activate){
-   if(document.querySelector('[data-admin-module="higher-education-jobs"]'))return;
+   if(document.querySelector('[data-admin-module="higher-education-jobs"]')){ bindHigherJobs(); return; }
    const tabBar=document.querySelector(".admin-module-tabs");
    const panel=document.querySelector('[data-admin-module-panel="vacancies"]');
    if(!tabBar||!panel)return;
