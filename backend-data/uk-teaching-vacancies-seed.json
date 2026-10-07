@@ -1678,29 +1678,5 @@
     "visa_model": "Skilled Worker — verify",
     "vacancy_status": "Recruitment target — current sponsored vacancy must be verified",
     "sponsorship_route": "Employer sponsorship if the specific employer/role is eligible"
-  },
-  {
-    "id": "uk27-71",
-    "title": "International Teacher Opportunity — FE teaching",
-    "school": "Leicester College",
-    "country": "United Kingdom",
-    "region": "Leicester",
-    "subject": "FE teaching",
-    "level": "Primary / Secondary / FE",
-    "employment": "Full-time",
-    "salary": "See current employer vacancy and applicable UK teacher pay scale",
-    "deadline": "Check current employer posting",
-    "description": "Potential UK teaching recruitment route for FE teaching. This record is a target employer/recruitment route rather than a claim that a specific sponsored vacancy is open today.",
-    "requirements": "Relevant degree; recognised teaching qualification; QTS or eligibility where required; relevant experience; safeguarding checks; right-to-work and sponsorship eligibility.",
-    "apply_url": "https://teaching-vacancies.service.gov.uk/jobs?visa_sponsorship_availability%5B%5D=true",
-    "featured": false,
-    "status": "published",
-    "source": "UK international teacher recruitment research — GOV.UK sponsor guidance and Teaching Vacancies, 2026",
-    "verified_date": "9 September 2026",
-    "why_match": "Potential employer to monitor for international teaching vacancies. Sponsorship is not guaranteed for every role; confirm the vacancy and sponsor status before applying.",
-    "documents": "International teacher CV; degree/transcripts; teaching qualification; QTS/eligibility evidence; experience letters; references; passport; police/background clearance; visa documents.",
-    "visa_model": "Skilled Worker — verify",
-    "vacancy_status": "Recruitment target — current sponsored vacancy must be verified",
-    "sponsorship_route": "Employer sponsorship if the specific employer/role is eligible"
   }
 ]
