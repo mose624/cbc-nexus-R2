@@ -8,8 +8,8 @@ async function main() {
     return;
   }
 
-  const file = path.join(__dirname, "..", "backend-data", "uae-january-2027-seed.json");
-  const seed = JSON.parse(fs.readFileSync(file, "utf8"));
+  const files = ["uae-january-2027-seed.json", "usa-teaching-vacancies-seed.json"].map(name => path.join(__dirname, "..", "backend-data", name));
+  const seed = files.flatMap(file => JSON.parse(fs.readFileSync(file, "utf8")));
   const rows = seed.map(v => ({
     id: String(v.id),
     title: String(v.title || "").trim(),
@@ -48,7 +48,7 @@ async function main() {
     throw new Error("[vacancy-seed] Supabase teaching_vacancies upsert failed: " + message);
   }
 
-  console.log("[vacancy-seed] Upserted " + (data || []).length + " UAE January 2027 vacancies into teaching_vacancies.");
+  console.log("[vacancy-seed] Upserted " + (data || []).length + " international teaching vacancies into teaching_vacancies.");
 }
 
 main().catch(error => {
