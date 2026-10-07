@@ -36,7 +36,12 @@ async function main() {
     .select("id,title,status");
 
   if (error) {
-    throw new Error("[vacancy-seed] Supabase teaching_vacancies upsert failed: " + (error.message || error));
+    const message = String(error.message || error);
+    if (/could not find the table|relation .* does not exist|schema cache/i.test(message)) {
+      console.warn("[vacancy-seed] teaching_vacancies table is not present in Supabase yet. The local seed will continue to power the public board.");
+      return;
+    }
+    throw new Error("[vacancy-seed] Supabase teaching_vacancies upsert failed: " + message);
   }
 
   console.log("[vacancy-seed] Upserted " + (data || []).length + " UAE January 2027 vacancies into teaching_vacancies.");
