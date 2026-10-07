@@ -8,7 +8,7 @@ async function main() {
     return;
   }
 
-  const files = ["uae-january-2027-seed.json", "usa-teaching-vacancies-seed.json", "uk-teaching-vacancies-seed.json", "canada-teaching-vacancies-seed.json", "australia-teaching-vacancies-seed.json"].map(name => path.join(__dirname, "..", "backend-data", name));
+  const files = ["uae-january-2027-seed.json","usa-teaching-vacancies-seed.json","uk-teaching-vacancies-seed.json","canada-teaching-vacancies-seed.json","australia-teaching-vacancies-seed.json","china-teaching-vacancies-seed.json","japan-teaching-vacancies-seed.json","germany-teaching-vacancies-seed.json","netherlands-teaching-vacancies-seed.json","switzerland-teaching-vacancies-seed.json","new-zealand-teaching-vacancies-seed.json","ukraine-teaching-vacancies-seed.json","russia-teaching-vacancies-seed.json"].map(name => path.join(__dirname, "..", "backend-data", name));
   const seed = files.flatMap(file => JSON.parse(fs.readFileSync(file, "utf8")));
   const rows = seed.map(v => ({
     id: String(v.id),
