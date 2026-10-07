@@ -26,6 +26,10 @@ async function main() {
     apply_url: String(v.apply_url || "").trim(),
     featured: Boolean(v.featured),
     status: "published",
+    source: String(v.source || "").trim(),
+    verified_date: String(v.verified_date || "").trim(),
+    why_match: String(v.why_match || "").trim(),
+    documents: String(v.documents || "").trim(),
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   }));
