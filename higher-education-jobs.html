@@ -55,7 +55,7 @@
    try{
      const r=await fetch("/api/vacancies?_="+Date.now(),{cache:"no-store"}),d=await r.json();
      if(!r.ok||!d.ok)throw new Error(d.error||"Jobs could not be loaded.");
-     rows=(d.vacancies||[]).filter(v=>String(v.region||"").startsWith("Higher Education"));
+     rows=(d.vacancies||[]).filter(v=>{const region=String(v.region||"").trim(); const type=String(v.institution_type||v.institutionType||"").trim(); return /^higher\s*education/i.test(region)||/^(university|TVET college|teacher training college|KMTC|technical institution|other higher education)$/i.test(type);});
      const counties=[...new Set(rows.map(v=>meta(v).county).filter(Boolean))].sort();
      $("hejCounty").innerHTML='<option value="">All Counties</option>'+counties.map(c=>'<option>'+esc(c)+'</option>').join("");
      render();
