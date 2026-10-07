@@ -234,6 +234,28 @@ function calc(){const s=Number(document.getElementById("calcSalary").value||0),l
 </div>
 <div id="vacancyFilterStatus" class="muted" style="margin:12px 0 0"></div>
 <div id="internationalVacancyGrid" class="vacancy-grid"><p class="form-status">Loading vacancies...</p></div></section><script src="app.js"></script><script>
+/* CBE NEXUS vacancy-board fallback loader: keeps the public board independent of optional app.js initializers. */
+(function(){
+  const grid=document.getElementById("internationalVacancyGrid");
+  if(!grid) return;
+  const esc=v=>String(v??"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+  const safeUrl=v=>{try{const u=new URL(String(v||""),location.href);return /^https?:$/.test(u.protocol)?u.href:"#";}catch{return "#";}};
+  async function load(){
+    try{
+      const r=await fetch("/api/vacancies?_="+Date.now(),{credentials:"same-origin",cache:"no-store",headers:{"Accept":"application/json","Cache-Control":"no-cache"}});
+      const d=await r.json().catch(()=>({}));
+      if(!r.ok||!d.ok) throw new Error(d.error||"Vacancies could not be loaded.");
+      const rows=Array.isArray(d.vacancies)?d.vacancies:[];
+      if(!rows.length){grid.innerHTML='<div class="empty-state">No teaching vacancies published yet.</div>';return;}
+      grid.innerHTML=rows.map(v=>'<article class="vacancy-card '+(v.featured?'featured':'')+'"><div class="vacancy-card-top"><span class="vacancy-region">'+esc(v.region||v.country||"International")+'</span>'+(v.featured?'<span class="vacancy-featured">FEATURED</span>':'')+'</div><h3>'+esc(v.title)+'</h3><strong>'+esc(v.school)+'</strong><p class="vacancy-meta">'+esc(v.country)+' · '+esc(v.subject)+' · '+esc(v.level)+' · '+esc(v.employment||"Full-time")+'</p>'+(v.salary?'<p><strong>Package:</strong> '+esc(v.salary)+'</p>':'')+(v.deadline?'<p><strong>Deadline:</strong> '+esc(v.deadline)+'</p>':'')+(v.description?'<details class="vacancy-details"><summary>📋 Job Description</summary><p>'+esc(v.description)+'</p></details>':'')+(v.requirements?'<details class="vacancy-details"><summary>🎓 Requirements</summary><p>'+esc(v.requirements)+'</p></details>':'')+(v.why_match?'<details class="vacancy-details"><summary>⭐ Why you may be a good match</summary><p>'+esc(v.why_match)+'</p></details>':'')+(v.documents?'<details class="vacancy-details"><summary>📄 Documents to prepare</summary><p>'+esc(v.documents)+'</p></details>':'')+(v.verified_date?'<p class="vacancy-verified"><small>Verified: '+esc(v.verified_date)+'</small></p>':'')+'<div class="vacancy-card-actions"><a class="primary-button" href="'+safeUrl(v.apply_url)+'" target="_blank" rel="noopener noreferrer">Apply / View Vacancy</a></div></article>').join("");
+      const status=document.getElementById("vacancyFilterStatus"); if(status) status.textContent=rows.length+" vacancies loaded";
+    }catch(e){
+      if(!grid.querySelector(".vacancy-card")) grid.innerHTML='<p class="form-status error">'+esc(e.message||"Vacancies could not be loaded.")+'</p>';
+    }
+  }
+  load();
+})();
+</script><script>
 (function(){
 function init(){
  const grid=document.getElementById("internationalVacancyGrid"); if(!grid)return;
