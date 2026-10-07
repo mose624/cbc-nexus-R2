@@ -71,7 +71,7 @@
 <div class="section-head"><div><h2>🌍 CBE Nexus Global Careers — INTERNATIONAL TEACHING JOBS</h2><p>Latest teaching vacancies uploaded and published by CBE Nexus. New opportunities added by the administrator appear here automatically.</p></div><span class="badge">LIVE JOB BOARD</span></div>
 <div class="job-tools" style="margin-top:16px">
 <div class="section-head" style="align-items:center"><p class="muted">Search and review vacancies currently published in the CBE Nexus database. Each listing includes the school, region, subject, level, salary/package, deadline, job description and application link.</p><button class="secondary-button" type="button" onclick="window.location.reload()">↻ Refresh Jobs</button></div>
-<div id="internationalVacancyGrid" class="job-grid" aria-live="polite"><div class="job-card"><p>Loading published international teaching jobs…</p></div></div>
+<div id="publishedInternationalVacancyGrid" class="job-grid" aria-live="polite"><div class="job-card"><p>Loading published international teaching jobs…</p></div></div>
 </div></section>
 
 <section class="section">
@@ -224,7 +224,7 @@ function calc(){const s=Number(document.getElementById("calcSalary").value||0),l
 ["calcSalary","calcLiving","calcHousing","calcRent"].forEach(id=>document.getElementById(id).addEventListener("input",calc));document.getElementById("calcHousing").addEventListener("change",calc);
 })();
 </script>
-<section id="internationalVacanciesPublic" class="content-band international-vacancies-band"><div class="section-heading"><div><p class="eyebrow">Live vacancy board</p><h2>Teaching Vacancies Abroad</h2><p>Published opportunities are added and managed by CBE Nexus admin.</p></div></div><div class="job-board-controls job-board-controls-global" aria-label="Global international teaching vacancy filters">
+<section id="internationalVacanciesPublic" class="content-band international-vacancies-band"><div class="section-heading"><div><p class="eyebrow">Live vacancy board</p><h2>Teaching Vacancies Abroad</h2><p>Published opportunities are added and managed by CBE Nexus admin.</p></div></div><div id="vacancyFilterStatus" class="muted" style="margin:10px 0 0"></div><div class="job-board-controls job-board-controls-global" aria-label="Global international teaching vacancy filters">
 <div class="job-board-filter"><label for="vacancyCountryFilter">Country</label><select id="vacancyCountryFilter"><option value="all">All 33 countries</option></select></div>
 <div class="job-board-filter"><label for="vacancyRegionFilter">Region</label><select id="vacancyRegionFilter"><option value="all">All regions</option></select></div>
 <div class="job-board-filter"><label for="vacancyCurriculumFilter">Curriculum</label><select id="vacancyCurriculumFilter"><option value="all">All curricula</option></select></div>
@@ -237,7 +237,6 @@ function calc(){const s=Number(document.getElementById("calcSalary").value||0),l
 <div class="job-board-filter search-filter"><label for="vacancyKeywordFilter">Search</label><input id="vacancyKeywordFilter" type="search" placeholder="School, country, region, subject..."></div>
 <button class="secondary-button" id="clearVacancyFilters" type="button">Reset filters</button>
 </div>
-<div id="vacancyFilterStatus" class="muted" style="margin:12px 0 0"></div>
 <div id="internationalVacancyGrid" class="vacancy-grid"><p class="form-status">Loading vacancies...</p></div></section><script src="app.js"></script><script>
 /* CBE NEXUS vacancy-board fallback loader: keeps the public board independent of optional app.js initializers. */
 (function(){
