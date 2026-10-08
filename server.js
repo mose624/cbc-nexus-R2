@@ -208,8 +208,8 @@ async function refineCvWithSmartEditor(payload){
     name:clean(payload.name,160), jobTitle:clean(payload.jobTitle,200), country:clean(payload.country,120),
     languages:clean(payload.languages,1000), education:clean(payload.education,5000), units:clean(payload.units,4000),
     universityClass:clean(payload.universityClass,500), experience:clean(payload.experience,7000),
-    achievements:clean(payload.achievements,4000), skills:clean(payload.skills,3000),
-    targetJob:clean(payload.targetJob,5000)
+    achievements:clean(payload.achievements,4000), skills:clean(payload.skills,3000), curriculum:clean(payload.curriculum,2500),
+    certifications:clean(payload.certifications,3000), targetJob:clean(payload.targetJob,5000)
   };
   const fallback={
     profile: base.jobTitle+" with relevant education, practical experience and transferable skills, presenting a clear record of responsibility, results and professional growth.",
@@ -224,7 +224,7 @@ async function refineCvWithSmartEditor(payload){
     throw error;
   }
   const model=String(process.env.OPENAI_MODEL||"gpt-6-luna").trim();
-  const system="You are a senior international CV editor. Rewrite candidate information into concise, truthful, employer-focused CV language. Never invent employers, qualifications, certifications, licences, dates, achievements, metrics or skills that are not supported by the candidate's information. You may identify transferable skills clearly implied by the supplied experience. Tailor terminology to the selected destination and target role. For US and Canadian applications, keep the structure ATS-friendly and do not recommend a photograph or unnecessary personal details. For UAE applications, use a professional international CV style and allow a photo only where appropriate. Return JSON only with keys: profile (string), skills (array of strings), experience (string), achievements (string).";
+  const system="You are a senior international CV editor. Rewrite candidate information into concise, truthful, employer-focused CV language. Never invent employers, qualifications, certifications, licences, dates, achievements, metrics or skills that are not supported by the candidate's information. You may identify transferable skills clearly implied by the supplied experience. Tailor terminology to the selected destination and target role. Improve grammar, clarity, hierarchy and ATS keyword alignment. Convert responsibilities into strong action-oriented statements and emphasize outcomes only when supported by the candidate's information. Never create statistics, awards or achievements. Preserve the candidate's actual facts, dates and institutions. For US and Canadian applications, keep the structure ATS-friendly and do not recommend a photograph or unnecessary personal details. For UAE applications, use a professional international CV style and allow a photo only where appropriate. Return JSON only with keys: profile (string), skills (array of strings), experience (string), achievements (string).";
   const user=JSON.stringify(base);
   const body={model,messages:[{role:"system",content:system},{role:"user",content:"Refine this candidate information for an international job application. Strengthen the profile, rewrite experience into action-and-impact bullets where the evidence permits, improve achievements, and identify relevant employer-facing skills. Target vacancy if supplied: "+user}],response_format:{type:"json_object"}};
   const https=require("https");
