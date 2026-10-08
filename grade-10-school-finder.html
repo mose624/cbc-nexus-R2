@@ -160,13 +160,13 @@ async function loadSchoolDatabase(){
  const results=document.getElementById("schoolResults");
  if(results)results.innerHTML='<div class="empty">Loading the national C1–C4 senior-school dataset…</div>';
  try{
-  const r=await fetch("/api/schools?_="+Date.now(),{cache:"no-store"}),d=await r.json();
+  const r=await fetch("/api/grade10-national-schools?_="+Date.now(),{cache:"no-store"}),d=await r.json();
   if(!r.ok||!d.ok)throw new Error(d.error||"School database could not be loaded.");
   const live=(d.schools||[]).map(normalizeSchoolRecord).filter(s=>s.name);
   if(!live.length)throw new Error("No published school records are available.");
   schools=live;
   const note=document.querySelector("#schoolPanel .note");
-  if(note)note.innerHTML=schools.length.toLocaleString()+" CBE Nexus school records loaded. <b>Sky-blue cards</b> show guidance matches. The national Ministry dataset identifies senior schools by C1–C4, county, gender and boarding/day characteristics; verify current pathways, combinations and capacity before final selection.";
+  if(note)note.innerHTML=(d.count||schools.length).toLocaleString()+" national senior-school records loaded. <b>Sky-blue cards</b> show guidance matches. Official Ministry/KNEC source fields include county, sub-county, UIC, KNEC code, C1–C4 cluster, school type, SNE/disability information, accommodation and gender. Verify current pathways, combinations and capacity before final selection.";
  }catch(error){
   schools=[...sampleSchools];
   const note=document.querySelector("#schoolPanel .note");
