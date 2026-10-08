@@ -188,7 +188,7 @@ async function getOpportunities(admin=false){
       const rows=data||[];
       if(admin)return rows;
       let seeds=[];
-      try{seeds=JSON.parse(await fs.readFile(path.join(ROOT,"scholarship-opportunities-seed.json"),"utf8"));}catch{}
+      try{seeds=JSON.parse(await fs.readFile(path.join(ROOT,"scholarship-opportunities-seed.json"),"utf8"));}catch{} try{const extra=JSON.parse(await fs.readFile(path.join(ROOT,"scholarship-opportunities-extra.json"),"utf8")); seeds=seeds.concat(extra);}catch{}
       const ids=new Set(rows.map(x=>String(x.id)));
       return rows.concat(seeds.filter(x=>String(x.status||"published")==="published"&&!ids.has(String(x.id))));
     }
@@ -196,7 +196,7 @@ async function getOpportunities(admin=false){
   }catch(error){console.warn("Supabase opportunities lookup failed:",error.message||error);}}
   const rows=await readJsonStore("scholarship-opportunities.json");
   let seeds=[];
-  try{seeds=JSON.parse(await fs.readFile(path.join(ROOT,"scholarship-opportunities-seed.json"),"utf8"));}catch{}
+  try{seeds=JSON.parse(await fs.readFile(path.join(ROOT,"scholarship-opportunities-seed.json"),"utf8"));}catch{} try{const extra=JSON.parse(await fs.readFile(path.join(ROOT,"scholarship-opportunities-extra.json"),"utf8")); seeds=seeds.concat(extra);}catch{}
   if(admin)return rows;
   const published=rows.filter(x=>String(x.status||"published")==="published");
   const ids=new Set(published.map(x=>String(x.id)));
