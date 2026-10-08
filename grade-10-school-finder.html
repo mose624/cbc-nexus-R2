@@ -141,7 +141,7 @@ const counties=["Baringo","Bomet","Bungoma","Busia","Elgeyo-Marakwet","Embu","Ga
 const subjects=["English","Kiswahili","Mathematics","Kenyan Sign Language","Integrated Science","Agriculture","Social Studies","CRE / IRE / HRE","Creative Arts & Sports","Pre-Technical Studies"];
 const subjectEl=document.getElementById("subjects");
 subjects.forEach((s,i)=>{subjectEl.insertAdjacentHTML("beforeend",`<div class="subject"><label>${s}<input class="scoreInput" data-subject="${s}" type="number" min="0" max="100" placeholder="0–100"></label></div>`)});
-const pCounty=document.getElementById("pCounty"); counties.forEach(c=>pCounty.insertAdjacentHTML("beforeend",`<option>${c}</option>`);
+const pCounty=document.getElementById("pCounty"); counties.forEach(c=>pCounty.insertAdjacentHTML("beforeend",`<option value="${c}">${c}</option>`));
 
 let schools=[];
 const sampleSchools=[
