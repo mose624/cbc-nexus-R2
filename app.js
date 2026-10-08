@@ -356,7 +356,7 @@ function restoreAdminAccess() {
 }
 const ADMIN_EXTENSION_SCRIPTS = [
   "/admin-module-fix.js",
-  "/r2-browser.js",
+  "/r2-browser.js?v=20261008-1",
   "/ai-course-admin.js?v=20261004-1",
   "/scholarships-admin.js?v=20261004-1",
   "/school-directory-admin.js?v=20261004-1",
