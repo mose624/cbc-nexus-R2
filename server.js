@@ -218,8 +218,12 @@ async function refineCvWithSmartEditor(payload){
     achievements: base.achievements
   };
   const apiKey=String(process.env.OPENAI_API_KEY||"").trim();
-  if(!apiKey)return fallback;
-  const model=String(process.env.OPENAI_MODEL||"gpt-5-mini").trim();
+  if(!apiKey){
+    const error=new Error("AI CV Generator is not configured yet. Add OPENAI_API_KEY to the Render environment variables.");
+    error.code="OPENAI_NOT_CONFIGURED";
+    throw error;
+  }
+  const model=String(process.env.OPENAI_MODEL||"gpt-6-luna").trim();
   const system="You are a senior international CV editor. Rewrite candidate information into concise, truthful, employer-focused CV language. Never invent employers, qualifications, certifications, licences, dates, achievements, metrics or skills that are not supported by the candidate's information. You may identify transferable skills clearly implied by the supplied experience. Tailor terminology to the selected destination and target role. For US and Canadian applications, keep the structure ATS-friendly and do not recommend a photograph or unnecessary personal details. For UAE applications, use a professional international CV style and allow a photo only where appropriate. Return JSON only with keys: profile (string), skills (array of strings), experience (string), achievements (string).";
   const user=JSON.stringify(base);
   const body={model,messages:[{role:"system",content:system},{role:"user",content:"Refine this candidate information for an international job application. Strengthen the profile, rewrite experience into action-and-impact bullets where the evidence permits, improve achievements, and identify relevant employer-facing skills. Target vacancy if supplied: "+user}],response_format:{type:"json_object"}};
@@ -349,7 +353,7 @@ async function handleApi(req,res,url){
       sendJson(res,200,{ok:true,refined});
     }catch(error){
       console.error("CV refinement error:",error);
-      sendJson(res,503,{ok:false,error:"The CV refinement service is temporarily unavailable. Please try again."});
+      sendJson(res,503,{ok:false,error:error.code==="OPENAI_NOT_CONFIGURED"?"AI CV Generator is not configured yet. Please ask the CBE Nexus administrator to configure the OpenAI API key.":"The AI CV refinement service is temporarily unavailable. Please try again."});
     }
     return true;
   }
