@@ -26,9 +26,9 @@ function stripHtml(s){return decodeHtml(String(s||"").replace(/<br\s*\/?>/gi," "
 function parseGrade10NationalHtml(html){
   const rows=[]; const trRe=/<tr\\b[^>]*>([\\s\\S]*?)<\\/tr>/gi; let m;
   while((m=trRe.exec(html))){const cells=[];const tdRe=/<td\\b[^>]*>([\\s\\S]*?)<\\/td>/gi;let x;while((x=tdRe.exec(m[1])))cells.push(stripHtml(x[1]));
-    if(cells.length<12)continue; const v=cells.length>12?cells.slice(-12):cells;
-    if(!/^\\d+$/.test(v[0]))continue;
-    rows.push({id:"g10-"+v[0]+"-"+(v[5]||v[4]||v[6]),name:v[6]||"",region:v[1]||"",county:v[2]||"",subcounty:v[3]||"",uic:v[4]||"",knec_code:v[5]||"",cluster:v[7]||"",type:v[8]||"",regular_sne:v[9]||"",disability_type:v[10]||"",accommodation:v[11]||"",gender:v[12]||"",country:"Kenya",status:"published",source:"Ministry/KNEC senior-school list (published reproduction)",source_url:GRADE10_OFFICIAL_SOURCE,last_verified:"2026-10-08"});
+    if(cells.length<12)continue; const v=cells.length>=13?cells.slice(0,13):cells;
+    if(!/^\\d+$/.test(String(v[0]||"").trim()))continue;
+    rows.push({id:"g10-"+(v[4]||v[5]||v[6]),name:v[6]||"",region:v[1]||"",county:v[2]||"",subcounty:v[3]||"",uic:v[4]||"",knec_code:v[5]||"",cluster:v[7]||"",type:v[8]||"",regular_sne:v[9]||"",disability_type:v[10]||"",accommodation:v[11]||"",gender:v[12]||"",country:"Kenya",status:"published",source:"Ministry/KNEC senior-school list (published reproduction)",source_url:GRADE10_OFFICIAL_SOURCE,last_verified:"2026-10-08"});
   }
   return rows;
 }
