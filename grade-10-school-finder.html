@@ -155,20 +155,19 @@ function asArray(v){if(Array.isArray(v))return v.map(x=>String(x||"").trim()).fi
 function normalizeSchoolRecord(s){return {id:String(s.id||s.school_id||""),name:String(s.name||s.school_name||"School").trim(),cluster:String(s.cluster||s.school_cluster||s.category||s.school_category||"").trim().toUpperCase(),county:String(s.county||s.city||"").trim(),gender:String(s.gender||s.type_gender||"").trim().toUpperCase(),accom:String(s.accommodation||s.accom||s.boarding||"").trim().toUpperCase(),pathways:asArray(s.pathways||s.pathway||s.pathway_options),tracks:asArray(s.tracks||s.track),subjects:asArray(s.subjects||s.subject_combinations||s.subjects_offered),facilities:asArray(s.facilities||s.facility),description:String(s.description||"").trim(),website:String(s.website||"").trim(),vacancies:Array.isArray(s.vacancies)?s.vacancies:[]}}
 async function loadSchoolDatabase(){
  const results=document.getElementById("schoolResults");
- if(results)results.innerHTML='<div class="empty">Loading the CBE Nexus school database…</div>';
+ if(results)results.innerHTML='<div class="empty">Loading the national C1–C4 senior-school dataset…</div>';
  try{
   const r=await fetch("/api/schools?_="+Date.now(),{cache:"no-store"}),d=await r.json();
   if(!r.ok||!d.ok)throw new Error(d.error||"School database could not be loaded.");
   const live=(d.schools||[]).map(normalizeSchoolRecord).filter(s=>s.name);
-  const seen=new Set(live.map(s=>s.name.toLowerCase()));
-  schools=live.length?live:[...sampleSchools];
-  sampleSchools.forEach(s=>{if(!seen.has(s.name.toLowerCase())&&schools.length<8)schools.push(s)});
+  if(!live.length)throw new Error("No published school records are available.");
+  schools=live;
   const note=document.querySelector("#schoolPanel .note");
-  if(note)note.innerHTML=schools.length+" school records loaded from the CBE Nexus directory. <b>Sky-blue cards</b> are research matches; verify current pathways, combinations, capacity and placement on the official Ministry profile.";
+  if(note)note.innerHTML=schools.length.toLocaleString()+" CBE Nexus school records loaded. <b>Sky-blue cards</b> show guidance matches. The national Ministry dataset identifies senior schools by C1–C4, county, gender and boarding/day characteristics; verify current pathways, combinations and capacity before final selection.";
  }catch(error){
   schools=[...sampleSchools];
   const note=document.querySelector("#schoolPanel .note");
-  if(note)note.innerHTML="CBE Nexus school database is temporarily unavailable, so a small research fallback is shown. <b>Verify all school details</b> on the official Ministry portal.";
+  if(note)note.innerHTML="National school database is temporarily unavailable. Showing a clearly labelled fallback only; do not treat these sample records as the national dataset.";
  }
  renderSchools();
 }
