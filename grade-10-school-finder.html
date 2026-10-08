@@ -26,6 +26,9 @@ body{background:#f4f8fc;color:#14253d}.g10{max-width:1200px;margin:auto;padding:
 details{padding:12px 0;border-top:1px solid #dce8ef}summary{font-weight:800;color:#073b66;cursor:pointer}
 @media(max-width:900px){.grid,.school-grid,.pathways{grid-template-columns:1fr 1fr}.steps{grid-template-columns:repeat(3,1fr)}.subject-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:650px){.grid,.school-grid,.pathways,.choice-list,.subject-grid,.steps{grid-template-columns:1fr}.hero{padding:26px 20px}}
+@media print{
+body{background:#fff}.g10{max-width:none;padding:0}.hero{box-shadow:none}.hero .btn,.school-actions,.modal,.steps,.panel:nth-of-type(4),.panel:nth-of-type(6),.panel:last-child{display:none!important}.panel{box-shadow:none;break-inside:avoid}.school-card,.path-card,.choice{break-inside:avoid}
+}
 </style>
 <link rel="stylesheet" href="customer-care.css?v=20261004-2">
 </head>
@@ -180,11 +183,26 @@ const comboData=[
 
 const scores={};
 let pathwayScores={STEM:0,"Social Sciences":0,"Arts & Sports":0};
-const saved=JSON.parse(localStorage.getItem("cbeG10Choices")||"[]");
+let saved=[]; try{const raw=JSON.parse(localStorage.getItem("cbeG10Choices")||"[]");saved=Array.isArray(raw)?raw:[]}catch(e){saved=[]}
+const PLAN_KEY="cbeG10Plan";
+function collectPlan(){scoreInputs();return {version:2,savedAt:new Date().toISOString(),profile:{gender:document.getElementById("pGender").value,county:document.getElementById("pCounty").value,accom:document.getElementById("pAccom").value,cluster:document.getElementById("pCluster").value,career:document.getElementById("career").value,interest:document.getElementById("interest").value},scores:{...scores},pathwayScores:{...pathwayScores},choices:[...saved]}}
+function restorePlan(showMessage=false){
+ try{
+  const p=JSON.parse(localStorage.getItem(PLAN_KEY)||"null");if(!p)return false;
+  const pr=p.profile||{};["gender","county","accom","cluster","career","interest"].forEach(k=>{const el=document.getElementById("p"+k.charAt(0).toUpperCase()+k.slice(1))||document.getElementById(k);if(el&&pr[k]!=null)el.value=pr[k]});
+  if(pr.career){document.getElementById("career2").value=pr.career;updateCareer(false)}
+  document.querySelectorAll(".scoreInput").forEach(x=>{if(p.scores&&p.scores[x.dataset.subject]!=null)x.value=p.scores[x.dataset.subject]});
+  saved=Array.isArray(p.choices)?p.choices.slice(0,12):[];localStorage.setItem("cbeG10Choices",JSON.stringify(saved));
+  analyse(false);renderChoices();renderSchools();if(showMessage)alert("Your saved Grade 10 plan has been restored.");
+  return true;
+ }catch(e){return false}
+}
+function autoSavePlan(){localStorage.setItem(PLAN_KEY,JSON.stringify(collectPlan()))}
+
 
 function scoreInputs(){document.querySelectorAll(".scoreInput").forEach(x=>{scores[x.dataset.subject]=Math.max(0,Math.min(100,Number(x.value)||0))})}
 function avg(names){const a=names.map(x=>scores[x]).filter(x=>Number.isFinite(x));return a.length?a.reduce((a,b)=>a+b,0)/a.length:0}
-function analyse(){
+function analyse(autoSave=true){
 scoreInputs();
 const stem=avg(["Mathematics","Integrated Science","Pre-Technical Studies","Agriculture"]);
 const social=avg(["English","Kiswahili","Social Studies","CRE / IRE / HRE"]);
@@ -196,19 +214,19 @@ document.getElementById("recommendation").textContent=best[1]?"Recommended guida
 document.getElementById("recommendationText").textContent=best[1]?"Your strongest profile is "+best[0]+". Consider interests, aspirations and available subject combinations before making decisions.":"Enter some subject scores first.";
 ["stemCard","socialCard","artsCard"].forEach(id=>document.getElementById(id).classList.remove("recommended"));
 if(best[1])document.getElementById(best[0]==="STEM"?"stemCard":best[0]==="Social Sciences"?"socialCard":"artsCard").classList.add("recommended");
-renderSchools();
+renderSchools();if(autoSave)autoSavePlan();
 }
 function setPath(prefix,value){document.getElementById(prefix+"Score").textContent=value?value+"/75":"—";document.getElementById(prefix+"Bar").style.width=Math.min(100,(value/75)*100)+"%"}
 document.getElementById("analyse").onclick=analyse;
 document.getElementById("clearScores").onclick=()=>{document.querySelectorAll(".scoreInput").forEach(x=>x.value="");analyse()};
 
 function careerMap(c){const map={"Medicine & Health":"STEM","Engineering":"STEM","ICT & Technology":"STEM","Business & Entrepreneurship":"Social Sciences","Law & Social Sciences":"Social Sciences","Education":"Social Sciences","Media & Communication":"Social Sciences","Arts & Design":"Arts & Sports","Music & Performing Arts":"Arts & Sports","Sports":"Arts & Sports","Agriculture & Environment":"STEM"};return map[c]||""}
-function updateCareer(){
+function updateCareer(autoSave=true){
 const c=document.getElementById("career2").value,p=careerMap(c);document.getElementById("careerPath").value=p;document.getElementById("careerNote").value=p?"Explore "+p+" tracks and relevant subject combinations.":"";
 document.getElementById("career").value=c||document.getElementById("career").value;
-renderSchools();
+renderSchools();if(autoSave)autoSavePlan();
 }
-document.getElementById("career2").onchange=updateCareer;document.getElementById("career").onchange=()=>{document.getElementById("career2").value=document.getElementById("career").value;updateCareer()};
+document.getElementById("career2").onchange=()=>updateCareer();document.getElementById("career").onchange=()=>{document.getElementById("career2").value=document.getElementById("career").value;updateCareer()};
 
 function matchSchool(s){
 let score=45;
@@ -238,12 +256,13 @@ function openSchool(name){const s=schools.find(x=>x.name===name);if(s)openSchool
 function closeModal(){document.getElementById("schoolModal").classList.add("hidden")}
 document.getElementById("schoolModal").addEventListener("click",e=>{if(e.target.id==="schoolModal")closeModal()});
 
-function saveChoice(name){if(saved.includes(name)){renderChoices();return}if(saved.length>=12){alert("You can save up to 12 schools.");return}saved.push(name);localStorage.setItem("cbeG10Choices",JSON.stringify(saved));renderChoices()}
-function removeChoice(name){const i=saved.indexOf(name);if(i>-1)saved.splice(i,1);localStorage.setItem("cbeG10Choices",JSON.stringify(saved));renderChoices()}
+function saveChoice(name){if(saved.includes(name)){renderChoices();return}if(saved.length>=12){alert("You can save up to 12 schools.");return}saved.push(name);localStorage.setItem("cbeG10Choices",JSON.stringify(saved));autoSavePlan();renderChoices()}
+
+function removeChoice(name){const i=saved.indexOf(name);if(i>-1)saved.splice(i,1);localStorage.setItem("cbeG10Choices",JSON.stringify(saved));autoSavePlan();renderChoices()}
 function renderChoices(){const el=document.getElementById("choices");if(!saved.length){el.innerHTML='<div class="empty" style="grid-column:1/-1">No schools saved yet. Use “Add to Choices” on a school card.</div>';return}el.innerHTML=saved.map((n,i)=>`<div class="choice"><span><strong>${i+1}. ${n}</strong><br><span class="note">Personal shortlist</span></span><button onclick="removeChoice('${n.replace(/'/g,"\\'")}')">Remove</button></div>`).join("")}
-document.getElementById("clearChoices").onclick=()=>{saved.splice(0,saved.length);localStorage.removeItem("cbeG10Choices");renderChoices()};
-document.getElementById("savePlan").onclick=()=>{localStorage.setItem("cbeG10Plan",JSON.stringify({pathwayScores,choices:saved,career:document.getElementById("career").value,county:pCounty.value}));alert("Your Grade 10 plan has been saved on this device.")};
-document.getElementById("printPlan").onclick=()=>window.print();
+document.getElementById("clearChoices").onclick=()=>{if(!saved.length)return;if(!confirm("Clear all saved Grade 10 school choices? This cannot be undone."))return;saved.splice(0,saved.length);localStorage.removeItem("cbeG10Choices");autoSavePlan();renderChoices()};
+document.getElementById("savePlan").onclick=()=>{autoSavePlan();localStorage.setItem("cbeG10Choices",JSON.stringify(saved));alert("Your complete Grade 10 plan has been saved on this device. You can return to this page on the same browser to continue.");};
+document.getElementById("printPlan").onclick=()=>{autoSavePlan();window.print()};
 
 function renderCombos(){
 const p=document.getElementById("comboPath").value,t=document.getElementById("comboTrack").value,q=document.getElementById("comboSearch").value.toLowerCase();
@@ -251,8 +270,9 @@ const x=comboData.filter(c=>(!p||c[0]===p)&&(!t||c[1]===t)&&(!q||c.join(" ").toL
 document.getElementById("combos").innerHTML=x.map(c=>`<article class="school-card"><h3>${c[0]}</h3><span class="tag">${c[1]}</span><p><b>${c[2]}</b></p><p class="note">Confirm the exact current combination and schools offering it through the official selection information.</p></article>`).join("")||'<div class="empty">No combination in this guide matches the selected filters.</div>';
 }
 ["comboPath","comboTrack","comboSearch"].forEach(id=>document.getElementById(id).addEventListener("input",renderCombos));
-["pCounty","pGender","pAccom","pCluster"].forEach(id=>document.getElementById(id).addEventListener("change",renderSchools));
-renderCombos();renderChoices();loadSchoolDatabase();
+["pCounty","pGender","pAccom","pCluster","interest"].forEach(id=>document.getElementById(id).addEventListener("change",()=>{renderSchools();autoSavePlan()}));
+document.querySelectorAll(".scoreInput").forEach(x=>x.addEventListener("input",()=>{scoreInputs();autoSavePlan()}));
+renderCombos();renderChoices();restorePlan(false);loadSchoolDatabase();
 </script>
 <script src="section-shell.js?v=20261004-3" defer></script>
 <script src="customer-care.js?v=20261004-2" defer></script>
