@@ -29,7 +29,20 @@
 @media print{.site-header,.back,.actions,.job-tools,.section:not(#cvPreviewSection),#cvBuilderSection,.note,.faq,.score{display:none!important}.page{padding:0}.preview-wrap{background:#fff;border:0;padding:0}.preview-paper{box-shadow:none;max-width:none;padding:20px}}
 .job-board-search{margin:16px 0 10px;padding:14px 16px;background:#f8fbfd;border:1px solid #cfe8f7;border-radius:12px}.job-board-search label{display:block;font-size:12px;font-weight:800;margin-bottom:6px}.job-board-search input{width:100%;box-sizing:border-box;border:2px solid #cbd5e1;border-radius:10px;padding:13px 15px;background:#fff;font-size:14px;outline:none}.job-board-search input:focus{border-color:#c9ad24;box-shadow:0 0 0 3px rgba(214,185,45,.13)}.job-board-search input::placeholder{color:#64748b}.job-board-controls{display:grid;grid-template-columns:repeat(5,1fr) auto;gap:10px;align-items:end;margin:0 0 4px;padding:14px;background:#f8fbfd;border:1px solid #cfe8f7;border-radius:12px}.job-board-filter label{display:block;font-size:11px;font-weight:800;margin-bottom:5px}.job-board-filter select{width:100%;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:8px;padding:10px;background:#fff;font-size:12px}.job-board-filter select:focus{border-color:#c9ad24;outline:none;box-shadow:0 0 0 3px rgba(214,185,45,.13)}.job-board-controls button{white-space:nowrap;height:38px}.vacancy-filter-hidden{display:none!important}@media(max-width:1000px){.job-board-controls{grid-template-columns:repeat(3,1fr)}}@media(max-width:700px){.job-board-controls{grid-template-columns:1fr 1fr}.job-board-controls button{width:100%}}</style>
 <link rel="stylesheet" href="customer-care.css?v=20261004-2">
-</head>
+<style id="compact-sky-blue-vacancy-cards">
+/* Compact sky-blue vacancy blocks: keeps many opportunities visible without changing the page structure. */
+#internationalVacancyGrid.vacancy-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:stretch}
+#internationalVacancyGrid .vacancy-card{background:#e0f2fe!important;border:1px solid #7dd3fc!important;border-radius:9px!important;padding:12px!important;min-width:0;box-shadow:0 2px 7px rgba(14,116,144,.08)!important;display:flex;flex-direction:column;gap:6px}
+#internationalVacancyGrid .vacancy-card:hover{background:#d5effc!important;transform:translateY(-2px);box-shadow:0 7px 16px rgba(14,116,144,.14)!important}
+#internationalVacancyGrid .vacancy-card h3,#internationalVacancyGrid .vacancy-card h4{font-size:14px!important;line-height:1.25!important;margin:0!important}
+#internationalVacancyGrid .vacancy-card p{font-size:11px!important;line-height:1.35!important;margin:2px 0!important}
+#internationalVacancyGrid .vacancy-card .pill,#internationalVacancyGrid .vacancy-card .badge{font-size:9px!important;padding:3px 6px!important}
+#internationalVacancyGrid .vacancy-card .apply-button,#internationalVacancyGrid .vacancy-card a{font-size:10px!important}
+#internationalVacancyGrid .vacancy-card .vacancy-description{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+@media(max-width:1100px){#internationalVacancyGrid.vacancy-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:800px){#internationalVacancyGrid.vacancy-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){#internationalVacancyGrid.vacancy-grid{grid-template-columns:1fr}}
+</style></head>
 <body>
 <header class="site-header"><nav class="main-nav"><a class="brand" href="index.html#dashboard"><span class="brand-mark">CBE</span><span><strong>CBE Nexus</strong><small>Connecting learners to excellence</small></span></a><div class="nav-actions"><a class="secondary-button" href="index.html#dashboard">← Home</a><a class="primary-button" href="professional-cv-writing.html">Professional CV Writing</a></div></nav></header>
 
