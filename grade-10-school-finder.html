@@ -140,7 +140,8 @@ const subjectEl=document.getElementById("subjects");
 subjects.forEach((s,i)=>{subjectEl.insertAdjacentHTML("beforeend",`<div class="subject"><label>${s}<input class="scoreInput" data-subject="${s}" type="number" min="0" max="100" placeholder="0–100"></label></div>`)});
 const pCounty=document.getElementById("pCounty"); counties.forEach(c=>pCounty.insertAdjacentHTML("beforeend",`<option>${c}</option>`);
 
-const schools=[
+let schools=[];
+const sampleSchools=[
 {name:"Kisii High School",cluster:"C1",county:"Kisii",gender:"BOYS",accom:"BOARDING",pathways:["STEM","Social Sciences","Arts & Sports"],tracks:["Pure Sciences","Applied Sciences","Humanities & Business Studies"],subjects:["Mathematics","Biology","Chemistry","Physics","Computer Studies"],facilities:["Laboratories","ICT","Sports"]},
 {name:"Nyabururu Girls High School",cluster:"C1",county:"Kisii",gender:"GIRLS",accom:"BOARDING",pathways:["STEM","Social Sciences","Arts & Sports"],tracks:["Pure Sciences","Applied Sciences","Humanities & Business Studies"],subjects:["Mathematics","Biology","Chemistry","Physics","Computer Studies"],facilities:["Laboratories","ICT","Sports"]},
 {name:"Kereri Girls High School",cluster:"C1",county:"Kisii",gender:"GIRLS",accom:"BOARDING",pathways:["STEM","Social Sciences"],tracks:["Pure Sciences","Applied Sciences"],subjects:["Mathematics","Biology","Chemistry","Physics"],facilities:["Laboratories","ICT"]},
@@ -150,6 +151,27 @@ const schools=[
 {name:"Alliance High School",cluster:"C1",county:"Kiambu",gender:"BOYS",accom:"BOARDING",pathways:["STEM","Social Sciences"],tracks:["Pure Sciences","Applied Sciences","Humanities & Business Studies"],subjects:["Mathematics","Biology","Chemistry","Physics","Computer Studies"],facilities:["Laboratories","ICT","Library"]},
 {name:"Alliance Girls High School",cluster:"C1",county:"Kiambu",gender:"GIRLS",accom:"BOARDING",pathways:["STEM","Social Sciences","Arts & Sports"],tracks:["Pure Sciences","Applied Sciences","Humanities & Business Studies"],subjects:["Mathematics","Biology","Chemistry","Physics","Computer Studies"],facilities:["Laboratories","ICT","Arts","Sports"]}
 ];
+function asArray(v){if(Array.isArray(v))return v.map(x=>String(x||"").trim()).filter(Boolean);if(typeof v==="string")return v.split(/[,;|•\n]+/).map(x=>x.trim()).filter(Boolean);return []}
+function normalizeSchoolRecord(s){return {id:String(s.id||s.school_id||""),name:String(s.name||s.school_name||"School").trim(),cluster:String(s.cluster||s.school_cluster||s.category||s.school_category||"").trim().toUpperCase(),county:String(s.county||s.city||"").trim(),gender:String(s.gender||s.type_gender||"").trim().toUpperCase(),accom:String(s.accommodation||s.accom||s.boarding||"").trim().toUpperCase(),pathways:asArray(s.pathways||s.pathway||s.pathway_options),tracks:asArray(s.tracks||s.track),subjects:asArray(s.subjects||s.subject_combinations||s.subjects_offered),facilities:asArray(s.facilities||s.facility),description:String(s.description||"").trim(),website:String(s.website||"").trim(),vacancies:Array.isArray(s.vacancies)?s.vacancies:[]}}
+async function loadSchoolDatabase(){
+ const results=document.getElementById("schoolResults");
+ if(results)results.innerHTML='<div class="empty">Loading the CBE Nexus school database…</div>';
+ try{
+  const r=await fetch("/api/schools?_="+Date.now(),{cache:"no-store"}),d=await r.json();
+  if(!r.ok||!d.ok)throw new Error(d.error||"School database could not be loaded.");
+  const live=(d.schools||[]).map(normalizeSchoolRecord).filter(s=>s.name);
+  const seen=new Set(live.map(s=>s.name.toLowerCase()));
+  schools=live.length?live:[...sampleSchools];
+  sampleSchools.forEach(s=>{if(!seen.has(s.name.toLowerCase())&&schools.length<8)schools.push(s)});
+  const note=document.querySelector("#schoolPanel .note");
+  if(note)note.innerHTML=schools.length+" school records loaded from the CBE Nexus directory. <b>Sky-blue cards</b> are research matches; verify current pathways, combinations, capacity and placement on the official Ministry profile.";
+ }catch(error){
+  schools=[...sampleSchools];
+  const note=document.querySelector("#schoolPanel .note");
+  if(note)note.innerHTML="CBE Nexus school database is temporarily unavailable, so a small research fallback is shown. <b>Verify all school details</b> on the official Ministry portal.";
+ }
+ renderSchools();
+}
 
 const comboData=[
 ["STEM","Pure Sciences","Mathematics • Biology • Chemistry"],["STEM","Pure Sciences","Mathematics • Physics • Chemistry"],["STEM","Applied Sciences","Mathematics • Computer Studies • Physics"],["STEM","Applied Sciences","General Science • Agriculture • Business Studies"],
@@ -201,12 +223,19 @@ const career=careerMap(document.getElementById("career").value);if(career&&s.pat
 return Math.min(99,score)
 }
 function renderSchools(){
-const county=document.getElementById("pCounty").value,gender=document.getElementById("pGender").value,accom=document.getElementById("pAccom").value,cluster=document.getElementById("pCluster").value,career=careerMap(document.getElementById("career").value);
-let arr=schools.filter(s=>(!county||s.county===county)&&(!gender||s.gender===gender)&&(!accom||s.accom===accom)&&(!cluster||s.cluster===cluster)&&(!career||s.pathways.includes(career))).map(s=>({...s,match:matchSchool(s)})).sort((a,b)=>b.match-a.match);
-if(!arr.length){document.getElementById("schoolResults").innerHTML='<div class="empty">No sample research records match all selected filters. Try broadening the filters or browse the full Schools & Institutions directory.</div>';return}
-document.getElementById("schoolResults").innerHTML=arr.map(s=>`<article class="school-card" onclick="openSchool('${s.name.replace(/'/g,"\\'")}')"><h3>${s.name}</h3><div class="match">${s.match}% match</div><span class="tag">${s.cluster}</span><span class="tag">${s.county}</span><span class="tag">${s.gender}</span><span class="tag">${s.accom}</span><p><b>Pathways:</b> ${s.pathways.join(" • ")}</p><p class="note"><b>Facilities:</b> ${s.facilities.join(", ")}</p><div class="school-actions"><button class="mini" onclick="event.stopPropagation();openSchool('${s.name.replace(/'/g,"\\'")}')">View School</button><button class="mini save" onclick="event.stopPropagation();saveChoice('${s.name.replace(/'/g,"\\'")}')">♡ Add to Choices</button></div></article>`).join("")
+ const county=document.getElementById("pCounty").value,gender=document.getElementById("pGender").value,accom=document.getElementById("pAccom").value,cluster=document.getElementById("pCluster").value,career=careerMap(document.getElementById("career").value);
+ const best=Object.entries(pathwayScores).sort((a,b)=>b[1]-a[1])[0],desired=best[1]?best[0]:"";
+ let arr=schools.filter(s=>(!county||s.county===county)&&(!gender||!s.gender||s.gender===gender)&&(!accom||!s.accom||s.accom===accom)&&(!cluster||!s.cluster||s.cluster===cluster)&&(!career||!s.pathways.length||s.pathways.includes(career))&&(!desired||!s.pathways.length||s.pathways.includes(desired))).map(s=>({...s,match:matchSchool(s)})).sort((a,b)=>b.match-a.match);
+ if(!arr.length){document.getElementById("schoolResults").innerHTML='<div class="empty">No school records match all selected filters. Try broadening the filters or browse the full Schools & Institutions directory.</div>';return}
+ document.getElementById("schoolResults").innerHTML=arr.slice(0,60).map((s,i)=>`<article class="school-card" onclick="openSchoolById('${String(s.id||s.name).replace(/'/g,"\\'")}')"><h3>${s.name}</h3><div class="match">${s.match}% guidance match</div><span class="tag">${s.cluster||"Senior School"}</span><span class="tag">${s.county||"Kenya"}</span><span class="tag">${s.gender||"Verify gender"}</span><span class="tag">${s.accom||"Verify accommodation"}</span><p><b>Pathways:</b> ${s.pathways.length?s.pathways.join(" • "):"Verify current pathway profile"}</p><p class="note"><b>Facilities:</b> ${s.facilities.length?s.facilities.join(", "):"See official school profile"}</p><div class="school-actions"><button class="mini" onclick="event.stopPropagation();openSchoolById('${String(s.id||s.name).replace(/'/g,"\\'")}')">View School</button><button class="mini save" onclick="event.stopPropagation();saveChoice('${s.name.replace(/'/g,"\\'")}')">♡ Add to Choices</button></div></article>`).join("");
 }
-function openSchool(name){const s=schools.find(x=>x.name===name);if(!s)return;document.getElementById("modalContent").innerHTML=`<h2>${s.name}</h2><p><b>${s.county}</b> • ${s.cluster} • ${s.gender} • ${s.accom}</p><h3>Pathways</h3><p>${s.pathways.join(" • ")}</p><h3>Tracks</h3><p>${s.tracks.join(" • ")}</p><h3>Research subjects</h3><p>${s.subjects.join(" • ")}</p><h3>Facilities</h3><p>${s.facilities.join(" • ")}</p><div class="info">Verify the school's current pathway, track, subject combinations, capacity and placement information through the official Ministry/school sources before making final choices.</div><button class="btn" onclick="saveChoice('${s.name.replace(/'/g,"\\'") }');closeModal()">♡ Add to My Choices</button>`;document.getElementById("schoolModal").classList.remove("hidden")}
+function openSchoolById(id){
+ const s=schools.find(x=>String(x.id||x.name)===String(id));if(!s)return;
+ const website=s.website?'<p><a href="'+s.website.replace(/"/g,"&quot;")+'" target="_blank" rel="noopener">School website ↗</a></p>':"";
+ document.getElementById("modalContent").innerHTML=`<h2>${s.name}</h2><p><b>${s.county||"Kenya"}</b> • ${s.cluster||"Senior School"} • ${s.gender||"Verify gender"} • ${s.accom||"Verify accommodation"}</p><h3>Pathways</h3><p>${s.pathways.length?s.pathways.join(" • "):"Verify the current Ministry profile."}</p><h3>Tracks</h3><p>${s.tracks.length?s.tracks.join(" • "):"Verify the current approved tracks."}</p><h3>Subjects / combinations</h3><p>${s.subjects.length?s.subjects.join(" • "):"Verify the current approved subject combinations."}</p><h3>Facilities</h3><p>${s.facilities.length?s.facilities.join(" • "):"See the school's current profile."}</p>${website}<div class="info">CBE Nexus guidance only. Verify the school's current pathway, subject combinations, capacity, gender, accommodation and placement information through the official Ministry/school sources before making final choices.</div><button class="btn" onclick="saveChoice('${s.name.replace(/'/g,"\\'")}');closeModal()">♡ Add to My Choices</button>`;
+ document.getElementById("schoolModal").classList.remove("hidden");
+}
+function openSchool(name){const s=schools.find(x=>x.name===name);if(s)openSchoolById(s.id||s.name)}
 function closeModal(){document.getElementById("schoolModal").classList.add("hidden")}
 document.getElementById("schoolModal").addEventListener("click",e=>{if(e.target.id==="schoolModal")closeModal()});
 
@@ -224,7 +253,7 @@ document.getElementById("combos").innerHTML=x.map(c=>`<article class="school-car
 }
 ["comboPath","comboTrack","comboSearch"].forEach(id=>document.getElementById(id).addEventListener("input",renderCombos));
 ["pCounty","pGender","pAccom","pCluster"].forEach(id=>document.getElementById(id).addEventListener("change",renderSchools));
-renderCombos();renderChoices();renderSchools();
+renderCombos();renderChoices();loadSchoolDatabase();
 </script>
 <script src="section-shell.js?v=20261004-3" defer></script>
 <script src="customer-care.js?v=20261004-2" defer></script>
