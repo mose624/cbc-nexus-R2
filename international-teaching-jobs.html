@@ -42,6 +42,46 @@
 @media(max-width:1100px){#internationalVacancyGrid.vacancy-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:800px){#internationalVacancyGrid.vacancy-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){#internationalVacancyGrid.vacancy-grid{grid-template-columns:1fr}}
+</style><style id="stable-vacancy-mobile-polish">
+/* Stable vacancy board: mobile-first readability without changing the desktop structure. */
+#internationalVacancyGrid{min-width:0}
+#internationalVacancyGrid .vacancy-card{min-width:0;overflow-wrap:anywhere}
+#internationalVacancyGrid .vacancy-card-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:auto;padding-top:5px}
+#internationalVacancyGrid .vacancy-card-actions a{white-space:normal;text-align:center}
+#internationalVacancyGrid .vacancy-details{margin-top:5px}
+#internationalVacancyGrid .vacancy-details summary{cursor:pointer;font-weight:800;font-size:11px;line-height:1.35}
+@media(max-width:700px){
+  .page{padding:16px 10px 42px}
+  .section{margin-top:18px}
+  .section-head{align-items:flex-start;gap:10px}
+  .section h2{font-size:20px;line-height:1.2}
+  .section-head p{font-size:12px;line-height:1.5}
+  .job-board-search{padding:11px;margin:10px 0 8px}
+  .job-board-search input{font-size:13px;padding:11px 12px}
+  .job-board-controls{grid-template-columns:1fr!important;gap:8px;padding:10px}
+  .job-board-filter label{font-size:10px}
+  .job-board-filter select{font-size:12px;padding:10px}
+  .job-board-controls button{width:100%;height:42px}
+  #internationalVacancyGrid.vacancy-grid{grid-template-columns:1fr!important;gap:10px;margin-top:10px}
+  #internationalVacancyGrid .vacancy-card{padding:13px!important;border-radius:10px!important;gap:5px}
+  #internationalVacancyGrid .vacancy-card h3{font-size:15px!important;line-height:1.3!important}
+  #internationalVacancyGrid .vacancy-card p{font-size:11.5px!important;line-height:1.45!important}
+  #internationalVacancyGrid .vacancy-card .meta{gap:4px;margin:6px 0}
+  #internationalVacancyGrid .vacancy-card .pill{font-size:9px!important;line-height:1.25;padding:4px 6px!important}
+  #internationalVacancyGrid .vacancy-card-actions{display:grid;grid-template-columns:1fr;gap:7px}
+  #internationalVacancyGrid .vacancy-card-actions a,
+  #internationalVacancyGrid .vacancy-card-actions button{width:100%;min-height:40px}
+  .vacancy-stats{grid-template-columns:repeat(2,1fr)!important;gap:7px!important}
+  .vacancy-stat{padding:10px!important}
+  .vacancy-stat strong{font-size:19px!important}
+  .vacancy-stat span{font-size:9px!important}
+  .vacancy-country-breakdown{font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+}
+@media(max-width:380px){
+  .page{padding-left:8px;padding-right:8px}
+  .section h2{font-size:18px}
+  #internationalVacancyGrid .vacancy-card{padding:11px!important}
+}
 </style></head>
 <body>
 <header class="site-header"><nav class="main-nav"><a class="brand" href="index.html#dashboard"><span class="brand-mark">CBE</span><span><strong>CBE Nexus</strong><small>Connecting learners to excellence</small></span></a><div class="nav-actions"><a class="secondary-button" href="index.html#dashboard">← Home</a><a class="primary-button" href="professional-cv-writing.html">Professional CV Writing</a></div></nav></header>
@@ -250,7 +290,7 @@ function calc(){const s=Number(document.getElementById("calcSalary").value||0),l
 
 <button class="secondary-button" id="clearVacancyFilters" type="button">Reset filters</button>
 </div>
-<div id="internationalVacancyGrid" class="vacancy-grid"><p class="form-status">Loading vacancies...</p></div></section><script src="app.js"></script><script>
+<div id="internationalVacancyGrid" class="vacancy-grid" data-stable-vacancy-board><p class="form-status">Loading vacancies...</p></div></section><script src="app.js"></script><script>
 /* CBE NEXUS vacancy-board fallback loader: keeps the public board independent of optional app.js initializers. */
 (function(){
   const grid=document.getElementById("internationalVacancyGrid");
