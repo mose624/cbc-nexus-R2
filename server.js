@@ -183,11 +183,24 @@ async function getOpportunities(admin=false){
   if(supabaseConfigured){try{
     let q=supabase.from("scholarship_opportunities").select("*").order("featured",{ascending:false}).order("created_at",{ascending:false});
     if(!admin)q=q.eq("status","published");
-    const {data,error}=await q;if(!error)return data||[];
+    const {data,error}=await q;
+    if(!error){
+      const rows=data||[];
+      if(admin)return rows;
+      let seeds=[];
+      try{seeds=JSON.parse(await fs.readFile(path.join(ROOT,"scholarship-opportunities-seed.json"),"utf8"));}catch{}
+      const ids=new Set(rows.map(x=>String(x.id)));
+      return rows.concat(seeds.filter(x=>String(x.status||"published")==="published"&&!ids.has(String(x.id))));
+    }
     console.warn("Supabase opportunities lookup failed:",error.message||error);
   }catch(error){console.warn("Supabase opportunities lookup failed:",error.message||error);}}
   const rows=await readJsonStore("scholarship-opportunities.json");
-  return admin?rows:rows.filter(x=>String(x.status||"published")==="published");
+  let seeds=[];
+  try{seeds=JSON.parse(await fs.readFile(path.join(ROOT,"scholarship-opportunities-seed.json"),"utf8"));}catch{}
+  if(admin)return rows;
+  const published=rows.filter(x=>String(x.status||"published")==="published");
+  const ids=new Set(published.map(x=>String(x.id)));
+  return published.concat(seeds.filter(x=>String(x.status||"published")==="published"&&!ids.has(String(x.id))));
 }
 async function saveOpportunity(payload){
   const item=normalizeOpportunityPayload(payload,payload);
