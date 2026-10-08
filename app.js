@@ -900,12 +900,17 @@ async function handleFormSubmit(event) {
     elements.adminGrade.value = "Grade 1";
     if (typeof refreshAdminUploadSubjects === "function") refreshAdminUploadSubjects();
     elements.fileHelp.textContent = "Choose a PDF, Word document, PowerPoint, Excel file, text file, or ZIP.";
-    elements.formStatus.textContent = isInternationalUpload
-      ? `${curriculum} resource uploaded successfully. It will appear only on the ${curriculum} resource page after approval.`
-      : "Resource uploaded to R2 and saved to Supabase successfully.";
-    showToast(isInternationalUpload ? `${curriculum} resource uploaded successfully.` : "Resource uploaded successfully.");
-    await syncPublicResourcesFromServer();
-    if (typeof loadAdminDashboard === "function") await loadAdminDashboard();
+    // Keep the administrator on the upload form and give an unmistakable success message.
+    const successMessage = isInternationalUpload
+      ? `✓ SUCCESS — ${curriculum} resource uploaded and saved successfully. It will appear only on the ${curriculum} resource page after approval.`
+      : "✓ SUCCESS — Resource uploaded to Cloudflare R2 and saved to Supabase successfully.";
+    elements.formStatus.textContent = successMessage;
+    elements.formStatus.className = "form-status upload-success";
+    showToast(successMessage);
+    const submitButton = elements.form.querySelector('button[type="submit"]');
+    if (submitButton) submitButton.textContent = "✓ Upload Successful";
+    // Refresh only the resource moderation list; do not navigate/reset the Admin Dashboard.
+    if (typeof window.loadAdminResourceModeration === "function") await window.loadAdminResourceModeration();
   } catch (error) {
     console.error("CBE Nexus resource publish error:", error);
     elements.formStatus.textContent = error.message || "Resource could not be published.";
