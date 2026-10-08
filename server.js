@@ -698,10 +698,17 @@ async function handleApi(req,res,url){
     const c=getMpesaConfig();
     if(!c.shortCode||!c.passkey||!c.callbackUrl){sendJson(res,503,{ok:false,error:"M-Pesa STK Push is not fully configured on the server."});return true;}
     try{
-      const resource=await findResourceForPayment(resourceId);
-      if(!resource||String(resource.status||"approved").toLowerCase()!=="approved"){sendJson(res,404,{ok:false,error:"The selected resource is not available for purchase."});return true;}
-      const amount=resourcePrice(resource);
-      if(amount<1){sendJson(res,400,{ok:false,error:"This resource does not require an M-Pesa payment."});return true;}
+      let resource=null, amount=0;
+      if(/^cv:(basic|classic|professional)$/i.test(resourceId)){
+        const pkg=resourceId.split(":")[1].toLowerCase();
+        amount=pkg==="basic"?200:pkg==="classic"?400:800;
+        resource={id:resourceId,title:"CBE Nexus "+pkg+" CV",status:"approved",price:amount};
+      }else{
+        resource=await findResourceForPayment(resourceId);
+        if(!resource||String(resource.status||"approved").toLowerCase()!=="approved"){sendJson(res,404,{ok:false,error:"The selected resource is not available for purchase."});return true;}
+        amount=resourcePrice(resource);
+        if(amount<1){sendJson(res,400,{ok:false,error:"This resource does not require an M-Pesa payment."});return true;}
+      }
       const token=await getMpesaAccessToken(),timestamp=mpesaTimestamp();
       const stk=await darajaPost("/mpesa/stkpush/v1/processrequest",{BusinessShortCode:c.shortCode,Password:mpesaPassword(c.shortCode,c.passkey,timestamp),Timestamp:timestamp,TransactionType:"CustomerPayBillOnline",Amount:amount,PartyA:phone,PartyB:c.shortCode,PhoneNumber:phone,CallBackURL:c.callbackUrl,AccountReference:String(resource.title||"CBE Nexus").slice(0,12),TransactionDesc:"CBE Nexus resource"},token);
       const d=stk.data||{};
