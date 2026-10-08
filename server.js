@@ -18,6 +18,26 @@ const RATE_LIMITS = { general: 120, auth: 10, upload: 12 };
 const rateBuckets = new Map();
 const ADMIN_LOGIN_LOCKOUT_MS = 15 * 60 * 1000;
 const ADMIN_LOGIN_MAX_FAILURES = 5;
+const GRADE10_NATIONAL_SOURCE="https://arena.co.ke/knec-list-of-senior-schools-per-county-with-categories/";
+const GRADE10_OFFICIAL_SOURCE="https://selection.education.go.ke/files/senior-schools-in-kenya.pdf";
+let grade10NationalCache={expiresAt:0,schools:[]};
+function decodeHtml(s){return String(s||"").replace(/&nbsp;/gi," ").replace(/&amp;/gi,"&").replace(/&quot;/gi,'\"').replace(/&#39;|&apos;/gi,"'").replace(/&lt;/gi,"<").replace(/&gt;/gi,">");}
+function stripHtml(s){return decodeHtml(String(s||"").replace(/<br\s*\/?>/gi," ").replace(/<[^>]+>/g," ")).replace(/\\s+/g," ").trim();}
+function parseGrade10NationalHtml(html){
+  const rows=[]; const trRe=/<tr\\b[^>]*>([\\s\\S]*?)<\\/tr>/gi; let m;
+  while((m=trRe.exec(html))){const cells=[];const tdRe=/<td\\b[^>]*>([\\s\\S]*?)<\\/td>/gi;let x;while((x=tdRe.exec(m[1])))cells.push(stripHtml(x[1]));
+    if(cells.length<12)continue; const v=cells.length>12?cells.slice(-12):cells;
+    if(!/^\\d+$/.test(v[0]))continue;
+    rows.push({id:"g10-"+v[0]+"-"+(v[5]||v[4]||v[6]),name:v[6]||"",region:v[1]||"",county:v[2]||"",subcounty:v[3]||"",uic:v[4]||"",knec_code:v[5]||"",cluster:v[7]||"",type:v[8]||"",regular_sne:v[9]||"",disability_type:v[10]||"",accommodation:v[11]||"",gender:v[12]||"",country:"Kenya",status:"published",source:"Ministry/KNEC senior-school list (published reproduction)",source_url:GRADE10_OFFICIAL_SOURCE,last_verified:"2026-10-08"});
+  }
+  return rows;
+}
+async function getGrade10NationalSchools(){
+  if(grade10NationalCache.expiresAt>Date.now()&&grade10NationalCache.schools.length)return grade10NationalCache.schools;
+  const response=await fetch(GRADE10_NATIONAL_SOURCE,{headers:{"user-agent":"CBE-Nexus/1.0"}}); if(!response.ok)throw new Error("National senior-school source returned HTTP "+response.status+".");
+  const html=await response.text(); const schools=parseGrade10NationalHtml(html); if(schools.length<5000)throw new Error("National school source returned an incomplete dataset ("+schools.length+" records).");
+  grade10NationalCache={expiresAt:Date.now()+24*60*60*1000,schools}; return schools;
+}
 const adminLoginFailures = new Map();
 
 function clientIp(req) {
@@ -317,6 +337,9 @@ async function handleApi(req,res,url){
   if(req.method==="GET"&&url.pathname==="/api/analytics/config"){
     sendJson(res,200,{ok:true,googleAnalyticsId:String(process.env.GA_MEASUREMENT_ID||"").trim(),clarityProjectId:String(process.env.CLARITY_PROJECT_ID||"").trim()});
     return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/grade10-national-schools"){
+    try{const schools=await getGrade10NationalSchools();sendJson(res,200,{ok:true,schools,count:schools.length,source:"Ministry/KNEC senior-school list",officialSource:GRADE10_OFFICIAL_SOURCE,lastVerified:"2026-10-08"});}catch(error){console.error("Grade 10 national school source error:",error);sendJson(res,503,{ok:false,error:"The national Grade 10 school dataset is temporarily unavailable."});}return true;
   }
   if(req.method==="GET"&&url.pathname==="/api/schools"){
     try{sendJson(res,200,{ok:true,schools:await getSchoolDirectory(false)});}catch(error){console.error("School directory lookup error:",error);sendJson(res,500,{ok:false,error:"School directory could not be loaded."});}return true;
