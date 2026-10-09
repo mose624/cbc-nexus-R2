@@ -1304,7 +1304,15 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
     showToast("Grade 1 upload mode selected.");
   });
 
-  // Resource upload: use a capture-phase guard so the browser never follows a form action or reloads the dashboard.\n  if (elements.form && !elements.form.dataset.cbeUploadHandler) {\n    elements.form.dataset.cbeUploadHandler = "1";\n    elements.form.addEventListener("submit", (event) => {\n      event.preventDefault();\n      event.stopPropagation();\n      handleFormSubmit(event);\n    }, true);\n  }
+  // Resource upload: use a capture-phase guard so the browser never follows a form action or reloads the dashboard.
+  if (elements.form && !elements.form.dataset.cbeUploadHandler) {
+    elements.form.dataset.cbeUploadHandler = "1";
+    elements.form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      handleFormSubmit(event);
+    }, true);
+  }
   safeOn(elements.sellerAccountForm, "submit", createSellerAccount);
   safeOn(elements.sellerLoginForm, "submit", loginSeller);
   safeOn(elements.adminLoginForm, "submit", unlockAdmin);
