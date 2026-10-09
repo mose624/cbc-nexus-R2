@@ -182,7 +182,9 @@ async function openResourceViewer(resource){
   viewerFrame.src="about:blank";
   try{
     const fileName=String(resource.fileName||"").toLowerCase();
-    const isPdf=/\.pdf$/.test(fileName);
+    const storageKey=String(resource.r2Key||resource.r2_key||"").toLowerCase();
+    // The admin display filename can omit the extension; the actual R2 key preserves it.
+    const isPdf=/\.pdf(?:$|[?#])/.test(fileName)||/\.pdf(?:$|[?#])/.test(storageKey);
     let viewUrl="";
     if(isPdf&&resource.previewKey){
       const response=await fetch("/api/r2/preview?key="+encodeURIComponent(resource.previewKey),{credentials:"same-origin",cache:"no-store"});
