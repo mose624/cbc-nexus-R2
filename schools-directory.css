@@ -42,3 +42,26 @@
   border-color: #fda4af;
   box-shadow: 0 7px 20px rgba(185, 28, 28, .12);
 }
+
+
+/* C1, C2, C3 and C4 school-cluster cards: sky green for quick visibility. */
+.cluster-card {
+  background: #d9fbe8;
+  border-color: #86efac;
+  border-top-color: #16a34a;
+}
+.cluster-card b,
+.cluster-card em {
+  color: #166534;
+}
+.cluster-card strong {
+  color: #14532d;
+}
+.cluster-card span {
+  color: #276749;
+}
+.cluster-card:hover {
+  background: #bbf7d0;
+  border-color: #4ade80;
+  box-shadow: 0 7px 20px rgba(22, 163, 74, .14);
+}
