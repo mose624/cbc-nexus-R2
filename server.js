@@ -29,7 +29,7 @@ function parseGrade10NationalHtml(html){
   let m;
   while((m=trRe.exec(html))){
     const cells=[];
-    const tdRe=/<td\b[^>]*>([\s\S]*?)<\/td>/gi;
+    const tdRe=/<t[dh]\b[^>]*>([\s\S]*?)<\/t[dh]>/gi;
     let x;
     while((x=tdRe.exec(m[1]))) cells.push(stripHtml(x[1]));
     if(cells.length<13) continue;
