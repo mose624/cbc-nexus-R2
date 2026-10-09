@@ -1,3 +1,20 @@
+// Install the resource-upload submit guard before other page initialization.
+// This prevents a native form navigation back to the homepage if another initializer fails.
+if (!window.__cbeResourceSubmitGuardInstalled) {
+  window.__cbeResourceSubmitGuardInstalled = true;
+  document.addEventListener("submit", function (event) {
+    if (!event.target || event.target.id !== "resourceForm") return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    if (typeof handleFormSubmit === "function") {
+      void handleFormSubmit(event);
+    } else {
+      const status = document.querySelector("#formStatus");
+      if (status) status.textContent = "Upload script did not initialize. Please refresh and try again.";
+    }
+  }, true);
+}
+
 // Security: Encryption utilities for sensitive data
 const SecurityUtils = {
   encode: (str) => btoa(encodeURIComponent(str)),
@@ -1304,15 +1321,7 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
     showToast("Grade 1 upload mode selected.");
   });
 
-  // Resource upload: use a capture-phase guard so the browser never follows a form action or reloads the dashboard.
-  if (elements.form && !elements.form.dataset.cbeUploadHandler) {
-    elements.form.dataset.cbeUploadHandler = "1";
-    elements.form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      handleFormSubmit(event);
-    }, true);
-  }
+  // Resource upload submit is guarded at the top of this file before other initializers run.
   safeOn(elements.sellerAccountForm, "submit", createSellerAccount);
   safeOn(elements.sellerLoginForm, "submit", loginSeller);
   safeOn(elements.adminLoginForm, "submit", unlockAdmin);
