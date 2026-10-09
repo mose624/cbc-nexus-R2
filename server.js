@@ -1651,6 +1651,8 @@ async function serveStatic(req,res,url){
       res.end(await buildBlogRss(req));
     }catch(error){
       console.error("RSS feed error:",error);
+      // Do not attempt a second response if streaming/writing already started.
+      if(res.headersSent||res.writableEnded||res.destroyed)return;
       res.writeHead(500,{"Content-Type":"application/xml; charset=utf-8"});
       res.end('<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>CBE Nexus Education Hub</title><description>RSS feed temporarily unavailable.</description></channel></rss>');
     }
@@ -1728,10 +1730,12 @@ async function serveStatic(req,res,url){
       "Cache-Control":cacheControl
     });
     res.end(data);
-  }catch{
-    try{const notFound=await fs.readFile(path.join(ROOT,"404.html"),"utf8");res.writeHead(404,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"public, max-age=300"});res.end(notFound);}
-    catch{res.writeHead(404,{"Content-Type":"text/plain; charset=utf-8"});res.end("Not found");}
+  }catch(error){
+    // A response may already have started. Never write a second HTTP response.
+    if(res.headersSent||res.writableEnded||res.destroyed)return;
+    try{const notFound=await fs.readFile(path.join(ROOT,"404.html"),"utf8");if(res.headersSent||res.writableEnded||res.destroyed)return;res.writeHead(404,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"public, max-age=300"});res.end(notFound);}
+    catch{if(res.headersSent||res.writableEnded||res.destroyed)return;res.writeHead(404,{"Content-Type":"text/plain; charset=utf-8"});res.end("Not found");}
   }
 }
-const server=http.createServer(async(req,res)=>{const url=new URL(req.url,`http://${req.headers.host||"127.0.0.1"}`);setSecurityHeaders(res);const limit=allowRequest(req,url);res.setHeader("X-RateLimit-Remaining",String(Math.max(0,limit.remaining)));if(!limit.allowed){res.setHeader("Retry-After","60");sendJson(res,429,{ok:false,error:"Too many requests. Please try again shortly."});return;}try{if(await handleApi(req,res,url))return;await serveStatic(req,res,url);}catch(error){console.error("Unhandled server error:",error);sendJson(res,500,{ok:false,error:"Server error."});}});
+const server=http.createServer(async(req,res)=>{const url=new URL(req.url,`http://${req.headers.host||"127.0.0.1"}`);setSecurityHeaders(res);const limit=allowRequest(req,url);res.setHeader("X-RateLimit-Remaining",String(Math.max(0,limit.remaining)));if(!limit.allowed){res.setHeader("Retry-After","60");sendJson(res,429,{ok:false,error:"Too many requests. Please try again shortly."});return;}try{if(await handleApi(req,res,url))return;await serveStatic(req,res,url);}catch(error){console.error("Unhandled server error:",error);if(res.headersSent||res.writableEnded||res.destroyed){if(!res.writableEnded&&!res.destroyed)res.destroy(error);return;}sendJson(res,500,{ok:false,error:"Server error."});}});
 server.listen(PORT,"0.0.0.0",()=>console.log(`CBE website backend running on port ${PORT}`));
