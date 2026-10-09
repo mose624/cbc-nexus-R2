@@ -25,27 +25,44 @@ function decodeHtml(s){return String(s||"").replace(/&nbsp;/gi," ").replace(/&am
 function stripHtml(s){return decodeHtml(String(s||"").replace(/<br\s*\/?>/gi," ").replace(/<[^>]+>/g," ")).replace(/\\s+/g," ").trim();}
 function parseGrade10NationalHtml(html){
   const rows=[];
-  const trRe=/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi;
-  let m;
-  while((m=trRe.exec(html))){
-    const cells=[];
-    const tdRe=/<t[dh]\b[^>]*>([\s\S]*?)<\/t[dh]>/gi;
-    let x;
-    while((x=tdRe.exec(m[1]))) cells.push(stripHtml(x[1]));
-    if(cells.length<13) continue;
-    const v=cells.slice(0,13);
-    if(!/^\d+$/.test(String(v[0]||"").trim())) continue;
+  const counties=["Baringo","Bomet","Bungoma","Busia","Elgeyo Marakwet","Embu","Garissa","Homa Bay","Isiolo","Kajiado","Kakamega","Kericho","Kiambu","Kilifi","Kirinyaga","Kisii","Kisumu","Kitui","Kwale","Laikipia","Lamu","Machakos","Makueni","Mandera","Marsabit","Meru","Migori","Mombasa","Murang'a","Nairobi","Nakuru","Nandi","Narok","Nyamira","Nyandarua","Nyeri","Samburu","Siaya","Taita Taveta","Tana River","Tharaka Nithi","Trans Nzoia","Turkana","Uasin Gishu","Vihiga","Wajir","West Pokot"];
+  const normalize=s=>String(s||"").toUpperCase().replace(/[^A-Z0-9]+/g," ").trim().replace(/\s+/g," ");
+  const countyNames=counties.map(name=>({name,n:normalize(name)})).sort((a,b)=>b.n.length-a.n.length);
+  const plain=decodeHtml(String(html||"")
+    .replace(/<br\s*\/?\s*>/gi,"\n")
+    .replace(/<\/(?:p|tr|div|li|h[1-6]|article|section)>/gi,"\n")
+    .replace(/<\/(?:td|th)>/gi," ")
+    .replace(/<[^>]+>/g," ")
+    .replace(/&ndash;|&mdash;/gi,"-"));
+  const lines=plain.split(/[\r\n]+/).map(line=>line.replace(/\s+/g," ").trim()).filter(Boolean);
+  const rowRe=/^(\d{1,5})\s+(.+?)\s+([A-Z0-9]{4})\s+(\d{8})\s+(.+?)\s+(C[1-4])\s+(PUBLIC|PRIVATE)\s+(REGULAR|SNE|SPECIAL NEEDS|INTERGRATED|INTEGRATED)\s+(.+?)\s+(DAY|BOARDING)\s+(MIXED|BOYS|GIRLS)\s*$/i;
+  for(const line of lines){
+    const m=line.match(rowRe);
+    if(!m) continue;
+    const [,serial,prefix,uic,knec_code,name,cluster,type,regular_sne,tail,accommodation,gender]=m;
+    const prefixText=String(prefix||"").trim();
+    const normalizedPrefix=normalize(prefixText);
+    let countyMatch=null;
+    for(const item of countyNames){
+      const idx=normalizedPrefix.indexOf(item.n);
+      if(idx>=0){countyMatch={...item,idx};break;}
+    }
+    const county=countyMatch?.name||"";
+    const region=countyMatch?prefixText.slice(0,countyMatch.idx).trim():"";
+    const subcounty=countyMatch?prefixText.slice(countyMatch.idx+countyMatch.n.length).trim():"";
+    const disability_type=String(tail||"").trim().replace(/\s+/g," ");
     rows.push({
-      id:"g10-"+(v[4]||v[5]||v[6]),
-      name:v[6]||"",region:v[1]||"",county:v[2]||"",subcounty:v[3]||"",
-      uic:v[4]||"",knec_code:v[5]||"",cluster:v[7]||"",type:v[8]||"",
-      regular_sne:v[9]||"",disability_type:v[10]||"",accommodation:v[11]||"",
-      gender:v[12]||"",country:"Kenya",status:"published",
-      source:"Ministry/KNEC senior-school list (published reproduction)",
-      source_url:GRADE10_OFFICIAL_SOURCE,last_verified:"2026-10-08"
+      id:"g10-"+(uic||knec_code||serial),serial:Number(serial),name:String(name||"").trim().replace(/\s+/g," "),
+      region,county,subcounty,uic,knec_code,cluster:String(cluster).toUpperCase(),type:String(type).toUpperCase(),
+      regular_sne:String(regular_sne).toUpperCase(),disability_type:disability_type||"NONE",
+      accommodation:String(accommodation).toUpperCase(),gender:String(gender).toUpperCase(),
+      country:"Kenya",status:"published",source:"Ministry/KNEC senior-school list (published reproduction)",
+      source_url:GRADE10_OFFICIAL_SOURCE,last_verified:"2026-10-09"
     });
   }
-  return rows;
+  const unique=new Map();
+  for(const school of rows) if(!unique.has(school.uic||school.knec_code)) unique.set(school.uic||school.knec_code,school);
+  return [...unique.values()];
 }
 async function getGrade10NationalSchools(){
   if(grade10NationalCache.expiresAt>Date.now()&&grade10NationalCache.schools.length)return grade10NationalCache.schools;
