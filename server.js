@@ -816,9 +816,7 @@ async function handleApi(req,res,url){
     const resourceId=String(req.headers["x-cbe-resource-id"]||"resource").trim();
     const contentType=String(req.headers["content-type"]||"application/octet-stream").trim()||"application/octet-stream";
     if(!grade||!subject||!type){sendJson(res,400,{ok:false,error:"Grade, subject and material type are required."});return true;}
-    const allowedExtensions=[".pdf",".doc",".docx",".ppt",".pptx",".xls",".xlsx",".txt",".zip"];
-    const extension=path.extname(fileName.toLowerCase());
-    if(!allowedExtensions.includes(extension)){sendJson(res,400,{ok:false,error:"Unsupported file type."});return true;}
+    // Accept any file extension for Admin Resource Upload. Keep the existing 50 MB size limit.
     if(Number(req.headers["content-length"]||0)>50*1024*1024){sendJson(res,413,{ok:false,error:"Upload is too large. Maximum file size is 50 MB."});return true;}
     try{
       const body=await readBinaryBody(req);
