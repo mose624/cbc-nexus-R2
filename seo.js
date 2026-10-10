@@ -156,11 +156,21 @@ async function sitemap(req){
   for(const entry of entries){
    if(!entry.isFile() || !/^[a-z0-9][a-z0-9._-]*\.html$/i.test(entry.name)) continue;
    const filename=entry.name.toLowerCase();
-   if(["blog-article.html","upload.html","admin.html","admin-login.html","login.html"].includes(filename)) continue;
+   // Do not publish error, account, payment, upload, or administration pages.
+   if(filename==="404.html" ||
+      ["blog-article.html","upload.html","admin.html","admin-login.html","login.html"].includes(filename) ||
+      /(^|[-_.])(admin|login|upload|dashboard|checkout|payment|account|reset-password)([-_.]|$)/i.test(filename)) continue;
    let html="";
    try{html=await fs.readFile(path.join(__dirname,entry.name),"utf8");}catch{continue;}
-   if(/<meta\s+[^>]*name=["']robots["'][^>]*content=["'][^"']*noindex/i.test(html) ||
-      /<meta\s+[^>]*content=["'][^"']*noindex[^"']*["'][^>]*name=["']robots["']/i.test(html)) continue;
+   // Respect robots noindex even when name/content attributes appear in either order.
+   const metaTags=html.match(/<meta\\b[^>]*>/gi)||[];
+   const hasNoindex=metaTags.some(tag=>{
+    const nameMatch=tag.match(/\\bname\\s*=\\s*["']?([^"'\\s/>]+)/i);
+    const contentMatch=tag.match(/\\bcontent\\s*=\\s*["']([^"']*)["']/i);
+    return nameMatch && nameMatch[1].toLowerCase()==="robots" &&
+      contentMatch && /(?:^|[\\s,])noindex(?:$|[\\s,])/i.test(contentMatch[1]);
+   });
+   if(hasNoindex) continue;
    urls.push("/"+entry.name);
   }
  }catch(e){console.warn("SEO sitemap static-page discovery failed:",e.message||e);}
