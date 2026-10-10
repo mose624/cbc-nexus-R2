@@ -1745,7 +1745,7 @@ async function serveStatic(req,res,url){
   if(req.method==="GET" && url.pathname==="/robots.txt"){
     const base=seo.base(req);
     res.writeHead(200,{"Content-Type":"text/plain; charset=utf-8","Cache-Control":"public, max-age=3600"});
-    res.end("User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /admin\nDisallow: /upload.html\nDisallow: /backend-data/\nSitemap: "+base+"/sitemap.xml\n");
+    res.end("User-agent: *\\nAllow: /\\nDisallow: /api/\\nDisallow: /admin\\nDisallow: /upload.html\\nDisallow: /backend-data/\\n\\nUser-agent: Googlebot\\nAllow: /\\n\\nUser-agent: OAI-SearchBot\\nAllow: /\\n\\nSitemap: "+base+"/sitemap.xml\\n");
     return;
   }
   if(req.method==="GET" && url.pathname==="/"){
