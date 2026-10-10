@@ -105,9 +105,17 @@
           const grade = resource.grade || resource.level || "CBC/CBE";
           const subject = resource.subject || "";
           const type = resource.type || resource.resource_type || "Learning material";
-          const key = resource.r2Key || resource.r2_key || "";
-          const href = resource.downloadUrl || resource.download_url || resource.file ||
-            resource.url || (key ? "/api/r2/file?key=" + encodeURIComponent(key) : "");
+          const key = String(resource.r2Key || resource.r2_key || "").trim();
+          const resourceId = resource.id ?? resource.resource_id ?? "";
+          // Use the dedicated server-validated free-download route for stored R2 files.
+          // The generic /api/r2/file route can return JSON metadata/errors, not the file itself.
+          const href = key && resourceId
+            ? "/api/r2/free-file?resourceId=" + encodeURIComponent(String(resourceId)) + "&key=" + encodeURIComponent(key)
+            : (() => {
+                const candidate = String(resource.downloadUrl || resource.download_url || resource.file || resource.url || "").trim();
+                if (!candidate || /^\/api\/(?:r2\/file|resources)(?:\?|$)/i.test(candidate)) return "";
+                return candidate;
+              })();
           const meta = [grade, subject, type].filter(Boolean).join(" · ");
           const card = document.createElement("a");
           card.className = "free-resource-card";
