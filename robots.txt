@@ -1,17 +1,27 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /upload.html
+Disallow: /backend-data/
 
-# AI/search crawlers — keep public educational content discoverable.
+# AI and search crawlers may index public educational pages, not private/admin endpoints.
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /upload.html
+Disallow: /backend-data/
+
 User-agent: OAI-SearchBot
 Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /upload.html
+Disallow: /backend-data/
 
 User-agent: GPTBot
 Allow: /
-
-User-agent: Googlebot
-Allow: /
-
-# Keep private/admin and API endpoints out of search results.
 Disallow: /api/
 Disallow: /admin
 Disallow: /upload.html
