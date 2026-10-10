@@ -149,6 +149,21 @@ async function sitemap(req){
    if(!error) (data||[]).forEach(p=>{if(p&&p.slug) urls.push("/blog-article.html?slug="+encodeURIComponent(String(p.slug)));});
   }catch(e){console.warn("SEO sitemap blog lookup failed:",e.message||e);}
  }
+ // Discover public, indexable root-level HTML pages automatically so new pages are not
+ // forgotten when the sitemap is updated. Exclude templates and sensitive/admin pages.
+ try{
+  const entries=await fs.readdir(__dirname,{withFileTypes:true});
+  for(const entry of entries){
+   if(!entry.isFile() || !/^[a-z0-9][a-z0-9._-]*\.html$/i.test(entry.name)) continue;
+   const filename=entry.name.toLowerCase();
+   if(["blog-article.html","upload.html","admin.html","admin-login.html","login.html"].includes(filename)) continue;
+   let html="";
+   try{html=await fs.readFile(path.join(__dirname,entry.name),"utf8");}catch{continue;}
+   if(/<meta\s+[^>]*name=["']robots["'][^>]*content=["'][^"']*noindex/i.test(html) ||
+      /<meta\s+[^>]*content=["'][^"']*noindex[^"']*["'][^>]*name=["']robots["']/i.test(html)) continue;
+   urls.push("/"+entry.name);
+  }
+ }catch(e){console.warn("SEO sitemap static-page discovery failed:",e.message||e);}
  const unique=[...new Set(urls)].filter(u=>typeof u==="string"&&u.startsWith("/"));
  const body=unique.map(u=>"<url><loc>"+xml(b+u)+"</loc></url>").join("");
  return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+body+"\n</urlset>";
