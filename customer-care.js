@@ -27,6 +27,15 @@
     </section>`;
   document.body.appendChild(root);
 
+  // Force-load the current subscription widget styles, independent of older page CSS URLs.
+  if (!document.getElementById("cbe-resource-subscribe-css")) {
+    const subscriptionCss = document.createElement("link");
+    subscriptionCss.id = "cbe-resource-subscribe-css";
+    subscriptionCss.rel = "stylesheet";
+    subscriptionCss.href = "/customer-care.css?v=20261010-subscribe1";
+    document.head.appendChild(subscriptionCss);
+  }
+
   // CBE Nexus floating resource-update subscription.
   if (!document.getElementById("cbe-resource-subscribe")) {
     const subscribeRoot = document.createElement("div");
