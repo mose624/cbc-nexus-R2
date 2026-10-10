@@ -149,6 +149,31 @@ async function sitemap(req){
    if(!error) (data||[]).forEach(p=>{if(p&&p.slug) urls.push("/blog-article.html?slug="+encodeURIComponent(String(p.slug)));});
   }catch(e){console.warn("SEO sitemap blog lookup failed:",e.message||e);}
  }
+ // Discover public, indexable root-level HTML pages automatically so new pages are not
+ // forgotten when the sitemap is updated. Exclude templates and sensitive/admin pages.
+ try{
+  const entries=await fs.readdir(__dirname,{withFileTypes:true});
+  for(const entry of entries){
+   if(!entry.isFile() || !/^[a-z0-9][a-z0-9._-]*\.html$/i.test(entry.name)) continue;
+   const filename=entry.name.toLowerCase();
+   // Do not publish error, account, payment, upload, or administration pages.
+   if(filename==="404.html" ||
+      ["blog-article.html","upload.html","admin.html","admin-login.html","login.html"].includes(filename) ||
+      /(^|[-_.])(admin|login|upload|dashboard|checkout|payment|account|reset-password)([-_.]|$)/i.test(filename)) continue;
+   let html="";
+   try{html=await fs.readFile(path.join(__dirname,entry.name),"utf8");}catch{continue;}
+   // Respect robots noindex even when name/content attributes appear in either order.
+   const metaTags=html.match(/<meta\b[^>]*>/gi)||[];
+   const hasNoindex=metaTags.some(tag=>{
+    const nameMatch=tag.match(/\bname\s*=\s*["']?([^"'\s/>]+)/i);
+    const contentMatch=tag.match(/\bcontent\s*=\s*["']([^"']*)["']/i);
+    return nameMatch && nameMatch[1].toLowerCase()==="robots" &&
+      contentMatch && /(?:^|[\s,])noindex(?:$|[\s,])/i.test(contentMatch[1]);
+   });
+   if(hasNoindex) continue;
+   urls.push("/"+entry.name);
+  }
+ }catch(e){console.warn("SEO sitemap static-page discovery failed:",e.message||e);}
  const unique=[...new Set(urls)].filter(u=>typeof u==="string"&&u.startsWith("/"));
  const body=unique.map(u=>"<url><loc>"+xml(b+u)+"</loc></url>").join("");
  return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+body+"\n</urlset>";
