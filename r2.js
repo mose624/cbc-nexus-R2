@@ -123,11 +123,33 @@ async function deleteObject(key) {
   return { deleted: true, key: cleanKey };
 }
 
-async function createDownloadUrl(key) {
+async function createDownloadUrl(key, fileName = "") {
   const { cfg, client } = getClient();
+  const cleanName = String(fileName || key.split("/").pop() || "resource.bin")
+    .replace(/[\\r\\n"]/g, "_")
+    .replace(/[\\\\/]/g, "_")
+    .trim() || "resource.bin";
+  const ext = cleanName.toLowerCase().match(/\\.([a-z0-9]{1,8})$/)?.[1] || "";
+  const contentTypes = {
+    pdf: "application/pdf",
+    doc: "application/msword",
+    docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    xls: "application/vnd.ms-excel",
+    xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    ppt: "application/vnd.ms-powerpoint",
+    pptx: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    txt: "text/plain; charset=utf-8",
+    csv: "text/csv; charset=utf-8",
+    jpg: "image/jpeg",
+    jpeg: "image/jpeg",
+    png: "image/png",
+    zip: "application/zip"
+  };
   const command = new GetObjectCommand({
     Bucket: cfg.bucket,
-    Key: key
+    Key: key,
+    ResponseContentDisposition: "attachment; filename=\\" + cleanName + "\\"; filename*=UTF-8''" + encodeURIComponent(cleanName),
+    ...(contentTypes[ext] ? { ResponseContentType: contentTypes[ext] } : {})
   });
   return getSignedUrl(client, command, { expiresIn: 300 });
 }
