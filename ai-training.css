@@ -371,3 +371,80 @@ html,body{min-width:1200px!important;width:1200px!important;max-width:none!impor
  .module-quiz .module-answer-option{min-height:50px;padding:12px}
  .module-quiz #submitQuiz{width:100%;min-width:0}
 }
+
+
+/* CBE Nexus AI Academy — orderly lesson-note cards */
+.ai-academy-page .notes-paper{
+  padding:clamp(18px,3vw,34px);
+  border-radius:14px;
+}
+.ai-academy-page .notes-paper>.notes-badge{
+  margin-bottom:20px;
+  border-radius:7px;
+  background:#eaf7fc;
+  color:#075985;
+  letter-spacing:.02em;
+}
+.ai-academy-page .notes-content{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  align-items:stretch;
+  gap:16px;
+}
+.ai-academy-page .notes-content section{
+  min-width:0;
+  margin:0;
+  padding:20px;
+  border:1px solid #dfe7ef;
+  border-top:4px solid #049fd9;
+  border-radius:11px;
+  background:#fff;
+  box-shadow:0 4px 14px rgba(7,29,73,.045);
+  overflow-wrap:anywhere;
+}
+.ai-academy-page .notes-content section:nth-child(3n+2){
+  border-top-color:#00875a;
+}
+.ai-academy-page .notes-content section:nth-child(3n){
+  border-top-color:#6b5ce7;
+}
+.ai-academy-page .notes-content section h2{
+  margin:0 0 12px;
+  padding-bottom:10px;
+  border-bottom:1px solid #e8eef4;
+  color:#071d49;
+  font-size:1.08rem;
+  line-height:1.45;
+}
+.ai-academy-page .notes-content section p{
+  margin:0;
+  color:#334e68;
+  font-size:.96rem;
+  line-height:1.8;
+  white-space:pre-line;
+  overflow-wrap:anywhere;
+}
+.ai-academy-page .notes-content section ul,
+.ai-academy-page .notes-content section ol{
+  padding-left:22px;
+  line-height:1.8;
+}
+.ai-academy-page .notes-content section li{
+  margin:0 0 7px;
+  line-height:1.7;
+}
+.ai-academy-page .practice-box{
+  margin-top:22px;
+  padding:22px;
+  border:1px solid #c9e8f3;
+  border-left:5px solid #049fd9;
+  border-radius:10px;
+  background:#f0f9fd;
+}
+.ai-academy-page .practice-box p{line-height:1.75}
+@media(max-width:800px){
+  .ai-academy-page .notes-content{grid-template-columns:minmax(0,1fr);gap:12px}
+  .ai-academy-page .notes-content section{padding:17px}
+  .ai-academy-page .notes-content section h2{font-size:1.02rem}
+  .ai-academy-page .notes-content section p{font-size:.94rem;line-height:1.75}
+}
