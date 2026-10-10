@@ -163,12 +163,12 @@ async function sitemap(req){
    let html="";
    try{html=await fs.readFile(path.join(__dirname,entry.name),"utf8");}catch{continue;}
    // Respect robots noindex even when name/content attributes appear in either order.
-   const metaTags=html.match(/<meta\\b[^>]*>/gi)||[];
+   const metaTags=html.match(/<meta\b[^>]*>/gi)||[];
    const hasNoindex=metaTags.some(tag=>{
-    const nameMatch=tag.match(/\\bname\\s*=\\s*["']?([^"'\\s/>]+)/i);
-    const contentMatch=tag.match(/\\bcontent\\s*=\\s*["']([^"']*)["']/i);
+    const nameMatch=tag.match(/\bname\s*=\s*["']?([^"'\s/>]+)/i);
+    const contentMatch=tag.match(/\bcontent\s*=\s*["']([^"']*)["']/i);
     return nameMatch && nameMatch[1].toLowerCase()==="robots" &&
-      contentMatch && /(?:^|[\\s,])noindex(?:$|[\\s,])/i.test(contentMatch[1]);
+      contentMatch && /(?:^|[\s,])noindex(?:$|[\s,])/i.test(contentMatch[1]);
    });
    if(hasNoindex) continue;
    urls.push("/"+entry.name);
