@@ -120,7 +120,8 @@ async function sitemap(req){
  const b="https://cbenexus.co.ke";
  const urls=[
   "/","/resources.html","/free-resources.html","/quizzes.html","/projects.html","/tuition.html",
-  "/blog.html","/learning-hub.html","/answer-hub.html","/grade-10-school-finder.html",
+  "/blog.html","/learning-hub.html","/answer-hub.html","/grade-10-school-finder.html","/contact.html",
+  "/privacy-policy.html","/terms-and-conditions.html","/copyright.html",
   "/kenya-universities-colleges.html","/public-universities.html","/private-universities.html",
   "/specialized-universities.html","/university-constituent-colleges.html","/interim-universities.html",
   "/university-course-catalogue.html","/technical-vocational-catalogue.html","/tvet-colleges.html",
