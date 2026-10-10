@@ -969,7 +969,7 @@ async function handleApi(req,res,url){
     try{
       let resource=null;
       if(supabaseConfigured){
-        const {data,error}=await supabase.from("resources").select("id,r2_key,status,filename,title,price,discount_price").eq("id",resourceId).maybeSingle();
+        const {data,error}=await supabase.from("resources").select("id,r2_key,preview_key,status,filename,title,price,discount_price").eq("id",resourceId).maybeSingle();
         if(error)throw error;
         resource=data;
       } else {
@@ -978,8 +978,26 @@ async function handleApi(req,res,url){
       if(!resource||!resource.r2_key||String(resource.status||"approved").toLowerCase()!=="approved"){
         sendJson(res,403,{ok:false,error:"This resource is not available for viewing."});return true;
       }
-      const viewUrl=await createDownloadUrl(resource.r2_key);
-      sendJson(res,200,{ok:true,viewUrl,expiresIn:300,fileName:resource.filename||"",title:resource.title||""});
+      // Never return a signed URL for the original object here: this endpoint is public
+      // and is intentionally used before payment. Only expose a limited preview object.
+      let previewKey=String(resource.preview_key||resource.previewKey||"").trim();
+      if(!previewKey&&/\.pdf$/i.test(String(resource.filename||resource.fileName||""))){
+        const preview=await createPdfPreview(resource.r2_key,3);
+        previewKey=preview.previewKey;
+        if(supabaseConfigured){
+          const {error}=await supabase.from("resources").update({preview_key:previewKey}).eq("id",resourceId);
+          if(error)throw error;
+        }else{
+          const rows=await readJsonStore("resources.json");
+          const updated=rows.map(item=>String(item.id)===resourceId?{...item,previewKey}:item);
+          await fs.writeFile(path.join(DATA_DIR,"resources.json"),JSON.stringify(updated,null,2));
+        }
+      }
+      if(!previewKey||!previewKey.startsWith("previews/")){
+        sendJson(res,403,{ok:false,error:"A safe preview is not available for this file. Download it after purchase."});return true;
+      }
+      const viewUrl=await createDownloadUrl(previewKey,"CBE-Nexus-preview.pdf");
+      sendJson(res,200,{ok:true,viewUrl,expiresIn:300,fileName:resource.filename||resource.fileName||"",title:resource.title||"",previewOnly:true});
     }catch(error){
       console.error("R2 resource view error:",error);
       sendJson(res,500,{ok:false,error:"Resource preview could not be opened."});
