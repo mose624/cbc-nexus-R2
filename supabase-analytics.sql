@@ -46,6 +46,15 @@ create index if not exists download_approvals_status_idx on public.download_appr
 alter table public.download_approvals enable row level security;
 
 
+-- Compatibility migration for older purchases tables that already existed.
+-- CREATE TABLE IF NOT EXISTS does not add missing columns to an existing table.
+alter table public.purchases add column if not exists resource_id text;
+alter table public.purchases add column if not exists customer_phone text;
+alter table public.purchases add column if not exists amount numeric(12,2) not null default 0;
+alter table public.purchases add column if not exists status text not null default 'pending';
+alter table public.purchases add column if not exists payment_reference text;
+alter table public.purchases add column if not exists created_at timestamptz not null default now();
+
 -- Server-side Safaricom Daraja STK Push verification fields
 alter table public.purchases add column if not exists checkout_request_id text;
 alter table public.purchases add column if not exists merchant_request_id text;
