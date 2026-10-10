@@ -1775,15 +1775,17 @@
 
 <!-- CBE NEXUS PUBLIC SEARCH & AI CONTEXT: visible content matching the site's structured data -->
 <style>
-.cbenexus-search-guide{max-width:1180px;margin:32px auto;padding:24px 20px;color:#172033;line-height:1.7}
-.cbenexus-search-guide h2{font-size:clamp(1.25rem,2.4vw,1.8rem);margin:0 0 10px}
-.cbenexus-search-guide h3{font-size:1.05rem;margin:16px 0 6px}
+.cbenexus-search-guide{width:100%;max-width:none;box-sizing:border-box;margin:0;padding:38px max(20px,calc((100% - 1180px)/2));background:linear-gradient(135deg,#fce7f3 0%,#fdf2f8 55%,#fbcfe8 100%);border-top:5px solid #ec4899;color:#4a1430;line-height:1.75}
+.cbenexus-search-guide h2{font-size:clamp(1.35rem,2.4vw,1.9rem);margin:0 0 12px;color:#9d174d}
+.cbenexus-search-guide h3{font-size:1.05rem;margin:16px 0 6px;color:#831843}
 .cbenexus-search-guide p{margin:8px 0}
-.cbenexus-search-guide .search-guide-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:18px 0}
-.cbenexus-search-guide .search-guide-card{border:1px solid #dbe5ef;border-radius:12px;padding:16px;background:#fff}
+.cbenexus-search-guide .search-guide-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:20px 0 28px}
+.cbenexus-search-guide .search-guide-card{border:1px solid #f9a8d4;border-radius:14px;padding:18px;background:rgba(255,255,255,.82);box-shadow:0 5px 18px rgba(157,23,77,.07)}
 .cbenexus-search-guide ul{padding-left:22px;margin:8px 0}
-.cbenexus-search-guide a{color:#075985;text-decoration:underline;text-underline-offset:2px}
-@media(max-width:760px){.cbenexus-search-guide .search-guide-grid{grid-template-columns:1fr}}
+.cbenexus-search-guide a{color:#9d174d;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;font-weight:600}
+.cbenexus-search-guide a:hover{color:#500724}
+.cbenexus-search-guide h2#about-cbe-nexus{padding-bottom:10px;border-bottom:2px solid #f9a8d4}
+@media(max-width:760px){.cbenexus-search-guide{padding:28px 16px}.cbenexus-search-guide .search-guide-grid{grid-template-columns:1fr}.cbenexus-search-guide .search-guide-card{padding:15px}}
 </style>
 <section class="cbenexus-search-guide" aria-labelledby="about-cbe-nexus">
   <h2 id="about-cbe-nexus">About CBE Nexus — Kenya’s CBC and CBE Education Resource Platform</h2>
