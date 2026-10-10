@@ -9,7 +9,7 @@ create table if not exists public.resource_subscribers (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
-create unique index if not exists resource_subscribers_email_lower_uidx
-  on public.resource_subscribers (lower(email));
+create unique index if not exists resource_subscribers_email_uidx
+  on public.resource_subscribers (email);
 alter table public.resource_subscribers enable row level security;
 revoke all on table public.resource_subscribers from anon, authenticated;
