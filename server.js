@@ -366,7 +366,7 @@ async function handleApi(req,res,url){
     const name=String(p.name||"").trim().slice(0,100);
     const source=String(p.source||"/").trim().slice(0,300);
     if(String(p.website||"").trim()){sendJson(res,200,{ok:true,message:"Thank you for your interest in CBE Nexus updates."});return true;}
-    if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)||email.length>254||p.consent!==true){sendJson(res,400,{ok:false,error:"Enter a valid email address and confirm your consent."});return true;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||email.length>254||p.consent!==true){sendJson(res,400,{ok:false,error:"Enter a valid email address and confirm your consent."});return true;}
     if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Subscriptions are temporarily unavailable. Please try again later."});return true;}
     try{
       const {error}=await supabase.from("resource_subscribers").upsert({email,name:name||null,source,consent:true,updated_at:new Date().toISOString()},{onConflict:"email",ignoreDuplicates:true});
