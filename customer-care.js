@@ -27,6 +27,52 @@
     </section>`;
   document.body.appendChild(root);
 
+  // CBE Nexus floating resource-update subscription.
+  if (!document.getElementById("cbe-resource-subscribe")) {
+    const subscribeRoot = document.createElement("div");
+    subscribeRoot.id = "cbe-resource-subscribe";
+    subscribeRoot.innerHTML = `
+      <button type="button" class="crs-launcher" aria-expanded="false" aria-controls="crs-panel"><span aria-hidden="true">🔔</span> Subscribe for Updates</button>
+      <section class="crs-panel" id="crs-panel" aria-label="Subscribe to CBE Nexus resource updates" hidden>
+        <div class="crs-heading"><div><strong>Get CBE Nexus Updates</strong><small>New CBC/CBE resources, notes, schemes and learning materials.</small></div><button type="button" class="crs-close" aria-label="Close subscription form">×</button></div>
+        <form class="crs-form">
+          <label for="crs-name">Name (optional)</label><input id="crs-name" name="name" type="text" maxlength="100" autocomplete="name" placeholder="Your name">
+          <label for="crs-email">Email address</label><input id="crs-email" name="email" type="email" maxlength="254" autocomplete="email" required placeholder="you@example.com">
+          <label class="crs-consent"><input type="checkbox" name="consent" required><span>I agree to receive CBE Nexus resource updates by email. I can unsubscribe at any time.</span></label>
+          <input class="crs-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="crs-submit" type="submit">Subscribe for Updates</button>
+          <p class="crs-status" role="status" aria-live="polite"></p>
+          <small class="crs-privacy">Your email is used for CBE Nexus updates only.</small>
+        </form>
+      </section>`;
+    document.body.appendChild(subscribeRoot);
+    const launch=subscribeRoot.querySelector(".crs-launcher");
+    const panel=subscribeRoot.querySelector(".crs-panel");
+    const close=subscribeRoot.querySelector(".crs-close");
+    const form=subscribeRoot.querySelector(".crs-form");
+    const status=subscribeRoot.querySelector(".crs-status");
+    launch.addEventListener("click",()=>{const open=panel.hidden;panel.hidden=!open;launch.setAttribute("aria-expanded",String(open));if(open)subscribeRoot.querySelector("#crs-email").focus();});
+    close.addEventListener("click",()=>{panel.hidden=true;launch.setAttribute("aria-expanded","false");launch.focus();});
+    form.addEventListener("submit",async event=>{
+      event.preventDefault();
+      const email=String(form.email.value||"").trim().toLowerCase();
+      const name=String(form.name.value||"").trim();
+      const consent=form.consent.checked;
+      const website=String(form.website.value||"");
+      if(!email||!consent){status.textContent="Please enter your email and confirm your consent.";return;}
+      const submit=form.querySelector(".crs-submit");
+      submit.disabled=true;status.textContent="Submitting your subscription…";
+      try{
+        const response=await fetch("/api/resource-updates/subscribe",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({email,name,consent,website,source:location.pathname||"/"})});
+        const data=await response.json().catch(()=>({}));
+        if(!response.ok||!data.ok)throw new Error(data.error||"We could not save your subscription right now.");
+        status.textContent=data.message||"You're subscribed! We'll send new CBE Nexus resource updates to your email.";
+        form.reset();
+      }catch(error){status.textContent=error.message||"Subscription failed. Please try again later.";}
+      finally{submit.disabled=false;}
+    });
+  }
+
   const summaryGrid = document.querySelector(".summary-grid");
   if (summaryGrid) summaryGrid.innerHTML = `<a class="holiday-program-card" href="#holidayTuition" aria-label="Book Holiday Tuition"><span class="holiday-program-icon">📚</span><span class="holiday-program-copy"><strong>Learners Holiday Program</strong><small>Book Holiday Tuition</small></span><span class="holiday-program-arrow">→</span></a>`;
 
