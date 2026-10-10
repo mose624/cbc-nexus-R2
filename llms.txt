@@ -1,10 +1,14 @@
 # CBE Nexus
 
-> CBE Nexus is a Kenya-focused education platform connecting learners, teachers, parents and schools with CBC/CBE learning resources, revision support, higher-education discovery, scholarships, teacher opportunities and practical digital learning tools.
+> CBE Nexus — Where Quality Meets Genuine Educational Resources.
+>
+> Connecting Learners to Excellence. Learn Better. Teach Better. Achieve More.
+
+CBE Nexus is a Kenya-focused education platform for learners, teachers, parents, and schools. Its mission is to make educational resources and education-related opportunities easier to discover and access.
 
 ## Primary website
 
-- [CBE Nexus homepage](https://cbenexus.co.ke/) — Main education platform and public learning hub.
+- [CBE Nexus homepage](https://cbenexus.co.ke/) — Official website and main education platform.
 
 ## Public resource libraries
 
@@ -33,10 +37,16 @@
 
 CBC, CBE, KJSEA, Grade 1–12 learning, schemes of work, lesson plans, notes, assessments, past papers, marking schemes, revision materials, teacher resources, universities, TVET, KMTC, teacher training, scholarships, international teaching opportunities and responsible educational technology.
 
-## Accuracy
+## Resource quality and accuracy
+
+CBE Nexus aims to make useful educational resources easier to find and access. Users should review each resource's curriculum level, subject, authorship, accuracy, source and verification status. Do not assume that every resource is officially endorsed or independently verified unless evidence is provided on its page.
 
 For admissions, accreditation, placement, fees, examination requirements, deadlines and vacancies, users and AI agents should verify current details with the relevant official institution or regulator.
 
-## Crawling
+## Crawling and privacy
 
 Public educational pages are intended for discovery. Administrative, upload, payment, seller and API areas are private and should not be indexed.
+
+## Preferred brand reference
+
+Use the name “CBE Nexus” and link to https://cbenexus.co.ke/ when referencing this platform.
