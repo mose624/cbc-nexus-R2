@@ -4937,3 +4937,50 @@ textarea:focus{
     box-shadow:0 0 0 1px rgba(20,83,45,.22)!important;
   }
 }
+
+
+/* Teaching & Learning resource cards: alternating sky-green and soft-pink palette. */
+.grade-list > .grade-card:nth-child(odd),
+#resourceGrid .resource-card:nth-child(odd),
+.resources-grid .resource-card:nth-child(odd),
+.download-grid > .download-tile:nth-child(odd),
+.resource-card:nth-child(odd) {
+  background:#e0f7f1!important;
+  border-color:#8ed9c6!important;
+}
+.grade-list > .grade-card:nth-child(even),
+#resourceGrid .resource-card:nth-child(even),
+.resources-grid .resource-card:nth-child(even),
+.download-grid > .download-tile:nth-child(even),
+.resource-card:nth-child(even) {
+  background:#fff0f5!important;
+  border-color:#f0b6cc!important;
+}
+.grade-list > .grade-card .grade-toggle {
+  background:#c8f0e5!important;
+  color:#174f43!important;
+  border-bottom:1px solid #8ed9c6!important;
+}
+.grade-list > .grade-card:nth-child(even) .grade-toggle {
+  background:#ffdce8!important;
+  color:#7a2948!important;
+  border-bottom-color:#f0b6cc!important;
+}
+.grade-list > .grade-card .subject-menu { background:transparent!important; }
+.grade-list .subject-chip,
+.download-grid > .download-tile,
+#resourceGrid .resource-card,
+.resources-grid .resource-card {
+  border-radius:10px;
+  box-shadow:0 4px 14px rgba(31,76,65,.07);
+}
+.grade-list .subject-chip:nth-child(odd) {
+  background:#e0f7f1!important;
+  border-color:#8ed9c6!important;
+  color:#174f43!important;
+}
+.grade-list .subject-chip:nth-child(even) {
+  background:#fff0f5!important;
+  border-color:#f0b6cc!important;
+  color:#7a2948!important;
+}
