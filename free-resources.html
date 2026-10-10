@@ -120,7 +120,8 @@
           const card = document.createElement("a");
           card.className = "free-resource-card";
           card.href = href || "resources.html";
-          if (href && !/^https?:\/\//i.test(href)) card.setAttribute("download", "");
+          // Do not force-download API responses: if the server returns a JSON error, show it instead of saving it as a fake document.
+          if (href && !/^https?:\/\//i.test(href) && !/^\/api\//i.test(href)) card.setAttribute("download", "");
           card.innerHTML = '<span class="free-badge">FREE · KSh 0</span><strong>' + escapeHtml(title) +
             '</strong><span class="free-resource-meta">' + escapeHtml(meta) +
             '</span><span class="free-resource-action">' + (href ? "Download resource →" : "View resource library →") + '</span>';
