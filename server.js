@@ -360,6 +360,21 @@ async function submitSchoolDirectory(payload){
 }
 
 async function handleApi(req,res,url){
+  if(req.method==="POST"&&url.pathname==="/api/resource-updates/subscribe"){
+    let p={};try{p=JSON.parse((await readBody(req))||"{}");}catch{sendJson(res,400,{ok:false,error:"Please submit a valid subscription form."});return true;}
+    const email=String(p.email||"").trim().toLowerCase();
+    const name=String(p.name||"").trim().slice(0,100);
+    const source=String(p.source||"/").trim().slice(0,300);
+    if(String(p.website||"").trim()){sendJson(res,200,{ok:true,message:"Thank you for your interest in CBE Nexus updates."});return true;}
+    if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)||email.length>254||p.consent!==true){sendJson(res,400,{ok:false,error:"Enter a valid email address and confirm your consent."});return true;}
+    if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Subscriptions are temporarily unavailable. Please try again later."});return true;}
+    try{
+      const {error}=await supabase.from("resource_subscribers").upsert({email,name:name||null,source,consent:true,updated_at:new Date().toISOString()},{onConflict:"email",ignoreDuplicates:true});
+      if(error)throw error;
+      sendJson(res,201,{ok:true,message:"You're subscribed! We'll send new CBE Nexus resource updates to your email."});
+    }catch(error){console.error("Resource update subscription error:",error);sendJson(res,503,{ok:false,error:"We couldn't save your subscription just now. Please try again later."});}
+    return true;
+  }
   if(req.method==="GET"&&url.pathname==="/api/admin/ad-revenue"){
     if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
     try{sendJson(res,200,await getAdRevenueDashboard());}
