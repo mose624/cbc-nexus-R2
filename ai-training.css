@@ -184,3 +184,160 @@ html,body{min-width:1200px!important;width:1200px!important;max-width:none!impor
   .project-steps{grid-template-columns:repeat(5,minmax(0,1fr))!important}
   .project-form-grid{grid-template-columns:1fr 1fr!important}
 }
+
+
+/* CBE Nexus Academy — clearer module assessment question cards */
+.ai-academy-page .final-assessment-form,
+.ai-academy-page #quiz .final-assessment-form{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  gap:18px;
+}
+.ai-academy-page .assessment-question,
+.ai-academy-page #quiz .assessment-question{
+  display:block;
+  width:100%;
+  min-width:0;
+  box-sizing:border-box;
+  margin:0;
+  padding:22px;
+  border:1px solid #d7e2ec;
+  border-radius:14px;
+  background:linear-gradient(180deg,#fff 0%,#fbfdff 100%);
+  box-shadow:0 4px 14px rgba(7,29,73,.055);
+  text-align:left;
+  transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease;
+}
+.ai-academy-page .assessment-question:hover,
+.ai-academy-page #quiz .assessment-question:hover{
+  border-color:#75b8d4;
+  box-shadow:0 8px 22px rgba(7,29,73,.10);
+  transform:translateY(-1px);
+}
+.ai-academy-page .assessment-question legend,
+.ai-academy-page #quiz .assessment-question legend{
+  display:grid;
+  grid-template-columns:44px minmax(0,1fr);
+  align-items:start;
+  gap:5px 13px;
+  width:100%;
+  padding:0 0 16px;
+  border-bottom:1px solid #e5edf3;
+}
+.ai-academy-page .question-number,
+.ai-academy-page #quiz .question-number{
+  grid-column:1;
+  grid-row:1 / span 2;
+  display:grid;
+  place-items:center;
+  width:40px;
+  height:40px;
+  margin:0;
+  border-radius:10px;
+  background:#082f57;
+  color:#fff;
+  font-size:1rem;
+  font-weight:900;
+}
+.ai-academy-page .question-module,
+.ai-academy-page #quiz .question-module{
+  display:block;
+  grid-column:2;
+  grid-row:1;
+  margin:1px 0 0;
+  color:#0879a7;
+  font-size:.72rem;
+  font-weight:850;
+  letter-spacing:.055em;
+  text-transform:uppercase;
+}
+.ai-academy-page .question-text,
+.ai-academy-page #quiz .question-text{
+  display:block;
+  grid-column:2;
+  grid-row:2;
+  margin:2px 0 0;
+  color:#102a43;
+  font-size:1.02rem;
+  font-weight:750;
+  line-height:1.65;
+  text-transform:none;
+}
+.ai-academy-page .answer-options,
+.ai-academy-page #quiz .answer-options{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+  margin:16px 0 0;
+}
+.ai-academy-page .answer-option,
+.ai-academy-page #quiz .answer-option{
+  display:flex!important;
+  align-items:flex-start;
+  gap:10px;
+  width:100%;
+  min-width:0;
+  min-height:58px;
+  box-sizing:border-box;
+  margin:0!important;
+  padding:13px 14px;
+  border:1px solid #dbe5ee;
+  border-radius:10px;
+  background:#f7fafc;
+  color:#243b53;
+  cursor:pointer;
+  line-height:1.55!important;
+  text-align:left;
+  white-space:normal;
+}
+.ai-academy-page .answer-option:hover,
+.ai-academy-page #quiz .answer-option:hover{
+  border-color:#0b84b5;
+  background:#eef9fd;
+}
+.ai-academy-page .answer-option:has(input:checked),
+.ai-academy-page #quiz .answer-option:has(input:checked){
+  border-color:#0879a7;
+  background:#e7f6fc;
+  box-shadow:inset 0 0 0 1px #0879a7;
+}
+.ai-academy-page .answer-option input,
+.ai-academy-page #quiz .answer-option input{
+  flex:0 0 auto;
+  margin:4px 0 0;
+  accent-color:#0879a7;
+}
+.ai-academy-page .answer-option .option-letter,
+.ai-academy-page #quiz .answer-option .option-letter{
+  flex:0 0 20px;
+  color:#0879a7;
+  font-weight:900;
+}
+.ai-academy-page .answer-option span:last-child,
+.ai-academy-page #quiz .answer-option span:last-child{
+  min-width:0;
+  overflow-wrap:anywhere;
+  color:inherit;
+  line-height:1.55;
+  text-transform:none;
+}
+.ai-academy-page .assessment-submit,
+.ai-academy-page #quiz .assessment-submit{
+  margin-top:6px;
+  padding:20px;
+  border:1px solid #dbe5ee;
+  border-radius:12px;
+  background:#f5f9fc;
+}
+@media(max-width:760px){
+  .ai-academy-page .assessment-question,
+  .ai-academy-page #quiz .assessment-question{padding:16px}
+  .ai-academy-page .assessment-question legend,
+  .ai-academy-page #quiz .assessment-question legend{grid-template-columns:36px minmax(0,1fr);gap:5px 10px}
+  .ai-academy-page .question-number,
+  .ai-academy-page #quiz .question-number{width:34px;height:34px;border-radius:8px}
+  .ai-academy-page .answer-options,
+  .ai-academy-page #quiz .answer-options{grid-template-columns:minmax(0,1fr)}
+  .ai-academy-page .answer-option,
+  .ai-academy-page #quiz .answer-option{min-height:50px;padding:12px}
+}
