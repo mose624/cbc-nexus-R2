@@ -126,10 +126,10 @@ async function deleteObject(key) {
 async function createDownloadUrl(key, fileName = "") {
   const { cfg, client } = getClient();
   const cleanName = String(fileName || key.split("/").pop() || "resource.bin")
-    .replace(/[\\r\\n"]/g, "_")
-    .replace(/[\\\\/]/g, "_")
+    .replace(/[\r\n"]/g, "_")
+    .replace(/[\\/]/g, "_")
     .trim() || "resource.bin";
-  const ext = cleanName.toLowerCase().match(/\\.([a-z0-9]{1,8})$/)?.[1] || "";
+  const ext = cleanName.toLowerCase().match(/\.([a-z0-9]{1,8})$/)?.[1] || "";
   const contentTypes = {
     pdf: "application/pdf",
     doc: "application/msword",
@@ -148,7 +148,7 @@ async function createDownloadUrl(key, fileName = "") {
   const command = new GetObjectCommand({
     Bucket: cfg.bucket,
     Key: key,
-    ResponseContentDisposition: "attachment; filename=\\" + cleanName + "\\"; filename*=UTF-8''" + encodeURIComponent(cleanName),
+    ResponseContentDisposition: 'attachment; filename="' + cleanName + '"',
     ...(contentTypes[ext] ? { ResponseContentType: contentTypes[ext] } : {})
   });
   return getSignedUrl(client, command, { expiresIn: 300 });
