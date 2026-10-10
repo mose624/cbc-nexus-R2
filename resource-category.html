@@ -33,6 +33,28 @@ header{border-bottom:4px solid var(--grade-accent)!important}
 .card{border-top:4px solid var(--grade-accent)!important}
 .card .grade-tag{background:var(--grade-soft)!important;border-color:var(--grade-accent-2)!important;color:var(--grade-accent)!important}
 .card .subject-tag{border-color:var(--grade-accent-2)!important}
+
+/* Resource cards use alternating sky-green and pink; filters and payment controls stay unchanged. */
+.resource-grid > .card:nth-child(odd) {
+  background:#e0f7f1!important;
+  border:1px solid #8ed9c6!important;
+  border-top:4px solid #55bfa4!important;
+}
+.resource-grid > .card:nth-child(even) {
+  background:#fff0f5!important;
+  border:1px solid #f0b6cc!important;
+  border-top:4px solid #e68aae!important;
+}
+.resource-grid > .card:nth-child(odd) .tag {
+  background:#c8f0e5;
+  border-color:#8ed9c6;
+  color:#174f43;
+}
+.resource-grid > .card:nth-child(even) .tag {
+  background:#ffdce8;
+  border-color:#f0b6cc;
+  color:#7a2948;
+}
 </style><style id="cbe-mobile-resource-centre">
 /* Phone keeps the desktop canvas, but the Resource Centre header is intentionally rebalanced:
    Dashboard stays on the left and the Resource Centre identity sits centrally. */
