@@ -1,4 +1,4 @@
-const { S3Client, PutObjectCommand, GetObjectCommand, HeadBucketCommand, DeleteObjectCommand } = require("@aws-sdk/client-s3");
+const { S3Client, PutObjectCommand, GetObjectCommand, HeadBucketCommand, HeadObjectCommand, DeleteObjectCommand } = require("@aws-sdk/client-s3");
 const { PDFDocument } = require("pdf-lib");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
@@ -94,6 +94,22 @@ async function createUploadUrl(input) {
   return { uploadUrl, key, expiresIn: 900 };
 }
 
+
+async function objectExists(key) {
+  const cleanKey = String(key || "").trim();
+  if (!cleanKey) return false;
+  const { cfg, client } = getClient();
+  try {
+    await client.send(new HeadObjectCommand({ Bucket: cfg.bucket, Key: cleanKey }));
+    return true;
+  } catch (error) {
+    const status = error?.$metadata?.httpStatusCode || 0;
+    const code = String(error?.name || error?.Code || "");
+    if (status === 404 || code === "NotFound" || code === "NoSuchKey") return false;
+    throw error;
+  }
+}
+
 async function createPdfPreview(key, pages = 3) {
   const { cfg, client } = getClient();
   const object = await client.send(new GetObjectCommand({ Bucket: cfg.bucket, Key: key }));
@@ -154,4 +170,4 @@ async function createDownloadUrl(key, fileName = "") {
   return getSignedUrl(client, command, { expiresIn: 300 });
 }
 
-module.exports = { createUploadUrl, createDownloadUrl, createPdfPreview, uploadObject, deleteObject, verifyR2Connection };
+module.exports = { createUploadUrl, createDownloadUrl, createPdfPreview, objectExists, uploadObject, deleteObject, verifyR2Connection };
