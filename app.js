@@ -1350,18 +1350,28 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
 }
 
 async function openResourcePreview(resourceId) {
-  const resource = getAllResources().find((r) => r.id === resourceId);
-  if (!resource?.previewKey) { showToast("A page preview is not available for this resource yet."); return; }
+  const resource = getAllResources().find((r) => String(r.id) === String(resourceId));
+  if (!resource) { showToast("This resource could not be found. Refresh the page and try again."); return; }
   try {
-    const response = await fetch("/api/r2/preview?key=" + encodeURIComponent(resource.previewKey), { credentials: "same-origin" });
-    const data = await response.json();
-    if (!response.ok || !data.ok) throw new Error(data.error || "Preview could not be opened.");
-    elements.resourcePreviewTitle.textContent = resource.title;
-    elements.resourcePreviewInfo.textContent = "Showing the first 3 pages only. The full file is protected until payment.";
-    elements.resourcePreviewFrame.src = data.previewUrl;
+    // Ask the server to create/retrieve the limited preview. This also repairs
+    // older PDF resources whose previewKey was never saved during upload.
+    // The endpoint must return only the preview object, never the paid original.
+    const response = await fetch("/api/r2/view?resourceId=" + encodeURIComponent(resourceId), {
+      credentials: "same-origin",
+      headers: { "Accept": "application/json" }
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || !data.ok) throw new Error(data.error || "A safe preview could not be prepared for this file.");
+    const previewUrl = data.viewUrl || data.previewUrl;
+    if (!previewUrl) throw new Error("The safe preview is not ready yet. Please try again shortly.");
+    elements.resourcePreviewTitle.textContent = resource.title || data.title || "Resource preview";
+    elements.resourcePreviewInfo.textContent = "Safe preview: first 3 pages only. The complete original file remains locked until payment is confirmed.";
+    elements.resourcePreviewFrame.src = previewUrl;
     elements.resourcePreviewModal.hidden = false;
     elements.resourcePreviewModal.classList.add("open");
-  } catch (error) { showToast(error.message || "Preview could not be opened."); }
+  } catch (error) {
+    showToast(error.message || "Preview could not be opened.");
+  }
 }
 
 function closeResourcePreview() {
