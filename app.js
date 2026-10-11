@@ -15,6 +15,56 @@ if (!window.__cbeResourceSubmitGuardInstalled) {
   }, true);
 }
 
+// Explicitly handle the Publish Resource button click as well as form submission.
+// This makes publishing reliable if another script or browser behavior prevents
+// the submit event from reaching the form handler, while preserving native validation.
+if (!window.__cbeResourcePublishClickInstalled) {
+  window.__cbeResourcePublishClickInstalled = true;
+  document.addEventListener("click", function (event) {
+    const button = event.target && event.target.closest
+      ? event.target.closest('#resourceForm button[type="submit"]')
+      : null;
+    if (!button) return;
+    const form = document.getElementById("resourceForm");
+    if (!form) return;
+    if (typeof form.reportValidity === "function" && !form.reportValidity()) return;
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    if (button.dataset.cbePublishing === "1") return;
+
+    const status = document.getElementById("formStatus");
+    const originalLabel = button.textContent;
+    button.dataset.cbePublishing = "1";
+    button.disabled = true;
+    button.textContent = "Publishing...";
+    if (status) {
+      status.textContent = "Preparing resource upload...";
+      status.classList.remove("upload-success");
+    }
+
+    Promise.resolve()
+      .then(function () {
+        if (typeof handleFormSubmit !== "function") {
+          throw new Error("The resource publishing script did not initialize. Refresh the page and try again.");
+        }
+        return handleFormSubmit({ preventDefault: function () {} });
+      })
+      .catch(function (error) {
+        console.error("CBE Nexus Publish Resource click error:", error);
+        if (status) status.textContent = error && error.message
+          ? error.message
+          : "Publishing failed unexpectedly. Please try again.";
+        button.textContent = originalLabel || "Publish Resource";
+      })
+      .finally(function () {
+        button.disabled = false;
+        delete button.dataset.cbePublishing;
+        if (button.textContent === "Publishing...") button.textContent = originalLabel || "Publish Resource";
+      });
+  }, true);
+}
+
 // Security: Encryption utilities for sensitive data
 const SecurityUtils = {
   encode: (str) => btoa(encodeURIComponent(str)),
