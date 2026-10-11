@@ -2,7 +2,8 @@ const http = require("http");
 const fs = require("fs/promises");
 const path = require("path");
 const crypto = require("crypto");
-const { createUploadUrl, createDownloadUrl, createPdfPreview, createInlineUrl, getObjectMetadata, objectExists, uploadObject, deleteObject, verifyR2Connection } = require("./r2");
+const { createUploadUrl, createDownloadUrl, createPdfPreview, createInlineUrl, getObjectMetadata, getObjectBuffer, objectExists, uploadObject, deleteObject, verifyR2Connection } = require("./r2");
+const mammoth = require("mammoth");
 const { supabase, supabaseConfigured } = require("./supabase");
 const seo = require("./seo");
 
@@ -994,9 +995,23 @@ async function handleApi(req,res,url){
         sendJson(res,200,{ok:true,viewUrl,expiresIn:300,fileName,title:resource.title||"",previewOnly:true,previewType:"image"});
         return true;
       }
+      const isDocx=ext==="docx"||actualType==="application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+      if(isDocx){
+        const docxBuffer=await getObjectBuffer(sourceKey,8*1024*1024);
+        const extracted=await mammoth.extractRawText({buffer:docxBuffer});
+        const plainText=String(extracted.value||"").replace(/\u0000/g,"").slice(0,16000);
+        if(!plainText.trim()) throw new Error("The Word document contains no readable text.");
+        const escapeHtml=(value)=>String(value).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+        const safeTitle=escapeHtml(resource.title||fileName||"CBE Nexus Word preview");
+        const safeText=escapeHtml(plainText);
+        const html="<!doctype html><html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; style-src 'unsafe-inline'; img-src data:\"><title>"+safeTitle+"</title><style>body{font-family:Arial,sans-serif;background:#f3f6f8;color:#1f2937;margin:0;padding:20px;line-height:1.65}.paper{max-width:850px;margin:auto;background:#fff;padding:28px;border:1px solid #e5e7eb;border-radius:8px;white-space:pre-wrap;overflow-wrap:anywhere}.notice{max-width:850px;margin:0 auto 12px;color:#526070;font-size:13px}</style></head><body><div class=\"notice\">Safe text preview only. The original Word file remains locked until payment is confirmed.</div><main class=\"paper\"><h2>"+safeTitle+"</h2><div>"+safeText+"</div></main></body></html>";
+        const viewUrl="data:text/html;charset=utf-8;base64,"+Buffer.from(html,"utf8").toString("base64");
+        sendJson(res,200,{ok:true,viewUrl,expiresIn:300,fileName,title:resource.title||"",previewOnly:true,previewType:"docx"});
+        return true;
+      }
       const isPdf=actualType==="application/pdf"||ext==="pdf"||/\.pdf$/i.test(sourceKey);
       if(!isPdf){
-        sendJson(res,415,{ok:false,error:"A safe preview is not available for this file format yet. PDF previews and image previews are supported; the original file remains locked until payment is confirmed."});return true;
+        sendJson(res,415,{ok:false,error:"A safe preview is not available for this file format yet. Supported previews are PDF, Word (.docx), and common images. Older .doc files and other formats remain locked until payment is confirmed."});return true;
       }
       let previewKey=String(resource.preview_key||resource.previewKey||"").trim();
       let previewAvailable=false;
