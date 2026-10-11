@@ -1,3 +1,5 @@
+const starterResources = [];
+
 // Install the resource-upload submit guard before other page initialization.
 // This prevents a native form navigation back to the homepage if another initializer fails.
 if (!window.__cbeResourceSubmitGuardInstalled) {
