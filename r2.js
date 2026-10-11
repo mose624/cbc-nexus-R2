@@ -94,7 +94,6 @@ async function createUploadUrl(input) {
   return { uploadUrl, key, expiresIn: 900 };
 }
 
-
 async function objectExists(key) {
   const cleanKey = String(key || "").trim();
   if (!cleanKey) return false;
@@ -110,10 +109,44 @@ async function objectExists(key) {
   }
 }
 
+async function getObjectMetadata(key) {
+  const { cfg, client } = getClient();
+  const result = await client.send(new HeadObjectCommand({ Bucket: cfg.bucket, Key: String(key || "").trim() }));
+  return {
+    contentType: String(result.ContentType || "application/octet-stream").toLowerCase(),
+    contentLength: Number(result.ContentLength || 0)
+  };
+}
+
+async function createInlineUrl(key, fileName, contentType) {
+  const { cfg, client } = getClient();
+  const cleanName = String(fileName || key.split("/").pop() || "preview")
+    .replace(/[\r\n"]/g, "_")
+    .replace(/[\\/]/g, "_")
+    .trim() || "preview";
+  const allowedInlineTypes = new Set(["image/jpeg", "image/png", "image/webp", "image/gif"]);
+  const safeType = allowedInlineTypes.has(String(contentType || "").toLowerCase())
+    ? String(contentType).toLowerCase()
+    : "application/octet-stream";
+  const command = new GetObjectCommand({
+    Bucket: cfg.bucket,
+    Key: key,
+    ResponseContentDisposition: 'inline; filename="' + cleanName + '"',
+    ResponseContentType: safeType,
+    ResponseCacheControl: "private, max-age=60",
+    ResponseContentSecurityPolicy: "default-src 'none'; sandbox"
+  });
+  return getSignedUrl(client, command, { expiresIn: 300 });
+}
+
 async function createPdfPreview(key, pages = 3) {
   const { cfg, client } = getClient();
   const object = await client.send(new GetObjectCommand({ Bucket: cfg.bucket, Key: key }));
-  const bytes = await object.Body.transformToByteArray();
+  const bytes = Buffer.from(await object.Body.transformToByteArray());
+  // Refuse to interpret arbitrary files (for example images or Word documents) as PDFs.
+  if (bytes.length < 5 || bytes.subarray(0, 5).toString("ascii") !== "%PDF-") {
+    throw new Error("Stored resource bytes do not have a valid PDF header.");
+  }
   const source = await PDFDocument.load(bytes);
   const preview = await PDFDocument.create();
   const count = Math.min(Math.max(1, Number(pages) || 3), source.getPageCount());
@@ -159,6 +192,8 @@ async function createDownloadUrl(key, fileName = "") {
     jpg: "image/jpeg",
     jpeg: "image/jpeg",
     png: "image/png",
+    webp: "image/webp",
+    gif: "image/gif",
     zip: "application/zip"
   };
   const command = new GetObjectCommand({
@@ -170,4 +205,4 @@ async function createDownloadUrl(key, fileName = "") {
   return getSignedUrl(client, command, { expiresIn: 300 });
 }
 
-module.exports = { createUploadUrl, createDownloadUrl, createPdfPreview, objectExists, uploadObject, deleteObject, verifyR2Connection };
+module.exports = { createUploadUrl, createDownloadUrl, createPdfPreview, createInlineUrl, getObjectMetadata, objectExists, uploadObject, deleteObject, verifyR2Connection };
