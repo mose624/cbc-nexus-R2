@@ -186,6 +186,8 @@ async function openResourceViewer(resource){
     // The admin display filename can omit the extension; the actual R2 key preserves it.
     const isPdf=/\.pdf(?:$|[?#])/.test(fileName)||/\.pdf(?:$|[?#])/.test(storageKey);
     let viewUrl="";
+    let previewType="";
+    let previewHtml="";
     if(isPdf&&resource.previewKey){
       const response=await fetch("/api/r2/preview?key="+encodeURIComponent(resource.previewKey),{credentials:"same-origin",cache:"no-store"});
       const data=await response.json();
@@ -195,13 +197,21 @@ async function openResourceViewer(resource){
       const response=await fetch("/api/r2/view?resourceId="+encodeURIComponent(resource.id),{credentials:"same-origin",cache:"no-store"});
       const data=await response.json();
       if(!response.ok||!data.ok)throw new Error(data.error||"Document view unavailable.");
-      viewUrl=data.viewUrl;
+      viewUrl=data.viewUrl||"";
+      previewType=data.previewType||"";
+      previewHtml=data.previewHtml||"";
     }
     if(isPdf){
       await renderPdfWithoutToolbar(viewUrl);
+    }else if(previewType==="docx"&&previewHtml){
+      const box=document.getElementById("pdfViewer");if(box)box.classList.remove("active");
+      viewerFrame.style.display="block";
+      viewerFrame.removeAttribute("src");
+      viewerFrame.srcdoc=previewHtml;
     }else{
       const box=document.getElementById("pdfViewer");if(box)box.classList.remove("active");
       viewerFrame.style.display="block";
+      viewerFrame.removeAttribute("srcdoc");
       viewerFrame.src="https://view.officeapps.live.com/op/embed.aspx?src="+encodeURIComponent(viewUrl);
     }
   }catch(error){
