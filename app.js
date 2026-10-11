@@ -1363,7 +1363,7 @@ async function openResourcePreview(resourceId) {
     const data = await response.json().catch(() => ({}));
     if (!response.ok || !data.ok) throw new Error(data.error || "A safe preview could not be prepared for this file.");
     const previewUrl = data.viewUrl || data.previewUrl;
-    if (!previewUrl) throw new Error("The safe preview is not ready yet. Please try again shortly.");
+    if (data.previewType === "docx" ? !data.previewHtml : !previewUrl) throw new Error("The safe preview is not ready yet. Please try again shortly.");
     elements.resourcePreviewTitle.textContent = resource.title || data.title || "Resource preview";
     elements.resourcePreviewInfo.textContent = data.previewType === "image" ? "Image preview only. The original resource download remains locked until payment is confirmed." : data.previewType === "docx" ? "Safe text-only Word preview. The original document remains locked until payment is confirmed." : "Safe preview: first 3 pages only. The complete original file remains locked until payment is confirmed.";
     if (data.previewType === "docx" && data.previewHtml) { elements.resourcePreviewFrame.removeAttribute("src"); elements.resourcePreviewFrame.srcdoc = data.previewHtml; } else { elements.resourcePreviewFrame.removeAttribute("srcdoc"); elements.resourcePreviewFrame.src = previewUrl; }
