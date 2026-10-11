@@ -2,7 +2,7 @@ const http = require("http");
 const fs = require("fs/promises");
 const path = require("path");
 const crypto = require("crypto");
-const { createUploadUrl, createDownloadUrl, createPdfPreview, objectExists, uploadObject, deleteObject, verifyR2Connection } = require("./r2");
+const { createUploadUrl, createDownloadUrl, createPdfPreview, createInlineUrl, getObjectMetadata, objectExists, uploadObject, deleteObject, verifyR2Connection } = require("./r2");
 const { supabase, supabaseConfigured } = require("./supabase");
 const seo = require("./seo");
 
@@ -978,43 +978,55 @@ async function handleApi(req,res,url){
       if(!resource||!resource.r2_key||String(resource.status||"approved").toLowerCase()!=="approved"){
         sendJson(res,403,{ok:false,error:"This resource is not available for viewing."});return true;
       }
-      // Never return a signed URL for the original object here: this endpoint is public
-      // and is intentionally used before payment. Only expose a limited preview object.
+      // This endpoint never signs the original as an attachment. Select a preview
+      // strategy from actual R2 metadata first, then fall back to the saved filename.
       const fileName=String(resource.filename||resource.fileName||"");
       const sourceKey=String(resource.r2_key||"");
-      // Some older records have a missing filename or a stale preview key.
-      // Detect PDF by either the visible filename or the actual R2 object key.
-      const isPdf=/\.pdf$/i.test(fileName)||/\.pdf$/i.test(sourceKey);
+      const ext=(fileName||sourceKey).toLowerCase().match(/\.([a-z0-9]{1,8})(?:\?|$)/)?.[1]||"";
+      const metadata=await getObjectMetadata(sourceKey);
+      const actualType=String(metadata.contentType||"application/octet-stream").split(";")[0].trim().toLowerCase();
+      const imageTypes=new Set(["image/jpeg","image/png","image/webp","image/gif"]);
+      const imageExtTypes={jpg:"image/jpeg",jpeg:"image/jpeg",png:"image/png",webp:"image/webp",gif:"image/gif"};
+      const isImage=imageTypes.has(actualType)||(actualType==="application/octet-stream"&&Boolean(imageExtTypes[ext]));
+      if(isImage){
+        const imageType=imageTypes.has(actualType)?actualType:imageExtTypes[ext];
+        const viewUrl=await createInlineUrl(sourceKey,fileName||("CBE-Nexus-preview."+ext),imageType);
+        sendJson(res,200,{ok:true,viewUrl,expiresIn:300,fileName,title:resource.title||"",previewOnly:true,previewType:"image"});
+        return true;
+      }
+      const isPdf=actualType==="application/pdf"||ext==="pdf"||/\.pdf$/i.test(sourceKey);
+      if(!isPdf){
+        sendJson(res,415,{ok:false,error:"A safe preview is not available for this file format yet. PDF previews and image previews are supported; the original file remains locked until payment is confirmed."});return true;
+      }
       let previewKey=String(resource.preview_key||resource.previewKey||"").trim();
       let previewAvailable=false;
-      if(previewKey.startsWith("previews/")){
-        previewAvailable=await objectExists(previewKey);
-      }
-      // Generate/rebuild a three-page sample if the key is absent, malformed,
-      // or points to an object that no longer exists in R2. Do not rely only on
-      // metadata extensions: older resource records may have no .pdf filename
-      // even when the stored object itself is a PDF.
+      if(previewKey.startsWith("previews/")) previewAvailable=await objectExists(previewKey);
       if(!previewAvailable){
         const preview=await createPdfPreview(sourceKey,3);
         previewKey=preview.previewKey;
         if(supabaseConfigured){
           const {error}=await supabase.from("resources").update({preview_key:previewKey}).eq("id",resourceId);
           if(error)throw error;
-        }else{
+        } else {
           const rows=await readJsonStore("resources.json");
           const updated=rows.map(item=>String(item.id)===resourceId?{...item,previewKey}:item);
           await fs.writeFile(path.join(DATA_DIR,"resources.json"),JSON.stringify(updated,null,2));
         }
         previewAvailable=true;
       }
-      if(!previewKey||!previewKey.startsWith("previews/")||!previewAvailable){
+      if(!previewKey.startsWith("previews/")||!previewAvailable){
         sendJson(res,403,{ok:false,error:"A safe PDF sample could not be prepared for this resource. The original file remains locked until payment."});return true;
       }
       const viewUrl=await createDownloadUrl(previewKey,"CBE-Nexus-preview.pdf");
-      sendJson(res,200,{ok:true,viewUrl,expiresIn:300,fileName:resource.filename||resource.fileName||"",title:resource.title||"",previewOnly:true});
+      sendJson(res,200,{ok:true,viewUrl,expiresIn:300,fileName,title:resource.title||"",previewOnly:true,previewType:"pdf"});
     }catch(error){
-      console.error("R2 resource view error:",error);
-      sendJson(res,500,{ok:false,error:"Resource preview could not be opened."});
+      const message=String(error?.message||"");
+      console.error("R2 resource view error:",{resourceId,code:error?.name||error?.Code||"",message});
+      if(/valid PDF header|No PDF header found/i.test(message)){
+        sendJson(res,415,{ok:false,error:"The stored file is not a valid PDF, so a PDF preview cannot be generated. The original file remains locked until payment. Please re-upload the correct file format."});
+      } else {
+        sendJson(res,500,{ok:false,error:"Resource preview could not be opened."});
+      }
     }
     return true;
   }
