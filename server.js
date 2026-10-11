@@ -980,8 +980,11 @@ async function handleApi(req,res,url){
       }
       // Never return a signed URL for the original object here: this endpoint is public
       // and is intentionally used before payment. Only expose a limited preview object.
+      const fileName=String(resource.filename||resource.fileName||"");
       let previewKey=String(resource.preview_key||resource.previewKey||"").trim();
-      if(!previewKey&&/\.pdf$/i.test(String(resource.filename||resource.fileName||""))){
+      // Older uploads may contain a stale/invalid preview key. Regenerate a
+      // fresh limited preview for PDFs instead of returning the generic error.
+      if(/\.pdf$/i.test(fileName)&&(!previewKey||!previewKey.startsWith("previews/"))){
         const preview=await createPdfPreview(resource.r2_key,3);
         previewKey=preview.previewKey;
         if(supabaseConfigured){
@@ -994,7 +997,7 @@ async function handleApi(req,res,url){
         }
       }
       if(!previewKey||!previewKey.startsWith("previews/")){
-        sendJson(res,403,{ok:false,error:"A safe preview is not available for this file. Download it after purchase."});return true;
+        sendJson(res,403,{ok:false,error:"This file format does not yet have a safe sample preview. The original file remains locked until payment."});return true;
       }
       const viewUrl=await createDownloadUrl(previewKey,"CBE-Nexus-preview.pdf");
       sendJson(res,200,{ok:true,viewUrl,expiresIn:300,fileName:resource.filename||resource.fileName||"",title:resource.title||"",previewOnly:true});
