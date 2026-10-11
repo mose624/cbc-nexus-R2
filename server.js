@@ -2,7 +2,7 @@ const http = require("http");
 const fs = require("fs/promises");
 const path = require("path");
 const crypto = require("crypto");
-const { createUploadUrl, createDownloadUrl, createPdfPreview, uploadObject, deleteObject, verifyR2Connection } = require("./r2");
+const { createUploadUrl, createDownloadUrl, createPdfPreview, objectExists, uploadObject, deleteObject, verifyR2Connection } = require("./r2");
 const { supabase, supabaseConfigured } = require("./supabase");
 const seo = require("./seo");
 
@@ -981,11 +981,19 @@ async function handleApi(req,res,url){
       // Never return a signed URL for the original object here: this endpoint is public
       // and is intentionally used before payment. Only expose a limited preview object.
       const fileName=String(resource.filename||resource.fileName||"");
+      const sourceKey=String(resource.r2_key||"");
+      // Some older records have a missing filename or a stale preview key.
+      // Detect PDF by either the visible filename or the actual R2 object key.
+      const isPdf=/\.pdf$/i.test(fileName)||/\.pdf$/i.test(sourceKey);
       let previewKey=String(resource.preview_key||resource.previewKey||"").trim();
-      // Older uploads may contain a stale/invalid preview key. Regenerate a
-      // fresh limited preview for PDFs instead of returning the generic error.
-      if(/\.pdf$/i.test(fileName)&&(!previewKey||!previewKey.startsWith("previews/"))){
-        const preview=await createPdfPreview(resource.r2_key,3);
+      let previewAvailable=false;
+      if(previewKey.startsWith("previews/")){
+        previewAvailable=await objectExists(previewKey);
+      }
+      // Generate/rebuild a three-page sample if the key is absent, malformed,
+      // or points to an object that no longer exists in R2.
+      if(isPdf&&!previewAvailable){
+        const preview=await createPdfPreview(sourceKey,3);
         previewKey=preview.previewKey;
         if(supabaseConfigured){
           const {error}=await supabase.from("resources").update({preview_key:previewKey}).eq("id",resourceId);
@@ -995,9 +1003,10 @@ async function handleApi(req,res,url){
           const updated=rows.map(item=>String(item.id)===resourceId?{...item,previewKey}:item);
           await fs.writeFile(path.join(DATA_DIR,"resources.json"),JSON.stringify(updated,null,2));
         }
+        previewAvailable=true;
       }
-      if(!previewKey||!previewKey.startsWith("previews/")){
-        sendJson(res,403,{ok:false,error:"This file format does not yet have a safe sample preview. The original file remains locked until payment."});return true;
+      if(!previewKey||!previewKey.startsWith("previews/")||!previewAvailable){
+        sendJson(res,403,{ok:false,error:"A safe PDF sample could not be prepared for this resource. The original file remains locked until payment."});return true;
       }
       const viewUrl=await createDownloadUrl(previewKey,"CBE-Nexus-preview.pdf");
       sendJson(res,200,{ok:true,viewUrl,expiresIn:300,fileName:resource.filename||resource.fileName||"",title:resource.title||"",previewOnly:true});
