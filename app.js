@@ -856,6 +856,34 @@ async function handleFormSubmit(event) {
   }
 
   fileName = fileName || uploadedFile.name;
+
+  // Prevent accidental repeat uploads by checking already-known resources before
+  // sending another copy to storage. Match both file identity and resource metadata.
+  const normalizeDuplicateText = (value) => String(value || "").trim().toLowerCase().replace(/\\s+/g, " ");
+  const existingResources = [
+    ...readSavedResources(),
+    ...readSellerResources(),
+    ...starterResources
+  ];
+  const duplicate = existingResources.find((resource) => {
+    const existingName = normalizeDuplicateText(resource.fileName || resource.filename || resource.originalName);
+    const existingTitle = normalizeDuplicateText(resource.title);
+    const sameContext =
+      normalizeDuplicateText(resource.grade) === normalizeDuplicateText(grade) &&
+      normalizeDuplicateText(resource.subject) === normalizeDuplicateText(subject) &&
+      normalizeDuplicateText(resource.type || resource.resource_type) === normalizeDuplicateText(type);
+    const sameFile = existingName && existingName === normalizeDuplicateText(fileName) &&
+      Number(resource.fileSize || resource.size || 0) === Number(uploadedFile.size);
+    const sameResource = existingTitle === normalizeDuplicateText(title) && sameContext;
+    return sameContext && (sameFile || sameResource);
+  });
+  if (duplicate) {
+    const message = "Duplicate upload blocked: this file or a resource with the same title, grade, subject and material type already exists. Check the existing resource before uploading again.";
+    if (elements.formStatus) elements.formStatus.textContent = message;
+    showToast("Duplicate resource detected. Upload cancelled.");
+    return;
+  }
+
   const resourceId = `admin-${Date.now()}`;
 
   try {
