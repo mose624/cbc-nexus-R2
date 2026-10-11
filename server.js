@@ -991,8 +991,10 @@ async function handleApi(req,res,url){
         previewAvailable=await objectExists(previewKey);
       }
       // Generate/rebuild a three-page sample if the key is absent, malformed,
-      // or points to an object that no longer exists in R2.
-      if(isPdf&&!previewAvailable){
+      // or points to an object that no longer exists in R2. Do not rely only on
+      // metadata extensions: older resource records may have no .pdf filename
+      // even when the stored object itself is a PDF.
+      if(!previewAvailable&&(isPdf||!previewKey)){
         const preview=await createPdfPreview(sourceKey,3);
         previewKey=preview.previewKey;
         if(supabaseConfigured){
