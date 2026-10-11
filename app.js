@@ -807,8 +807,17 @@ function refreshAdminUploadSubjects() {
   } else {
     const grades = Object.keys(gradeSubjects).filter((value) => !internationalCurricula.includes(value));
     optionList(elements.adminGrade, grades, "Grade 1");
-    const subjects = gradeSubjects["Grade 1"] || allCbeSubjects;
-    optionList(elements.adminSubject, subjects, subjects[0] || "");
+    // Admin uploads should always expose the complete, stable CBC/CBE subject catalogue.
+    // Build the list from the master catalogue plus every CBC/CBE grade catalogue so
+    // subjects do not disappear when grade/curriculum controls refresh or initialize late.
+    const subjects = [...new Set([
+      ...allCbeSubjects,
+      ...Object.entries(gradeSubjects)
+        .filter(([gradeName]) => !internationalCurricula.includes(gradeName))
+        .flatMap(([, gradeList]) => gradeList || [])
+    ])].sort((a, b) => a.localeCompare(b));
+    const previousSubject = String(elements.adminSubject.value || "").trim();
+    optionList(elements.adminSubject, subjects, subjects.includes(previousSubject) ? previousSubject : "Building and Construction");
   }
 }
 
