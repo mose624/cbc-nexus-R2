@@ -1005,8 +1005,7 @@ async function handleApi(req,res,url){
         const safeTitle=escapeHtml(resource.title||fileName||"CBE Nexus Word preview");
         const safeText=escapeHtml(plainText);
         const html="<!doctype html><html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; style-src 'unsafe-inline'; img-src data:\"><title>"+safeTitle+"</title><style>body{font-family:Arial,sans-serif;background:#f3f6f8;color:#1f2937;margin:0;padding:20px;line-height:1.65}.paper{max-width:850px;margin:auto;background:#fff;padding:28px;border:1px solid #e5e7eb;border-radius:8px;white-space:pre-wrap;overflow-wrap:anywhere}.notice{max-width:850px;margin:0 auto 12px;color:#526070;font-size:13px}</style></head><body><div class=\"notice\">Safe text preview only. The original Word file remains locked until payment is confirmed.</div><main class=\"paper\"><h2>"+safeTitle+"</h2><div>"+safeText+"</div></main></body></html>";
-        const viewUrl="data:text/html;charset=utf-8;base64,"+Buffer.from(html,"utf8").toString("base64");
-        sendJson(res,200,{ok:true,viewUrl,expiresIn:300,fileName,title:resource.title||"",previewOnly:true,previewType:"docx"});
+        sendJson(res,200,{ok:true,previewHtml:html,expiresIn:300,fileName,title:resource.title||"",previewOnly:true,previewType:"docx"});
         return true;
       }
       const isPdf=actualType==="application/pdf"||ext==="pdf"||/\.pdf$/i.test(sourceKey);
