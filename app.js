@@ -1365,7 +1365,7 @@ async function openResourcePreview(resourceId) {
     const previewUrl = data.viewUrl || data.previewUrl;
     if (!previewUrl) throw new Error("The safe preview is not ready yet. Please try again shortly.");
     elements.resourcePreviewTitle.textContent = resource.title || data.title || "Resource preview";
-    elements.resourcePreviewInfo.textContent = "Safe preview: first 3 pages only. The complete original file remains locked until payment is confirmed.";
+    elements.resourcePreviewInfo.textContent = data.previewType === "image" ? "Image preview only. The original resource download remains locked until payment is confirmed." : "Safe preview: first 3 pages only. The complete original file remains locked until payment is confirmed.";
     elements.resourcePreviewFrame.src = previewUrl;
     elements.resourcePreviewModal.hidden = false;
     elements.resourcePreviewModal.classList.add("open");
