@@ -205,4 +205,18 @@ async function createDownloadUrl(key, fileName = "") {
   return getSignedUrl(client, command, { expiresIn: 300 });
 }
 
-module.exports = { createUploadUrl, createDownloadUrl, createPdfPreview, createInlineUrl, getObjectMetadata, objectExists, uploadObject, deleteObject, verifyR2Connection };
+
+async function getObjectBuffer(key, maxBytes = 8 * 1024 * 1024) {
+  const { cfg, client } = getClient();
+  const result = await client.send(new GetObjectCommand({ Bucket: cfg.bucket, Key: key }));
+  const length = Number(result.ContentLength || 0);
+  if (length > maxBytes) throw new Error("Document is too large to prepare a safe preview.");
+  if (!result.Body || typeof result.Body.transformToByteArray !== "function") {
+    throw new Error("Could not read the document for preview.");
+  }
+  const bytes = await result.Body.transformToByteArray();
+  if (bytes.byteLength > maxBytes) throw new Error("Document is too large to prepare a safe preview.");
+  return Buffer.from(bytes);
+}
+
+module.exports = { createUploadUrl, createDownloadUrl, createPdfPreview, createInlineUrl, getObjectMetadata, getObjectBuffer, objectExists, uploadObject, deleteObject, verifyR2Connection };
