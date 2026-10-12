@@ -179,7 +179,7 @@ function mpesaTimestamp(){const d=new Date();return d.getFullYear().toString()+S
 function mpesaPassword(shortCode,passkey,timestamp){return Buffer.from(String(shortCode)+String(passkey)+String(timestamp)).toString("base64");}
 async function darajaPost(pathname,body,token){const https=require("https"),base=mpesaBase();return await new Promise((res,rej)=>{const q=https.request(base+pathname,{method:"POST",headers:{Authorization:"Bearer "+token,"Content-Type":"application/json"}},r=>{let d="";r.on("data",c=>d+=c);r.on("end",()=>{try{res({status:r.statusCode||500,data:JSON.parse(d)});}catch{res({status:r.statusCode||500,data:{raw:d}});}})});q.on("error",rej);q.write(JSON.stringify(body));q.end();});}
 function getMpesaConfig(){return {shortCode:firstEnv("MPESA_SHORTCODE","MPESA_BUSINESS_SHORTCODE","MPESA_SHORT_CODE"),passkey:firstEnv("MPESA_PASSKEY","MPESA_LIPA_NA_MPESA_PASSKEY"),callbackUrl:firstEnv("MPESA_CALLBACK_URL","MPESA_CALLBACK"),environment:firstEnv("MPESA_ENVIRONMENT","MPESA_ENV")||"sandbox"};}
-async function findResourceForPayment(resourceId){if(!resourceId)return null;if(supabaseConfigured){const {data,error}=await supabase.from("resources").select("id,title,price,discount_price,status,r2_key").eq("id",resourceId).maybeSingle();if(error)throw error;return data;}const rows=await readJsonStore("resources.json");return rows.find(r=>String(r.id)===String(resourceId))||null;}
+async function findResourceForPayment(resourceId){if(!resourceId)return null;if(supabaseConfigured){const {data,error}=await supabase.from("resources").select("id,title,price,discount_price,status,r2_key,grade").eq("id",resourceId).maybeSingle();if(error)throw error;return data;}const rows=await readJsonStore("resources.json");return rows.find(r=>String(r.id)===String(resourceId))||null;}
 function resourcePrice(row){const price=Math.max(0,Number(row?.price||0));const sale=Number(row?.discount_price??row?.discount??0);const payable=sale>0&&sale<price?sale:price;return Math.max(0,Math.round(payable));}
 async function savePayment(row){if(!supabaseConfigured)throw new Error("Supabase is required for server-side M-Pesa verification.");const {data,error}=await supabase.from("purchases").insert(row).select("*").single();if(error)throw error;return data;}
 async function updatePaymentByCheckout(checkoutRequestId,patch){if(!supabaseConfigured)throw new Error("Supabase is required for server-side M-Pesa verification.");const {data,error}=await supabase.from("purchases").update(patch).eq("checkout_request_id",checkoutRequestId).select("*").single();if(error)throw error;return data;}
@@ -820,7 +820,16 @@ async function handleApi(req,res,url){
     if(!c.shortCode||!c.passkey||!c.callbackUrl){sendJson(res,503,{ok:false,error:"M-Pesa STK Push is not fully configured on the server."});return true;}
     try{
       let resource=null, amount=0;
-      if(/^cv:(basic|classic|professional)$/i.test(resourceId)){
+      const accessPlanPrices={"subscription:month":300,"subscription:6months":700,"subscription:year":1200};
+      const gradePackageMatch=resourceId.match(/^grade-package:([1-9])$/);
+      if(Object.prototype.hasOwnProperty.call(accessPlanPrices,resourceId)){
+        amount=accessPlanPrices[resourceId];
+        const labels={"subscription:month":"1-month all-resource access","subscription:6months":"6-month all-resource access","subscription:year":"12-month all-resource access"};
+        resource={id:resourceId,title:"CBE Nexus "+labels[resourceId],status:"approved",price:amount};
+      }else if(gradePackageMatch){
+        amount=50;
+        resource={id:resourceId,title:"CBE Nexus Grade "+gradePackageMatch[1]+" all-subject package",status:"approved",price:amount};
+      }else if(/^cv:(basic|classic|professional)$/i.test(resourceId)){
         const pkg=resourceId.split(":")[1].toLowerCase();
         amount=pkg==="basic"?200:pkg==="classic"?400:800;
         resource={id:resourceId,title:"CBE Nexus "+pkg+" CV",status:"approved",price:amount};
@@ -907,6 +916,25 @@ async function handleApi(req,res,url){
     if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure download approvals require Supabase payment verification."});return true;}
     try{
       const requestedReference=String(p.paymentReference||p.checkoutRequestID||"").trim();
+      const resource=await findResourceForPayment(resourceId);
+      if(!resource||String(resource.status||"approved").toLowerCase()!=="approved"){sendJson(res,404,{ok:false,error:"The selected resource is not available."});return true;}
+      const {data:entitlements,error:entitlementError}=await supabase.from("purchases").select("*").eq("customer_phone",phone).in("status",["paid","completed","success"]).in("resource_id",["subscription:month","subscription:6months","subscription:year","grade-package:1","grade-package:2","grade-package:3","grade-package:4","grade-package:5","grade-package:6","grade-package:7","grade-package:8","grade-package:9"]).order("created_at",{ascending:false}).limit(100);
+      if(entitlementError)throw entitlementError;
+      const now=Date.now();
+      const gradeNumber=Number(String(resource.grade||"").match(/(?:Grade\s*)?(\d+)/i)?.[1]||0);
+      const activeEntitlement=(entitlements||[]).find(e=>{
+        const id=String(e.resource_id||"");
+        if(id.startsWith("grade-package:"))return gradeNumber>=1&&gradeNumber<=9&&Number(id.split(":")[1])===gradeNumber;
+        const created=Date.parse(e.created_at||e.verified_at||"");
+        if(!Number.isFinite(created))return false;
+        const days=id==="subscription:month"?30:id==="subscription:6months"?183:id==="subscription:year"?365:0;
+        return days>0&&now<created+days*86400000;
+      });
+      if(activeEntitlement){
+        const item={id:"approval-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),resourceId,customerPhone:phone,paymentReference:String(activeEntitlement.mpesa_receipt||activeEntitlement.checkout_request_id||""),purchase_id:activeEntitlement.id,status:"approved",approved_at:new Date().toISOString(),createdAt:new Date().toISOString()};
+        const {data,error}=await supabase.from("download_approvals").insert(item).select("*").single();if(error)throw error;
+        sendJson(res,201,{ok:true,approval:data,payment:{status:"paid",receipt:activeEntitlement.mpesa_receipt||null},accessPlan:activeEntitlement.resource_id,storage:"supabase"});return true;
+      }
       let payment=null;
       const {data:payments,error:paymentError}=await supabase.from("purchases").select("*").eq("resource_id",resourceId).eq("customer_phone",phone).in("status",["paid","completed","success"]).order("created_at",{ascending:false}).limit(1);
       if(paymentError)throw paymentError;
@@ -915,8 +943,6 @@ async function handleApi(req,res,url){
       if(!payment){sendJson(res,402,{ok:false,error:"No verified M-Pesa payment was found for this resource and phone number."});return true;}
       if(String(payment.status).toLowerCase()==="pending"){try{payment=await verifyMpesaPaymentByQuery(payment.checkout_request_id)||payment;}catch{}}
       if(!["paid","completed","success"].includes(String(payment.status||"").toLowerCase())){sendJson(res,402,{ok:false,error:"Your M-Pesa payment has not been verified yet."});return true;}
-      const resource=await findResourceForPayment(resourceId);
-      if(!resource||String(resource.status||"approved").toLowerCase()!=="approved"){sendJson(res,404,{ok:false,error:"The selected resource is not available."});return true;}
       if(resourcePrice(resource)!==Number(payment.amount)){sendJson(res,402,{ok:false,error:"Verified payment amount does not match the resource price."});return true;}
       const item={id:"approval-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),resourceId,customerPhone:phone,paymentReference:String(payment.mpesa_receipt||payment.checkout_request_id||requestedReference||""),purchase_id:payment.id,status:"approved",approved_at:new Date().toISOString(),createdAt:new Date().toISOString()};
       const {data,error}=await supabase.from("download_approvals").insert(item).select("*").single();if(error)throw error;
@@ -1052,15 +1078,26 @@ async function handleApi(req,res,url){
       if(supabaseConfigured){const {data,error}=await supabase.from("resources").select("id,r2_key,status").eq("id",resourceId).maybeSingle();if(error)throw error;resource=data;}
       else {resource=(await readJsonStore("resources.json")).find(x=>String(x.id)===resourceId);}
       if(!resource||String(resource.r2_key||"")!==key||String(resource.status||"approved").toLowerCase()!=="approved"){sendJson(res,403,{ok:false,error:"This protected resource is not available."});return true;}
+      const resourcePriceForProtectedResource=resourcePrice(await findResourceForPayment(resourceId));
       let approval=null;
        if(supabaseConfigured){
-         const {data:payments,error:paymentError}=await supabase.from("purchases").select("id").eq("resource_id",resourceId).eq("customer_phone",phone).in("status",["paid","completed","success"]).order("created_at",{ascending:false}).limit(20);
+         const {data:payments,error:paymentError}=await supabase.from("purchases").select("*").eq("customer_phone",phone).in("status",["paid","completed","success"]).order("created_at",{ascending:false}).limit(100);
          if(paymentError)throw paymentError;
-         const purchaseIds=(payments||[]).map(p=>p.id);
+         const now=Date.now(),gradeNumber=Number(String((await findResourceForPayment(resourceId))?.grade||"").match(/(?:Grade\s*)?(\d+)/i)?.[1]||0);
+         const validPayments=(payments||[]).filter(p=>{
+           const pid=String(p.resource_id||"");
+           if(pid===resourceId)return Number(p.amount)===resourcePriceForProtectedResource;
+           if(pid.startsWith("grade-package:"))return gradeNumber>=1&&gradeNumber<=9&&Number(pid.split(":")[1])===gradeNumber;
+           const created=Date.parse(p.created_at||p.verified_at||"");
+           if(!Number.isFinite(created))return false;
+           const days=pid==="subscription:month"?30:pid==="subscription:6months"?183:pid==="subscription:year"?365:0;
+           return days>0&&now<created+days*86400000;
+         });
+         const purchaseIds=validPayments.map(p=>p.id);
          if(purchaseIds.length){const {data,error}=await supabase.from("download_approvals").select("*").in("purchase_id",purchaseIds).eq("resource_id",resourceId).eq("customer_phone",phone).eq("status","approved").order("approved_at",{ascending:false}).limit(1).maybeSingle();if(error)throw error;approval=data;}
        } else approval=(await readJsonStore("download-approvals.json")).find(a=>a.resourceId===resourceId&&a.customerPhone===phone&&a.status==="approved");
 
-      if(!approval){sendJson(res,403,{ok:false,error:"Admin has not approved this download yet."});return true;}
+      if(!approval){sendJson(res,403,{ok:false,error:"Verified payment or active access plan is required for this protected download."});return true;}
       const downloadUrl=await createDownloadUrl(key);
       if(supabaseConfigured){const {error}=await supabase.from("downloads").insert({resource_id:resourceId,customer_phone:phone,purchase_id:approval.purchase_id||null});if(error)console.error("Download log error:",error);}
       sendJson(res,200,{ok:true,downloadUrl,expiresIn:300});return true;
