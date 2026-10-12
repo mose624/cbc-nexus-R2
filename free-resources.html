@@ -110,7 +110,7 @@
           // Use the dedicated server-validated free-download route for stored R2 files.
           // The generic /api/r2/file route can return JSON metadata/errors, not the file itself.
           const href = key && resourceId
-            ? "/api/r2/free-file?resourceId=" + encodeURIComponent(String(resourceId)) + "&key=" + encodeURIComponent(key)
+            ? "/api/r2/direct-download?resourceId=" + encodeURIComponent(String(resourceId))
             : (() => {
                 const candidate = String(resource.downloadUrl || resource.download_url || resource.file || resource.url || "").trim();
                 if (!candidate || /^\/api\/(?:r2\/file|resources)(?:\?|$)/i.test(candidate)) return "";
