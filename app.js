@@ -186,7 +186,8 @@ const internationalCurriculumSubjects = [
 
 const allCbeSubjects = [...new Set([
   ...prePrimarySubjects,...lowerPrimarySubjects,...upperPrimarySubjects,...juniorSchoolSubjects,
-  ...seniorSchoolSubjects,...specialNeedsSubjects,...diplomaTeacherEducationSubjects,...internationalCurriculumSubjects
+  ...seniorSchoolSubjects,...specialNeedsSubjects,...diplomaTeacherEducationSubjects,...internationalCurriculumSubjects,
+  "Multiple Subjects (Combined Set)"
 ])].sort((a,b)=>a.localeCompare(b));
 
 /*
