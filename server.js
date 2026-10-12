@@ -1141,7 +1141,7 @@ async function handleApi(req,res,url){
       if(supabaseConfigured){
         const {data:payments,error:paymentError}=await supabase.from("purchases").select("*").eq("customer_phone",phone).in("status",["paid","completed","success"]).order("created_at",{ascending:false}).limit(100);
         if(paymentError)throw paymentError;
-        const now=Date.now(),gradeNumber=Number(String(protectedResource?.grade||"").match(/(?:Grade\\s*)?(\\d+)/i)?.[1]||0);
+        const now=Date.now(),gradeNumber=Number(String(protectedResource?.grade||"").match(/(?:Grade\s*)?(\d+)/i)?.[1]||0);
         validPayments=(payments||[]).filter(p=>{
           const pid=String(p.resource_id||"");
           // A verified, paid purchase permanently unlocks the exact resource bought.
