@@ -959,8 +959,12 @@ async function handleApi(req,res,url){
     // Accept any file extension for Admin Resource Upload. Keep the existing 50 MB size limit.
     if(Number(req.headers["content-length"]||0)>50*1024*1024){sendJson(res,413,{ok:false,error:"Upload is too large. Maximum file size is 50 MB."});return true;}
     try{
-      const body=await readBinaryBody(req);
-      const uploaded=await uploadObject({grade,subject,type,fileName,resourceId,contentType},body);
+      const contentLength=Number(req.headers["content-length"]||0);
+      // Stream normal browser uploads straight through to R2. If a client does
+      // not supply a length, keep the buffered fallback for compatibility.
+      const uploaded=contentLength>0
+        ? await uploadObject({grade,subject,type,fileName,resourceId,contentType},req,contentLength)
+        : await uploadObject({grade,subject,type,fileName,resourceId,contentType},await readBinaryBody(req),0);
       sendJson(res,200,{ok:true,...uploaded});
     }catch(error){
       console.error("R2 backend upload error:",error);
