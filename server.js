@@ -241,7 +241,7 @@ function resourcePrice(row){const price=Math.max(0,Number(row?.price||0));const 
 async function savePayment(row){if(!supabaseConfigured)throw new Error("Supabase is required for server-side M-Pesa verification.");const {data,error}=await supabase.from("purchases").insert(row).select("*").single();if(error)throw error;return data;}
 async function updatePaymentByCheckout(checkoutRequestId,patch){if(!supabaseConfigured)throw new Error("Supabase is required for server-side M-Pesa verification.");const {data,error}=await supabase.from("purchases").update(patch).eq("checkout_request_id",checkoutRequestId).select("*").single();if(error)throw error;return data;}
 function callbackMetadataToObject(items){const out={};for(const item of Array.isArray(items)?items:[]){if(item?.Name)out[item.Name]=item.Value??null;}return out;}
-async function verifyMpesaPaymentByQuery(checkoutRequestId){const c=getMpesaConfig();if(!checkoutRequestId||!c.shortCode||!c.passkey)return null;const token=await getMpesaAccessToken(),timestamp=mpesaTimestamp(),response=await darajaPost("/mpesa/stkpushquery/v1/query",{BusinessShortCode:c.shortCode,Password:mpesaPassword(c.shortCode,c.passkey,timestamp),Timestamp:timestamp,CheckoutRequestID:checkoutRequestId},token);const d=response.data||{};if(Number(d.ResponseCode)===0&&String(d.ResultCode)==="0"){return updatePaymentByCheckout(checkoutRequestId,{status:"paid",result_code:0,result_desc:String(d.ResultDesc||"Success"),verified_at:new Date().toISOString()});}if(d.ResultCode!==undefined){return updatePaymentByCheckout(checkoutRequestId,{status:"failed",result_code:Number(d.ResultCode),result_desc:String(d.ResultDesc||"Payment failed"),verified_at:new Date().toISOString()});}return null;}
+async function verifyMpesaPaymentByQuery(checkoutRequestId){const c=getMpesaConfig();if(!checkoutRequestId||!c.shortCode||!c.passkey)return null;const token=await getMpesaAccessToken(),timestamp=mpesaTimestamp(),response=await darajaPost("/mpesa/stkpushquery/v1/query",{BusinessShortCode:c.shortCode,Password:mpesaPassword(c.shortCode,c.passkey,timestamp),Timestamp:timestamp,CheckoutRequestID:checkoutRequestId},token);const d=response.data||{};const {data:current,error:currentError}=await supabase.from("purchases").select("*").eq("checkout_request_id",checkoutRequestId).maybeSingle();if(currentError)throw currentError;if(!current)return null;if(["paid","completed","success"].includes(String(current.status||"").toLowerCase()))return current;if(Number(d.ResponseCode)===0&&String(d.ResultCode)==="0"){return updatePaymentByCheckout(checkoutRequestId,{status:"paid",result_code:0,result_desc:String(d.ResultDesc||"Success"),verified_at:new Date().toISOString()});}if(d.ResultCode!==undefined&&String(d.ResultCode)!==""){return updatePaymentByCheckout(checkoutRequestId,{status:"failed",result_code:Number(d.ResultCode),result_desc:String(d.ResultDesc||"Payment failed"),verified_at:new Date().toISOString()});}return null;}
 function cleanAICourseText(v,max=5000){return String(v??"").trim().slice(0,max);}
 function normalizeAICoursePayload(p){
   const title=cleanAICourseText(p.title,180), slug=cleanAICourseText(p.slug,100).toLowerCase().replace(/[^a-z0-9-]+/g,"-").replace(/^-+|-+$/g,"");
@@ -921,7 +921,7 @@ async function handleApi(req,res,url){
         const verified=await verifyMpesaPaymentByQuery(checkoutRequestId);
         if(!verified||String(verified.status).toLowerCase()!=="paid"){sendJson(res,502,{ResultCode:1,ResultDesc:"Payment could not be independently verified."});return true;}
         await updatePaymentByCheckout(checkoutRequestId,{status:"paid",result_code:0,result_desc:String(stk?.ResultDesc||"Success"),mpesa_receipt:String(meta.MpesaReceiptNumber||verified.mpesa_receipt||""),transaction_time:String(meta.TransactionDate||""),verified_at:new Date().toISOString()});
-      }else{
+      }else if(!["paid","completed","success"].includes(String(pending.status||"").toLowerCase())){
         await updatePaymentByCheckout(checkoutRequestId,{status:"failed",result_code:Number.isFinite(resultCode)?resultCode:null,result_desc:String(stk?.ResultDesc||"Payment failed"),verified_at:new Date().toISOString()});
       }
       sendJson(res,200,{ResultCode:0,ResultDesc:"Accepted"});
@@ -935,7 +935,7 @@ async function handleApi(req,res,url){
       const {data,error}=await supabase.from("purchases").select("*").eq("checkout_request_id",checkoutRequestId).eq("customer_phone",phone).maybeSingle();
       if(error)throw error;
       let payment=data;
-      if(payment?.status==="pending"){try{payment=await verifyMpesaPaymentByQuery(checkoutRequestId)||payment;}catch(error){console.warn("M-Pesa status query fallback failed:",error.message||error);}}
+      if(["pending","failed","cancelled"].includes(String(payment?.status||"").toLowerCase())){try{payment=await verifyMpesaPaymentByQuery(checkoutRequestId)||payment;}catch(error){console.warn("M-Pesa status query fallback failed:",error.message||error);}}
       sendJson(res,200,{ok:true,status:String(payment?.status||"unknown"),payment:payment?{id:payment.id,resourceId:payment.resource_id,amount:payment.amount,status:payment.status,receipt:payment.mpesa_receipt||null,verifiedAt:payment.verified_at||null}:null});
     }catch(error){console.error("M-Pesa status lookup error:",error);sendJson(res,500,{ok:false,error:"Payment status could not be checked securely."});}
     return true;
@@ -1000,9 +1000,8 @@ async function handleApi(req,res,url){
       payment=payments?.[0]||null;
       if(!payment&&requestedReference){const {data:byRef,error:refError}=await supabase.from("purchases").select("*").eq("checkout_request_id",requestedReference).eq("resource_id",resourceId).eq("customer_phone",phone).maybeSingle();if(refError)throw refError;payment=byRef;}
       if(!payment){sendJson(res,402,{ok:false,error:"No verified M-Pesa payment was found for this resource and phone number."});return true;}
-      if(String(payment.status).toLowerCase()==="pending"){try{payment=await verifyMpesaPaymentByQuery(payment.checkout_request_id)||payment;}catch{}}
+      if(["pending","failed","cancelled"].includes(String(payment.status||"").toLowerCase())){try{payment=await verifyMpesaPaymentByQuery(payment.checkout_request_id)||payment;}catch(error){console.warn("Payment access reconciliation failed:",error.message||error);}}
       if(!["paid","completed","success"].includes(String(payment.status||"").toLowerCase())){sendJson(res,402,{ok:false,error:"Your M-Pesa payment has not been verified yet."});return true;}
-      if(resourcePrice(resource)!==Number(payment.amount)){sendJson(res,402,{ok:false,error:"Verified payment amount does not match the resource price."});return true;}
       const item={id:"approval-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),resourceId,customerPhone:phone,paymentReference:String(payment.mpesa_receipt||payment.checkout_request_id||requestedReference||""),purchase_id:payment.id,status:"approved",approved_at:new Date().toISOString(),createdAt:new Date().toISOString()};
       const {data,error}=await supabase.from("download_approvals").insert(item).select("*").single();if(error)throw error;
       sendJson(res,201,{ok:true,approval:data,payment:{status:"paid",receipt:payment.mpesa_receipt||null},storage:"supabase"});return true;
