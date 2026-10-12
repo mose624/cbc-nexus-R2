@@ -1362,18 +1362,27 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
     renderResources();
   });
 
-  // ADMIN UPLOAD: Grade controls the Subject list.
-  // This keeps every uploaded resource aligned with the grade pages.
+  // ADMIN UPLOAD: keep the complete subject catalogue available when the grade changes.
+  // Combined-set documents and cross-grade materials must not disappear from this dropdown.
   safeOn(elements.adminGrade, "change", (event) => {
     const grade = String(event.target.value || "").trim();
-    const subjects = gradeSubjects[grade] || [];
+    const curriculum = String(elements.adminCurriculum?.value || "CBC/CBE").trim();
+    const internationalCurricula = ["IGCSE", "IB", "O Level", "A Level", "Pearson"];
+    const subjects = internationalCurricula.includes(curriculum)
+      ? (gradeSubjects[grade] || gradeSubjects[curriculum] || [])
+      : [...new Set([
+          ...allCbeSubjects,
+          ...Object.entries(gradeSubjects)
+            .filter(([gradeName]) => !internationalCurricula.includes(gradeName))
+            .flatMap(([, gradeList]) => gradeList || [])
+        ])].sort((a, b) => a.localeCompare(b));
     const current = canonicalSubjectName(elements.adminSubject?.value || "");
-    const selected = subjects.find((subject) => canonicalSubjectName(subject) === current) || subjects[0] || "";
+    const selected = subjects.find((subject) => canonicalSubjectName(subject) === current) || current || "Multiple Subjects (Combined Set)";
     optionList(elements.adminSubject, subjects, selected);
     if (elements.formStatus && grade) {
-      elements.formStatus.textContent = subjects.length
-        ? grade + " selected. Only subjects belonging to " + grade + " are available."
-        : "Select a valid grade.";
+      elements.formStatus.textContent = internationalCurricula.includes(curriculum)
+        ? curriculum + " selected. Choose the matching international subject."
+        : grade + " selected. The full CBC/CBE subject catalogue remains available, including Multiple Subjects (Combined Set).";
     }
   });
 
