@@ -4986,22 +4986,25 @@ textarea:focus{
 }
 
 
-/* Highlight Holiday Tuition navigation links with green blinking text. */
-@keyframes holidayTuitionGreenBlink {
-  0%, 48%, 100% { color: #16803c; opacity: 1; }
-  50%, 74% { color: #16803c; opacity: .28; }
+
+/* Make the Holiday Tuition words visibly green and blinking. */
+@keyframes holidayTuitionTextBlink {
+  0%, 100% { opacity: 1; text-shadow: 0 0 0 rgba(22,128,60,0); }
+  50% { opacity: .18; text-shadow: 0 0 8px rgba(22,128,60,.55); }
 }
 a[href="#holidayTuition"],
-a[href="tuition.html"] {
+a[href="tuition.html"],
+.site-header .top-strip a[href="#holidayTuition"],
+.portal-side-link[href="#holidayTuition"],
+.download-tile[href="tuition.html"] {
   color: #16803c !important;
-  font-weight: 800 !important;
-  animation: holidayTuitionGreenBlink 1.15s steps(1, end) infinite;
+  -webkit-text-fill-color: #16803c !important;
+  font-weight: 900 !important;
+  animation: holidayTuitionTextBlink .8s ease-in-out infinite !important;
 }
-@media (prefers-reduced-motion: reduce) {
-  a[href="#holidayTuition"],
-  a[href="tuition.html"] {
-    animation: none;
-    color: #16803c !important;
-    opacity: 1;
-  }
+a[href="#holidayTuition"] *,
+a[href="tuition.html"] * {
+  color: #16803c !important;
+  -webkit-text-fill-color: #16803c !important;
+  animation: holidayTuitionTextBlink .8s ease-in-out infinite !important;
 }
