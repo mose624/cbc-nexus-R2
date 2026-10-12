@@ -68,16 +68,22 @@ async function verifyR2Connection() {
   }
 }
 
-async function uploadObject(input, body) {
+async function uploadObject(input, body, contentLength) {
   const { cfg, client } = getClient();
   const key = buildKey(input);
   const contentType = input.contentType || "application/octet-stream";
-  await client.send(new PutObjectCommand({
+  const commandInput = {
     Bucket: cfg.bucket,
     Key: key,
     Body: body,
     ContentType: contentType
-  }));
+  };
+  // When the request stream and its length are available, send bytes directly
+  // to R2 instead of buffering the complete file in Render memory first.
+  if (Number.isFinite(Number(contentLength)) && Number(contentLength) > 0) {
+    commandInput.ContentLength = Number(contentLength);
+  }
+  await client.send(new PutObjectCommand(commandInput));
   return { key, fileName: input.fileName || "resource.bin" };
 }
 
