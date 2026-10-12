@@ -992,7 +992,7 @@ async function handleApi(req,res,url){
         return days>0&&now<created+days*86400000;
       });
       if(activeEntitlement){
-        const item={id:"approval-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),resourceId,customerPhone:phone,paymentReference:String(activeEntitlement.mpesa_receipt||activeEntitlement.checkout_request_id||""),purchase_id:activeEntitlement.id,status:"approved",approved_at:new Date().toISOString(),createdAt:new Date().toISOString()};
+        const item={id:"approval-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),resource_id:resourceId,customer_phone:phone,payment_reference:String(activeEntitlement.mpesa_receipt||activeEntitlement.checkout_request_id||""),status:"approved",approved_at:new Date().toISOString()};
         const {data,error}=await supabase.from("download_approvals").insert(item).select("*").single();if(error)throw error;
         sendJson(res,201,{ok:true,approval:data,payment:{status:"paid",receipt:activeEntitlement.mpesa_receipt||null},accessPlan:activeEntitlement.resource_id,storage:"supabase"});return true;
       }
@@ -1004,7 +1004,7 @@ async function handleApi(req,res,url){
       if(!payment){sendJson(res,402,{ok:false,error:"No verified M-Pesa payment was found for this resource and phone number."});return true;}
       if(["pending","failed","cancelled"].includes(String(payment.status||"").toLowerCase())){try{payment=await verifyMpesaPaymentByQuery(payment.checkout_request_id)||payment;}catch(error){console.warn("Payment access reconciliation failed:",error.message||error);}}
       if(!["paid","completed","success"].includes(String(payment.status||"").toLowerCase())){sendJson(res,402,{ok:false,error:"Your M-Pesa payment has not been verified yet."});return true;}
-      const item={id:"approval-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),resourceId,customerPhone:phone,paymentReference:String(payment.mpesa_receipt||payment.checkout_request_id||requestedReference||""),purchase_id:payment.id,status:"approved",approved_at:new Date().toISOString(),createdAt:new Date().toISOString()};
+      const item={id:"approval-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),resource_id:resourceId,customer_phone:phone,payment_reference:String(payment.mpesa_receipt||payment.checkout_request_id||requestedReference||""),status:"approved",approved_at:new Date().toISOString()};
       const {data,error}=await supabase.from("download_approvals").insert(item).select("*").single();if(error)throw error;
       sendJson(res,201,{ok:true,approval:data,payment:{status:"paid",receipt:payment.mpesa_receipt||null},storage:"supabase"});return true;
     }catch(error){console.error("Download approval request error:",error);sendJson(res,500,{ok:false,error:"Download request could not be recorded securely."});return true;}
