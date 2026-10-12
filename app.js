@@ -1697,11 +1697,30 @@ loadPublicStats();
 syncPublicResourcesFromServer();
 renderCart();
 renderSellerResources();
-renderSellerAccountApprovals();
-renderAdminApprovals();
-renderPaymentRecords();
-renderDownloadApprovals();
-renderProgressReport();
+// Keep checkout initialization immediate, but move hidden admin-only rendering
+// off the initial page-load task. This reduces main-thread contention for visitors
+// while still initializing the admin panels shortly after the page becomes idle.
+(function scheduleNonCriticalAdminRenders(){
+  const tasks = [
+    renderSellerAccountApprovals,
+    renderAdminApprovals,
+    renderPaymentRecords,
+    renderDownloadApprovals,
+    renderProgressReport
+  ];
+  let index = 0;
+  const runNext = () => {
+    if (index >= tasks.length) return;
+    const task = tasks[index++];
+    try { task(); } catch (error) { console.error("CBE Nexus admin panel initialization failed:", error); }
+    if (index < tasks.length) window.setTimeout(runNext, 120);
+  };
+  if ("requestIdleCallback" in window) {
+    window.requestIdleCallback(runNext, { timeout: 1800 });
+  } else {
+    window.setTimeout(runNext, 900);
+  }
+})();
 initializePaymentCheckoutFromUrl();
 (function(){const q=id=>document.getElementById(id);function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));}function url(v){try{const u=new URL(String(v||""),location.origin);return /^https?:$/.test(u.protocol)?u.href:"#";}catch{return "#";}}
 async function loadVacancies(id,publicMode){const t=q(id);if(!t)return;if(publicMode&&t.hasAttribute("data-stable-vacancy-board"))return;try{const r=await fetch("/api/vacancies?_="+Date.now(),{credentials:"same-origin",cache:"no-store",headers:{"Accept":"application/json"}});const raw=await r.text();let d={};try{d=JSON.parse(raw)}catch{throw new Error("The vacancy service returned an invalid response. Please refresh the page.");}if(!r.ok||!d.ok)throw new Error(d.error||"Vacancies could not be loaded.");const rows=Array.isArray(d.vacancies)?d.vacancies:[];if(!rows.length){t.innerHTML='<div class="empty-state">No teaching vacancies published yet.</div>';return;}t.innerHTML=rows.map(v=>'<article class="vacancy-card '+(v.featured?'featured':'')+'"><div class="vacancy-card-top"><span class="vacancy-region">'+esc(v.region||v.country||"International")+'</span>'+(v.featured?'<span class="vacancy-featured">FEATURED</span>':'')+'</div><h3>'+esc(v.title)+'</h3><strong>'+esc(v.school)+'</strong><p class="vacancy-meta">'+esc(v.country)+' · '+esc(v.subject)+' · '+esc(v.level)+' · '+esc(v.employment||"Full-time")+'</p>'+(v.salary?'<p><strong>Package:</strong> '+esc(v.salary)+'</p>':'')+(v.deadline?'<p><strong>Deadline:</strong> '+esc(v.deadline)+'</p>':'')+(v.description?'<details class="vacancy-details"><summary>📋 Job Description</summary><p>'+esc(v.description)+'</p></details>':'')+(v.requirements?'<details class="vacancy-details"><summary>🎓 Requirements</summary><p>'+esc(v.requirements)+'</p></details>':'')+(v.why_match?'<details class="vacancy-details"><summary>⭐ Why you may be a good match</summary><p>'+esc(v.why_match)+'</p></details>':'')+(v.documents?'<details class="vacancy-details"><summary>📄 Documents to prepare</summary><p>'+esc(v.documents)+'</p></details>':'')+(v.verified_date?'<p class="vacancy-verified"><small>Verified: '+esc(v.verified_date)+'</small></p>':'')+'<div class="vacancy-card-actions"><a class="primary-button" href="'+url(v.apply_url)+'" target="_blank" rel="noopener noreferrer">Apply / View Vacancy</a>'+(publicMode?'<button class="whatsapp-share-button" type="button" data-share-vacancy="whatsapp" data-vacancy-id="'+esc(v.id)+'">WhatsApp</button><button class="facebook-share-button" type="button" data-share-vacancy="facebook" data-vacancy-id="'+esc(v.id)+'">Facebook</button>':'<button class="whatsapp-share-button" type="button" data-share-vacancy="whatsapp" data-vacancy-id="'+esc(v.id)+'">WhatsApp</button><button class="facebook-share-button" type="button" data-share-vacancy="facebook" data-vacancy-id="'+esc(v.id)+'">Facebook</button><button class="ghost-button" type="button" data-share-vacancy="copy" data-vacancy-id="'+esc(v.id)+'">Copy Link</button><button class="secondary-button" type="button" data-edit-vacancy="'+esc(v.id)+'">✏ Edit</button><button class="ghost-button" type="button" data-delete-vacancy="'+esc(v.id)+'">Delete</button>')+'</div></article>').join("");}catch(e){t.innerHTML='<p class="form-status error">'+esc(e.message)+'</p>';}}
