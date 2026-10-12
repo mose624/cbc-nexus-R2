@@ -1163,12 +1163,21 @@ async function handleApi(req,res,url){
   }
   if(req.method==="GET"&&url.pathname==="/api/r2/file"){
     const key=String(url.searchParams.get("key")||"").trim(),resourceId=String(url.searchParams.get("resourceId")||"").trim(),phone=normalizeMpesaPhone(url.searchParams.get("phone")||"");
-    if(!key||!resourceId||!phone){sendJson(res,400,{ok:false,error:"Resource, phone and protected file are required."});return true;}
+    if(!resourceId){sendJson(res,400,{ok:false,error:"Resource ID is required."});return true;}
     let resource=null;
     try{
-      if(supabaseConfigured){const {data,error}=await supabase.from("resources").select("id,r2_key,status,filename").eq("id",resourceId).maybeSingle();if(error)throw error;resource=data;}
+      if(supabaseConfigured){const {data,error}=await supabase.from("resources").select("id,r2_key,status,filename,price,discount_price").eq("id",resourceId).maybeSingle();if(error)throw error;resource=data;}
       else {resource=(await readJsonStore("resources.json")).find(x=>String(x.id)===resourceId);}
-      if(!resource||String(resource.r2_key||"")!==key||String(resource.status||"approved").toLowerCase()!=="approved"){sendJson(res,403,{ok:false,error:"This protected resource is not available."});return true;}
+      if(!resource||!resource.r2_key||(key&&String(resource.r2_key)!==key)||String(resource.status||"approved").toLowerCase()!=="approved"){sendJson(res,403,{ok:false,error:"This protected resource is not available."});return true;}
+      // Backward-compatible navigation for older page links: free resources must redirect to
+      // the actual R2 object, never expose this endpoint's JSON metadata as a downloaded file.
+      if(resourcePrice(resource)===0){
+        const fileName=String(resource.filename||resource.fileName||resource.r2_key.split("/").pop()||"resource");
+        const target=await createDownloadUrl(resource.r2_key,fileName);
+        res.writeHead(302,{"Location":target,"Cache-Control":"no-store","Referrer-Policy":"no-referrer"});
+        res.end();return true;
+      }
+      if(!key||!phone){sendJson(res,400,{ok:false,error:"A resource, phone number and protected file are required for paid downloads."});return true;}
       const protectedResource=await findResourceForPayment(resourceId);
       const resourcePriceForProtectedResource=resourcePrice(protectedResource);
       let validPayments=[];
