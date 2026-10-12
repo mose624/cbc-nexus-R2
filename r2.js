@@ -178,15 +178,52 @@ async function createDownloadUrl(key, fileName = "") {
   const requestedName = String(fileName || "").trim();
   const keyExt = keyName.toLowerCase().match(/\.([a-z0-9]{1,8})$/)?.[1] || "";
   const requestedExt = requestedName.toLowerCase().match(/\.([a-z0-9]{1,8})$/)?.[1] || "";
-  // Keep the uploaded file's extension from the storage key if metadata omitted it.
-  const originalName = requestedName
-    ? (requestedExt || !keyExt ? requestedName : requestedName + "." + keyExt)
-    : keyName;
+  const isPlaceholderExt = (ext) => !ext || ext === "bin";
+  // Prefer the real filename extension over the storage-key extension. Older uploads
+  // may have a .bin storage key even when the original document was a PDF/Word file.
+  let storedContentType = "";
+  try {
+    const head = await client.send(new HeadObjectCommand({ Bucket: cfg.bucket, Key: key }));
+    storedContentType = String(head.ContentType || "").split(";")[0].trim().toLowerCase();
+  } catch (error) {
+    console.warn("Could not inspect R2 object metadata for download:", error.message || error);
+  }
+  const extensionByContentType = {
+    "application/pdf":"pdf",
+    "application/msword":"doc",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document":"docx",
+    "application/vnd.ms-excel":"xls",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":"xlsx",
+    "application/vnd.ms-powerpoint":"ppt",
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation":"pptx",
+    "application/rtf":"rtf",
+    "application/vnd.oasis.opendocument.text":"odt",
+    "application/vnd.oasis.opendocument.spreadsheet":"ods",
+    "application/vnd.oasis.opendocument.presentation":"odp",
+    "text/plain":"txt",
+    "text/csv":"csv",
+    "application/zip":"zip",
+    "image/jpeg":"jpg",
+    "image/png":"png",
+    "image/webp":"webp",
+    "image/gif":"gif",
+    "audio/mpeg":"mp3",
+    "video/mp4":"mp4"
+  };
+  const metadataExt = extensionByContentType[storedContentType] || "";
+  const ext = !isPlaceholderExt(requestedExt) ? requestedExt
+    : !isPlaceholderExt(keyExt) ? keyExt : metadataExt;
+  let originalName = requestedName || keyName;
+  const originalNameExt = originalName.toLowerCase().match(/\.([a-z0-9]{1,8})$/)?.[1] || "";
+  if (isPlaceholderExt(originalNameExt) && ext) {
+    originalName = originalName.replace(/\.(?:bin)$/i, "") + "." + ext;
+  } else if (!originalNameExt && ext) {
+    originalName += "." + ext;
+  }
   const cleanName = originalName
     .replace(/[\r\n"]/g, "_")
     .replace(/[\\/]/g, "_")
     .trim() || keyName;
-  const ext = keyExt || cleanName.toLowerCase().match(/\.([a-z0-9]{1,8})$/)?.[1] || "";
   const contentTypes = {
     pdf: "application/pdf",
     doc: "application/msword",
