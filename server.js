@@ -876,6 +876,8 @@ async function handleApi(req,res,url){
     const c=getMpesaConfig();
     if(!c.shortCode||!c.passkey||!c.callbackUrl||(String(c.environment).toLowerCase()==="production"&&!c.tillNumber)){sendJson(res,503,{ok:false,error:String(c.environment).toLowerCase()==="production"&&!c.tillNumber?"Production Buy Goods payments require the MPESA_TILL_NUMBER setting in Render.":"M-Pesa STK Push is not fully configured on the server.",diagnosticCode:"MPESA_CONFIGURATION_INCOMPLETE"});return true;}
     try{
+      // Start OAuth token retrieval while resource validation runs, reducing cold-start latency.
+      const tokenResultPromise=getMpesaAccessToken().then(token=>({token})).catch(error=>({error}));
       let resource=null, amount=0;
       const accessPlanPrices={"subscription:month":300,"subscription:6months":700,"subscription:year":1200};
       const gradePackageMatch=resourceId.match(/^grade-package:([1-9])$/);
@@ -896,7 +898,7 @@ async function handleApi(req,res,url){
         amount=resourcePrice(resource);
         if(amount<1){sendJson(res,400,{ok:false,error:"This resource does not require an M-Pesa payment."});return true;}
       }
-      const token=await getMpesaAccessToken(),timestamp=mpesaTimestamp();
+      const tokenResult=await tokenResultPromise;if(tokenResult.error)throw tokenResult.error;const token=tokenResult.token,timestamp=mpesaTimestamp();
       const isBuyGoods=Boolean(c.tillNumber);const stk=await darajaPost("/mpesa/stkpush/v1/processrequest",{BusinessShortCode:c.shortCode,Password:mpesaPassword(c.shortCode,c.passkey,timestamp),Timestamp:timestamp,TransactionType:isBuyGoods?"CustomerBuyGoodsOnline":"CustomerPayBillOnline",Amount:amount,PartyA:phone,PartyB:isBuyGoods?c.tillNumber:c.shortCode,PhoneNumber:phone,CallBackURL:c.callbackUrl,AccountReference:String(resource.title||"CBE Nexus").slice(0,12),TransactionDesc:"CBE Nexus resource"},token);
       const d=stk.data||{};
       if(stk.status<200||stk.status>=300||!d.CheckoutRequestID){console.error("M-Pesa STK request rejected:",{httpStatus:stk.status,responseCode:d.ResponseCode,responseDescription:d.ResponseDescription,errorCode:d.errorCode,errorMessage:d.errorMessage});sendJson(res,502,{ok:false,error:String(d.errorMessage||d.ResponseDescription||"M-Pesa payment request was not accepted."),diagnosticCode:"MPESA_DARAJA_REQUEST_REJECTED"});return true;}
