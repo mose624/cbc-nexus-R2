@@ -1042,8 +1042,9 @@ async function handleApi(req,res,url){
       if(effectivePrice!==0){
         sendJson(res,402,{ok:false,error:"This resource requires payment before download."});return true;
       }
-      const downloadUrl=await createDownloadUrl(resource.r2_key);
-      sendJson(res,200,{ok:true,downloadUrl,expiresIn:300,fileName:resource.filename||"",title:resource.title||"",free:true});
+      const fileName=String(resource.filename||resource.fileName||resource.r2_key.split("/").pop()||"resource");
+      const downloadUrl=await createDownloadUrl(resource.r2_key,fileName);
+      sendJson(res,200,{ok:true,downloadUrl,expiresIn:300,fileName,title:resource.title||"",free:true});
     }catch(error){
       console.error("Free resource download error:",error);
       sendJson(res,500,{ok:false,error:"Free resource download could not be prepared."});
@@ -1135,7 +1136,7 @@ async function handleApi(req,res,url){
     if(!key||!resourceId||!phone){sendJson(res,400,{ok:false,error:"Resource, phone and protected file are required."});return true;}
     let resource=null;
     try{
-      if(supabaseConfigured){const {data,error}=await supabase.from("resources").select("id,r2_key,status").eq("id",resourceId).maybeSingle();if(error)throw error;resource=data;}
+      if(supabaseConfigured){const {data,error}=await supabase.from("resources").select("id,r2_key,status,filename").eq("id",resourceId).maybeSingle();if(error)throw error;resource=data;}
       else {resource=(await readJsonStore("resources.json")).find(x=>String(x.id)===resourceId);}
       if(!resource||String(resource.r2_key||"")!==key||String(resource.status||"approved").toLowerCase()!=="approved"){sendJson(res,403,{ok:false,error:"This protected resource is not available."});return true;}
       const protectedResource=await findResourceForPayment(resourceId);
@@ -1163,9 +1164,10 @@ async function handleApi(req,res,url){
       }
       const entitlement=validPayments[0]||null;
       if(!entitlement){sendJson(res,403,{ok:false,error:"Verified payment or active access plan is required for this protected download."});return true;}
-      const downloadUrl=await createDownloadUrl(key);
+      const fileName=String(resource.filename||resource.fileName||key.split("/").pop()||"resource");
+      const downloadUrl=await createDownloadUrl(key,fileName);
       if(supabaseConfigured){const {error}=await supabase.from("downloads").insert({resource_id:resourceId,customer_phone:phone,purchase_id:entitlement.id||null});if(error)console.error("Download log error:",error);}
-      sendJson(res,200,{ok:true,downloadUrl,expiresIn:300});return true;
+      sendJson(res,200,{ok:true,downloadUrl,expiresIn:300,fileName});return true;
     }catch(error){console.error("Protected download error:",error);sendJson(res,500,{ok:false,error:"Secure download could not be created."});return true;}
   }
   if(req.method==="POST"&&url.pathname==="/api/public/view"){
