@@ -16,24 +16,42 @@ main{padding:32px 5% 60px}.group{margin:28px 0}.group h2{color:var(--navy);font-
 .resource-box{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:20px}.resource{background:var(--navy);color:#fff;border-radius:10px;padding:17px;border-top:4px solid var(--accent)}.resource b{display:block;margin-bottom:6px}.resource small{color:#dce8fa}
 footer{background:var(--navy);color:#c9d7eb;text-align:center;padding:28px 5%;font-size:13px}footer a{color:#fff}
 @media(max-width:650px){.nav{position:static}.hero{padding:42px 5%}.subjects{grid-template-columns:1fr}}
+
+/* CBE Nexus international resource catalogue — inspired by resource-first study portals */
+.international-quick-nav{display:flex;gap:8px;overflow-x:auto;white-space:nowrap;padding:11px clamp(16px,5%,60px);background:#fff;border-bottom:1px solid #dce5f0;scrollbar-width:thin}
+.international-quick-nav a{flex:0 0 auto;padding:9px 13px;border:1px solid #d7e1ed;border-radius:5px;color:#071a3d;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.25px;background:#f8fafc}
+.international-quick-nav a:hover,.international-quick-nav a:focus{background:var(--light);border-color:var(--accent);outline:none}
+.subject-search-wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:34px 0 10px;padding:16px;background:#fff;border:1px solid #dbe4ef;border-radius:9px}
+.subject-search-wrap label{font-weight:900;color:var(--navy);white-space:nowrap}
+.subject-search-wrap input{flex:1;min-width:220px;padding:12px 14px;border:1px solid #cbd7e5;border-radius:6px;background:#fff;color:#17233b}
+.subject-search-wrap input:focus{outline:2px solid var(--accent);outline-offset:1px}
+.resource-box .resource{width:100%;min-height:112px;text-align:left;font:inherit;cursor:pointer;border:0;border-top:4px solid var(--accent);display:flex;flex-direction:column;gap:7px;transition:transform .15s,box-shadow .15s}
+.resource-box a.resource{text-decoration:none}
+.resource-box .resource:hover,.resource-box .resource:focus{transform:translateY(-2px);box-shadow:0 9px 22px rgba(7,26,61,.15);outline:2px solid var(--accent);outline-offset:1px}
+.resource-box .resource small{color:#dce8fa;line-height:1.5;font-weight:500}
+.resource-box .resource-filter:after{content:"Browse resources →";font-size:12px;font-weight:900;color:var(--accent);margin-top:auto}
+@media(max-width:640px){.international-quick-nav{padding-left:16px;padding-right:16px}.subject-search-wrap{margin-top:24px}.subject-search-wrap label{width:100%}.subject-search-wrap input{min-width:0;width:100%}}
 </style><link rel="stylesheet" href="international-resource-library.css?v=20261004-1">
 <link rel="stylesheet" href="customer-care.css?v=20261004-2">
 </head>
 <body data-curriculum="A Level">
 <div class="top"><div class="wrap">CBE Nexus • International Curriculum Resource Centre</div></div>
 <nav class="nav"><a class="brand" href="index.html">CBE Nexus</a><a class="back" href="index.html">← Back to CBE Nexus</a></nav>
+<div class="international-quick-nav" aria-label="International resource navigation">
+<a href="#resource-types">Past Papers &amp; Practice</a><a href="#resource-types">Notes &amp; Study Guides</a><a href="#resource-types">Marking Schemes</a><a href="#resource-types">Schemes &amp; Lesson Plans</a><a href="#subjects">Browse Subjects</a><a href="resource-category.html?curriculum=A-Levels">All A-Levels Resources</a></div>
 <header class="hero"><div class="wrap"><div class="eyebrow">International Curriculum</div><h1>A-Levels</h1><p><strong>International Advanced Level & A-Level Resources</strong><br>Advanced-level resources for subject study, structured revision and examination preparation.</p>
 <div class="actions"><a class="btn primary" href="#subjects">Browse Subjects</a><a class="btn secondary" href="resource-category.html?curriculum=A-Levels">Open Resource Library</a></div></div></header>
 <main><div class="wrap">
 <div class="info"><strong>How CBE Nexus organizes international resources:</strong> Curriculum → subject/group → resource type → revision & assessment support. Subject buttons connect to the existing Resource Library.</div>
-<section><h2 style="color:var(--navy)">Resource types</h2><div class="resource-box">
-<div class="resource"><b>📘 Notes & Study Guides</b><small>Topic notes, summaries and revision guides.</small></div>
-<div class="resource"><b>📝 Past Papers</b><small>Practice papers and examination preparation.</small></div>
-<div class="resource"><b>✅ Marking Schemes</b><small>Answer support and self-assessment.</small></div>
-<div class="resource"><b>📋 Schemes & Lesson Plans</b><small>Teacher planning and classroom delivery.</small></div>
-<div class="resource"><b>🎯 Topical Questions</b><small>Focused practice by topic and subject.</small></div>
-<div class="resource"><b>🔬 Practical & Projects</b><small>Practical activities, projects and coursework support.</small></div>
+<section id="resource-types"><h2 style="color:var(--navy)">Resource types</h2><div class="resource-box">
+<button type="button" class="resource resource-filter" data-filter-type="Notes"><b>📘 Notes & Study Guides</b><small>Topic notes, summaries and revision guides.</small></button>
+<button type="button" class="resource resource-filter" data-filter-type="Past Papers"><b>📝 Past Papers</b><small>Practice papers and examination preparation.</small></button>
+<button type="button" class="resource resource-filter" data-filter-type="Marking Schemes"><b>✅ Marking Schemes</b><small>Answer support and self-assessment.</small></button>
+<button type="button" class="resource resource-filter" data-filter-type="Schemes of Work"><b>📋 Schemes & Lesson Plans</b><small>Teacher planning and classroom delivery.</small></button>
+<button type="button" class="resource resource-filter" data-filter-type="Topical Questions"><b>🎯 Topical Questions</b><small>Focused practice by topic and subject.</small></button>
+<button type="button" class="resource resource-filter" data-filter-type="Projects"><b>🔬 Practical & Projects</b><small>Practical activities, projects and coursework support.</small></button>
 </div></section>
+<div class="subject-search-wrap"><label for="internationalSubjectSearch">Find a subject</label><input id="internationalSubjectSearch" type="search" placeholder="Search subjects, e.g. Mathematics, Biology, Economics…" autocomplete="off"><span class="subject-search-count" aria-live="polite">Browse the subject catalogue</span></div>
 <section id="subjects"><h2 style="color:var(--navy);margin-top:42px">Subjects</h2>
     <section class="group">
       <h2>Mathematics</h2>
@@ -95,5 +113,24 @@ footer{background:var(--navy);color:#c9d7eb;text-align:center;padding:28px 5%;fo
 </main>
 <footer><div class="wrap"><strong>CBE Nexus</strong> — Connecting learners to excellence.<br><a href="index.html">Home</a> · <a href="international-curriculum.html">International Curriculum</a> · <a href="international-teaching-jobs.html">International Teaching Jobs</a></div></footer>
 <script src="international-resource-library.js?v=20261004-1"></script>
+<script>
+(function(){
+  if(window.__cbeInternationalSubjectSearch)return;window.__cbeInternationalSubjectSearch=true;
+  const input=document.getElementById("internationalSubjectSearch");
+  const root=document.getElementById("subjects");
+  const count=document.querySelector(".subject-search-count");
+  if(!input||!root)return;
+  const links=[...root.querySelectorAll(".subject")];
+  const groups=[...root.querySelectorAll(".group")];
+  function filter(){
+    const q=input.value.trim().toLowerCase();let visible=0;
+    links.forEach(a=>{const show=a.textContent.toLowerCase().includes(q);a.hidden=!show;if(show)visible++;});
+    groups.forEach(g=>{g.hidden=!!q&&![...g.querySelectorAll(".subject")].some(a=>!a.hidden);});
+    if(count)count.textContent=q?(visible+" subject"+(visible===1?"":"s")+" found"):"Browse "+links.length+" subject options";
+  }
+  input.addEventListener("input",filter);
+  if(count)count.textContent="Browse "+links.length+" subject options";
+})();
+</script>
 <script src="customer-care.js?v=20261004-2" defer></script>
 </body></html>
