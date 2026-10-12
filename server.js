@@ -1078,15 +1078,26 @@ async function handleApi(req,res,url){
       if(supabaseConfigured){const {data,error}=await supabase.from("resources").select("id,r2_key,status").eq("id",resourceId).maybeSingle();if(error)throw error;resource=data;}
       else {resource=(await readJsonStore("resources.json")).find(x=>String(x.id)===resourceId);}
       if(!resource||String(resource.r2_key||"")!==key||String(resource.status||"approved").toLowerCase()!=="approved"){sendJson(res,403,{ok:false,error:"This protected resource is not available."});return true;}
+      const resourcePriceForProtectedResource=resourcePrice(await findResourceForPayment(resourceId));
       let approval=null;
        if(supabaseConfigured){
-         const {data:payments,error:paymentError}=await supabase.from("purchases").select("id").eq("resource_id",resourceId).eq("customer_phone",phone).in("status",["paid","completed","success"]).order("created_at",{ascending:false}).limit(20);
+         const {data:payments,error:paymentError}=await supabase.from("purchases").select("*").eq("customer_phone",phone).in("status",["paid","completed","success"]).order("created_at",{ascending:false}).limit(100);
          if(paymentError)throw paymentError;
-         const purchaseIds=(payments||[]).map(p=>p.id);
+         const now=Date.now(),gradeNumber=Number(String((await findResourceForPayment(resourceId))?.grade||"").match(/(?:Grade\\s*)?(\\d+)/i)?.[1]||0);
+         const validPayments=(payments||[]).filter(p=>{
+           const pid=String(p.resource_id||"");
+           if(pid===resourceId)return Number(p.amount)===resourcePriceForProtectedResource;
+           if(pid.startsWith("grade-package:"))return gradeNumber>=1&&gradeNumber<=9&&Number(pid.split(":")[1])===gradeNumber;
+           const created=Date.parse(p.created_at||p.verified_at||"");
+           if(!Number.isFinite(created))return false;
+           const days=pid==="subscription:month"?30:pid==="subscription:6months"?183:pid==="subscription:year"?365:0;
+           return days>0&&now<created+days*86400000;
+         });
+         const purchaseIds=validPayments.map(p=>p.id);
          if(purchaseIds.length){const {data,error}=await supabase.from("download_approvals").select("*").in("purchase_id",purchaseIds).eq("resource_id",resourceId).eq("customer_phone",phone).eq("status","approved").order("approved_at",{ascending:false}).limit(1).maybeSingle();if(error)throw error;approval=data;}
        } else approval=(await readJsonStore("download-approvals.json")).find(a=>a.resourceId===resourceId&&a.customerPhone===phone&&a.status==="approved");
 
-      if(!approval){sendJson(res,403,{ok:false,error:"Admin has not approved this download yet."});return true;}
+      if(!approval){sendJson(res,403,{ok:false,error:"Verified payment or active access plan is required for this protected download."});return true;}
       const downloadUrl=await createDownloadUrl(key);
       if(supabaseConfigured){const {error}=await supabase.from("downloads").insert({resource_id:resourceId,customer_phone:phone,purchase_id:approval.purchase_id||null});if(error)console.error("Download log error:",error);}
       sendJson(res,200,{ok:true,downloadUrl,expiresIn:300});return true;
