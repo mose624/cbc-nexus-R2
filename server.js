@@ -140,7 +140,7 @@ async function readCueProgrammes(){
 }
 // Matches the actual Supabase resources table. preview_text is intentionally omitted because it is not present in the live schema.
 function resourceRowFromPayload(p,sellerId=null,previewKey=""){return {seller_id:sellerId,title:String(p.title||"").trim(),description:String(p.description||"").trim(),grade:String(p.grade||"").trim(),subject:String(p.subject||"").trim(),resource_type:String(p.type||"").trim(),filename:String(p.fileName||"").trim(),r2_key:String(p.r2Key||"").trim(),preview_key:String(previewKey||p.previewKey||"").trim(),price:Math.max(0,Number(p.price||0)),discount_price:Math.max(0,Number(p.discountPrice||0)),status:String(p.status||(sellerId?"pending":"approved"))};}
-function resourcePayloadFromRow(r){const internationalCurricula=["IGCSE","IB","O Level","A Level","Pearson"];const curriculum=internationalCurricula.includes(String(r.grade||"").trim())?String(r.grade||"").trim():"CBC/CBE";return {id:r.id,title:r.title,grade:r.grade,subject:r.subject,type:r.resource_type||"",description:r.description||"",curriculum,price:Number(r.price||0),discount:Number(r.discount_price||0),term:"",isFreeSample:false,popularity:0,fileName:r.filename||"",r2Key:r.r2_key||"",previewKey:r.preview_key||"",previewText:"",createdAt:r.created_at||"",updatedAt:r.updated_at||"",file:r.r2_key?"/api/r2/file?key="+encodeURIComponent(r.r2_key):"",status:r.status||"pending",downloads:0,purchases:0,sellerId:r.seller_id||null,createdAt:r.created_at||null,updatedAt:r.updated_at||null};}
+function resourcePayloadFromRow(r){const internationalCurricula=["IGCSE","IB","O Level","A Level","Pearson"];const curriculum=internationalCurricula.includes(String(r.grade||"").trim())?String(r.grade||"").trim():"CBC/CBE";return {id:r.id,title:r.title,grade:r.grade,subject:r.subject,type:r.resource_type||"",description:r.description||"",curriculum,price:Number(r.price||0),discount:Number(r.discount_price||0),term:"",isFreeSample:false,popularity:0,fileName:r.filename||"",r2Key:r.r2_key||"",previewKey:r.preview_key||"",previewText:"",createdAt:r.created_at||"",updatedAt:r.updated_at||"",file:r.r2_key?(Number(r.price||0)===0?"/api/r2/direct-download?resourceId="+encodeURIComponent(r.id):""): "",status:r.status||"pending",downloads:0,purchases:0,sellerId:r.seller_id||null,createdAt:r.created_at||null,updatedAt:r.updated_at||null};}
 function sendJson(res,status,data){res.setHeader("Cache-Control","no-store");res.writeHead(status,{"Content-Type":"application/json; charset=utf-8"});res.end(JSON.stringify(data));}
 function readBody(req){return new Promise((resolve,reject)=>{let b="";req.on("data",c=>{b+=c;if(b.length>MAX_BODY_SIZE){reject(new Error("Request body too large."));req.destroy();}});req.on("end",()=>resolve(b));req.on("error",reject);});}
 function readBinaryBody(req,maxSize=50*1024*1024){return new Promise((resolve,reject)=>{const chunks=[];let total=0;let settled=false;const fail=(e)=>{if(settled)return;settled=true;reject(e);try{req.destroy();}catch{}};req.on("data",c=>{if(settled)return;total+=c.length;if(total>maxSize){fail(new Error("Upload is too large. Maximum file size is 50 MB."));return;}chunks.push(c);});req.on("end",()=>{if(!settled){settled=true;resolve(Buffer.concat(chunks));}});req.on("error",fail);});}
@@ -1022,6 +1022,36 @@ async function handleApi(req,res,url){
     if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
     if(supabaseConfigured){try{const {data,error}=await supabase.from("download_approvals").select("*").order("created_at",{ascending:false}).limit(100);if(error)throw error;sendJson(res,200,{ok:true,approvals:data||[],storage:"supabase"});return true;}catch(error){console.error("Download approvals lookup error:",error);sendJson(res,500,{ok:false,error:"Download approvals could not be loaded."});return true;}}
     sendJson(res,200,{ok:true,approvals:(await readJsonStore("download-approvals.json")).slice(0,100),storage:"local"});return true;
+  }
+  // Direct-download navigation for free resources: redirect the browser to the signed original file,
+  // instead of exposing this API's JSON response as a downloaded file.
+  if(req.method==="GET"&&url.pathname==="/api/r2/direct-download"){
+    const resourceId=String(url.searchParams.get("resourceId")||"").trim();
+    if(!resourceId){sendJson(res,400,{ok:false,error:"Resource ID is required."});return true;}
+    try{
+      let resource=null;
+      if(supabaseConfigured){
+        const {data,error}=await supabase.from("resources").select("id,r2_key,status,filename,price,discount_price").eq("id",resourceId).maybeSingle();
+        if(error)throw error;
+        resource=data;
+      }else{
+        resource=(await readJsonStore("resources.json")).find(x=>String(x.id)===resourceId);
+      }
+      if(!resource||!resource.r2_key||String(resource.status||"approved").toLowerCase()!=="approved"){
+        sendJson(res,404,{ok:false,error:"This resource is not available for download."});return true;
+      }
+      if(resourcePrice(resource)!==0){
+        sendJson(res,402,{ok:false,error:"This resource requires payment. Use the secure paid-download button."});return true;
+      }
+      const fileName=String(resource.filename||resource.fileName||resource.r2_key.split("/").pop()||"resource");
+      const target=await createDownloadUrl(resource.r2_key,fileName);
+      res.writeHead(302,{"Location":target,"Cache-Control":"no-store","Referrer-Policy":"no-referrer"});
+      res.end();
+    }catch(error){
+      console.error("Direct free download error:",error);
+      sendJson(res,500,{ok:false,error:"The original resource file could not be prepared."});
+    }
+    return true;
   }
   // CBE_NEXUS_FREE_DOWNLOAD_V2
   if(req.method==="GET"&&url.pathname==="/api/r2/free-download"){
