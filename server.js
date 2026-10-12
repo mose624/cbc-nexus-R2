@@ -820,7 +820,16 @@ async function handleApi(req,res,url){
     if(!c.shortCode||!c.passkey||!c.callbackUrl){sendJson(res,503,{ok:false,error:"M-Pesa STK Push is not fully configured on the server."});return true;}
     try{
       let resource=null, amount=0;
-      if(/^cv:(basic|classic|professional)$/i.test(resourceId)){
+      const accessPlanPrices={"subscription:month":300,"subscription:6months":700,"subscription:year":1200};
+      const gradePackageMatch=resourceId.match(/^grade-package:([1-9])$/);
+      if(Object.prototype.hasOwnProperty.call(accessPlanPrices,resourceId)){
+        amount=accessPlanPrices[resourceId];
+        const labels={"subscription:month":"1-month all-resource access","subscription:6months":"6-month all-resource access","subscription:year":"12-month all-resource access"};
+        resource={id:resourceId,title:"CBE Nexus "+labels[resourceId],status:"approved",price:amount};
+      }else if(gradePackageMatch){
+        amount=50;
+        resource={id:resourceId,title:"CBE Nexus Grade "+gradePackageMatch[1]+" all-subject package",status:"approved",price:amount};
+      }else if(/^cv:(basic|classic|professional)$/i.test(resourceId)){
         const pkg=resourceId.split(":")[1].toLowerCase();
         amount=pkg==="basic"?200:pkg==="classic"?400:800;
         resource={id:resourceId,title:"CBE Nexus "+pkg+" CV",status:"approved",price:amount};
@@ -907,6 +916,25 @@ async function handleApi(req,res,url){
     if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure download approvals require Supabase payment verification."});return true;}
     try{
       const requestedReference=String(p.paymentReference||p.checkoutRequestID||"").trim();
+      const resource=await findResourceForPayment(resourceId);
+      if(!resource||String(resource.status||"approved").toLowerCase()!=="approved"){sendJson(res,404,{ok:false,error:"The selected resource is not available."});return true;}
+      const {data:entitlements,error:entitlementError}=await supabase.from("purchases").select("*").eq("customer_phone",phone).in("status",["paid","completed","success"]).in("resource_id",["subscription:month","subscription:6months","subscription:year","grade-package:1","grade-package:2","grade-package:3","grade-package:4","grade-package:5","grade-package:6","grade-package:7","grade-package:8","grade-package:9"]).order("created_at",{ascending:false}).limit(100);
+      if(entitlementError)throw entitlementError;
+      const now=Date.now();
+      const gradeNumber=Number(String(resource.grade||"").match(/(?:Grade\\s*)?(\\d+)/i)?.[1]||0);
+      const activeEntitlement=(entitlements||[]).find(e=>{
+        const id=String(e.resource_id||"");
+        if(id.startsWith("grade-package:"))return gradeNumber>=1&&gradeNumber<=9&&Number(id.split(":")[1])===gradeNumber;
+        const created=Date.parse(e.created_at||e.verified_at||"");
+        if(!Number.isFinite(created))return false;
+        const days=id==="subscription:month"?30:id==="subscription:6months"?183:id==="subscription:year"?365:0;
+        return days>0&&now<created+days*86400000;
+      });
+      if(activeEntitlement){
+        const item={id:"approval-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),resourceId,customerPhone:phone,paymentReference:String(activeEntitlement.mpesa_receipt||activeEntitlement.checkout_request_id||""),purchase_id:activeEntitlement.id,status:"approved",approved_at:new Date().toISOString(),createdAt:new Date().toISOString()};
+        const {data,error}=await supabase.from("download_approvals").insert(item).select("*").single();if(error)throw error;
+        sendJson(res,201,{ok:true,approval:data,payment:{status:"paid",receipt:activeEntitlement.mpesa_receipt||null},accessPlan:activeEntitlement.resource_id,storage:"supabase"});return true;
+      }
       let payment=null;
       const {data:payments,error:paymentError}=await supabase.from("purchases").select("*").eq("resource_id",resourceId).eq("customer_phone",phone).in("status",["paid","completed","success"]).order("created_at",{ascending:false}).limit(1);
       if(paymentError)throw paymentError;
@@ -915,8 +943,6 @@ async function handleApi(req,res,url){
       if(!payment){sendJson(res,402,{ok:false,error:"No verified M-Pesa payment was found for this resource and phone number."});return true;}
       if(String(payment.status).toLowerCase()==="pending"){try{payment=await verifyMpesaPaymentByQuery(payment.checkout_request_id)||payment;}catch{}}
       if(!["paid","completed","success"].includes(String(payment.status||"").toLowerCase())){sendJson(res,402,{ok:false,error:"Your M-Pesa payment has not been verified yet."});return true;}
-      const resource=await findResourceForPayment(resourceId);
-      if(!resource||String(resource.status||"approved").toLowerCase()!=="approved"){sendJson(res,404,{ok:false,error:"The selected resource is not available."});return true;}
       if(resourcePrice(resource)!==Number(payment.amount)){sendJson(res,402,{ok:false,error:"Verified payment amount does not match the resource price."});return true;}
       const item={id:"approval-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),resourceId,customerPhone:phone,paymentReference:String(payment.mpesa_receipt||payment.checkout_request_id||requestedReference||""),purchase_id:payment.id,status:"approved",approved_at:new Date().toISOString(),createdAt:new Date().toISOString()};
       const {data,error}=await supabase.from("download_approvals").insert(item).select("*").single();if(error)throw error;
