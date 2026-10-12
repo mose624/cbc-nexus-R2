@@ -921,7 +921,7 @@ async function handleApi(req,res,url){
       const {data:entitlements,error:entitlementError}=await supabase.from("purchases").select("*").eq("customer_phone",phone).in("status",["paid","completed","success"]).in("resource_id",["subscription:month","subscription:6months","subscription:year","grade-package:1","grade-package:2","grade-package:3","grade-package:4","grade-package:5","grade-package:6","grade-package:7","grade-package:8","grade-package:9"]).order("created_at",{ascending:false}).limit(100);
       if(entitlementError)throw entitlementError;
       const now=Date.now();
-      const gradeNumber=Number(String(resource.grade||"").match(/(?:Grade\\s*)?(\\d+)/i)?.[1]||0);
+      const gradeNumber=Number(String(resource.grade||"").match(/(?:Grade\s*)?(\d+)/i)?.[1]||0);
       const activeEntitlement=(entitlements||[]).find(e=>{
         const id=String(e.resource_id||"");
         if(id.startsWith("grade-package:"))return gradeNumber>=1&&gradeNumber<=9&&Number(id.split(":")[1])===gradeNumber;
