@@ -97,7 +97,7 @@ async function getResources(){
   const cached=readResourceCache();
   if(cached.resources.length&&Date.now()-cached.time<RESOURCE_CACHE_TTL)return cached.resources;
   return refreshResourcesInBackground();
-}function normalizeResource(r){return {...r,id:r.id??r.resource_id,title:r.title||"Untitled resource",grade:String(r.grade||"").trim(),subject:canonicalSubjectName(r.subject||""),type:canonicalTypeName(r.type||r.resource_type||""),description:r.description||"",price:Number(r.price??0),discount:Number(r.discount??r.discount_price??0),fileName:r.fileName||r.filename||"",r2Key:r.r2Key||r.r2_key||"",previewKey:r.previewKey||r.preview_key||"",file:r.file||(r.r2_key?"/api/r2/file?key="+encodeURIComponent(r.r2_key):""),status:String(r.status||"approved").toLowerCase(),createdAt:r.createdAt||r.created_at||"",updatedAt:r.updatedAt||r.updated_at||""};}
+}function normalizeResource(r){return {...r,id:r.id??r.resource_id,title:r.title||"Untitled resource",grade:String(r.grade||"").trim(),subject:canonicalSubjectName(r.subject||""),type:canonicalTypeName(r.type||r.resource_type||""),description:r.description||"",price:Number(r.price??0),discount:Number(r.discount??r.discount_price??0),fileName:r.fileName||r.filename||"",r2Key:r.r2Key||r.r2_key||"",previewKey:r.previewKey||r.preview_key||"",file:r.file||(r.r2_key&&Number(r.price??0)===0?"/api/r2/direct-download?resourceId="+encodeURIComponent(r.id??r.resource_id??""):""),status:String(r.status||"approved").toLowerCase(),createdAt:r.createdAt||r.created_at||"",updatedAt:r.updatedAt||r.updated_at||""};}
 function norm(v){return canonicalSubjectName(String(v||"").trim());}
 function render(){
   updateContext();
