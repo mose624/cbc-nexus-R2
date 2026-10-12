@@ -182,11 +182,16 @@ async function createDownloadUrl(key, fileName = "") {
   // Prefer the real filename extension over the storage-key extension. Older uploads
   // may have a .bin storage key even when the original document was a PDF/Word file.
   let storedContentType = "";
-  try {
-    const head = await client.send(new HeadObjectCommand({ Bucket: cfg.bucket, Key: key }));
-    storedContentType = String(head.ContentType || "").split(";")[0].trim().toLowerCase();
-  } catch (error) {
-    console.warn("Could not inspect R2 object metadata for download:", error.message || error);
+  // Avoid an extra R2 network round-trip for ordinary downloads when the requested
+  // filename or object key already identifies the file type. Only inspect metadata
+  // for legacy uploads whose names are missing an extension or end in .bin.
+  if (isPlaceholderExt(requestedExt) && isPlaceholderExt(keyExt)) {
+    try {
+      const head = await client.send(new HeadObjectCommand({ Bucket: cfg.bucket, Key: key }));
+      storedContentType = String(head.ContentType || "").split(";")[0].trim().toLowerCase();
+    } catch (error) {
+      console.warn("Could not inspect R2 object metadata for download:", error.message || error);
+    }
   }
   const extensionByContentType = {
     "application/pdf":"pdf",
