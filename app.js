@@ -710,7 +710,7 @@ async function syncPublicResourcesFromServer() {
         r2Key: r.r2Key || r.r2_key || "",
         fileName: r.fileName || r.filename || "",
         previewKey: r.previewKey || r.preview_key || "",
-        file: r.file || ((r.r2Key || r.r2_key) ? "/api/r2/file?key=" + encodeURIComponent(r.r2Key || r.r2_key) : "")
+        file: r.file || (((r.r2Key || r.r2_key) && Number(r.price ?? 0) === 0) ? "/api/r2/direct-download?resourceId=" + encodeURIComponent(r.id ?? r.resource_id ?? "") : "")
       }))
       .filter((r) => r.id && r.status === "approved" && !["IGCSE","IB","O Level","A Level","Pearson"].includes(String(r.grade || "").trim()));
 
