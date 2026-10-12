@@ -1675,7 +1675,7 @@ async function requestMpesaPayment(event){
     const download=await fetch("/api/r2/file?key="+encodeURIComponent(key)+"&resourceId="+encodeURIComponent(resourceId)+"&phone="+encodeURIComponent(phone),{credentials:"same-origin",cache:"no-store"});
     const result=await download.json().catch(()=>({}));
     if(!download.ok||!result.ok)throw new Error(result.error||"Secure download is not available.");
-    if(status){status.innerHTML="<strong style=\\"color:#166534;font-size:18px;\\">✅ PAYMENT SUCCESSFUL — DOWNLOAD STARTING</strong><br><span>Your payment is confirmed. Your secure resource download is starting now.</span>";status.className="form-status payment-success";}
+    if(status){status.innerHTML="<strong style=\"color:#166534;font-size:18px;\">✅ PAYMENT SUCCESSFUL — DOWNLOAD STARTING</strong><br><span>Your payment is confirmed. Your secure resource download is starting now.</span>";status.className="form-status payment-success";}
     window.location.href=result.downloadUrl;
   }catch(error){
     if(status)status.textContent=error.message||"Payment could not be completed.";
