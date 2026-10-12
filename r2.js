@@ -174,33 +174,61 @@ async function deleteObject(key) {
 
 async function createDownloadUrl(key, fileName = "") {
   const { cfg, client } = getClient();
-  const cleanName = String(fileName || key.split("/").pop() || "resource.bin")
+  const keyName = String(key || "").split("/").pop() || "resource.bin";
+  const requestedName = String(fileName || "").trim();
+  const keyExt = keyName.toLowerCase().match(/\.([a-z0-9]{1,8})$/)?.[1] || "";
+  const requestedExt = requestedName.toLowerCase().match(/\.([a-z0-9]{1,8})$/)?.[1] || "";
+  // Keep the uploaded file's extension from the storage key if metadata omitted it.
+  const originalName = requestedName
+    ? (requestedExt || !keyExt ? requestedName : requestedName + "." + keyExt)
+    : keyName;
+  const cleanName = originalName
     .replace(/[\r\n"]/g, "_")
     .replace(/[\\/]/g, "_")
-    .trim() || "resource.bin";
-  const ext = cleanName.toLowerCase().match(/\.([a-z0-9]{1,8})$/)?.[1] || "";
+    .trim() || keyName;
+  const ext = keyExt || cleanName.toLowerCase().match(/\.([a-z0-9]{1,8})$/)?.[1] || "";
   const contentTypes = {
     pdf: "application/pdf",
     doc: "application/msword",
     docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    docm: "application/vnd.ms-word.document.macroEnabled.12",
+    rtf: "application/rtf",
+    odt: "application/vnd.oasis.opendocument.text",
     xls: "application/vnd.ms-excel",
     xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    xlsm: "application/vnd.ms-excel.sheet.macroEnabled.12",
+    ods: "application/vnd.oasis.opendocument.spreadsheet",
     ppt: "application/vnd.ms-powerpoint",
     pptx: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    pptm: "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
+    odp: "application/vnd.oasis.opendocument.presentation",
     txt: "text/plain; charset=utf-8",
+    md: "text/markdown; charset=utf-8",
     csv: "text/csv; charset=utf-8",
+    json: "application/json",
+    xml: "application/xml",
+    html: "text/html; charset=utf-8",
+    htm: "text/html; charset=utf-8",
     jpg: "image/jpeg",
     jpeg: "image/jpeg",
     png: "image/png",
     webp: "image/webp",
     gif: "image/gif",
-    zip: "application/zip"
+    svg: "image/svg+xml",
+    zip: "application/zip",
+    rar: "application/vnd.rar",
+    "7z": "application/x-7z-compressed",
+    mp3: "audio/mpeg",
+    mp4: "video/mp4"
   };
+  const asciiName = cleanName.replace(/[^\x20-\x7E]/g, "_").replace(/[%\\]/g, "_");
+  const encodedName = encodeURIComponent(cleanName).replace(/['()*]/g, ch => "%" + ch.charCodeAt(0).toString(16).toUpperCase());
   const command = new GetObjectCommand({
     Bucket: cfg.bucket,
     Key: key,
-    ResponseContentDisposition: 'attachment; filename="' + cleanName + '"',
-    ...(contentTypes[ext] ? { ResponseContentType: contentTypes[ext] } : {})
+    ResponseContentDisposition: 'attachment; filename="' + asciiName + '"; filename*=UTF-8\'\'' + encodedName,
+    ResponseContentType: contentTypes[ext] || "application/octet-stream",
+    ResponseCacheControl: "private, no-store"
   });
   return getSignedUrl(client, command, { expiresIn: 300 });
 }
