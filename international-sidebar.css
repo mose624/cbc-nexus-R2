@@ -1,0 +1,32 @@
+/* International curriculum left-side navigation inspired by resource-directory layouts. */
+:root { --intl-sidebar-width: 232px; }
+body { padding-left: var(--intl-sidebar-width) !important; }
+#cbeInternationalSidebar {
+  position: fixed; inset: 0 auto 0 0; z-index: 10000;
+  width: var(--intl-sidebar-width); height: 100vh; overflow-y: auto;
+  padding: 22px 14px 26px; background: #071a3d; color: #fff;
+  border-right: 4px solid #18b6d9; box-shadow: 8px 0 26px rgba(7,26,61,.12);
+  font-family: Inter, Arial, sans-serif;
+}
+#cbeInternationalSidebar .intl-side-brand { display:block; padding: 0 9px 18px; margin-bottom: 18px; border-bottom:1px solid rgba(255,255,255,.2); color:#fff; text-decoration:none; font-size:20px; font-weight:900; line-height:1.25; }
+#cbeInternationalSidebar .intl-side-brand small { display:block; margin-top:7px; color:#bcd5f3; font-size:11px; letter-spacing:1.1px; text-transform:uppercase; }
+#cbeInternationalSidebar .intl-side-heading { padding:0 10px; margin:0 0 10px; color:#8ee5f3; font-size:11px; font-weight:900; letter-spacing:1.3px; text-transform:uppercase; }
+#cbeInternationalSidebar .intl-side-links { display:grid; gap:6px; }
+#cbeInternationalSidebar .intl-side-links a { display:flex; align-items:center; gap:10px; min-height:44px; padding:10px 11px; border:1px solid rgba(255,255,255,.12); border-radius:9px; color:#eaf2ff; font-size:13px; font-weight:750; text-decoration:none; line-height:1.25; transition:background .18s,border-color .18s,transform .18s; }
+#cbeInternationalSidebar .intl-side-links a:hover, #cbeInternationalSidebar .intl-side-links a:focus-visible { background:#12376b; border-color:#18b6d9; transform:translateX(2px); outline:none; }
+#cbeInternationalSidebar .intl-side-links a[aria-current="page"] { background:#e8f9fc; border-color:#18b6d9; color:#071a3d; box-shadow:inset 4px 0 #18b6d9; }
+#cbeInternationalSidebar .intl-side-links .intl-side-dot { width:8px;height:8px;flex:0 0 8px;border-radius:50%;background:#18b6d9; }
+#cbeInternationalSidebar .intl-side-footer { margin:22px 9px 0; padding-top:15px; border-top:1px solid rgba(255,255,255,.2); color:#bcd5f3; font-size:11px; line-height:1.6; }
+@media (max-width: 760px) {
+  body { padding-left:0 !important; }
+  #cbeInternationalSidebar { position:relative; inset:auto; width:100%; height:auto; max-height:none; overflow:visible; padding:12px 12px 14px; border-right:0; border-bottom:4px solid #18b6d9; box-shadow:none; }
+  #cbeInternationalSidebar .intl-side-brand { padding:0 4px 10px; margin-bottom:10px; font-size:18px; }
+  #cbeInternationalSidebar .intl-side-brand small { display:inline; margin-left:7px; }
+  #cbeInternationalSidebar .intl-side-heading { padding:0 4px; margin-bottom:8px; }
+  #cbeInternationalSidebar .intl-side-links { display:flex; flex-wrap:wrap; gap:6px; }
+  #cbeInternationalSidebar .intl-side-links a { min-height:38px; padding:8px 10px; flex:1 1 135px; }
+  #cbeInternationalSidebar .intl-side-footer { display:none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #cbeInternationalSidebar .intl-side-links a { transition:none; }
+}
