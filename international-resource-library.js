@@ -14,7 +14,9 @@
   const esc = (v) => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const money = v => "KSh " + Math.max(0, Math.round(Number(v || 0))).toLocaleString();
   const curr = curriculum.toLowerCase();
-  const requestedSubject = new URLSearchParams(window.location.search).get("subject")?.trim() || "";
+  const queryParams = new URLSearchParams(window.location.search);
+  const requestedSubject = queryParams.get("subject")?.trim() || "";
+  const requestedType = queryParams.get("type")?.trim() || "";
 
   function matches(r) {
     const c = String(r.curriculum || r.grade || "").trim().toLowerCase();
@@ -80,6 +82,7 @@
       resources = data.resources.filter(r => String(r.curriculum || r.grade || "").trim().toLowerCase() === curr && String(r.status || "approved").toLowerCase() === "approved");
       fillSubjects();
       if (requestedSubject && subject) subject.value = [...subject.options].some(o => o.value.toLowerCase() === requestedSubject.toLowerCase()) ? requestedSubject : "";
+      if (requestedType && type) type.value = [...type.options].some(o => o.value.toLowerCase() === requestedType.toLowerCase()) ? requestedType : "";
       status.textContent = resources.length ? "This is the dedicated "+curriculum+" library. CBC/CBE resources remain completely separate." : "No approved "+curriculum+" resources have been published yet.";
       render();
     } catch {
@@ -89,6 +92,18 @@
   }
 
   [subject,type,search].forEach(el => el?.addEventListener(el === search ? "input" : "change", render));
+  document.querySelectorAll("[data-filter-type]").forEach(card => card.addEventListener("click", () => {
+    const selectedType = String(card.dataset.filterType || "").trim();
+    if (type) type.value = [...type.options].some(o => o.value.toLowerCase() === selectedType.toLowerCase()) ? selectedType : "";
+    if (window.history?.replaceState) {
+      const params = new URLSearchParams(window.location.search);
+      if (selectedType && type?.value) params.set("type", type.value); else params.delete("type");
+      const query = params.toString();
+      window.history.replaceState({}, "", window.location.pathname + (query ? "?" + query : "") + "#internationalResources");
+    }
+    render();
+    document.getElementById("internationalResources")?.scrollIntoView({behavior:"smooth",block:"start"});
+  }));
   reset?.addEventListener("click", () => { if(subject) subject.value=""; if (window.history?.replaceState) window.history.replaceState({}, "", window.location.pathname + "#internationalResources"); if(type) type.value=""; if(search) search.value=""; render(); });
   load();
 })();
