@@ -1729,9 +1729,9 @@
 })();
 </script>
 
-<!-- CBE NEXUS HOMEPAGE HEADER COMPACT BUTTONS -->
+<!-- CBE NEXUS HOMEPAGE HEADER: PHONE-ONLY COMPACT TRICOLOUR CONTROLS -->
 <style>
-/* Homepage phone view only: compact professional header controls */
+/* Phone view only: smaller header buttons with the desktop red/yellow/green colour rhythm */
 @media(max-width:760px){
   .site-header .top-strip a,
   .site-header .main-nav .nav-link,
@@ -1742,27 +1742,51 @@
     color:#fff!important;
     border:1px solid #14532d!important;
     border-radius:4px!important;
-    min-height:27px!important;
-    height:27px!important;
-    padding:3px 6px!important;
-    font-size:9px!important;
+    min-height:23px!important;
+    height:23px!important;
+    padding:2px 5px!important;
+    font-size:8px!important;
     line-height:1!important;
     font-weight:600!important;
     letter-spacing:0!important;
     box-shadow:none!important;
     margin:0!important;
+    white-space:nowrap!important;
   }
-  .site-header .top-strip{gap:0!important;}
-  .site-header .main-nav .nav-menu{gap:0!important;}
-  .site-header .main-nav .nav-actions{gap:0!important;}
+  /* Repeat the desktop-style yellow, red and green sequence across both header rows */
+  .site-header .top-strip a:nth-child(3n+1),
+  .site-header .main-nav .nav-menu > .nav-link:nth-child(3n+1),
+  .site-header .main-nav .nav-menu > .nav-dropdown:nth-child(3n+1) > summary,
+  .site-header .main-nav .nav-actions > :nth-child(3n+1){
+    background:#facc15!important;
+    border-color:#eab308!important;
+    color:#422006!important;
+  }
+  .site-header .top-strip a:nth-child(3n+2),
+  .site-header .main-nav .nav-menu > .nav-link:nth-child(3n+2),
+  .site-header .main-nav .nav-menu > .nav-dropdown:nth-child(3n+2) > summary,
+  .site-header .main-nav .nav-actions > :nth-child(3n+2){
+    background:#dc2626!important;
+    border-color:#b91c1c!important;
+    color:#fff!important;
+  }
+  .site-header .top-strip a:nth-child(3n),
+  .site-header .main-nav .nav-menu > .nav-link:nth-child(3n),
+  .site-header .main-nav .nav-menu > .nav-dropdown:nth-child(3n) > summary,
+  .site-header .main-nav .nav-actions > :nth-child(3n){
+    background:#15803d!important;
+    border-color:#166534!important;
+    color:#fff!important;
+  }
+  .site-header .top-strip,
+  .site-header .main-nav .nav-menu,
+  .site-header .main-nav .nav-actions{gap:2px!important;}
   .site-header .top-strip a:hover,
   .site-header .main-nav .nav-link:hover,
   .site-header .main-nav .nav-dropdown > summary:hover,
   .site-header .main-nav .nav-actions a:hover,
   .site-header .main-nav .nav-actions button:hover{
-    background:#166534!important;
-    color:#fff!important;
-    border-color:#166534!important;
+    filter:brightness(.94)!important;
   }
   /* Save phone header space by hiding only Marking Scheme */
   .site-header .top-strip a[href*="Marking%20Schemes"],
