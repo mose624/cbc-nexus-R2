@@ -172,12 +172,69 @@ async function sendResourceUpdateEmails(resource){
 }
 
 function mpesaCredential(kind){const exact=kind==="key"?["MPESA_CONSUMER_KEY","MPESA_CONSUMERKEY","MPESA_KEY","CONSUMER_KEY","CONSUMERKEY","DARAJA_CONSUMER_KEY","SAFARICOM_CONSUMER_KEY"]:["MPESA_CONSUMER_SECRET","MPESA_CONSUMERSECRET","MPESA_SECRET","CONSUMER_SECRET","CONSUMERSECRET","DARAJA_CONSUMER_SECRET","SAFARICOM_CONSUMER_SECRET"];const direct=firstEnv(...exact);if(direct)return direct;const keys=Object.keys(process.env);const candidates=keys.filter(name=>{const n=name.toUpperCase();const hasProvider=/(MPESA|DARAJA|SAFARICOM)/.test(n);const hasConsumer=/CONSUMER/.test(n);const hasPart=kind==="key"?/(KEY|KEY_ID)/.test(n):/(SECRET|SECRET_KEY)/.test(n);return hasProvider&&hasConsumer&&hasPart;});for(const name of candidates){const value=String(process.env[name]??"").trim();if(value)return value;}return "";}
-async function getMpesaAccessToken(){const k=mpesaCredential("key"),s=mpesaCredential("secret");if(!k||!s)throw new Error("M-Pesa consumer credentials are not available to the running Render service.");const base=String(process.env.MPESA_ENVIRONMENT||"sandbox").toLowerCase()==="production"?"https://api.safaricom.co.ke":"https://sandbox.safaricom.co.ke";return await new Promise((res,rej)=>{const https=require("https"),q=https.request(base+"/oauth/v1/generate?grant_type=client_credentials",{headers:{Authorization:"Basic "+Buffer.from(k+":"+s).toString("base64"),Accept:"application/json"}},r=>{let d="";r.on("data",c=>d+=c);r.on("end",()=>{let x={};try{x=JSON.parse(d||"{}");}catch{rej(new Error("Daraja authorization returned a non-JSON response (HTTP "+String(r.statusCode||500)+")."));return;}if(x.access_token){res(x.access_token);return;}const detail=String(x.error_description||x.error||x.ResponseDescription||x.message||"No access token returned.");rej(new Error("Daraja authorization failed (HTTP "+String(r.statusCode||500)+"): "+detail.slice(0,240)));});});q.on("error",rej);q.end();});}
+let mpesaTokenCache={token:"",expiresAt:0,pending:null};
+async function getMpesaAccessToken(){
+  const now=Date.now();
+  if(mpesaTokenCache.token && now<mpesaTokenCache.expiresAt-60000) return mpesaTokenCache.token;
+  if(mpesaTokenCache.pending) return mpesaTokenCache.pending;
+  mpesaTokenCache.pending=(async()=>{
+    const k=mpesaCredential("key"),secret=mpesaCredential("secret");
+    if(!k||!secret) throw new Error("M-Pesa consumer credentials are not available to the running Render service.");
+    const base=mpesaBase();
+    const https=require("https");
+    const token=await new Promise((resolve,reject)=>{
+      const q=https.request(base+"/oauth/v1/generate?grant_type=client_credentials",{
+        headers:{Authorization:"Basic "+Buffer.from(k+":"+secret).toString("base64"),Accept:"application/json"},
+        timeout:10000
+      },r=>{
+        let d="";
+        r.on("data",c=>d+=c);
+        r.on("end",()=>{
+          let x={};
+          try{x=JSON.parse(d||"{}");}
+          catch{reject(new Error("Daraja authorization returned a non-JSON response (HTTP "+String(r.statusCode||500)+")."));return;}
+          if(r.statusCode>=200&&r.statusCode<300&&x.access_token){resolve({token:x.access_token,expiresIn:Number(x.expires_in)||3600});return;}
+          const detail=String(x.error_description||x.error||x.ResponseDescription||x.message||"No access token returned.");
+          reject(new Error("Daraja authorization failed (HTTP "+String(r.statusCode||500)+"): "+detail.slice(0,240)));
+        });
+      });
+      q.on("timeout",()=>q.destroy(new Error("Daraja authorization timed out after 10 seconds.")));
+      q.on("error",reject);
+      q.end();
+    });
+    mpesaTokenCache.token=token.token;
+    mpesaTokenCache.expiresAt=Date.now()+Math.max(60,token.expiresIn-60)*1000;
+    return token.token;
+  })();
+  try{return await mpesaTokenCache.pending;}
+  finally{mpesaTokenCache.pending=null;}
+}
 function normalizeMpesaPhone(p){p=String(p||"").replace(/\s+/g,"");if(/^0[17]\d{8}$/.test(p))return"254"+p.slice(1);if(/^254[17]\d{8}$/.test(p))return p;return"";}
 function mpesaBase(){return String(process.env.MPESA_ENVIRONMENT||"sandbox").toLowerCase()==="production"?"https://api.safaricom.co.ke":"https://sandbox.safaricom.co.ke";}
 function mpesaTimestamp(){const d=new Date();return d.getFullYear().toString()+String(d.getMonth()+1).padStart(2,"0")+String(d.getDate()).padStart(2,"0")+String(d.getHours()).padStart(2,"0")+String(d.getMinutes()).padStart(2,"0")+String(d.getSeconds()).padStart(2,"0");}
 function mpesaPassword(shortCode,passkey,timestamp){return Buffer.from(String(shortCode)+String(passkey)+String(timestamp)).toString("base64");}
-async function darajaPost(pathname,body,token){const https=require("https"),base=mpesaBase();return await new Promise((res,rej)=>{const q=https.request(base+pathname,{method:"POST",headers:{Authorization:"Bearer "+token,"Content-Type":"application/json"}},r=>{let d="";r.on("data",c=>d+=c);r.on("end",()=>{try{res({status:r.statusCode||500,data:JSON.parse(d)});}catch{res({status:r.statusCode||500,data:{raw:d}});}})});q.on("error",rej);q.write(JSON.stringify(body));q.end();});}
+async function darajaPost(pathname,body,token){
+  const https=require("https"),base=mpesaBase();
+  return await new Promise((resolve,reject)=>{
+    const q=https.request(base+pathname,{
+      method:"POST",
+      headers:{Authorization:"Bearer "+token,"Content-Type":"application/json","Accept":"application/json"},
+      timeout:15000
+    },r=>{
+      let d="";
+      r.on("data",c=>d+=c);
+      r.on("end",()=>{
+        let data;
+        try{data=JSON.parse(d||"{}");}
+        catch{data={raw:String(d||"").slice(0,1000)};}
+        resolve({status:r.statusCode||500,data});
+      });
+    });
+    q.on("timeout",()=>q.destroy(new Error("Daraja request timed out after 15 seconds.")));
+    q.on("error",reject);
+    q.end(JSON.stringify(body));
+  });
+}
 function getMpesaConfig(){return {shortCode:firstEnv("MPESA_SHORTCODE","MPESA_BUSINESS_SHORTCODE","MPESA_SHORT_CODE"),tillNumber:firstEnv("MPESA_TILL_NUMBER","MPESA_TILL","MPESA_PARTY_B"),passkey:firstEnv("MPESA_PASSKEY","MPESA_LIPA_NA_MPESA_PASSKEY"),callbackUrl:firstEnv("MPESA_CALLBACK_URL","MPESA_CALLBACK"),environment:firstEnv("MPESA_ENVIRONMENT","MPESA_ENV")||"sandbox"};}
 async function findResourceForPayment(resourceId){if(!resourceId)return null;if(supabaseConfigured){const {data,error}=await supabase.from("resources").select("id,title,price,discount_price,status,r2_key,grade").eq("id",resourceId).maybeSingle();if(error)throw error;return data;}const rows=await readJsonStore("resources.json");return rows.find(r=>String(r.id)===String(resourceId))||null;}
 function resourcePrice(row){const price=Math.max(0,Number(row?.price||0));const sale=Number(row?.discount_price??row?.discount??0);const payable=sale>0&&sale<price?sale:price;return Math.max(0,Math.round(payable));}
