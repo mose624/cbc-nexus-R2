@@ -138,6 +138,12 @@ async function startDirectMpesaPurchase(resource,b){
       const download=await fetch("/api/r2/file?key="+encodeURIComponent(key)+"&resourceId="+encodeURIComponent(id)+"&phone="+encodeURIComponent(phone),{credentials:"same-origin",cache:"no-store"});
       const downloadData=await download.json().catch(()=>({}));
       if(!download.ok||!downloadData.ok)throw new Error(downloadData.error||"Secure download is unavailable.");
+      b.innerHTML="✅ Payment Successful — Downloading…";
+      const notice=document.createElement("p");
+      notice.setAttribute("role","status");
+      notice.style.cssText="margin:10px 0;padding:12px 14px;border-radius:8px;background:#e8f7ed;color:#166534;font-weight:700;border:1px solid #86d6a1";
+      notice.textContent="✅ Payment successful! Your secure download is starting now.";
+      b.closest(".actions")?.parentElement?.appendChild(notice);
       window.location.href=downloadData.downloadUrl;
       return;
     }
