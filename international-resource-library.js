@@ -25,6 +25,7 @@
   }
   const topicFilter = addMetadataFilter("internationalLibraryTopic", "Topics");
   const levelFilter = addMetadataFilter("internationalLibraryLevel", "Levels");
+  const qualificationFilter = addMetadataFilter("internationalLibraryQualification", "Qualifications");
   const sessionFilter = addMetadataFilter("internationalLibrarySession", "Exam Sessions");
   const metadataValue = (r, keys) => {
     for (const key of keys) {
@@ -50,15 +51,18 @@
     const t = String(type?.value || "").trim().toLowerCase();
     const topic = String(topicFilter?.value || "").trim().toLowerCase();
     const level = String(levelFilter?.value || "").trim().toLowerCase();
+    const qualification = String(qualificationFilter?.value || "").trim().toLowerCase();
     const session = String(sessionFilter?.value || "").trim().toLowerCase();
     const rowTopic = metadataValue(r, ["topic","topics","unit","chapter"]).toLowerCase();
-    const rowLevel = metadataValue(r, ["level","qualification","stage","yearGroup"]).toLowerCase();
+    const rowLevel = metadataValue(r, ["level","stage","yearGroup","gradeLevel"]).toLowerCase();
+    const rowQualification = metadataValue(r, ["qualification","qualificationLevel","examBoard","syllabus","specification"]).toLowerCase();
     const rowSession = metadataValue(r, ["examSession","session","exam_session","series"]).toLowerCase();
-    const hay = [r.title,r.description,r.subject,r.type,r.fileName,rowTopic,rowLevel,rowSession].join(" ").toLowerCase();
+    const hay = [r.title,r.description,r.subject,r.type,r.fileName,rowTopic,rowLevel,rowQualification,rowSession].join(" ").toLowerCase();
     return c === curr && (!s || String(r.subject || "").trim().toLowerCase() === s)
       && (!t || String(r.type || "").trim().toLowerCase() === t)
       && (!topic || rowTopic.split(",").map(v => v.trim()).includes(topic))
       && (!level || rowLevel === level)
+      && (!qualification || rowQualification === qualification)
       && (!session || rowSession === session)
       && (!q || hay.includes(q));
   }
@@ -135,7 +139,7 @@
     }
   }
 
-  [subject,type,topicFilter,levelFilter,sessionFilter,search].forEach(el => el?.addEventListener(el === search ? "input" : "change", render));
+  [subject,type,topicFilter,levelFilter,qualificationFilter,sessionFilter,search].forEach(el => el?.addEventListener(el === search ? "input" : "change", render));
   document.querySelectorAll("[data-filter-type]").forEach(card => card.addEventListener("click", () => {
     const selectedType = String(card.dataset.filterType || "").trim();
     if (type) type.value = [...type.options].some(o => o.value.toLowerCase() === selectedType.toLowerCase()) ? selectedType : "";
@@ -148,6 +152,6 @@
     render();
     document.getElementById("internationalResources")?.scrollIntoView({behavior:"smooth",block:"start"});
   }));
-  reset?.addEventListener("click", () => { if(subject) subject.value=""; if(topicFilter) topicFilter.value=""; if(levelFilter) levelFilter.value=""; if(sessionFilter) sessionFilter.value=""; if (window.history?.replaceState) window.history.replaceState({}, "", window.location.pathname + "#internationalResources"); if(type) type.value=""; if(search) search.value=""; render(); });
+  reset?.addEventListener("click", () => { if(subject) subject.value=""; if(topicFilter) topicFilter.value=""; if(levelFilter) levelFilter.value=""; if(qualificationFilter) qualificationFilter.value=""; if(sessionFilter) sessionFilter.value=""; if (window.history?.replaceState) window.history.replaceState({}, "", window.location.pathname + "#internationalResources"); if(type) type.value=""; if(search) search.value=""; render(); });
   load();
 })();
