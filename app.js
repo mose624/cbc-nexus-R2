@@ -1028,7 +1028,13 @@ async function handleFormSubmit(event) {
     const submitButton = elements.form.querySelector('button[type="submit"]');
     if (submitButton) submitButton.textContent = "✓ Upload Successful";
     // Refresh only the resource moderation list; do not navigate/reset the Admin Dashboard.
-    if (typeof window.loadAdminResourceModeration === "function") await window.loadAdminResourceModeration();
+    if (typeof window.loadAdminResourceModeration === "function") {
+      // Do not make the upload-success response wait for the separate moderation list.
+      // Refresh it in the background so the admin can publish the next resource sooner.
+      Promise.resolve().then(() => window.loadAdminResourceModeration()).catch((refreshError) => {
+        console.warn("Background moderation refresh failed:", refreshError);
+      });
+    }
   } catch (error) {
     console.error("CBE Nexus resource publish error:", error);
     elements.formStatus.textContent = error.message || "Resource could not be published.";
