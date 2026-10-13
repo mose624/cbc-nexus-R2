@@ -8,7 +8,32 @@
   const type = document.querySelector("#internationalLibraryType");
   const search = document.querySelector("#internationalLibrarySearch");
   const reset = document.querySelector("#internationalLibraryReset");
+  const controls = document.querySelector(".international-library-controls");
   if (!grid || !curriculum) return;
+
+  function addMetadataFilter(id, label) {
+    if (!controls) return null;
+    let el = document.getElementById(id);
+    if (!el) {
+      el = document.createElement("select");
+      el.id = id;
+      el.setAttribute("aria-label", label);
+      el.innerHTML = '<option value="">All ' + label + '</option>';
+      controls.insertBefore(el, controls.querySelector("#internationalLibraryReset") || null);
+    }
+    return el;
+  }
+  const topicFilter = addMetadataFilter("internationalLibraryTopic", "Topics");
+  const levelFilter = addMetadataFilter("internationalLibraryLevel", "Levels");
+  const sessionFilter = addMetadataFilter("internationalLibrarySession", "Exam Sessions");
+  const metadataValue = (r, keys) => {
+    for (const key of keys) {
+      const value = r && r[key];
+      if (Array.isArray(value) && value.length) return value.map(v => String(v ?? "").trim()).filter(Boolean).join(", ");
+      if (value !== undefined && value !== null && String(value).trim()) return String(value).trim();
+    }
+    return "";
+  };
 
   let resources = [];
   const esc = (v) => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -23,9 +48,19 @@
     const q = String(search?.value || "").trim().toLowerCase();
     const s = String(subject?.value || "").trim().toLowerCase();
     const t = String(type?.value || "").trim().toLowerCase();
-    const hay = [r.title,r.description,r.subject,r.type,r.fileName].join(" ").toLowerCase();
+    const topic = String(topicFilter?.value || "").trim().toLowerCase();
+    const level = String(levelFilter?.value || "").trim().toLowerCase();
+    const session = String(sessionFilter?.value || "").trim().toLowerCase();
+    const rowTopic = metadataValue(r, ["topic","topics","unit","chapter"]).toLowerCase();
+    const rowLevel = metadataValue(r, ["level","qualification","stage","yearGroup"]).toLowerCase();
+    const rowSession = metadataValue(r, ["examSession","session","exam_session","series"]).toLowerCase();
+    const hay = [r.title,r.description,r.subject,r.type,r.fileName,rowTopic,rowLevel,rowSession].join(" ").toLowerCase();
     return c === curr && (!s || String(r.subject || "").trim().toLowerCase() === s)
-      && (!t || String(r.type || "").trim().toLowerCase() === t) && (!q || hay.includes(q));
+      && (!t || String(r.type || "").trim().toLowerCase() === t)
+      && (!topic || rowTopic.split(",").map(v => v.trim()).includes(topic))
+      && (!level || rowLevel === level)
+      && (!session || rowSession === session)
+      && (!q || hay.includes(q));
   }
 
   function render() {
@@ -66,10 +101,19 @@
     window.location.href = "index.html?resource="+encodeURIComponent(r.title)+"&amount="+encodeURIComponent(Math.max(0, Math.round(Number(r.price || 0))))+"#payments";
   }
 
+  function fillSelect(el, label, values) {
+    if (!el) return;
+    const selected = el.value;
+    el.innerHTML = '<option value="">All ' + label + '</option>' + values.map(v => '<option value="' + esc(v) + '">' + esc(v) + '</option>').join("");
+    if (values.includes(selected)) el.value = selected;
+  }
+
   function fillSubjects() {
-    if (!subject) return;
     const values = [...new Set(resources.map(r => String(r.subject || "").trim()).filter(Boolean))].sort((a,b) => a.localeCompare(b));
-    subject.innerHTML = '<option value="">All Subjects</option>' + values.map(v => '<option value="'+esc(v)+'">'+esc(v)+'</option>').join("");
+    fillSelect(subject, "Subjects", values);
+    fillSelect(topicFilter, "Topics", [...new Set(resources.map(r => metadataValue(r, ["topic","topics","unit","chapter"]).split(",").map(v => v.trim()).filter(Boolean)).flat())].sort((a,b) => a.localeCompare(b)));
+    fillSelect(levelFilter, "Levels", [...new Set(resources.map(r => metadataValue(r, ["level","qualification","stage","yearGroup"])).filter(Boolean))].sort((a,b) => a.localeCompare(b)));
+    fillSelect(sessionFilter, "Exam Sessions", [...new Set(resources.map(r => metadataValue(r, ["examSession","session","exam_session","series"])).filter(Boolean))].sort((a,b) => a.localeCompare(b)));
   }
 
   async function load() {
@@ -91,7 +135,7 @@
     }
   }
 
-  [subject,type,search].forEach(el => el?.addEventListener(el === search ? "input" : "change", render));
+  [subject,type,topicFilter,levelFilter,sessionFilter,search].forEach(el => el?.addEventListener(el === search ? "input" : "change", render));
   document.querySelectorAll("[data-filter-type]").forEach(card => card.addEventListener("click", () => {
     const selectedType = String(card.dataset.filterType || "").trim();
     if (type) type.value = [...type.options].some(o => o.value.toLowerCase() === selectedType.toLowerCase()) ? selectedType : "";
@@ -104,6 +148,6 @@
     render();
     document.getElementById("internationalResources")?.scrollIntoView({behavior:"smooth",block:"start"});
   }));
-  reset?.addEventListener("click", () => { if(subject) subject.value=""; if (window.history?.replaceState) window.history.replaceState({}, "", window.location.pathname + "#internationalResources"); if(type) type.value=""; if(search) search.value=""; render(); });
+  reset?.addEventListener("click", () => { if(subject) subject.value=""; if(topicFilter) topicFilter.value=""; if(levelFilter) levelFilter.value=""; if(sessionFilter) sessionFilter.value=""; if (window.history?.replaceState) window.history.replaceState({}, "", window.location.pathname + "#internationalResources"); if(type) type.value=""; if(search) search.value=""; render(); });
   load();
 })();
