@@ -883,9 +883,9 @@ async function handleFormSubmit(event) {
   const notes = elements.notesContent.value.trim();
   const price = Number(document.querySelector("#priceInput").value || 0);
   const discount = Number(document.querySelector("#discountInput").value || 0);
-  const grade = elements.adminGrade.value;
-  const curriculum = elements.adminCurriculum ? elements.adminCurriculum.value : "CBC/CBE";
-  const subject = elements.adminSubject.value;
+  let grade = String(elements.adminGrade?.value || "").trim();
+  const curriculum = String(elements.adminCurriculum?.value || "CBC/CBE").trim();
+  const subject = String(elements.adminSubject?.value || "").trim();
   const type = elements.adminType.value;
   let fileName = document.querySelector("#fileNameInput").value.trim();
   const internationalCurricula = ["IGCSE","Cambridge International","IB","O Level","A Level","Pearson"];
@@ -897,10 +897,20 @@ async function handleFormSubmit(event) {
     return;
   }
 
-  if (isInternationalUpload && (!grade || grade !== curriculum)) {
-    elements.formStatus.textContent = "Select the international curriculum and its subject before publishing.";
-    showToast("Choose a valid international curriculum and subject.");
-    return;
+  if (isInternationalUpload) {
+    // Keep the stored grade/curriculum key aligned even if the grade dropdown did not
+    // refresh after the curriculum selection (for example, after a delayed script load).
+    if (elements.adminGrade && grade !== curriculum) {
+      optionList(elements.adminGrade, [curriculum], curriculum);
+      grade = curriculum;
+    }
+    const validSubjects = gradeSubjects[curriculum] || [];
+    const subjectIsValid = validSubjects.some((name) => canonicalSubjectName(name) === canonicalSubjectName(subject));
+    if (!grade || grade !== curriculum || !subject || !subjectIsValid) {
+      elements.formStatus.textContent = "Choose an international curriculum and a subject from that curriculum’s subject list before publishing.";
+      showToast("Select the international curriculum and its subject before publishing.");
+      return;
+    }
   }
 
   if (!uploadedFile) {
