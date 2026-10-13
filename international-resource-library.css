@@ -2,7 +2,7 @@
 .international-library-header{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:20px}
 .international-library-kicker{color:#0d2d5f;font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
 .international-library-header h2{margin:6px 0 5px;color:#061a3a}.international-library-header p{margin:0;color:#5d6b80}
-.international-library-controls{display:grid;grid-template-columns:1.2fr 1fr 1fr auto;gap:10px;margin-bottom:18px}
+.international-library-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px;margin-bottom:18px}
 .international-library-controls input,.international-library-controls select{width:100%;padding:11px 12px;border:1px solid #cbd5e1;border-radius:9px;background:#fff;color:#10213f;font:inherit}
 .international-library-controls button{padding:11px 15px;border:1px solid #173b70;border-radius:9px;background:#f4f7fb;color:#10213f;font-weight:800;cursor:pointer}
 .international-library-summary{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:14px;color:#526176;font-size:14px}.international-library-summary strong{color:#061a3a;font-size:22px}
