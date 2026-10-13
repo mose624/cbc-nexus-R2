@@ -1,3 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="144 132 959 959">
-  <image href="/CBC%20Nexus%20Education%20Emblem.png" width="1254" height="1254" preserveAspectRatio="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="13" fill="#075e35"/>
+  <circle cx="32" cy="32" r="27" fill="#ffffff" stroke="#f2c94c" stroke-width="3"/>
+  <path d="M13 18h38v28H13z" fill="#075e35"/>
+  <text x="32" y="37" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="900" text-anchor="middle" fill="#ffffff">CBE</text>
+  <path d="M18 43h28" stroke="#f2c94c" stroke-width="2.5" stroke-linecap="round"/>
 </svg>
