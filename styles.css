@@ -5060,3 +5060,33 @@ a[href="tuition.html"] * {
   -webkit-text-fill-color: #16803c !important;
   animation: holidayTuitionTextBlink .8s ease-in-out infinite !important;
 }
+
+
+/* CBE Nexus official emblem: clearer, larger header branding without changing layout */
+.site-header .brand-logo {
+  display: block;
+  width: 68px;
+  height: 68px;
+  flex: 0 0 68px;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 10px;
+  background: #fff;
+  padding: 3px;
+  box-shadow: 0 2px 9px rgba(0, 0, 0, .18);
+}
+@media (max-width: 900px) {
+  .site-header .brand-logo {
+    width: 56px;
+    height: 56px;
+    flex-basis: 56px;
+  }
+}
+@media (max-width: 520px) {
+  .site-header .brand-logo {
+    width: 48px;
+    height: 48px;
+    flex-basis: 48px;
+    padding: 2px;
+  }
+}
