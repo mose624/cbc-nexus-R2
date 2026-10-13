@@ -108,7 +108,7 @@ footer a{color:#fff}
 <section class="section wrap" aria-labelledby="subjectsHeading">
 <div class="section-heading"><div><h2 id="subjectsHeading">Browse the subject directory</h2><p>Search common subjects, then choose the curriculum portal that matches your qualification.</p></div></div>
 <div class="subject-panel">
-<div class="subject-tools"><input id="subjectSearch" type="search" aria-label="Search subjects" placeholder="Find a subject, e.g. Biology or Economics" autocomplete="off"><select id="subjectArea" aria-label="Filter subjects by learning area"><option value="">All subject areas</option><option value="languages">Languages</option><option value="sciences">Sciences</option><option value="mathematics">Mathematics</option><option value="humanities">Humanities & social sciences</option><option value="business">Business & technology</option><option value="arts">Arts & other subjects</option></select></div>
+<div class="subject-tools"><input id="subjectSearch" type="search" aria-label="Search subjects" placeholder="Find a subject, e.g. Biology or Economics" autocomplete="off"><select id="subjectCurriculum" aria-label="Choose curriculum"><option value="igcse.html">IGCSE</option><option value="cambridge-international.html">Cambridge International</option><option value="ib.html">IB</option><option value="o-levels.html">O Level</option><option value="a-levels.html">A Level</option><option value="pearson-edexcel.html">Pearson Edexcel</option></select><select id="subjectArea" aria-label="Filter subjects by learning area"><option value="">All subject areas</option><option value="languages">Languages</option><option value="sciences">Sciences</option><option value="mathematics">Mathematics</option><option value="humanities">Humanities & social sciences</option><option value="business">Business & technology</option><option value="arts">Arts & other subjects</option></select></div>
 <div class="subject-grid" id="subjectGrid">
 <a class="subject-item" data-area="languages" data-search="english language literature" href="igcse.html?subject=English%20Language#internationalResources">English Language <span aria-hidden="true">›</span></a>
 <a class="subject-item" data-area="languages" data-search="english literature" href="igcse.html?subject=English%20Literature#internationalResources">English Literature <span aria-hidden="true">›</span></a>
@@ -163,7 +163,7 @@ footer a{color:#fff}
   const q=(subjectInput.value||input.value||"").trim().toLowerCase();
   const selected=area.value;
   let shown=0;
-  subjectItems.forEach(item=>{const match=(!q||(item.dataset.search+" "+item.textContent).toLowerCase().includes(q))&&(!selected||item.dataset.area===selected);item.hidden=!match;if(match)shown++;});
+  subjectItems.forEach(item=>{const match=(!q||(item.dataset.search+" "+item.textContent).toLowerCase().includes(q))&&(!selected||item.dataset.area===selected);item.hidden=!match;if(match)shown++; const base=curriculumChoice?.value||"igcse.html"; const subjectName=item.textContent.replace(/›/g,"").trim(); item.href=base+"?subject="+encodeURIComponent(subjectName)+"#internationalResources";});
   subjectEmpty.style.display=shown?"none":"block";
  }
  input.addEventListener("input",filterCurricula);
