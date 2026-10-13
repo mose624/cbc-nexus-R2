@@ -5090,3 +5090,48 @@ a[href="tuition.html"] * {
     padding: 2px;
   }
 }
+
+
+/* EXTRA-VISIBLE CBE Nexus branding: deliberately large emblem and wordmark */
+.site-header .main-nav { min-height: 118px; }
+.site-header .brand { gap: 16px; align-items: center; }
+.site-header .brand-logo {
+  display: block;
+  width: 104px;
+  height: 104px;
+  flex: 0 0 104px;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 14px;
+  background: #fff;
+  padding: 4px;
+  box-shadow: 0 3px 12px rgba(0,0,0,.22);
+}
+.site-header .brand strong {
+  display: block;
+  font-size: clamp(25px, 2.2vw, 36px);
+  line-height: 1.08;
+  font-weight: 900;
+  letter-spacing: .025em;
+  text-transform: uppercase;
+}
+.site-header .brand small {
+  display: block;
+  margin-top: 6px;
+  font-size: clamp(12px, 1.1vw, 15px);
+  font-weight: 700;
+  line-height: 1.25;
+}
+@media (max-width: 900px) {
+  .site-header .main-nav { min-height: 92px; }
+  .site-header .brand { gap: 12px; }
+  .site-header .brand-logo { width: 80px; height: 80px; flex-basis: 80px; }
+  .site-header .brand strong { font-size: clamp(22px, 4vw, 30px); }
+}
+@media (max-width: 520px) {
+  .site-header .main-nav { min-height: 78px; gap: 8px; }
+  .site-header .brand { gap: 9px; }
+  .site-header .brand-logo { width: 68px; height: 68px; flex-basis: 68px; padding: 2px; border-radius: 10px; }
+  .site-header .brand strong { font-size: 21px; letter-spacing: .01em; }
+  .site-header .brand small { font-size: 10px; margin-top: 3px; }
+}
