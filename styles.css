@@ -1964,6 +1964,58 @@ img, svg, video, iframe {
   }
 }
 
+/* Mobile dropdown reliability: make every header dropdown visible and touch-friendly,
+   including Teaching & Learning Resources and its nested grade/curriculum menus. */
+@media (max-width: 760px) {
+  .site-header .main-nav details[open] > .dropdown-panel,
+  .site-header .main-nav details[open] > .dropdown-grade-subjects {
+    position: fixed !important;
+    top: 105px !important;
+    left: 10px !important;
+    right: 10px !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    max-height: 65vh !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    z-index: 99990 !important;
+    display: grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background: #fff !important;
+    color: #111827 !important;
+    border: 2px solid #d1d5db !important;
+    border-radius: 10px !important;
+    box-shadow: 0 12px 30px rgba(15,23,42,.28) !important;
+    pointer-events: auto !important;
+  }
+  .site-header .main-nav details[open] > .dropdown-panel a,
+  .site-header .main-nav details[open] > .dropdown-grade-subjects a {
+    display: block !important;
+    width: 100% !important;
+    min-height: 42px !important;
+    height: auto !important;
+    padding: 12px 14px !important;
+    margin: 0 !important;
+    font-size: 14px !important;
+    line-height: 1.35 !important;
+    white-space: normal !important;
+    text-align: left !important;
+    color: #111827 !important;
+    background: #fff !important;
+    border-bottom: 1px solid #e5e7eb !important;
+    pointer-events: auto !important;
+    box-sizing: border-box !important;
+  }
+  .site-header .main-nav details > summary {
+    touch-action: manipulation;
+    cursor: pointer !important;
+    -webkit-tap-highlight-color: rgba(37,99,235,.2);
+  }
+}
+
 /* Professional dropdown navigation */
 .nav-menu {
   display: flex;
