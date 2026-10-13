@@ -32,7 +32,7 @@
     const subscriptionCss = document.createElement("link");
     subscriptionCss.id = "cbe-resource-subscribe-css";
     subscriptionCss.rel = "stylesheet";
-    subscriptionCss.href = "/customer-care.css?v=20261010-subscribe1";
+    subscriptionCss.href = "/customer-care.css?v=20261013-subscribe-yellow";
     document.head.appendChild(subscriptionCss);
   }
 
