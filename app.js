@@ -210,6 +210,7 @@ const gradeSubjects = {
   "Grade 11": ["Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","Islamic Religious Education","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","Hindu Religious Education","Mandarin Chinese"],
   "Grade 12": ["Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","Islamic Religious Education","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","Hindu Religious Education","Mandarin Chinese"],
   "IGCSE": ["Mathematics","Biology","Chemistry","Physics","English","Business Studies","Economics","Computer Science","Geography","History","French","Spanish","German","Swahili","Art & Design","Physical Education","Accounting","Agriculture","Design & Technology","Drama","Global Perspectives","ICT","Psychology","Sociology","Travel & Tourism"],
+  "Cambridge International": ["English Language","English Literature","English as a Second Language","Mathematics","Additional Mathematics","Biology","Chemistry","Physics","Combined Science","Computer Science","ICT","Business Studies","Economics","Accounting","Geography","History","Global Perspectives","French","Spanish","German","Arabic","Art & Design","Design & Technology","Physical Education"],
   "IB": ["English Language & Literature","English Literature","French","Spanish","Business Management","Economics","Geography","History","Biology","Chemistry","Physics","Computer Science","Mathematics","Visual Arts","Music","Theatre","Film"],
   "O Level": ["English","Mathematics","Biology","Chemistry","Physics","Geography","History","Business Studies","Accounting","Economics","Computer Science","ICT","French","Spanish","Arabic","Art & Design","Design & Technology","Religious Studies","Physical Education"],
   "A Level": ["Mathematics","Further Mathematics","Physics","Chemistry","Biology","Economics","Business","Accounting","Computer Science","English Language","English Literature","French","Spanish","Geography","History","Psychology","Art & Design","Music","Drama","Travel & Tourism","Sociology","Law"],
@@ -713,7 +714,7 @@ async function syncPublicResourcesFromServer() {
         previewKey: r.previewKey || r.preview_key || "",
         file: r.file || (((r.r2Key || r.r2_key) && Number(r.price ?? 0) === 0) ? "/api/r2/direct-download?resourceId=" + encodeURIComponent(r.id ?? r.resource_id ?? "") : "")
       }))
-      .filter((r) => r.id && r.status === "approved" && !["IGCSE","IB","O Level","A Level","Pearson"].includes(String(r.grade || "").trim()));
+      .filter((r) => r.id && r.status === "approved" && !["IGCSE","Cambridge International","IB","O Level","A Level","Pearson"].includes(String(r.grade || "").trim()));
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(remote));
     renderResources();
@@ -850,7 +851,7 @@ function saveLocalList(key, item) {
 function refreshAdminUploadSubjects() {
   if (!elements.adminCurriculum || !elements.adminGrade || !elements.adminSubject) return;
   const curriculum = String(elements.adminCurriculum.value || "CBC/CBE").trim();
-  const internationalCurricula = ["IGCSE","IB","O Level","A Level","Pearson"];
+  const internationalCurricula = ["IGCSE","Cambridge International","IB","O Level","A Level","Pearson"];
   const international = internationalCurricula.includes(curriculum);
   if (international) {
     optionList(elements.adminGrade, [curriculum], curriculum);
@@ -887,7 +888,7 @@ async function handleFormSubmit(event) {
   const subject = elements.adminSubject.value;
   const type = elements.adminType.value;
   let fileName = document.querySelector("#fileNameInput").value.trim();
-  const internationalCurricula = ["IGCSE","IB","O Level","A Level","Pearson"];
+  const internationalCurricula = ["IGCSE","Cambridge International","IB","O Level","A Level","Pearson"];
   const isInternationalUpload = internationalCurricula.includes(curriculum);
 
   if (!title || !description || !subject || !type || !price && price !== 0) {
