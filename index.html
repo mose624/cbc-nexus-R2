@@ -181,7 +181,18 @@
 .quality-tick{color:#22c55e;font-size:1.05rem;font-weight:1000;text-shadow:0 1px 2px rgba(0,0,0,.25)}
 .quality-gold{color:#f5c542;font-size:1.05rem;font-weight:1000;text-shadow:0 1px 2px rgba(0,0,0,.25)}
 @media(max-width:650px){.footer-quality-badges{flex-direction:column;gap:7px}.footer-quality-badge{font-size:.78rem}}
-</style></head>
+</style><style id="international-header-dropdown-fix">
+/* Ensure the International Curriculum menu opens and its links remain clickable. */
+.site-header .main-nav .nav-dropdown.international-header-dropdown{position:relative;z-index:1200;flex-shrink:0}
+.site-header .main-nav .international-header-dropdown>summary{cursor:pointer;pointer-events:auto;position:relative;z-index:1202;user-select:none}
+.site-header .main-nav .international-header-dropdown:not([open])>.dropdown-panel{display:none!important}
+.site-header .main-nav .international-header-dropdown[open]>.dropdown-panel{display:grid!important;position:absolute;top:calc(100% + 5px);left:0;z-index:1201;min-width:230px;max-width:min(300px,90vw);background:#fff;pointer-events:auto}
+.site-header .main-nav .international-header-dropdown>.dropdown-panel>a{display:block;visibility:visible;opacity:1;pointer-events:auto}
+@media(max-width:760px){
+ .site-header .main-nav .international-header-dropdown[open]>.dropdown-panel{position:absolute;top:calc(100% + 4px);left:0;max-width:90vw;max-height:65vh;overflow-y:auto}
+}
+</style>
+</head>
   <body>
     <header class="site-header">
       <div class="top-strip">
