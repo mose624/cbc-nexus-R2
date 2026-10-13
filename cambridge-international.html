@@ -34,7 +34,7 @@ footer{background:var(--navy);color:#c9d7eb;text-align:center;padding:28px 5%;fo
 </style><link rel="stylesheet" href="customer-care.css?v=20261004-2">
 <link rel="stylesheet" href="international-sidebar.css?v=20261013-1">
 </head>
-<body>
+<body data-curriculum="Cambridge International">
 <div class="top"><div class="wrap">CBE Nexus • International Curriculum Resource Centre</div></div>
 <nav class="nav"><a class="brand" href="index.html">CBE Nexus</a><a class="back" href="index.html">← Back to CBE Nexus</a></nav>
 <div class="international-quick-nav" aria-label="International resource navigation">
@@ -89,7 +89,18 @@ footer{background:var(--navy);color:#c9d7eb;text-align:center;padding:28px 5%;fo
         <a href="resource-category.html?subject=Art%20%26%20Design&curriculum=Cambridge%20International" class="subject">Art & Design<span>→</span></a><a href="resource-category.html?subject=Design%20%26%20Technology&curriculum=Cambridge%20International" class="subject">Design & Technology<span>→</span></a><a href="resource-category.html?subject=Information%20Technology&curriculum=Cambridge%20International" class="subject">Information Technology<span>→</span></a><a href="resource-category.html?subject=Travel%20%26%20Tourism&curriculum=Cambridge%20International" class="subject">Travel & Tourism<span>→</span></a>
       </div>
     </section></section>
-</div></main>
+</div><section id="internationalResources" class="international-library-section" aria-label="Cambridge International dedicated resource library">
+  <div class="international-library-header"><div><div class="international-library-kicker">Dedicated Resource Library</div><h2>Cambridge International Resources</h2><p id="internationalLibraryStatus">Loading approved resources...</p></div></div>
+  <div class="international-library-controls">
+    <input id="internationalLibrarySearch" type="search" placeholder="Search Cambridge International resources..." aria-label="Search Cambridge International resources">
+    <select id="internationalLibrarySubject" aria-label="Filter by subject"><option value="">All Subjects</option></select>
+    <select id="internationalLibraryType" aria-label="Filter by resource type"><option value="">All Resource Types</option><option>Notes</option><option>Study Guides</option><option>Topical Questions</option><option>Assessment Test</option><option>Past Papers</option><option>Marking Schemes</option><option>Schemes of Work</option><option>Lesson Plan</option><option>Assignments</option><option>Projects</option><option>Quizzes</option></select>
+    <button id="internationalLibraryReset" type="button">Reset</button>
+  </div>
+  <div class="international-library-summary"><span><strong id="internationalLibraryCount">0</strong> approved resource(s)</span><span>Only Cambridge International materials are shown here.</span></div>
+  <div id="internationalLibraryGrid" class="international-library-grid"></div>
+</section>
+</main>
 <footer><div class="wrap"><strong>CBE Nexus</strong> — Connecting learners to excellence.<br><a href="index.html">Home</a> · <a href="resource-category.html">Resource Library</a> · <a href="international-teaching-jobs.html">International Teaching Jobs</a></div></footer>
 <script>
 (function(){
@@ -110,6 +121,7 @@ footer{background:var(--navy);color:#c9d7eb;text-align:center;padding:28px 5%;fo
   if(count)count.textContent="Browse "+links.length+" subject options";
 })();
 </script>
+<script src="international-resource-library.js?v=20261004-1"></script>
 <script src="customer-care.js?v=20261004-2" defer></script>
 <script src="international-sidebar.js?v=20261013-1" defer></script>
 </body></html>
