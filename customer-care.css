@@ -61,7 +61,7 @@
 /* Floating CBE Nexus resource-update subscription */
 #cbe-resource-subscribe{all:initial;position:fixed;right:20px;bottom:88px;z-index:2147482998;font-family:Arial,Helvetica,sans-serif;color:#173042;box-sizing:border-box}
 #cbe-resource-subscribe *{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
-#cbe-resource-subscribe .crs-launcher{border:0;border-radius:999px;padding:13px 17px;background:#166534;color:#fff;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 5px 18px rgba(0,0,0,.2);white-space:nowrap}
+#cbe-resource-subscribe .crs-launcher{border:1px solid #eab308;border-radius:999px;padding:13px 17px;background:#facc15;color:#422006;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 5px 18px rgba(0,0,0,.2);white-space:nowrap}
 #cbe-resource-subscribe .crs-launcher span{margin-right:6px}
 #cbe-resource-subscribe .crs-panel{position:absolute;right:0;bottom:56px;width:min(355px,calc(100vw - 28px));max-height:calc(100vh - 150px);overflow:auto;background:#fff;border:1px solid #d5e3dc;border-radius:15px;box-shadow:0 14px 40px rgba(0,0,0,.24)}
 #cbe-resource-subscribe .crs-panel[hidden]{display:none}
