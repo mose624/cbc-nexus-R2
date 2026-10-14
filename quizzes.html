@@ -1,22 +1,188 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Marked Quizzes & Learner Progress | CBE Nexus</title>
-    <link rel="stylesheet" href="styles.css">
-  <meta name="description" content="Take automated CBC quizzes, receive instant feedback and track learner progress on CBE Nexus.">
-<link rel="canonical" href="https://cbenexus.co.ke/quizzes.html">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Marked Quizzes & Learner Progress | CBE Nexus","url":"https://cbenexus.co.ke/quizzes.html","isPartOf":{"@type":"WebSite","name":"CBE Nexus","url":"https://cbenexus.co.ke/"}}</script>
-<link rel="stylesheet" href="customer-care.css?v=20261004-2">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Automated Marked Quizzes & Learner Progress | CBE Nexus</title>
+  <meta name="description" content="Take curriculum-linked quizzes, get instant marking, review learning gaps, and track learner progress on CBE Nexus.">
+  <link rel="canonical" href="https://cbenexus.co.ke/quizzes.html">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="customer-care.css?v=20261004-2">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Automated Marked Quizzes & Learner Progress | CBE Nexus","url":"https://cbenexus.co.ke/quizzes.html","isPartOf":{"@type":"WebSite","name":"CBE Nexus","url":"https://cbenexus.co.ke/"}}</script>
 </head>
-  <body>
-    <main class="info-band">
-      <p class="eyebrow">Page 6</p>
-      <h1>Automated Marked Quizzes</h1>
-      <p>Complete quizzes, receive instant marks, and save progress reports.</p>
-      <a class="primary-button" href="index.html#quizCentre">Start Quiz</a>
-    </main>
+<body>
+  <header class="site-header">
+    <div class="top-strip">
+      <a href="index.html" aria-label="CBE Nexus home">CBE Nexus</a>
+      <nav aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="resources.html">Resources</a>
+        <a href="quizzes.html" aria-current="page">Quizzes & Progress</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="info-band info-band-light">
+      <p class="eyebrow">CBE Nexus Learning Tools</p>
+      <h1>Automated Marked Quizzes & Learner Progress</h1>
+      <p>Choose a grade and subject, take a randomized quiz, receive instant marking, review learning gaps, and track learner progress.</p>
+      <p><a class="ghost-button" href="index.html">← Back to Home</a></p>
+    </section>
+    <section id="quizCentre" class="info-band">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Automated assessment</p>
+            <h2>Automated Marked Quizzes &amp; Learner Progress</h2>
+            <p>Choose a grade and subject, take a randomized quiz, receive instant marking, and build a learner progress history.</p>
+          </div>
+          <div class="price-pill">Instant marking <strong>100%</strong></div>
+        </div>
+
+        <form id="quizForm" class="quiz-panel">
+          <div class="form-row">
+            <label>
+              Learner Name
+              <input id="quizLearnerInput" required placeholder="Learner name">
+            </label>
+            <label>
+              Grade
+              <select id="quizGradeInput" required></select>
+            </label>
+            <label>
+              Subject
+              <select id="quizSubjectInput" required></select>
+            </label>
+            <label>
+              Strand / Topic
+              <select id="quizStrandInput" required>
+                <option value="All Topics">All Topics</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="form-row">
+            <div id="quizContentCovered" class="quiz-curriculum-meta" aria-live="polite">Select a strand and sub-strand to view content covered.</div>
+            <label>
+              Sub-Strand
+              <select id="quizSubStrandInput">
+                <option value="All Sub-Strands">All Sub-Strands</option>
+              </select>
+            </label>
+            <label>
+              Specific Learning Outcome
+              <select id="quizOutcomeInput">
+                <option value="All Outcomes">All Learning Outcomes</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="quiz-toolbar">
+            <label>
+              Number of Questions
+              <select id="quizLengthInput">
+                <option value="5">5 Questions</option>
+                <option value="10" selected>10 Questions</option>
+              </select>
+            </label>
+            <label>
+              Quiz Mode
+              <select id="quizModeInput">
+                <option value="practice" selected>Practice</option>
+                <option value="assessment">Assessment</option>
+              </select>
+            </label>
+            <button class="secondary-button" id="startQuizButton" type="button">Start / Restart Quiz</button>
+          </div>
+
+          <div class="quiz-setter-panel">
+            <div class="progress-panel-heading">
+              <div>
+                <h3>Set Questions</h3>
+                <p>Create your own curriculum-linked multiple-choice questions. Saved questions are available when you start quizzes on this browser.</p>
+              </div>
+              <button class="secondary-button" id="toggleQuestionSetterButton" type="button">Open Question Setter</button>
+            </div>
+
+            <div id="questionSetter" class="hidden-section">
+              <div class="form-row">
+                <label>
+                  Question
+                  <textarea id="setQuestionText" rows="3" placeholder="e.g. What is the place value of 8 in 48,305?"></textarea>
+                </label>
+              </div>
+              <div class="form-row">
+                <label>Option A<input id="setOptionA" placeholder="First option"></label>
+                <label>Option B<input id="setOptionB" placeholder="Second option"></label>
+                <label>Option C<input id="setOptionC" placeholder="Third option"></label>
+                <label>Option D<input id="setOptionD" placeholder="Fourth option"></label>
+              </div>
+              <div class="form-row">
+                <label>
+                  Correct Answer
+                  <select id="setCorrectAnswer">
+                    <option value="0">A</option>
+                    <option value="1">B</option>
+                    <option value="2">C</option>
+                    <option value="3">D</option>
+                  </select>
+                </label>
+                <label>
+                  Content Covered
+                  <input id="setContentCovered" placeholder="Specific content assessed">
+                </label>
+              </div>
+              <div class="form-row">
+                <label>
+                  Explanation
+                  <textarea id="setExplanation" rows="2" placeholder="Explain why the correct answer is correct."></textarea>
+                </label>
+              </div>
+              <div class="quiz-actions">
+                <button class="primary-button" id="saveSetQuestionButton" type="button">Save Question</button>
+                <button class="ghost-button" id="clearSetQuestionButton" type="button">Clear Form</button>
+              </div>
+              <p id="questionSetterStatus" class="form-status" aria-live="polite"></p>
+              <div id="setQuestionsList" class="quiz-review"></div>
+            </div>
+          </div>
+
+          <div id="quizInstructions" class="quiz-instructions">
+            Select the learner, grade and subject, then click <strong>Start / Restart Quiz</strong>.
+          </div>
+          <div id="quizTimer" class="quiz-timer" aria-live="polite">Time: 00:00</div>
+          <div id="quizQuestions" class="quiz-questions"></div>
+
+          <div class="quiz-actions">
+            <button class="primary-button" id="submitQuizButton" type="submit" disabled>Submit &amp; Mark Quiz</button>
+            <button class="ghost-button" id="clearQuizButton" type="button">Clear Answers</button>
+          </div>
+          <p id="quizStatus" class="form-status" aria-live="polite"></p>
+        </form>
+
+        <div id="quizResultPanel" class="quiz-result-panel hidden-section" aria-live="polite"></div>
+
+        <div class="progress-panel">
+          <div class="progress-panel-heading">
+            <div>
+              <h3>Learner Progress</h3>
+              <p>Scores are stored in this browser and can later be connected to the CBE Nexus learner account database.</p>
+            </div>
+            <button class="secondary-button" id="clearQuizProgressButton" type="button">Clear My Progress</button>
+          </div>
+          <div id="progressReport"></div>
+          <div class="learning-gaps-panel">
+            <div class="progress-panel-heading">
+              <div>
+                <h3>Learning Gaps &amp; Remediation</h3>
+                <p>See the strands/topics where the learner is struggling and launch focused practice immediately.</p>
+              </div>
+            </div>
+            <div id="learningGapsReport"></div>
+          </div>
+        </div>
+      </section>
+  </main>
+  <script src="assessment.js?v=20261014-quizpage1" defer></script>
   <script src="customer-care.js?v=20261004-2" defer></script>
 </body>
 </html>
