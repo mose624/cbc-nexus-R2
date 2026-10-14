@@ -118,6 +118,7 @@
       return;
     }
     if(!ctx.packageName){if(status)status.textContent="Enter a Package / Set Name so these files can be identified together.";return;}
+    if(["Assessment Test","Past Papers"].includes(ctx.type)&&ctx.assessmentType==="Not applicable"){if(status)status.textContent="Choose Opener, Midterm, Endterm, Revision or Topical for assessment and exam resources.";return;}
     if(files.length>30){if(status)status.textContent="Select no more than 30 files per batch.";return;}
     if(files.some(f=>f.size===0)){if(status)status.textContent="The batch contains an empty file. Remove it and try again.";return;}
     const originalLabel=button?.textContent;
