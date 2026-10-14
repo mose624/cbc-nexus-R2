@@ -1104,7 +1104,9 @@ async function handleApi(req,res,url){
       // strategy from actual R2 metadata first, then fall back to the saved filename.
       const fileName=String(resource.filename||resource.fileName||"");
       const sourceKey=String(resource.r2_key||"");
-      // Admin filenames may omit extensions; fall back to the actual object key so PDF/DOCX previews still work.\n      const getExtension=(value)=>String(value||"").toLowerCase().match(/\.([a-z0-9]{1,8})(?:[?#].*)?$/)?.[1]||"";\n      const ext=getExtension(fileName)||getExtension(sourceKey);
+      // Admin filenames may omit extensions; fall back to the actual object key so PDF/DOCX previews still work.
+      const getExtension=(value)=>String(value||"").toLowerCase().match(/\.([a-z0-9]{1,8})(?:[?#].*)?$/)?.[1]||"";
+      const ext=getExtension(fileName)||getExtension(sourceKey);
       const metadata=await getObjectMetadata(sourceKey);
       const actualType=String(metadata.contentType||"application/octet-stream").split(";")[0].trim().toLowerCase();
       const imageTypes=new Set(["image/jpeg","image/png","image/webp","image/gif"]);
