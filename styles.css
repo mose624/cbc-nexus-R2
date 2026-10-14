@@ -5082,3 +5082,29 @@ a[href="tuition.html"] * {
 .home-dashboard-card.indigo{background:#e0e7ff;color:#3730a3;border-color:#c7d2fe}
 @media(max-width:900px){.home-dashboard-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.home-dashboard-cards{padding:24px 13px}.home-dashboard-card-grid{grid-template-columns:1fr;gap:10px}.home-dashboard-card{min-height:0;padding:15px}}
+
+
+/* Compact homepage navigation cards — smaller footprint while keeping six colours. */
+.home-dashboard-cards{padding:18px 14px!important}
+.home-dashboard-cards-heading{margin-bottom:14px!important}
+.home-dashboard-cards-heading h2{font-size:1.25rem!important;margin:3px 0 5px!important}
+.home-dashboard-cards-heading p:last-child{font-size:.88rem!important}
+.home-dashboard-card-grid{gap:10px!important}
+.home-dashboard-card{min-height:104px!important;padding:12px!important;gap:6px!important;border-radius:11px!important;box-shadow:0 2px 7px rgba(15,23,42,.06)!important}
+.home-dashboard-card .dashboard-card-icon{font-size:1.25rem!important;line-height:1.05!important}
+.home-dashboard-card strong{font-size:.9rem!important;line-height:1.25!important}
+.home-dashboard-card span:last-child{font-size:.78rem!important;line-height:1.35!important}
+@media(max-width:900px){
+ .home-dashboard-card-grid{gap:9px!important}
+ .home-dashboard-card{min-height:96px!important;padding:11px!important}
+}
+@media(max-width:520px){
+ .home-dashboard-cards{padding:15px 10px!important}
+ .home-dashboard-cards-heading{margin-bottom:11px!important}
+ .home-dashboard-cards-heading h2{font-size:1.12rem!important}
+ .home-dashboard-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+ .home-dashboard-card{min-height:88px!important;padding:9px!important;gap:5px!important;border-radius:9px!important}
+ .home-dashboard-card .dashboard-card-icon{font-size:1.1rem!important}
+ .home-dashboard-card strong{font-size:.78rem!important;line-height:1.2!important}
+ .home-dashboard-card span:last-child{font-size:.68rem!important;line-height:1.25!important}
+}
