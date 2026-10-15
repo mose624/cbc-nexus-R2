@@ -5108,3 +5108,42 @@ a[href="tuition.html"] * {
  .home-dashboard-card strong{font-size:.78rem!important;line-height:1.2!important}
  .home-dashboard-card span:last-child{font-size:.68rem!important;line-height:1.25!important}
 }
+
+
+/* Dedicated Interactive Questions header CTA: high-contrast green blink. */
+.interactive-questions-header-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 42px;
+  padding: 10px 14px;
+  border: 2px solid #dcfce7;
+  border-radius: 7px;
+  background: #16a34a;
+  color: #fff !important;
+  font-size: .92rem;
+  font-weight: 900;
+  line-height: 1.15;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 0 0 2px rgba(22,163,74,.22), 0 5px 16px rgba(0,0,0,.2);
+  animation: cbeInteractiveQuestionsBlink 1.15s steps(2, jump-none) infinite;
+}
+.interactive-questions-header-btn:hover,
+.interactive-questions-header-btn:focus-visible {
+  animation-play-state: paused;
+  background: #15803d;
+  outline: 3px solid #bbf7d0;
+  outline-offset: 2px;
+}
+@keyframes cbeInteractiveQuestionsBlink {
+  0%, 100% { background: #16a34a; box-shadow: 0 0 0 2px rgba(22,163,74,.25), 0 5px 16px rgba(0,0,0,.2); }
+  50% { background: #166534; box-shadow: 0 0 0 4px rgba(74,222,128,.5), 0 5px 20px rgba(0,0,0,.28); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .interactive-questions-header-btn { animation: none; }
+}
+@media (max-width: 760px) {
+  .interactive-questions-header-btn { min-height: 36px; padding: 8px 10px; font-size: .84rem; }
+}
