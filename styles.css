@@ -5357,3 +5357,29 @@ a[href="tuition.html"] * {
     animation: none !important;
   }
 }
+
+
+/* Sky-green / mint CTA override for Interactive Questions. */
+.site-header .nav-actions > a.interactive-questions-header-btn,
+.nav-actions > a.interactive-questions-header-btn {
+  background: #7df9c2 !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  border: 2px solid #075e42 !important;
+  box-shadow: 0 0 0 2px rgba(125,249,194,.25), 0 0 12px rgba(45,212,150,.45) !important;
+  animation: cbeIQSkyGreenGlow 2.4s ease-in-out infinite !important;
+}
+.site-header .nav-actions > a.interactive-questions-header-btn::after,
+.nav-actions > a.interactive-questions-header-btn::after {
+  border-color: rgba(45,212,150,.65) !important;
+}
+.site-header .nav-actions > a.interactive-questions-header-btn:hover,
+.site-header .nav-actions > a.interactive-questions-header-btn:focus-visible {
+  background: #b7ffe0 !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+@keyframes cbeIQSkyGreenGlow {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(125,249,194,.2), 0 0 9px rgba(45,212,150,.38); }
+  50% { box-shadow: 0 0 0 3px rgba(125,249,194,.35), 0 0 16px rgba(45,212,150,.62); }
+}
