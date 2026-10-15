@@ -1,3 +1,72 @@
+const starterResources = [];
+
+// Install the resource-upload submit guard before other page initialization.
+// This prevents a native form navigation back to the homepage if another initializer fails.
+if (!window.__cbeResourceSubmitGuardInstalled) {
+  window.__cbeResourceSubmitGuardInstalled = true;
+  document.addEventListener("submit", function (event) {
+    if (!event.target || event.target.id !== "resourceForm") return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    if (typeof handleFormSubmit === "function") {
+      void handleFormSubmit(event);
+    } else {
+      const status = document.querySelector("#formStatus");
+      if (status) status.textContent = "Upload script did not initialize. Please refresh and try again.";
+    }
+  }, true);
+}
+
+// Explicitly handle the Publish Resource button click as well as form submission.
+// This makes publishing reliable if another script or browser behavior prevents
+// the submit event from reaching the form handler, while preserving native validation.
+if (!window.__cbeResourcePublishClickInstalled) {
+  window.__cbeResourcePublishClickInstalled = true;
+  document.addEventListener("click", function (event) {
+    const button = event.target && event.target.closest
+      ? event.target.closest('#resourceForm button[type="submit"]')
+      : null;
+    if (!button) return;
+    const form = document.getElementById("resourceForm");
+    if (!form) return;
+    if (typeof form.reportValidity === "function" && !form.reportValidity()) return;
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    if (button.dataset.cbePublishing === "1") return;
+
+    const status = document.getElementById("formStatus");
+    const originalLabel = button.textContent;
+    button.dataset.cbePublishing = "1";
+    button.disabled = true;
+    button.textContent = "Publishing...";
+    if (status) {
+      status.textContent = "Preparing resource upload...";
+      status.classList.remove("upload-success");
+    }
+
+    Promise.resolve()
+      .then(function () {
+        if (typeof handleFormSubmit !== "function") {
+          throw new Error("The resource publishing script did not initialize. Refresh the page and try again.");
+        }
+        return handleFormSubmit({ preventDefault: function () {} });
+      })
+      .catch(function (error) {
+        console.error("CBE Nexus Publish Resource click error:", error);
+        if (status) status.textContent = error && error.message
+          ? error.message
+          : "Publishing failed unexpectedly. Please try again.";
+        button.textContent = originalLabel || "Publish Resource";
+      })
+      .finally(function () {
+        button.disabled = false;
+        delete button.dataset.cbePublishing;
+        if (button.textContent === "Publishing...") button.textContent = originalLabel || "Publish Resource";
+      });
+  }, true);
+}
+
 // Security: Encryption utilities for sensitive data
 const SecurityUtils = {
   encode: (str) => btoa(encodeURIComponent(str)),
@@ -28,7 +97,6 @@ const QUIZ_PROGRESS_KEY = "cbeQuizProgress";
 const SELLER_STORAGE_LIMIT_BYTES = 20 * 1024 * 1024 * 1024; // 20 GB storage space
 const APPROVED_DOWNLOADS_KEY = "cbeApprovedDownloads";
 let remoteStats = { resources: 0, purchases: 0, downloads: 0, views: 0, byResource: {} };
-let serverResources = [];
 let activeAdminModule = "resources";
 // Sensitive data now encrypted via SecurityUtils
 const MPESA_PHONE = SecurityUtils.MPESA_PHONE;
@@ -105,9 +173,21 @@ const diplomaTeacherEducationSubjects = [
   "Historical and comparative Foundations of Education","Agriculture"
 ];
 
+const internationalCurriculumSubjects = [
+  "Mathematics","Further Mathematics","Mathematics A","Mathematics B","Further Pure Mathematics",
+  "Biology","Human Biology","Chemistry","Physics","Science Double Award","Computer Science","ICT",
+  "English","English Language","English Language A","English Language B","English Literature",
+  "English Language & Literature","Business","Business Studies","Business Management","Accounting",
+  "Economics","Geography","History","Religious Studies","Psychology","Sociology","Law",
+  "French","Spanish","German","Arabic","Swahili","Art & Design","Visual Arts","Music","Theatre",
+  "Drama","Film","Physical Education","Design & Technology","Agriculture","Global Perspectives",
+  "Travel & Tourism","Commerce"
+];
+
 const allCbeSubjects = [...new Set([
   ...prePrimarySubjects,...lowerPrimarySubjects,...upperPrimarySubjects,...juniorSchoolSubjects,
-  ...seniorSchoolSubjects,...specialNeedsSubjects,...diplomaTeacherEducationSubjects
+  ...seniorSchoolSubjects,...specialNeedsSubjects,...diplomaTeacherEducationSubjects,...internationalCurriculumSubjects,
+  "Multiple Subjects (Combined Set)"
 ])].sort((a,b)=>a.localeCompare(b));
 
 /*
@@ -128,7 +208,13 @@ const gradeSubjects = {
   "Grade 9": ["Agriculture","Arabic","Creative Arts","Christian Religious Education","English","French","German","Hindu Religious Education","Indigenous Language","Integrated Science","Islamic Religious Education","Kiswahili","Mandarin","Mathematics","Pre-Technical Studies","Social Studies"],
   "Grade 10": ["Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","Islamic Religious Education","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","Hindu Religious Education","Mandarin Chinese"],
   "Grade 11": ["Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","Islamic Religious Education","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","Hindu Religious Education","Mandarin Chinese"],
-  "Grade 12": ["Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","Islamic Religious Education","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","Hindu Religious Education","Mandarin Chinese"]
+  "Grade 12": ["Agriculture","Aviation","Biology","Building and Construction","Business Studies","Chemistry","Christian Religious Education","Community Service Learning","Computer Studies","Core Mathematics","Electricity","English","Essential Mathematics","Fasihi ya Kiswahili","Fine Arts","General Science","Geography","History & Citizenship","Home Science","ICT","Indigenous Languages","Islamic Religious Education","Kiswahili","Literature in English","Marine & Fisheries","Media Technology","Metal Work","Music & Dance","Physics","Power Mechanics","Sports & Recreation","Theatre & Film","Woodwork","Arabic","French","German","Hindu Religious Education","Mandarin Chinese"],
+  "IGCSE": ["Mathematics","Biology","Chemistry","Physics","English","Business Studies","Economics","Computer Science","Geography","History","French","Spanish","German","Swahili","Art & Design","Physical Education","Accounting","Agriculture","Design & Technology","Drama","Global Perspectives","ICT","Psychology","Sociology","Travel & Tourism"],
+  "Cambridge International": ["English Language","English Literature","English as a Second Language","Mathematics","Additional Mathematics","Biology","Chemistry","Physics","Combined Science","Computer Science","ICT","Business Studies","Economics","Accounting","Geography","History","Global Perspectives","French","Spanish","German","Arabic","Art & Design","Design & Technology","Physical Education"],
+  "IB": ["English Language & Literature","English Literature","French","Spanish","Business Management","Economics","Geography","History","Biology","Chemistry","Physics","Computer Science","Mathematics","Visual Arts","Music","Theatre","Film"],
+  "O Level": ["English","Mathematics","Biology","Chemistry","Physics","Geography","History","Business Studies","Accounting","Economics","Computer Science","ICT","French","Spanish","Arabic","Art & Design","Design & Technology","Religious Studies","Physical Education"],
+  "A Level": ["Mathematics","Further Mathematics","Physics","Chemistry","Biology","Economics","Business","Accounting","Computer Science","English Language","English Literature","French","Spanish","Geography","History","Psychology","Art & Design","Music","Drama","Travel & Tourism","Sociology","Law"],
+  "Pearson": ["English Language A","English Language B","English Literature","Mathematics A","Mathematics B","Further Pure Mathematics","Biology","Human Biology","Chemistry","Physics","Science Double Award","Accounting","Business Studies","Commerce","Economics","Computer Science","ICT","Geography","History","Religious Studies","Arabic","French","German","Spanish","Swahili","Art & Design","Global Citizenship"]
 };
 
 const subjectAliases = {
@@ -195,6 +281,7 @@ const elements = {
   activeContext: document.querySelector("#activeContext"),
   statResources: document.querySelector("#statResources"),
   form: document.querySelector("#resourceForm"),
+  adminCurriculum: document.querySelector("#adminCurriculumInput"),
   adminGrade: document.querySelector("#adminGradeInput"),
   adminSubject: document.querySelector("#adminSubjectInput"),
   adminType: document.querySelector("#adminTypeInput"),
@@ -271,6 +358,7 @@ const elements = {
   adminPriceManagement: document.querySelector("#adminPriceManagement"),
   refreshAdminDashboardButton: document.querySelector("#refreshAdminDashboardButton"),
   adminDashboardSearch: document.querySelector("#adminDashboardSearch"),
+  adminGradeFilter: document.querySelector("#adminGradeFilter"),
   adminStatusFilter: document.querySelector("#adminStatusFilter"),
   adminLastUpdated: document.querySelector("#adminLastUpdated"),
   adminSellerBadge: document.querySelector("#adminSellerBadge"),
@@ -317,6 +405,265 @@ const elements = {
 };
 
 let toastTimer;
+
+let adminDashboardData = {};
+function readApprovedDownloads() {
+  try { return JSON.parse(localStorage.getItem(APPROVED_DOWNLOADS_KEY) || "[]"); }
+  catch (_) { return []; }
+}
+function safeOn(target, eventName, handler, options) {
+  if (!target || typeof target.addEventListener !== "function" || typeof handler !== "function") return;
+  target.addEventListener(eventName, handler, options);
+}
+function restoreAdminAccess() {
+  try {
+    const unlocked = sessionStorage.getItem("cbeAdminUnlocked") === "true";
+    if (unlocked) {
+      document.body.classList.add("admin-unlocked");
+      const dashboard = document.getElementById("admin");
+      if (dashboard) { dashboard.classList.add("open"); dashboard.setAttribute("aria-hidden","false"); }
+    }
+  } catch (_) {}
+}
+const ADMIN_EXTENSION_SCRIPTS = [
+  "/admin-module-fix.js",
+  "/r2-browser.js?v=20261008-1",
+  "/ai-course-admin.js?v=20261004-1",
+  "/scholarships-admin.js?v=20261004-1",
+  "/school-directory-admin.js?v=20261004-1",
+  "/admin-blog.js?v=20261004-1",
+  "/ad-revenue.js?v=20261005-1"
+];
+let adminExtensionsPromise = null;
+function loadAdminExtensions(){
+  if(adminExtensionsPromise) return adminExtensionsPromise;
+  adminExtensionsPromise = Promise.all(ADMIN_EXTENSION_SCRIPTS.map(src=>new Promise(resolve=>{
+    if(document.querySelector('script[data-cbe-admin-extension="'+src+'"]')) return resolve();
+    const s=document.createElement("script");
+    s.src=src; s.defer=true; s.dataset.cbeAdminExtension=src;
+    s.onload=resolve; s.onerror=resolve;
+    document.head.appendChild(s);
+  })));
+  return adminExtensionsPromise;
+}
+
+function openAdminLogin(event) {
+  event?.preventDefault();
+  const section=document.getElementById("adminLogin");
+  if (!section) return;
+  section.classList.add("open");
+  section.setAttribute("aria-hidden","false");
+  section.scrollIntoView({behavior:"smooth",block:"start"});
+  setTimeout(()=>document.getElementById("adminUsernameInput")?.focus(),120);
+}
+function setAdminModule(module) {
+  activeAdminModule = String(module || "resources").trim();
+  document.querySelectorAll("[data-admin-module]").forEach((button)=>{
+    const active=button.dataset.adminModule===activeAdminModule;
+    button.classList.toggle("active",active);
+    button.setAttribute("aria-selected",String(active));
+    button.setAttribute("aria-current",active ? "page" : "false");
+  });
+  document.querySelectorAll("[data-admin-module-panel]").forEach((panel)=>{
+    const active=panel.dataset.adminModulePanel===activeAdminModule;
+    panel.classList.toggle("active",active);
+    panel.hidden=!active;
+    panel.setAttribute("aria-hidden",String(!active));
+  });
+  const panel=document.querySelector('[data-admin-module-panel="'+CSS.escape(activeAdminModule)+'"]');
+  if(panel){
+    panel.hidden=false;
+    panel.classList.add("active");
+    setTimeout(()=>panel.scrollIntoView({behavior:"smooth",block:"nearest"}),0);
+  }
+  if(activeAdminModule==="ai-notes" && typeof initAICourseNotesAdmin==="function") initAICourseNotesAdmin();
+  if(activeAdminModule==="resources"){
+    if(typeof window.loadAdminResourceModeration==="function") window.loadAdminResourceModeration();
+    const form=document.getElementById("resourceForm");
+    if(form) setTimeout(()=>form.scrollIntoView({behavior:"smooth",block:"start"}),120);
+  }
+}
+/* Robust admin tab navigation: works for every coloured dashboard button even if another listener intercepts the click. */
+(function enableReliableAdminTabs(){
+  document.addEventListener("click",function(event){
+    const button=event.target.closest("[data-admin-module]");
+    if(!button) return;
+    event.preventDefault();
+    event.stopPropagation();
+    setAdminModule(button.dataset.adminModule);
+    const panel=document.querySelector('[data-admin-module-panel="'+CSS.escape(button.dataset.adminModule)+'"]');
+    if(panel) panel.scrollIntoView({behavior:"smooth",block:"nearest"});
+  },true);
+})();
+function handleAdminControlClick(event) {
+  const button=event.target.closest("[data-admin-module]");
+  if (button) setAdminModule(button.dataset.adminModule);
+}
+function renderAdminControlCentre(data) {
+  adminDashboardData=data||{};
+  const resources=Array.isArray(data.resources)?data.resources:[];
+  const sellers=Array.isArray(data.sellers)?data.sellers:readSellerAccounts();
+  const payments=Array.isArray(data.payments)?data.payments:readPaymentRecords();
+  const downloads=Array.isArray(data.downloads)?data.downloads:readApprovedDownloads();
+  const users=Array.isArray(data.users)?data.users:[];
+  const sales=Array.isArray(data.sales)?data.sales:[];
+  const pending=resources.filter(r=>String(r.status||"pending").toLowerCase()==="pending").length;
+  const approved=resources.filter(r=>String(r.status||"").toLowerCase()==="approved").length;
+  const rejected=resources.filter(r=>String(r.status||"").toLowerCase()==="rejected").length;
+  if(elements.adminStatsGrid) {
+    const cards=[
+      ["Resources",resources.length,"All uploaded resources"],
+      ["Pending",pending,"Awaiting verification"],
+      ["Online",approved,"Visible to clients"],
+      ["Rejected",rejected,"Hidden from clients"],
+      ["Sellers",sellers.length,"Seller accounts"],
+      ["Sales",sales.length,"Recorded sales"],
+      ["Payments",payments.length,"M-Pesa records"],
+      ["Downloads",downloads.length,"Download approvals"]
+    ];
+    elements.adminStatsGrid.innerHTML=cards.map(c=>`<div class="admin-kpi-card"><span>${escapeHtml(c[0])}</span><strong>${Number(c[1]||0).toLocaleString("en-KE")}</strong><small>${escapeHtml(c[2])}</small></div>`).join("");
+  }
+  renderAdminModuleDetails(data);
+  auditAdminExportButtons();
+  if(elements.adminResourceBadge) elements.adminResourceBadge.textContent=resources.length;
+  if(elements.adminSellerBadge) elements.adminSellerBadge.textContent=sellers.length;
+  if(elements.adminPaymentBadge) elements.adminPaymentBadge.textContent=payments.length;
+  if(elements.adminSalesBadge) elements.adminSalesBadge.textContent=sales.length;
+  if(elements.adminUserBadge) elements.adminUserBadge.textContent=users.length;
+  if(elements.adminLastUpdated) elements.adminLastUpdated.textContent="Updated "+new Date().toLocaleString("en-KE");
+  const summary=document.getElementById("adminResourceSummary");
+  if(summary) summary.textContent=`${pending} pending · ${approved} online · ${rejected} rejected`;
+}
+function checkAIAcademyIntegrations(){
+  const sup=document.getElementById("aiSupabaseStatus"), r2=document.getElementById("aiR2Status"), gh=document.getElementById("aiGithubStatus"), render=document.getElementById("aiRenderStatus");
+  if(gh) gh.textContent="Connected source";
+  if(render) render.textContent="Live application server";
+  fetch("/api/supabase/status",{credentials:"same-origin",cache:"no-store"}).then(r=>r.json()).then(d=>{if(sup)sup.textContent=d.supabaseConfigured?"Connected ✓":"Not configured";}).catch(()=>{if(sup)sup.textContent="Connection error";});
+  fetch("/api/r2/status",{credentials:"same-origin",cache:"no-store"}).then(r=>r.json()).then(d=>{if(r2)r2.textContent=d.r2Configured?"Connected ✓":"Not configured";}).catch(()=>{if(r2)r2.textContent="Connection error";});
+}
+function initAICourseNotesAdmin(){
+  const courseSelect=document.getElementById("aiNotesCourseInput"), moduleSelect=document.getElementById("aiNotesModuleInput"), levelSelect=document.getElementById("aiNotesLevelInput"), statusSelect=document.getElementById("aiNotesStatusInput");
+  const form=document.getElementById("aiNotesAdminForm"); if(!courseSelect||!moduleSelect||!form||courseSelect.dataset.ready==="1") return;
+  courseSelect.dataset.ready="1";
+  checkAIAcademyIntegrations();
+  const courses=window.CBENexusAICourses||{};
+  courseSelect.innerHTML=Object.keys(courses).map(s=>'<option value="'+escapeHtml(s)+'">'+escapeHtml(courses[s].title)+'</option>').join("");
+  function refreshModules(){const c=courses[courseSelect.value];moduleSelect.innerHTML=(c?.modules||[]).map((m,i)=>'<option value="'+(i+1)+'">Module '+(i+1)+': '+escapeHtml(m[0])+'</option>').join("");document.getElementById("aiNotesModuleTitleInput").value=c?.modules?.[Number(moduleSelect.value)-1]?.[0]||"";}
+  refreshModules();courseSelect.addEventListener("change",refreshModules);moduleSelect.addEventListener("change",refreshModules);
+  document.getElementById("aiNotesLoadButton")?.addEventListener("click",loadAICourseNoteAdmin);
+  document.getElementById("aiNotesPreviewButton")?.addEventListener("click",()=>{const v=document.getElementById("aiNotesContentInput").value;const w=window.open("","_blank","noopener");if(w)w.document.write("<html><body style='font-family:Arial;padding:30px;max-width:900px;margin:auto'><h1>"+escapeHtml(document.getElementById("aiNotesModuleTitleInput").value)+"</h1><pre style='white-space:pre-wrap;line-height:1.6'>"+escapeHtml(v)+"</pre></body></html>");});
+  form.addEventListener("submit",async e=>{e.preventDefault();const c=courses[courseSelect.value],m=c.modules[Number(moduleSelect.value)-1];const payload={courseSlug:courseSelect.value,courseTitle:c.title,moduleNumber:Number(moduleSelect.value),moduleTitle:document.getElementById("aiNotesModuleTitleInput").value,level:levelSelect.value,status:statusSelect.value,content:document.getElementById("aiNotesContentInput").value,objectives:document.getElementById("aiNotesObjectivesInput").value,examples:document.getElementById("aiNotesExamplesInput").value,activity:document.getElementById("aiNotesActivityInput").value,questions:document.getElementById("aiNotesQuestionsInput").value};const st=document.getElementById("aiNotesAdminStatus");st.textContent="Saving...";try{const r=await fetch("/api/admin/ai-course-notes",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}),d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||"Could not save notes.");st.textContent=payload.status==="published"?"Published successfully.":"Saved as draft.";
+    const pdfInput=document.getElementById("aiNotesPdfInput"), pdfStatus=document.getElementById("aiNotesPdfStatus");
+    if(pdfInput?.files?.[0]){
+      const file=pdfInput.files[0];
+      if(file.type!=="application/pdf"&&!/\\.pdf$/i.test(file.name)) throw new Error("Please select a PDF file.");
+      if(file.size>50*1024*1024) throw new Error("PDF is too large. Maximum size is 50 MB.");
+      if(pdfStatus) pdfStatus.textContent="Uploading PDF to Cloudflare R2...";
+      const up=await fetch("/api/admin/ai-course-note-pdf",{method:"POST",credentials:"same-origin",headers:{
+        "Content-Type":"application/pdf","X-AI-Course-Slug":payload.courseSlug,"X-AI-Module-Number":String(payload.moduleNumber),
+        "X-AI-Level":payload.level,"X-AI-File-Name":file.name
+      },body:await file.arrayBuffer()});
+      const ud=await up.json().catch(()=>({}));
+      if(!up.ok||!ud.ok) throw new Error(ud.error||"PDF upload failed.");
+      if(pdfStatus) pdfStatus.textContent="✅ PDF uploaded successfully to Cloudflare R2.";
+      pdfInput.value="";
+    }
+    loadAICourseNotesAdmin();}catch(err){st.textContent=err.message;}}); loadAICourseNotesAdmin();
+}
+async function loadAICourseNotesAdmin(){
+  const host=document.getElementById("aiNotesAdminList");if(!host||!isAdminUnlocked())return;try{const r=await fetch("/api/admin/ai-course-notes?_="+Date.now(),{credentials:"same-origin",cache:"no-store"}),d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||"Could not load notes.");host.innerHTML=(d.notes||[]).map(n=>'<article class="ai-notes-admin-card"><span class="eyebrow">'+escapeHtml(String(n.status||"").toUpperCase())+' • '+escapeHtml(n.level||"basic")+'</span><h4>'+escapeHtml(n.course_title||n.course_slug)+'</h4><p>Module '+n.module_number+': '+escapeHtml(n.module_title||"")+'</p><button class="secondary-button" data-ai-note-load="'+escapeHtml(n.id)+'">Load</button></article>').join("")||'<div class="admin-management-card">No notes published yet.</div>';host.querySelectorAll("[data-ai-note-load]").forEach(b=>b.addEventListener("click",()=>loadAICourseNoteAdmin(b.dataset.aiNoteLoad)));document.getElementById("aiNotesAdminSummary").textContent=(d.notes||[]).length+" saved notes";}catch(e){host.innerHTML='<div class="admin-management-card">'+escapeHtml(e.message)+'</div>';}
+}
+async function loadAICourseNoteAdmin(id){
+  const r=await fetch("/api/admin/ai-course-notes?_="+Date.now(),{credentials:"same-origin",cache:"no-store"}),d=await r.json();const n=(d.notes||[]).find(x=>String(x.id)===String(id));if(!n)return;
+  document.getElementById("aiNotesCourseInput").value=n.course_slug;document.getElementById("aiNotesCourseInput").dispatchEvent(new Event("change"));document.getElementById("aiNotesModuleInput").value=n.module_number;document.getElementById("aiNotesModuleInput").dispatchEvent(new Event("change"));document.getElementById("aiNotesLevelInput").value=n.level;document.getElementById("aiNotesStatusInput").value=n.status;document.getElementById("aiNotesModuleTitleInput").value=n.module_title||"";document.getElementById("aiNotesObjectivesInput").value=n.objectives||"";document.getElementById("aiNotesContentInput").value=n.content||"";document.getElementById("aiNotesExamplesInput").value=n.examples||"";document.getElementById("aiNotesActivityInput").value=n.activity||"";document.getElementById("aiNotesQuestionsInput").value=n.questions||"";const pdfStatus=document.getElementById("aiNotesPdfStatus");if(pdfStatus)pdfStatus.textContent=n.pdf_r2_key?"✅ PDF attached: "+(n.pdf_filename||"PDF notes"):"No PDF attached yet.";window.scrollTo({top:document.getElementById("aiNotesAdminForm").offsetTop-100,behavior:"smooth"});
+}
+function renderAdminModuleDetails(data){
+  const users=Array.isArray(data?.users)?data.users:[];
+  const sales=Array.isArray(data?.sales)?data.sales:[];
+  const resources=Array.isArray(data?.resources)?data.resources:[];
+  const userHost=document.getElementById("adminUserManagement");
+  if(userHost){
+    userHost.innerHTML=users.length
+      ? users.slice(0,100).map((u,i)=>'<article class="admin-management-card"><div class="admin-management-heading"><div><span class="eyebrow">USER '+(i+1)+'</span><h4>'+escapeHtml(u.name||u.username||u.email||"Customer")+'</h4><p>'+escapeHtml(u.email||u.phone||"Account")+'</p></div><span class="price-pill">ACTIVE</span></div></article>').join("")
+      : '<div class="admin-management-card"><strong>No customer accounts found.</strong><p>Registered users will appear here.</p></div>';
+  }
+  const salesHost=document.getElementById("adminSalesManagement");
+  if(salesHost){
+    salesHost.innerHTML=sales.length
+      ? sales.slice().reverse().slice(0,100).map((s,i)=>'<article class="admin-management-card"><div class="admin-management-heading"><div><span class="eyebrow">SALE '+(i+1)+'</span><h4>'+escapeHtml(s.resource||s.title||"Resource purchase")+'</h4><p>'+escapeHtml(s.phone||s.email||s.customer||"Customer")+'</p></div><span class="price-pill">KES '+Number(s.amount||s.price||0).toLocaleString("en-KE")+'</span></div><p>'+escapeHtml(s.status||s.date||s.createdAt||"Recorded transaction")+'</p></article>').join("")
+      : '<div class="admin-management-card"><strong>No sales recorded yet.</strong><p>Completed marketplace transactions will appear here.</p></div>';
+  }
+  const priceHost=document.getElementById("adminPriceManagement");
+  if(priceHost){
+    const priced=resources.filter(r=>Number(r.price||0)>0);
+    const free=resources.filter(r=>Number(r.price||0)<=0);
+    const avg=priced.length?priced.reduce((n,r)=>n+Number(r.price||0),0)/priced.length:0;
+    priceHost.innerHTML='<article class="admin-management-card"><div class="admin-management-heading"><div><span class="eyebrow">MARKETPLACE PRICING</span><h4>Resource pricing overview</h4><p>Prices are stored with each uploaded resource.</p></div><span class="price-pill">KES</span></div><div class="summary-grid"><div><strong>'+priced.length+'</strong><span>Paid resources</span></div><div><strong>'+free.length+'</strong><span>Free resources</span></div><div><strong>KES '+Math.round(avg).toLocaleString("en-KE")+'</strong><span>Average price</span></div></div></article>';
+  }
+}
+function downloadAdminJson(filename,data){
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json;charset=utf-8"});
+  const url=URL.createObjectURL(blob); const a=document.createElement("a");
+  a.href=url; a.download=filename; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function auditAdminExportButtons(){
+  const salesButton=document.getElementById("adminExportSales");
+  if(salesButton) salesButton.onclick=()=>{
+    downloadAdminJson("cbe-nexus-sales.json",adminDashboardData?.sales||[]);
+    showToast("Sales export downloaded.");
+  };
+  safeOn(document.getElementById("adminExportResources"),"click",()=>{
+    downloadAdminJson("cbe-nexus-resources.json",adminDashboardData?.resources||[]);
+    showToast("Resources export downloaded.");
+  });
+}
+async function loadAdminDashboard() {
+  if(!isAdminUnlocked()) return;
+  try {
+    const me=await fetch("/api/admin/me",{credentials:"same-origin",cache:"no-store"});
+    if(me.ok){ const md=await me.json().catch(()=>({})); if(md.authenticated===false){sessionStorage.removeItem("cbeAdminUnlocked");return;} }
+  } catch (_) {}
+  document.body.classList.add("admin-unlocked");
+  try {
+    const r=await fetch("/api/admin/resources?_="+Date.now(),{credentials:"same-origin",cache:"no-store"});
+    const d=await r.json().catch(()=>({}));
+    if(r.ok && d.ok) adminDashboardData={...adminDashboardData,resources:d.resources||[]};
+  } catch (_) {}
+  adminDashboardData.sellers=readSellerAccounts();
+  adminDashboardData.payments=readPaymentRecords();
+  adminDashboardData.downloads=readApprovedDownloads();
+  adminDashboardData.users=JSON.parse(localStorage.getItem("cbeUsers")||"[]");
+  adminDashboardData.sales=JSON.parse(localStorage.getItem("cbeSales")||"[]");
+  renderAdminControlCentre(adminDashboardData);
+  setAdminModule(activeAdminModule||"resources");
+  if(typeof window.loadAdminResourceModeration==="function") await window.loadAdminResourceModeration();
+}
+async function unlockAdmin(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  const username=String(elements.adminUsername?.value||"").trim();
+  const password=String(elements.adminPassword?.value||"");
+  const email=String(elements.adminEmail?.value||"").trim().toLowerCase();
+  if(!username||!password||!email){ if(elements.adminLoginStatus) elements.adminLoginStatus.textContent="Enter your admin email, username and password."; return; }
+  if(elements.adminLoginStatus) elements.adminLoginStatus.textContent="Checking admin credentials...";
+  try {
+    const r=await fetch("/api/admin/login",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({username,password,email})});
+    const d=await r.json().catch(()=>({}));
+    if(!r.ok||!d.ok) throw new Error(d.error||"Invalid admin credentials.");
+    sessionStorage.setItem("cbeAdminUnlocked","true");
+    await loadAdminExtensions();
+    document.body.classList.add("admin-unlocked");
+    const login=document.getElementById("adminLogin");
+    if(login){login.classList.remove("open");login.setAttribute("aria-hidden","true");}
+    const dashboard=document.getElementById("admin");
+    if(dashboard){dashboard.classList.add("open");dashboard.setAttribute("aria-hidden","false");dashboard.scrollIntoView({behavior:"smooth",block:"start"});}
+    if(elements.adminLoginStatus) elements.adminLoginStatus.textContent="Admin login successful.";
+    await loadAdminDashboard();
+  } catch(error) {
+    if(elements.adminLoginStatus) elements.adminLoginStatus.textContent=error.message||"Admin login failed.";
+  }
+}
 
 function isAdminUnlocked(){ return document.body.classList.contains("admin-unlocked"); }
 
@@ -365,11 +712,10 @@ async function syncPublicResourcesFromServer() {
         r2Key: r.r2Key || r.r2_key || "",
         fileName: r.fileName || r.filename || "",
         previewKey: r.previewKey || r.preview_key || "",
-        file: r.file || ((r.r2Key || r.r2_key) ? "/api/r2/file?key=" + encodeURIComponent(r.r2Key || r.r2_key) : "")
+        file: r.file || (((r.r2Key || r.r2_key) && Number(r.price ?? 0) === 0) ? "/api/r2/direct-download?resourceId=" + encodeURIComponent(r.id ?? r.resource_id ?? "") : "")
       }))
-      .filter((r) => r.id && r.status === "approved");
+      .filter((r) => r.id && r.status === "approved" && !["IGCSE","Cambridge International","IB","O Level","A Level","Pearson"].includes(String(r.grade || "").trim()));
 
-    serverResources = remote;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(remote));
     renderResources();
     renderTrending();
@@ -432,19 +778,11 @@ function getSellerStorageUsage() {
 }
 
 function getAllResources() {
-  const combined = [
+  return [
     ...starterResources,
     ...readSavedResources().map(normalizeResourceForLibrary),
-    ...serverResources.map(normalizeResourceForLibrary),
     ...readSellerResources().filter((resource) => resource.status === "approved").map(normalizeResourceForLibrary)
   ];
-  const seen = new Set();
-  return combined.filter((resource) => {
-    const key = String(resource.id || "");
-    if (!key || seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
 }
 
 function readCart() {
@@ -510,1135 +848,31 @@ function saveLocalList(key, item) {
   localStorage.setItem(key, JSON.stringify([item, ...existing]));
 }
 
-function setActiveMaterialLink() {
-  document.querySelectorAll("[data-material-link]").forEach((link) => {
-    link.classList.toggle("active", link.dataset.materialLink === state.type);
-  });
-}
-
-function renderQuickTypes() {
-  elements.quickTypes.innerHTML = materialTypes
-    .map((type) => `<button type="button" data-quick-type="${escapeHtml(type)}">${escapeHtml(type)}</button>`)
-    .join("");
-}
-
-async function loadPublicStats() {
-  try {
-    const response = await fetch("/api/public/stats", { credentials: "same-origin", cache: "no-store" });
-    if (!response.ok) return;
-    const data = await response.json();
-    if (!data.ok) return;
-    remoteStats = {
-      resources: Number(data.stats?.resources || 0),
-      purchases: Number(data.stats?.purchases || 0),
-      downloads: Number(data.stats?.downloads || 0),
-      views: Number(data.stats?.views || 0),
-      byResource: data.byResource || {}
-    };
-    const stat = (id, value) => { const node = document.getElementById(id); if (node) node.textContent = Number(value || 0).toLocaleString("en-KE"); };
-    stat("statResources", remoteStats.resources);
-    stat("statPurchases", remoteStats.purchases);
-    stat("statDownloads", remoteStats.downloads);
-    stat("statViews", remoteStats.views);
-    renderResources();
-    let AFFILIATE_PRODUCTS = [];
-
-async function loadAffiliateProducts(){
-  try{
-    const response=await fetch("/api/affiliate-products",{credentials:"same-origin"});
-    const data=await response.json();
-    if(response.ok&&data.ok) AFFILIATE_PRODUCTS=Array.isArray(data.products)?data.products:[];
-  }catch(error){console.warn("Affiliate products could not be loaded:",error);}
-  renderAffiliateMarketplace();
-}
-
-function renderAffiliateMarketplace(){
-  const grid=document.getElementById("affiliateProductGrid");
-  if(!grid)return;
-  grid.innerHTML=AFFILIATE_PRODUCTS.length?AFFILIATE_PRODUCTS.map((p)=>`<article class="affiliate-card">${p.image?`<img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.title)}" loading="lazy">`:""}<span class="affiliate-category">${escapeHtml(p.category||"Other")}</span><h3>${escapeHtml(p.title)}</h3><p>${escapeHtml(p.description||"")}</p><small>Partner: ${escapeHtml(p.merchant||"Partner")}${p.price?" · "+escapeHtml(p.price):""}</small><a class="primary-button" href="${escapeHtml(p.url)}" target="_blank" rel="sponsored noopener nofollow">${escapeHtml(p.label||"Shop now")}</a></article>`).join(""):"<div class=\"empty-state\">Affiliate products will appear here soon.</div>";
-}
-
-async function loadAffiliateAdmin(){
-  try{
-    const response=await fetch("/api/admin/affiliate-products",{credentials:"same-origin"});
-    if(!response.ok)return;
-    const data=await response.json(), list=Array.isArray(data.products)?data.products:[];
-    const node=document.getElementById("affiliateAdminList");
-    const badge=document.getElementById("adminAffiliateBadge"), summary=document.getElementById("adminAffiliateSummary");
-    if(badge)badge.textContent=list.length;
-    if(summary)summary.textContent=list.length+" products";
-    if(node)node.innerHTML=list.length?list.map(p=>`<div class="admin-record"><div class="admin-record-main"><strong>${escapeHtml(p.title)}</strong><span>${escapeHtml(p.category||"Other")} · ${escapeHtml(p.merchant||"Partner")} · ${p.active!==false?"Active":"Hidden"}</span></div><div class="admin-record-actions"><button class="secondary-button" type="button" data-affiliate-edit="${escapeHtml(p.id)}">Edit</button><button class="secondary-button" type="button" data-affiliate-delete="${escapeHtml(p.id)}">Delete</button></div></div>`).join(""):"<div class=\"empty-state\">No affiliate products added yet.</div>";
-    window.__affiliateAdminProducts=list;
-  }catch(error){console.warn("Affiliate admin could not load:",error);}
-}
-
-function clearAffiliateAdminForm(){
-  ["affiliateAdminId","affiliateAdminTitle","affiliateAdminCategory","affiliateAdminMerchant","affiliateAdminUrl","affiliateAdminImage","affiliateAdminPrice","affiliateAdminCommission","affiliateAdminDescription"].forEach(id=>{const n=document.getElementById(id);if(n)n.value="";});
-  const label=document.getElementById("affiliateAdminLabel"); if(label)label.value="Shop now";
-  const active=document.getElementById("affiliateAdminActive"); if(active)active.checked=true;
-}
-
-async function saveAffiliateAdminProduct(event){
-  event.preventDefault();
-  const payload={id:document.getElementById("affiliateAdminId")?.value,title:document.getElementById("affiliateAdminTitle")?.value,category:document.getElementById("affiliateAdminCategory")?.value,merchant:document.getElementById("affiliateAdminMerchant")?.value,url:document.getElementById("affiliateAdminUrl")?.value,image:document.getElementById("affiliateAdminImage")?.value,price:document.getElementById("affiliateAdminPrice")?.value,commission:document.getElementById("affiliateAdminCommission")?.value,label:document.getElementById("affiliateAdminLabel")?.value,description:document.getElementById("affiliateAdminDescription")?.value,active:document.getElementById("affiliateAdminActive")?.checked};
-  try{await adminPost("/api/admin/affiliate-product",payload);clearAffiliateAdminForm();await loadAffiliateAdmin();await loadAffiliateProducts();showToast("Affiliate product saved.");}catch(error){showToast(error.message||"Affiliate product could not be saved.");}
-}
-
-async function handleAffiliateAdminClick(event){
-  const edit=event.target.closest("[data-affiliate-edit]"), del=event.target.closest("[data-affiliate-delete]");
-  const list=window.__affiliateAdminProducts||[];
-  if(edit){const p=list.find(x=>String(x.id)===String(edit.dataset.affiliateEdit));if(!p)return;Object.entries({affiliateAdminId:p.id,affiliateAdminTitle:p.title,affiliateAdminCategory:p.category,affiliateAdminMerchant:p.merchant,affiliateAdminUrl:p.url,affiliateAdminImage:p.image,affiliateAdminPrice:p.price,affiliateAdminCommission:p.commission,affiliateAdminLabel:p.label,affiliateAdminDescription:p.description}).forEach(([id,v])=>{const n=document.getElementById(id);if(n)n.value=v||"";});const a=document.getElementById("affiliateAdminActive");if(a)a.checked=p.active!==false;}
-  if(del){if(!confirm("Delete this affiliate product?"))return;try{await adminPost("/api/admin/affiliate-product-delete",{id:del.dataset.affiliateDelete});await loadAffiliateAdmin();await loadAffiliateProducts();showToast("Affiliate product deleted.");}catch(error){showToast(error.message||"Delete failed.");}}
-}
-
-
-renderTrending();
-loadAffiliateProducts();
-
-  } catch (error) {
-    console.warn("Public statistics could not be loaded:", error);
+function refreshAdminUploadSubjects() {
+  if (!elements.adminCurriculum || !elements.adminGrade || !elements.adminSubject) return;
+  const curriculum = String(elements.adminCurriculum.value || "CBC/CBE").trim();
+  const internationalCurricula = ["IGCSE","Cambridge International","IB","O Level","A Level","Pearson"];
+  const international = internationalCurricula.includes(curriculum);
+  if (international) {
+    optionList(elements.adminGrade, [curriculum], curriculum);
+    const subjects = gradeSubjects[curriculum] || [];
+    optionList(elements.adminSubject, subjects, subjects[0] || "");
+    if (elements.formStatus) elements.formStatus.textContent = curriculum + " selected — choose a " + curriculum + " subject below, then upload and publish.";
+  } else {
+    const grades = Object.keys(gradeSubjects).filter((value) => !internationalCurricula.includes(value));
+    optionList(elements.adminGrade, grades, "Grade 1");
+    // Admin uploads should always expose the complete, stable CBC/CBE subject catalogue.
+    // Build the list from the master catalogue plus every CBC/CBE grade catalogue so
+    // subjects do not disappear when grade/curriculum controls refresh or initialize late.
+    const subjects = [...new Set([
+      ...allCbeSubjects,
+      ...Object.entries(gradeSubjects)
+        .filter(([gradeName]) => !internationalCurricula.includes(gradeName))
+        .flatMap(([, gradeList]) => gradeList || [])
+    ])].sort((a, b) => a.localeCompare(b));
+    const previousSubject = String(elements.adminSubject.value || "").trim();
+    optionList(elements.adminSubject, subjects, subjects.includes(previousSubject) ? previousSubject : "Building and Construction");
   }
-}
-
-
-async function trackResourceView(resourceId) {
-  try {
-    const key = `cbeViewed:${resourceId}`;
-    if (sessionStorage.getItem(key)) return;
-    sessionStorage.setItem(key, "1");
-    await fetch("/api/public/view", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ resourceId }) });
-  } catch {}
-}
-
-function renderTrending() {
-  if (!elements.trendingList) return;
-  const resources = getAllResources().slice(0, 6);
-  elements.trendingList.innerHTML = resources.map((resource, index) => `
-    <button class="trending-item" type="button" data-trending="${escapeHtml(resource.id)}">
-      <strong>${escapeHtml(resource.title)}</strong>
-      <span>${15 - index} orders this week | ${escapeHtml(resource.grade)} | ${escapeHtml(resource.type)}</span>
-    </button>
-  `).join("");
-}
-
-function whatsappLink(resource, amount) {
-  const message = resource
-    ? `Hello, I want to buy ${resource.title} (${resource.grade}, ${resource.subject}) for ${money(amount)}. I will pay via M-Pesa ${MPESA_PHONE}.`
-    : `Hello, I want to buy CBE e-learning resources. I will pay via M-Pesa ${MPESA_PHONE}.`;
-  return `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(message)}`;
-}
-
-function paidResourceHelpLink(resource, amount) {
-  const message = `Hello, help me access ${resource.title} (${resource.grade}, ${resource.subject}). I have paid ${money(amount)} via M-Pesa to ${MPESA_PHONE}. Kindly send/activate this CBE resource.`;
-  return `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(message)}`;
-}
-
-function renderGradeDashboard() {
-  if (!elements.gradeList) return;
-
-  const grades = Object.entries(gradeSubjects);
-  elements.gradeList.innerHTML = grades
-    .map(([grade, subjects], index) => `
-      <article class="grade-card ${index === 0 ? "open" : ""}" data-grade-card="${escapeHtml(grade)}">
-        <button class="grade-toggle" type="button" data-grade-toggle="${escapeHtml(grade)}" aria-expanded="${index === 0}">
-          <span>${escapeHtml(grade)}</span>
-          <span class="grade-chevron" aria-hidden="true">▾</span>
-        </button>
-        <div class="subject-menu">
-          <label class="subject-dropdown-label" for="subject-${index}">Choose a subject</label>
-          <select class="subject-dropdown" id="subject-${index}" data-grade-subject-select data-grade="${escapeHtml(grade)}" aria-label="Choose a subject for ${escapeHtml(grade)}">
-            <option value="All Subjects">Select subject</option>
-            ${subjects.map((subject) => `<option value="${escapeHtml(subject)}">${escapeHtml(subject)}</option>`).join("")}
-          </select>
-        </div>
-      </article>`).join("");
-}
-function refreshSubjectFilters() {
-  const subjects = state.grade === "All Grades"
-    ? Array.from(new Set(Object.values(gradeSubjects).flat())).sort()
-    : gradeSubjects[state.grade];
-
-  if (!subjects.includes(state.subject) && state.subject !== "All Subjects") {
-    state.subject = "All Subjects";
-  }
-
-  optionList(elements.subjectFilter, ["All Subjects", ...subjects], state.subject);
-}
-
-function setupFilters() {
-  const grades = Object.keys(gradeSubjects);
-  const allAdminSubjects = allCbeSubjects;
-
-  optionList(elements.gradeFilter, ["All Grades", ...grades], state.grade);
-  optionList(elements.adminGrade, grades, "Grade 1");
-  optionList(elements.sellerGrade, grades, "Grade 1");
-  optionList(elements.projectGrade, grades, "Grade 1");
-  optionList(elements.tuitionGrade, grades, "Grade 1");
-
-  optionList(elements.typeFilter, ["All Materials", ...materialTypes], state.type);
-  optionList(elements.adminType, materialTypes, "Notes");
-  optionList(elements.sellerType, materialTypes, "Notes");
-  // Upload and Publish Learning Resources: show the complete subject catalogue.
-  optionList(elements.adminSubject, allAdminSubjects, "Mathematics Activities");
-  optionList(elements.sellerSubject, allAdminSubjects, "Mathematics Activities");
-  refreshSubjectFilters();
-}
-
-function resourceMatches(resource) {
-  const normalized = normalizeResourceForLibrary(resource);
-  const query = state.search.trim().toLowerCase();
-  const searchable = `${normalized.title} ${normalized.description} ${normalized.subject} ${normalized.type} ${normalized.term || ""}`.toLowerCase();
-  return (state.grade === "All Grades" || normalized.grade === state.grade)
-    && (state.subject === "All Subjects" || normalized.subject === canonicalSubjectName(state.subject))
-    && (state.type === "All Materials" || normalized.type === state.type)
-    && (state.term === "All Terms" || normalized.term === state.term)
-    && (state.access === "All Access" || (state.access === "Free Samples" ? normalized.isFreeSample : !normalized.isFreeSample))
-    && (!query || searchable.includes(query));
-}
-
-function sortResources(resources) {
-  return [...resources].sort((a, b) => {
-    if (state.sort === "Price Low to High") return discountedPrice(a) - discountedPrice(b);
-    if (state.sort === "Price High to Low") return discountedPrice(b) - discountedPrice(a);
-    if (state.sort === "Popular") return (Number(b.popularity) || 0) - (Number(a.popularity) || 0);
-    return String(b.id).localeCompare(String(a.id));
-  });
-}
-
-function renderResources() {
-  const resources = getAllResources().map(normalizeResourceForLibrary);
-  const filtered = sortResources(resources.filter(resourceMatches));
-  elements.statResources.textContent = Number(remoteStats.resources || resources.length).toLocaleString("en-KE");
-  elements.activeContext.textContent = `${filtered.length} material(s) showing for ${state.grade}, ${state.subject}, ${state.type}`;
-  setActiveMaterialLink();
-
-  if (!filtered.length) {
-    elements.resourceGrid.innerHTML = `<div class="empty-state">No resources match the current filters. Use the admin dashboard to publish a new material.</div>`;
-    return;
-  }
-
-  elements.resourceGrid.innerHTML = filtered.map((resource) => `
-    <article class="resource-card">
-      <div class="resource-meta">
-        <span class="tag">${escapeHtml(resource.grade)}</span>
-        <span class="tag">${escapeHtml(resource.subject)}</span>
-        <span class="tag">${escapeHtml(resource.type)}</span>
-        <span class="tag">${escapeHtml(resource.term || "Term Ready")}</span>
-        ${resource.isFreeSample ? `<span class="tag free">Free Sample</span>` : ""}
-        ${resource.sellerUsername ? `<span class="tag">Seller: ${escapeHtml(resource.sellerUsername)}</span>` : ""}
-      </div>
-      <h3>${escapeHtml(resource.title)}</h3>
-      <p>${escapeHtml(resource.description)}</p>\n      <div class="resource-activity"><span>🗓 Updated ${resource.updatedAt ? new Date(resource.updatedAt).toLocaleDateString("en-KE") : "recently"}</span><a href="mailto:cbenexus@gmail.com?subject=Resource%20report&body=Please%20review%20this%20resource:%20${encodeURIComponent(resource.title || "")}" aria-label="Report resource">Report resource</a></div>
-      <div class="resource-activity"><span>📥 ${Number(remoteStats.byResource?.[resource.id]?.downloads ?? resource.downloads ?? 0)} downloads</span><span>🛒 ${Number(remoteStats.byResource?.[resource.id]?.purchases ?? resource.purchases ?? 0)} purchases</span></div>
-      <div class="price-row">
-        <div>
-          <strong>${money(discountedPrice(resource))}</strong>
-          <span>${Number(resource.discount) || 0}% discount from ${money(resource.price)}</span>
-        </div>
-      </div>
-      <div class="card-actions resource-library-actions">
-        <button class="primary-button resource-action-button" type="button" data-pay="${escapeHtml(resource.id)}">Pay M-Pesa</button>
-        <a class="secondary-button resource-action-button whatsapp-buy-button" href="${whatsappLink(resource, discountedPrice(resource))}" target="_blank" rel="noopener" data-whatsapp-buy="${escapeHtml(resource.id)}">💬 Buy via WhatsApp</a>
-        <button class="secondary-button resource-action-button" type="button" data-preview-resource="${escapeHtml(resource.id)}">👁 Preview</button>
-        ${resource.isFreeSample ? `<a class="secondary-button resource-action-button" href="${escapeHtml(resource.file)}&free=1" download="${escapeHtml(resource.fileName || "")}">Preview Sample</a>` : ""}
-        ${localStorage.getItem(REFERRAL_KEY) ? `<a class="secondary-button resource-action-button" href="${escapeHtml(resource.file)}&free=1" download="${escapeHtml(resource.fileName || "")}" data-free-resource="${escapeHtml(resource.id)}">Free Referral Paper</a>` : ""}
-        <button class="secondary-button resource-action-button resource-download-button" type="button" data-download-resource="${escapeHtml(resource.id)}" title="Available after payment confirmation by admin">📥 Download</button>
-      </div>
-    </article>
-  `).join("");
-}
-
-function unlockFreeReferral(event) {
-  event.preventDefault();
-  const friendName = elements.friendName.value.trim();
-  const friendPhone = elements.friendPhone.value.trim();
-  localStorage.setItem(REFERRAL_KEY, JSON.stringify({
-    friendName,
-    friendPhone,
-    unlockedAt: new Date().toISOString()
-  }));
-  elements.referForm.reset();
-  renderResources();
-  showToast("Referral recorded. One free CBE paper is unlocked.");
-}
-
-function cartWhatsappLink(cart) {
-  const total = cart.reduce((sum, resource) => sum + discountedPrice(resource), 0);
-  const list = cart.map((resource, index) => `${index + 1}. ${resource.title} - ${money(discountedPrice(resource))}`).join("\n");
-  const message = `Hello, help me access these CBE resources:\n${list}\nTotal paid: ${money(total)}\nI have paid via M-Pesa to ${MPESA_PHONE}. Kindly send/activate the materials.`;
-  return `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(message)}`;
-}
-
-function renderCart() {
-  const cart = readCart();
-  elements.cartCount.textContent = cart.length;
-  elements.cartTotal.textContent = money(cart.reduce((sum, resource) => sum + discountedPrice(resource), 0));
-  elements.cartWhatsapp.href = cart.length ? cartWhatsappLink(cart) : whatsappLink(null, 0);
-
-  if (!cart.length) {
-    elements.cartItems.innerHTML = `<div class="empty-state">Your cart is empty. Add CBE resources from the library.</div>`;
-    return;
-  }
-
-  elements.cartItems.innerHTML = cart.map((resource) => `
-    <div class="cart-item">
-      <strong>${escapeHtml(resource.title)}</strong>
-      <span>${escapeHtml(resource.grade)} | ${escapeHtml(resource.subject)} | ${money(discountedPrice(resource))}</span>
-      <button class="secondary-button" type="button" data-remove-cart="${escapeHtml(resource.id)}">Remove</button>
-    </div>
-  `).join("");
-}
-
-function renderSellerResources() {
-  const sellerResources = readSellerResources();
-  const activeSeller = JSON.parse(sessionStorage.getItem("activeSellerAccount") || "null");
-  const visibleResources = activeSeller
-    ? sellerResources.filter((resource) => resource.sellerUsername === activeSeller.username)
-    : sellerResources;
-  const approved = visibleResources.filter((resource) => resource.status === "approved");
-  const earnings = approved.reduce((sum, resource) => sum + Math.round(Number(resource.price) * 0.5), 0);
-  elements.sellerEarningsTotal.textContent = money(earnings);
-  renderSellerStorageInfo();
-  if (!visibleResources.length) {
-    elements.sellerResourceList.innerHTML = `<div class="empty-state">No seller resources submitted yet.</div>`;
-    return;
-  }
-
-  elements.sellerResourceList.innerHTML = visibleResources.map((resource) => `
-    <div class="seller-resource-item">
-      <strong>${escapeHtml(resource.title)}</strong>
-      <span>@${escapeHtml(resource.sellerUsername || "seller")} | ${escapeHtml(resource.sellerName)} | ${escapeHtml(resource.grade)} | ${escapeHtml(resource.subject)}</span>
-      <span>Price: ${money(resource.price)} | Seller earns: ${money(Math.round(Number(resource.price) * 0.5))}</span>
-      <span>Status: ${escapeHtml(resource.status || "pending")} | Admin approval within 3 days</span>
-    </div>
-  `).join("");
-}
-
-function renderSellerAccountApprovals() {
-  const pending = readSellerAccounts().filter((account) => account.status === "pending");
-  if (!pending.length) {
-    elements.sellerAccountApprovalList.innerHTML = `<div class="empty-state">No pending seller accounts.</div>`;
-    return;
-  }
-
-  elements.sellerAccountApprovalList.innerHTML = pending.map((account) => `
-    <div class="approval-item">
-      <strong>${escapeHtml(account.name)}</strong>
-      <span>${escapeHtml(account.username)} | ${escapeHtml(account.phone)} | Approval within 24 hours</span>
-      <div class="approval-actions">
-        <button class="primary-button" type="button" data-approve-seller-account="${escapeHtml(account.id)}">Approve Account</button>
-        <button class="secondary-button" type="button" data-reject-seller-account="${escapeHtml(account.id)}">Reject Account</button>
-      </div>
-    </div>
-  `).join("");
-}
-
-function updateSellerAccountStatus(accountId, status) {
-  const updated = readSellerAccounts().map((account) => {
-    if (account.id !== accountId) return account;
-    return {
-      ...account,
-      status,
-      reviewedAt: new Date().toISOString()
-    };
-  });
-  localStorage.setItem(SELLER_ACCOUNTS_KEY, JSON.stringify(updated));
-  fetch("/api/admin/seller-account-status",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({accountId,status})}).catch(()=>{});
-  renderSellerAccountApprovals();
-  showToast(`Seller account ${status}.`);
-}
-
-function renderAdminApprovals() {
-  const sellerResources = readSellerResources();
-  const pending = sellerResources.filter((resource) => resource.status === "pending");
-  if (!pending.length) {
-    elements.adminApprovalList.innerHTML = `<div class="empty-state">No pending seller resources.</div>`;
-    return;
-  }
-
-  elements.adminApprovalList.innerHTML = pending.map((resource) => `
-    <div class="approval-item">
-      <strong>${escapeHtml(resource.title)}</strong>
-      <span>${escapeHtml(resource.sellerName)} | ${escapeHtml(resource.grade)} | ${escapeHtml(resource.subject)} | ${money(resource.price)}</span>
-      <span>${escapeHtml(resource.description)}</span>
-      <div class="approval-actions">
-        <button class="primary-button" type="button" data-approve-seller="${escapeHtml(resource.id)}">Approve</button>
-        <button class="secondary-button" type="button" data-reject-seller="${escapeHtml(resource.id)}">Reject</button>
-      </div>
-    </div>
-  `).join("");
-}
-
-function updateSellerStatus(resourceId, status) {
-  const updated = readSellerResources().map((resource) => {
-    if (resource.id !== resourceId) return resource;
-    return {
-      ...resource,
-      status,
-      reviewedAt: new Date().toISOString()
-    };
-  });
-  localStorage.setItem(SELLER_STORAGE_KEY, JSON.stringify(updated));
-  renderSellerResources();
-  renderAdminApprovals();
-  renderResources();
-  renderTrending();
-  showToast(`Seller resource ${status}.`);
-}
-
-function renderSellerStorageInfo() {
-  if (!elements.sellerStorageInfo) return;
-  const usedBytes = getSellerStorageUsage();
-  elements.sellerStorageInfo.textContent = `Seller storage usage: ${formatBytes(usedBytes)} of 20 GB available.`;
-}
-
-function renderPaymentRecords() {
-  if (!elements.paymentRecordsList) return;
-  const records = readPaymentRecords();
-  if (!records.length) {
-    elements.paymentRecordsList.innerHTML = `<div class="empty-state">No payment records yet.</div>`;
-    return;
-  }
-
-  elements.paymentRecordsList.innerHTML = records.map((record) => `
-    <div class="record-item">
-      <strong>${escapeHtml(record.resource || "CBE resource order")}</strong>
-      <span>${escapeHtml(record.customerPhone)} | ${money(record.amount)} | ${escapeHtml(record.status)}</span>
-      <span>${new Date(record.createdAt).toLocaleString()}</span>
-      ${record.status === "pending confirmation" ? `<button class="primary-button" type="button" data-approve-download="${record.id}">Activate Download</button>` : ""}
-    </div>
-  `).join("");
-}
-
-async function renderDownloadApprovals() {
-  if (!elements.downloadApprovalList) return;
-  try {
-    const response = await fetch("/api/admin/download-approvals", { credentials: "same-origin" });
-    if (!response.ok) throw new Error("Admin login required.");
-    const data = await response.json();
-    const approvals = data.approvals || [];
-    const pending = approvals.filter((a) => a.status === "pending");
-    if (!pending.length) {
-      elements.downloadApprovalList.innerHTML = '<div class="empty-state">No pending download requests.</div>';
-      return;
-    }
-    elements.downloadApprovalList.innerHTML = pending.map((a) => {
-      const resource = getAllResources().find((r) => String(r.id) === String(a.resource_id || a.resourceId));
-      const name = resource?.title || a.resource_id || a.resourceId;
-      const phone = a.customer_phone || a.customerPhone || "";
-      const ref = a.payment_reference || a.paymentReference || "";
-      return `
-        <div class="approval-item">
-          <strong>${escapeHtml(name)}</strong>
-          <span>Customer: ${escapeHtml(phone)}</span>
-          ${ref ? `<span>Payment reference: ${escapeHtml(ref)}</span>` : ""}
-          <span>Status: Waiting for admin approval</span>
-          <div class="approval-actions">
-            <button class="primary-button" type="button" data-confirm-download="${escapeHtml(a.id)}">Approve Download</button>
-            <button class="secondary-button" type="button" data-reject-download="${escapeHtml(a.id)}">Reject</button>
-          </div>
-        </div>`;
-    }).join("");
-  } catch (error) {
-    elements.downloadApprovalList.innerHTML = '<div class="empty-state">Sign in as admin to manage download approvals.</div>';
-  }
-}
-
-async function handleProjectUpload(event) {
-  event.preventDefault();
-  const uploadedFile = elements.projectFile.files[0];
-  const file = uploadedFile ? await readUploadedFile(uploadedFile) : null;
-  const project = {
-    id: `project-${Date.now()}`,
-    title: elements.projectTitle.value.trim(),
-    grade: elements.projectGrade.value,
-    subject: elements.projectSubject.value.trim(),
-    notes: elements.projectNotes.value.trim(),
-    fileName: uploadedFile ? uploadedFile.name : "",
-    file,
-    status: "submitted",
-    createdAt: new Date().toISOString()
-  };
-  saveLocalList(PROJECTS_KEY, project);
-  const backend = await postToBackend(API_ENDPOINTS.projects, project);
-  elements.projectForm.reset();
-  elements.projectGrade.value = "Grade 1";
-  elements.projectStatus.textContent = backend
-    ? "CBC project uploaded to the backend successfully."
-    : "CBC project saved in this browser. Start the backend server to store it centrally.";
-  showToast("CBC project submitted.");
-}
-
-async function handleTuitionRegistration(event) {
-  event.preventDefault();
-  const registration = {
-    id: `tuition-${Date.now()}`,
-    learner: elements.tuitionLearner.value.trim(),
-    phone: elements.tuitionPhone.value.trim(),
-    grade: elements.tuitionGrade.value,
-    subjects: elements.tuitionSubjects.value.trim(),
-    freeResourcesUnlocked: true,
-    createdAt: new Date().toISOString()
-  };
-  saveLocalList(TUITION_KEY, registration);
-  const backend = await postToBackend(API_ENDPOINTS.tuition, registration);
-  elements.tuitionForm.reset();
-  elements.tuitionGrade.value = "Grade 1";
-  elements.tuitionStatus.textContent = backend
-    ? "Holiday tuition registration received. Free CBC resources are unlocked below."
-    : "Registration saved in this browser. Free CBC resources are unlocked below.";
-  showToast("Holiday tuition registration received.");
-  document.querySelector("#freeCbcResources").scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
-function renderProgressReport() {
-  const attempts = readQuizProgress();
-  if (!attempts.length) {
-    elements.progressReport.innerHTML = `<div class="empty-state">No quiz attempts yet. Mark a quiz to generate progress.</div>`;
-    return;
-  }
-  elements.progressReport.innerHTML = attempts.slice(0, 6).map((attempt) => `
-    <div class="progress-item">
-      <strong>${escapeHtml(attempt.learner)} - ${attempt.score}%</strong>
-      <span>${escapeHtml(attempt.remark)} | ${new Date(attempt.createdAt).toLocaleString()}</span>
-      <div class="progress-meter" aria-label="Score ${attempt.score}%"><span style="width: ${attempt.score}%"></span></div>
-    </div>
-  `).join("");
-}
-
-async function handleQuizSubmit(event) {
-  event.preventDefault();
-  const formData = new FormData(elements.quizForm);
-  const answers = {
-    q1: formData.get("q1"),
-    q2: formData.get("q2"),
-    q3: formData.get("q3")
-  };
-  const answerKey = {
-    q1: "competency",
-    q2: "assessment",
-    q3: "specific"
-  };
-  const correct = Object.keys(answerKey).filter((key) => answers[key] === answerKey[key]).length;
-  const score = Math.round((correct / Object.keys(answerKey).length) * 100);
-  const attempt = {
-    id: `quiz-${Date.now()}`,
-    learner: elements.quizLearner.value.trim(),
-    answers,
-    correct,
-    score,
-    remark: score >= 80 ? "Excellent progress" : score >= 50 ? "Good effort; revise weak areas" : "Needs guided revision",
-    createdAt: new Date().toISOString()
-  };
-  saveLocalList(QUIZ_PROGRESS_KEY, attempt);
-  await postToBackend(API_ENDPOINTS.quizzes, attempt);
-  elements.quizStatus.textContent = `${attempt.learner} scored ${score}%. ${attempt.remark}.`;
-  elements.quizForm.reset();
-  renderProgressReport();
-  showToast("Quiz marked and progress report updated.");
-}
-
-async function handleSellerSubmit(event) {
-  event.preventDefault();
-  const activeSeller = JSON.parse(sessionStorage.getItem("activeSellerAccount") || "null");
-  if (!activeSeller || activeSeller.status !== "approved") {
-    elements.sellerStatus.textContent = "Seller account must be approved before uploading resources.";
-    showToast("Seller account approval required.");
-    return;
-  }
-  const sellerFile = elements.sellerFile.files[0];
-  const file = await readUploadedFile(sellerFile);
-  const resource = {
-    id: `seller-${Date.now()}`,
-    sellerName: activeSeller.name,
-    sellerPhone: activeSeller.phone,
-    sellerUsername: activeSeller.username,
-    title: elements.sellerTitle.value.trim(),
-    grade: elements.sellerGrade.value,
-    subject: elements.sellerSubject.value,
-    type: elements.sellerType.value,
-    description: elements.sellerDescription.value.trim(),
-    price: Number(elements.sellerPrice.value || 0),
-    discount: Number(elements.sellerDiscount.value || 0),
-    term: "Term 1",
-    isFreeSample: false,
-    popularity: 1,
-    fileName: sellerFile.name,
-    file,
-    fileSize: sellerFile.size,
-    commission: 50,
-    status: "pending",
-    approvalNote: "Admin will review and approve within 3 days."
-  };
-
-  const currentUsage = getSellerStorageUsage();
-  if (currentUsage + sellerFile.size > SELLER_STORAGE_LIMIT_BYTES) {
-    elements.sellerStatus.textContent = "Your seller upload storage has reached its 20GB limit. Remove older uploads before submitting more files.";
-    showToast("Seller storage limit reached.");
-    return;
-  }
-  localStorage.setItem(SELLER_STORAGE_KEY, JSON.stringify([...readSellerResources(), resource]));
-  elements.sellerForm.reset();
-  elements.sellerPrice.value = "";
-  elements.sellerDiscount.value = 0;
-  elements.sellerGrade.value = "Grade 1";
-  optionList(elements.sellerSubject, gradeSubjects["Grade 1"], "Mathematics Activities");
-  elements.sellerStatus.textContent = "Seller resource submitted. Admin will review and approve within 3 days.";
-  renderSellerResources();
-  renderAdminApprovals();
-  renderResources();
-  renderTrending();
-  showToast("Seller resource submitted for admin approval.");
-}
-
-function requestWithdrawal(event) {
-  event.preventDefault();
-  const approved = readSellerResources().filter((resource) => resource.status === "approved");
-  const amount = approved.reduce((sum, resource) => sum + Math.round(Number(resource.price) * 0.5), 0);
-  if (!amount) {
-    elements.withdrawStatus.textContent = "No approved seller earnings available for withdrawal.";
-    return;
-  }
-  const request = {
-    id: `withdraw-${Date.now()}`,
-    phone: elements.withdrawPhone.value.trim(),
-    amount,
-    status: "pending",
-    createdAt: new Date().toISOString()
-  };
-  localStorage.setItem(WITHDRAWAL_KEY, JSON.stringify([...readWithdrawalRequests(), request]));
-  elements.withdrawForm.reset();
-  elements.withdrawStatus.textContent = `Withdrawal request submitted for ${money(amount)}.`;
-  showToast("Seller withdrawal request submitted.");
-}
-
-function openAdminLogin() {
-  const adminLoginSection = document.querySelector("#adminLogin");
-  if (!adminLoginSection) return;
-  adminLoginSection.classList.add("open");
-  adminLoginSection.setAttribute("aria-hidden", "false");
-  adminLoginSection.scrollIntoView({ behavior: "smooth", block: "start" });
-  showToast("Admin login section opened.");
-}
-
-function openSellerDashboard() {
-  const activeSeller = JSON.parse(sessionStorage.getItem("activeSellerAccount") || "null");
-  if (!activeSeller || activeSeller.status !== "approved") {
-    document.querySelector("#sellerAccount").classList.add("open");
-    document.querySelector("#sellerAccount").scrollIntoView({ behavior: "smooth", block: "start" });
-    showToast("Create or login to an approved seller account first.");
-    return;
-  }
-  elements.sellerName.value = activeSeller.name;
-  elements.sellerPhone.value = activeSeller.phone;
-  elements.sellerDashboard.classList.add("open");
-  elements.sellerDashboard.scrollIntoView({ behavior: "smooth", block: "start" });
-  showToast("Seller dashboard opened.");
-}
-
-async function createSellerAccount(event){event.preventDefault();const p={name:elements.sellerAccountName.value.trim(),phone:elements.sellerAccountPhone.value.trim(),username:elements.sellerAccountUsername.value.trim().toLowerCase(),password:elements.sellerAccountPassword.value};try{const r=await fetch("/api/seller/account",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(p)}),d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||"Seller account could not be created.");localStorage.setItem(SELLER_ACCOUNTS_KEY,JSON.stringify([{...d.account,password:p.password},...readSellerAccounts().filter(x=>x.username!==d.account.username)]));elements.sellerAccountForm.reset();elements.sellerAccountStatus.textContent="Seller account created. Admin approval is required before login.";renderSellerAccountApprovals();showToast("Seller account submitted for approval.");}catch(e){elements.sellerAccountStatus.textContent=e.message;}}
-async function loginSeller(event){event.preventDefault();const username=elements.sellerLoginUsername.value.trim().toLowerCase(),password=elements.sellerLoginPassword.value;try{const r=await fetch("/api/seller/login",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({username,password})}),d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||"Invalid seller username or password.");localStorage.setItem(SELLER_ACCOUNTS_KEY,JSON.stringify([d.account,...readSellerAccounts().filter(x=>x.username!==d.account.username)]));sessionStorage.setItem("activeSellerAccount",JSON.stringify(d.account));elements.sellerLoginForm.reset();elements.sellerLoginStatus.textContent="Seller login successful.";openSellerDashboard();}catch(e){elements.sellerLoginStatus.textContent=e.message;}}
-async function unlockAdmin(event) {
-  event.preventDefault();
-  const username = elements.adminUsername.value.trim();
-  const password = elements.adminPassword.value;
-  const email = elements.adminEmail.value.trim();
-
-  elements.adminLoginStatus.textContent = "Checking admin credentials...";
-  try {
-    const response = await fetch("/api/admin/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "same-origin",
-      body: JSON.stringify({ username, password, email })
-    });
-    const data = await response.json();
-    if (!response.ok || !data.ok) {
-      elements.adminLoginStatus.textContent = data.error || "Invalid admin username, password, or email.";
-      showToast("Admin login failed.");
-      return;
-    }
-    sessionStorage.setItem("cbeAdminUnlocked", "true");
-    setAdminOnlyVisibility(true);
-    const adminLoginSection = document.querySelector("#adminLogin");
-    if (adminLoginSection) {
-      adminLoginSection.classList.remove("open");
-      adminLoginSection.setAttribute("aria-hidden", "true");
-    }
-    elements.adminSection.classList.add("open");
-    elements.adminSection.setAttribute("aria-hidden", "false");
-    elements.adminLoginForm.reset();
-    elements.adminLoginStatus.textContent = "Admin dashboard unlocked securely.";
-    elements.adminSection.scrollIntoView({ behavior: "smooth", block: "start" });
-    showToast("Admin dashboard unlocked.");
-    loadAdminDashboard();
-loadAffiliateAdmin();
-  } catch {
-    elements.adminLoginStatus.textContent = "Could not connect to the admin server.";
-    showToast("Admin login failed.");
-  }
-}
-
-async function restoreAdminAccess() {
-  try {
-    const response = await fetch("/api/admin/me", { credentials: "same-origin" });
-    if (response.ok) {
-      sessionStorage.setItem("cbeAdminUnlocked", "true");
-      elements.adminSection.classList.add("open");
-      elements.adminSection.setAttribute("aria-hidden", "false");
-      loadAdminDashboard();
-    } else {
-      sessionStorage.removeItem("cbeAdminUnlocked");
-    }
-  } catch {
-    sessionStorage.removeItem("cbeAdminUnlocked");
-  }
-}
-
-async function loadAdminDashboard() {
-  if (!elements.adminControlPanel) return;
-  try {
-    const response = await fetch("/api/admin/dashboard", {
-      credentials: "same-origin",
-      cache: "no-store",
-      headers: { "Cache-Control": "no-cache" }
-    });
-    if (!response.ok) return;
-    const data = await response.json();
-    if (!data.ok) return;
-
-    // Keep the existing admin dashboard data flow, but also reconcile the
-    // resource list directly from the live resource API. This prevents an
-    // approved Supabase resource from being absent from the Admin Control
-    // Centre when the dashboard response is briefly stale.
-    try {
-      const resourceResponse = await fetch("/api/resources?_admin_sync=" + Date.now(), {
-        credentials: "same-origin",
-        cache: "no-store",
-        headers: { "Cache-Control": "no-cache" }
-      });
-      if (resourceResponse.ok) {
-        const resourceData = await resourceResponse.json();
-        if (resourceData.ok && Array.isArray(resourceData.resources)) {
-          const merged = new Map((Array.isArray(data.resources) ? data.resources : []).map((item) => [String(item.id), item]));
-          resourceData.resources.forEach((item) => {
-            const key = String(item.id ?? item.resource_id ?? "");
-            if (key) merged.set(key, { ...(merged.get(key) || {}), ...item });
-          });
-          data.resources = [...merged.values()];
-        }
-      }
-    } catch (resourceSyncError) {
-      console.warn("CBE Nexus admin resource reconciliation failed:", resourceSyncError);
-    }
-
-    renderAdminControlCentre(data);
-  } catch (error) {
-    console.warn("CBE Nexus admin dashboard load failed:", error);
-  }
-}
-
-function setAdminModule(module) {
-  activeAdminModule = module;
-  document.querySelectorAll("[data-admin-module]").forEach((button) => {
-    const active = button.dataset.adminModule === module;
-    button.classList.toggle("active", active);
-    button.setAttribute("aria-selected", String(active));
-  });
-  document.querySelectorAll("[data-admin-module-panel]").forEach((panel) => {
-    panel.classList.toggle("active", panel.dataset.adminModulePanel === module);
-  });
-}
-
-function renderAdminControlCentre(data) {
-  const stats = data.stats || {};
-  const sellers = data.sellers || [];
-  // Admin uses the complete Supabase resource set. Do not hide approved records because of frontend field-name differences.\n  const resources = (Array.isArray(data.resources) ? data.resources : []).map(normalizeResourceForLibrary);
-  const users = data.users || [];
-  const sales = data.sales || [];
-  const payments = data.payments || [];
-  const pendingPayments = payments.filter((item) => String(item.status || "").toLowerCase().includes("pending")).length;
-
-  elements.adminStatsGrid.innerHTML = [
-    ["Total sellers", stats.sellers || 0, (stats.pendingSellers || 0) + " pending", "sellers"],
-    ["Total resources", stats.resources || 0, (stats.pendingResources || 0) + " pending", "resources"],
-    ["Total purchases", stats.purchases || stats.sales || 0, "completed purchases", "sales"],
-    ["Popular resources", (data.popularResources || []).length, "top resources", "resources"],
-    ["Revenue", money(stats.revenue || 0), "recorded sales value", "sales"],
-    ["Downloads", stats.downloads || 0, "R2 downloads", "resources"]
-  ].map(([label, value, note, module]) =>
-    "<button class=\"admin-stat-card\" type=\"button\" data-admin-kpi-module=\"" + escapeHtml(module) + "\"><strong>" +
-    escapeHtml(value) + "</strong><span>" + escapeHtml(label) + "</span><small>" + escapeHtml(note) + "</small></button>"
-  ).join("");
-
-  if (elements.adminSellerBadge) elements.adminSellerBadge.textContent = stats.pendingSellers || 0;
-  if (elements.adminResourceBadge) elements.adminResourceBadge.textContent = stats.pendingResources || 0;
-  if (elements.adminUserBadge) elements.adminUserBadge.textContent = users.length;
-  if (elements.adminSalesBadge) elements.adminSalesBadge.textContent = sales.length;
-  if (elements.adminPaymentBadge) elements.adminPaymentBadge.textContent = pendingPayments;
-  const analyticsNode = document.getElementById("adminAnalyticsGrid");
-  if (analyticsNode) {
-    const monthMap = {};
-    sales.forEach((item) => {
-      const d = new Date(item.createdAt || item.confirmedAt || Date.now());
-      if (!Number.isNaN(d.getTime())) {
-        const key = d.toLocaleDateString(undefined, { month: "short", year: "numeric" });
-        monthMap[key] = (monthMap[key] || 0) + Number(item.amount || 0);
-      }
-    });
-    const list = (items, formatter) => items.length
-      ? "<div class=\"admin-analytics-list\">" + items.map(([k,v]) => "<div><span>" + escapeHtml(k) + "</span><strong>" + formatter(v) + "</strong></div>").join("") + "</div>"
-      : "<p class=\"admin-analytics-empty\">No data recorded yet.</p>";
-    const topResources = [...resources].map((r) => [r.title || "Untitled resource", Number(r.purchases || 0), Number(r.downloads || 0)])
-      .sort((x,y) => (y[1]*3+y[2])-(x[1]*3+x[2])).slice(0,5);
-    const sellerMap = new Map(sellers.map((s) => [String(s.id), s]));
-    const sellerStats = new Map();
-    resources.forEach((r) => {
-      const sid = String(r.sellerId || r.seller_id || "");
-      if (!sid) return;
-      const m = sellerStats.get(sid) || { purchases: 0, downloads: 0 };
-      m.purchases += Number(r.purchases || 0); m.downloads += Number(r.downloads || 0);
-      sellerStats.set(sid, m);
-    });
-    const topSellers = [...sellerStats.entries()].map(([id,m]) => {
-      const s = sellerMap.get(id);
-      return [s?.name || s?.username || "Seller", m.purchases, m.downloads];
-    }).sort((x,y) => (y[1]*3+y[2])-(x[1]*3+x[2])).slice(0,5);
-    const resourceStatuses = {};
-    resources.forEach((r) => { const k=String(r.status||"approved").toLowerCase(); resourceStatuses[k]=(resourceStatuses[k]||0)+1; });
-    analyticsNode.innerHTML =
-      "<article><h4>Sales revenue</h4><strong class=\"admin-analytics-total\">" + money(stats.revenue||0) + "</strong>" + list(Object.entries(monthMap).slice(-6),(v)=>money(v)) + "</article>" +
-      "<article><h4>Top resources</h4><strong class=\"admin-analytics-total\">" + topResources.length + "</strong>" + list(topResources.map(x=>[x[0],x[1]+" purchases · "+x[2]+" downloads"]),(v)=>v) + "</article>" +
-      "<article><h4>Top sellers</h4><strong class=\"admin-analytics-total\">" + topSellers.length + "</strong>" + list(topSellers.map(x=>[x[0],x[1]+" purchases · "+x[2]+" downloads"]),(v)=>v) + "</article>" +
-      "<article><h4>Resource status</h4><strong class=\"admin-analytics-total\">" + resources.length + "</strong>" + list(Object.entries(resourceStatuses),(v)=>v) + "</article>" +
-      "<article><h4>User activity</h4><strong class=\"admin-analytics-total\">" + users.length + "</strong><div class=\"admin-analytics-list\"><div><span>Active</span><strong>" + users.filter(u=>String(u.status||"active").toLowerCase()==="active").length + "</strong></div><div><span>Blocked</span><strong>" + users.filter(u=>String(u.status||"").toLowerCase()==="blocked").length + "</strong></div></div></article>" +
-      "<article><h4>Marketplace activity</h4><strong class=\"admin-analytics-total\">" + (Number(stats.purchases||stats.sales||0)+Number(stats.downloads||0)) + "</strong><div class=\"admin-analytics-list\"><div><span>Purchases</span><strong>" + Number(stats.purchases||stats.sales||0) + "</strong></div><div><span>Downloads</span><strong>" + Number(stats.downloads||0) + "</strong></div></div></article>";
-  }
-
-  function exportAdminCsv(filename, headers, rows) {
-    const csv = [headers, ...rows].map((row) => row.map((value) => '"' + String(value ?? "").replace(/"/g, '""') + '"').join(",")).join("\n");
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url; link.download = filename; link.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  }
-  const exportSalesButton = document.getElementById("adminExportSales");
-  if (exportSalesButton) exportSalesButton.onclick = () => exportAdminCsv("cbe-nexus-sales.csv", ["Resource","Customer","Amount","Status","Date"], sales.map(s => [s.resource||"",s.customerPhone||s.phone||"",s.amount||0,s.status||"",s.createdAt||s.confirmedAt||""]));
-  const exportResourcesButton = document.getElementById("adminExportResources");
-  if (exportResourcesButton) exportResourcesButton.onclick = () => exportAdminCsv("cbe-nexus-resources.csv", ["Title","Grade","Subject","Type","Status","Price","Purchases","Downloads"], resources.map(r => [r.title||"",r.grade||"",r.subject||"",r.type||"",r.status||"",r.price||0,r.purchases||0,r.downloads||0]));
-
-  const query = String(elements.adminDashboardSearch?.value || "").trim().toLowerCase();
-  const status = String(elements.adminStatusFilter?.value || "all").toLowerCase();
-  const matches = (record, values) => {
-    const haystack = values.map((value) => String(value ?? "")).join(" ").toLowerCase();
-    const recordStatus = String(record.status || "").toLowerCase();
-    return (!query || haystack.includes(query)) && (status === "all" || recordStatus === status);
-  };
-
-  const visibleSellers = sellers.filter((s) => matches(s, [s.name, s.username, s.phone, s.status])).slice(0, 50);
-  elements.adminSellerManagement.innerHTML = visibleSellers.length
-    ? visibleSellers.map((s) =>
-      "<div class=\"admin-record\"><div class=\"admin-record-main\"><strong>" + escapeHtml(s.name || s.username || "Seller") +
-      "</strong><span>@" + escapeHtml(s.username || "") + " · " + escapeHtml(s.phone || "") +
-      "</span></div><span class=\"status-pill " + escapeHtml(s.status || "pending") + "\">" + escapeHtml(s.status || "pending") +
-      "</span><div class=\"admin-record-actions\"><button class=\"primary-button\" type=\"button\" data-admin-seller-id=\"" +
-      escapeHtml(s.id) + "\" data-admin-seller-status=\"approved\">Approve</button><button class=\"secondary-button\" type=\"button\" data-admin-seller-id=\"" +
-      escapeHtml(s.id) + "\" data-admin-seller-status=\"rejected\">Reject</button></div></div>"
-    ).join("")
-    : "<div class=\"empty-state\">No sellers match the current filters.</div>";
-
-  // Show every matching resource in the Admin Resource Management list.\n  // The existing search/status filters still apply; there is no arbitrary 50-record cutoff.\n  const visibleResources = resources.filter((r) => matches(r, [r.title, r.grade, r.subject, r.type, r.sellerUsername, r.status]));
-  elements.adminResourceManagement.innerHTML = visibleResources.length
-    ? visibleResources.map((r) =>
-      "<div class=\"admin-record\"><div class=\"admin-record-main\"><strong>" + escapeHtml(r.title || "Untitled resource") +
-      "</strong><span>" + escapeHtml(r.grade || "") + " · " + escapeHtml(r.subject || "") + " · " + escapeHtml(r.type || "Resource") +
-      "</span></div><span class=\"status-pill " + escapeHtml(r.status || "approved") + "\">" + escapeHtml(r.status || "approved") +
-      "</span><div class=\"admin-record-actions\"><button class=\"primary-button\" type=\"button\" data-admin-resource-id=\"" +
-      escapeHtml(r.id) + "\" data-admin-resource-status=\"approved\">Approve</button><button class=\"secondary-button\" type=\"button\" data-admin-resource-id=\"" +
-      escapeHtml(r.id) + "\" data-admin-resource-status=\"rejected\">Reject</button><button class=\"secondary-button admin-delete-resource\" type=\"button\" data-admin-resource-delete=\"" + escapeHtml(r.id) + "\" aria-label=\"Delete resource\">Delete</button></div></div>"
-    ).join("")
-    : "<div class=\"empty-state\">No resources match the current filters.</div>";
-
-  const visibleUsers = users.filter((u) => matches(u, [u.name, u.phone, u.status, u.source])).slice(0, 50);
-  elements.adminUserManagement.innerHTML = visibleUsers.length
-    ? visibleUsers.map((u) =>
-      "<div class=\"admin-record\" data-user-phone=\"" + escapeHtml(u.phone || "") + "\"><div class=\"admin-record-main\"><strong>" +
-      escapeHtml(u.name || "Customer") + "</strong><span>" + escapeHtml(u.phone || "") + " · " + escapeHtml(u.source || "account") +
-      "</span></div><span class=\"status-pill " + escapeHtml(u.status || "active") + "\">" + escapeHtml(u.status || "active") +
-      "</span><div class=\"admin-record-actions\"><button class=\"primary-button\" type=\"button\" data-admin-user-id=\"" +
-      escapeHtml(u.id) + "\" data-admin-user-status=\"active\">Activate</button><button class=\"secondary-button\" type=\"button\" data-admin-user-id=\"" +
-      escapeHtml(u.id) + "\" data-admin-user-status=\"blocked\">Block</button></div></div>"
-    ).join("")
-    : "<div class=\"empty-state\">No users match the current filters.</div>";
-
-  const visibleSales = sales.filter((s) => matches(s, [s.resource, s.customerPhone, s.phone, s.amount, s.status])).slice(0, 50);
-  elements.adminSalesManagement.innerHTML = visibleSales.length
-    ? visibleSales.map((s) =>
-      "<div class=\"admin-record\"><div class=\"admin-record-main\"><strong>" + escapeHtml(s.resource || "Resource sale") +
-      "</strong><span>" + escapeHtml(s.customerPhone || s.phone || "Customer") + " · " +
-      new Date(s.createdAt || s.confirmedAt || Date.now()).toLocaleString() +
-      "</span></div><strong class=\"admin-amount\">" + money(s.amount || 0) +
-      "</strong><span class=\"status-pill paid\">" + escapeHtml(s.status || "paid") + "</span></div>"
-    ).join("")
-    : "<div class=\"empty-state\">No completed sales match the current filters.</div>";
-
-  const visiblePayments = payments.filter((p) => matches(p, [p.resource, p.customerPhone, p.phone, p.amount, p.status, p.checkoutRequestID])).slice(0, 50);
-  elements.adminPaymentManagement.innerHTML = visiblePayments.length
-    ? visiblePayments.map((p) =>
-      "<div class=\"admin-record\"><div class=\"admin-record-main\"><strong>" + escapeHtml(p.resource || "Payment request") +
-      "</strong><span>" + escapeHtml(p.customerPhone || p.phone || "Customer") + " · " +
-      new Date(p.createdAt || p.receivedAt || Date.now()).toLocaleString() +
-      "</span></div><strong class=\"admin-amount\">" + money(p.amount || 0) +
-      "</strong><span class=\"status-pill " + escapeHtml(p.status || "pending") + "\">" +
-      escapeHtml(p.status || "pending") + "</span></div>"
-    ).join("")
-    : "<div class=\"empty-state\">No payments match the current filters.</div>";
-
-  const visiblePrices = resources.filter((r) => matches(r, [r.title, r.grade, r.subject, r.type, r.price, r.discount]));
-  elements.adminPriceManagement.innerHTML = visiblePrices.length
-    ? visiblePrices.map((r) =>
-      "<div class=\"admin-price-row\"><div><strong>" + escapeHtml(r.title || "Untitled resource") +
-      "</strong><span>" + escapeHtml(r.grade || "") + " · " + escapeHtml(r.subject || "") +
-      "</span></div><label><span>Price</span><input type=\"number\" min=\"0\" value=\"" + Number(r.price || 0) +
-      "\" data-admin-price=\"" + escapeHtml(r.id) + "\"></label><label><span>Discount %</span><input type=\"number\" min=\"0\" max=\"100\" value=\"" +
-      Number(r.discount || 0) + "\" data-admin-discount=\"" + escapeHtml(r.id) + "\"></label><button class=\"primary-button\" type=\"button\" data-admin-save-price=\"" +
-      escapeHtml(r.id) + "\">Save</button></div>"
-    ).join("")
-    : "<div class=\"empty-state\">No resources match the current filters.</div>";
-
-  const summaries = {
-    adminSellerSummary: (sellers.filter((s) => s.status === "pending").length) + " awaiting review",
-    adminResourceSummary: (stats.pendingResources || 0) + " awaiting review",
-    adminUserSummary: users.length + " identified",
-    adminSalesSummary: sales.length + " completed",
-    adminPaymentSummary: pendingPayments + " pending"
-  };
-  Object.keys(summaries).forEach((id) => {
-    const node = document.getElementById(id);
-    if (node) node.textContent = summaries[id];
-  });
-  setAdminModule(activeAdminModule);
-}
-
-
-async function adminPost(path, payload) {
-  const response = await fetch(path, { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok || !data.ok) throw new Error(data.error || "Admin action failed.");
-  return data;
-}
-
-async function handleAdminControlClick(event) {
-  const sellerButton = event.target.closest("[data-admin-seller-id]");
-  const resourceButton = event.target.closest("[data-admin-resource-id]");
-  const deleteResourceButton = event.target.closest("[data-admin-resource-delete]");
-  const userButton = event.target.closest("[data-admin-user-id]");
-  const priceButton = event.target.closest("[data-admin-save-price]");
-  try {
-    if (deleteResourceButton) {
-      const resourceId = deleteResourceButton.dataset.adminResourceDelete;
-      const resource = getAllResources().find((r) => String(r.id) === String(resourceId));
-      const title = resource?.title || "this resource";
-      if (!window.confirm(`Delete "${title}" permanently? This removes the marketplace record and its R2 file/preview.`)) return;
-      await adminPost("/api/admin/resource-delete", { resourceId });
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(readSavedResources().filter((r) => String(r.id) !== String(resourceId))));
-      localStorage.setItem(SELLER_STORAGE_KEY, JSON.stringify(readSellerResources().filter((r) => String(r.id) !== String(resourceId))));
-      renderSellerResources(); renderAdminApprovals(); renderResources(); renderTrending();
-    } else if (sellerButton) {
-      await adminPost("/api/admin/seller-account-status", { accountId: sellerButton.dataset.adminSellerId, status: sellerButton.dataset.adminSellerStatus });
-      renderSellerAccountApprovals();
-    } else if (resourceButton) {
-      const resourceId = resourceButton.dataset.adminResourceId;
-      const resourceStatus = resourceButton.dataset.adminResourceStatus;
-      await adminPost("/api/admin/resource-status", { resourceId, status: resourceStatus });
-      localStorage.setItem(SELLER_STORAGE_KEY, JSON.stringify(readSellerResources().map((r) => r.id === resourceId ? { ...r, status: resourceStatus, reviewedAt: new Date().toISOString() } : r)));
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(readSavedResources().map((r) => r.id === resourceId ? { ...r, status: resourceStatus } : r)));
-      renderSellerResources(); renderAdminApprovals(); renderResources();
-    } else if (userButton) {
-      const row = userButton.closest(".admin-record");
-      const phone = row?.querySelector("span")?.textContent?.trim() || "";
-      await adminPost("/api/admin/user-status", { userId: userButton.dataset.adminUserId, phone, status: userButton.dataset.adminUserStatus });
-    } else if (priceButton) {
-      const id = priceButton.dataset.adminSavePrice;
-      const price = elements.adminPriceManagement.querySelector(`[data-admin-price="\${CSS.escape(id)}"]`)?.value;
-      const discount = elements.adminPriceManagement.querySelector(`[data-admin-discount="\${CSS.escape(id)}"]`)?.value;
-      await adminPost("/api/admin/resource-price", { resourceId: id, price, discount });
-      const updatePrice = (r) => r.id === id ? { ...r, price: Number(price), discount: Number(discount) } : r;
-      localStorage.setItem(SELLER_STORAGE_KEY, JSON.stringify(readSellerResources().map(updatePrice)));
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(readSavedResources().map(updatePrice)));
-      renderSellerResources(); renderResources();
-    } else return;
-    await loadAdminDashboard();
-    showToast("Admin change saved.");
-  } catch (error) {
-    showToast(error.message || "Admin action failed.");
-  }
-}
-
-function addToCart(resourceId) {
-  const resource = getAllResources().find((item) => item.id === resourceId);
-  if (!resource) return;
-  const cart = readCart();
-  if (!cart.some((item) => item.id === resource.id)) {
-    localStorage.setItem(CART_KEY, JSON.stringify([...cart, resource]));
-  }
-  renderCart();
-  elements.cartDrawer.classList.add("open");
-  elements.cartDrawer.setAttribute("aria-hidden", "false");
-  showToast(`${resource.title} added to cart.`);
-}
-
-function removeFromCart(resourceId) {
-  localStorage.setItem(CART_KEY, JSON.stringify(readCart().filter((resource) => resource.id !== resourceId)));
-  renderCart();
-  showToast("Resource removed from cart.");
-}
-
-function selectResourceForPayment(resourceId) {
-  const resource = getAllResources().find((item) => item.id === resourceId);
-  if (!resource) return;
-
-  const amount = discountedPrice(resource);
-  elements.selectedResource.value = resource.title;
-  elements.selectedResource.dataset.resourceId = String(resource.id);
-  elements.amount.value = amount;
-  elements.paymentStatus.textContent = `Ready to request M-Pesa payment of ${money(amount)} to ${MPESA_PHONE}.`;
-  elements.whatsappOrder.href = whatsappLink(resource, amount);
-  showToast(`${resource.title} selected for M-Pesa payment.`);
-  document.querySelector("#payments").scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
-async function requestMpesaPayment(event) {
-  event.preventDefault();
-  const resourceId = String(elements.selectedResource.dataset.resourceId || "").trim();
-  const phone = elements.customerPhone.value.trim();
-  if (!resourceId) { showToast("Please select a resource before starting payment."); return; }
-  if (!phone) { showToast("Enter the Safaricom number that should receive the payment prompt."); return; }
-
-  const payload = { customerPhone: phone, resourceId };
-  elements.paymentStatus.textContent = "Sending M-Pesa payment request...";
-  showToast("Processing M-Pesa request...");
-  try {
-    const response = await fetch(MPESA_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-    const result = await response.json().catch(() => ({}));
-    if (!response.ok || !result.ok || !result.CheckoutRequestID) throw new Error(result.error || "M-Pesa request was not accepted.");
-    const record = { id: `pay-${Date.now()}`, customerPhone: phone, amount: result.amount, resource: elements.selectedResource.value.trim(), resourceId, checkoutRequestID: result.CheckoutRequestID, status: "pending confirmation", createdAt: new Date().toISOString() };
-    localStorage.setItem(PAYMENT_RECORDS_KEY, JSON.stringify([record, ...readPaymentRecords()]));
-    renderPaymentRecords();
-    elements.paymentStatus.textContent = "M-Pesa request sent. Complete the payment prompt on your phone. Payment will be verified automatically.";
-    showToast("M-Pesa request sent successfully.");
-    pollMpesaPayment(result.CheckoutRequestID, phone, resourceId);
-  } catch (error) {
-    elements.paymentStatus.textContent = error.message || "M-Pesa payment could not be started.";
-    showToast(error.message || "M-Pesa payment could not be started.");
-  }
-}
-
-async function pollMpesaPayment(checkoutRequestID, phone, resourceId) {
-  let attempts = 0;
-  const timer = setInterval(async () => {
-    attempts += 1;
-    try {
-      const response = await fetch("/api/mpesa/status?checkoutRequestID=" + encodeURIComponent(checkoutRequestID) + "&phone=" + encodeURIComponent(phone), { credentials: "same-origin" });
-      const data = await response.json().catch(() => ({}));
-      if (!response.ok || !data.ok) throw new Error(data.error || "Payment status could not be checked.");
-      const status = String(data.status || "unknown").toLowerCase();
-      const records = readPaymentRecords().map(item => item.checkoutRequestID === checkoutRequestID ? {...item, status: status === "paid" ? "paid" : status === "failed" ? "failed" : "pending confirmation", mpesaReceipt: data.payment?.receipt || null} : item);
-      localStorage.setItem(PAYMENT_RECORDS_KEY, JSON.stringify(records));
-      renderPaymentRecords();
-      if (status === "paid") { clearInterval(timer); elements.paymentStatus.textContent = "Payment verified. You can now request the download for admin approval."; showToast("M-Pesa payment verified."); }
-      else if (status === "failed") { clearInterval(timer); elements.paymentStatus.textContent = "M-Pesa payment was not completed."; showToast("M-Pesa payment was not completed."); }
-    } catch {}
-    if (attempts >= 12) clearInterval(timer);
-  }, 5000);
-}
-
-function syncGradeSubjectLink() {
-  const params = new URLSearchParams();
-  if (state.grade && state.grade !== "All Grades") params.set("grade", state.grade);
-  if (state.subject && state.subject !== "All Subjects") params.set("subject", state.subject);
-  const hash = params.toString() ? "#resources?" + params.toString() : "#resources";
-  if (window.location.hash !== hash) {
-    window.history.replaceState(null, "", hash);
-  }
-}
-
-function applyGradeSubjectFromLink(scroll = false) {
-  const raw = window.location.hash || "";
-  if (!raw.startsWith("#resources")) return false;
-  const query = raw.includes("?") ? raw.slice(raw.indexOf("?") + 1) : "";
-  const params = new URLSearchParams(query);
-  const grade = params.get("grade");
-  const subject = params.get("subject");
-
-  if (grade && gradeSubjects[grade]) {
-    state.grade = grade;
-    const canonicalSubject = canonicalSubjectName(subject);
-    state.subject = canonicalSubject && gradeSubjects[grade].includes(canonicalSubject) ? canonicalSubject : "All Subjects";
-    if (elements.gradeFilter) elements.gradeFilter.value = state.grade;
-    refreshSubjectFilters();
-    if (elements.subjectFilter) elements.subjectFilter.value = state.subject;
-
-    document.querySelectorAll("#gradeList .grade-card").forEach((card) => {
-      const active = card.dataset.gradeCard === grade;
-      card.classList.toggle("open", active);
-      const toggle = card.querySelector("[data-grade-toggle]");
-      toggle?.classList.toggle("active", active);
-      toggle?.setAttribute("aria-expanded", String(active));
-      const select = card.querySelector("[data-grade-subject-select]");
-      if (select) select.value = active ? state.subject : "All Subjects";
-    });
-
-    renderResources();
-    if (scroll) document.querySelector("#resources")?.scrollIntoView({ behavior: "smooth", block: "start" });
-    return true;
-  }
-
-  return false;
-}
-
-function setGradeSubject(grade, subject, updateLink = true) {
-  state.grade = grade;
-  state.subject = canonicalSubjectName(subject);
-  if (elements.gradeFilter) elements.gradeFilter.value = grade;
-  refreshSubjectFilters();
-  if (elements.subjectFilter) elements.subjectFilter.value = subject;
-  if (updateLink) syncGradeSubjectLink();
-  renderResources();
-  document.querySelector("#resources")?.scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
-function createDownloadFile(resource) {
-  const content = [
-    "CBE E-Learning Resource",
-    `Title: ${resource.title}`,
-    `Grade: ${resource.grade}`,
-    `Subject: ${resource.subject}`,
-    `Material Type: ${resource.type}`,
-    `Description: ${resource.description}`,
-    `Price: ${money(resource.price)}`,
-    `Discount: ${resource.discount}%`,
-    "",
-    resource.notes ? "NOTES" : "",
-    resource.notes || "",
-    resource.notes ? "" : "",
-    "Replace this generated file with the final PDF, DOCX, or workbook when deploying online."
-  ].filter((line) => line !== "").join("\n");
-  return `data:text/plain;charset=utf-8,${encodeURIComponent(content)}`;
-}
-
-function readUploadedFile(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = () => reject(reader.error);
-    reader.readAsDataURL(file);
-  });
 }
 
 async function handleFormSubmit(event) {
@@ -1649,90 +883,197 @@ async function handleFormSubmit(event) {
   const notes = elements.notesContent.value.trim();
   const price = Number(document.querySelector("#priceInput").value || 0);
   const discount = Number(document.querySelector("#discountInput").value || 0);
+  let grade = String(elements.adminGrade?.value || "").trim();
+  const curriculum = String(elements.adminCurriculum?.value || "CBC/CBE").trim();
+  const subject = String(elements.adminSubject?.value || "").trim();
+  const type = elements.adminType.value;
   let fileName = document.querySelector("#fileNameInput").value.trim();
-  let file = "";
+  const internationalCurricula = ["IGCSE","Cambridge International","IB","O Level","A Level","Pearson"];
+  const isInternationalUpload = internationalCurricula.includes(curriculum);
 
-  if (uploadedFile) {
-    fileName = fileName || uploadedFile.name;
-    file = await readUploadedFile(uploadedFile);
-  } else {
-    fileName = fileName || `${Date.now()}-cbe-resource.txt`;
+  if (!title || !description || !subject || !type || !price && price !== 0) {
+    elements.formStatus.textContent = "Complete the resource title, description, subject, material type and price before publishing.";
+    showToast("Please complete all required resource details.");
+    return;
   }
 
-  const resource = {
-    id: `admin-${Date.now()}`,
-    title,
-    grade: elements.adminGrade.value,
-    subject: elements.adminSubject.value,
-    type: elements.adminType.value,
-    description,
-    notes,
-    price,
-    discount,
-    term: elements.termInput.value,
-    isFreeSample: elements.freeSample.value === "true",
-    popularity: 1,
-    fileName,
-    file: file || createDownloadFile({
-      title,
-      grade: elements.adminGrade.value,
-      subject: elements.adminSubject.value,
-      type: elements.adminType.value,
-      description,
-      notes,
-      price,
-      discount,
-      term: elements.termInput.value
-    })
-  };
-
-  const saved = readSavedResources();
-  localStorage.setItem(STORAGE_KEY, JSON.stringify([...saved, resource]));
-  elements.form.reset();
-  document.querySelector("#priceInput").value = "";
-  document.querySelector("#discountInput").value = 0;
-  elements.termInput.value = "Term 1";
-  elements.freeSample.value = "false";
-  elements.notesContent.value = "";
-  elements.adminGrade.value = "Grade 1";
-  optionList(elements.adminSubject, gradeSubjects["Grade 1"], "Mathematics Activities");
-  elements.fileHelp.textContent = "Choose a PDF, Word document, PowerPoint, Excel file, text file, or ZIP.";
-  elements.formStatus.textContent = "Resource published successfully and added to the library.";
-  showToast("Resource published successfully.");
-  renderResources();
-}
-
-function safeOn(element, eventName, handler, options) {
-  if (element && typeof element.addEventListener === "function") {
-    element.addEventListener(eventName, handler, options);
+  if (isInternationalUpload) {
+    // Keep the stored grade/curriculum key aligned even if the grade dropdown did not
+    // refresh after the curriculum selection (for example, after a delayed script load).
+    if (elements.adminGrade && grade !== curriculum) {
+      optionList(elements.adminGrade, [curriculum], curriculum);
+      grade = curriculum;
+    }
+    const validSubjects = gradeSubjects[curriculum] || [];
+    const subjectIsValid = validSubjects.some((name) => canonicalSubjectName(name) === canonicalSubjectName(subject));
+    if (!grade || grade !== curriculum || !subject || !subjectIsValid) {
+      elements.formStatus.textContent = "Choose an international curriculum and a subject from that curriculum’s subject list before publishing.";
+      showToast("Select the international curriculum and its subject before publishing.");
+      return;
+    }
   }
-}
 
-function bindEvents() {
-  window.addEventListener("hashchange", () => {
-    applyGradeSubjectFromLink(true);
+  if (!uploadedFile) {
+    elements.formStatus.textContent = "Please choose the resource file before publishing.";
+    showToast("Select a resource file first.");
+    return;
+  }
+
+  fileName = fileName || uploadedFile.name;
+
+  // Prevent accidental repeat uploads by checking already-known resources before
+  // sending another copy to storage. Match both file identity and resource metadata.
+  const normalizeDuplicateText = (value) => String(value || "").trim().toLowerCase().replace(/\\s+/g, " ");
+  const existingResources = [
+    ...readSavedResources(),
+    ...readSellerResources(),
+    ...starterResources
+  ];
+  const duplicate = existingResources.find((resource) => {
+    const existingName = normalizeDuplicateText(resource.fileName || resource.filename || resource.originalName);
+    const existingTitle = normalizeDuplicateText(resource.title);
+    const sameContext =
+      normalizeDuplicateText(resource.grade) === normalizeDuplicateText(grade) &&
+      normalizeDuplicateText(resource.subject) === normalizeDuplicateText(subject) &&
+      normalizeDuplicateText(resource.type || resource.resource_type) === normalizeDuplicateText(type);
+    const sameFile = existingName && existingName === normalizeDuplicateText(fileName) &&
+      Number(resource.fileSize || resource.size || 0) === Number(uploadedFile.size);
+    const sameResource = existingTitle === normalizeDuplicateText(title) && sameContext;
+    return sameContext && (sameFile || sameResource);
   });
+  if (duplicate) {
+    const message = "Duplicate upload blocked: this file or a resource with the same title, grade, subject and material type already exists. Check the existing resource before uploading again.";
+    if (elements.formStatus) elements.formStatus.textContent = message;
+    showToast("Duplicate resource detected. Upload cancelled.");
+    return;
+  }
 
+  const resourceId = `admin-${Date.now()}`;
+
+  try {
+    elements.formStatus.textContent = isInternationalUpload
+      ? `Uploading ${curriculum} resource to its dedicated international library...`
+      : "Uploading resource to Cloudflare R2...";
+    const uploadResponse = await fetch("/api/r2/upload", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": uploadedFile.type || "application/octet-stream",
+        "Content-Length": String(uploadedFile.size),
+        "X-CBE-Role": "admin",
+        "X-CBE-Grade": grade,
+        "X-CBE-Subject": subject,
+        "X-CBE-Type": type,
+        "X-CBE-Filename": fileName,
+        "X-CBE-Resource-Id": resourceId
+      },
+      body: uploadedFile
+    });
+    const uploadData = await uploadResponse.json().catch(() => ({}));
+    if (!uploadResponse.ok || !uploadData.ok) throw new Error(uploadData.error || "Resource file could not be uploaded to R2.");
+
+    elements.formStatus.textContent = "Saving resource details to Supabase...";
+    const resourceResponse = await fetch("/api/resources", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({
+        id: resourceId,
+        role: "admin",
+        title,
+        grade,
+        curriculum,
+        subject,
+        type,
+        description,
+        notes,
+        price,
+        discount,
+        term: elements.termInput.value,
+        isFreeSample: elements.freeSample.value === "true",
+        popularity: 1,
+        fileName,
+        r2Key: uploadData.r2Key || uploadData.key,
+        previewKey: uploadData.previewKey || ""
+      })
+    });
+    const resourceData = await resourceResponse.json().catch(() => ({}));
+    if (!resourceResponse.ok || !resourceData.ok) throw new Error(resourceData.error || "Resource metadata could not be saved to Supabase.");
+
+    const saved = resourceData.saved || {
+      ...resourceData.resource,
+      id: resourceId, title, grade, subject, type, description, price, discount, term: elements.termInput.value,
+      isFreeSample: elements.freeSample.value === "true", fileName,
+      r2Key: uploadData.r2Key || uploadData.key
+    };
+    const local = readSavedResources().filter((r) => String(r.id) !== String(saved.id));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([...local, normalizeResourceForLibrary(saved)]));
+
+    elements.form.reset();
+    document.querySelector("#priceInput").value = "";
+    document.querySelector("#discountInput").value = 0;
+    elements.termInput.value = "Term 1";
+    elements.freeSample.value = "false";
+    elements.notesContent.value = "";
+    elements.adminGrade.value = "Grade 1";
+    if (typeof refreshAdminUploadSubjects === "function") refreshAdminUploadSubjects();
+    elements.fileHelp.textContent = "Choose a PDF, Word document, PowerPoint, Excel file, text file, or ZIP.";
+    // Keep the administrator on the upload form and give an unmistakable success message.
+    const successMessage = isInternationalUpload
+      ? `✓ SUCCESS — ${curriculum} resource uploaded and saved successfully. It will appear only on the ${curriculum} resource page after approval.`
+      : "✓ SUCCESS — Resource uploaded to Cloudflare R2 and saved to Supabase successfully.";
+    elements.formStatus.textContent = successMessage;
+    elements.formStatus.className = "form-status upload-success";
+    showToast(successMessage);
+    const submitButton = elements.form.querySelector('button[type="submit"]');
+    if (submitButton) submitButton.textContent = "✓ Upload Successful";
+    // Refresh only the resource moderation list; do not navigate/reset the Admin Dashboard.
+    if (typeof window.loadAdminResourceModeration === "function") {
+      // Do not make the upload-success response wait for the separate moderation list.
+      // Refresh it in the background so the admin can publish the next resource sooner.
+      Promise.resolve().then(() => window.loadAdminResourceModeration()).catch((refreshError) => {
+        console.warn("Background moderation refresh failed:", refreshError);
+      });
+    }
+  } catch (error) {
+    console.error("CBE Nexus resource publish error:", error);
+    elements.formStatus.textContent = error.message || "Resource could not be published.";
+    showToast(error.message || "Resource could not be published.");
+  }
+}
+
+function setActiveMaterialLink() {
   document.querySelectorAll("[data-material-link]").forEach((link) => {
     link.addEventListener("click", (event) => {
+      const type = link.dataset.materialLink;
+      if (!type) return;
       event.preventDefault();
-      state.type = link.dataset.materialLink;
-      elements.typeFilter.value = state.type;
-      renderResources();
-      showToast(`${state.type} selected.`);
-      document.querySelector("#resources").scrollIntoView({ behavior: "smooth", block: "start" });
+      window.location.href = "resource-category.html?type=" + encodeURIComponent(type);
     });
   });
 
   document.querySelectorAll("[data-hero-resource]").forEach((link) => {
     link.addEventListener("click", (event) => {
-      event.preventDefault();
       const category = link.dataset.heroResource;
-      state.search = category;
-      elements.searchFilter.value = category;
+      if (!category) return;
+      // Dashboard category cards stay on the main Teaching & Learning Dashboard.
+      // They must not redirect learners to a subject/resource-category page.
+      event.preventDefault();
+      const categoryTypeMap = {
+        "Holiday Classes": "Holiday Workbooks",
+        "Assignments": "Assignments",
+        "KNEC Rubrics": "KNEC Rubrics",
+        "Novels": "Bookshop",
+        "Novels & Setbooks": "Bookshop",
+        "Revision Booklets": "Study Guides",
+        "Bookshop": "Bookshop"
+      };
+      const selectedType = categoryTypeMap[category] || category;
+      if (elements.typeFilter) elements.typeFilter.value = selectedType;
+      state.type = selectedType;
       renderResources();
-      showToast(`${category} selected.`);
-      document.querySelector("#resources").scrollIntoView({ behavior: "smooth", block: "start" });
+      document.querySelector("#resources")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      showToast(category + " selected.");
     });
   });
 
@@ -1765,14 +1106,14 @@ function bindEvents() {
 
   safeOn(elements.cartButton, "click", () => {
     renderCart();
+    elements.cartDrawer.hidden = false;
     elements.cartDrawer.classList.add("open");
-    elements.cartDrawer.setAttribute("aria-hidden", "false");
   });
 
   safeOn(elements.closeResourcePreview, "click", closeResourcePreview);
   safeOn(elements.closeCartButton, "click", () => {
     elements.cartDrawer.classList.remove("open");
-    elements.cartDrawer.setAttribute("aria-hidden", "true");
+    elements.cartDrawer.hidden = true;
   });
 
   safeOn(elements.cartItems, "click", (event) => {
@@ -1827,6 +1168,103 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
   safeOn(elements.adminStatusFilter, "change", () => renderAdminControlCentre(adminDashboardData || {}));
   document.querySelectorAll("[data-admin-module]").forEach((button) => safeOn(button, "click", () => setAdminModule(button.dataset.adminModule)));
 
+  // Left Dashboard navigation: Grade -> Subject -> dedicated Resource Centre page.
+  function openCbeGradeSubjectPage(grade, subject) {
+    const selectedGrade = String(grade || "").trim();
+    const selectedSubject = String(subject || "").trim();
+    if (!selectedGrade || !selectedSubject || selectedSubject === "All Subjects") return;
+
+    // The HEADER Grade -> Subject links are the single source of truth.
+    // The Left Resource Centre resolves its selection to the exact same href.
+    const normalize = (value) => String(value || "")
+      .trim()
+      .toLowerCase()
+      .replace(/&/g, "and")
+      .replace(/[()]/g, "")
+      .replace(/\s+/g, " ")
+      .replace(/[^a-z0-9]+/g, " ")
+      .trim();
+
+    const aliasKey = (value) => {
+      const raw = String(value || "").trim();
+      const aliases = {
+        "cre": "christian religious education",
+        "christian religious education (cre)": "christian religious education",
+        "hre": "hindu religious education",
+        "hindu religious education (hre)": "hindu religious education",
+        "ire": "islamic religious education",
+        "islamic religious education (ire)": "islamic religious education",
+        "pre technical studies": "pre technical studies",
+        "pre technical": "pre technical studies",
+        "science & technology": "science and technology",
+        "science and technology": "science and technology",
+        "history and citizenship": "history and citizenship",
+        "history & citizenship": "history and citizenship",
+        "music and dance": "music and dance",
+        "music & dance": "music and dance",
+        "theatre and film": "theatre and film",
+        "theatre & film": "theatre and film",
+        "sports and recreation": "sports and recreation",
+        "sports & recreation": "sports and recreation",
+        "building and construction": "building and construction",
+        "building & construction": "building and construction",
+        "metalwork": "metal work",
+        "metal work": "metal work",
+        "wood technology": "woodwork",
+        "woodwork": "woodwork",
+        "marine and fisheries technology": "marine fisheries",
+        "marine technology": "marine fisheries",
+        "marine & fisheries": "marine fisheries",
+        "kenya sign language (ksl)": "sign language",
+        "kenya sign language": "sign language",
+        "ksl": "sign language",
+        "community service learning (csl)": "community service learning",
+        "community service learning": "community service learning",
+        "indigenous language": "indigenous languages",
+        "indigenous languages": "indigenous languages",
+        "kiswahili activities": "kiswahili",
+        "mathematics activities": "mathematics"
+      };
+      return normalize(aliases[raw.toLowerCase()] || raw);
+    };
+
+    const gradeKey = normalize(selectedGrade);
+    const subjectKey = aliasKey(selectedSubject);
+
+    const headerLinks = Array.from(document.querySelectorAll(
+      "a[href*=\"resource-category.html?grade=\"]"
+    ));
+
+    const matchingLink = headerLinks.find((link) => {
+      try {
+        const url = new URL(link.getAttribute("href"), window.location.href);
+        const headerGrade = url.searchParams.get("grade") || "";
+        const headerSubject = url.searchParams.get("subject") || "";
+        return normalize(headerGrade) === gradeKey && aliasKey(headerSubject) === subjectKey;
+      } catch {
+        return false;
+      }
+    });
+
+    const target = matchingLink?.getAttribute("href") ||
+      ("resource-category.html?grade=" + encodeURIComponent(selectedGrade) +
+       "&subject=" + encodeURIComponent(selectedSubject));
+
+    window.location.assign(target);
+  }
+
+  // Keep every Grade 1-12 subject dropdown independently functional.\n  function setGradeSubject(gradeName, subjectName = "All Subjects") {\n    const cards = elements.gradeList?.querySelectorAll(".grade-card") || [];\n    const targetCard = Array.from(cards).find(card => card.dataset.gradeCard === gradeName);\n    if (!targetCard) return;\n    const select = targetCard.querySelector("[data-grade-subject-select]");\n    if (!select) return;\n    const subjects = gradeSubjects[gradeName] || [];\n    const current = String(subjectName || "All Subjects");\n    select.innerHTML = "";\n    const placeholder = document.createElement("option");\n    placeholder.value = "All Subjects";\n    placeholder.textContent = "Select subject";\n    select.appendChild(placeholder);\n    subjects.forEach(subjectName => {\n      const option = document.createElement("option");\n      option.value = subjectName;\n      option.textContent = subjectName;\n      select.appendChild(option);\n    });\n    select.value = subjects.includes(current) ? current : "All Subjects";\n  }\n\n  // Main dashboard subject links: open the Resource Centre directly for the selected grade + subject.
+  // Capture the click so no older navigation handler can redirect the user elsewhere.
+  safeOn(elements.gradeList, "click", (event) => {
+    const subjectLink = event.target.closest(".dropdown-grade-subjects a[href*=\"resource-category.html?grade=\"]");
+    if (!subjectLink) return;
+    const href = subjectLink.getAttribute("href");
+    if (!href) return;
+    event.preventDefault();
+    event.stopPropagation();
+    window.location.assign(href);
+  }, true);
+
   // Grade 1-12 navigation: every grade opens its own subject dropdown.
   safeOn(elements.gradeList, "click", (event) => {
     const toggle = event.target.closest("[data-grade-toggle]");
@@ -1874,8 +1312,11 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
     toggle?.classList.add("active");
     toggle?.setAttribute("aria-expanded", "true");
 
+    if (subject !== "All Subjects") {
+      openCbeGradeSubjectPage(grade, subject);
+      return;
+    }
     setGradeSubject(grade, subject);
-    if (subject !== "All Subjects") showToast(`${grade} — ${subject} selected.`);
   });
 
   safeOn(elements.resourceGrid, "click", (event) => {
@@ -1938,10 +1379,36 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
     renderResources();
   });
 
-  safeOn(elements.adminGrade, "change", () => {
-    const allAdminSubjects = allCbeSubjects;
-    const current = elements.adminSubject?.value;
-    optionList(elements.adminSubject, allAdminSubjects, current || "Mathematics Activities");
+  // ADMIN UPLOAD: keep the complete subject catalogue available when the grade changes.
+  // Combined-set documents and cross-grade materials must not disappear from this dropdown.
+  safeOn(elements.adminGrade, "change", (event) => {
+    const grade = String(event.target.value || "").trim();
+    const curriculum = String(elements.adminCurriculum?.value || "CBC/CBE").trim();
+    const internationalCurricula = ["IGCSE", "IB", "O Level", "A Level", "Pearson"];
+    const subjects = internationalCurricula.includes(curriculum)
+      ? (gradeSubjects[grade] || gradeSubjects[curriculum] || [])
+      : [...new Set([
+          ...allCbeSubjects,
+          ...Object.entries(gradeSubjects)
+            .filter(([gradeName]) => !internationalCurricula.includes(gradeName))
+            .flatMap(([, gradeList]) => gradeList || [])
+        ])].sort((a, b) => a.localeCompare(b));
+    const current = canonicalSubjectName(elements.adminSubject?.value || "");
+    const selected = subjects.find((subject) => canonicalSubjectName(subject) === current) || current || "Multiple Subjects (Combined Set)";
+    optionList(elements.adminSubject, subjects, selected);
+    if (elements.formStatus && grade) {
+      elements.formStatus.textContent = internationalCurricula.includes(curriculum)
+        ? curriculum + " selected. Choose the matching international subject."
+        : grade + " selected. The full CBC/CBE subject catalogue remains available, including Multiple Subjects (Combined Set).";
+    }
+  });
+
+  safeOn(elements.adminCurriculum, "change", () => {
+    refreshAdminUploadSubjects();
+    const selected = String(elements.adminCurriculum?.value || "CBC/CBE");
+    if (elements.formStatus) elements.formStatus.textContent = selected === "CBC/CBE"
+      ? "CBC / CBE upload selected."
+      : selected + " upload selected. This resource will appear only on its dedicated international curriculum page.";
   });
 
   safeOn(elements.sellerGrade, "change", (event) => {
@@ -1970,7 +1437,7 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
     showToast("Grade 1 upload mode selected.");
   });
 
-  safeOn(elements.form, "submit", handleFormSubmit);
+  // Resource upload submit is guarded at the top of this file before other initializers run.
   safeOn(elements.sellerAccountForm, "submit", createSellerAccount);
   safeOn(elements.sellerLoginForm, "submit", loginSeller);
   safeOn(elements.adminLoginForm, "submit", unlockAdmin);
@@ -2000,27 +1467,34 @@ safeOn(document.getElementById("affiliateAdminList"), "click", handleAffiliateAd
 
 async function openResourcePreview(resourceId) {
   const resource = getAllResources().find((r) => String(r.id) === String(resourceId));
-  if (!resource) { showToast("Resource could not be found. Refresh the library and try again."); return; }
-  if (!resource.previewKey && !resource.r2Key) { showToast("This resource has no previewable file."); return; }
+  if (!resource) { showToast("This resource could not be found. Refresh the page and try again."); return; }
   try {
-    const query = resource.previewKey
-      ? "key=" + encodeURIComponent(resource.previewKey)
-      : "resourceId=" + encodeURIComponent(resource.id);
-    const response = await fetch("/api/r2/preview?" + query + "&_=" + Date.now(), { credentials: "same-origin", cache: "no-store" });
-    const data = await response.json();
-    if (!response.ok || !data.ok) throw new Error(data.error || "Preview could not be opened.");
-    elements.resourcePreviewTitle.textContent = resource.title;
-    elements.resourcePreviewInfo.textContent = "Showing the first 3 pages only. The full file is protected until payment.";
-    elements.resourcePreviewFrame.src = data.previewUrl;
+    // Ask the server to create/retrieve the limited preview. This also repairs
+    // older PDF resources whose previewKey was never saved during upload.
+    // The endpoint must return only the preview object, never the paid original.
+    const response = await fetch("/api/r2/view?resourceId=" + encodeURIComponent(resourceId), {
+      credentials: "same-origin",
+      headers: { "Accept": "application/json" }
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || !data.ok) throw new Error(data.error || "A safe preview could not be prepared for this file.");
+    const previewUrl = data.viewUrl || data.previewUrl;
+    if (data.previewType === "docx" ? !data.previewHtml : !previewUrl) throw new Error("The safe preview is not ready yet. Please try again shortly.");
+    elements.resourcePreviewTitle.textContent = resource.title || data.title || "Resource preview";
+    elements.resourcePreviewInfo.textContent = data.previewType === "image" ? "Image preview only. The original resource download remains locked until payment is confirmed." : data.previewType === "docx" ? "Safe text-only Word preview. The original document remains locked until payment is confirmed." : "Safe preview: first 3 pages only. The complete original file remains locked until payment is confirmed.";
+    if (data.previewType === "docx" && data.previewHtml) { elements.resourcePreviewFrame.removeAttribute("src"); elements.resourcePreviewFrame.srcdoc = data.previewHtml; } else { elements.resourcePreviewFrame.removeAttribute("srcdoc"); elements.resourcePreviewFrame.src = previewUrl; }
+    elements.resourcePreviewModal.hidden = false;
     elements.resourcePreviewModal.classList.add("open");
-    elements.resourcePreviewModal.setAttribute("aria-hidden", "false");
-  } catch (error) { showToast(error.message || "Preview could not be opened."); }
+  } catch (error) {
+    showToast(error.message || "Preview could not be opened.");
+  }
 }
 
 function closeResourcePreview() {
   if (!elements.resourcePreviewModal) return;
   elements.resourcePreviewModal.classList.remove("open");
-  elements.resourcePreviewModal.setAttribute("aria-hidden", "true");
+  elements.resourcePreviewModal.hidden = true;
+  elements.resourcePreviewFrame.removeAttribute("srcdoc");
   elements.resourcePreviewFrame.src = "about:blank";
 }
 
@@ -2158,12 +1632,91 @@ function injectContactInfo() {
   });
 }
 
+function selectResourceForPayment(resourceId){
+  const id=String(resourceId||"").trim();
+  const resource=(getAllResources()||[]).find(r=>String(r.id)===id);
+  if(!resource){showToast("This resource is not available. Please refresh and try again.");return;}
+  const price=discountedPrice(resource);
+  if(price<1){showToast("This resource is free and does not require M-Pesa payment.");return;}
+  const titleInput=document.getElementById("selectedResourceInput");
+  const idInput=document.getElementById("selectedResourceIdInput");
+  const amountInput=document.getElementById("amountInput");
+  const phoneInput=document.getElementById("customerPhoneInput");
+  if(titleInput)titleInput.value=resource.title||"";
+  if(idInput)idInput.value=id;
+  if(amountInput)amountInput.value=String(price);
+  const phone=window.prompt("Enter the M-Pesa phone number to receive the STK Push (e.g. 0712345678):",phoneInput?.value||"");
+  if(!phone)return;
+  if(phoneInput)phoneInput.value=phone;
+  requestMpesaPayment({preventDefault(){},submitter:document.querySelector("#paymentForm button[type=submit]")});
+}
+
+async function requestMpesaPayment(event){
+  event.preventDefault();
+  const phoneInput=document.getElementById("customerPhoneInput");
+  const amountInput=document.getElementById("amountInput");
+  const resourceInput=document.getElementById("selectedResourceInput");
+  const resourceIdInput=document.getElementById("selectedResourceIdInput");
+  const status=document.getElementById("paymentStatus");
+  const phone=String(phoneInput?.value||"").trim();
+  let resourceId=String(resourceIdInput?.value||"").trim();
+  const resourceTitle=String(resourceInput?.value||"").trim();
+  const matchedResource=(getAllResources()||[]).find(r=>String(r.title||"").trim()===resourceTitle);
+  if(!resourceId&&matchedResource)resourceId=String(matchedResource.id||"");
+  const amount=Number(amountInput?.value||0);
+  if(!phone||!resourceId||!resourceTitle||amount<1){
+    if(status)status.textContent="Select a paid resource and enter a valid M-Pesa phone number.";
+    return;
+  }
+  const button=event.submitter||document.querySelector("#paymentForm button[type=submit]");
+  if(button)button.disabled=true;
+  if(status)status.textContent="Starting secure M-Pesa STK Push…";
+  try{
+    const start=await fetch("/api/mpesa/stk-push",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({customerPhone:phone,resourceId})});
+    const data=await start.json().catch(()=>({}));
+    if(!start.ok||!data.ok)throw new Error(data.error||"M-Pesa payment could not be started.");
+    const checkoutRequestID=String(data.CheckoutRequestID||"");
+    if(!checkoutRequestID)throw new Error("M-Pesa did not return a checkout request.");
+    if(status)status.textContent="STK Push sent. Complete the payment on your phone…";
+    let paid=null;
+    for(let attempt=0;attempt<30;attempt++){
+      await new Promise(resolve=>setTimeout(resolve,2000));
+      const check=await fetch("/api/mpesa/status?checkoutRequestID="+encodeURIComponent(checkoutRequestID)+"&phone="+encodeURIComponent(phone),{credentials:"same-origin",cache:"no-store"});
+      const result=await check.json().catch(()=>({}));
+      if(result.status==="paid"){paid=result;break;}
+      if(result.status==="failed"){throw new Error(result.payment?.resultDesc||"M-Pesa payment failed or was cancelled.");}
+      if(status)status.textContent="Waiting for M-Pesa confirmation… ("+(attempt+1)+"/30)";
+    }
+    if(!paid)throw new Error("Payment confirmation is taking longer than expected. Please check your M-Pesa message and use the Download button again after confirmation.");
+    if(status){status.innerHTML="<strong style=\"color:#166534;font-size:18px;\">✅ PAYMENT SUCCESSFUL</strong><br><span>Your payment has been received successfully. Preparing your secure download…</span>";status.className="form-status payment-success";}
+    const approval=await fetch("/api/download-approval/request",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({resourceId,customerPhone:phone,paymentReference:checkoutRequestID})});
+    const approvalData=await approval.json().catch(()=>({}));
+    if(!approval.ok||!approvalData.ok)throw new Error(approvalData.error||"Payment was confirmed but download access could not be prepared.");
+    if(approvalData.approval?.status!=="approved"){
+      if(status)status.textContent="Payment confirmed. Download access is awaiting final approval.";
+      return;
+    }
+    const resource=(getAllResources()||[]).find(r=>String(r.id)===resourceId);
+    const key=resource?.r2Key||resource?.r2_key;
+    if(!key)throw new Error("The protected resource file is unavailable.");
+    const download=await fetch("/api/r2/file?key="+encodeURIComponent(key)+"&resourceId="+encodeURIComponent(resourceId)+"&phone="+encodeURIComponent(phone),{credentials:"same-origin",cache:"no-store"});
+    const result=await download.json().catch(()=>({}));
+    if(!download.ok||!result.ok)throw new Error(result.error||"Secure download is not available.");
+    if(status){status.innerHTML="<strong style=\"color:#166534;font-size:18px;\">✅ PAYMENT SUCCESSFUL — DOWNLOAD STARTING</strong><br><span>Your payment is confirmed. Your secure resource download is starting now.</span>";status.className="form-status payment-success";}
+    window.location.href=result.downloadUrl;
+  }catch(error){
+    if(status)status.textContent=error.message||"Payment could not be completed.";
+  }finally{
+    if(button)button.disabled=false;
+  }
+}
+
+function initializePaymentCheckoutFromUrl(){const p=new URLSearchParams(location.search);const resource=p.get("resource");const amount=p.get("amount");const resourceId=p.get("resourceId");if(resource&&elements.selectedResource){elements.selectedResource.value=resource;}if(resourceId&&document.getElementById("selectedResourceIdInput"))document.getElementById("selectedResourceIdInput").value=resourceId;if(amount&&elements.amount&&Number(amount)>0){elements.amount.value=amount;}if(resource&&elements.paymentStatus){elements.paymentStatus.textContent="You are purchasing: "+resource+" — Amount: KSh "+Number(amount||0).toLocaleString()+". Enter the M-Pesa phone number you will use, then select Pay with M-Pesa. An STK Push will be sent to that phone when Daraja is configured.";elements.paymentStatus.className="form-status";}if((resource||amount)&&location.hash==="#payments"){setTimeout(()=>document.getElementById("payments")?.scrollIntoView({behavior:"smooth",block:"start"}),50);}if(resourceId&&resource){setTimeout(()=>{const phone=document.getElementById("customerPhoneInput");const value=window.prompt("Enter the M-Pesa phone number to receive the STK Push (e.g. 0712345678):",phone?.value||"");if(!value)return;if(phone)phone.value=value;requestMpesaPayment({preventDefault(){},submitter:document.querySelector("#paymentForm button[type=submit]")});},250);}}
 renderGradeDashboard();
 setupFilters();
 applyGradeSubjectFromLink(false);
 renderQuickTypes();
 restoreAdminAccess();
-bindEvents();
 injectContactInfo();
 renderResources();
 renderTrending();
@@ -2171,8 +1724,217 @@ loadPublicStats();
 syncPublicResourcesFromServer();
 renderCart();
 renderSellerResources();
-renderSellerAccountApprovals();
-renderAdminApprovals();
-renderPaymentRecords();
-renderDownloadApprovals();
-renderProgressReport();
+// Keep checkout initialization immediate, but move hidden admin-only rendering
+// off the initial page-load task. This reduces main-thread contention for visitors
+// while still initializing the admin panels shortly after the page becomes idle.
+(function scheduleNonCriticalAdminRenders(){
+  const tasks = [
+    renderSellerAccountApprovals,
+    renderAdminApprovals,
+    renderPaymentRecords,
+    renderDownloadApprovals,
+    renderProgressReport
+  ];
+  let index = 0;
+  const runNext = () => {
+    if (index >= tasks.length) return;
+    const task = tasks[index++];
+    try { task(); } catch (error) { console.error("CBE Nexus admin panel initialization failed:", error); }
+    if (index < tasks.length) window.setTimeout(runNext, 120);
+  };
+  if ("requestIdleCallback" in window) {
+    window.requestIdleCallback(runNext, { timeout: 1800 });
+  } else {
+    window.setTimeout(runNext, 900);
+  }
+})();
+initializePaymentCheckoutFromUrl();
+(function(){const q=id=>document.getElementById(id);function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));}function url(v){try{const u=new URL(String(v||""),location.origin);return /^https?:$/.test(u.protocol)?u.href:"#";}catch{return "#";}}
+async function loadVacancies(id,publicMode){const t=q(id);if(!t)return;if(publicMode&&t.hasAttribute("data-stable-vacancy-board"))return;try{const r=await fetch("/api/vacancies?_="+Date.now(),{credentials:"same-origin",cache:"no-store",headers:{"Accept":"application/json"}});const raw=await r.text();let d={};try{d=JSON.parse(raw)}catch{throw new Error("The vacancy service returned an invalid response. Please refresh the page.");}if(!r.ok||!d.ok)throw new Error(d.error||"Vacancies could not be loaded.");const rows=Array.isArray(d.vacancies)?d.vacancies:[];if(!rows.length){t.innerHTML='<div class="empty-state">No teaching vacancies published yet.</div>';return;}t.innerHTML=rows.map(v=>'<article class="vacancy-card '+(v.featured?'featured':'')+'"><div class="vacancy-card-top"><span class="vacancy-region">'+esc(v.region||v.country||"International")+'</span>'+(v.featured?'<span class="vacancy-featured">FEATURED</span>':'')+'</div><h3>'+esc(v.title)+'</h3><strong>'+esc(v.school)+'</strong><p class="vacancy-meta">'+esc(v.country)+' · '+esc(v.subject)+' · '+esc(v.level)+' · '+esc(v.employment||"Full-time")+'</p>'+(v.salary?'<p><strong>Package:</strong> '+esc(v.salary)+'</p>':'')+(v.deadline?'<p><strong>Deadline:</strong> '+esc(v.deadline)+'</p>':'')+(v.description?'<details class="vacancy-details"><summary>📋 Job Description</summary><p>'+esc(v.description)+'</p></details>':'')+(v.requirements?'<details class="vacancy-details"><summary>🎓 Requirements</summary><p>'+esc(v.requirements)+'</p></details>':'')+(v.why_match?'<details class="vacancy-details"><summary>⭐ Why you may be a good match</summary><p>'+esc(v.why_match)+'</p></details>':'')+(v.documents?'<details class="vacancy-details"><summary>📄 Documents to prepare</summary><p>'+esc(v.documents)+'</p></details>':'')+(v.verified_date?'<p class="vacancy-verified"><small>Verified: '+esc(v.verified_date)+'</small></p>':'')+'<div class="vacancy-card-actions"><a class="primary-button" href="'+url(v.apply_url)+'" target="_blank" rel="noopener noreferrer">Apply / View Vacancy</a>'+(publicMode?'<button class="whatsapp-share-button" type="button" data-share-vacancy="whatsapp" data-vacancy-id="'+esc(v.id)+'">WhatsApp</button><button class="facebook-share-button" type="button" data-share-vacancy="facebook" data-vacancy-id="'+esc(v.id)+'">Facebook</button>':'<button class="whatsapp-share-button" type="button" data-share-vacancy="whatsapp" data-vacancy-id="'+esc(v.id)+'">WhatsApp</button><button class="facebook-share-button" type="button" data-share-vacancy="facebook" data-vacancy-id="'+esc(v.id)+'">Facebook</button><button class="ghost-button" type="button" data-share-vacancy="copy" data-vacancy-id="'+esc(v.id)+'">Copy Link</button><button class="secondary-button" type="button" data-edit-vacancy="'+esc(v.id)+'">✏ Edit</button><button class="ghost-button" type="button" data-delete-vacancy="'+esc(v.id)+'">Delete</button>')+'</div></article>').join("");}catch(e){t.innerHTML='<p class="form-status error">'+esc(e.message)+'</p>';}}
+async function initVacancies(){loadVacancies("homeVacancyGrid",true);loadVacancies("internationalVacancyGrid",true);document.addEventListener("click",e=>{const b=e.target.closest("[data-share-vacancy]");if(!b)return;const id=b.dataset.vacancyId;const card=b.closest(".vacancy-card");if(!card||!id)return;const title=card.querySelector("h3")?.textContent?.trim()||"International teaching vacancy";const school=card.querySelector("strong")?.textContent?.trim()||"";const text=school?title+" at "+school:title;const shareUrl=new URL("international-teaching-jobs.html",location.href);shareUrl.hash="vacancy-"+encodeURIComponent(id);const encodedUrl=encodeURIComponent(shareUrl.href);if(b.dataset.shareVacancy==="whatsapp"){window.open("https://wa.me/?text="+encodeURIComponent("🌍 Teaching Vacancy Abroad\n"+text+"\n\nView vacancy: "+shareUrl.href)," _blank","noopener,noreferrer");}else if(b.dataset.shareVacancy==="facebook"){window.open("https://www.facebook.com/sharer/sharer.php?u="+encodedUrl," _blank","noopener,noreferrer");}else if(b.dataset.shareVacancy==="copy"){navigator.clipboard?.writeText(shareUrl.href).then(()=>{if(typeof showToast==="function")showToast("Vacancy link copied.");}).catch(()=>window.prompt("Copy vacancy link:",shareUrl.href));}});const form=q("adminVacancyForm");if(!form)return;try{const r=await fetch("/api/admin/me",{credentials:"same-origin"});const d=await r.json();if(!r.ok||!d.authenticated){form.closest(".admin-vacancies-card")?.remove();return;}}catch{form.closest(".admin-vacancies-card")?.remove();return;}loadVacancies("adminVacancyList",false);form.addEventListener("submit",async e=>{e.preventDefault();const s=q("adminVacancyStatus");s.textContent="Publishing vacancy…";const body={id:form.dataset.editId||undefined,title:q("vacancyTitleInput").value,school:q("vacancySchoolInput").value,country:q("vacancyCountryInput").value,region:q("vacancyRegionInput").value,subject:q("vacancySubjectInput").value,level:q("vacancyLevelInput").value,employment:q("vacancyEmploymentInput").value,salary:q("vacancySalaryInput").value,deadline:q("vacancyDeadlineInput").value,applyUrl:q("vacancyApplyUrlInput").value,description:q("vacancyDescriptionInput").value,requirements:q("vacancyRequirementsInput").value,featured:q("vacancyFeaturedInput").checked};try{const r=await fetch("/api/admin/vacancy",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)}),d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||"Vacancy could not be published.");s.textContent=form.dataset.editId?"✓ Vacancy updated successfully.":"✓ Vacancy published successfully.";form.reset();delete form.dataset.editId;form.querySelector('[type="submit"]').textContent="➕ Publish Vacancy";loadVacancies("adminVacancyList",false);loadVacancies("homeVacancyGrid",true);loadVacancies("internationalVacancyGrid",true);}catch(e){s.textContent=e.message||"Vacancy could not be published.";}});q("clearAdminVacancyButton")?.addEventListener("click",()=>{form.reset();delete form.dataset.editId;form.querySelector('[type="submit"]').textContent="➕ Publish Vacancy";q("adminVacancyStatus").textContent="";});q("adminVacancyList")?.addEventListener("click",async e=>{
+const edit=e.target.closest("[data-edit-vacancy]");if(edit){
+  const id=edit.dataset.editVacancy;
+  try{
+    const r=await fetch("/api/vacancies?_="+Date.now(),{credentials:"same-origin",cache:"no-store"}),d=await r.json();
+    const v=(d.vacancies||[]).find(x=>String(x.id)===String(id));if(!v)throw new Error("Vacancy could not be found.");
+    q("vacancyTitleInput").value=v.title||"";q("vacancySchoolInput").value=v.school||"";q("vacancyCountryInput").value=v.country||"";q("vacancyRegionInput").value=v.region||"UAE & Gulf";q("vacancySubjectInput").value=v.subject||"";q("vacancyLevelInput").value=v.level||"";q("vacancyEmploymentInput").value=v.employment||"Full-time";q("vacancySalaryInput").value=v.salary||"";q("vacancyDeadlineInput").value=v.deadline||"";q("vacancyApplyUrlInput").value=v.apply_url||"";q("vacancyDescriptionInput").value=v.description||"";q("vacancyRequirementsInput").value=v.requirements||"";q("vacancyFeaturedInput").checked=!!v.featured;
+    form.dataset.editId=id;form.querySelector('[type="submit"]').textContent="💾 Update Vacancy";q("adminVacancyStatus").textContent="Editing "+v.title;form.scrollIntoView({behavior:"smooth",block:"start"});
+  }catch(err){q("adminVacancyStatus").textContent=err.message||"Could not load vacancy.";}
+  return;
+}
+const b=e.target.closest("[data-delete-vacancy]");if(!b)return;if(!confirm("Delete this teaching vacancy?"))return;const r=await fetch("/api/admin/vacancy-delete",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({id:b.dataset.deleteVacancy})}),d=await r.json();if(!r.ok||!d.ok){q("adminVacancyStatus").textContent=d.error||"Could not delete vacancy.";return;}loadVacancies("adminVacancyList",false);loadVacancies("homeVacancyGrid",true);loadVacancies("internationalVacancyGrid",true);});}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initVacancies);else initVacancies();})();
+
+/* Admin resource moderation: approve, reject or permanently delete uploaded resources. */
+(function initAdminResourceModeration(){
+  const host=document.getElementById("adminResourceManagement");
+  if(!host)return;
+  let adminResources=[];
+  const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
+  async function load(){
+    try{
+      const r=await fetch("/api/admin/resources?_="+Date.now(),{credentials:"same-origin",cache:"no-store"});
+      if(r.status===401){host.innerHTML='<p class="form-status">Admin login required.</p>';return;}
+      const d=await r.json();
+      if(!r.ok||!d.ok)throw new Error(d.error||"Resources could not be loaded.");
+      adminResources=d.resources||[];
+      render();
+    }catch(e){host.innerHTML='<p class="form-status error">'+esc(e.message)+'</p>';}
+  }
+  function render(){
+    const q=String(document.getElementById("adminDashboardSearch")?.value||"").trim().toLowerCase();
+    const filter=String(document.getElementById("adminStatusFilter")?.value||"all").toLowerCase();
+    const gradeFilter=String(document.getElementById("adminGradeFilter")?.value||"all").trim().toLowerCase();
+    const rows=adminResources.filter(x=>{
+      const hay=[x.title,x.grade,x.subject,x.type,x.fileName,x.filename].join(" ").toLowerCase();
+      const resourceGrade=String(x.grade||"").trim().toLowerCase();
+      return (!q||hay.includes(q))
+        && (filter==="all"||String(x.status||"pending").toLowerCase()===filter)
+        && (gradeFilter==="all"||resourceGrade===gradeFilter);
+    });
+    const pending=adminResources.filter(x=>String(x.status||"pending").toLowerCase()==="pending").length;
+    const approved=adminResources.filter(x=>String(x.status||"").toLowerCase()==="approved").length;
+    const rejected=adminResources.filter(x=>String(x.status||"").toLowerCase()==="rejected").length;
+    const summary=document.getElementById("adminResourceSummary");
+    if(summary)summary.textContent=`${pending} pending · ${approved} online · ${rejected} rejected`;
+    if(!rows.length){host.innerHTML='<div class="admin-management-card"><strong>No uploaded resources match this filter.</strong><p>New seller uploads will appear here for moderation.</p></div>';return;}
+    host.innerHTML=rows.map(x=>{
+      const s=String(x.status||"pending").toLowerCase();
+      const badge=s==="approved"?"✓ ONLINE":s==="rejected"?"✕ REJECTED":"● PENDING";
+      return `<article class="admin-management-card admin-resource-moderation-card">
+        <div class="admin-management-heading"><div><span class="eyebrow">${esc(x.grade||"Grade")} · ${esc(x.subject||"Subject")}</span><h4>${esc(x.title||"Untitled resource")}</h4><p>${esc(x.type||"Resource")} · ${esc(x.fileName||x.filename||"File")}</p></div><span class="price-pill">${badge}</span></div>
+        <p><strong>Price:</strong> KES ${Number(x.price||0).toLocaleString("en-KE")} · <strong>Status:</strong> ${esc(s)}</p>
+        <div class="admin-resource-moderation-actions">
+          <a class="secondary-button" href="resource-category.html?grade=${encodeURIComponent(String(x.grade||""))}&subject=${encodeURIComponent(String(x.subject||""))}" target="_self">View Grade Page</a>
+          <button class="primary-button" type="button" data-resource-moderate="approved" data-resource-id="${esc(x.id)}" ${s==="approved"?"disabled":""}>✓ Approve / Publish</button>
+          <button class="secondary-button" type="button" data-resource-moderate="rejected" data-resource-id="${esc(x.id)}" ${s==="rejected"?"disabled":""}>✕ Reject / Hide</button>
+          <button class="danger-button" type="button" data-resource-delete="${esc(x.id)}">🗑 Delete File</button>
+        </div>
+      </article>`;
+    }).join("");
+  }
+  host.addEventListener("click",async e=>{
+    const statusBtn=e.target.closest("[data-resource-moderate]");
+    const deleteBtn=e.target.closest("[data-resource-delete]");
+    if(!statusBtn&&!deleteBtn)return;
+    const id=(statusBtn||deleteBtn).dataset.resourceId||(deleteBtn?.dataset.resourceDelete);
+    if(deleteBtn){
+      if(!confirm("Permanently delete this resource from CBE Nexus and Cloudflare R2? This cannot be undone."))return;
+      deleteBtn.disabled=true;
+      try{
+        const r=await fetch("/api/admin/resource-delete",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({id})});
+        const d=await r.json().catch(()=>({}));
+        if(!r.ok||!d.ok)throw new Error(d.error||"Delete failed.");
+        adminResources=adminResources.filter(x=>String(x.id)!==String(id));render();
+        if(typeof window.syncPublicResourcesFromServer==="function")await window.syncPublicResourcesFromServer();
+        if(typeof showToast==="function")showToast("Resource and stored file deleted.");
+      }catch(err){deleteBtn.disabled=false;showToast(err.message||"Delete failed.");}
+      return;
+    }
+    const status=statusBtn.dataset.resourceModerate;
+    statusBtn.disabled=true;
+    try{
+      const r=await fetch("/api/admin/resource-status",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({id,status})});
+      const d=await r.json().catch(()=>({}));
+      if(!r.ok||!d.ok)throw new Error(d.error||"Status update failed.");
+      const item=adminResources.find(x=>String(x.id)===String(id));if(item)item.status=status;render();
+      if(typeof window.syncPublicResourcesFromServer==="function")await window.syncPublicResourcesFromServer();
+      if(typeof showToast==="function")showToast(status==="approved"?"Resource is now online.":"Resource rejected and hidden from clients.");
+    }catch(err){statusBtn.disabled=false;showToast(err.message||"Status update failed.");}
+  });
+  const refresh=document.getElementById("refreshAdminDashboardButton");
+  refresh?.addEventListener("click",load);
+  document.getElementById("adminDashboardSearch")?.addEventListener("input",render);
+  document.getElementById("adminGradeFilter")?.addEventListener("change",render);
+  document.getElementById("adminStatusFilter")?.addEventListener("change",render);
+  window.loadAdminResourceModeration=load;
+  const observer=new MutationObserver(()=>{if(document.body.classList.contains("admin-unlocked")&&host.dataset.loaded!=="1"){host.dataset.loaded="1";load();}});
+  observer.observe(document.body,{attributes:true,attributeFilter:["class"]});
+  if(document.body.classList.contains("admin-unlocked")){host.dataset.loaded="1";load();}
+})();
+
+/* Reliable page navigation for dashboard/action buttons. Existing form, modal, grade-toggle and admin-tab actions are left untouched. */
+(function wireButtonPageNavigation(){
+  const routes={
+    openSellerDashboardButtonSecondary:"upload.html",
+    startQuizButton:"quizzes.html",
+    toggleQuestionSetterButton:"quizzes.html",
+    startGradeOneUploadButton:"upload.html?grade=Grade%201"
+  };
+  function go(url){ if(url) window.location.assign(url); }
+  document.addEventListener("click",function(event){
+    const button=event.target.closest("button");
+    if(!button) return;
+    if(button.dataset.page) { event.preventDefault(); go(button.dataset.page); return; }
+    if(routes[button.id]) { event.preventDefault(); go(routes[button.id]); return; }
+    const search=button.closest("[data-landing-search]")?.dataset.landingSearch || button.dataset.landingSearch;
+    if(search){
+      event.preventDefault();
+      go("resource-category.html?search="+encodeURIComponent(search));
+    }
+  },true);
+})();
+
+/* Automatic grade colour theme for Teaching & Learning pages. */
+(function(){
+  const gradeThemeMap={
+    "PP1":"preprimary","PP2":"preprimary",
+    "Grade 1":"lower-primary","Grade 2":"lower-primary","Grade 3":"lower-primary",
+    "Grade 4":"upper-primary","Grade 5":"upper-primary","Grade 6":"upper-primary",
+    "Grade 7":"junior-secondary","Grade 8":"junior-secondary","Grade 9":"junior-secondary",
+    "Grade 10":"senior-school","Grade 11":"senior-school","Grade 12":"senior-school"
+  };
+  function applyGradeTheme(grade){
+    const value=String(grade||"").trim();
+    const theme=gradeThemeMap[value]||"preprimary";
+    document.documentElement.setAttribute("data-grade-theme",theme);
+    document.documentElement.style.setProperty("--selected-grade",JSON.stringify(value));
+    document.body?.setAttribute("data-selected-grade",value);
+  }
+  function readSelectedGrade(){
+    const candidates=[
+      document.querySelector("#gradeFilter"),
+      document.querySelector("#gradeSelect"),
+      document.querySelector("#grade"),
+      document.querySelector("[data-grade-select]")
+    ];
+    const selected=candidates.find(el=>el&&el.value&&el.value!=="All Grades");
+    if(selected) applyGradeTheme(selected.value);
+  }
+  document.addEventListener("DOMContentLoaded",function(){
+    readSelectedGrade();
+    document.addEventListener("change",function(event){
+      const el=event.target;
+      if(el&&["gradeFilter","gradeSelect","grade"].includes(el.id)) applyGradeTheme(el.value);
+    });
+  });
+  window.applyCbeGradeTheme=applyGradeTheme;
+})();
+
+
+/* CBE NEXUS — FORCE VISIBLE GRADE COLOURS
+   Applies inline styles to the existing Grade 1–12 cards so no
+   inherited/legacy CSS can hide the individual colours. */
+(function forceVisibleGradeCardColours(){
+  const colours={
+    "Grade 1":["#d84315","#fff3ee"],"Grade 2":["#8e24aa","#faf0fc"],
+    "Grade 3":["#1565c0","#edf5ff"],"Grade 4":["#00838f","#eafafa"],
+    "Grade 5":["#2e7d32","#eef9ef"],"Grade 6":["#558b2f","#f2f9eb"],
+    "Grade 7":["#ef6c00","#fff4e8"],"Grade 8":["#6a1b9a","#f8effc"],
+    "Grade 9":["#ad1457","#fff0f6"],"Grade 10":["#283593","#eef0ff"],
+    "Grade 11":["#00695c","#eaf8f5"],"Grade 12":["#bf360c","#fff1ec"]
+  };
+  function paint(){
+    document.querySelectorAll('#dashboard .grade-card[data-grade-card]').forEach(card=>{
+      const pair=colours[card.getAttribute('data-grade-card')]; if(!pair)return;
+      card.style.setProperty('border-left','6px solid '+pair[0],'important');
+      card.style.setProperty('background','linear-gradient(135deg,'+pair[1]+' 0%,#ffffff 100%)','important');
+      card.style.setProperty('border-radius','12px','important');
+      const toggle=card.querySelector('.grade-toggle');
+      const chev=card.querySelector('.grade-chevron');
+      if(toggle)toggle.style.setProperty('color',pair[0],'important');
+      if(chev)chev.style.setProperty('color',pair[0],'important');
+    });
+  }
+  document.addEventListener('DOMContentLoaded',paint);
+  if(document.readyState!=='loading')paint();
+})();
