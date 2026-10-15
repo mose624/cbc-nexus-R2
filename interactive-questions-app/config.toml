@@ -1,0 +1,6 @@
+project_id = "cbc-nexus"
+
+[functions.cbc-nexus-results]
+# Public learner actions authenticate with one-time attempt tokens.
+# Teacher actions independently validate a real Supabase Auth JWT and teacher_admins membership.
+verify_jwt = false
