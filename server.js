@@ -1995,6 +1995,20 @@ async function serveStatic(req,res,url){
     res.end(data);
     return;
   }
+  // Serve Interactive Questions explicitly before SEO fallback routing so the dedicated page cannot be swallowed by a generic route.
+  if(req.method==="GET" && (url.pathname==="/interactive-questions.html" || url.pathname==="/interactive-questions")){
+    try{
+      const page=await fs.readFile(path.join(ROOT,"interactive-questions.html"));
+      res.writeHead(200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"no-store"});
+      res.end(page);
+    }catch(error){
+      console.error("Interactive Questions page unavailable:",error);
+      if(res.headersSent||res.writableEnded||res.destroyed)return;
+      res.writeHead(500,{"Content-Type":"text/plain; charset=utf-8","Cache-Control":"no-store"});
+      res.end("Interactive Questions page is temporarily unavailable.");
+    }
+    return;
+  }
   const seoPage=await seo.match(req);
   if(req.method==="GET" && seoPage){
     res.writeHead(200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"public, max-age=600"});
