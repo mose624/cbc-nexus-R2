@@ -2,7 +2,8 @@ const http = require("http");
 const fs = require("fs/promises");
 const path = require("path");
 const crypto = require("crypto");
-const { createUploadUrl, createDownloadUrl, createPdfPreview, uploadObject, deleteObject, verifyR2Connection } = require("./r2");
+const { createUploadUrl, createDownloadUrl, createPdfPreview, createInlineUrl, getObjectMetadata, getObjectBuffer, objectExists, uploadObject, deleteObject, verifyR2Connection } = require("./r2");
+const mammoth = require("mammoth");
 const { supabase, supabaseConfigured } = require("./supabase");
 const seo = require("./seo");
 
@@ -18,6 +19,58 @@ const RATE_LIMITS = { general: 120, auth: 10, upload: 12 };
 const rateBuckets = new Map();
 const ADMIN_LOGIN_LOCKOUT_MS = 15 * 60 * 1000;
 const ADMIN_LOGIN_MAX_FAILURES = 5;
+const GRADE10_NATIONAL_SOURCE="https://arena.co.ke/knec-list-of-senior-schools-per-county-with-categories/";
+const GRADE10_OFFICIAL_SOURCE="https://selection.education.go.ke/files/senior-schools-in-kenya.pdf";
+let grade10NationalCache={expiresAt:0,schools:[]};
+function decodeHtml(s){return String(s||"").replace(/&nbsp;/gi," ").replace(/&amp;/gi,"&").replace(/&quot;/gi,'\"').replace(/&#39;|&apos;/gi,"'").replace(/&lt;/gi,"<").replace(/&gt;/gi,">");}
+function stripHtml(s){return decodeHtml(String(s||"").replace(/<br\s*\/?>/gi," ").replace(/<[^>]+>/g," ")).replace(/\\s+/g," ").trim();}
+function parseGrade10NationalHtml(html){
+  const rows=[];
+  const counties=["Baringo","Bomet","Bungoma","Busia","Elgeyo Marakwet","Embu","Garissa","Homa Bay","Isiolo","Kajiado","Kakamega","Kericho","Kiambu","Kilifi","Kirinyaga","Kisii","Kisumu","Kitui","Kwale","Laikipia","Lamu","Machakos","Makueni","Mandera","Marsabit","Meru","Migori","Mombasa","Murang'a","Nairobi","Nakuru","Nandi","Narok","Nyamira","Nyandarua","Nyeri","Samburu","Siaya","Taita Taveta","Tana River","Tharaka Nithi","Trans Nzoia","Turkana","Uasin Gishu","Vihiga","Wajir","West Pokot"];
+  const normalize=s=>String(s||"").toUpperCase().replace(/[^A-Z0-9]+/g," ").trim().replace(/\s+/g," ");
+  const countyNames=counties.map(name=>({name,n:normalize(name)})).sort((a,b)=>b.n.length-a.n.length);
+  const plain=decodeHtml(String(html||"")
+    .replace(/<br\s*\/?\s*>/gi,"\n")
+    .replace(/<\/(?:p|tr|div|li|h[1-6]|article|section)>/gi,"\n")
+    .replace(/<\/(?:td|th)>/gi," ")
+    .replace(/<[^>]+>/g," ")
+    .replace(/&ndash;|&mdash;/gi,"-"));
+  const lines=plain.split(/[\r\n]+/).map(line=>line.replace(/\s+/g," ").trim()).filter(Boolean);
+  const rowRe=/^(\d{1,5})\s+(.+?)\s+([A-Z0-9]{4})\s+(\d{8})\s+(.+?)\s+(C[1-4])\s+(PUBLIC|PRIVATE)\s+(REGULAR|SNE|SPECIAL NEEDS|INTERGRATED|INTEGRATED)\s+(.+?)\s+(DAY|BOARDING)\s+(MIXED|BOYS|GIRLS)\s*$/i;
+  for(const line of lines){
+    const m=line.match(rowRe);
+    if(!m) continue;
+    const [,serial,prefix,uic,knec_code,name,cluster,type,regular_sne,tail,accommodation,gender]=m;
+    const prefixText=String(prefix||"").trim();
+    const normalizedPrefix=normalize(prefixText);
+    let countyMatch=null;
+    for(const item of countyNames){
+      const idx=normalizedPrefix.indexOf(item.n);
+      if(idx>=0){countyMatch={...item,idx};break;}
+    }
+    const county=countyMatch?.name||"";
+    const region=countyMatch?prefixText.slice(0,countyMatch.idx).trim():"";
+    const subcounty=countyMatch?prefixText.slice(countyMatch.idx+countyMatch.n.length).trim():"";
+    const disability_type=String(tail||"").trim().replace(/\s+/g," ");
+    rows.push({
+      id:"g10-"+(uic||knec_code||serial),serial:Number(serial),name:String(name||"").trim().replace(/\s+/g," "),
+      region,county,subcounty,uic,knec_code,cluster:String(cluster).toUpperCase(),type:String(type).toUpperCase(),
+      regular_sne:String(regular_sne).toUpperCase(),disability_type:disability_type||"NONE",
+      accommodation:String(accommodation).toUpperCase(),gender:String(gender).toUpperCase(),
+      country:"Kenya",status:"published",source:"Ministry/KNEC senior-school list (published reproduction)",
+      source_url:GRADE10_OFFICIAL_SOURCE,last_verified:"2026-10-09"
+    });
+  }
+  const unique=new Map();
+  for(const school of rows) if(!unique.has(school.uic||school.knec_code)) unique.set(school.uic||school.knec_code,school);
+  return [...unique.values()];
+}
+async function getGrade10NationalSchools(){
+  if(grade10NationalCache.expiresAt>Date.now()&&grade10NationalCache.schools.length)return grade10NationalCache.schools;
+  const response=await fetch(GRADE10_NATIONAL_SOURCE,{headers:{"user-agent":"CBE-Nexus/1.0"}}); if(!response.ok)throw new Error("National senior-school source returned HTTP "+response.status+".");
+  const html=await response.text(); const schools=parseGrade10NationalHtml(html); if(schools.length<5000)throw new Error("National school source returned an incomplete dataset ("+schools.length+" records).");
+  grade10NationalCache={expiresAt:Date.now()+24*60*60*1000,schools}; return schools;
+}
 const adminLoginFailures = new Map();
 
 function clientIp(req) {
@@ -78,26 +131,408 @@ const stores={"/api/projects":"projects.json","/api/tuition":"tuition-registrati
 async function ensureDataDir(){await fs.mkdir(DATA_DIR,{recursive:true});}
 async function readJsonStore(f){await ensureDataDir();try{return JSON.parse(await fs.readFile(path.join(DATA_DIR,f),"utf8"));}catch{return [];}}
 async function appendJsonStore(f,item){const c=await readJsonStore(f),s={id:item.id||`${Date.now()}`,...item,receivedAt:new Date().toISOString()};c.unshift(s);await fs.writeFile(path.join(DATA_DIR,f),JSON.stringify(c,null,2));return s;}
+function normaliseCueProgramme(p){
+  return {institutionName:String(p.institutionName||p.university||"").trim(),institutionCode:String(p.institutionCode||p.code||"").trim(),county:String(p.county||"").trim(),programmeCode:String(p.programmeCode||p.programCode||"").trim(),programmeName:String(p.programmeName||p.name||"").trim(),qualificationLevel:String(p.qualificationLevel||p.level||"").trim(),field:String(p.field||"").trim(),accreditationStatus:String(p.accreditationStatus||p.status||"").trim(),sourceDate:String(p.sourceDate||"2026-07-31").trim()};
+}
+async function readCueProgrammes(){
+  await ensureDataDir();
+  try{const d=JSON.parse(await fs.readFile(path.join(DATA_DIR,"cue-programmes.json"),"utf8"));return Array.isArray(d)?d:(Array.isArray(d.records)?d.records:[]);}catch{return [];}
+}
 // Matches the actual Supabase resources table. preview_text is intentionally omitted because it is not present in the live schema.
-function resourceRowFromPayload(p,sellerId=null,previewKey=""){return {seller_id:sellerId,title:String(p.title||"").trim(),description:String(p.description||"").trim(),grade:String(p.grade||"").trim(),subject:String(p.subject||"").trim(),resource_type:String(p.type||"").trim(),filename:String(p.fileName||"").trim(),r2_key:String(p.r2Key||"").trim(),preview_key:String(previewKey||p.previewKey||"").trim(),price:Math.max(0,Number(p.price||0)),discount_price:Math.max(0,Number(p.discountPrice||0)),status:String(p.status||"pending")};}
-function resourcePayloadFromRow(r){return {id:r.id,title:r.title,grade:r.grade,subject:r.subject,type:r.resource_type||"",description:r.description||"",price:Number(r.price||0),discount:Number(r.discount_price||0),term:"",isFreeSample:false,popularity:0,fileName:r.filename||"",r2Key:r.r2_key||"",previewKey:r.preview_key||"",previewText:"",createdAt:r.created_at||"",updatedAt:r.updated_at||"",file:r.r2_key?"/api/r2/file?key="+encodeURIComponent(r.r2_key):"",status:r.status||"pending",downloads:0,purchases:0,sellerId:r.seller_id||null,createdAt:r.created_at||null,updatedAt:r.updated_at||null};}
+function resourceRowFromPayload(p,sellerId=null,previewKey=""){return {seller_id:sellerId,title:String(p.title||"").trim(),description:String(p.description||"").trim(),grade:String(p.grade||"").trim(),subject:String(p.subject||"").trim(),resource_type:String(p.type||"").trim(),filename:String(p.fileName||"").trim(),r2_key:String(p.r2Key||"").trim(),preview_key:String(previewKey||p.previewKey||"").trim(),price:Math.max(0,Number(p.price||0)),discount_price:Math.max(0,Number(p.discountPrice||0)),status:String(p.status||(sellerId?"pending":"approved"))};}
+function resourcePayloadFromRow(r){const internationalCurricula=["IGCSE","Cambridge International","IB","O Level","A Level","Pearson"];const curriculum=internationalCurricula.includes(String(r.grade||"").trim())?String(r.grade||"").trim():"CBC/CBE";return {id:r.id,title:r.title,grade:r.grade,subject:r.subject,type:r.resource_type||"",description:r.description||"",curriculum,price:Number(r.price||0),discount:Number(r.discount_price||0),term:"",isFreeSample:false,popularity:0,fileName:r.filename||"",r2Key:r.r2_key||"",previewKey:r.preview_key||"",previewText:"",createdAt:r.created_at||"",updatedAt:r.updated_at||"",file:r.r2_key?(Number(r.price||0)===0?"/api/r2/direct-download?resourceId="+encodeURIComponent(r.id):""): "",status:r.status||"pending",downloads:0,purchases:0,sellerId:r.seller_id||null,createdAt:r.created_at||null,updatedAt:r.updated_at||null};}
 function sendJson(res,status,data){res.setHeader("Cache-Control","no-store");res.writeHead(status,{"Content-Type":"application/json; charset=utf-8"});res.end(JSON.stringify(data));}
 function readBody(req){return new Promise((resolve,reject)=>{let b="";req.on("data",c=>{b+=c;if(b.length>MAX_BODY_SIZE){reject(new Error("Request body too large."));req.destroy();}});req.on("end",()=>resolve(b));req.on("error",reject);});}
 function readBinaryBody(req,maxSize=50*1024*1024){return new Promise((resolve,reject)=>{const chunks=[];let total=0;let settled=false;const fail=(e)=>{if(settled)return;settled=true;reject(e);try{req.destroy();}catch{}};req.on("data",c=>{if(settled)return;total+=c.length;if(total>maxSize){fail(new Error("Upload is too large. Maximum file size is 50 MB."));return;}chunks.push(c);});req.on("end",()=>{if(!settled){settled=true;resolve(Buffer.concat(chunks));}});req.on("error",fail);});}
-async function getMpesaAccessToken(){const k=String(process.env.MPESA_CONSUMER_KEY||""),s=String(process.env.MPESA_CONSUMER_SECRET||"");if(!k||!s)throw new Error("M-Pesa consumer credentials are not configured.");const base=String(process.env.MPESA_ENVIRONMENT||"sandbox").toLowerCase()==="production"?"https://api.safaricom.co.ke":"https://sandbox.safaricom.co.ke";return await new Promise((res,rej)=>{const https=require("https"),q=https.request(base+"/oauth/v1/generate?grant_type=client_credentials",{headers:{Authorization:"Basic "+Buffer.from(k+":"+s).toString("base64")}},r=>{let d="";r.on("data",c=>d+=c);r.on("end",()=>{try{const x=JSON.parse(d);x.access_token?res(x.access_token):rej(new Error("Daraja authorization failed."));}catch{rej(new Error("Invalid Daraja authorization response."));}})});q.on("error",rej);q.end();});}
+function firstEnv(...names){for(const name of names){const value=String(process.env[name]??"").trim();if(value)return value;}return "";}
+function resourceEmailEscape(value){return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch]));}
+function resourceUnsubscribeToken(email){const secret=firstEnv("RESEND_UNSUBSCRIBE_SECRET","ADMIN_SESSION_SECRET");return secret?crypto.createHmac("sha256",secret).update(String(email).toLowerCase()).digest("hex"):"";}
+async function sendResourceUpdateEmails(resource){
+  if(!supabaseConfigured||!String(process.env.RESEND_API_KEY||"").trim()){console.warn("Resource update email skipped: Supabase or RESEND_API_KEY is not configured.");return;}
+  const sender=firstEnv("RESEND_FROM_EMAIL")||"CBE Nexus <info@cbenexus.co.ke>";
+  const site=firstEnv("PUBLIC_SITE_URL")||"https://cbc-nexus-r2.onrender.com";
+  const resourceId=String(resource?.id||"").trim();if(!resourceId)return;
+  const {data:subscribers,error:subscriberError}=await supabase.from("resource_subscribers").select("email,name").eq("consent",true).is("unsubscribed_at",null);
+  if(subscriberError)throw subscriberError;
+  for(const subscriber of (subscribers||[])){
+    const email=String(subscriber.email||"").trim().toLowerCase();if(!email)continue;
+    try{
+      const {data:prior,error:priorError}=await supabase.from("resource_update_notifications").select("resource_id").eq("resource_id",resourceId).eq("subscriber_email",email).maybeSingle();
+      if(priorError)throw priorError;if(prior)continue;
+      const title=String(resource.title||"New CBE Nexus resource"),grade=String(resource.grade||"CBC/CBE"),subject=String(resource.subject||"Learning resources"),type=String(resource.resource_type||resource.type||"Learning material");
+      const url=site.replace(/\/$/,"")+"/resources.html",token=resourceUnsubscribeToken(email);
+      const unsubscribeUrl=token?site.replace(/\/$/,"")+"/api/resource-updates/unsubscribe?email="+encodeURIComponent(email)+"&token="+encodeURIComponent(token):"mailto:info@cbenexus.co.ke?subject=Unsubscribe%20from%20CBE%20Nexus%20updates";
+      const firstName=String(subscriber.name||"").trim().split(/\s+/)[0];
+      const html="<div style=\"font-family:Arial,sans-serif;max-width:640px;margin:auto;color:#1f2937;line-height:1.6\"><h2 style=\"color:#176b43\">New learning resource on CBE Nexus</h2><p>Hello "+resourceEmailEscape(firstName||"educator")+",</p><p>A new resource is now available on CBE Nexus.</p><div style=\"border:1px solid #dbe5dd;border-radius:10px;padding:18px\"><h3>"+resourceEmailEscape(title)+"</h3><p><b>Grade/Curriculum:</b> "+resourceEmailEscape(grade)+"<br><b>Subject:</b> "+resourceEmailEscape(subject)+"<br><b>Resource type:</b> "+resourceEmailEscape(type)+"</p><p>"+resourceEmailEscape(resource.description||"Explore this learning material on CBE Nexus.")+"</p><p><a href=\""+resourceEmailEscape(url)+"\" style=\"display:inline-block;background:#176b43;color:#fff;padding:10px 16px;border-radius:6px;text-decoration:none\">Explore resources</a></p></div><p style=\"font-size:12px;color:#6b7280\">You received this email because you subscribed to CBE Nexus resource updates. <a href=\""+resourceEmailEscape(unsubscribeUrl)+"\">Unsubscribe</a>.</p></div>";
+      const response=await fetch("https://api.resend.com/emails",{method:"POST",headers:{"Authorization":"Bearer "+String(process.env.RESEND_API_KEY).trim(),"Content-Type":"application/json"},body:JSON.stringify({from:sender,to:[email],reply_to:firstEnv("RESEND_REPLY_TO")||"info@cbenexus.co.ke",subject:"New CBE Nexus resource: "+title,html,text:"A new resource is available on CBE Nexus: "+title+"\nGrade/Curriculum: "+grade+"\nSubject: "+subject+"\nType: "+type+"\nExplore resources: "+url+"\nUnsubscribe: "+unsubscribeUrl})});
+      const result=await response.json().catch(()=>({}));if(!response.ok)throw new Error("Resend HTTP "+response.status+": "+String(result.message||result.name||"Email send failed"));
+      const {error:logError}=await supabase.from("resource_update_notifications").insert({resource_id:resourceId,subscriber_email:email,resend_email_id:String(result.id||"")||null});if(logError)throw logError;
+    }catch(error){console.error("Resource update email failed for subscriber:",email,error.message||error);}
+  }
+}
+
+function mpesaCredential(kind){const exact=kind==="key"?["MPESA_CONSUMER_KEY","MPESA_CONSUMERKEY","MPESA_KEY","CONSUMER_KEY","CONSUMERKEY","DARAJA_CONSUMER_KEY","SAFARICOM_CONSUMER_KEY"]:["MPESA_CONSUMER_SECRET","MPESA_CONSUMERSECRET","MPESA_SECRET","CONSUMER_SECRET","CONSUMERSECRET","DARAJA_CONSUMER_SECRET","SAFARICOM_CONSUMER_SECRET"];const direct=firstEnv(...exact);if(direct)return direct;const keys=Object.keys(process.env);const candidates=keys.filter(name=>{const n=name.toUpperCase();const hasProvider=/(MPESA|DARAJA|SAFARICOM)/.test(n);const hasConsumer=/CONSUMER/.test(n);const hasPart=kind==="key"?/(KEY|KEY_ID)/.test(n):/(SECRET|SECRET_KEY)/.test(n);return hasProvider&&hasConsumer&&hasPart;});for(const name of candidates){const value=String(process.env[name]??"").trim();if(value)return value;}return "";}
+let mpesaTokenCache={token:"",expiresAt:0,pending:null};
+async function getMpesaAccessToken(){
+  const now=Date.now();
+  if(mpesaTokenCache.token && now<mpesaTokenCache.expiresAt-60000) return mpesaTokenCache.token;
+  if(mpesaTokenCache.pending) return mpesaTokenCache.pending;
+  mpesaTokenCache.pending=(async()=>{
+    const k=mpesaCredential("key"),secret=mpesaCredential("secret");
+    if(!k||!secret) throw new Error("M-Pesa consumer credentials are not available to the running Render service.");
+    const base=mpesaBase();
+    const https=require("https");
+    const token=await new Promise((resolve,reject)=>{
+      const q=https.request(base+"/oauth/v1/generate?grant_type=client_credentials",{
+        headers:{Authorization:"Basic "+Buffer.from(k+":"+secret).toString("base64"),Accept:"application/json"},
+        timeout:10000
+      },r=>{
+        let d="";
+        r.on("data",c=>d+=c);
+        r.on("end",()=>{
+          let x={};
+          try{x=JSON.parse(d||"{}");}
+          catch{reject(new Error("Daraja authorization returned a non-JSON response (HTTP "+String(r.statusCode||500)+")."));return;}
+          if(r.statusCode>=200&&r.statusCode<300&&x.access_token){resolve({token:x.access_token,expiresIn:Number(x.expires_in)||3600});return;}
+          const detail=String(x.error_description||x.error||x.ResponseDescription||x.message||"No access token returned.");
+          reject(new Error("Daraja authorization failed (HTTP "+String(r.statusCode||500)+"): "+detail.slice(0,240)));
+        });
+      });
+      q.on("timeout",()=>q.destroy(new Error("Daraja authorization timed out after 10 seconds.")));
+      q.on("error",reject);
+      q.end();
+    });
+    mpesaTokenCache.token=token.token;
+    mpesaTokenCache.expiresAt=Date.now()+Math.max(60,token.expiresIn-60)*1000;
+    return token.token;
+  })();
+  try{return await mpesaTokenCache.pending;}
+  finally{mpesaTokenCache.pending=null;}
+}
 function normalizeMpesaPhone(p){p=String(p||"").replace(/\s+/g,"");if(/^0[17]\d{8}$/.test(p))return"254"+p.slice(1);if(/^254[17]\d{8}$/.test(p))return p;return"";}
 function mpesaBase(){return String(process.env.MPESA_ENVIRONMENT||"sandbox").toLowerCase()==="production"?"https://api.safaricom.co.ke":"https://sandbox.safaricom.co.ke";}
 function mpesaTimestamp(){const d=new Date();return d.getFullYear().toString()+String(d.getMonth()+1).padStart(2,"0")+String(d.getDate()).padStart(2,"0")+String(d.getHours()).padStart(2,"0")+String(d.getMinutes()).padStart(2,"0")+String(d.getSeconds()).padStart(2,"0");}
 function mpesaPassword(shortCode,passkey,timestamp){return Buffer.from(String(shortCode)+String(passkey)+String(timestamp)).toString("base64");}
-async function darajaPost(pathname,body,token){const https=require("https"),base=mpesaBase();return await new Promise((res,rej)=>{const q=https.request(base+pathname,{method:"POST",headers:{Authorization:"Bearer "+token,"Content-Type":"application/json"}},r=>{let d="";r.on("data",c=>d+=c);r.on("end",()=>{try{res({status:r.statusCode||500,data:JSON.parse(d)});}catch{res({status:r.statusCode||500,data:{raw:d}});}})});q.on("error",rej);q.write(JSON.stringify(body));q.end();});}
-function getMpesaConfig(){return {shortCode:String(process.env.MPESA_SHORTCODE||"").trim(),passkey:String(process.env.MPESA_PASSKEY||"").trim(),callbackUrl:String(process.env.MPESA_CALLBACK_URL||"").trim(),environment:String(process.env.MPESA_ENVIRONMENT||"sandbox").trim().toLowerCase()};}
-async function findResourceForPayment(resourceId){if(!resourceId)return null;if(supabaseConfigured){const {data,error}=await supabase.from("resources").select("id,title,price,discount_price,status,r2_key").eq("id",resourceId).maybeSingle();if(error)throw error;return data;}const rows=await readJsonStore("resources.json");return rows.find(r=>String(r.id)===String(resourceId))||null;}
-function resourcePrice(row){const price=Number(row?.price||0),discount=Number(row?.discount_price??row?.discount??0);return Math.max(0,Math.round(price*(1-Math.max(0,Math.min(100,discount))/100)));}
+async function darajaPost(pathname,body,token){
+  const https=require("https"),base=mpesaBase();
+  return await new Promise((resolve,reject)=>{
+    const q=https.request(base+pathname,{
+      method:"POST",
+      headers:{Authorization:"Bearer "+token,"Content-Type":"application/json","Accept":"application/json"},
+      timeout:15000
+    },r=>{
+      let d="";
+      r.on("data",c=>d+=c);
+      r.on("end",()=>{
+        let data;
+        try{data=JSON.parse(d||"{}");}
+        catch{data={raw:String(d||"").slice(0,1000)};}
+        resolve({status:r.statusCode||500,data});
+      });
+    });
+    q.on("timeout",()=>q.destroy(new Error("Daraja request timed out after 15 seconds.")));
+    q.on("error",reject);
+    q.end(JSON.stringify(body));
+  });
+}
+function getMpesaConfig(){return {shortCode:firstEnv("MPESA_SHORTCODE","MPESA_BUSINESS_SHORTCODE","MPESA_SHORT_CODE"),tillNumber:firstEnv("MPESA_TILL_NUMBER","MPESA_TILL","MPESA_PARTY_B"),passkey:firstEnv("MPESA_PASSKEY","MPESA_LIPA_NA_MPESA_PASSKEY"),callbackUrl:firstEnv("MPESA_CALLBACK_URL","MPESA_CALLBACK"),environment:firstEnv("MPESA_ENVIRONMENT","MPESA_ENV")||"sandbox"};}
+async function findResourceForPayment(resourceId){if(!resourceId)return null;if(supabaseConfigured){const {data,error}=await supabase.from("resources").select("id,title,price,discount_price,status,r2_key,grade").eq("id",resourceId).maybeSingle();if(error)throw error;return data;}const rows=await readJsonStore("resources.json");return rows.find(r=>String(r.id)===String(resourceId))||null;}
+function resourcePrice(row){const price=Math.max(0,Number(row?.price||0));const sale=Number(row?.discount_price??row?.discount??0);const payable=sale>0&&sale<price?sale:price;return Math.max(0,Math.round(payable));}
 async function savePayment(row){if(!supabaseConfigured)throw new Error("Supabase is required for server-side M-Pesa verification.");const {data,error}=await supabase.from("purchases").insert(row).select("*").single();if(error)throw error;return data;}
 async function updatePaymentByCheckout(checkoutRequestId,patch){if(!supabaseConfigured)throw new Error("Supabase is required for server-side M-Pesa verification.");const {data,error}=await supabase.from("purchases").update(patch).eq("checkout_request_id",checkoutRequestId).select("*").single();if(error)throw error;return data;}
 function callbackMetadataToObject(items){const out={};for(const item of Array.isArray(items)?items:[]){if(item?.Name)out[item.Name]=item.Value??null;}return out;}
-async function verifyMpesaPaymentByQuery(checkoutRequestId){const c=getMpesaConfig();if(!checkoutRequestId||!c.shortCode||!c.passkey)return null;const token=await getMpesaAccessToken(),timestamp=mpesaTimestamp(),response=await darajaPost("/mpesa/stkpushquery/v1/query",{BusinessShortCode:c.shortCode,Password:mpesaPassword(c.shortCode,c.passkey,timestamp),Timestamp:timestamp,CheckoutRequestID:checkoutRequestId},token);const d=response.data||{};if(Number(d.ResponseCode)===0&&String(d.ResultCode)==="0"){return updatePaymentByCheckout(checkoutRequestId,{status:"paid",result_code:0,result_desc:String(d.ResultDesc||"Success"),verified_at:new Date().toISOString()});}if(d.ResultCode!==undefined){return updatePaymentByCheckout(checkoutRequestId,{status:"failed",result_code:Number(d.ResultCode),result_desc:String(d.ResultDesc||"Payment failed"),verified_at:new Date().toISOString()});}return null;}
+async function verifyMpesaPaymentByQuery(checkoutRequestId){const c=getMpesaConfig();if(!checkoutRequestId||!c.shortCode||!c.passkey)return null;const token=await getMpesaAccessToken(),timestamp=mpesaTimestamp(),response=await darajaPost("/mpesa/stkpushquery/v1/query",{BusinessShortCode:c.shortCode,Password:mpesaPassword(c.shortCode,c.passkey,timestamp),Timestamp:timestamp,CheckoutRequestID:checkoutRequestId},token);const d=response.data||{};const {data:current,error:currentError}=await supabase.from("purchases").select("*").eq("checkout_request_id",checkoutRequestId).maybeSingle();if(currentError)throw currentError;if(!current)return null;if(["paid","completed","success"].includes(String(current.status||"").toLowerCase()))return current;/* A non-zero API ResponseCode is a query/API error, not proof the customer payment failed. */if(Number(d.ResponseCode)!==0||d.ResultCode===undefined||String(d.ResultCode)==="")return null;if(String(d.ResultCode)==="0"){return updatePaymentByCheckout(checkoutRequestId,{status:"paid",result_code:0,result_desc:String(d.ResultDesc||"Success"),verified_at:new Date().toISOString()});}return updatePaymentByCheckout(checkoutRequestId,{status:"failed",result_code:Number(d.ResultCode),result_desc:String(d.ResultDesc||"Payment failed"),verified_at:new Date().toISOString()});}
+function cleanAICourseText(v,max=5000){return String(v??"").trim().slice(0,max);}
+function normalizeAICoursePayload(p){
+  const title=cleanAICourseText(p.title,180), slug=cleanAICourseText(p.slug,100).toLowerCase().replace(/[^a-z0-9-]+/g,"-").replace(/^-+|-+$/g,"");
+  const courseSlug=slug||title.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,90);
+  const courseUrl=cleanAICourseText(p.courseUrl||p.course_url,1000);
+  if(!title||!courseUrl) throw new Error("Course title and course link are required.");
+  let parsed;try{parsed=new URL(courseUrl,process.env.PUBLIC_BASE_URL||"http://localhost");}catch{throw new Error("Course link is not valid.");}
+  if(!/^https?:$/.test(parsed.protocol)) throw new Error("Course link must use http or https.");
+  return {
+    id:cleanAICourseText(p.id,120)||"ai-course-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),
+    slug:courseSlug,title,short:cleanAICourseText(p.short,500),description:cleanAICourseText(p.description,3000),
+    provider:cleanAICourseText(p.provider,180),category:cleanAICourseText(p.category,120),
+    level:cleanAICourseText(p.level,80)||"Beginner",duration:cleanAICourseText(p.duration,100),
+    course_url:courseUrl,featured:!!p.featured,status:String(p.status||"published")==="draft"?"draft":"published"
+  };
+}
+async function getAICourses(admin=false){
+  if(supabaseConfigured){
+    try{
+      let q=supabase.from("ai_courses").select("*").order("featured",{ascending:false}).order("created_at",{ascending:false});
+      if(!admin)q=q.eq("status","published");
+      const {data,error}=await q;if(!error)return data||[];
+      console.warn("Supabase AI courses lookup failed:",error.message||error);
+    }catch(error){console.warn("Supabase AI courses lookup failed:",error.message||error);}
+  }
+  const rows=await readJsonStore("ai-courses.json");
+  return admin?rows:rows.filter(x=>String(x.status||"published")==="published");
+}
+async function saveAICourse(payload){
+  const item=normalizeAICoursePayload(payload);
+  const now=new Date().toISOString();
+  if(supabaseConfigured){
+    try{
+      const row={...item,created_at:payload.created_at||now,updated_at:now};
+      const {data,error}=await supabase.from("ai_courses").upsert(row,{onConflict:"id"}).select("*").single();
+      if(!error)return data;
+      console.warn("Supabase AI course save failed:",error.message||error);
+    }catch(error){console.warn("Supabase AI course save failed:",error.message||error);}
+  }
+  const rows=await readJsonStore("ai-courses.json");
+  const old=rows.find(x=>String(x.id)===String(item.id));
+  const stored={...item,created_at:old?.created_at||now,updated_at:now};
+  await fs.writeFile(path.join(DATA_DIR,"ai-courses.json"),JSON.stringify([stored,...rows.filter(x=>String(x.id)!==String(item.id))],null,2));
+  return stored;
+}
+function cleanOpportunity(v,max=6000){return String(v??"").trim().slice(0,max);}
+function normalizeOpportunityPayload(p, existing=null){
+  const title=cleanOpportunity(p.title||existing?.title,220);
+  if(!title) throw new Error("Opportunity title is required.");
+  const applyUrl=cleanOpportunity(p.applyUrl||p.apply_url||existing?.apply_url,1200);
+  if(!applyUrl) throw new Error("Official application link is required.");
+  let u; try{u=new URL(applyUrl);}catch{throw new Error("Application link is not valid.");}
+  if(!/^https?:$/.test(u.protocol)) throw new Error("Application link must use http or https.");
+  const now=new Date().toISOString();
+  return {
+    id:cleanOpportunity(p.id||existing?.id,120)||"opportunity-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),
+    title,organization:cleanOpportunity(p.organization||existing?.organization,220),
+    country:cleanOpportunity(p.country||existing?.country,120),
+    type:cleanOpportunity(p.type||existing?.type,100)||"Scholarship",
+    level:cleanOpportunity(p.level||existing?.level,180),
+    field:cleanOpportunity(p.field||existing?.field,220),
+    funding:cleanOpportunity(p.funding||existing?.funding,180),
+    description:cleanOpportunity(p.description||existing?.description,7000),
+    eligibility:cleanOpportunity(p.eligibility||existing?.eligibility,7000),
+    benefits:cleanOpportunity(p.benefits||existing?.benefits,5000),
+    requirements:cleanOpportunity(p.requirements||existing?.requirements,5000),
+    opening_date:cleanOpportunity(p.openingDate||p.opening_date||existing?.opening_date,40),
+    deadline:cleanOpportunity(p.deadline||existing?.deadline,40),
+    apply_url:applyUrl,featured:!!(p.featured??existing?.featured),
+    status:["draft","published","closed"].includes(String(p.status||existing?.status||"published"))?String(p.status||existing?.status||"published"):"published",
+    created_at:existing?.created_at||now,updated_at:now
+  };
+}
+async function getOpportunities(admin=false){
+  if(supabaseConfigured){try{
+    let q=supabase.from("scholarship_opportunities").select("*").order("featured",{ascending:false}).order("created_at",{ascending:false});
+    if(!admin)q=q.eq("status","published");
+    const {data,error}=await q;
+    if(!error){
+      const rows=data||[];
+      if(admin)return rows;
+      let seeds=[];
+      try{seeds=JSON.parse(await fs.readFile(path.join(ROOT,"scholarship-opportunities-seed.json"),"utf8"));}catch{} try{const extra=JSON.parse(await fs.readFile(path.join(ROOT,"scholarship-opportunities-extra.json"),"utf8")); seeds=seeds.concat(extra);}catch{}
+      const ids=new Set(rows.map(x=>String(x.id)));
+      return rows.concat(seeds.filter(x=>String(x.status||"published")==="published"&&!ids.has(String(x.id))));
+    }
+    console.warn("Supabase opportunities lookup failed:",error.message||error);
+  }catch(error){console.warn("Supabase opportunities lookup failed:",error.message||error);}}
+  const rows=await readJsonStore("scholarship-opportunities.json");
+  let seeds=[];
+  try{seeds=JSON.parse(await fs.readFile(path.join(ROOT,"scholarship-opportunities-seed.json"),"utf8"));}catch{} try{const extra=JSON.parse(await fs.readFile(path.join(ROOT,"scholarship-opportunities-extra.json"),"utf8")); seeds=seeds.concat(extra);}catch{}
+  if(admin)return rows;
+  const published=rows.filter(x=>String(x.status||"published")==="published");
+  const ids=new Set(published.map(x=>String(x.id)));
+  return published.concat(seeds.filter(x=>String(x.status||"published")==="published"&&!ids.has(String(x.id))));
+}
+async function saveOpportunity(payload){
+  const item=normalizeOpportunityPayload(payload,payload);
+  if(supabaseConfigured){try{
+    const {data,error}=await supabase.from("scholarship_opportunities").upsert(item,{onConflict:"id"}).select("*").single();
+    if(!error)return data;
+    console.warn("Supabase opportunity save failed:",error.message||error);
+  }catch(error){console.warn("Supabase opportunity save failed:",error.message||error);}}
+  const rows=await readJsonStore("scholarship-opportunities.json");
+  await fs.writeFile(path.join(DATA_DIR,"scholarship-opportunities.json"),JSON.stringify([item,...rows.filter(x=>String(x.id)!==item.id)],null,2));
+  return item;
+}
+async function getTeachingVacancies(){const seedFiles=["uae-january-2027-seed.json","usa-teaching-vacancies-seed.json","uk-teaching-vacancies-seed.json","canada-teaching-vacancies-seed.json","australia-teaching-vacancies-seed.json","china-teaching-vacancies-seed.json","japan-teaching-vacancies-seed.json","germany-teaching-vacancies-seed.json","netherlands-teaching-vacancies-seed.json","switzerland-teaching-vacancies-seed.json","new-zealand-teaching-vacancies-seed.json","ukraine-teaching-vacancies-seed.json","russia-teaching-vacancies-seed.json","south-korea-teaching-vacancies-seed.json","singapore-teaching-vacancies-seed.json","thailand-teaching-vacancies-seed.json","vietnam-teaching-vacancies-seed.json","india-teaching-vacancies-seed.json","indonesia-teaching-vacancies-seed.json","malaysia-teaching-vacancies-seed.json","qatar-teaching-vacancies-seed.json","saudi-arabia-teaching-vacancies-seed.json","kuwait-teaching-vacancies-seed.json","oman-teaching-vacancies-seed.json","bahrain-teaching-vacancies-seed.json","france-teaching-vacancies-seed.json","spain-teaching-vacancies-seed.json","portugal-teaching-vacancies-seed.json","italy-teaching-vacancies-seed.json","austria-teaching-vacancies-seed.json","sweden-teaching-vacancies-seed.json","norway-teaching-vacancies-seed.json","denmark-teaching-vacancies-seed.json"];const seedParts=await Promise.all(seedFiles.map(async f=>{try{return await readJsonStore(f);}catch(error){console.warn("Teaching vacancy seed skipped:",f,error.message||error);return []}}));const seed=seedParts.flat().filter(v=>v&&typeof v==="object");if(supabaseConfigured){try{const query=supabase.from("teaching_vacancies").select("*").order("featured",{ascending:false}).order("created_at",{ascending:false});const result=await Promise.race([query,new Promise((_,reject)=>setTimeout(()=>reject(new Error("Supabase vacancy lookup timed out")),5000))]);const {data,error}=result;if(!error){const rows=data||[];const byId=new Map(rows.map(v=>[String(v.id),v]));const published=rows.filter(v=>String(v.status||"published").toLowerCase()==="published");const stableSeeds=seed.filter(v=>!byId.has(String(v.id)));return published.concat(stableSeeds.filter(v=>String(v.status||"published").toLowerCase()==="published"));}console.warn("Supabase vacancy lookup failed:",error.message||error);}catch(error){console.warn("Supabase teaching vacancies lookup failed:",error.message||error);}}let local=[];try{local=(await readJsonStore("teaching-vacancies.json")).filter(v=>v.status!=="deleted"&&v.status!=="draft");}catch(error){console.warn("Local teaching vacancies lookup failed:",error.message||error);}const ids=new Set(local.map(v=>String(v.id)));return local.concat(seed.filter(v=>!ids.has(String(v.id))&&String(v.status||"published").toLowerCase()==="published"));}
+async function saveTeachingVacancy(p){const clean=(v,max=4000)=>String(v??"").trim().slice(0,max);const item={id:String(p.id||"vacancy-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex")),title:clean(p.title,180),school:clean(p.school,180),country:clean(p.country,100),region:clean(p.region,100),subject:clean(p.subject,160),level:clean(p.level,160),employment:clean(p.employment,80),salary:clean(p.salary,160),deadline:clean(p.deadline,40),description:clean(p.description,5000),requirements:clean(p.requirements,5000),apply_url:clean(p.applyUrl||p.apply_url,1000),featured:!!p.featured,status:"published",created_at:new Date().toISOString(),updated_at:new Date().toISOString()};if(!item.title||!item.school||!item.country||!item.subject||!item.level||!item.apply_url)throw new Error("Title, school, country, subject, level and application link are required.");if(supabaseConfigured){try{const {data,error}=await supabase.from("teaching_vacancies").upsert(item,{onConflict:"id"}).select("*").single();if(!error)return data;console.warn("Supabase vacancy save failed:",error.message||error);}catch(error){console.warn("Supabase vacancy save failed:",error.message||error);}}const items=await readJsonStore("teaching-vacancies.json");await fs.writeFile(path.join(DATA_DIR,"teaching-vacancies.json"),JSON.stringify([item,...items.filter(x=>x.id!==item.id)],null,2));return item;}
+async function refineCvWithSmartEditor(payload){
+  const clean=(v,max=6000)=>String(v||"").trim().slice(0,max);
+  const base={
+    name:clean(payload.name,160), jobTitle:clean(payload.jobTitle,200), country:clean(payload.country,120),
+    languages:clean(payload.languages,1000), education:clean(payload.education,5000), units:clean(payload.units,4000),
+    universityClass:clean(payload.universityClass,500), experience:clean(payload.experience,7000),
+    achievements:clean(payload.achievements,4000), skills:clean(payload.skills,3000), curriculum:clean(payload.curriculum,2500),
+    certifications:clean(payload.certifications,3000), targetJob:clean(payload.targetJob,5000)
+  };
+  const fallback={
+    profile: base.jobTitle+" with relevant education, practical experience and transferable skills, presenting a clear record of responsibility, results and professional growth.",
+    skills:Array.from(new Set((base.skills.split(/[,;\n]+/).map(x=>x.trim()).filter(Boolean)).concat(["Professional communication","Team collaboration","Problem solving","Time management","Digital literacy","Adaptability"]))).slice(0,14),
+    experience: base.experience,
+    achievements: base.achievements
+  };
+  const apiKey=String(process.env.OPENAI_API_KEY||"").trim();
+  if(!apiKey){
+    const error=new Error("AI CV Generator is not configured yet. Add OPENAI_API_KEY to the Render environment variables.");
+    error.code="OPENAI_NOT_CONFIGURED";
+    throw error;
+  }
+  const model=String(process.env.OPENAI_MODEL||"gpt-6-luna").trim();
+  const system="You are a senior international CV editor. Rewrite candidate information into concise, truthful, employer-focused CV language. Never invent employers, qualifications, certifications, licences, dates, achievements, metrics or skills that are not supported by the candidate's information. You may identify transferable skills clearly implied by the supplied experience. Tailor terminology to the selected destination and target role. Improve grammar, clarity, hierarchy and ATS keyword alignment. Convert responsibilities into strong action-oriented statements and emphasize outcomes only when supported by the candidate's information. Never create statistics, awards or achievements. Preserve the candidate's actual facts, dates and institutions. For US and Canadian applications, keep the structure ATS-friendly and do not recommend a photograph or unnecessary personal details. For UAE applications, use a professional international CV style and allow a photo only where appropriate. Return JSON only with keys: profile (string), skills (array of strings), experience (string), achievements (string).";
+  const user=JSON.stringify(base);
+  const body={model,messages:[{role:"system",content:system},{role:"user",content:"Refine this candidate information for an international job application. Strengthen the profile, rewrite experience into action-and-impact bullets where the evidence permits, improve achievements, and identify relevant employer-facing skills. Target vacancy if supplied: "+user}],response_format:{type:"json_object"}};
+  const https=require("https");
+  const result=await new Promise((resolve,reject)=>{
+    const req=https.request("https://api.openai.com/v1/chat/completions",{method:"POST",headers:{"Authorization":"Bearer "+apiKey,"Content-Type":"application/json"}},res=>{
+      let data="";res.on("data",d=>data+=d);res.on("end",()=>{try{resolve({status:res.statusCode||500,data:JSON.parse(data)})}catch{resolve({status:res.statusCode||500,data:{}})}})
+    });
+    req.on("error",reject);req.write(JSON.stringify(body));req.end();
+  });
+  if(result.status<200||result.status>=300)throw new Error("Smart CV editor is temporarily unavailable.");
+  const text=String(result.data?.choices?.[0]?.message?.content||"").trim();
+  let out;try{out=JSON.parse(text)}catch{throw new Error("Smart CV editor returned an invalid response.");}
+  return {
+    profile:clean(out.profile,1800)||fallback.profile,
+    skills:Array.isArray(out.skills)?out.skills.map(x=>clean(x,120)).filter(Boolean).slice(0,18):fallback.skills,
+    experience:clean(out.experience,8000)||fallback.experience,
+    achievements:clean(out.achievements,5000)||fallback.achievements
+  };
+}
+
+async function getSchoolDirectory(admin=false){
+  if(supabaseConfigured){
+    try{
+      let q=supabase.from("schools").select("*,school_vacancies(*)").order("created_at",{ascending:false});
+      if(!admin)q=q.eq("status","published");
+      const {data,error}=await q;
+      if(!error)return data||[];
+      console.warn("Supabase school directory lookup failed:",error.message||error);
+    }catch(error){console.warn("Supabase school directory lookup failed:",error.message||error);}
+  }
+  const schools=await readJsonStore("schools.json");
+  const vacancies=await readJsonStore("school-vacancies.json");
+  return (admin?schools:schools.filter(s=>s.status==="published")).map(s=>({...s,vacancies:vacancies.filter(v=>String(v.school_id)===String(s.id)&&(admin||v.status==="published"))}));
+}
+function normalizeSchoolPayload(p){
+  const clean=(v,n)=>String(v??"").trim().slice(0,n);
+  const name=clean(p.name,220),country=clean(p.country,120),email=clean(p.email,180),website=clean(p.website,500);
+  if(!name||!country||!email)throw new Error("School name, country and contact email are required.");
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email))throw new Error("Enter a valid school email.");
+  if(website){let u;try{u=new URL(website)}catch{throw new Error("School website is not valid.");}if(!/^https?:$/.test(u.protocol))throw new Error("School website must use http or https.");}
+  return {id:"school-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),name,country,city:clean(p.city,120),curriculum:clean(p.curriculum,180),type:clean(p.type,120),website,email,phone:clean(p.phone,60),description:clean(p.schoolDescription||p.description,3000),status:"pending",created_at:new Date().toISOString(),updated_at:new Date().toISOString()};
+}
+function normalizeSchoolVacancyPayload(p,schoolId){
+  const clean=(v,n)=>String(v??"").trim().slice(0,n);
+  const title=clean(p.title,220),subject=clean(p.subject,180),level=clean(p.level,150),description=clean(p.vacancyDescription||p.description,5000),applyUrl=clean(p.applyUrl,1000);
+  if(!title||!subject||!level||!description||!applyUrl)throw new Error("Vacancy title, subject, level, description and application link are required.");
+  let u;try{u=new URL(applyUrl)}catch{throw new Error("Application link is not valid.");}
+  if(!/^https?:$/.test(u.protocol))throw new Error("Application link must use http or https.");
+  return {id:"school-vacancy-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),school_id:schoolId,title,subject,level,employment:clean(p.employment,80)||"Full-time",salary:clean(p.salary,300),deadline:clean(p.deadline,40),description,requirements:clean(p.requirements,4000),apply_url:applyUrl,status:"pending",featured:false,created_at:new Date().toISOString(),updated_at:new Date().toISOString()};
+}
+async function submitSchoolDirectory(payload){
+  const school=normalizeSchoolPayload(payload),vacancy=normalizeSchoolVacancyPayload(payload,school.id);
+  if(supabaseConfigured){
+    try{
+      const {data,error}=await supabase.from("schools").insert(school).select("*").single();
+      if(error)throw error;
+      const {data:v,error:ve}=await supabase.from("school_vacancies").insert(vacancy).select("*").single();
+      if(ve)throw ve;
+      return {school:data,vacancy:v};
+    }catch(error){
+      console.error("Supabase school submission failed:",error);
+      throw new Error("School submission could not be saved to Supabase. Please try again.");
+    }
+  }
+  await appendJsonStore("schools.json",school);
+  await appendJsonStore("school-vacancies.json",vacancy);
+  return {school,vacancy};
+}
+
 async function handleApi(req,res,url){
+  if(req.method==="GET"&&url.pathname==="/api/resource-updates/unsubscribe"){
+    const email=String(url.searchParams.get("email")||"").trim().toLowerCase(),token=String(url.searchParams.get("token")||""),expected=resourceUnsubscribeToken(email);
+    if(!email||!expected||!safeEqual(token,expected)){sendJson(res,400,{ok:false,error:"This unsubscribe link is invalid or expired."});return true;}
+    if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Unsubscribe is temporarily unavailable. Please contact info@cbenexus.co.ke."});return true;}
+    const {error}=await supabase.from("resource_subscribers").update({unsubscribed_at:new Date().toISOString()}).eq("email",email);
+    if(error){console.error("Resource update unsubscribe error:",error);sendJson(res,503,{ok:false,error:"We could not process your request. Please contact info@cbenexus.co.ke."});return true;}
+    res.writeHead(200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"no-store"});
+    res.end("<!doctype html><html><head><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>Unsubscribed | CBE Nexus</title></head><body style=\"font-family:Arial,sans-serif;max-width:600px;margin:60px auto;padding:24px;color:#1f2937\"><h1>You have been unsubscribed</h1><p>You will no longer receive CBE Nexus resource update emails at this address.</p><p><a href=\"/\">Return to CBE Nexus</a></p></body></html>");return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/resource-updates/subscribe"){
+    let p={};try{p=JSON.parse((await readBody(req))||"{}");}catch{sendJson(res,400,{ok:false,error:"Please submit a valid subscription form."});return true;}
+    const email=String(p.email||"").trim().toLowerCase();
+    const name=String(p.name||"").trim().slice(0,100);
+    const source=String(p.source||"/").trim().slice(0,300);
+    if(String(p.website||"").trim()){sendJson(res,200,{ok:true,message:"Thank you for your interest in CBE Nexus updates."});return true;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||email.length>254||p.consent!==true){sendJson(res,400,{ok:false,error:"Enter a valid email address and confirm your consent."});return true;}
+    if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Subscriptions are temporarily unavailable. Please try again later."});return true;}
+    try{
+      const {error}=await supabase.from("resource_subscribers").upsert({email,name:name||null,source,consent:true,updated_at:new Date().toISOString()},{onConflict:"email",ignoreDuplicates:true});
+      if(error)throw error;
+      sendJson(res,201,{ok:true,message:"You're subscribed! We'll send new CBE Nexus resource updates to your email."});
+    }catch(error){console.error("Resource update subscription error:",error);sendJson(res,503,{ok:false,error:"We couldn't save your subscription just now. Please try again later."});}
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/admin/ad-revenue"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{sendJson(res,200,await getAdRevenueDashboard());}
+    catch(error){console.error("Ad revenue dashboard error:",error);sendJson(res,503,{ok:false,error:error.message||"Ad revenue data unavailable.",configured:Boolean(String(process.env.GA4_PROPERTY_ID||"").trim()&&String(process.env.GA4_SERVICE_ACCOUNT_JSON||"").trim())});}
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/analytics/config"){
+    sendJson(res,200,{ok:true,googleAnalyticsId:String(process.env.GA_MEASUREMENT_ID||"").trim(),clarityProjectId:String(process.env.CLARITY_PROJECT_ID||"").trim()});
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/grade10-national-schools"){
+    try{const schools=await getGrade10NationalSchools();sendJson(res,200,{ok:true,schools,count:schools.length,source:"Ministry/KNEC senior-school list",officialSource:GRADE10_OFFICIAL_SOURCE,lastVerified:"2026-10-08"});}catch(error){console.error("Grade 10 national school source error:",error);sendJson(res,503,{ok:false,error:"The national Grade 10 school dataset is temporarily unavailable."});}return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/schools"){
+    try{sendJson(res,200,{ok:true,schools:await getSchoolDirectory(false)});}catch(error){console.error("School directory lookup error:",error);sendJson(res,500,{ok:false,error:"School directory could not be loaded."});}return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/schools/advertise"){
+    try{const payload=JSON.parse((await readBody(req))||"{}");const result=await submitSchoolDirectory(payload);sendJson(res,201,{ok:true,message:"School and vacancy submitted for review.",school:result.school,vacancy:result.vacancy});}catch(error){sendJson(res,400,{ok:false,error:error.message||"School submission failed."});}return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/admin/schools"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin authentication required."});return true;}
+    try{sendJson(res,200,{ok:true,schools:await getSchoolDirectory(true)});}catch(error){sendJson(res,500,{ok:false,error:"School directory could not be loaded."});}return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/school-status"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin authentication required."});return true;}
+    try{
+      const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||""),status=["pending","published","rejected"].includes(String(p.status))?String(p.status):"pending";
+      if(!id)throw new Error("School id is required.");
+      if(supabaseConfigured){const {error}=await supabase.from("schools").update({status,updated_at:new Date().toISOString()}).eq("id",id);if(error)throw error;sendJson(res,200,{ok:true});return true;}
+      const rows=await readJsonStore("schools.json"),next=rows.map(x=>String(x.id)===id?{...x,status,updated_at:new Date().toISOString()}:x);await fs.writeFile(path.join(DATA_DIR,"schools.json"),JSON.stringify(next,null,2));sendJson(res,200,{ok:true});
+    }catch(error){sendJson(res,400,{ok:false,error:error.message||"Status update failed."});}return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/school-vacancy-status"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin authentication required."});return true;}
+    try{const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||""),status=["pending","published","rejected"].includes(String(p.status))?String(p.status):"pending";if(!id)throw new Error("Vacancy id is required.");
+      if(supabaseConfigured){const {error}=await supabase.from("school_vacancies").update({status,updated_at:new Date().toISOString()}).eq("id",id);if(error)throw error;sendJson(res,200,{ok:true});return true;}
+      const rows=await readJsonStore("school-vacancies.json"),next=rows.map(x=>String(x.id)===id?{...x,status,updated_at:new Date().toISOString()}:x);await fs.writeFile(path.join(DATA_DIR,"school-vacancies.json"),JSON.stringify(next,null,2));sendJson(res,200,{ok:true});
+    }catch(error){sendJson(res,400,{ok:false,error:error.message||"Vacancy status update failed."});}return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/school-delete"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin authentication required."});return true;}
+    try{const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"");if(!id)throw new Error("School id is required.");
+      if(supabaseConfigured){const {error}=await supabase.from("schools").delete().eq("id",id);if(error)throw error;sendJson(res,200,{ok:true});return true;}
+      const schools=await readJsonStore("schools.json"),vacancies=await readJsonStore("school-vacancies.json");await fs.writeFile(path.join(DATA_DIR,"schools.json"),JSON.stringify(schools.filter(x=>String(x.id)!==id),null,2));await fs.writeFile(path.join(DATA_DIR,"school-vacancies.json"),JSON.stringify(vacancies.filter(x=>String(x.school_id)!==id),null,2));sendJson(res,200,{ok:true});
+    }catch(error){sendJson(res,400,{ok:false,error:error.message||"School deletion failed."});}return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/school-vacancy-delete"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin authentication required."});return true;}
+    try{const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"");if(!id)throw new Error("Vacancy id is required.");
+      if(supabaseConfigured){const {error}=await supabase.from("school_vacancies").delete().eq("id",id);if(error)throw error;sendJson(res,200,{ok:true});return true;}
+      const rows=await readJsonStore("school-vacancies.json");await fs.writeFile(path.join(DATA_DIR,"school-vacancies.json"),JSON.stringify(rows.filter(x=>String(x.id)!==id),null,2));sendJson(res,200,{ok:true});
+    }catch(error){sendJson(res,400,{ok:false,error:error.message||"Vacancy deletion failed."});}return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/cv/refine"){
+    try{
+      const payload=JSON.parse((await readBody(req))||"{}");
+      if(!String(payload.jobTitle||"").trim()||!String(payload.country||"").trim()){sendJson(res,400,{ok:false,error:"Job title and country are required."});return true;}
+      const refined=await refineCvWithSmartEditor(payload);
+      sendJson(res,200,{ok:true,refined});
+    }catch(error){
+      console.error("CV refinement error:",error);
+      sendJson(res,503,{ok:false,error:error.code==="OPENAI_NOT_CONFIGURED"?"AI CV Generator is not configured yet. Please ask the CBE Nexus administrator to configure the OpenAI API key.":"The AI CV refinement service is temporarily unavailable. Please try again."});
+    }
+    return true;
+  }
   if(req.method==="GET"&&url.pathname==="/api/affiliate-products"){
     const products=await readJsonStore("affiliate-products.json");
     sendJson(res,200,{ok:true,products:products.filter(p=>p.active!==false)});
@@ -127,7 +562,229 @@ async function handleApi(req,res,url){
     return true;
   }
 
-  if(req.method==="GET"&&url.pathname==="/api/admin/dashboard"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}let resources=await readJsonStore("resources.json");const [localSellerAccounts,payments,mpesaRequests,tuition,localUsers]=await Promise.all([readJsonStore("seller-accounts.json"),readJsonStore("payments.json"),readJsonStore("mpesa-requests.json"),readJsonStore("tuition-registrations.json"),readJsonStore("admin-users.json")]);if(supabaseConfigured){try{const {data:resourceData,error:resourceError}=await supabase.from("resources").select("*");if(resourceError)throw resourceError;resources=(resourceData||[]).map(resourcePayloadFromRow);}catch(error){console.error("Supabase resource dashboard lookup error:",error);}}let sellerAccounts=localSellerAccounts,users=localUsers,verifiedPurchases=[];if(supabaseConfigured){try{const {data,error}=await supabase.from("purchases").select("*").order("created_at",{ascending:false}).limit(100);if(error)throw error;verifiedPurchases=(data||[]).map(p=>({...p,id:p.id,resource:p.resource_id,resourceId:p.resource_id,customerPhone:p.customer_phone,checkoutRequestID:p.checkout_request_id,merchantRequestID:p.merchant_request_id,mpesaReceipt:p.mpesa_receipt,createdAt:p.created_at}));}catch(error){console.error("Supabase payment dashboard lookup error:",error);}}if(supabaseConfigured){try{const [{data:sellersData,error:sellersError},{data:usersData,error:usersError}]=await Promise.all([supabase.from("sellers").select("id,user_id,phone,username,status,created_at"),supabase.from("users").select("id,name,phone,role,status,created_at")]);if(sellersError)throw sellersError;if(usersError)throw usersError;sellerAccounts=sellersData||[];users=usersData||[];}catch(error){console.error("Supabase admin dashboard lookup error:",error);}}const userMap=new Map();[...users].forEach(u=>userMap.set(u.phone||u.username||u.id,u));[...payments,...mpesaRequests,...tuition].forEach(item=>{const phone=item.customerPhone||item.phone;if(phone&&!userMap.has(phone))userMap.set(phone,{id:"user-"+phone,name:item.learner||item.name||"Customer",phone,status:"active",source:"transaction"});});const allUsers=[...userMap.values()],sales=payments.filter(p=>["paid","completed","success"].includes(String(p.status||"").toLowerCase())),totalDownloads=resources.reduce((s,r)=>s+Number(r.downloads||0),0),popularResources=[...resources].map(r=>({...r,downloads:Number(r.downloads||0),purchases:Number(r.purchases||0)})).sort((a,b)=>(b.downloads+b.purchases*3)-(a.downloads+a.purchases*3)).slice(0,10);const dashboardPayments=[...payments,...mpesaRequests,...verifiedPurchases];const dashboardSales=[...payments,...verifiedPurchases].filter(p=>["paid","completed","success"].includes(String(p.status||"").toLowerCase()));sendJson(res,200,{ok:true,stats:{sellers:sellerAccounts.length,pendingSellers:sellerAccounts.filter(x=>x.status==="pending").length,resources:resources.length,pendingResources:resources.filter(x=>x.status==="pending").length,users:allUsers.length,sales:dashboardSales.length,purchases:dashboardSales.length,revenue:dashboardSales.reduce((s,x)=>s+Number(x.amount||0),0),downloads:totalDownloads},popularResources,sellers:sellerAccounts,resources,users:allUsers,sales:dashboardSales,payments:dashboardPayments.slice(0,100)});return true;}
+  if(req.method==="GET"&&url.pathname==="/api/opportunities"){
+    try{sendJson(res,200,{ok:true,opportunities:await getOpportunities(false)});}
+    catch(error){console.error("Opportunities lookup error:",error);sendJson(res,500,{ok:false,error:"Opportunities could not be loaded."});} return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/admin/opportunities"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{sendJson(res,200,{ok:true,opportunities:await getOpportunities(true)});}
+    catch(error){sendJson(res,500,{ok:false,error:"Opportunities could not be loaded."});} return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/opportunity"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{const item=await saveOpportunity(JSON.parse((await readBody(req))||"{}"));sendJson(res,201,{ok:true,opportunity:item});}
+    catch(error){sendJson(res,400,{ok:false,error:error.message||"Opportunity could not be saved."});} return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/opportunity-delete"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"").trim();
+    if(!id){sendJson(res,400,{ok:false,error:"Opportunity ID is required."});return true;}
+    if(supabaseConfigured){try{const {error}=await supabase.from("scholarship_opportunities").delete().eq("id",id);if(!error){sendJson(res,200,{ok:true,deletedId:id});return true;}}catch(error){console.warn("Supabase opportunity delete failed:",error.message||error);}}
+    const rows=await readJsonStore("scholarship-opportunities.json");await fs.writeFile(path.join(DATA_DIR,"scholarship-opportunities.json"),JSON.stringify(rows.filter(x=>String(x.id)!==id),null,2));
+    sendJson(res,200,{ok:true,deletedId:id});return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/vacancies"){try{sendJson(res,200,{ok:true,vacancies:await getTeachingVacancies()});}catch(error){console.error("Teaching vacancies lookup error:",error);sendJson(res,500,{ok:false,error:"Teaching vacancies could not be loaded."});}return true;}
+  if(req.method==="POST"&&url.pathname==="/api/admin/vacancy"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}try{const item=await saveTeachingVacancy(JSON.parse((await readBody(req))||"{}"));sendJson(res,201,{ok:true,vacancy:item});}catch(error){sendJson(res,400,{ok:false,error:error.message||"Vacancy could not be saved."});}return true;}
+  if(req.method==="POST"&&url.pathname==="/api/admin/vacancy-delete"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"").trim();if(!id){sendJson(res,400,{ok:false,error:"Vacancy ID is required."});return true;}if(supabaseConfigured){try{const {error}=await supabase.from("teaching_vacancies").update({status:"deleted",updated_at:new Date().toISOString()}).eq("id",id);if(!error){sendJson(res,200,{ok:true,deletedId:id});return true;}}catch(error){console.warn("Supabase vacancy delete failed:",error.message||error);}}const items=await readJsonStore("teaching-vacancies.json"),next=items.map(x=>x.id===id?{...x,status:"deleted",updatedAt:new Date().toISOString()}:x);await fs.writeFile(path.join(DATA_DIR,"teaching-vacancies.json"),JSON.stringify(next,null,2));sendJson(res,200,{ok:true,deletedId:id});return true;}
+  if(req.method==="GET"&&url.pathname==="/api/ai-courses"){
+    try{sendJson(res,200,{ok:true,courses:await getAICourses(false)});}
+    catch(error){console.error("AI courses lookup error:",error);sendJson(res,500,{ok:false,error:"AI courses could not be loaded."});}
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/admin/ai-courses"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{sendJson(res,200,{ok:true,courses:await getAICourses(true)});}
+    catch(error){console.error("Admin AI courses lookup error:",error);sendJson(res,500,{ok:false,error:"AI courses could not be loaded."});}
+    return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/ai-course"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{const item=await saveAICourse(JSON.parse((await readBody(req))||"{}"));sendJson(res,201,{ok:true,course:item});}
+    catch(error){sendJson(res,400,{ok:false,error:error.message||"AI course could not be saved."});}
+    return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/ai-course-delete"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"").trim();
+    if(!id){sendJson(res,400,{ok:false,error:"Course ID is required."});return true;}
+    if(supabaseConfigured){
+      try{const {error}=await supabase.from("ai_courses").delete().eq("id",id);if(!error){sendJson(res,200,{ok:true,deletedId:id});return true;}}
+      catch(error){console.warn("Supabase AI course delete failed:",error.message||error);}
+    }
+    const rows=await readJsonStore("ai-courses.json");
+    await fs.writeFile(path.join(DATA_DIR,"ai-courses.json"),JSON.stringify(rows.filter(x=>String(x.id)!==id),null,2));
+    sendJson(res,200,{ok:true,deletedId:id});return true;
+  }
+
+  // ---------------- BLOG PUBLISHING SYSTEM ----------------
+  function blogSlug(value){
+    return String(value||"").trim().toLowerCase().normalize("NFKD").replace(/[^\w\s-]/g,"").replace(/[\s_-]+/g,"-").replace(/^-+|-+$/g,"").slice(0,140);
+  }
+  function cleanBlogHtml(value){
+    let html=String(value||"").trim().slice(0,120000);
+    html=html.replace(/<\s*(script|style|iframe|object|embed|form|input|button|textarea|select)[^>]*>[\s\S]*?<\s*\/\s*\1\s*>/gi,"");
+    html=html.replace(/\son[a-z]+\s*=\s*(["']).*?\1/gi,"");
+    html=html.replace(/javascript\s*:/gi,"");
+    return html;
+  }
+  function blogRowFromPayload(p, existing=null){
+    const title=String(p.title||existing?.title||"").trim().slice(0,220);
+    const slug=blogSlug(p.slug||existing?.slug||title);
+    const status=["draft","published"].includes(String(p.status||existing?.status||"draft").toLowerCase())?String(p.status||existing?.status||"draft").toLowerCase():"draft";
+    const now=new Date().toISOString();
+    return {
+      id:String(p.id||existing?.id||"BLOG-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex").toUpperCase()),
+      title,slug,category:String(p.category||existing?.category||"CBC/CBE").trim().slice(0,80),
+      excerpt:String(p.excerpt||existing?.excerpt||"").trim().slice(0,500),
+      content:cleanBlogHtml(p.content||existing?.content||""),
+      featured_image:String(p.featuredImage||p.featured_image||existing?.featured_image||existing?.featuredImage||"").trim().slice(0,1000),
+      keywords:String(p.keywords||existing?.keywords||"").trim().slice(0,1000),
+      seo_title:String(p.seoTitle||p.seo_title||existing?.seo_title||existing?.seoTitle||title).trim().slice(0,220),
+      meta_description:String(p.metaDescription||p.meta_description||existing?.meta_description||existing?.metaDescription||p.excerpt||existing?.excerpt||"").trim().slice(0,320),
+      author:String(p.author||existing?.author||"CBE Nexus").trim().slice(0,120),
+      status,
+      published_at:status==="published"?(existing?.published_at||existing?.publishedAt||now):null,
+      created_at:existing?.created_at||existing?.createdAt||now,
+      updated_at:now
+    };
+  }
+  function blogPayloadFromRow(r){
+    return {id:r.id,title:r.title,slug:r.slug,category:r.category||"CBC/CBE",excerpt:r.excerpt||"",content:r.content||"",
+      featuredImage:r.featured_image||r.featuredImage||"",keywords:r.keywords||"",seoTitle:r.seo_title||r.seoTitle||r.title,
+      metaDescription:r.meta_description||r.metaDescription||r.excerpt||"",author:r.author||"CBE Nexus",status:r.status||"draft",
+      publishedAt:r.published_at||r.publishedAt||null,createdAt:r.created_at||r.createdAt||null,updatedAt:r.updated_at||r.updatedAt||null};
+  }
+  async function getBlogPosts(includeDrafts=false){
+    if(supabaseConfigured){
+      try{
+        let q=supabase.from("blog_posts").select("*").order("created_at",{ascending:false}).limit(500);
+        if(!includeDrafts)q=q.eq("status","published");
+        const {data,error}=await q;if(error)throw error;
+        if((data||[]).length)return (data||[]).map(blogPayloadFromRow);
+        const seedRows=await readJsonStore("blog-posts.json");
+        return seedRows.filter(x=>includeDrafts||x.status==="published").map(blogPayloadFromRow);
+      }catch(error){console.warn("Supabase blog lookup failed:",error.message||error);}
+    }
+    const rows=await readJsonStore("blog-posts.json");
+    return rows.filter(x=>includeDrafts||x.status==="published").map(blogPayloadFromRow);
+  }
+  if(req.method==="GET"&&url.pathname==="/api/blog/posts"){
+    try{sendJson(res,200,{ok:true,posts:await getBlogPosts(false)});}
+    catch(error){console.error("Public blog lookup error:",error);sendJson(res,500,{ok:false,error:"Blog posts could not be loaded."});}
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname.startsWith("/api/blog/post/")){
+    const slug=decodeURIComponent(url.pathname.slice("/api/blog/post/".length)).trim();
+    if(!slug){sendJson(res,400,{ok:false,error:"Article slug is required."});return true;}
+    try{
+      let post=null;
+      if(supabaseConfigured){const {data,error}=await supabase.from("blog_posts").select("*").eq("slug",slug).eq("status","published").maybeSingle();if(error)throw error;post=data?blogPayloadFromRow(data):null;}
+      else {const row=(await readJsonStore("blog-posts.json")).find(x=>x.slug===slug&&x.status==="published");post=row?blogPayloadFromRow(row):null;}
+      if(!post){sendJson(res,404,{ok:false,error:"Article not found."});return true;}
+      sendJson(res,200,{ok:true,post});
+    }catch(error){console.error("Public blog article error:",error);sendJson(res,500,{ok:false,error:"Article could not be loaded."});}
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/admin/blog/posts"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{sendJson(res,200,{ok:true,posts:await getBlogPosts(true),storage:supabaseConfigured?"supabase":"local"});}
+    catch(error){sendJson(res,500,{ok:false,error:"Blog articles could not be loaded."});}
+    return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/blog/post"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{
+      const p=JSON.parse((await readBody(req))||"{}");
+      if(String(p.title||"").trim().length<3||String(p.content||"").trim().length<20){sendJson(res,400,{ok:false,error:"Article title and content are required."});return true;}
+      let existing=null;
+      if(p.id&&supabaseConfigured){const {data,error}=await supabase.from("blog_posts").select("*").eq("id",String(p.id)).maybeSingle();if(error)throw error;existing=data;}
+      else if(p.id)existing=(await readJsonStore("blog-posts.json")).find(x=>String(x.id)===String(p.id))||null;
+      const row=blogRowFromPayload(p,existing);
+      if(supabaseConfigured){
+        const {data,error}=await supabase.from("blog_posts").upsert(row,{onConflict:"id"}).select("*").single();
+        if(error)throw error;
+        const publishedPost=blogPayloadFromRow(data);
+        if(String(publishedPost.status)==="published") notifyIndexNow(req,[seo.base(req).replace(/\/$/,"")+"/blog-article.html?slug="+encodeURIComponent(String(publishedPost.slug||"")),seo.base(req).replace(/\/$/,"")+"/blog.html",seo.base(req).replace(/\/$/,"")+"/sitemap.xml"]).catch(()=>{});
+        sendJson(res,200,{ok:true,post:publishedPost,storage:"supabase"});return true;
+      }
+      const rows=await readJsonStore("blog-posts.json");
+      await fs.writeFile(path.join(DATA_DIR,"blog-posts.json"),JSON.stringify([row,...rows.filter(x=>x.id!==row.id)],null,2));
+      const publishedPost=blogPayloadFromRow(row);
+      if(String(publishedPost.status)==="published") notifyIndexNow(req,[seo.base(req).replace(/\/$/,"")+"/blog-article.html?slug="+encodeURIComponent(String(publishedPost.slug||"")),seo.base(req).replace(/\/$/,"")+"/blog.html",seo.base(req).replace(/\/$/,"")+"/sitemap.xml"]).catch(()=>{});
+      sendJson(res,200,{ok:true,post:publishedPost,storage:"local"});
+    }catch(error){console.error("Admin blog save error:",error);sendJson(res,500,{ok:false,error:error.message||"Article could not be saved. If Supabase is enabled, run the blog schema SQL first."});}
+    return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/blog/delete"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{
+      const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"").trim();
+      if(!id){sendJson(res,400,{ok:false,error:"Article ID is required."});return true;}
+      if(supabaseConfigured){const {error}=await supabase.from("blog_posts").delete().eq("id",id);if(error)throw error;sendJson(res,200,{ok:true,deletedId:id});return true;}
+      const rows=await readJsonStore("blog-posts.json");await fs.writeFile(path.join(DATA_DIR,"blog-posts.json"),JSON.stringify(rows.filter(x=>String(x.id)!==id),null,2));sendJson(res,200,{ok:true,deletedId:id});
+    }catch(error){console.error("Admin blog delete error:",error);sendJson(res,500,{ok:false,error:"Article could not be deleted."});}
+    return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/blog/image"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    const fileName=String(req.headers["x-blog-file-name"]||"blog-image").trim(),contentType=String(req.headers["content-type"]||"application/octet-stream").trim();
+    const allowed=["image/jpeg","image/png","image/webp","image/gif"];
+    if(!allowed.includes(contentType)){sendJson(res,400,{ok:false,error:"Only JPG, PNG, WebP or GIF images are allowed."});return true;}
+    if(Number(req.headers["content-length"]||0)>8*1024*1024){sendJson(res,413,{ok:false,error:"Blog image is too large. Maximum size is 8 MB."});return true;}
+    try{
+      const body=await readBinaryBody(req,8*1024*1024);if(!body.length){sendJson(res,400,{ok:false,error:"Image file is empty."});return true;}
+      const id="BLOGIMG-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex");
+      const uploaded=await uploadObject({grade:"Blog",subject:"CBE Nexus Blog",type:"Featured Image",fileName:Date.now()+"-"+fileName,resourceId:id,contentType},body);
+      sendJson(res,200,{ok:true,key:uploaded.key,featuredImage:"/api/blog/image?key="+encodeURIComponent(uploaded.key)});
+    }catch(error){console.error("Blog image upload error:",error);sendJson(res,500,{ok:false,error:"Blog image upload failed."});}
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/blog/image"){
+    const key=String(url.searchParams.get("key")||"").trim();
+    if(!key||!key.startsWith("resources/Blog/")){sendJson(res,400,{ok:false,error:"Invalid blog image key."});return true;}
+    try{const target=await createDownloadUrl(key);res.writeHead(302,{Location:target,"Cache-Control":"public, max-age=300"});res.end();}
+    catch(error){sendJson(res,404,{ok:false,error:"Blog image could not be opened."});}
+    return true;
+  }
+  // Public website ratings: persistent in Supabase when configured, with local fallback.
+  if(req.method==="GET"&&url.pathname==="/api/ratings"){
+    try{
+      const visitorId=String(url.searchParams.get("visitorId")||"").trim();
+      if(supabaseConfigured){
+        const {data,error}=await supabase.from("website_ratings").select("rating,visitor_id").eq("site_key","cbe-nexus");
+        if(error)throw error;
+        const rows=data||[],sum=rows.reduce((s,x)=>s+Number(x.rating||0),0),mine=visitorId?(rows.find(x=>String(x.visitor_id)===visitorId)?.rating||0):0;
+        sendJson(res,200,{ok:true,average:rows.length?sum/rows.length:0,count:rows.length,myRating:Number(mine)||0});
+        return true;
+      }
+      const rows=await readJsonStore("website-ratings.json"),sum=rows.reduce((s,x)=>s+Number(x.rating||0),0),mine=visitorId?(rows.find(x=>String(x.visitorId)===visitorId)?.rating||0):0;
+      sendJson(res,200,{ok:true,average:rows.length?sum/rows.length:0,count:rows.length,myRating:Number(mine)||0});
+    }catch(error){console.error("Ratings lookup error:",error);sendJson(res,500,{ok:false,error:"Ratings could not be loaded."});}
+    return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/ratings"){
+    try{
+      const p=JSON.parse((await readBody(req))||"{}"),rating=Math.round(Number(p.rating)),visitorId=String(p.visitorId||"").trim().slice(0,120);
+      if(!Number.isInteger(rating)||rating<1||rating>5||!visitorId){sendJson(res,400,{ok:false,error:"A rating from 1 to 5 and a visitor ID are required."});return true;}
+      if(supabaseConfigured){
+        const {error}=await supabase.from("website_ratings").upsert({site_key:"cbe-nexus",visitor_id:visitorId,rating},{onConflict:"site_key,visitor_id"});
+        if(error)throw error;
+        const {data,error:readError}=await supabase.from("website_ratings").select("rating").eq("site_key","cbe-nexus");
+        if(readError)throw readError;
+        const rows=data||[],sum=rows.reduce((s,x)=>s+Number(x.rating||0),0);
+        sendJson(res,200,{ok:true,average:rows.length?sum/rows.length:0,count:rows.length,myRating:rating});return true;
+      }
+      const rows=await readJsonStore("website-ratings.json"),i=rows.findIndex(x=>String(x.visitorId)===visitorId);
+      const item={id:i>=0?rows[i].id:"rating-"+Date.now()+"-"+crypto.randomBytes(3).toString("hex"),siteKey:"cbe-nexus",visitorId,rating,updatedAt:new Date().toISOString()};
+      if(i>=0)rows[i]=item;else rows.unshift(item);
+      await fs.writeFile(path.join(DATA_DIR,"website-ratings.json"),JSON.stringify(rows,null,2));
+      const sum=rows.reduce((s,x)=>s+Number(x.rating||0),0);
+      sendJson(res,200,{ok:true,average:rows.length?sum/rows.length:0,count:rows.length,myRating:rating});
+    }catch(error){console.error("Rating save error:",error);sendJson(res,500,{ok:false,error:"Rating could not be saved."});}
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/admin/dashboard"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}let resources=await readJsonStore("resources.json");const [localSellerAccounts,payments,mpesaRequests,tuition,localUsers]=await Promise.all([readJsonStore("seller-accounts.json"),readJsonStore("payments.json"),readJsonStore("mpesa-requests.json"),readJsonStore("tuition-registrations.json"),readJsonStore("admin-users.json")]);if(supabaseConfigured){try{const {data:resourceData,error:resourceError}=await supabase.from("resources").select("*").eq("status","approved").order("created_at",{ascending:false});if(resourceError)throw resourceError;resources=(resourceData||[]).map(resourcePayloadFromRow);}catch(error){console.error("Supabase resource dashboard lookup error:",error);}}let sellerAccounts=localSellerAccounts,users=localUsers,verifiedPurchases=[];if(supabaseConfigured){try{const {data,error}=await supabase.from("purchases").select("*").order("created_at",{ascending:false}).limit(100);if(error)throw error;verifiedPurchases=(data||[]).map(p=>({...p,id:p.id,resource:p.resource_id,resourceId:p.resource_id,customerPhone:p.customer_phone,checkoutRequestID:p.checkout_request_id,merchantRequestID:p.merchant_request_id,mpesaReceipt:p.mpesa_receipt,createdAt:p.created_at}));}catch(error){console.error("Supabase payment dashboard lookup error:",error);}}if(supabaseConfigured){try{const [{data:sellersData,error:sellersError},{data:usersData,error:usersError}]=await Promise.all([supabase.from("sellers").select("id,user_id,phone,username,status,created_at"),supabase.from("users").select("id,name,phone,role,status,created_at")]);if(sellersError)throw sellersError;if(usersError)throw usersError;sellerAccounts=sellersData||[];users=usersData||[];}catch(error){console.error("Supabase admin dashboard lookup error:",error);}}const userMap=new Map();[...users].forEach(u=>userMap.set(u.phone||u.username||u.id,u));[...payments,...mpesaRequests,...tuition].forEach(item=>{const phone=item.customerPhone||item.phone;if(phone&&!userMap.has(phone))userMap.set(phone,{id:"user-"+phone,name:item.learner||item.name||"Customer",phone,status:"active",source:"transaction"});});const allUsers=[...userMap.values()],sales=payments.filter(p=>["paid","completed","success"].includes(String(p.status||"").toLowerCase())),totalDownloads=resources.reduce((s,r)=>s+Number(r.downloads||0),0),popularResources=[...resources].map(r=>({...r,downloads:Number(r.downloads||0),purchases:Number(r.purchases||0)})).sort((a,b)=>(b.downloads+b.purchases*3)-(a.downloads+a.purchases*3)).slice(0,10);const dashboardPayments=[...payments,...mpesaRequests,...verifiedPurchases];const dashboardSales=[...payments,...verifiedPurchases].filter(p=>["paid","completed","success"].includes(String(p.status||"").toLowerCase()));sendJson(res,200,{ok:true,stats:{sellers:sellerAccounts.length,pendingSellers:sellerAccounts.filter(x=>x.status==="pending").length,resources:resources.length,pendingResources:resources.filter(x=>x.status==="pending").length,users:allUsers.length,sales:dashboardSales.length,purchases:dashboardSales.length,revenue:dashboardSales.reduce((s,x)=>s+Number(x.amount||0),0),downloads:totalDownloads},popularResources,sellers:sellerAccounts,resources,users:allUsers,sales:dashboardSales,payments:dashboardPayments.slice(0,100)});return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/resource"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const p=JSON.parse((await readBody(req))||"{}"),items=await readJsonStore("resources.json"),item={...p,status:p.status||"approved",updatedAt:new Date().toISOString()};await fs.writeFile(path.join(DATA_DIR,"resources.json"),JSON.stringify([item,...items.filter(x=>x.id!==item.id)],null,2));sendJson(res,200,{ok:true,resource:item});return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/resource-delete"){
     if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
@@ -161,8 +818,10 @@ async function handleApi(req,res,url){
     if(!resourceId){sendJson(res,400,{ok:false,error:"Resource ID is required."});return true;}
     if(supabaseConfigured){
       try{
+        const {data:before,error:beforeError}=await supabase.from("resources").select("status").eq("id",resourceId).maybeSingle();if(beforeError)throw beforeError;
         const {data,error}=await supabase.from("resources").update({status}).eq("id",resourceId).select("*").single();
         if(error)throw error;
+        const wasPublished=["approved","published","active","live","available"].includes(String(before?.status||"").toLowerCase()),isPublished=["approved","published","active","live","available"].includes(String(data.status||"").toLowerCase());if(!wasPublished&&isPublished)setImmediate(()=>sendResourceUpdateEmails(data).catch(e=>console.error("Resource update notification job failed:",e.message||e)));
         sendJson(res,200,{ok:true,resource:resourcePayloadFromRow(data),storage:"supabase"});return true;
       }catch(error){console.error("Supabase resource status update error:",error);sendJson(res,500,{ok:false,error:"Resource status could not be updated in Supabase."});return true;}
     }
@@ -215,19 +874,37 @@ async function handleApi(req,res,url){
     if(!phone||!resourceId){sendJson(res,400,{ok:false,error:"A valid M-Pesa phone number and resource are required."});return true;}
     if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Supabase must be configured before M-Pesa payments can be verified securely."});return true;}
     const c=getMpesaConfig();
-    if(!c.shortCode||!c.passkey||!c.callbackUrl){sendJson(res,503,{ok:false,error:"M-Pesa STK Push is not fully configured on the server."});return true;}
+    if(!c.shortCode||!c.passkey||!c.callbackUrl||(String(c.environment).toLowerCase()==="production"&&!c.tillNumber)){sendJson(res,503,{ok:false,error:String(c.environment).toLowerCase()==="production"&&!c.tillNumber?"Production Buy Goods payments require the MPESA_TILL_NUMBER setting in Render.":"M-Pesa STK Push is not fully configured on the server.",diagnosticCode:"MPESA_CONFIGURATION_INCOMPLETE"});return true;}
     try{
-      const resource=await findResourceForPayment(resourceId);
-      if(!resource||String(resource.status||"approved").toLowerCase()!=="approved"){sendJson(res,404,{ok:false,error:"The selected resource is not available for purchase."});return true;}
-      const amount=resourcePrice(resource);
-      if(amount<1){sendJson(res,400,{ok:false,error:"This resource does not require an M-Pesa payment."});return true;}
-      const token=await getMpesaAccessToken(),timestamp=mpesaTimestamp();
-      const stk=await darajaPost("/mpesa/stkpush/v1/processrequest",{BusinessShortCode:c.shortCode,Password:mpesaPassword(c.shortCode,c.passkey,timestamp),Timestamp:timestamp,TransactionType:"CustomerPayBillOnline",Amount:amount,PartyA:phone,PartyB:c.shortCode,PhoneNumber:phone,CallBackURL:c.callbackUrl,AccountReference:String(resource.title||"CBE Nexus").slice(0,12),TransactionDesc:"CBE Nexus resource"},token);
+      // Start OAuth token retrieval while resource validation runs, reducing cold-start latency.
+      const tokenResultPromise=getMpesaAccessToken().then(token=>({token})).catch(error=>({error}));
+      let resource=null, amount=0;
+      const accessPlanPrices={"subscription:month":300,"subscription:6months":700,"subscription:year":1200};
+      const gradePackageMatch=resourceId.match(/^grade-package:([1-9])$/);
+      if(Object.prototype.hasOwnProperty.call(accessPlanPrices,resourceId)){
+        amount=accessPlanPrices[resourceId];
+        const labels={"subscription:month":"1-month all-resource access","subscription:6months":"6-month all-resource access","subscription:year":"12-month all-resource access"};
+        resource={id:resourceId,title:"CBE Nexus "+labels[resourceId],status:"approved",price:amount};
+      }else if(gradePackageMatch){
+        amount=50;
+        resource={id:resourceId,title:"CBE Nexus Grade "+gradePackageMatch[1]+" all-subject package",status:"approved",price:amount};
+      }else if(/^cv:(basic|classic|professional)$/i.test(resourceId)){
+        const pkg=resourceId.split(":")[1].toLowerCase();
+        amount=pkg==="basic"?200:pkg==="classic"?400:800;
+        resource={id:resourceId,title:"CBE Nexus "+pkg+" CV",status:"approved",price:amount};
+      }else{
+        resource=await findResourceForPayment(resourceId);
+        if(!resource||String(resource.status||"approved").toLowerCase()!=="approved"){sendJson(res,404,{ok:false,error:"The selected resource is not available for purchase."});return true;}
+        amount=resourcePrice(resource);
+        if(amount<1){sendJson(res,400,{ok:false,error:"This resource does not require an M-Pesa payment."});return true;}
+      }
+      const tokenResult=await tokenResultPromise;if(tokenResult.error)throw tokenResult.error;const token=tokenResult.token,timestamp=mpesaTimestamp();
+      const isBuyGoods=Boolean(c.tillNumber);const stk=await darajaPost("/mpesa/stkpush/v1/processrequest",{BusinessShortCode:c.shortCode,Password:mpesaPassword(c.shortCode,c.passkey,timestamp),Timestamp:timestamp,TransactionType:isBuyGoods?"CustomerBuyGoodsOnline":"CustomerPayBillOnline",Amount:amount,PartyA:phone,PartyB:isBuyGoods?c.tillNumber:c.shortCode,PhoneNumber:phone,CallBackURL:c.callbackUrl,AccountReference:String(resource.title||"CBE Nexus").slice(0,12),TransactionDesc:"CBE Nexus resource"},token);
       const d=stk.data||{};
-      if(stk.status<200||stk.status>=300||!d.CheckoutRequestID){sendJson(res,502,{ok:false,error:String(d.errorMessage||d.ResponseDescription||"M-Pesa payment request was not accepted.")});return true;}
-      const saved=await savePayment({resource_id:resourceId,customer_phone:phone,amount,status:"pending",payment_reference:String(d.CheckoutRequestID),checkout_request_id:String(d.CheckoutRequestID),merchant_request_id:String(d.MerchantRequestID||""),result_code:null,result_desc:String(d.ResponseDescription||"STK Push sent"),mpesa_receipt:null,transaction_time:null});
+      if(stk.status<200||stk.status>=300||!d.CheckoutRequestID){console.error("M-Pesa STK request rejected:",{httpStatus:stk.status,responseCode:d.ResponseCode,responseDescription:d.ResponseDescription,errorCode:d.errorCode,errorMessage:d.errorMessage});sendJson(res,502,{ok:false,error:String(d.errorMessage||d.ResponseDescription||"M-Pesa payment request was not accepted."),diagnosticCode:"MPESA_DARAJA_REQUEST_REJECTED"});return true;}
+      let saved;try{saved=await savePayment({resource_id:resourceId,customer_phone:phone,amount,status:"pending",payment_reference:String(d.CheckoutRequestID),checkout_request_id:String(d.CheckoutRequestID),merchant_request_id:String(d.MerchantRequestID||""),result_code:null,result_desc:String(d.ResponseDescription||"STK Push sent"),mpesa_receipt:null,transaction_time:null});}catch(saveError){console.error("M-Pesa payment record error:",saveError);sendJson(res,500,{ok:false,error:"STK Push reached the phone, but CBE Nexus could not save the payment record.",diagnosticCode:"MPESA_PAYMENT_RECORD_ERROR"});return true;}
       sendJson(res,200,{ok:true,CheckoutRequestID:d.CheckoutRequestID,MerchantRequestID:d.MerchantRequestID,amount,resourceId:resourceId,paymentId:saved.id,status:saved.status});
-    }catch(error){console.error("M-Pesa STK Push error:",error);sendJson(res,500,{ok:false,error:"M-Pesa payment request could not be started securely."});}
+    }catch(error){console.error("M-Pesa STK Push error:",error);const msg=String(error?.message||error||"Unknown error");let code="MPESA_STK_START_FAILED";if(/customer_phone|schema cache|PGRST/i.test(msg))code="SUPABASE_PAYMENT_SCHEMA_ERROR";else if(/credential|consumer|configured|token|oauth/i.test(msg))code="MPESA_CREDENTIAL_ERROR";else if(/R2|resource/i.test(msg))code="RESOURCE_LOOKUP_ERROR";sendJson(res,500,{ok:false,error:"M-Pesa payment request could not be started securely.",diagnosticCode:code});}
     return true;
   }
   if(req.method==="POST"&&url.pathname==="/api/mpesa/callback"){
@@ -244,7 +921,7 @@ async function handleApi(req,res,url){
         const verified=await verifyMpesaPaymentByQuery(checkoutRequestId);
         if(!verified||String(verified.status).toLowerCase()!=="paid"){sendJson(res,502,{ResultCode:1,ResultDesc:"Payment could not be independently verified."});return true;}
         await updatePaymentByCheckout(checkoutRequestId,{status:"paid",result_code:0,result_desc:String(stk?.ResultDesc||"Success"),mpesa_receipt:String(meta.MpesaReceiptNumber||verified.mpesa_receipt||""),transaction_time:String(meta.TransactionDate||""),verified_at:new Date().toISOString()});
-      }else{
+      }else if(!["paid","completed","success"].includes(String(pending.status||"").toLowerCase())){
         await updatePaymentByCheckout(checkoutRequestId,{status:"failed",result_code:Number.isFinite(resultCode)?resultCode:null,result_desc:String(stk?.ResultDesc||"Payment failed"),verified_at:new Date().toISOString()});
       }
       sendJson(res,200,{ResultCode:0,ResultDesc:"Accepted"});
@@ -258,7 +935,9 @@ async function handleApi(req,res,url){
       const {data,error}=await supabase.from("purchases").select("*").eq("checkout_request_id",checkoutRequestId).eq("customer_phone",phone).maybeSingle();
       if(error)throw error;
       let payment=data;
-      if(payment?.status==="pending"){try{payment=await verifyMpesaPaymentByQuery(checkoutRequestId)||payment;}catch(error){console.warn("M-Pesa status query fallback failed:",error.message||error);}}
+      /* Give the asynchronous STK callback time to arrive before querying Daraja. Immediate query responses can be transient. */
+      const paymentAgeMs=payment?.created_at?Date.now()-Date.parse(payment.created_at):0;
+      if(["pending","failed","cancelled"].includes(String(payment?.status||"").toLowerCase())&&paymentAgeMs>=15000){try{payment=await verifyMpesaPaymentByQuery(checkoutRequestId)||payment;}catch(error){console.warn("M-Pesa status query fallback failed:",error.message||error);}}
       sendJson(res,200,{ok:true,status:String(payment?.status||"unknown"),payment:payment?{id:payment.id,resourceId:payment.resource_id,amount:payment.amount,status:payment.status,receipt:payment.mpesa_receipt||null,verifiedAt:payment.verified_at||null}:null});
     }catch(error){console.error("M-Pesa status lookup error:",error);sendJson(res,500,{ok:false,error:"Payment status could not be checked securely."});}
     return true;
@@ -277,13 +956,15 @@ async function handleApi(req,res,url){
     const resourceId=String(req.headers["x-cbe-resource-id"]||"resource").trim();
     const contentType=String(req.headers["content-type"]||"application/octet-stream").trim()||"application/octet-stream";
     if(!grade||!subject||!type){sendJson(res,400,{ok:false,error:"Grade, subject and material type are required."});return true;}
-    const allowedExtensions=[".pdf",".doc",".docx",".ppt",".pptx",".xls",".xlsx",".txt",".zip"];
-    const extension=path.extname(fileName.toLowerCase());
-    if(!allowedExtensions.includes(extension)){sendJson(res,400,{ok:false,error:"Unsupported file type."});return true;}
+    // Accept any file extension for Admin Resource Upload. Keep the existing 50 MB size limit.
     if(Number(req.headers["content-length"]||0)>50*1024*1024){sendJson(res,413,{ok:false,error:"Upload is too large. Maximum file size is 50 MB."});return true;}
     try{
-      const body=await readBinaryBody(req);
-      const uploaded=await uploadObject({grade,subject,type,fileName,resourceId,contentType},body);
+      const contentLength=Number(req.headers["content-length"]||0);
+      // Stream normal browser uploads straight through to R2. If a client does
+      // not supply a length, keep the buffered fallback for compatibility.
+      const uploaded=contentLength>0
+        ? await uploadObject({grade,subject,type,fileName,resourceId,contentType},req,contentLength)
+        : await uploadObject({grade,subject,type,fileName,resourceId,contentType},await readBinaryBody(req),0);
       sendJson(res,200,{ok:true,...uploaded});
     }catch(error){
       console.error("R2 backend upload error:",error);
@@ -300,15 +981,34 @@ async function handleApi(req,res,url){
     if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure download approvals require Supabase payment verification."});return true;}
     try{
       const requestedReference=String(p.paymentReference||p.checkoutRequestID||"").trim();
+      const resource=await findResourceForPayment(resourceId);
+      if(!resource||String(resource.status||"approved").toLowerCase()!=="approved"){sendJson(res,404,{ok:false,error:"The selected resource is not available."});return true;}
+      const {data:entitlements,error:entitlementError}=await supabase.from("purchases").select("*").eq("customer_phone",phone).in("status",["paid","completed","success"]).in("resource_id",["subscription:month","subscription:6months","subscription:year","grade-package:1","grade-package:2","grade-package:3","grade-package:4","grade-package:5","grade-package:6","grade-package:7","grade-package:8","grade-package:9"]).limit(100);
+      if(entitlementError)throw entitlementError;
+      const now=Date.now();
+      const gradeNumber=Number(String(resource.grade||"").match(/(?:Grade\s*)?(\d+)/i)?.[1]||0);
+      const activeEntitlement=(entitlements||[]).find(e=>{
+        const id=String(e.resource_id||"");
+        if(id.startsWith("grade-package:"))return gradeNumber>=1&&gradeNumber<=9&&Number(id.split(":")[1])===gradeNumber;
+        const created=Date.parse(e.created_at||e.verified_at||"");
+        if(!Number.isFinite(created))return false;
+        const days=id==="subscription:month"?30:id==="subscription:6months"?183:id==="subscription:year"?365:0;
+        return days>0&&now<created+days*86400000;
+      });
+      if(activeEntitlement){
+        const item={id:"approval-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),resource_id:resourceId,customer_phone:phone,payment_reference:String(activeEntitlement.mpesa_receipt||activeEntitlement.checkout_request_id||""),status:"approved",approved_at:new Date().toISOString()};
+        const {data,error}=await supabase.from("download_approvals").insert(item).select("*").single();if(error)throw error;
+        sendJson(res,201,{ok:true,approval:data,payment:{status:"paid",receipt:activeEntitlement.mpesa_receipt||null},accessPlan:activeEntitlement.resource_id,storage:"supabase"});return true;
+      }
       let payment=null;
-      const {data:payments,error:paymentError}=await supabase.from("purchases").select("*").eq("resource_id",resourceId).eq("customer_phone",phone).in("status",["paid","completed","success"]).order("created_at",{ascending:false}).limit(1);
+      const {data:payments,error:paymentError}=await supabase.from("purchases").select("*").eq("resource_id",resourceId).eq("customer_phone",phone).in("status",["paid","completed","success"]).limit(1);
       if(paymentError)throw paymentError;
       payment=payments?.[0]||null;
       if(!payment&&requestedReference){const {data:byRef,error:refError}=await supabase.from("purchases").select("*").eq("checkout_request_id",requestedReference).eq("resource_id",resourceId).eq("customer_phone",phone).maybeSingle();if(refError)throw refError;payment=byRef;}
       if(!payment){sendJson(res,402,{ok:false,error:"No verified M-Pesa payment was found for this resource and phone number."});return true;}
-      if(String(payment.status).toLowerCase()==="pending"){try{payment=await verifyMpesaPaymentByQuery(payment.checkout_request_id)||payment;}catch{}}
+      if(["pending","failed","cancelled"].includes(String(payment.status||"").toLowerCase())){try{payment=await verifyMpesaPaymentByQuery(payment.checkout_request_id)||payment;}catch(error){console.warn("Payment access reconciliation failed:",error.message||error);}}
       if(!["paid","completed","success"].includes(String(payment.status||"").toLowerCase())){sendJson(res,402,{ok:false,error:"Your M-Pesa payment has not been verified yet."});return true;}
-      const item={id:"approval-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),resourceId,customerPhone:phone,paymentReference:String(payment.mpesa_receipt||payment.checkout_request_id||requestedReference||""),purchase_id:payment.id,status:"pending",createdAt:new Date().toISOString()};
+      const item={id:"approval-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),resource_id:resourceId,customer_phone:phone,payment_reference:String(payment.mpesa_receipt||payment.checkout_request_id||requestedReference||""),status:"approved",approved_at:new Date().toISOString()};
       const {data,error}=await supabase.from("download_approvals").insert(item).select("*").single();if(error)throw error;
       sendJson(res,201,{ok:true,approval:data,payment:{status:"paid",receipt:payment.mpesa_receipt||null},storage:"supabase"});return true;
     }catch(error){console.error("Download approval request error:",error);sendJson(res,500,{ok:false,error:"Download request could not be recorded securely."});return true;}
@@ -327,26 +1027,192 @@ async function handleApi(req,res,url){
     if(supabaseConfigured){try{const {data,error}=await supabase.from("download_approvals").select("*").order("created_at",{ascending:false}).limit(100);if(error)throw error;sendJson(res,200,{ok:true,approvals:data||[],storage:"supabase"});return true;}catch(error){console.error("Download approvals lookup error:",error);sendJson(res,500,{ok:false,error:"Download approvals could not be loaded."});return true;}}
     sendJson(res,200,{ok:true,approvals:(await readJsonStore("download-approvals.json")).slice(0,100),storage:"local"});return true;
   }
+  // Direct-download navigation for free resources: redirect the browser to the signed original file,
+  // instead of exposing this API's JSON response as a downloaded file.
+  if(req.method==="GET"&&url.pathname==="/api/r2/direct-download"){
+    const resourceId=String(url.searchParams.get("resourceId")||"").trim();
+    if(!resourceId){sendJson(res,400,{ok:false,error:"Resource ID is required."});return true;}
+    try{
+      let resource=null;
+      if(supabaseConfigured){
+        const {data,error}=await supabase.from("resources").select("id,r2_key,status,filename,price,discount_price").eq("id",resourceId).maybeSingle();
+        if(error)throw error;
+        resource=data;
+      }else{
+        resource=(await readJsonStore("resources.json")).find(x=>String(x.id)===resourceId);
+      }
+      if(!resource||!resource.r2_key||String(resource.status||"approved").toLowerCase()!=="approved"){
+        sendJson(res,404,{ok:false,error:"This resource is not available for download."});return true;
+      }
+      if(resourcePrice(resource)!==0){
+        sendJson(res,402,{ok:false,error:"This resource requires payment. Use the secure paid-download button."});return true;
+      }
+      const fileName=String(resource.filename||resource.fileName||resource.r2_key.split("/").pop()||"resource");
+      const target=await createDownloadUrl(resource.r2_key,fileName);
+      res.writeHead(302,{"Location":target,"Cache-Control":"no-store","Referrer-Policy":"no-referrer"});
+      res.end();
+    }catch(error){
+      console.error("Direct free download error:",error);
+      sendJson(res,500,{ok:false,error:"The original resource file could not be prepared."});
+    }
+    return true;
+  }
+  // CBE_NEXUS_FREE_DOWNLOAD_V2
+  if(req.method==="GET"&&url.pathname==="/api/r2/free-download"){
+    const resourceId=String(url.searchParams.get("resourceId")||"").trim();
+    if(!resourceId){sendJson(res,400,{ok:false,error:"Resource ID is required."});return true;}
+    try{
+      let resource=null;
+      if(supabaseConfigured){
+        const {data,error}=await supabase.from("resources").select("id,r2_key,status,filename,title,price,discount_price").eq("id",resourceId).maybeSingle();
+        if(error)throw error; resource=data;
+      } else {
+        resource=(await readJsonStore("resources.json")).find(x=>String(x.id)===resourceId);
+      }
+      if(!resource||!resource.r2_key||String(resource.status||"approved").toLowerCase()!=="approved"){
+        sendJson(res,404,{ok:false,error:"This resource is not available for download."});return true;
+      }
+      const effectivePrice=resourcePrice(resource);
+      if(effectivePrice!==0){
+        sendJson(res,402,{ok:false,error:"This resource requires payment before download."});return true;
+      }
+      const fileName=String(resource.filename||resource.fileName||resource.r2_key.split("/").pop()||"resource");
+      const downloadUrl=await createDownloadUrl(resource.r2_key,fileName);
+      sendJson(res,200,{ok:true,downloadUrl,expiresIn:300,fileName,title:resource.title||"",free:true});
+    }catch(error){
+      console.error("Free resource download error:",error);
+      sendJson(res,500,{ok:false,error:"Free resource download could not be prepared."});
+    }
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/r2/view"){
+    const resourceId=String(url.searchParams.get("resourceId")||"").trim();
+    if(!resourceId){sendJson(res,400,{ok:false,error:"Resource ID is required."});return true;}
+    try{
+      let resource=null;
+      if(supabaseConfigured){
+        const {data,error}=await supabase.from("resources").select("id,r2_key,preview_key,status,filename,title,price,discount_price").eq("id",resourceId).maybeSingle();
+        if(error)throw error;
+        resource=data;
+      } else {
+        resource=(await readJsonStore("resources.json")).find(x=>String(x.id)===resourceId);
+      }
+      if(!resource||!resource.r2_key||String(resource.status||"approved").toLowerCase()!=="approved"){
+        sendJson(res,403,{ok:false,error:"This resource is not available for viewing."});return true;
+      }
+      // This endpoint never signs the original as an attachment. Select a preview
+      // strategy from actual R2 metadata first, then fall back to the saved filename.
+      const fileName=String(resource.filename||resource.fileName||"");
+      const sourceKey=String(resource.r2_key||"");
+      // Admin filenames may omit extensions; fall back to the actual object key so PDF/DOCX previews still work.
+      const getExtension=(value)=>String(value||"").toLowerCase().match(/\.([a-z0-9]{1,8})(?:[?#].*)?$/)?.[1]||"";
+      const ext=getExtension(fileName)||getExtension(sourceKey);
+      const metadata=await getObjectMetadata(sourceKey);
+      const actualType=String(metadata.contentType||"application/octet-stream").split(";")[0].trim().toLowerCase();
+      const imageTypes=new Set(["image/jpeg","image/png","image/webp","image/gif"]);
+      const imageExtTypes={jpg:"image/jpeg",jpeg:"image/jpeg",png:"image/png",webp:"image/webp",gif:"image/gif"};
+      const isImage=imageTypes.has(actualType)||(actualType==="application/octet-stream"&&Boolean(imageExtTypes[ext]));
+      if(isImage){
+        const imageType=imageTypes.has(actualType)?actualType:imageExtTypes[ext];
+        const viewUrl=await createInlineUrl(sourceKey,fileName||("CBE-Nexus-preview."+ext),imageType);
+        sendJson(res,200,{ok:true,viewUrl,expiresIn:300,fileName,title:resource.title||"",previewOnly:true,previewType:"image"});
+        return true;
+      }
+      const isDocx=ext==="docx"||actualType==="application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+      if(isDocx){
+        const docxBuffer=await getObjectBuffer(sourceKey,8*1024*1024);
+        const extracted=await mammoth.extractRawText({buffer:docxBuffer});
+        const plainText=String(extracted.value||"").replace(/\u0000/g,"").slice(0,16000);
+        if(!plainText.trim()) throw new Error("The Word document contains no readable text.");
+        const escapeHtml=(value)=>String(value).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+        const safeTitle=escapeHtml(resource.title||fileName||"CBE Nexus Word preview");
+        const safeText=escapeHtml(plainText);
+        const html="<!doctype html><html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; style-src 'unsafe-inline'; img-src data:\"><title>"+safeTitle+"</title><style>body{font-family:Arial,sans-serif;background:#f3f6f8;color:#1f2937;margin:0;padding:20px;line-height:1.65}.paper{max-width:850px;margin:auto;background:#fff;padding:28px;border:1px solid #e5e7eb;border-radius:8px;white-space:pre-wrap;overflow-wrap:anywhere}.notice{max-width:850px;margin:0 auto 12px;color:#526070;font-size:13px}</style></head><body><div class=\"notice\">Safe text preview only. The original Word file remains locked until payment is confirmed.</div><main class=\"paper\"><h2>"+safeTitle+"</h2><div>"+safeText+"</div></main></body></html>";
+        sendJson(res,200,{ok:true,previewHtml:html,expiresIn:300,fileName,title:resource.title||"",previewOnly:true,previewType:"docx"});
+        return true;
+      }
+      const isPdf=actualType==="application/pdf"||ext==="pdf"||/\.pdf$/i.test(sourceKey);
+      if(!isPdf){
+        sendJson(res,415,{ok:false,error:"A safe preview is not available for this file format yet. Supported previews are PDF, Word (.docx), and common images. Older .doc files and other formats remain locked until payment is confirmed."});return true;
+      }
+      let previewKey=String(resource.preview_key||resource.previewKey||"").trim();
+      let previewAvailable=false;
+      if(previewKey.startsWith("previews/")) previewAvailable=await objectExists(previewKey);
+      if(!previewAvailable){
+        const preview=await createPdfPreview(sourceKey,3);
+        previewKey=preview.previewKey;
+        if(supabaseConfigured){
+          const {error}=await supabase.from("resources").update({preview_key:previewKey}).eq("id",resourceId);
+          if(error)throw error;
+        } else {
+          const rows=await readJsonStore("resources.json");
+          const updated=rows.map(item=>String(item.id)===resourceId?{...item,previewKey}:item);
+          await fs.writeFile(path.join(DATA_DIR,"resources.json"),JSON.stringify(updated,null,2));
+        }
+        previewAvailable=true;
+      }
+      if(!previewKey.startsWith("previews/")||!previewAvailable){
+        sendJson(res,403,{ok:false,error:"A safe PDF sample could not be prepared for this resource. The original file remains locked until payment."});return true;
+      }
+      const viewUrl=await createDownloadUrl(previewKey,"CBE-Nexus-preview.pdf");
+      sendJson(res,200,{ok:true,viewUrl,expiresIn:300,fileName,title:resource.title||"",previewOnly:true,previewType:"pdf"});
+    }catch(error){
+      const message=String(error?.message||"");
+      console.error("R2 resource view error:",{resourceId,code:error?.name||error?.Code||"",message});
+      if(/valid PDF header|No PDF header found/i.test(message)){
+        sendJson(res,415,{ok:false,error:"The stored file is not a valid PDF, so a PDF preview cannot be generated. The original file remains locked until payment. Please re-upload the correct file format."});
+      } else {
+        sendJson(res,500,{ok:false,error:"Resource preview could not be opened."});
+      }
+    }
+    return true;
+  }
   if(req.method==="GET"&&url.pathname==="/api/r2/file"){
     const key=String(url.searchParams.get("key")||"").trim(),resourceId=String(url.searchParams.get("resourceId")||"").trim(),phone=normalizeMpesaPhone(url.searchParams.get("phone")||"");
-    if(!key||!resourceId||!phone){sendJson(res,400,{ok:false,error:"Resource, phone and protected file are required."});return true;}
+    if(!resourceId){sendJson(res,400,{ok:false,error:"Resource ID is required."});return true;}
     let resource=null;
     try{
-      if(supabaseConfigured){const {data,error}=await supabase.from("resources").select("id,r2_key,status").eq("id",resourceId).maybeSingle();if(error)throw error;resource=data;}
+      if(supabaseConfigured){const {data,error}=await supabase.from("resources").select("id,r2_key,status,filename,price,discount_price").eq("id",resourceId).maybeSingle();if(error)throw error;resource=data;}
       else {resource=(await readJsonStore("resources.json")).find(x=>String(x.id)===resourceId);}
-      if(!resource||String(resource.r2_key||"")!==key||String(resource.status||"approved").toLowerCase()!=="approved"){sendJson(res,403,{ok:false,error:"This protected resource is not available."});return true;}
-      let approval=null;
-       if(supabaseConfigured){
-         const {data:payments,error:paymentError}=await supabase.from("purchases").select("id").eq("resource_id",resourceId).eq("customer_phone",phone).in("status",["paid","completed","success"]).order("created_at",{ascending:false}).limit(20);
-         if(paymentError)throw paymentError;
-         const purchaseIds=(payments||[]).map(p=>p.id);
-         if(purchaseIds.length){const {data,error}=await supabase.from("download_approvals").select("*").in("purchase_id",purchaseIds).eq("resource_id",resourceId).eq("customer_phone",phone).eq("status","approved").order("approved_at",{ascending:false}).limit(1).maybeSingle();if(error)throw error;approval=data;}
-       } else approval=(await readJsonStore("download-approvals.json")).find(a=>a.resourceId===resourceId&&a.customerPhone===phone&&a.status==="approved");
-
-      if(!approval){sendJson(res,403,{ok:false,error:"Admin has not approved this download yet."});return true;}
-      const downloadUrl=await createDownloadUrl(key);
-      if(supabaseConfigured){const {error}=await supabase.from("downloads").insert({resource_id:resourceId,customer_phone:phone,purchase_id:approval.purchase_id||null});if(error)console.error("Download log error:",error);}
-      sendJson(res,200,{ok:true,downloadUrl,expiresIn:300});return true;
+      if(!resource||!resource.r2_key||(key&&String(resource.r2_key)!==key)||String(resource.status||"approved").toLowerCase()!=="approved"){sendJson(res,403,{ok:false,error:"This protected resource is not available."});return true;}
+      // Backward-compatible navigation for older page links: free resources must redirect to
+      // the actual R2 object, never expose this endpoint's JSON metadata as a downloaded file.
+      if(resourcePrice(resource)===0){
+        const fileName=String(resource.filename||resource.fileName||resource.r2_key.split("/").pop()||"resource");
+        const target=await createDownloadUrl(resource.r2_key,fileName);
+        res.writeHead(302,{"Location":target,"Cache-Control":"no-store","Referrer-Policy":"no-referrer"});
+        res.end();return true;
+      }
+      if(!key||!phone){sendJson(res,400,{ok:false,error:"A resource, phone number and protected file are required for paid downloads."});return true;}
+      const protectedResource=await findResourceForPayment(resourceId);
+      const resourcePriceForProtectedResource=resourcePrice(protectedResource);
+      let validPayments=[];
+      if(supabaseConfigured){
+        const {data:payments,error:paymentError}=await supabase.from("purchases").select("*").eq("customer_phone",phone).in("status",["paid","completed","success"]).limit(100);
+        if(paymentError)throw paymentError;
+        const now=Date.now(),gradeNumber=Number(String(protectedResource?.grade||"").match(/(?:Grade\s*)?(\d+)/i)?.[1]||0);
+        validPayments=(payments||[]).filter(p=>{
+          const pid=String(p.resource_id||"");
+          // A verified, paid purchase permanently unlocks the exact resource bought.
+          // Do not compare with today's price: sellers may change prices later.
+          if(pid===resourceId)return true;
+          // Grade 1–9 packages unlock only paid resources in the purchased grade.
+          if(pid.startsWith("grade-package:"))return gradeNumber>=1&&gradeNumber<=9&&Number(pid.split(":")[1])===gradeNumber;
+          // Subscription plans unlock resources while the purchased term remains active.
+          const created=Date.parse(p.created_at||p.verified_at||"");
+          if(!Number.isFinite(created))return false;
+          const days=pid==="subscription:month"?30:pid==="subscription:6months"?183:pid==="subscription:year"?365:0;
+          return days>0&&now<created+days*86400000;
+        });
+      }else{
+        validPayments=(await readJsonStore("purchases.json")).filter(p=>String(p.customerPhone||p.customer_phone||"")===phone&&String(p.resourceId||p.resource_id||"")===resourceId&&["paid","completed","success"].includes(String(p.status||"").toLowerCase()));
+      }
+      const entitlement=validPayments[0]||null;
+      if(!entitlement){sendJson(res,403,{ok:false,error:"Verified payment or active access plan is required for this protected download."});return true;}
+      const fileName=String(resource.filename||resource.fileName||key.split("/").pop()||"resource");
+      const downloadUrl=await createDownloadUrl(key,fileName);
+      if(supabaseConfigured){const {error}=await supabase.from("downloads").insert({resource_id:resourceId,customer_phone:phone,purchase_id:entitlement.id||null});if(error)console.error("Download log error:",error);}
+      sendJson(res,200,{ok:true,downloadUrl,expiresIn:300,fileName});return true;
     }catch(error){console.error("Protected download error:",error);sendJson(res,500,{ok:false,error:"Secure download could not be created."});return true;}
   }
   if(req.method==="POST"&&url.pathname==="/api/public/view"){
@@ -399,29 +1265,754 @@ async function handleApi(req,res,url){
     }
     return true;
   }
-  if(req.method==="GET"&&url.pathname==="/api/r2/preview"){const key=String(url.searchParams.get("key")||"").trim(),resourceId=String(url.searchParams.get("resourceId")||"").trim();try{let previewKey=key;let resource=null;if(supabaseConfigured&&resourceId){const {data,error}=await supabase.from("resources").select("id,r2_key,preview_key,status,filename").eq("id",resourceId).maybeSingle();if(error)throw error;resource=data;if(!resource||String(resource.status||"approved").toLowerCase()!=="approved"){sendJson(res,404,{ok:false,error:"Resource preview is not available."});return true;}previewKey=String(resource.preview_key||"").trim();if(!previewKey&&String(resource.r2_key||"").toLowerCase().endsWith(".pdf")){const preview=await createPdfPreview(resource.r2_key,3);previewKey=preview.previewKey;await supabase.from("resources").update({preview_key:previewKey}).eq("id",resource.id);}}if(!previewKey||!previewKey.startsWith("previews/")){sendJson(res,400,{ok:false,error:"A PDF preview is not available for this resource yet."});return true;}const previewUrl=await createDownloadUrl(previewKey);sendJson(res,200,{ok:true,previewUrl,previewKey,expiresIn:300});}catch(error){console.error("R2 preview error:",error);sendJson(res,500,{ok:false,error:"Preview could not be opened."});}return true;}
+  if(req.method==="GET"&&url.pathname==="/api/r2/preview"){const key=String(url.searchParams.get("key")||"").trim();if(!key||!key.startsWith("previews/")){sendJson(res,400,{ok:false,error:"A valid preview key is required."});return true;}try{const previewUrl=await createDownloadUrl(key);sendJson(res,200,{ok:true,previewUrl,expiresIn:300});}catch(error){console.error("R2 preview error:",error);sendJson(res,500,{ok:false,error:"Preview could not be opened."});}return true;}
   if(req.method==="GET"&&url.pathname==="/api/r2/status"){const required=["R2_ACCOUNT_ID","R2_ACCESS_KEY_ID","R2_SECRET_ACCESS_KEY","R2_BUCKET_NAME"],missing=required.filter(n=>!process.env[n]);sendJson(res,200,{ok:missing.length===0,r2Configured:missing.length===0,missing});return true;}
-  if(req.method==="GET"&&url.pathname==="/api/resources"){const adminRequested=url.searchParams.has("_admin_sync")&&verifyAdminSession(req);if(supabaseConfigured){try{let query=supabase.from("resources").select("*");if(!adminRequested)query=query.eq("status","approved");const {data,error}=await query;if(error)throw error;const resources=(data||[]).map(resourcePayloadFromRow).sort((a,b)=>String(b.createdAt||"").localeCompare(String(a.createdAt||"")));sendJson(res,200,{ok:true,resources,storage:"supabase",scope:adminRequested?"admin":"public"});return true;}catch(error){console.error("Supabase resource lookup error:",error);sendJson(res,500,{ok:false,error:"Resources could not be loaded from Supabase."});return true;}}let local=await readJsonStore("resources.json");if(!adminRequested)local=local.filter(x=>String(x.status||"approved").toLowerCase()==="approved");sendJson(res,200,{ok:true,resources:local,storage:"local",scope:adminRequested?"admin":"public"});return true;}
-  if(req.method==="POST"&&url.pathname==="/api/resources"){const payload=JSON.parse((await readBody(req))||"{}"),isAdmin=verifyAdminSession(req),sellerUsername=String(payload.sellerUsername||"").trim().toLowerCase(),authenticatedSeller=verifySellerSession(req),isSeller=Boolean(authenticatedSeller);if((payload.role==="admin"&&!isAdmin)||(payload.role==="seller"&&!isSeller)){sendJson(res,401,{ok:false,error:"Authorized account required."});return true;}if(!["admin","seller"].includes(payload.role)){sendJson(res,400,{ok:false,error:"Resource role is required."});return true;}if(supabaseConfigured){try{let sellerId=null;if(payload.role==="seller"){const username=authenticatedSeller||sellerUsername,{data:seller,error:sellerError}=await supabase.from("sellers").select("id").eq("username",username).maybeSingle();if(sellerError)throw sellerError;if(!seller){sendJson(res,403,{ok:false,error:"Approved seller account was not found in Supabase."});return true;}sellerId=seller.id;}let previewKey=String(payload.previewKey||"").trim();if(!previewKey&&/\.pdf$/i.test(String(payload.fileName||""))&&payload.r2Key){try{const preview=await createPdfPreview(payload.r2Key,3);previewKey=preview.previewKey;}catch(error){console.error("PDF preview generation error:",error);}}const row=resourceRowFromPayload(payload,sellerId,previewKey);if(!row.title||!row.grade||!row.subject||!row.resource_type||!row.r2_key){sendJson(res,400,{ok:false,error:"Resource title, grade, subject, type and R2 file are required."});return true;}const {data,error}=await supabase.from("resources").insert(row).select("*").single();if(error){try{await deleteObject(row.r2_key);}catch(cleanupError){console.error("R2 orphan cleanup failed:",cleanupError);}throw error;}sendJson(res,201,{ok:true,saved:resourcePayloadFromRow(data),storage:"supabase"});return true;}catch(error){console.error("Supabase resource save error:",error);sendJson(res,500,{ok:false,error:"Resource could not be saved to Supabase."});return true;}}const saved=await appendJsonStore("resources.json",payload);sendJson(res,201,{ok:true,saved,storage:"local"});return true;}
+  if(req.method==="GET"&&url.pathname==="/api/ai/course-notes"){
+    const courseSlug=String(url.searchParams.get("course")||"").trim();
+    const moduleNumber=Number(url.searchParams.get("module")||0);
+    const level=String(url.searchParams.get("level")||"basic").trim().toLowerCase();
+    if(!courseSlug||!Number.isInteger(moduleNumber)||moduleNumber<1||moduleNumber>6||!["basic","medium","advanced"].includes(level)){sendJson(res,400,{ok:false,error:"Course, module and level are required."});return true;}
+    if(supabaseConfigured){try{const {data,error}=await supabase.from("ai_course_notes").select("*").eq("course_slug",courseSlug).eq("module_number",moduleNumber).eq("level",level).eq("status","published").maybeSingle();if(error)throw error;if(data){if(data.pdf_r2_key){try{data.pdfUrl=await createDownloadUrl(data.pdf_r2_key);}catch{data.pdfUrl=null;}}sendJson(res,200,{ok:true,notes:data,source:"supabase"});return true;}}catch(error){console.warn("Published AI notes lookup failed:",error.message||error);}}
+    const rows=await readJsonStore("ai-course-notes.json");const found=rows.find(x=>x.course_slug===courseSlug&&Number(x.module_number)===moduleNumber&&x.level===level&&x.status==="published");sendJson(res,200,{ok:true,notes:found||null,source:"local"});return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/ai-course-note-pdf"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    const courseSlug=String(req.headers["x-ai-course-slug"]||"").trim();
+    const moduleNumber=Number(req.headers["x-ai-module-number"]||0);
+    const level=String(req.headers["x-ai-level"]||"basic").trim().toLowerCase();
+    const fileName=String(req.headers["x-ai-file-name"]||"ai-course-notes.pdf").trim();
+    if(!courseSlug||!Number.isInteger(moduleNumber)||moduleNumber<1||moduleNumber>6||!["basic","medium","advanced"].includes(level)){sendJson(res,400,{ok:false,error:"Course, module and level are required."});return true;}
+    if(!/\.pdf$/i.test(fileName)){sendJson(res,400,{ok:false,error:"Only PDF files are allowed."});return true;}
+    const length=Number(req.headers["content-length"]||0);if(length>50*1024*1024){sendJson(res,413,{ok:false,error:"PDF is too large. Maximum file size is 50 MB."});return true;}
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Supabase is required for AI PDF note metadata."});return true;}
+      const body=await readBinaryBody(req,50*1024*1024);
+      if(!body.length){sendJson(res,400,{ok:false,error:"The PDF file is empty."});return true;}
+      const noteId="AIN-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex").toUpperCase();
+      const uploaded=await uploadObject({grade:"AI Academy",subject:courseSlug,type:"PDF Notes",fileName,resourceId:noteId,contentType:"application/pdf"},body);
+      const {data:existing,error:findError}=await supabase.from("ai_course_notes").select("id").eq("course_slug",courseSlug).eq("module_number",moduleNumber).eq("level",level).maybeSingle();
+      if(findError)throw findError;
+      if(!existing){sendJson(res,404,{ok:false,error:"Save the AI course note first, then upload its PDF."});return true;}
+      const {data,error}=await supabase.from("ai_course_notes").update({pdf_r2_key:uploaded.key,pdf_filename:fileName,pdf_size:body.length,pdf_content_type:"application/pdf",updated_at:new Date().toISOString()}).eq("id",existing.id).select("*").single();
+      if(error)throw error;
+      sendJson(res,200,{ok:true,note:data,pdf:{key:uploaded.key,fileName,bytes:body.length}});
+    }catch(error){
+      console.error("AI course PDF upload error:",error);
+      sendJson(res,500,{ok:false,error:error.message||"AI course PDF upload failed. Make sure the AI PDF columns have been added to Supabase."});
+    }
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/admin/ai-course-notes"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    if(supabaseConfigured){try{const {data,error}=await supabase.from("ai_course_notes").select("*").order("updated_at",{ascending:false}).limit(500);if(error)throw error;sendJson(res,200,{ok:true,notes:data||[],storage:"supabase"});return true;}catch(error){console.error("Admin AI notes lookup error:",error);sendJson(res,500,{ok:false,error:"AI course notes could not be loaded."});return true;}}
+    sendJson(res,200,{ok:true,notes:await readJsonStore("ai-course-notes.json"),storage:"local"});return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/ai-course-notes"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    const p=JSON.parse((await readBody(req))||"{}");
+    const courseSlug=String(p.courseSlug||"").trim(),courseTitle=String(p.courseTitle||"").trim(),moduleNumber=Number(p.moduleNumber),moduleTitle=String(p.moduleTitle||"").trim(),level=String(p.level||"basic").trim().toLowerCase(),status=String(p.status||"draft").trim().toLowerCase();
+    const content=String(p.content||"").trim(),objectives=String(p.objectives||"").trim(),examples=String(p.examples||"").trim(),activity=String(p.activity||"").trim(),questions=String(p.questions||"").trim();
+    if(!courseSlug||!courseTitle||!Number.isInteger(moduleNumber)||moduleNumber<1||moduleNumber>6||!moduleTitle||!["basic","medium","advanced"].includes(level)||!["draft","published"].includes(status)||content.length<20){sendJson(res,400,{ok:false,error:"Course, module, level, status and comprehensive notes are required."});return true;}
+    const row={id:String(p.id||"AIN-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex").toUpperCase()),course_slug:courseSlug,course_title:courseTitle,module_number:moduleNumber,module_title:moduleTitle,level,status,content:content.slice(0,50000),objectives:objectives.slice(0,10000),examples:examples.slice(0,15000),activity:activity.slice(0,15000),questions:questions.slice(0,30000),updated_at:new Date().toISOString(),created_at:p.createdAt||new Date().toISOString()};
+    if(supabaseConfigured){try{const {data,error}=await supabase.from("ai_course_notes").upsert(row,{onConflict:"course_slug,module_number,level"}).select("*").single();if(error)throw error;sendJson(res,200,{ok:true,notes:data,storage:"supabase"});return true;}catch(error){console.error("AI notes save error:",error);sendJson(res,500,{ok:false,error:"AI course notes could not be saved. Run the supplied Supabase schema first."});return true;}}
+    const rows=await readJsonStore("ai-course-notes.json");const next=[row,...rows.filter(x=>!(x.course_slug===courseSlug&&Number(x.module_number)===moduleNumber&&x.level===level))];await fs.writeFile(path.join(DATA_DIR,"ai-course-notes.json"),JSON.stringify(next,null,2));sendJson(res,200,{ok:true,notes:row,storage:"local"});return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/admin/resources"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    if(supabaseConfigured){
+      try{
+        const {data,error}=await supabase.from("resources").select("*").order("created_at",{ascending:false}).limit(500);
+        if(error)throw error;
+        sendJson(res,200,{ok:true,resources:(data||[]).map(resourcePayloadFromRow),storage:"supabase"});return true;
+      }catch(error){console.error("Admin resource lookup error:",error);sendJson(res,500,{ok:false,error:"Resources could not be loaded for admin."});return true;}
+    }
+    sendJson(res,200,{ok:true,resources:await readJsonStore("resources.json"),storage:"local"});return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/resource-status"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"").trim(),status=String(p.status||"").trim().toLowerCase();
+    if(!id||!["approved","rejected","pending"].includes(status)){sendJson(res,400,{ok:false,error:"Resource ID and a valid status are required."});return true;}
+    if(supabaseConfigured){
+      try{
+        const {data,error}=await supabase.from("resources").update({status}).eq("id",id).select("*").single();
+        if(error)throw error;
+        sendJson(res,200,{ok:true,resource:resourcePayloadFromRow(data),storage:"supabase"});return true;
+      }catch(error){console.error("Admin resource status update error:",error);sendJson(res,500,{ok:false,error:"Resource status could not be updated."});return true;}
+    }
+    const items=await readJsonStore("resources.json"),found=items.find(x=>String(x.id)===id);
+    if(!found){sendJson(res,404,{ok:false,error:"Resource not found."});return true;}
+    found.status=status;found.updatedAt=new Date().toISOString();
+    await fs.writeFile(path.join(DATA_DIR,"resources.json"),JSON.stringify(items,null,2));
+    sendJson(res,200,{ok:true,resource:found,storage:"local"});return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/resource-delete"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"").trim();
+    if(!id){sendJson(res,400,{ok:false,error:"Resource ID is required."});return true;}
+    if(supabaseConfigured){
+      try{
+        const {data,error}=await supabase.from("resources").select("id,r2_key,preview_key,title").eq("id",id).maybeSingle();
+        if(error)throw error;
+        if(!data){sendJson(res,404,{ok:false,error:"Resource not found."});return true;}
+        for(const key of [data.r2_key,data.preview_key]){if(key){try{await deleteObject(key);}catch(e){console.warn("R2 object deletion warning:",e.message||e);}}}
+        const {error:delError}=await supabase.from("resources").delete().eq("id",id);
+        if(delError)throw delError;
+        sendJson(res,200,{ok:true,deletedId:id,storage:"supabase"});return true;
+      }catch(error){console.error("Admin resource deletion error:",error);sendJson(res,500,{ok:false,error:"Resource and its stored file could not be deleted."});return true;}
+    }
+    const items=await readJsonStore("resources.json"),found=items.find(x=>String(x.id)===id);
+    if(!found){sendJson(res,404,{ok:false,error:"Resource not found."});return true;}
+    for(const key of [found.r2Key,found.r2_key,found.previewKey,found.preview_key]){if(key){try{await deleteObject(key);}catch(e){console.warn("R2 object deletion warning:",e.message||e);}}}
+    await fs.writeFile(path.join(DATA_DIR,"resources.json"),JSON.stringify(items.filter(x=>String(x.id)!==id),null,2));
+    sendJson(res,200,{ok:true,deletedId:id,storage:"local"});return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/resources"){const requestedInternational=String(url.searchParams.get("_internationalLibrary")||"").trim();const internationalCurricula=["IGCSE","Cambridge International","IB","O Level","A Level","Pearson"];if(requestedInternational&&!internationalCurricula.includes(requestedInternational)){sendJson(res,400,{ok:false,error:"Unsupported international curriculum."});return true;}if(supabaseConfigured){try{let query=supabase.from("resources").select("*").eq("status","approved").order("created_at",{ascending:false});if(requestedInternational)query=query.eq("grade",requestedInternational);else query=query.not("grade","in","(IGCSE,IB,O Level,A Level,Pearson)");const {data,error}=await query;if(error)throw error;sendJson(res,200,{ok:true,resources:(data||[]).map(resourcePayloadFromRow),storage:"supabase",curriculum:requestedInternational||"CBC/CBE"});return true;}catch(error){console.error("Supabase resource lookup error:",error);sendJson(res,500,{ok:false,error:"Resources could not be loaded from Supabase."});return true;}}let local=await readJsonStore("resources.json");if(requestedInternational)local=local.filter(r=>String(r.grade||"").trim()===requestedInternational);else local=local.filter(r=>!internationalCurricula.includes(String(r.grade||"").trim()));sendJson(res,200,{ok:true,resources:local,curriculum:requestedInternational||"CBC/CBE",storage:"local"});return true;}
+  if(req.method==="POST"&&url.pathname==="/api/resources"){const payload=JSON.parse((await readBody(req))||"{}"),isAdmin=verifyAdminSession(req),sellerUsername=String(payload.sellerUsername||"").trim().toLowerCase(),authenticatedSeller=verifySellerSession(req),isSeller=Boolean(authenticatedSeller);if((payload.role==="admin"&&!isAdmin)||(payload.role==="seller"&&!isSeller)){sendJson(res,401,{ok:false,error:"Authorized account required."});return true;}if(!["admin","seller"].includes(payload.role)){sendJson(res,400,{ok:false,error:"Resource role is required."});return true;}if(supabaseConfigured){try{let sellerId=null;if(payload.role==="seller"){const username=authenticatedSeller||sellerUsername,{data:seller,error:sellerError}=await supabase.from("sellers").select("id,status").eq("username",username).maybeSingle();if(sellerError)throw sellerError;if(!seller||String(seller.status||"").toLowerCase()!=="approved"){sendJson(res,403,{ok:false,error:"An approved seller account is required to upload resources."});return true;}sellerId=seller.id;}let previewKey=String(payload.previewKey||"").trim();if(!previewKey&&/\.pdf$/i.test(String(payload.fileName||""))&&payload.r2Key){try{const preview=await createPdfPreview(payload.r2Key,3);previewKey=preview.previewKey;}catch(error){console.error("PDF preview generation error:",error);}}const row=resourceRowFromPayload(payload,sellerId,previewKey);if(payload.role==="seller")row.status="pending";if(!row.title||!row.grade||!row.subject||!row.resource_type||!row.r2_key){sendJson(res,400,{ok:false,error:"Resource title, grade, subject, type and R2 file are required."});return true;}const {data,error}=await supabase.from("resources").insert(row).select("*").single();if(error)throw error;if(["approved","published","active","live","available"].includes(String(data.status||"").toLowerCase()))setImmediate(()=>sendResourceUpdateEmails(data).catch(e=>console.error("Resource update notification job failed:",e.message||e)));sendJson(res,201,{ok:true,saved:resourcePayloadFromRow(data),storage:"supabase"});return true;}catch(error){console.error("Supabase resource save error:",error);sendJson(res,500,{ok:false,error:"Resource could not be saved to Supabase."});return true;}}const safePayload={...payload,status:payload.role==="seller"?"pending":String(payload.status||"approved")};const saved=await appendJsonStore("resources.json",safePayload);sendJson(res,201,{ok:true,saved,storage:"local"});return true;}
+  if(req.method==="POST"&&url.pathname==="/api/ai/certification-request"){
+    const p=JSON.parse((await readBody(req))||"{}");
+    const learnerName=String(p.learnerName||"").trim(),email=String(p.email||"").trim().toLowerCase(),phone=String(p.phone||"").trim(),courseSlug=String(p.courseSlug||"").trim(),courseTitle=String(p.courseTitle||"").trim(),finalScore=Number(p.finalScore),moduleScores=Array.isArray(p.moduleScores)?p.moduleScores.map(Number).slice(0,6):[],project=typeof p.project==="object"&&p.project?p.project:{},receipt=String(p.mpesaReceipt||"").trim().toUpperCase();
+    if(learnerName.length<2||!courseSlug||!courseTitle||!Number.isFinite(finalScore)||finalScore<70||moduleScores.length!==6||moduleScores.some(v=>!Number.isFinite(v)||v<70)||String(project.title||"").trim().length<3||String(project.evidence||"").trim().length<80){sendJson(res,400,{ok:false,error:"Complete all six modules, pass the final assessment with at least 70%, and submit the final project."});return true;}
+    if(!receipt){sendJson(res,400,{ok:false,error:"M-Pesa confirmation code is required after paying the KSh 250 certification fee."});return true;}
+    const row={id:"AIR-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex").toUpperCase(),learner_name:learnerName,email,phone,course_slug:courseSlug,course_title:courseTitle,final_score:Math.round(finalScore),module_scores:moduleScores,project_title:String(project.title||"").trim().slice(0,200),project_evidence:String(project.evidence||"").trim().slice(0,10000),mpesa_receipt:receipt,payment_number:"0798462815",certification_fee:250,status:"pending_payment_verification",created_at:new Date().toISOString()};
+    if(supabaseConfigured){try{const {data,error}=await supabase.from("ai_certification_requests").insert(row).select("*").single();if(error)throw error;sendJson(res,201,{ok:true,request:data,message:"Certification request submitted. Your KSh 250 M-Pesa payment will be verified by CBE Nexus before the certificate can be issued."});return true;}catch(error){console.error("AI certification request save error:",error);sendJson(res,500,{ok:false,error:"Certification request could not be submitted."});return true;}}
+    const saved=await appendJsonStore("ai-certification-requests.json",row);sendJson(res,201,{ok:true,request:saved,message:"Certification request submitted for payment verification."});return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/admin/ai-certification-requests"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    if(supabaseConfigured){try{const {data,error}=await supabase.from("ai_certification_requests").select("*").order("created_at",{ascending:false}).limit(500);if(error)throw error;sendJson(res,200,{ok:true,requests:data||[]});return true;}catch(error){console.error("AI certification admin lookup error:",error);sendJson(res,500,{ok:false,error:"Certification requests could not be loaded."});return true;}}
+    sendJson(res,200,{ok:true,requests:await readJsonStore("ai-certification-requests.json")});return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/ai-certification-payment"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"").trim(),status=String(p.status||"").trim().toLowerCase();
+    if(!id||!["paid_verified","rejected"].includes(status)){sendJson(res,400,{ok:false,error:"Request ID and status paid_verified or rejected are required."});return true;}
+    const patch={status,payment_verified_at:new Date().toISOString(),payment_verified_by:"admin"};
+    if(supabaseConfigured){try{const {data,error}=await supabase.from("ai_certification_requests").update(patch).eq("id",id).select("*").single();if(error)throw error;sendJson(res,200,{ok:true,request:data});return true;}catch(error){console.error("AI certification payment update error:",error);sendJson(res,500,{ok:false,error:"Certification payment status could not be updated."});return true;}}
+    const rows=await readJsonStore("ai-certification-requests.json"),found=rows.find(x=>String(x.id)===id);if(!found){sendJson(res,404,{ok:false,error:"Certification request not found."});return true;}Object.assign(found,patch);await fs.writeFile(path.join(DATA_DIR,"ai-certification-requests.json"),JSON.stringify(rows,null,2));sendJson(res,200,{ok:true,request:found});return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/ai/certificates"){
+    const p=JSON.parse((await readBody(req))||"{}"),requestId=String(p.requestId||"").trim();
+    if(!requestId){sendJson(res,400,{ok:false,error:"A verified certification request is required."});return true;}
+    let request=null;
+    if(supabaseConfigured){try{const {data,error}=await supabase.from("ai_certification_requests").select("*").eq("id",requestId).eq("status","paid_verified").maybeSingle();if(error)throw error;request=data;}catch(error){console.error("AI certificate request lookup error:",error);sendJson(res,500,{ok:false,error:"Certification payment verification could not be checked."});return true;}}
+    else request=(await readJsonStore("ai-certification-requests.json")).find(x=>String(x.id)===requestId&&x.status==="paid_verified");
+    if(!request){sendJson(res,403,{ok:false,error:"Certificate issuance is locked. The KSh 250 payment must be verified by CBE Nexus first."});return true;}
+    const certificateId="CBEN-AI-"+new Date().getFullYear()+"-"+crypto.randomBytes(5).toString("hex").toUpperCase(),issuedAt=new Date().toISOString();
+    const avg=Math.round(Number(request.module_scores.reduce((a,b)=>a+Number(b),0))/6),grade=Number(request.final_score)>=80?"A":Number(request.final_score)>=70?"B":"C";
+    const competencies=Array.isArray(p.competencies)?p.competencies.map(String).slice(0,20):["AI literacy","Applied AI workflows","Critical evaluation","Responsible AI","Practical problem solving"];
+    const row={id:certificateId,certificate_id:certificateId,learner_name:request.learner_name,email:request.email,course_slug:request.course_slug,course_title:request.course_title,assessment_result:Number(request.final_score),competencies,issued_at:issuedAt,status:"valid",framework:"Internationally aligned AI learning programme referencing recognised digital/AI competency frameworks.",credential_statement:"CBE Nexus Certificate of Completion — internationally aligned learning programme; not an accreditation claim.",module_scores:request.module_scores,grade,certification_request_id:request.id};
+    if(supabaseConfigured){try{const {data,error}=await supabase.from("ai_certificates").insert(row).select("*").single();if(error)throw error;await supabase.from("ai_certification_requests").update({status:"certificate_issued",certificate_id:certificateId}).eq("id",request.id);sendJson(res,201,{ok:true,certificate:data,storage:"supabase"});return true;}catch(error){console.error("AI certificate Supabase save error:",error);sendJson(res,500,{ok:false,error:"Certificate could not be issued."});return true;}}
+    const saved=await appendJsonStore("ai-certificates.json",row);sendJson(res,201,{ok:true,certificate:saved,storage:"local"});return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/ai/certificates/verify"){
+    const id=String(url.searchParams.get("id")||"").trim().toUpperCase();
+    if(!id){sendJson(res,400,{ok:false,error:"Certificate ID is required."});return true;}
+    if(supabaseConfigured){
+      try{const {data,error}=await supabase.from("ai_certificates").select("*").eq("certificate_id",id).maybeSingle();if(error)throw error;if(!data){sendJson(res,404,{ok:false,verified:false,error:"Certificate not found."});return true;}sendJson(res,200,{ok:true,verified:String(data.status||"valid")==="valid",certificate:data});return true;}
+      catch(error){console.error("AI certificate verification error:",error);}
+    }
+    const found=(await readJsonStore("ai-certificates.json")).find(x=>String(x.certificate_id||x.id).toUpperCase()===id);
+    if(!found){sendJson(res,404,{ok:false,verified:false,error:"Certificate not found."});return true;}
+    sendJson(res,200,{ok:true,verified:String(found.status||"valid")==="valid",certificate:found});return true;
+  }
+
+// ---------------- KUCCPS UNIVERSITY PROGRAMME DIRECTORY ----------------
+const kuccpsProgrammeCache=new Map();
+function kuccpsHttpGet(target,timeoutMs=15000){
+  return new Promise((resolve,reject)=>{
+    const https=require("https"),req=https.get(target,{headers:{"User-Agent":"CBE-Nexus/1.0 (+https://cbenexus.co.ke)","Accept":"text/html,application/xhtml+xml"}},r=>{
+      let body="";
+      r.setEncoding("utf8");
+      r.on("data",chunk=>body+=chunk);
+      r.on("end",()=>{if(r.statusCode>=200&&r.statusCode<400)resolve(body);else reject(new Error("KUCCPS returned HTTP "+r.statusCode));});
+    });
+    req.on("error",reject);
+    req.setTimeout(timeoutMs,()=>{req.destroy(new Error("KUCCPS request timed out."));});
+  });
+}
+function htmlText(v){
+  return String(v||"").replace(/<br\s*\/?>/gi," ").replace(/<[^>]*>/g," ").replace(/&nbsp;/gi," ").replace(/&amp;/gi,"&").replace(/&quot;/gi,'"').replace(/&#39;/gi,"'").replace(/&#x27;/gi,"'").replace(/\s+/g," ").trim();
+}
+function normKuccpsName(v){
+  return htmlText(v).toLowerCase().replace(/[’‘]/g,"'").replace(/&/g,"and").replace(/[^a-z0-9]+/g," ").trim();
+}
+async function kuccpsFindInstitutionId(name){
+  const wanted=normKuccpsName(name);
+  const directoryUrls=[
+    "https://students.kuccps.net/institutions/",
+    "https://students.kuccps.net/institutions/?category=university",
+    "https://students.kuccps.net/institutions/?category=university&sponsor=public",
+    "https://students.kuccps.net/institutions/?category=university&sponsor=private"
+  ];
+  for(const directoryUrl of directoryUrls){
+    const html=await kuccpsHttpGet(directoryUrl);
+    const re=/<a[^>]+href=["'](?:https?:\/\/students\.kuccps\.net)?\/institutions\/(\d+)\/?["'][^>]*>([\s\S]*?)<\/a>/gi;
+    let m;
+    while((m=re.exec(html))){
+      const label=normKuccpsName(m[2]);
+      if(label===wanted || label.includes(wanted) || wanted.includes(label)) return {id:m[1],name:htmlText(m[2])};
+    }
+    // Fallback: locate the institution name and the nearest institution/ID link.
+    const plain=normKuccpsName(name);
+    const idx=html.toLowerCase().indexOf(plain);
+    if(idx>=0){
+      const windowText=html.slice(Math.max(0,idx-1800),Math.min(html.length,idx+1800));
+      const near=windowText.match(/\/institutions\/(\d+)\/?/i);
+      if(near)return {id:near[1],name:name};
+    }
+  }
+  return null;
+}
+function parseKuccpsProgrammes(html){
+  const rows=[];
+  const seen=new Set();
+  const trRe=/<tr[^>]*>([\s\S]*?)<\/tr>/gi;
+  // KUCCPS programme codes can be numeric or alphanumeric (for example 1103B55).
+  const codeRe=/^(?:\d{6,10}|\d{4,7}[A-Za-z][A-Za-z0-9]{1,6})$/;
+  let tr;
+  while((tr=trRe.exec(html))){
+    const cells=[]; const tdRe=/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi; let td;
+    while((td=tdRe.exec(tr[1]))){
+      const value=htmlText(td[1]).replace(/\s+/g," ").trim();
+      if(value) cells.push(value);
+    }
+    if(cells.length>=4){
+      const codeIndex=cells.findIndex(x=>codeRe.test(x));
+      const code=codeIndex>=0?cells[codeIndex]:"";
+      if(codeIndex>=0 && cells[codeIndex+1]){
+        const name=cells[codeIndex+1];
+        const key=code+"|"+name;
+        if(!seen.has(key) && !/^programme name$/i.test(name) && !/^programmes? on offer/i.test(name)){
+          seen.add(key);
+          rows.push({
+            code,
+            name,
+            institutionType:cells[codeIndex+2]||"",
+            cutoff2025:cells[codeIndex+3]||"-",
+            cutoff2024:cells[codeIndex+4]||"-",
+            cutoff2023:cells[codeIndex+5]||"-",
+            level:"Bachelor's Degree"
+          });
+        }
+      }
+    }
+  }
+  return rows;
+}
+async function getKuccpsProgrammes(institutionName){
+  const key=normKuccpsName(institutionName),cached=kuccpsProgrammeCache.get(key);
+  if(cached && Date.now()-cached.at<6*60*60*1000)return cached.value;
+  const found=await kuccpsFindInstitutionId(institutionName);
+  if(!found)return {ok:false,institutionName,programmes:[],sourceUrl:"https://students.kuccps.net/institutions/"};
+  const sourceUrl="https://students.kuccps.net/institutions/"+found.id+"/";
+  const html=await kuccpsHttpGet(sourceUrl);
+  const programmes=parseKuccpsProgrammes(html);
+  const value={ok:true,institutionName:found.name||institutionName,institutionId:found.id,programmes,sourceUrl,cycle:"2026/2027",source:"KUCCPS"};
+  kuccpsProgrammeCache.set(key,{at:Date.now(),value});
+  return value;
+}
+
+const tvetaCourseCache=new Map();
+const tvetaInstitutionCache=new Map();
+async function getTvetaCourses(){
+  const cached=tvetaCourseCache.get("courses");
+  if(cached && Date.now()-cached.at<6*60*60*1000) return cached.value;
+  const sourceUrl="https://www.tveta.go.ke/tvet-courses/";
+  const response=await fetch(sourceUrl,{headers:{"User-Agent":"CBE-Nexus-Education-Directory/1.0"}});
+  if(!response.ok) throw new Error("TVETA returned "+response.status);
+  const html=await response.text();
+  const rows=[];
+  const trRe=new RegExp("<tr[^>]*>([\\s\\S]*?)</tr>","gi");
+  const tdRe=new RegExp("<t[dh][^>]*>([\\s\\S]*?)</t[dh]>","gi");
+  const strip=s=>String(s).replace(/<[^>]+>/g," ").replace(/&amp;/g,"&").replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/&nbsp;/g," ").replace(/\s+/g," ").trim();
+  let m;
+  while((m=trRe.exec(html))){
+    const cells=[];let d;
+    while((d=tdRe.exec(m[1]))) cells.push(strip(d[1]));
+    if(cells.length>=4 && /^\d+$/.test(cells[0]) && cells[1]){
+      rows.push({number:Number(cells[0]),name:cells[1],level:cells[2],examBody:cells[3]});
+    }
+  }
+  const value={ok:true,count:rows.length,courses:rows,source:"TVETA",sourceUrl,fetchedAt:new Date().toISOString()};
+  tvetaCourseCache.set("courses",{at:Date.now(),value});
+  return value;
+}
+
+  if(req.method==="GET"&&url.pathname==="/api/tveta/institutions"){
+    try{
+      const cached=tvetaInstitutionCache.get("institutions");
+      if(cached && Date.now()-cached.at<6*60*60*1000){sendJson(res,200,cached.value);return true;}
+      const source="https://www.tveta.go.ke/accredited-tvet-institutions/";
+      const response=await fetch(source,{headers:{"User-Agent":"CBE-Nexus-Education-Directory/1.0"}});
+      if(!response.ok) throw new Error("TVETA returned "+response.status);
+      const html=await response.text(),rows=[];
+      const trRe=new RegExp("<tr[^>]*>([\\s\\S]*?)</tr>","gi");
+      const tdRe=new RegExp("<t[dh][^>]*>([\\s\\S]*?)</t[dh]>","gi");
+      const clean=s=>String(s).replace(/<[^>]+>/g," ").replace(/&amp;/g,"&").replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/&nbsp;/g," ").replace(/\\s+/g," ").trim();
+      const linkRe=new RegExp('<a[^>]+href=["\\\']([^"\\\']+)["\\\'][^>]*>([\\s\\S]*?)</a>',"gi");
+      let tr;
+      while((tr=trRe.exec(html))){
+        const cells=[];let td;
+        while((td=tdRe.exec(tr[1])))cells.push(clean(td[1]));
+        if(cells.length>=8 && /^\\d+$/.test(cells[0]) && cells[1]){
+          let detailsUrl="",lm;
+          while((lm=linkRe.exec(tr[1]))){detailsUrl=new URL(lm[1],source).href;break;}
+          rows.push({number:Number(cells[0]),name:cells[1],registrationNumber:cells[2]||"",category:cells[3]||"",type:cells[4]||"",county:cells[5]||"",expiryDate:cells[6]||"",status:cells[7]||"",detailsUrl});
+        }
+        linkRe.lastIndex=0;
+      }
+      const value={ok:true,count:rows.length,institutions:rows,source:"TVETA",sourceUrl:source,fetchedAt:new Date().toISOString()};
+      tvetaInstitutionCache.set("institutions",{at:Date.now(),value});
+      sendJson(res,200,value);
+    }catch(error){
+      console.error("TVETA institutions lookup error:",error);
+      sendJson(res,502,{ok:false,institutions:[],count:0,source:"TVETA",sourceUrl:"https://www.tveta.go.ke/accredited-tvet-institutions/",error:"TVETA institution register could not be loaded right now."});
+    }
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/tveta/courses"){
+    try{
+      const data=await getTvetaCourses();
+      const q=String(url.searchParams.get("q")||"").trim().toLowerCase();
+      const level=String(url.searchParams.get("level")||"").trim().toLowerCase();
+      const body=String(url.searchParams.get("examBody")||"").trim().toLowerCase();
+      const courses=data.courses.filter(x=>(!q||(`${x.name} ${x.level} ${x.examBody}`).toLowerCase().includes(q))&&(!level||x.level.toLowerCase()===level)&&(!body||x.examBody.toLowerCase()===body));
+      sendJson(res,200,{...data,courses,count:courses.length});
+    }catch(error){
+      console.error("TVETA course lookup error:",error);
+      sendJson(res,502,{ok:false,courses:[],count:0,source:"TVETA",sourceUrl:"https://www.tveta.go.ke/tvet-courses/",error:"TVETA course register could not be loaded right now."});
+    }
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/tveta/institution"){
+    const institutionName=String(url.searchParams.get("institution")||"").trim();
+    if(!institutionName){sendJson(res,400,{ok:false,error:"Institution name is required."});return true;}
+    try{
+      const source="https://www.tveta.go.ke/accredited-tvet-institutions/";
+      const response=await fetch(source,{headers:{"User-Agent":"CBE-Nexus-Education-Directory/1.0"}});
+      if(!response.ok) throw new Error("TVETA returned "+response.status);
+      const html=await response.text();
+      const clean=s=>String(s).replace(/<[^>]+>/g," ").replace(/&amp;/g,"&").replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/&nbsp;/g," ").replace(/\s+/g," ").trim();
+      const wanted=institutionName.toLowerCase();
+      const linkRe=/<a[^>]+href=["\']([^"\']*institution-details[^"\']*)["\'][^>]*>([\s\S]*?)<\/a>/gi;
+      let m,detailUrl="";
+      while((m=linkRe.exec(html))){if(clean(m[2]).toLowerCase().includes(wanted)){detailUrl=new URL(m[1],source).href;break;}}
+      if(!detailUrl){
+        sendJson(res,404,{ok:false,institutionName,courses:[],source:"TVETA",sourceUrl:source,error:"Institution details were not found in the current TVETA register."});return true;
+      }
+      const dres=await fetch(detailUrl,{headers:{"User-Agent":"CBE-Nexus-Education-Directory/1.0"}});
+      if(!dres.ok) throw new Error("TVETA details returned "+dres.status);
+      const page=await dres.text();
+      const rows=[];const trRe=new RegExp("<tr[^>]*>([\\s\\S]*?)</tr>","gi");const tdRe=new RegExp("<t[dh][^>]*>([\\s\\S]*?)</t[dh]>","gi");let tr;
+      while((tr=trRe.exec(page))){const cells=[];let td;while((td=tdRe.exec(tr[1])))cells.push(clean(td[1]));if(cells.length>=3&&!/^#?$/.test(cells[0])&&cells[1]&&cells[2])rows.push({courseName:cells[1]||cells[0],level:cells[2],examBody:cells[3]||""});}
+      const textPage=clean(page);
+      const pick=(label,next)=>{const i=textPage.toLowerCase().indexOf(label.toLowerCase());return i>=0?textPage.slice(i+label.length,(next?textPage.toLowerCase().indexOf(next.toLowerCase(),i+label.length):i+label.length+180)).trim():"";};
+      sendJson(res,200,{ok:true,institutionName, courses:rows, source:"TVETA", sourceUrl:detailUrl, fetchedAt:new Date().toISOString(),detailsPage:detailUrl});
+    }catch(error){console.error("TVETA institution lookup error:",error);sendJson(res,502,{ok:false,institutionName,courses:[],source:"TVETA",sourceUrl:"https://www.tveta.go.ke/accredited-tvet-institutions/",error:"TVETA institution data could not be loaded right now."});}
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/cue/programmes"){
+    const q=String(url.searchParams.get("q")||"").trim().toLowerCase();
+    const institution=String(url.searchParams.get("institution")||"").trim().toLowerCase();
+    const county=String(url.searchParams.get("county")||"").trim().toLowerCase();
+    const level=String(url.searchParams.get("level")||"").trim().toLowerCase();
+    const rows=(await readCueProgrammes()).map(normaliseCueProgramme).filter(p=>
+      (!q||[p.programmeName,p.programmeCode,p.field,p.institutionName].join(" ").toLowerCase().includes(q))&&
+      (!institution||p.institutionName.toLowerCase()===institution)&&
+      (!county||p.county.toLowerCase()===county)&&
+      (!level||p.qualificationLevel.toLowerCase()===level)
+    );
+    sendJson(res,200,{ok:true,source:"CUE",sourceDate:"2026-07-31",imported:Boolean(rows.length),programmes:rows,total:rows.length});
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/kuccps/university-programmes"){
+    const institutionName=String(url.searchParams.get("institution")||"").trim();
+    if(!institutionName){sendJson(res,400,{ok:false,error:"University name is required."});return true;}
+    try{
+      const data=await getKuccpsProgrammes(institutionName);
+      sendJson(res,data.ok?200:404,data);
+    }catch(error){
+      console.error("KUCCPS programme lookup error:",error);
+      sendJson(res,502,{ok:false,institutionName,programmes:[],error:"KUCCPS programme data could not be loaded right now. Use the official KUCCPS link below."});
+    }
+    return true;
+  }
   if(req.method==="POST"&&stores[url.pathname]){const p=JSON.parse((await readBody(req))||"{}");sendJson(res,201,{ok:true,saved:await appendJsonStore(stores[url.pathname],p)});return true;}
+  if(req.method==="GET"&&url.pathname==="/api/international-countries"){
+    try{
+      let rows=[];
+      if(supabaseConfigured){
+        try{const {data,error}=await supabase.from("international_country_guides").select("*").eq("status","published").order("country",{ascending:true});if(!error)rows=data||[];}catch(error){console.warn("Supabase country guides lookup failed:",error.message||error);}
+      }
+      if(!rows.length)rows=(await readJsonStore("international-country-guides.json")).filter(x=>x.status!=="deleted"&&x.status!=="draft");
+      sendJson(res,200,{ok:true,countries:rows});
+    }catch(error){console.error("International country guides lookup error:",error);sendJson(res,500,{ok:false,error:"Country guides could not be loaded."});}
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/admin/international-countries"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{
+      let rows=[];
+      if(supabaseConfigured){
+        try{const {data,error}=await supabase.from("international_country_guides").select("*").order("country",{ascending:true});if(!error)rows=data||[];}catch(error){console.warn("Supabase admin country guides lookup failed:",error.message||error);}
+      }
+      if(!rows.length)rows=await readJsonStore("international-country-guides.json");
+      sendJson(res,200,{ok:true,countries:rows});
+    }catch(error){sendJson(res,500,{ok:false,error:"Country guides could not be loaded."});}
+    return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/international-country"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{
+      const p=JSON.parse((await readBody(req))||"{}"),clean=(v,max=5000)=>String(v??"").trim().slice(0,max);
+      const country=clean(p.country,120); if(!country)throw new Error("Country is required.");
+      const item={
+        id:clean(p.id,120)||"country-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),
+        country,flag:clean(p.flag,10),currency:clean(p.currency,30),region:clean(p.region,100),
+        average_salary:clean(p.average_salary,180),salary_period:clean(p.salary_period,60),
+        cost_of_living:clean(p.cost_of_living,500),rent:clean(p.rent,500),food:clean(p.food,500),
+        transport:clean(p.transport,500),healthcare:clean(p.healthcare,500),estimated_savings:clean(p.estimated_savings,500),
+        housing_benefit:clean(p.housing_benefit,300),flight_benefit:clean(p.flight_benefit,300),
+        visa:clean(p.visa,2000),work_permit:clean(p.work_permit,2000),qualifications:clean(p.qualifications,2000),
+        teacher_registration:clean(p.teacher_registration,2000),experience:clean(p.experience,500),
+        language:clean(p.language,500),curricula:clean(p.curricula,1000),subjects_in_demand:clean(p.subjects_in_demand,1000),
+        recruitment_period:clean(p.recruitment_period,500),required_documents:clean(p.required_documents,2500),
+        official_links:clean(p.official_links,3000),notes:clean(p.notes,4000),
+        last_verified:clean(p.last_verified,40),status:["draft","published"].includes(String(p.status))?String(p.status):"published",
+        updated_at:new Date().toISOString(),created_at:clean(p.created_at,60)||new Date().toISOString()
+      };
+      if(supabaseConfigured){
+        try{const {data,error}=await supabase.from("international_country_guides").upsert(item,{onConflict:"id"}).select("*").single();if(!error){sendJson(res,200,{ok:true,country:data,storage:"supabase"});return true;}console.warn("Supabase country guide save failed:",error.message||error);}catch(error){console.warn("Supabase country guide save failed:",error.message||error);}
+      }
+      const rows=await readJsonStore("international-country-guides.json");
+      await fs.writeFile(path.join(DATA_DIR,"international-country-guides.json"),JSON.stringify([item,...rows.filter(x=>String(x.id)!==String(item.id))],null,2));
+      sendJson(res,200,{ok:true,country:item,storage:"local"});
+    }catch(error){sendJson(res,400,{ok:false,error:error.message||"Country guide could not be saved."});}
+    return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/international-country/delete"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{
+      const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"").trim();if(!id)throw new Error("Country guide ID is required.");
+      if(supabaseConfigured){
+        try{const {error}=await supabase.from("international_country_guides").delete().eq("id",id);if(!error){sendJson(res,200,{ok:true,storage:"supabase"});return true;}console.warn("Supabase country guide delete failed:",error.message||error);}catch(error){console.warn("Supabase country guide delete failed:",error.message||error);}
+      }
+      const rows=await readJsonStore("international-country-guides.json");
+      await fs.writeFile(path.join(DATA_DIR,"international-country-guides.json"),JSON.stringify(rows.filter(x=>String(x.id)!==id),null,2));
+      sendJson(res,200,{ok:true,storage:"local"});
+    }catch(error){sendJson(res,400,{ok:false,error:error.message||"Country guide could not be deleted."});}
+    return true;
+  }
   if(url.pathname.startsWith("/api/")){sendJson(res,404,{ok:false,error:"API route not found."});return true;}return false;
 }
+
+function seoFooterForPath(pathname){
+  const p=String(pathname||"/").toLowerCase();
+  let theme={name:"CBE Nexus",color:"#e8f1ff",accent:"#1d4ed8",label:"CBE NEXUS EDUCATION PLATFORM"};
+  let groups=[
+    ["Explore CBE Nexus",[["Education Hub","learning-hub.html"],["Free Resources","free-resources.html"],["AI Courses","ai-training.html"],["School Directory","school-directory.html"]]],
+    ["For Teachers",[["International Teacher Jobs","international-teaching-jobs.html"],["Teacher CV Builder","professional-cv-writing.html"],["Teaching Resources","resources.html"],["Lesson Planning","lesson-planning-assessment.html"]]],
+    ["Opportunities",[["Scholarships & Opportunities","scholarships-opportunities.html"],["School Vacancies","school-directory.html"],["Career Resources","learning-hub.html"],["Education Guides","blog.html"]]]
+  ];
+  if(p.includes("international-teaching-jobs")||p.includes("professional-cv-writing")){
+    theme={name:"International Teacher Careers",color:"#e8f4ff",accent:"#0369a1",label:"INTERNATIONAL TEACHING CAREERS"};
+    groups=[["Teacher Careers",[["International Teacher Jobs","international-teaching-jobs.html"],["Build an International CV","professional-cv-writing.html"],["Teaching Jobs Abroad","blog.html"],["Career Guides","learning-hub.html"]]],["Professional Tools",[["CV Builder","professional-cv-writing.html"],["Education Hub","learning-hub.html"],["Teaching Resources","resources.html"],["AI for Teachers","ai-for-teachers.html"]]],["Opportunities",[["Scholarships","scholarships-opportunities.html"],["School Vacancies","school-directory.html"],["Career Guides","blog.html"],["CBE Nexus Resources","resources.html"]]]];
+  }else if(p.includes("scholarships")){
+    theme={name:"Scholarships & Opportunities",color:"#edfbea",accent:"#15803d",label:"SCHOLARSHIPS & OPPORTUNITIES"};
+    groups=[["Find Funding",[["Scholarships","scholarships-opportunities.html"],["Education Opportunities","learning-hub.html"],["Study Guides","blog.html"],["AI Learning","ai-training.html"]]],["Career Growth",[["International Teacher Jobs","international-teaching-jobs.html"],["Teacher CV Builder","professional-cv-writing.html"],["School Directory","school-directory.html"],["Teaching Resources","resources.html"]]],["Explore CBE Nexus",[["Education Hub","learning-hub.html"],["Free Resources","free-resources.html"],["AI Courses","ai-training.html"],["About CBE Nexus","index.html#about"]]]];
+  }else if(p.includes("ai-")||p.includes("chatgpt")||p.includes("gemini")||p.includes("generative-ai")||p.includes("prompt-engineering")){
+    theme={name:"AI Learning & Digital Skills",color:"#f2ecff",accent:"#6d28d9",label:"AI LEARNING & DIGITAL SKILLS"};
+    groups=[["AI Learning",[["AI Courses","ai-training.html"],["AI for Teachers","ai-for-teachers.html"],["AI for Students","ai-for-students.html"],["Generative AI","generative-ai.html"]]],["Digital Skills",[["Computer Literacy","computer-digital-literacy.html"],["Digital Marketing","digital-marketing.html"],["Python Programming","python-programming.html"],["Web Development","web-development-html-css.html"]]],["Career & Education",[["Teacher Jobs Abroad","international-teaching-jobs.html"],["Teacher CV Builder","professional-cv-writing.html"],["Scholarships","scholarships-opportunities.html"],["Education Hub","learning-hub.html"]]]];
+  }else if(p.includes("resource")||p.includes("tuition")||p.includes("quiz")||p.includes("school")){
+    theme={name:"CBE Learning Resources",color:"#fff5e8",accent:"#c2410c",label:"CBC • CBE • LEARNING RESOURCES"};
+    groups=[["Learning Resources",[["Free Resources","free-resources.html"],["All Resources","resources.html"],["Lesson Planning","lesson-planning-assessment.html"],["Teaching with Technology","teaching-with-technology.html"]]],["Schools & Teachers",[["School Directory","school-directory.html"],["International Teacher Jobs","international-teaching-jobs.html"],["Teacher CV Builder","professional-cv-writing.html"],["AI for Teachers","ai-for-teachers.html"]]],["Learning Support",[["Education Hub","learning-hub.html"],["Scholarships","scholarships-opportunities.html"],["Holiday Tuition","tuition.html"],["AI Courses","ai-training.html"]]]];
+  }else if(p.includes("blog")||p.includes("learning-hub")||p.includes("article")){
+    theme={name:"CBE Nexus Education Hub",color:"#eaf8f6",accent:"#0f766e",label:"CBE NEXUS EDUCATION HUB"};
+    groups=[["Latest Learning",[["Education Hub","learning-hub.html"],["Education Articles","blog.html"],["Teacher Career Guides","international-teaching-jobs.html"],["Scholarship Guides","scholarships-opportunities.html"]]],["Teacher Tools",[["International Teacher CV","professional-cv-writing.html"],["Teaching Resources","resources.html"],["AI for Teachers","ai-for-teachers.html"],["School Directory","school-directory.html"]]],["Opportunities",[["Teaching Jobs Abroad","international-teaching-jobs.html"],["Scholarships","scholarships-opportunities.html"],["School Vacancies","school-directory.html"],["Free Resources","free-resources.html"]]]];
+  }
+  const cards=groups.map(g=>'<section class="seo-footer-group"><h3>'+g[0]+'</h3><ul>'+g[1].map(x=>'<li><a href="'+x[1]+'">'+x[0]+'</a></li>').join("")+'</ul></section>').join("");
+  return '<footer class="site-footer seo-footer" style="--seo-footer-bg:'+theme.color+';--seo-footer-accent:'+theme.accent+'"><div class="seo-footer-inner"><div class="seo-footer-brand"><span class="seo-footer-kicker">'+theme.label+'</span><strong>'+theme.name+'</strong><p>CBE Nexus connects learners, teachers, schools and education professionals with practical learning resources, career opportunities, scholarships, professional tools and digital skills.</p></div><div class="seo-footer-groups">'+cards+'</div></div><div class="seo-footer-seo"><strong>Explore CBE Nexus:</strong> CBC and CBE learning resources, international teacher jobs, teacher CV building, scholarships, school vacancies, AI courses and practical education guides for learners and educators.</div><nav class="footer-links seo-footer-bottom" aria-label="Footer navigation"><a href="index.html#about">About Us</a><a href="learning-hub.html">Learning Hub</a><a href="privacy-policy.html">Privacy Policy</a><a href="terms-and-conditions.html">Terms</a><a href="copyright.html">Copyright</a><button class="footer-admin-dot" id="adminAreaButton" type="button" aria-label="Admin login" title="Admin login"><span aria-hidden="true"></span></button></nav><p class="seo-footer-copy">&copy; 2026 CBE Nexus. Education Resources, Teacher Jobs, Scholarships, CV Builder &amp; AI Learning.</p></footer>';
+}
+function injectSeoFooter(html,pathname){
+  const footer=seoFooterForPath(pathname);
+  const styles='<style id="cbe-seo-footer-css">.seo-footer{background:var(--seo-footer-bg)!important;border-top:4px solid var(--seo-footer-accent)!important;padding:24px 20px 14px!important;margin-top:24px!important}.seo-footer-inner{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.2fr 2fr;gap:24px}.seo-footer-brand strong{display:block;font-size:20px;color:#123447;margin:5px 0 8px}.seo-footer-kicker{font-size:9px;font-weight:800;letter-spacing:.12em;color:var(--seo-footer-accent)}.seo-footer-brand p{font-size:11px;line-height:1.55;max-width:440px;margin:0;color:#334e5f}.seo-footer-groups{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.seo-footer-group h3{font-size:12px;margin:0 0 7px;color:#123447}.seo-footer-group ul{list-style:none;padding:0;margin:0}.seo-footer-group li{margin:4px 0}.seo-footer-group a{font-size:10px;color:#31576b;text-decoration:none}.seo-footer-group a:hover{color:var(--seo-footer-accent);text-decoration:underline}.seo-footer-seo{max-width:1180px;margin:18px auto 10px;padding:10px 12px;border-radius:7px;background:rgba(255,255,255,.65);font-size:9px;line-height:1.5;color:#405766}.seo-footer-bottom{max-width:1180px;margin:8px auto!important}.seo-footer-copy{text-align:center!important;font-size:8px!important;margin:8px 0 0!important;opacity:.7}@media(max-width:760px){.seo-footer{padding:18px 10px 10px!important}.seo-footer-inner{grid-template-columns:1fr;gap:14px}.seo-footer-groups{grid-template-columns:repeat(3,1fr);gap:7px}.seo-footer-group h3{font-size:9px}.seo-footer-group a{font-size:7.5px}.seo-footer-brand strong{font-size:15px}.seo-footer-brand p,.seo-footer-seo{font-size:8px}}@media(max-width:480px){.seo-footer-groups{grid-template-columns:1fr 1fr}.seo-footer-group:nth-child(3){grid-column:1/-1}}</style>';
+  if(/<footer[\s\S]*?<\/footer>/i.test(html)) html=html.replace(/<footer[\s\S]*?<\/footer>/i,footer);
+  else html=html.replace(/<\/body>/i,footer+"</body>");
+  return html.replace(/<\/head>/i,styles+"</head>");
+}
+
+function xmlEscape(value){return String(value??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&apos;");}
+function rssCdata(value){return "<![CDATA["+String(value??"").replace(/]]>/g,"]]]]><![CDATA[>")+"]]>";
+}
+function indexNowKey(req){
+  const configured=String(process.env.INDEXNOW_KEY||"").trim();
+  if(configured && /^[A-Za-z0-9-]{8,128}$/.test(configured)) return configured;
+  const seed=String(process.env.INDEXNOW_SEED||process.env.ADMIN_SESSION_SECRET||"cbe-nexus-indexnow");
+  return crypto.createHash("sha256").update("cbe-nexus:"+seed).digest("hex").slice(0,32);
+}
+async function notifyIndexNow(req, urls){
+  const list=[...new Set((Array.isArray(urls)?urls:[]).filter(Boolean))].slice(0,10000);
+  if(!list.length)return {ok:false,skipped:true,reason:"no_urls"};
+  try{
+    const base=seo.base(req).replace(/\/$/,"");
+    const key=indexNowKey(req);
+    const host=new URL(base).host;
+    const response=await fetch("https://api.indexnow.org/indexnow",{
+      method:"POST",
+      headers:{"Content-Type":"application/json; charset=utf-8"},
+      body:JSON.stringify({host,key,keyLocation:base+"/indexnow-key.txt",urlList:list})
+    });
+    const status=response.status;
+    return {ok:status>=200&&status<300,status,urls:list.length};
+  }catch(error){
+    console.warn("IndexNow notification failed:",error.message||error);
+    return {ok:false,error:String(error.message||error)};
+  }
+}
+async function buildBlogRss(req){
+  const base=seo.base(req).replace(/\/$/,"");
+  const posts=await getBlogPosts(false);
+  const items=posts.slice(0,50).map(p=>{
+    const link=base+"/blog-article.html?slug="+encodeURIComponent(String(p.slug||""));
+    const date=p.publishedAt||p.createdAt||new Date().toISOString();
+    const description=String(p.excerpt||p.content||"").replace(/<script/gi,"").replace(/<\/script>/gi,"").slice(0,4000);
+    return "<item><title>"+rssCdata(p.title)+"</title><link>"+xmlEscape(link)+"</link><guid isPermaLink=\"true\">"+xmlEscape(link)+"</guid><description>"+rssCdata(description)+"</description><author>"+xmlEscape(p.author||"CBE Nexus")+"</author><category>"+xmlEscape(p.category||"Education")+"</category><pubDate>"+new Date(date).toUTCString()+"</pubDate></item>";
+  }).join("");
+  return '<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CBE Nexus Education Hub</title><atom:link href="'+xmlEscape(base+"/rss.xml")+'" rel="self" type="application/rss+xml"/><link>'+xmlEscape(base+"/blog.html")+'</link><description>Education news, teaching guides, scholarships, AI and CBC/CBE resources from CBE Nexus.</description><language>en-ke</language><lastBuildDate>'+new Date().toUTCString()+'</lastBuildDate>'+items+"</channel></rss>";
+}
+
+function getGa4ServiceAccount(){
+  const raw=String(process.env.GA4_SERVICE_ACCOUNT_JSON||"").trim();
+  if(!raw)return null;
+  try{
+    const decoded=raw.startsWith("{")?raw:Buffer.from(raw,"base64").toString("utf8");
+    const value=JSON.parse(decoded);
+    if(!value.client_email||!value.private_key)return null;
+    return value;
+  }catch(error){console.error("GA4 service account configuration error:",error.message||error);return null;}
+}
+function base64UrlJson(value){
+  return Buffer.from(JSON.stringify(value)).toString("base64").replace(/=/g,"").replace(/\+/g,"-").replace(/\//g,"_");
+}
+function signRs256(input,privateKey){
+  return crypto.createSign("RSA-SHA256").update(input).sign(privateKey,"base64").replace(/=/g,"").replace(/\+/g,"-").replace(/\//g,"_");
+}
+async function getGa4AccessToken(){
+  const sa=getGa4ServiceAccount();
+  if(!sa)return null;
+  const now=Math.floor(Date.now()/1000);
+  const header=base64UrlJson({alg:"RS256",typ:"JWT"});
+  const payload=base64UrlJson({iss:sa.client_email,scope:"https://www.googleapis.com/auth/analytics.readonly",aud:"https://oauth2.googleapis.com/token",iat:now,exp:now+3600});
+  const assertion=header+"."+payload+"."+signRs256(header+"."+payload,sa.private_key);
+  const response=await fetch("https://oauth2.googleapis.com/token",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams({grant_type:"urn:ietf:params:oauth:grant-type:jwt-bearer",assertion})});
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok||!data.access_token)throw new Error(data.error_description||data.error||"Could not obtain GA4 access token.");
+  return data.access_token;
+}
+async function queryGa4Report(body){
+  const propertyId=String(process.env.GA4_PROPERTY_ID||"").trim().replace(/^properties\//,"");
+  if(!propertyId)throw new Error("GA4_PROPERTY_ID is not configured.");
+  const token=await getGa4AccessToken();
+  if(!token)throw new Error("GA4_SERVICE_ACCOUNT_JSON is not configured.");
+  const response=await fetch("https://analyticsdata.googleapis.com/v1beta/properties/"+encodeURIComponent(propertyId)+":runReport",{method:"POST",headers:{"Authorization":"Bearer "+token,"Content-Type":"application/json"},body:JSON.stringify(body)});
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok)throw new Error(data.error?.message||"GA4 Data API request failed.");
+  return data;
+}
+function ga4Number(report,index){
+  const row=report?.rows?.[0]?.metricValues?.[index]?.value;
+  const n=Number(row);
+  return Number.isFinite(n)?n:0;
+}
+async function getAdRevenueDashboard(){
+  const days=Math.min(365,Math.max(1,Number(process.env.AD_REVENUE_DAYS||30)));
+  const dateRange={startDate:String(days)+"daysAgo",endDate:"yesterday"};
+  const overview=await queryGa4Report({dateRanges:[dateRange],metrics:[
+    {name:"screenPageViews"},{name:"sessions"},{name:"averageSessionDuration"},
+    {name:"publisherAdImpressions"},{name:"publisherAdClicks"},{name:"publisherAdRevenue"}
+  ]});
+  const country=await queryGa4Report({dateRanges:[dateRange],dimensions:[{name:"country"}],metrics:[{name:"sessions"},{name:"screenPageViews"},{name:"publisherAdRevenue"}],orderBys:[{metric:{metricName:"sessions"},desc:true}],limit:25});
+  const sessions=ga4Number(overview,1),pageviews=ga4Number(overview,0),impressions=ga4Number(overview,3),clicks=ga4Number(overview,4),revenue=ga4Number(overview,5);
+  const countries=(country.rows||[]).map(row=>({country:row.dimensionValues?.[0]?.value||"Unknown",sessions:Number(row.metricValues?.[0]?.value||0),pageviews:Number(row.metricValues?.[1]?.value||0),revenue:Number(row.metricValues?.[2]?.value||0)}));
+  return {ok:true,periodDays:days,startDate:days+" days ago",endDate:"yesterday",source:"GA4 Data API",metrics:{
+    pageviews,sessions,pagesPerSession:sessions?pageviews/sessions:0,adImpressions:impressions,adClicks:clicks,adCtr:impressions?clicks/impressions*100:0,rpm:pageviews?revenue/pageviews*1000:0,estimatedRevenue:revenue,averageSessionDuration:ga4Number(overview,2)
+  },countries};
+}
+function getAdSenseConfig(){
+  const raw=String(process.env.ADSENSE_PUBLISHER_ID||"").trim();
+  const publisherId=raw.replace(/^ca-/,"");
+  const enabled=String(process.env.ADSENSE_ENABLED||"").trim().toLowerCase()==="true" && /^pub-[A-Za-z0-9]+$/.test(publisherId);
+  return {enabled,publisherId};
+}
+function isAdExcludedPath(pathname){
+  const p=String(pathname||"/").toLowerCase();
+  return p.startsWith("/api/") || p.startsWith("/admin") || p.includes("login") || p.includes("checkout") || p.includes("payment") || p.includes("upload") || p.includes("dashboard");
+}
+function optimizeHtmlForAds(html){
+  let out=String(html||"");
+  // Preserve the first meaningful image for fast visual rendering; lazy-load the rest.
+  let seenImage=false;
+  out=out.replace(/<img\b([^>]*?)>/gi,(full,attrs)=>{
+    if(/\bloading\s*=|\bdecoding\s*=/i.test(attrs)) return full;
+    if(!seenImage){seenImage=true;return '<img'+attrs+' loading="eager" decoding="async">';}
+    return '<img'+attrs+' loading="lazy" decoding="async">';
+  });
+  return out;
+}
+function injectAdSenseTags(html,pathname){
+  const cfg=getAdSenseConfig();
+  if(!cfg.enabled || isAdExcludedPath(pathname)) return html;
+  let out=String(html||"");
+  if(/pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js/i.test(out)) return out;
+  const head='<link rel="preconnect" href="https://pagead2.googlesyndication.com"><link rel="preconnect" href="https://googleads.g.doubleclick.net"><meta name="google-adsense-account" content="'+cfg.publisherId+'"><script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-'+cfg.publisherId+'"></script>';
+  out=out.replace(/<head([^>]*)>/i,'<head$1>'+head);
+  return optimizeHtmlForAds(out);
+}
+function buildAdsTxt(){
+  const cfg=getAdSenseConfig();
+  if(!cfg.enabled) return "# AdSense is not enabled yet. Set ADSENSE_ENABLED=true and ADSENSE_PUBLISHER_ID=pub-XXXXXXXXXXXXXXX in Render.\n";
+  return 'google.com, '+cfg.publisherId+', DIRECT, f08c47fec0942fa0\n';
+}
+function injectAnalyticsTags(html){
+  const measurementId=String(process.env.GA_MEASUREMENT_ID||"G-8E0HGCJM8W").trim();
+  const clarityId=String(process.env.CLARITY_PROJECT_ID||"ysl6ujcrkf").trim();
+  let out=html;
+  if(measurementId && !/googletagmanager\.com\/gtag\/js/i.test(out) && !/gtag\(['"]config['"]\s*,/i.test(out)){
+    const tag='<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id='+measurementId+'"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","'+measurementId+'");</script>';
+    out=out.replace(/<head([^>]*)>/i,'<head$1>'+tag);
+  }
+  if(clarityId && !/clarity\.ms\/tag\//i.test(out)){
+    const tag='<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","'+clarityId+'");</script>';
+    out=out.replace(/<head([^>]*)>/i,'<head$1>'+tag);
+  }
+  return out;
+}
+
+let homepageHtmlCache=null;
+let homepageHtmlCacheTime=0;
+const HOMEPAGE_CACHE_TTL_MS=5*60*1000;
+
+async function getHomepageHtml(req){
+  const now=Date.now();
+  if(homepageHtmlCache && now-homepageHtmlCacheTime<HOMEPAGE_CACHE_TTL_MS) return homepageHtmlCache;
+  const filePath=path.join(ROOT,"index.html");
+  let data=await fs.readFile(filePath,"utf8");
+  const b=seo.base(req);
+  data=data
+    .replaceAll("https://example.com/",b+"/")
+    .replace("<title>CBE E-Learning Resources</title>","<title>CBE Nexus | CBC & CBE Learning Resources Kenya</title>")
+    .replace("CBE E-Learning Resources for Grades 1-12","CBE Nexus | CBC & CBE Learning Resources for Grades 1-12 in Kenya");
+  const bridgeScript='<script src="/resource-centre-bridge.js?v=20260930-4" defer></script><script src="/admin-fallback.js?v=20260930-4" defer></script>';
+  if(!data.includes("resource-centre-bridge.js")) data=data.replace("</body>",bridgeScript+"</body>");
+  data=injectAdSenseTags(injectAnalyticsTags(data),"/");
+  homepageHtmlCache=Buffer.from(data);
+  homepageHtmlCacheTime=now;
+  return homepageHtmlCache;
+}
+
+function invalidateHomepageHtmlCache(){
+  homepageHtmlCache=null;
+  homepageHtmlCacheTime=0;
+}
+
 async function serveStatic(req,res,url){
+  if(req.method==="GET" && url.pathname==="/health"){
+    res.writeHead(200,{"Content-Type":"text/plain; charset=utf-8","Cache-Control":"no-store"});
+    res.end("ok");
+    return;
+  }
+  if(req.method==="GET" && url.pathname==="/rss.xml"){
+    try{
+      res.writeHead(200,{"Content-Type":"application/rss+xml; charset=utf-8","Cache-Control":"public, max-age=900"});
+      res.end(await buildBlogRss(req));
+    }catch(error){
+      console.error("RSS feed error:",error);
+      // Do not attempt a second response if streaming/writing already started.
+      if(res.headersSent||res.writableEnded||res.destroyed)return;
+      res.writeHead(500,{"Content-Type":"application/xml; charset=utf-8"});
+      res.end('<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>CBE Nexus Education Hub</title><description>RSS feed temporarily unavailable.</description></channel></rss>');
+    }
+    return;
+  }
   if(req.method==="GET" && url.pathname==="/sitemap.xml"){
     res.writeHead(200,{"Content-Type":"application/xml; charset=utf-8","Cache-Control":"public, max-age=3600"});
     res.end(await seo.sitemap(req));
     return;
   }
+  if(req.method==="GET" && url.pathname==="/ads.txt"){
+    res.writeHead(200,{"Content-Type":"text/plain; charset=utf-8","Cache-Control":"public, max-age=3600"});
+    res.end(buildAdsTxt());
+    return;
+  }
+  if(req.method==="GET" && url.pathname==="/indexnow-key.txt"){
+    res.writeHead(200,{"Content-Type":"text/plain; charset=utf-8","Cache-Control":"public, max-age=86400"});
+    res.end(indexNowKey(req));
+    return;
+  }
   if(req.method==="GET" && url.pathname==="/robots.txt"){
     const base=seo.base(req);
     res.writeHead(200,{"Content-Type":"text/plain; charset=utf-8","Cache-Control":"public, max-age=3600"});
-    res.end("User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /admin\nDisallow: /upload.html\nDisallow: /backend-data/\nSitemap: "+base+"/sitemap.xml\n");
+    res.end([
+      "User-agent: *",
+      "Allow: /",
+      "Disallow: /api/",
+      "Disallow: /admin",
+      "Disallow: /upload.html",
+      "Disallow: /backend-data/",
+      "",
+      "User-agent: Googlebot",
+      "Allow: /",
+      "Disallow: /api/",
+      "Disallow: /admin",
+      "Disallow: /upload.html",
+      "Disallow: /backend-data/",
+      "",
+      "User-agent: OAI-SearchBot",
+      "Allow: /",
+      "Disallow: /api/",
+      "Disallow: /admin",
+      "Disallow: /upload.html",
+      "Disallow: /backend-data/",
+      "",
+      "User-agent: GPTBot",
+      "Allow: /",
+      "Disallow: /api/",
+      "Disallow: /admin",
+      "Disallow: /upload.html",
+      "Disallow: /backend-data/",
+      "",
+      "Sitemap: " + base + "/sitemap.xml",
+      ""
+    ].join("\n"));
+    return;
+  }
+  if(req.method==="GET" && url.pathname==="/"){
+    const data=await getHomepageHtml(req);
+    res.writeHead(200,{
+      "Content-Type":"text/html; charset=utf-8",
+      "Cache-Control":"public, max-age=300, must-revalidate"
+    });
+    res.end(data);
+    return;
+  }
+  // Serve Interactive Questions explicitly before SEO fallback routing so the dedicated page cannot be swallowed by a generic route.
+  if(req.method==="GET" && (url.pathname==="/interactive-questions.html" || url.pathname==="/interactive-questions")){
+    try{
+      const page=await fs.readFile(path.join(ROOT,"interactive-questions.html"));
+      res.writeHead(200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"no-store"});
+      res.end(page);
+    }catch(error){
+      console.error("Interactive Questions page unavailable:",error);
+      if(res.headersSent||res.writableEnded||res.destroyed)return;
+      res.writeHead(500,{"Content-Type":"text/plain; charset=utf-8","Cache-Control":"no-store"});
+      res.end("Interactive Questions page is temporarily unavailable.");
+    }
     return;
   }
   const seoPage=await seo.match(req);
   if(req.method==="GET" && seoPage){
     res.writeHead(200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"public, max-age=600"});
-    res.end(seoPage);
+    res.end(injectAdSenseTags(injectAnalyticsTags(injectSeoFooter(seoPage,url.pathname)),url.pathname));
     return;
   }
   const requestedPath=decodeURIComponent(url.pathname==="/"?"/index.html":url.pathname);
@@ -445,6 +2036,7 @@ async function serveStatic(req,res,url){
       if (!data.toString("utf8").includes("resource-centre-bridge.js")) data = Buffer.from(data.toString("utf8").replace("</body>", bridgeScript + "</body>"));
     }
     const ext=path.extname(target).toLowerCase();
+    if(ext===".html") data=Buffer.from(injectAdSenseTags(injectAnalyticsTags(data.toString("utf8")),url.pathname));
     const isHtml=ext===".html";
     const isVersionedAsset=/[?&]v=|-[0-9]{8,}/.test(url.search||"") && [".css",".js"].includes(ext);
     const cacheControl=isHtml
@@ -459,10 +2051,12 @@ async function serveStatic(req,res,url){
       "Cache-Control":cacheControl
     });
     res.end(data);
-  }catch{
-    try{const notFound=await fs.readFile(path.join(ROOT,"404.html"),"utf8");res.writeHead(404,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"public, max-age=300"});res.end(notFound);}
-    catch{res.writeHead(404,{"Content-Type":"text/plain; charset=utf-8"});res.end("Not found");}
+  }catch(error){
+    // A response may already have started. Never write a second HTTP response.
+    if(res.headersSent||res.writableEnded||res.destroyed)return;
+    try{const notFound=await fs.readFile(path.join(ROOT,"404.html"),"utf8");if(res.headersSent||res.writableEnded||res.destroyed)return;res.writeHead(404,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"public, max-age=300"});res.end(notFound);}
+    catch{if(res.headersSent||res.writableEnded||res.destroyed)return;res.writeHead(404,{"Content-Type":"text/plain; charset=utf-8"});res.end("Not found");}
   }
 }
-const server=http.createServer(async(req,res)=>{const url=new URL(req.url,`http://${req.headers.host||"127.0.0.1"}`);setSecurityHeaders(res);const limit=allowRequest(req,url);res.setHeader("X-RateLimit-Remaining",String(Math.max(0,limit.remaining)));if(!limit.allowed){res.setHeader("Retry-After","60");sendJson(res,429,{ok:false,error:"Too many requests. Please try again shortly."});return;}try{if(await handleApi(req,res,url))return;await serveStatic(req,res,url);}catch(error){console.error("Unhandled server error:",error);sendJson(res,500,{ok:false,error:"Server error."});}});
+const server=http.createServer(async(req,res)=>{const url=new URL(req.url,`http://${req.headers.host||"127.0.0.1"}`);setSecurityHeaders(res);const limit=allowRequest(req,url);res.setHeader("X-RateLimit-Remaining",String(Math.max(0,limit.remaining)));if(!limit.allowed){res.setHeader("Retry-After","60");sendJson(res,429,{ok:false,error:"Too many requests. Please try again shortly."});return;}try{if(await handleApi(req,res,url))return;await serveStatic(req,res,url);}catch(error){console.error("Unhandled server error:",error);if(res.headersSent||res.writableEnded||res.destroyed){if(!res.writableEnded&&!res.destroyed)res.destroy(error);return;}sendJson(res,500,{ok:false,error:"Server error."});}});
 server.listen(PORT,"0.0.0.0",()=>console.log(`CBE website backend running on port ${PORT}`));
