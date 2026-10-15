@@ -5,32 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Interactive Questions | CBE Nexus</title>
   <meta name="description" content="Interactive questions and online practice for learners on CBE Nexus.">
-  <meta name="robots" content="noindex, follow">
   <link rel="canonical" href="https://cbenexus.co.ke/interactive-questions.html">
   <link rel="icon" type="image/svg+xml" href="/favicon-cbe.svg?v=2">
   <style>
-    :root { color-scheme: light; --green:#00c943; --deep:#14532d; --ink:#17202a; --muted:#526170; --line:#dbe7df; }
+    :root { color-scheme: light; --green:#00c943; --ink:#17202a; }
     * { box-sizing:border-box; }
-    body { margin:0; min-height:100vh; font-family:Arial,Helvetica,sans-serif; color:var(--ink); background:linear-gradient(160deg,#f0fdf4 0%,#f8fafc 48%,#eff6ff 100%); }
+    body { margin:0; min-height:100vh; font-family:Arial,Helvetica,sans-serif; color:var(--ink); background:#f8fafc; }
     .topbar { padding:14px clamp(16px,4vw,44px); background:#c62828; border-bottom:4px solid #00c943; color:#fff; display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap; }
     .brand { font-weight:900; font-size:1.05rem; letter-spacing:.02em; }
     .back { display:inline-flex; align-items:center; justify-content:center; min-height:40px; padding:9px 14px; border-radius:8px; color:#fff; border:1px solid rgba(255,255,255,.65); font-weight:800; text-decoration:none; }
-    main { width:min(960px,calc(100% - 28px)); margin:clamp(26px,7vw,72px) auto; }
-    .hero { position:relative; overflow:hidden; padding:clamp(24px,5vw,52px); border-radius:24px; border:1px solid #bbf7d0; background:#fff; box-shadow:0 20px 55px rgba(20,83,45,.12); }
-    .eyebrow { display:inline-flex; padding:7px 11px; border-radius:999px; background:#dcfce7; color:#166534; font-size:.8rem; font-weight:900; letter-spacing:.04em; text-transform:uppercase; }
-    h1 { margin:18px 0 12px; color:var(--deep); font-size:clamp(2rem,5vw,3.4rem); line-height:1.08; letter-spacing:-.035em; }
-    .intro { max-width:700px; color:var(--muted); font-size:clamp(1rem,2vw,1.12rem); line-height:1.75; }
-    .integration { margin-top:28px; padding:clamp(18px,3vw,26px); border:2px solid #86efac; border-radius:18px; background:#f0fdf4; box-shadow:0 0 18px rgba(34,197,94,.12); }
-    .integration h2 { margin:0 0 10px; color:#14532d; font-size:1.25rem; }
-    .integration p { margin:0; color:#355b43; line-height:1.7; }
-    .steps { margin:14px 0 0; padding-left:22px; color:#355b43; line-height:1.8; }
-    .actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:24px; }
-    .primary,.secondary { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:11px 16px; border-radius:9px; font-weight:900; text-decoration:none; }
-    .primary { color:#000; background:#00e64d; border:2px solid #000; box-shadow:0 0 12px rgba(0,230,77,.35); }
-    .secondary { color:#166534; background:#fff; border:1px solid #bbf7d0; }
+    main { width:min(1500px,calc(100% - 20px)); margin:18px auto; }
+    h1 { margin:10px 4px 8px; color:#14532d; font-size:clamp(1.6rem,4vw,2.4rem); }
+    .intro { margin:0 4px 14px; color:#526170; line-height:1.65; }
+    .app-frame { display:block; width:100%; height:calc(100vh - 190px); min-height:850px; border:1px solid #dbe7df; border-radius:14px; background:white; box-shadow:0 12px 36px rgba(15,23,42,.10); }
     footer { padding:18px; text-align:center; color:#64748b; font-size:.84rem; }
-    @media(max-width:520px) { .topbar { align-items:flex-start; } .back { width:100%; } .actions a { width:100%; } }
-    @media(prefers-reduced-motion:reduce) { * { scroll-behavior:auto!important; } }
+    @media(max-width:520px) { .topbar { align-items:flex-start; } .back { width:100%; } main { width:calc(100% - 12px); margin:8px auto; } .app-frame { height:calc(100vh - 210px); min-height:720px; border-radius:8px; } }
   </style>
 </head>
 <body>
@@ -39,24 +28,9 @@
     <a class="back" href="/">← Back to CBE Nexus</a>
   </header>
   <main>
-    <section class="hero" aria-labelledby="page-title">
-      <span class="eyebrow">Practice · Participate · Progress</span>
-      <h1 id="page-title">Interactive Questions</h1>
-      <p class="intro">A dedicated home for interactive quizzes, revision activities and question-based learning. This page is separate from the existing CBE Nexus resource library and M-Pesa checkout.</p>
-      <section class="integration" aria-labelledby="integration-title">
-        <h2 id="integration-title">Your integration space is prepared</h2>
-        <p>The page and header link are in place. To connect your other interactive-questions website here, its source needs to be supplied first so it can be integrated safely without changing the existing CBE Nexus layout or payment flow.</p>
-        <ol class="steps">
-          <li>Share the other website's public URL, if it can be embedded or linked.</li>
-          <li>Or upload its source files (for example, HTML, CSS, JavaScript and any required assets) so the interactive question interface can be integrated into this page.</li>
-          <li>After the source is available, test question loading and learner interactions before considering the integration complete.</li>
-        </ol>
-      </section>
-      <div class="actions">
-        <a class="primary" href="/">Return to CBE Nexus</a>
-        <a class="secondary" href="/resource-category.html">Browse Learning Resources</a>
-      </div>
-    </section>
+    <h1>Interactive Questions</h1>
+    <p class="intro">Choose a grade and subject to practise. This learning app is hosted separately from the CBE Nexus marketplace, so existing resources and M-Pesa checkout remain unchanged.</p>
+    <iframe class="app-frame" src="/interactive-questions-app/index.html" title="CBE Nexus Interactive Questions learning app" loading="eager" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
   </main>
   <footer>© CBE Nexus · Connecting learners to excellence</footer>
 </body>
