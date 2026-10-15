@@ -5383,3 +5383,21 @@ a[href="tuition.html"] * {
   0%, 100% { box-shadow: 0 0 0 2px rgba(125,249,194,.2), 0 0 9px rgba(45,212,150,.38); }
   50% { box-shadow: 0 0 0 3px rgba(125,249,194,.35), 0 0 16px rgba(45,212,150,.62); }
 }
+
+
+/* Visible, gentle blink for the sky-green Interactive Questions header button. */
+@keyframes cbeIQSkyGreenBlink {
+  0%, 100% {
+    opacity: 1;
+    filter: brightness(1);
+    box-shadow: 0 0 0 2px rgba(125,249,194,.28), 0 0 12px rgba(45,212,150,.48);
+  }
+  50% {
+    opacity: .72;
+    filter: brightness(.92);
+    box-shadow: 0 0 0 4px rgba(125,249,194,.48), 0 0 22px rgba(45,212,150,.9);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .interactive-questions-header-btn { animation: none !important; }
+}
