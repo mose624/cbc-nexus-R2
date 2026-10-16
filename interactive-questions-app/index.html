@@ -24,7 +24,7 @@ const $=id=>document.getElementById(id), samples=[
 {id:'g10c1',g:'Grade 10',s:'Chemistry',topic:'Particles',title:'Changes of state',prompt:'Describe what happens to particles when liquid water changes into water vapour.',rubric:[{criterion:'Mentions energy is absorbed',marks:1},{criterion:'Explains particles move more freely',marks:1}]},
 {id:'g10b1',g:'Grade 10',s:'Biology',topic:'Cells',title:'Plant cell structures',prompt:'Name two structures found in plant cells but not typical animal cells, and state one function.',rubric:[{criterion:'Names two structures',marks:1},{criterion:'States a valid function',marks:1}]}
 ];let active=null,token=null;const storeKey='cbcNexusSupabaseSettings';
-function status(id,msg,type){$(id).textContent=msg;$(id).className='status'+(type?' '+type)}
+function status(id,msg,type){$(id).textContent=msg;$(id).className='status'+(type?' '+type:'')}
 function config(){let saved={};try{saved=JSON.parse(localStorage.getItem(storeKey)||'{}')}catch(e){}const baked=window.CBC_NEXUS_SUPABASE_CONFIG||{};return{url:(saved.url||baked.url||'').trim().replace(/\/$/,''),key:(saved.key||baked.publishableKey||'').trim(),fn:baked.functionName||'cbc-nexus-results'}}
 function checkUrl(u){try{return new URL(u).protocol==='https:'&&new URL(u).hostname.endsWith('.supabase.co')}catch(e){return false}}
 function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
