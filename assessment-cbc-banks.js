@@ -352,5 +352,51 @@
     curriculum[g] = {"Social Studies": kicdSocialStudiesCurriculum[g]};
   });
 
+
+  // Curated Grade 10 Mathematics 40-item MCQ practice assessment.
+  // Correct-answer index is zero-based; each item is [question, options, answerIndex, topic, explanation].
+  banks["Grade 10"].Mathematics = [
+    Q("A tank is 3/4 full. If 2/5 of its current water is used, what fraction of total capacity remains?",["7/20","9/20","11/20","3/10"],1,"Real numbers","Remaining fraction = 3/4 × 3/5 = 9/20."),
+    Q("A population is modelled by P = 500 × 2^t. After how many years will it reach 4,000?",["2 years","3 years","4 years","8 years"],1,"Indices and logarithms","2^t = 8 = 2^3, so t = 3."),
+    Q("A garden has length (x + 3) m, width x m and area 40 m². Which equation finds x?",["x² + 3x − 40 = 0","x² − 3x + 40 = 0","2x + 3 = 40","x² + 40x + 3 = 0"],0,"Quadratic equations","x(x + 3) = 40, so x² + 3x − 40 = 0."),
+    Q("Similar triangles have corresponding sides 6 cm and 15 cm. If another smaller side is 8 cm, find its corresponding larger side.",["12 cm","17 cm","20 cm","23 cm"],2,"Similarity and enlargement","Scale factor = 15/6 = 2.5; 8 × 2.5 = 20 cm."),
+    Q("P(4, −2) is reflected in the y-axis. What are its image coordinates?",["(4, 2)","(−4, −2)","(−4, 2)","(2, −4)"],1,"Reflection and congruence","Reflection in the y-axis maps (x,y) to (−x,y)."),
+    Q("A(3,1) is rotated 90° anticlockwise about the origin. Find its image.",["(1, −3)","(−1, 3)","(−3, −1)","(3, −1)"],1,"Rotation","A 90° anticlockwise rotation maps (x,y) to (−y,x)."),
+    Q("An angle subtended by a chord at the circumference is 38°. What is the angle subtended by the same chord at the centre?",["19°","38°","76°","142°"],2,"Circle geometry","The angle at the centre is twice the angle at the circumference."),
+    Q("A 5 m ladder rests against a wall with its foot 3 m from the wall. How high does it reach?",["2 m","3 m","4 m","8 m"],2,"Trigonometry","Height² = 5² − 3² = 16, so height = 4 m."),
+    Q("A triangle has base 12 m and height 7 m. A rectangle has the same base and height. What is the difference in their areas?",["21 m²","42 m²","63 m²","84 m²"],1,"Area of polygons","Rectangle = 84 m²; triangle = 42 m²; difference = 42 m²."),
+    Q("A sector has radius 7 cm and angle 90°. Using π = 22/7, find its area.",["19.25 cm²","38.5 cm²","77 cm²","154 cm²"],1,"Sector area","Area = 90/360 × 22/7 × 7² = 38.5 cm²."),
+    Q("A cuboid measures 8 cm by 5 cm by 3 cm. Find its volume.",["40 cm³","80 cm³","120 cm³","240 cm³"],2,"Volume of solids","Volume = 8 × 5 × 3 = 120 cm³."),
+    Q("A vehicle travels 150 km in 2.5 hours at constant speed. How far does it travel in another 1.5 hours?",["60 km","75 km","90 km","100 km"],2,"Linear motion","Speed = 150/2.5 = 60 km/h; distance = 60 × 1.5 = 90 km."),
+    Q("Marks are 4, 6, 6, 8 and 11. If 11 is replaced by 16, which statement is correct?",["The mean stays unchanged.","The median increases.","The mean increases but the median stays unchanged.","Both mean and median decrease."],2,"Statistics","The median remains 6 while the total and mean increase."),
+    Q("A bag has 4 red, 3 blue and 5 green balls. What is the probability of selecting a ball that is not blue?",["1/4","1/3","3/4","2/3"],2,"Probability","There are 9 non-blue balls out of 12, so 9/12 = 3/4."),
+    Q("One machine makes 2⁵ items per hour and another makes 2³. How many times as many items does the first make?",["2","4","8","16"],1,"Indices and application","2⁵ ÷ 2³ = 2² = 4."),
+    Q("The product of two consecutive positive integers is 72. Which pair works?",["7 and 8","8 and 9","9 and 10","6 and 12"],1,"Quadratic equations","8 × 9 = 72 and the integers are consecutive."),
+    Q("A model is 30 cm tall and the actual building is 24 m tall. What is the scale model : actual?",["1:8","1:80","1:800","8:1"],1,"Similarity and scale","24 m = 2,400 cm; 30:2,400 = 1:80."),
+    Q("A cyclic quadrilateral has one angle of 112°. Find its opposite angle.",["58°","68°","78°","112°"],1,"Circle geometry","Opposite angles sum to 180°; 180° − 112° = 68°."),
+    Q("A tree casts a 10 m shadow when the sun's elevation is 45°. Assuming level ground, how tall is the tree?",["5 m","10 m","10√2 m","20 m"],1,"Trigonometry","tan 45° = height/10 = 1, so height = 10 m."),
+    Q("A fair six-sided die is rolled once. What is the probability of a prime number?",["1/6","1/3","1/2","2/3"],2,"Probability","Prime results are 2, 3 and 5, so probability = 3/6 = 1/2."),
+    Q("A trader has 48 exercise books, sells 3/8 in the morning and 2/5 of the remainder in the afternoon. How many remain?",["12","18","20","30"],1,"Real numbers","18 are sold in the morning; 30 remain. Then 12 are sold, leaving 18."),
+    Q("N = 200 × 3^t models a bacteria population. How long until it reaches 5,400?",["2 hours","3 hours","4 hours","9 hours"],1,"Indices and logarithms","3^t = 27 = 3³, so t = 3 hours."),
+    Q("A field has length (x + 5) m, width x m and area 84 m². What are its dimensions?",["7 m by 12 m","6 m by 11 m","8 m by 13 m","9 m by 14 m"],0,"Quadratic equations","x² + 5x − 84 = 0 = (x + 12)(x − 7); positive width is 7 m."),
+    Q("Triangle ABC has A(1,1), B(3,1), C(2,2) and is enlarged by scale factor 2. What is the enlarged triangle's area?",["1 square unit","2 square units","4 square units","8 square units"],2,"Similarity and enlargement","Original area is 1; area scales by 2², giving 4 square units."),
+    Q("P(1,1), Q(4,1), R(2,3) are reflected in the y-axis. Which image coordinates are correct?",["P′(−1,1), Q′(−4,1), R′(−2,3)","P′(1,−1), Q′(4,−1), R′(2,−3)","P′(−1,−1), Q′(−4,−1), R′(−2,−3)","P′(1,1), Q′(4,1), R′(2,3)"],0,"Reflection and congruence","Reflection changes x to −x and preserves side lengths."),
+    Q("A(2,1) and B(3,2) are each rotated 90° anticlockwise about the origin. What are their images?",["A′(1,−2), B′(2,−3)","A′(−1,2), B′(−2,3)","A′(−2,−1), B′(−3,−2)","A′(2,−1), B′(3,−2)"],1,"Rotation","The rule is (x,y) → (−y,x)."),
+    Q("The central angle AOB is 124°. C lies on the major arc AB. Find angle ACB.",["31°","62°","124°","248°"],1,"Circle geometry","The circumference angle subtending the same minor arc is 124°/2 = 62°."),
+    Q("A surveyor is 20 m from a tower and the angle of elevation is 35°. Approximately how tall is the tower?",["11.5 m","14.0 m","16.4 m","28.6 m"],1,"Trigonometry","h = 20 tan 35° ≈ 14.0 m."),
+    Q("A trapezium garden has parallel sides 14 m and 8 m and height 6 m. Grass costs KSh 250/m². What is the total cost?",["KSh 12,000","KSh 16,500","KSh 20,000","KSh 33,000"],1,"Area of polygons","Area = ½(14 + 8) × 6 = 66 m²; cost = 66 × 250 = KSh 16,500."),
+    Q("A circular flower bed has radius 14 m. A 90° sector is for a pathway. Using π = 22/7, what area remains for flowers?",["154 m²","308 m²","462 m²","616 m²"],2,"Sector area","Whole area = 616 m²; pathway = 154 m²; remainder = 462 m²."),
+    Q("A closed cylinder has radius 7 cm and height 20 cm. Using π = 22/7, find its volume.",["1,540 cm³","2,200 cm³","3,080 cm³","6,160 cm³"],2,"Volume of solids","πr²h = 22/7 × 49 × 20 = 3,080 cm³."),
+    Q("A cyclist travels 6 m every 2 s at regular intervals. What does the distance-time graph indicate?",["The cyclist is stationary.","The cyclist moves at constant speed of 3 m/s.","The cyclist accelerates continuously.","The cyclist returns to the start."],1,"Linear motion","The speed is 6/2 = 3 m/s and remains constant."),
+    Q("Numbers of books read are 0, 1, 2, 3 with frequencies 2, 5, 8, 5. Find the mean.",["1.5","1.8","2.0","2.5"],1,"Statistics","Weighted total = 36 books; learners = 20; mean = 36/20 = 1.8."),
+    Q("A box contains 5 red, 4 yellow and 3 blue counters. Two are chosen without replacement. Probability both are red?",["5/12","5/33","1/6","25/144"],1,"Probability","5/12 × 4/11 = 20/132 = 5/33."),
+    Q("A rectangular plot has area 60 m² and length 7 m more than width. What are its dimensions?",["3 m by 20 m","4 m by 15 m","5 m by 12 m","6 m by 10 m"],2,"Quadratic equations","x(x + 7) = 60; (x + 12)(x − 5) = 0, so dimensions are 5 m by 12 m."),
+    Q("For y = 2ˣ, what is y when x = 4, and what trend does the graph show?",["y = 10; linear increase","y = 12; decreasing","y = 16; exponential increase","y = 16; exponential decrease"],2,"Indices and graphs","2⁴ = 16; the values double for each unit increase in x."),
+    Q("Similar plots have corresponding lengths 8 m and 20 m. The smaller plot has area 48 m². Find the larger area.",["120 m²","240 m²","300 m²","480 m²"],2,"Similarity and area","Scale factor = 2.5; area factor = 6.25; 48 × 6.25 = 300 m²."),
+    Q("P(2,3) is reflected in the x-axis, then rotated 180° about the origin. Find the final coordinates.",["(2,3)","(−2,−3)","(−2,3)","(2,−3)"],2,"Transformations","Reflection gives (2,−3); rotation gives (−2,3)."),
+    Q("A circular clock has radius 21 cm. A sector angle is 60°. Using π = 22/7, find the sector area.",["115.5 cm²","231 cm²","462 cm²","1,386 cm²"],1,"Circle geometry","60/360 × 22/7 × 21² = 231 cm²."),
+    Q("18 learners prefer football, 12 volleyball and 10 basketball. Two learners are selected without replacement. Probability both prefer basketball?",["1/16","3/52","1/10","9/40"],1,"Statistics and probability","10/40 × 9/39 = 90/1560 = 3/52.")
+  ];
+
   window.CBENexusCBCBanks = {banks:banks,topicMap:topicMap,curriculum:curriculum};
 })();
