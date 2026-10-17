@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CBE Nexus — Assessments</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="assessments/assessments.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="main-nav" aria-label="Assessments navigation">
+      <a class="brand" href="../index.html#dashboard" aria-label="CBE Nexus home">
+        <span class="brand-mark">CBE</span>
+        <span><strong>CBE Nexus</strong><small>Assessments</small></span>
+      </a>
+      <div class="nav-actions">
+        <a class="primary-button nav-cta" href="../index.html">Home</a>
+        <a class="primary-button nav-cta" href="assessments/admin.html">Teacher tools</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="assess-page">
+    <section class="assess-hero">
+      <h1>Assessments & Quizzes</h1>
+      <p>Take topic-based quizzes or timed assessments. Teachers can create and manage assessments via the Teacher tools.</p>
+    </section>
+
+    <section class="assess-controls">
+      <label>Grade <select id="filterGrade"><option value="">All</option></select></label>
+      <label>Subject <select id="filterSubject"><option value="">All</option></select></label>
+      <label>Topic <select id="filterTopic"><option value="">All</option></select></label>
+      <label>Type <select id="filterType"><option value="">All</option><option value="quiz">Quiz</option><option value="assessment">Assessment</option></select></label>
+      <input id="search" placeholder="Search assessments...">
+      <button id="clear">Clear</button>
+    </section>
+
+    <section id="list" class="assess-list">
+      <!-- assessments loaded here -->
+    </section>
+
+  </main>
+
+  <script src="../supabase-config.js" defer></script>
+  <script src="assessments/assessments.js" defer></script>
+</body>
+</html>

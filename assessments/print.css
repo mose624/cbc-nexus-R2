@@ -1,0 +1,3 @@
+@media print{
+  .site-header, .main-nav, .nav-actions, .admin-controls, .editor { display:none }
+}

@@ -1,0 +1,15 @@
+[
+  {
+    "id":"sample-attempt-1",
+    "assessment_id":"math-g6-quiz1",
+    "user_id":"anon",
+    "score":3,
+    "total_marks":6,
+    "percentage":50,
+    "answers":[
+      { "question_id":1001, "answer_text":"1", "awarded_marks":2, "model_answer":"3/4" },
+      { "question_id":1002, "answer_text":"False", "awarded_marks":1, "model_answer":"False" },
+      { "question_id":1003, "answer_text":"Because...", "awarded_marks":0, "model_answer":"Find common denominator and compare" }
+    ]
+  }
+]

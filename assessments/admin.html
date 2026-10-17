@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Teacher Tools — Assessments</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="assessments/assessments.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="main-nav" aria-label="Teacher navigation">
+      <a class="brand" href="../index.html#dashboard" aria-label="CBE Nexus home">
+        <span class="brand-mark">CBE</span>
+        <span><strong>CBE Nexus</strong><small>Teacher tools</small></span>
+      </a>
+      <div class="nav-actions">
+        <a class="primary-button nav-cta" href="../index.html">Home</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="admin-page">
+    <section class="admin-hero">
+      <h1>Teacher: Create / Edit Assessments</h1>
+      <p>Your account must be authenticated to create or modify assessments. The UI uses Supabase client auth for identity; ensure RLS policies allow authenticated teachers to perform writes.</p>
+    </section>
+
+    <section class="admin-controls">
+      <button id="btnNew">New assessment</button>
+      <div id="adminList"></div>
+    </section>
+
+    <section id="editor" class="editor hidden">
+      <h2 id="editorTitle">New assessment</h2>
+      <form id="editorForm">
+        <label>Title <input name="title" required></label>
+        <label>Grade <input name="grade"></label>
+        <label>Subject <input name="subject"></label>
+        <label>Topic <input name="topic"></label>
+        <label>Time limit (minutes, leave empty for none) <input name="time_limit_minutes" type="number" min="0"></label>
+        <label>Attempt limit (per student) <input name="attempt_limit" type="number" min="0" value="1"></label>
+        <label>Assessment type <select name="type"><option value="quiz">Quiz</option><option value="assessment">Assessment</option></select></label>
+        <div id="questionsEditor"></div>
+        <button type="button" id="btnAddQuestion">Add question</button>
+        <div style="margin-top:12px">
+          <button type="submit">Save assessment</button>
+          <button type="button" id="btnCancel">Cancel</button>
+        </div>
+      </form>
+    </section>
+
+  </main>
+
+  <script src="../supabase-config.js" defer></script>
+  <script src="assessments/api.js" defer></script>
+  <script src="assessments/admin.js" defer></script>
+</body>
+</html>

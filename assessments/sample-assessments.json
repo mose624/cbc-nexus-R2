@@ -1,0 +1,47 @@
+{
+  "assessments": [
+    {
+      "id": "math-g6-quiz1",
+      "title": "Fractions: comparing",
+      "grade": "6",
+      "subject": "Mathematics",
+      "topic": "Fractions",
+      "description": "Short quiz on comparing fractions",
+      "time_limit_minutes": 10,
+      "attempt_limit": 3,
+      "type": "quiz"
+    }
+  ],
+  "assessment_questions": [
+    {
+      "id": 1001,
+      "assessment_id": "math-g6-quiz1",
+      "question_type": "mcq",
+      "prompt": "Which is larger: 3/4 or 2/3?",
+      "marks": 2,
+      "order": 1
+    },
+    {
+      "id": 1002,
+      "assessment_id": "math-g6-quiz1",
+      "question_type": "tf",
+      "prompt": "A proper fraction has numerator larger than denominator.",
+      "marks": 1,
+      "order": 2
+    },
+    {
+      "id": 1003,
+      "assessment_id": "math-g6-quiz1",
+      "question_type": "short",
+      "prompt": "Explain why finding a common denominator helps compare fractions.",
+      "marks": 3,
+      "order": 3
+    }
+  ],
+  "question_options": [
+    { "id": 1, "question_id": 1001, "label": "3/4", "is_correct": true, "order": 1 },
+    { "id": 2, "question_id": 1001, "label": "2/3", "is_correct": false, "order": 2 },
+    { "id": 3, "question_id": 1002, "label": "True", "is_correct": false, "order": 1 },
+    { "id": 4, "question_id": 1002, "label": "False", "is_correct": true, "order": 2 }
+  ]
+}

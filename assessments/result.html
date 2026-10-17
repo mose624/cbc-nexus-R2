@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Assessment Results — CBE Nexus</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="assessments/assessments.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="main-nav" aria-label="Assessment navigation">
+      <a class="brand" href="../index.html#dashboard" aria-label="CBE Nexus home">
+        <span class="brand-mark">CBE</span>
+        <span><strong>CBE Nexus</strong><small>Assessments</small></span>
+      </a>
+      <div class="nav-actions">
+        <a class="primary-button nav-cta" href="assessments/index.html">All assessments</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="results-page">
+    <section id="resultPanel"></section>
+  </main>
+
+  <script src="../supabase-config.js" defer></script>
+  <script src="assessments/api.js" defer></script>
+  <script src="assessments/results.js" defer></script>
+</body>
+</html>

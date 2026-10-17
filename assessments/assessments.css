@@ -1,0 +1,18 @@
+/* Assessments styles */
+.assess-page, .take-page, .results-page, .admin-page { width: min(980px, calc(100% - 32px)); margin:36px auto; }
+.assess-hero{padding:12px;border-radius:10px;background:linear-gradient(135deg,#f6fbff,#fff)}
+.assess-controls{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.assess-controls label{display:flex;flex-direction:column;font-weight:700}
+.assess-controls select,input{padding:8px;border-radius:8px;border:1px solid var(--line)}
+.assess-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.card{border:1px solid #e6eef0;padding:12px;border-radius:10px;background:#fff}
+.card h3{margin:0}
+.card .meta{color:#3a5f56}
+.notice{padding:10px;border-radius:8px;background:#fff8e6;border:1px solid #f3e0b9;color:#6b4a00}
+.assessment{margin-top:12px}
+.question{border:1px dashed #e0e8e6;padding:10px;border-radius:8px;margin-bottom:10px}
+.q-options{margin-left:10px}
+.btn-inline{display:inline-block;padding:6px 8px;border-radius:8px;border:0;background:#eef}
+.hidden{display:none}
+.editor label{display:block;margin:6px 0}
+.editor input, .editor textarea, .editor select{width:100%;padding:8px;border-radius:6px;border:1px solid #ddd}
