@@ -55,8 +55,8 @@
     </section>
 
     <section class="interactive-resources" aria-labelledby="resources-heading">
-      <button id="resourcesToggle" class="resources-toggle" aria-expanded="false" aria-controls="resourcesPanel">Deployment &amp; AI marking — key docs and setup</button>
-      <div id="resourcesPanel" class="resources-panel" hidden>
+      <button id="resourcesToggle" class="resources-toggle" aria-expanded="true" aria-controls="resourcesPanel">Deployment &amp; AI marking — key docs and setup</button>
+      <div id="resourcesPanel" class="resources-panel">
         <p id="resources-heading"><strong>Quick setup notes</strong></p>
         <p>The online AI written marking, one-attempt enforcement and timed submissions require a Supabase project and the included Edge Function. Review these repository files for full instructions and configuration examples:</p>
         <ul>
@@ -80,6 +80,10 @@
     (function(){
       const toggle = document.getElementById('resourcesToggle');
       const panel = document.getElementById('resourcesPanel');
+      // Ensure panel is open by default on page load
+      toggle.setAttribute('aria-expanded', 'true');
+      panel.hidden = false;
+
       toggle.addEventListener('click', function(){
         const expanded = this.getAttribute('aria-expanded') === 'true';
         this.setAttribute('aria-expanded', String(!expanded));
