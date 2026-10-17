@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CBE Nexus — Learning Hub</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="learning/learning.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="main-nav" aria-label="Learning Hub navigation">
+      <a class="brand" href="../index.html#dashboard" aria-label="CBE Nexus home">
+        <span class="brand-mark">CBE</span>
+        <span><strong>CBE Nexus</strong><small>Learning Hub</small></span>
+      </a>
+      <div class="nav-actions">
+        <a class="primary-button nav-cta" href="../index.html">Home</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="learning-page">
+    <section class="learning-hero">
+      <h1>CBE Nexus — Learning Hub</h1>
+      <p>Browse curriculum-aligned lessons, filter by grade, subject and topic, and open structured lesson pages you can print or download.</p>
+      <p class="disclaimer"><strong>Note:</strong> Sample content is unverified and for development/demo use only. Do not treat it as official KICD material. You can replace or mark lessons as reviewed when you add verified curriculum materials.</p>
+    </section>
+
+    <section class="learning-controls">
+      <div class="filter-row">
+        <label>Grade
+          <select id="filterGrade"><option value="">All</option></select>
+        </label>
+        <label>Subject
+          <select id="filterSubject"><option value="">All</option></select>
+        </label>
+        <label>Topic
+          <select id="filterTopic"><option value="">All</option></select>
+        </label>
+        <label>Content type
+          <select id="filterType"><option value="">All</option><option value="notes">Notes</option><option value="examples">Worked examples</option><option value="activities">Activities</option></select>
+        </label>
+        <label class="search">Search
+          <input id="searchInput" placeholder="Search lessons...">
+        </label>
+        <button id="clearFilters" class="muted">Clear</button>
+      </div>
+    </section>
+
+    <section id="lessonsList" class="lessons-list" aria-live="polite">
+      <!-- Lessons loaded here -->
+    </section>
+
+    <section id="lessonPreview" class="lesson-preview hidden" aria-labelledby="previewHeading">
+      <!-- Preview panel when a lesson is selected -->
+    </section>
+
+  </main>
+
+  <script src="../supabase-config.js" defer></script>
+  <script src="learning/learning.js" defer></script>
+</body>
+</html>

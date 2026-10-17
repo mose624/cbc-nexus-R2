@@ -1,0 +1,7 @@
+/* Print styles for lessons */
+@media print{
+  body{color:#000;background:#fff}
+  .site-header, .main-nav, .nav-actions { display:none }
+  .lesson-page{width:100%;margin:0;padding:0}
+  .lesson-body img{max-width:100%!important;height:auto}
+}

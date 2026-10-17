@@ -1,0 +1,38 @@
+/* Learning Hub styles */
+.learning-page, .lesson-page { width: min(980px, calc(100% - 32px)); margin: 36px auto; }
+.learning-hero { background: linear-gradient(135deg,#f0fbf6,#ffffff); padding:20px;border-radius:12px;border:1px solid #e6f6ee;margin-bottom:18px }
+.learning-hero h1{margin:0 0 6px}
+.learning-hero p{margin:0}
+.learning-hero .disclaimer{margin-top:8px;color:#6b6b6b;font-size:0.95rem}
+
+.learning-controls .filter-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.filter-row label{display:flex;flex-direction:column;font-weight:700;font-size:0.92rem}
+.filter-row select, .filter-row input{padding:8px 10px;border-radius:8px;border:1px solid var(--line);min-width:140px}
+.filter-row .search input{min-width:220px}
+.filter-row button.muted{background:#fff;border:1px solid #ddd;padding:8px 12px;border-radius:8px}
+
+.lessons-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:14px}
+.lesson-card{border:1px solid #e6eef0;border-radius:10px;padding:12px;background:#fff;display:flex;flex-direction:column;gap:8px}
+.lesson-card h3{margin:0;font-size:1.05rem}
+.lesson-meta{font-size:0.9rem;color:#375e55}
+.lesson-card .tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{background:#f1fbf6;border-radius:999px;padding:6px 8px;font-size:0.85rem;border:1px solid #e5f6ee}
+.lesson-actions{margin-top:auto;display:flex;gap:8px}
+.btn{padding:8px 10px;border-radius:8px;border:0;cursor:pointer}
+.btn.ghost{background:transparent;border:1px solid #cdd}
+.btn.primary{background:#23c45a;color:#04292b}
+
+.lesson-preview{position:fixed;right:18px;top:84px;width:420px;max-height:80vh;overflow:auto;border:1px solid #e6eef0;background:#fff;padding:12px;border-radius:10px;box-shadow:var(--shadow)}
+.hidden{display:none}
+
+/* Lesson page */
+.lesson-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
+.lesson-header .meta{color:#2c4e48}
+.lesson-body section{margin:12px 0}
+.lesson-body h2{margin:0 0 8px}
+figure{border:1px solid #e6eef0;padding:8px;border-radius:8px}
+
+.print-only{display:none}
+@media print{.no-print{display:none}.print-only{display:block}}
+
+.notice-unverified{padding:10px;border-radius:8px;background:#fff8e6;border:1px solid #f3e0b9;color:#6b4a00}

@@ -1,0 +1,59 @@
+[
+  {
+    "id": "math-g6-01",
+    "grade": "6",
+    "subject": "Mathematics",
+    "topic": "Fractions",
+    "subtopic": "Comparing fractions",
+    "objectives": [
+      "Understand how to compare two fractions with different denominators.",
+      "Order a list of fractions from smallest to largest."
+    ],
+    "key_concepts": [
+      { "term": "Numerator", "definition": "The top number in a fraction indicating how many parts are being considered." },
+      { "term": "Denominator", "definition": "The bottom number in a fraction indicating the total number of equal parts." }
+    ],
+    "notes": "<p>To compare fractions with different denominators, convert them to a common denominator or compare cross-products. For example, to compare 3/4 and 2/3, cross-multiply: 3×3 = 9 and 4×2 = 8, so 3/4 > 2/3.</p>",
+    "worked_examples": [
+      { "title": "Compare 3/4 and 2/3", "content": "Cross-multiply: 3×3 = 9, 4×2 = 8 → 3/4 &gt; 2/3. Explain steps and show on number line." }
+    ],
+    "activities": [
+      "Use fraction cards to match equivalent fractions.",
+      "Order these fractions: 1/2, 3/8, 2/3, 5/6"
+    ],
+    "applications": "Fractions are used when sharing food, measuring ingredients in cooking, and dividing items among people.",
+    "illustrations": [
+      { "src": "https://via.placeholder.com/600x180.png?text=Fraction+number+line", "alt": "Fraction number line", "caption": "Number line showing 2/3 and 3/4" }
+    ],
+    "summary": "Comparing fractions can be done by finding common denominators or using cross-multiplication. Always reduce fractions when possible.",
+    "revision_questions": [
+      "Which is larger: 7/10 or 3/4?",
+      "Order: 2/5, 3/10, 1/2"
+    ],
+    "resources": [
+      { "label": "Printable notes (sample)", "url": "learning/sample-notes/fractions-grade6.pdf" }
+    ],
+    "verified": false
+  },
+  {
+    "id": "eng-g5-01",
+    "grade": "5",
+    "subject": "English",
+    "topic": "Paragraph writing",
+    "subtopic": "Topic sentences and supporting details",
+    "objectives": ["Identify topic sentences","Write a coherent paragraph with supporting details"],
+    "key_concepts": [
+      { "term": "Topic sentence", "definition": "A sentence that states the main idea of a paragraph." },
+      { "term": "Supporting details", "definition": "Sentences that explain or give examples supporting the topic sentence." }
+    ],
+    "notes": "<p>A good paragraph begins with a topic sentence, followed by supporting sentences and ends with a concluding sentence.</p>",
+    "worked_examples": [{ "title":"Example paragraph","content":"The topic sentence: 'My favourite season is the rainy season.' Supporting sentences: reasons why and an example." }],
+    "activities": ["Write a paragraph about your favourite season."],
+    "applications": "Useful for writing letters, essays and reports.",
+    "illustrations": [],
+    "summary": "A clear topic sentence and supporting details make a paragraph strong.",
+    "revision_questions": ["What is a topic sentence?","Write a topic sentence for a paragraph about school lunch."],
+    "resources": [],
+    "verified": false
+  }
+]
