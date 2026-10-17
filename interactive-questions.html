@@ -12,13 +12,21 @@
     .interactive-hero { padding:clamp(24px, 5vw, 52px); border-radius:22px; background:linear-gradient(135deg,#eaffee,#f4fff6); border:1px solid #a7eab5; box-shadow:var(--shadow); text-align:center; }
     .interactive-hero h1 { margin:0 0 14px; color:#123447; font-size:clamp(2rem,5vw,3.25rem); line-height:1.1; }
     .interactive-hero p { max-width:680px; margin:0 auto 24px; color:#263238; font-size:1.08rem; }
-    .interactive-launch { display:inline-flex; align-items:center; justify-content:center; padding:13px 20px; border-radius:999px; background:#21d94b; color:#050505; border:2px solid #15a83a; font-weight:900; text-decoration:none; }
+    .interactive-launch { display:inline-flex; align-items:center; justify-content:center; padding:13px 20px; border-radius:999px; background:#21d94b; color:#050505; border:2px solid #15a83a; font-weight:700; text-decoration:none; }
     .interactive-note { margin-top:22px; padding:18px; border-radius:14px; background:#fff; border:1px solid var(--line); color:var(--muted); text-align:left; }
     .interactive-back { display:inline-block; margin-bottom:18px; color:#123447; font-weight:700; }
     /* iframe container */
     .interactive-embed { margin-top:20px; border:1px solid #e6eef0; border-radius:12px; overflow:hidden; }
     .interactive-embed iframe{ width:100%; height:72vh; border:0; display:block; }
     @media(max-width:700px){ .interactive-embed iframe{ height:60vh; } }
+
+    /* resources panel */
+    .interactive-resources { max-width:960px; margin:22px auto 0; }
+    .resources-toggle { width:100%; text-align:left; background:#fff; border:1px solid #d6eedd; padding:12px 16px; border-radius:12px; cursor:pointer; font-weight:700; color:#0b3b2e; }
+    .resources-panel { margin-top:12px; padding:14px; border-radius:12px; background:linear-gradient(180deg,#fbfffb,#ffffff); border:1px solid #e6f6ea; color:#123447; }
+    .resources-panel ul { margin:8px 0 0 20px; }
+    .resources-panel li + li { margin-top:8px; }
+    .resources-note { margin-top:12px; color:#455a58; font-size:0.95rem; }
   </style>
 </head>
 <body>
@@ -46,19 +54,51 @@
       </div>
     </section>
 
+    <section class="interactive-resources" aria-labelledby="resources-heading">
+      <button id="resourcesToggle" class="resources-toggle" aria-expanded="false" aria-controls="resourcesPanel">Deployment &amp; AI marking — key docs and setup</button>
+      <div id="resourcesPanel" class="resources-panel" hidden>
+        <p id="resources-heading"><strong>Quick setup notes</strong></p>
+        <p>The online AI written marking, one-attempt enforcement and timed submissions require a Supabase project and the included Edge Function. Review these repository files for full instructions and configuration examples:</p>
+        <ul>
+          <li><a href="https://github.com/mose624/cbc-nexus-R2/blob/main/README_AI_WRITTEN_MARKING_AND_TIMING.md" target="_blank" rel="noopener">README_AI_WRITTEN_MARKING_AND_TIMING.md</a> — AI marking, timer and deployment overview (recommended start).</li>
+          <li><a href="https://github.com/mose624/cbc-nexus-R2/blob/main/supabase-config.js" target="_blank" rel="noopener">supabase-config.js</a> — public Supabase URL/publishable-key placeholders (do NOT add secret keys here).</li>
+          <li><a href="https://github.com/mose624/cbc-nexus-R2/blob/main/cbenexus-all-grades/supabase/schema.sql" target="_blank" rel="noopener">cbenexus-all-grades/supabase/schema.sql</a> — database schema (run in Supabase SQL editor).</li>
+          <li><a href="https://github.com/mose624/cbc-nexus-R2/blob/main/cbenexus-all-grades/supabase/functions" target="_blank" rel="noopener">cbenexus-all-grades/supabase/functions/</a> — Edge Function source (cbc-nexus-results).</li>
+          <li><a href="https://github.com/mose624/cbc-nexus-R2/blob/main/index.html" target="_blank" rel="noopener">index.html</a> — main site with learner gate and Teacher Dashboard.</li>
+        </ul>
+        <p class="resources-note">Important: never paste OpenAI API keys or Supabase service-role/secret keys into browser files or public repos. Follow the README_AI_WRITTEN_MARKING_AND_TIMING.md steps to configure server-side secrets and deploy the Edge Function.</p>
+      </div>
+    </section>
+
     <div class="interactive-embed" role="region" aria-label="Interactive quizzes embedded">
       <iframe id="interactiveFrame" src="quizzes.html" title="CBE Nexus Interactive Quizzes" loading="lazy"></iframe>
     </div>
 
   </main>
   <script>
+    // Toggle resources panel
+    (function(){
+      const toggle = document.getElementById('resourcesToggle');
+      const panel = document.getElementById('resourcesPanel');
+      toggle.addEventListener('click', function(){
+        const expanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', String(!expanded));
+        if (expanded) {
+          panel.hidden = true;
+        } else {
+          panel.hidden = false;
+          panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    })();
+
     // If quizzes.html fails to load inside the iframe (e.g. served cross-origin), show guidance to open in a new tab.
     (function(){
       const iframe = document.getElementById('interactiveFrame');
       iframe.addEventListener('error', function(){
         const note = document.createElement('div');
         note.className = 'interactive-note';
-        note.innerHTML = '<strong>Load failed</strong><p>Quizzes could not be loaded in the embed. You can open the full quizzes page in a new tab: <a href="quizzes.html" target="_blank" rel="noopener">Open Quizzes</a></p>';
+        note.innerHTML = '<strong>Load failed</strong><p>Quizzes could not be loaded in the embed. You can open the full quizzes page in a new tab: <a href="quizzes.html" target="_blank" rel="noopener noreferrer">Open quizzes</a></p>';
         iframe.replaceWith(note);
       });
     })();
