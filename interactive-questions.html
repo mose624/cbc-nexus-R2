@@ -12,9 +12,13 @@
     .interactive-hero { padding:clamp(24px, 5vw, 52px); border-radius:22px; background:linear-gradient(135deg,#eaffee,#f4fff6); border:1px solid #a7eab5; box-shadow:var(--shadow); text-align:center; }
     .interactive-hero h1 { margin:0 0 14px; color:#123447; font-size:clamp(2rem,5vw,3.25rem); line-height:1.1; }
     .interactive-hero p { max-width:680px; margin:0 auto 24px; color:#263238; font-size:1.08rem; }
-    .interactive-launch { display:inline-flex; align-items:center; justify-content:center; padding:13px 20px; border-radius:999px; background:#21d94b; color:#050505; border:2px solid #15a83a; font-weight:900; box-shadow:0 0 18px #21d94b80; }
+    .interactive-launch { display:inline-flex; align-items:center; justify-content:center; padding:13px 20px; border-radius:999px; background:#21d94b; color:#050505; border:2px solid #15a83a; font-weight:900; text-decoration:none; }
     .interactive-note { margin-top:22px; padding:18px; border-radius:14px; background:#fff; border:1px solid var(--line); color:var(--muted); text-align:left; }
     .interactive-back { display:inline-block; margin-bottom:18px; color:#123447; font-weight:700; }
+    /* iframe container */
+    .interactive-embed { margin-top:20px; border:1px solid #e6eef0; border-radius:12px; overflow:hidden; }
+    .interactive-embed iframe{ width:100%; height:72vh; border:0; display:block; }
+    @media(max-width:700px){ .interactive-embed iframe{ height:60vh; } }
   </style>
 </head>
 <body>
@@ -38,9 +42,26 @@
       <a class="interactive-launch" href="quizzes.html">Open Quizzes &amp; Learner Progress →</a>
       <div class="interactive-note">
         <strong>Interactive Questions portal</strong>
-        <p>This dedicated page is ready for the separate interactive-question website to be connected. The source website or its deployment URL still needs to be supplied before it can be embedded here; existing CBE Nexus pages, payments and resource downloads remain separate.</p>
+        <p>This page embeds the local quizzes implementation. If you prefer the full-page experience, open the quizzes interface in a new tab using the button above.</p>
       </div>
     </section>
+
+    <div class="interactive-embed" role="region" aria-label="Interactive quizzes embedded">
+      <iframe id="interactiveFrame" src="quizzes.html" title="CBE Nexus Interactive Quizzes" loading="lazy"></iframe>
+    </div>
+
   </main>
+  <script>
+    // If quizzes.html fails to load inside the iframe (e.g. served cross-origin), show guidance to open in a new tab.
+    (function(){
+      const iframe = document.getElementById('interactiveFrame');
+      iframe.addEventListener('error', function(){
+        const note = document.createElement('div');
+        note.className = 'interactive-note';
+        note.innerHTML = '<strong>Load failed</strong><p>Quizzes could not be loaded in the embed. You can open the full quizzes page in a new tab: <a href="quizzes.html" target="_blank" rel="noopener">Open Quizzes</a></p>';
+        iframe.replaceWith(note);
+      });
+    })();
+  </script>
 </body>
 </html>
