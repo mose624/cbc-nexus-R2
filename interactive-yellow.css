@@ -25,3 +25,28 @@ footer.site-footer div,footer.site-footer p,footer.site-footer small{color:#3026
 .mobile-nav{background:#ffe45c!important}.mobile-nav a,.mobile-nav .close{color:#171717!important;border-color:#d7b00d!important}
 .interactive-embed{border:2px solid #e2bb00!important;background:#fff5b8!important}
 @media(max-width:720px){.site-header,.hub-header,.top-strip{border-bottom-width:3px!important}.container{padding:12px!important}}
+
+/* Professional header typography and no mid-word/nav-label wrapping */
+.site-header .main-nav,.hub-header .header-inner,.top-strip,.nav-main,.nav-actions,.header-cta{min-width:0;gap:clamp(8px,1.2vw,16px)}
+.site-header .main-nav,.hub-header .header-inner{flex-wrap:nowrap}
+.site-header .brand,.hub-header .brand,.top-strip>a{flex:0 0 auto;min-width:max-content;white-space:nowrap}
+.site-header .brand strong,.site-header .brand small,.brand-title strong,.brand-title small{white-space:nowrap;word-break:normal;overflow-wrap:normal}
+.site-header .nav-actions,.nav-links,.header-cta{flex-wrap:nowrap}
+.site-header .nav-actions a,.nav-links a,.header-cta a,.top-strip nav a{white-space:nowrap;word-break:normal;overflow-wrap:normal;flex:0 0 auto;line-height:1.2}
+.site-header .nav-actions a,.nav-links a,.header-cta a{padding:9px clamp(8px,1vw,14px);font-size:clamp(.78rem,.95vw,.95rem)}
+.hub-header .header-inner.container{padding:12px clamp(12px,2vw,20px)}
+.site-header .brand small{font-size:.72rem}
+.interactive-hero h1,.hero h1,.info-band h1,.section-heading h2,.subjects-container h1{word-break:normal;overflow-wrap:normal;hyphens:none;line-height:1.15}
+.interactive-hero h1,.hero h1,.info-band h1,.section-heading h2{max-width:100%}
+@media(max-width:900px){
+ .hub-header .nav-links{display:none}
+ .hub-header .hamburger{display:inline-block}
+ .site-header .main-nav{gap:8px}
+ .site-header .nav-actions a{font-size:.82rem;padding:8px 9px}
+}
+@media(max-width:520px){
+ .site-header .brand small{display:none}
+ .site-header .nav-actions{gap:6px}
+ .site-header .nav-actions a{font-size:.76rem;padding:8px 7px}
+ .hub-header .header-inner{gap:8px}
+}
