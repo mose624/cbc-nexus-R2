@@ -78,22 +78,6 @@
       </div>
     </section>
 
-    <section class="interactive-resources" aria-labelledby="resources-heading">
-      <button id="resourcesToggle" class="resources-toggle" aria-expanded="true" aria-controls="resourcesPanel">Deployment &amp; AI marking — key docs and setup</button>
-      <div id="resourcesPanel" class="resources-panel">
-        <p id="resources-heading"><strong>Quick setup notes</strong></p>
-        <p>The online AI written marking, one-attempt enforcement and timed submissions require a Supabase project and the included Edge Function. Review these repository files for full instructions and configuration examples:</p>
-        <ul>
-          <li><a href="https://github.com/mose624/cbc-nexus-R2/blob/main/README_AI_WRITTEN_MARKING_AND_TIMING.md" target="_blank" rel="noopener">README_AI_WRITTEN_MARKING_AND_TIMING.md</a> — AI marking, timer and deployment overview (recommended start).</li>
-          <li><a href="https://github.com/mose624/cbc-nexus-R2/blob/main/supabase-config.js" target="_blank" rel="noopener">supabase-config.js</a> — public Supabase URL/publishable-key placeholders (do NOT add secret keys here).</li>
-          <li><a href="https://github.com/mose624/cbc-nexus-R2/blob/main/cbenexus-all-grades/supabase/schema.sql" target="_blank" rel="noopener">cbenexus-all-grades/supabase/schema.sql</a> — database schema (run in Supabase SQL editor).</li>
-          <li><a href="https://github.com/mose624/cbc-nexus-R2/blob/main/cbenexus-all-grades/supabase/functions" target="_blank" rel="noopener">cbenexus-all-grades/supabase/functions/</a> — Edge Function source (cbc-nexus-results).</li>
-          <li><a href="https://github.com/mose624/cbc-nexus-R2/blob/main/index.html" target="_blank" rel="noopener">index.html</a> — main site with learner gate and Teacher Dashboard.</li>
-        </ul>
-        <p class="resources-note">Important: never paste OpenAI API keys or Supabase service-role/secret keys into browser files or public repos. Follow the README_AI_WRITTEN_MARKING_AND_TIMING.md steps to configure server-side secrets and deploy the Edge Function.</p>
-      </div>
-    </section>
-
     <section class="curriculum-subject-picker" aria-labelledby="curriculumSubjectHeading">
       <label id="curriculumSubjectHeading" for="kicdSubjectSelect">Choose a KICD curriculum learning area / subject</label>
       <select id="kicdSubjectSelect">
