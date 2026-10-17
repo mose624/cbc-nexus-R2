@@ -1,73 +1,386 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CBE Nexus Learning Hub | CBC & CBE Guides Kenya</title>
-<meta name="description" content="Practical CBC and CBE learning guides for Kenyan parents, learners and teachers, including KJSEA preparation, assessment and Grade 7–9 resource guidance.">
-<meta name="robots" content="index,follow">
-<link rel="canonical" href="https://cbenexus.co.ke/learning-hub.html">
-<meta property="og:type" content="website">
-<meta property="og:title" content="CBE Nexus Learning Hub | CBC & CBE Guides Kenya">
-<meta property="og:description" content="Practical educational guides for Kenyan parents, learners and teachers.">
-<meta property="og:url" content="https://cbenexus.co.ke/learning-hub.html">
-<link rel="stylesheet" href="styles.css">
-<style>
-.learning-page{max-width:980px;margin:auto;padding:18px 12px}.learning-card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px;margin:12px 0}.learning-card h2{margin:0 0 8px}.learning-card p,.learning-card li{color:var(--muted);line-height:1.65}.learning-meta{font-size:13px;color:var(--muted)}.learning-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.learning-nav a{padding:7px 10px;border:1px solid var(--line);border-radius:6px;text-decoration:none;font-weight:700}.source-note{font-size:13px}
-</style>
-<link rel="stylesheet" href="customer-care.css?v=20261010-subscribe1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CBE Nexus Learning Hub | Learn. Practise. Excel.</title>
+  <meta name="description" content="CBC Nexus Learning Hub — premium Kenyan learning platform with lessons, quizzes, progress tracking and resources for Grades 6–10.">
+  <link rel="canonical" href="https://cbenexus.co.ke/learning-hub.html">
+  <link rel="icon" type="image/svg+xml" href="/favicon-cbe.svg">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Learning Hub specific styles - visual: black header, golden-yellow accents, white cards, light-grey backgrounds, dark text */
+    :root{
+      --brand-black:#0b0b0b;
+      --gold:#f5c542;
+      --gold-700:#d69e2e;
+      --muted:#475569;
+      --card-bg:#ffffff;
+      --page-bg:#f6f7f9;
+      --line:#e6e9ee;
+      --radius:14px;
+      --max-width:1180px;
+      --shadow:0 8px 24px rgba(11,11,11,0.08);
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color-scheme: light;
+    }
+    body{margin:0;background:var(--page-bg);color:#0f1724;line-height:1.45}
+    .container{max-width:var(--max-width);margin:0 auto;padding:20px}
+
+    /* Header */
+    .hub-header{background:var(--brand-black);color:var(--card-bg);position:sticky;top:0;z-index:120;box-shadow:0 6px 18px rgba(2,6,23,0.2)}
+    .hub-header .header-inner{max-width:var(--max-width);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;gap:12px}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+    .brand-mark{width:44px;height:44px;border-radius:10px;background:linear-gradient(180deg,var(--gold),var(--gold-700));display:grid;place-items:center;font-weight:800;color:var(--brand-black);font-size:18px}
+    .brand-title strong{display:block;font-size:1rem}
+    .brand-title small{display:block;font-size:0.72rem;color:rgba(11,11,11,0.65)}
+
+    /* Nav */
+    .nav-main{display:flex;align-items:center;gap:16px}
+    .nav-links{display:flex;gap:10px;align-items:center}
+    .nav-links a{color:var(--card-bg);text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600}
+    .nav-links a:hover{background:rgba(255,255,255,0.06)}
+    .header-cta{display:flex;gap:8px}
+    .btn{background:var(--gold);color:var(--brand-black);padding:9px 14px;border-radius:10px;font-weight:800;text-decoration:none;border:2px solid rgba(0,0,0,0.06)}
+    .btn.secondary{background:transparent;color:var(--card-bg);border:2px solid rgba(255,255,255,0.06)}
+
+    /* Mobile menu */
+    .hamburger{display:none;background:transparent;border:0;color:var(--card-bg);font-size:20px}
+    .mobile-nav{display:none;position:fixed;inset:0;background:linear-gradient(180deg, rgba(2,6,23,0.95), rgba(2,6,23,0.98));padding:28px;z-index:130}
+    .mobile-nav .close{display:block;color:var(--gold);font-size:22px;margin-bottom:20px}
+    .mobile-nav a{display:block;color:var(--card-bg);text-decoration:none;font-weight:700;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+
+    /* Hero */
+    .hero{background:linear-gradient(180deg,rgba(245,197,66,0.06),transparent);border-radius:var(--radius);padding:36px;margin:18px 0;box-shadow:var(--shadow);display:flex;gap:24px;align-items:center}
+    .hero-copy{flex:1}
+    .hero h1{margin:0 0 12px;font-size:clamp(1.6rem,3.8vw,2.4rem);line-height:1.05}
+    .eyebrow{font-weight:800;color:var(--gold-700);letter-spacing:0.06em}
+    .hero p{margin:0 0 18px;color:var(--muted);max-width:700px}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+    .hero-visual{width:320px;max-width:40%;min-width:220px}
+    .card{background:var(--card-bg);border-radius:12px;padding:14px;border:1px solid var(--line);box-shadow:0 6px 18px rgba(11,11,11,0.04)}
+
+    /* Grades */
+    .grades{margin:18px 0}
+    .grades-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+    .grade-card{background:var(--card-bg);border-radius:12px;padding:16px;text-align:center;border:1px solid var(--line);cursor:pointer}
+    .grade-card h3{margin:6px 0;font-size:1.05rem}
+    .grade-card p{margin:0;color:var(--muted)}
+    .grade-card a{display:block;color:inherit;text-decoration:none}
+
+    /* Subjects */
+    .subjects{margin:22px 0}
+    .subjects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+    .subject-card{display:flex;gap:12px;align-items:center;padding:12px;border-radius:12px;background:var(--card-bg);border:1px solid var(--line)}
+    .subject-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(180deg,#fff8e1,#fff3cd);display:grid;place-items:center;color:#653b00;font-weight:800}
+
+    /* Featured lessons & quizzes */
+    .two-col{display:grid;grid-template-columns:2fr 1fr;gap:12px}
+    .lesson-card{display:flex;gap:12px;align-items:flex-start}
+    .lesson-card img{width:120px;height:80px;border-radius:8px;object-fit:cover}
+
+    /* Progress cards */
+    .progress-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:18px 0}
+    .progress-card{padding:14px;border-radius:12px;background:var(--card-bg);border:1px solid var(--line)}
+    .progress-bar{height:10px;background:#e9eef5;border-radius:8px;overflow:hidden}
+    .progress-fill{height:100%;background:linear-gradient(90deg,var(--gold-700),#f59e0b);width:0}
+
+    /* Benefits */
+    .benefits{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:22px 0}
+    .benefit{padding:16px;border-radius:12px;background:var(--card-bg);border:1px solid var(--line);text-align:center}
+
+    /* Footer */
+    footer.site-footer{margin-top:28px;background:#0f1724;color:#dbeafe;padding:28px;border-radius:10px}
+    .footer-inner{max-width:var(--max-width);margin:0 auto;display:grid;grid-template-columns:1fr 1fr 200px;gap:18px;align-items:start}
+    .footer-links a{display:block;color:#fff;text-decoration:none;margin:6px 0}
+
+    /* Responsive */
+    @media(max-width:900px){.two-col{grid-template-columns:1fr}.hero{flex-direction:column}.hero-visual{max-width:100%;width:100%}}
+    @media(max-width:720px){.nav-links{display:none}.hamburger{display:inline-block}.footer-inner{grid-template-columns:1fr}} 
+  </style>
 </head>
 <body>
-<main class="learning-page">
-<nav class="learning-nav" aria-label="Learning Hub navigation"><a href="/">CBE Nexus Home</a><a href="/resources.html">Resources</a><a href="/free-resources.html">Free Resources</a><a href="/contact.html">Contact</a></nav>
-<header class="learning-card">
-<p class="eyebrow">CBE Nexus Learning Hub</p>
-<h1>CBC & CBE Learning Guides for Kenya</h1>
-<p>Practical, teacher-informed articles for parents, learners and educators. Use the guides alongside official curriculum and assessment information from KICD and KNEC.</p>
-<p class="learning-meta">Editorial focus: useful, original educational information • Updated September 2026</p>
-</header>
+  <header class="hub-header" role="banner">
+    <div class="header-inner container">
+      <a class="brand" href="index.html">
+        <div class="brand-mark">CBE</div>
+        <div class="brand-title"><strong>CBE Nexus</strong><small>Connecting learners to excellence</small></div>
+      </a>
 
-<article class="learning-card">
-<h2>CBC/CBE explained for Kenyan parents</h2>
-<p>Competency-Based Education focuses on what a learner can demonstrate, not only what the learner can recall. For parents, this means looking beyond marks to the skills, knowledge, values and application shown in school work. A useful home routine is simple: ask what the learner is working on, ask them to explain the idea in their own words, and encourage them to demonstrate it through a small practical task where appropriate.</p>
-<p>Parents can also help by keeping communication open with teachers, reviewing school feedback and creating a regular study routine. The aim is not to replace classroom teaching but to give the learner time, encouragement and a suitable environment for practice.</p>
-<p class="source-note">Curriculum designs for Kenya's grades are published by KICD. <a href="https://kicd.ac.ke/cbc-materials/curriculum-designs/regular-curriculum-designs/" target="_blank" rel="noopener">KICD curriculum designs</a>.</p>
-</article>
+      <nav class="nav-main" role="navigation" aria-label="Main">
+        <div class="nav-links" role="menubar" aria-label="Primary">
+          <a href="index.html">Home</a>
+          <a href="grades.html">Grades</a>
+          <a href="subjects.html">Subjects</a>
+          <a href="resource-category.html">Learning Materials</a>
+          <a href="quizzes.html">Quizzes</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </div>
 
-<article class="learning-card">
-<h2>How to prepare for KJSEA</h2>
-<p>KJSEA preparation should be based on the prescribed curriculum, regular practice and feedback. Start by identifying subjects and learning areas that need more attention. Use short revision sessions, practice questions, corrections and spaced review instead of waiting until the final weeks.</p>
-<p>For Grade 9 learners, preparation should also include understanding the assessment requirements and following instructions from the school. KNEC states that KJSEA is intended to measure competencies and provide feedback that helps guide pathway choices at senior school. The official KNEC regulations should therefore be the reference point for assessment requirements.</p>
-<p class="source-note"><a href="https://www.knec.ac.ke/wp-content/uploads/2026/02/KJSEA-REGULATIONS.pdf" target="_blank" rel="noopener">KNEC KJSEA Regulations</a> • <a href="https://www.knec.ac.ke/2026-kjsea-timetable/" target="_blank" rel="noopener">KNEC 2026 KJSEA timetable</a>.</p>
-</article>
+        <div class="header-cta">
+          <a class="btn" href="#startLearning" id="startLearningBtn">Start Learning</a>
+          <a class="btn secondary" href="grades.html">Explore Grades</a>
+          <button class="hamburger" id="openMobileNav" aria-label="Open menu">☰</button>
+        </div>
+      </nav>
+    </div>
+  </header>
 
-<article class="learning-card">
-<h2>How teachers can use CBE assessment</h2>
-<p>Assessment becomes more useful when it produces information that changes teaching. Teachers can combine classroom observation, tasks, questions, projects and other school-based assessment evidence with feedback and targeted intervention. After an assessment, identify the specific skill or learning outcome that needs support, reteach it in a different way, and give the learner another opportunity to demonstrate improvement.</p>
-<p>KNEC guidance emphasizes tracking learner achievement, preparing progress reports and providing feedback to learners and parents or guardians. Keep assessment records organized so that evidence can support decisions about learning support.</p>
-<p class="source-note"><a href="https://www.knec.ac.ke/wp-content/uploads/2026/02/KPSEA-KJSEA-USER-GUIDE-1.pdf" target="_blank" rel="noopener">KNEC KPSEA/KJSEA User Guide</a>.</p>
-</article>
+  <!-- Mobile nav overlay -->
+  <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+    <button class="close" id="closeMobileNav" aria-label="Close menu">✕</button>
+    <a href="index.html">Home</a>
+    <a href="grades.html">Grades</a>
+    <a href="subjects.html">Subjects</a>
+    <a href="resource-category.html">Learning Materials</a>
+    <a href="quizzes.html">Quizzes</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
 
-<article class="learning-card">
-<h2>CBC resources for Grade 7–9</h2>
-<p>Good Grade 7–9 resources should be clearly labelled by grade, subject and resource type. Before using a resource, check its learning area, topic or strand, instructions, difficulty level and whether it matches the current curriculum design. For revision, combine concise notes with questions and marking guidance so learners can practise and correct mistakes.</p>
-<p>KICD publishes curriculum designs for Grade 7, Grade 8 and Grade 9 learning areas. CBE Nexus resources should complement those official curriculum references rather than replace them.</p>
-<p class="source-note"><a href="https://kicd.ac.ke/cbc-materials/curriculum-designs/regular-curriculum-designs/" target="_blank" rel="noopener">KICD regular curriculum designs</a>.</p>
-</article>
+  <main class="container" id="startLearning">
+    <section class="hero" aria-label="Learn practise excel">
+      <div class="hero-copy">
+        <p class="eyebrow">Learn • Practise • Excel</p>
+        <h1>Learn. Practise. Excel.</h1>
+        <p>Welcome to the CBE Nexus Learning Hub — a premium Kenyan platform focused on practical CBC & CBE learning. Find curriculum-aligned lessons, practice quizzes, progress tracking and teacher resources designed for learners in Kenya.</p>
+        <div class="hero-actions">
+          <a class="btn" href="quizzes.html">Start Learning</a>
+          <a class="btn" href="grades.html">Explore Grades</a>
+          <a class="btn" id="viewMaterialsBtn" href="resource-category.html">Learning Materials</a>
+        </div>
+      </div>
+      <div class="hero-visual card">
+        <img src="assets/cbe-classroom.svg" alt="Classroom illustration" style="width:100%;height:180px;object-fit:contain">
+        <p style="margin-top:10px;color:var(--muted);font-size:0.95rem">Tailored lessons, practice quizzes and progress reports — built for Kenyan schools and learners.</p>
+      </div>
+    </section>
 
-<article class="learning-card">
-<h2>How parents can support learners at home</h2>
-<p>A practical home study routine does not need to be complicated. Choose a consistent time, set one or two clear learning goals, reduce distractions and allow short breaks. Ask the learner to explain what they learned instead of only asking whether homework is finished.</p>
-<p>When a learner struggles, focus on the specific difficulty rather than comparing them with other learners. Review the teacher's feedback, practise the skill in small steps and communicate with the school when additional support is needed. Encourage reading, problem-solving, practical activities and responsible use of digital learning resources.</p>
-</article>
+    <!-- Grades -->
+    <section class="card grades" aria-labelledby="gradesHeading">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div>
+          <p class="eyebrow">Grade levels</p>
+          <h2 id="gradesHeading">Choose your grade</h2>
+          <p style="margin:6px 0;color:var(--muted)">Content aligned to CBC/CBE standards. Tap a grade to view lessons, activities and quizzes.</p>
+        </div>
+        <div>
+          <a class="btn" href="grades.html">All Grades</a>
+        </div>
+      </div>
 
-<section class="learning-card">
-<h2>Explore CBE Nexus</h2>
-<p>Browse CBC/CBE notes, exams, revision materials, schemes of work, lesson plans, quizzes and other educational resources.</p>
-<a href="/resources.html">Browse the Resource Library</a> · <a href="/free-resources.html">Free CBC Resources</a> · <a href="/cbc-exam-generator">Free CBC Exam Generator</a>
-</section>
-</main>
-<script src="section-shell.js?v=20261004-5" defer></script>
-<script src="customer-care.js?v=20261010-subscribe1" defer></script>
+      <div class="grades-grid" role="list">
+        <div class="grade-card" role="listitem"><a href="grades/grade-6.html"><h3>Grade 6</h3><p>Foundations &amp; skills</p></a></div>
+        <div class="grade-card" role="listitem"><a href="grades/grade-7.html"><h3>Grade 7</h3><p>Concept building</p></a></div>
+        <div class="grade-card" role="listitem"><a href="grades/grade-8.html"><h3>Grade 8</h3><p>Higher thinking</p></a></div>
+        <div class="grade-card" role="listitem"><a href="grades/grade-9.html"><h3>Grade 9</h3><p>Assessment prep</p></a></div>
+        <div class="grade-card" role="listitem"><a href="grades/grade-10.html"><h3>Grade 10</h3><p>Transition &amp; revision</p></a></div>
+      </div>
+    </section>
+
+    <!-- Subjects -->
+    <section class="card subjects" aria-labelledby="subjectsHeading">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div>
+          <p class="eyebrow">Subjects</p>
+          <h2 id="subjectsHeading">Popular subjects</h2>
+        </div>
+        <div><a class="btn" href="subjects.html">All Subjects</a></div>
+      </div>
+
+      <div class="subjects-grid">
+        <a class="subject-card" href="resource-category.html?subject=Mathematics"><div class="subject-icon">∑</div><div><strong>Mathematics</strong><div style="color:var(--muted)">Numbers, algebra &amp; geometry</div></div></a>
+        <a class="subject-card" href="resource-category.html?subject=English"><div class="subject-icon">A</div><div><strong>English</strong><div style="color:var(--muted)">Language &amp; comprehension</div></div></a>
+        <a class="subject-card" href="resource-category.html?subject=Science"><div class="subject-icon">🔬</div><div><strong>Science</strong><div style="color:var(--muted)">Biology, chemistry &amp; physics</div></div></a>
+        <a class="subject-card" href="resource-category.html?subject=Social%20Studies"><div class="subject-icon">🌍</div><div><strong>Social Studies</strong><div style="color:var(--muted)">History &amp; geography</div></div></a>
+        <a class="subject-card" href="resource-category.html?subject=CRE"><div class="subject-icon">✝</div><div><strong>CRE</strong><div style="color:var(--muted)">Values &amp; morals</div></div></a>
+        <a class="subject-card" href="resource-category.html?subject=Computing"><div class="subject-icon">💻</div><div><strong>Computing</strong><div style="color:var(--muted)">Digital skills &amp; coding</div></div></a>
+      </div>
+    </section>
+
+    <!-- Featured lessons & Practice quizzes -->
+    <section class="two-col">
+      <div>
+        <div class="card">
+          <p class="eyebrow">Featured lessons</p>
+          <h2>Lessons to try today</h2>
+          <div style="display:grid;gap:12px;margin-top:12px">
+            <article class="lesson-card card">
+              <img src="assets/lesson-maths.jpg" alt="Lesson illustration">
+              <div>
+                <strong>Grade 7 • Fractions & Percentages</strong>
+                <p style="margin:6px 0;color:var(--muted)">Step-by-step lesson with worked examples and classroom activities.</p>
+                <div style="display:flex;gap:8px;margin-top:8px">
+                  <a class="btn" href="lessons/grade-7-fractions.html">Open Lesson</a>
+                  <a class="btn secondary" href="resource-category.html?grade=Grade%207&subject=Mathematics">View resources</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="lesson-card card">
+              <img src="assets/lesson-science.jpg" alt="Lesson illustration">
+              <div>
+                <strong>Grade 8 • Cells & Living Things</strong>
+                <p style="margin:6px 0;color:var(--muted)">Interactive lesson with diagrams and quick practice questions.</p>
+                <div style="display:flex;gap:8px;margin-top:8px">
+                  <a class="btn" href="lessons/grade-8-cells.html">Open Lesson</a>
+                  <a class="btn secondary" href="resource-category.html?grade=Grade%208&subject=Science">View resources</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <p class="eyebrow">Practice quizzes</p>
+          <h2>Quick practice</h2>
+          <div style="display:grid;gap:10px;margin-top:12px">
+            <div class="card" style="display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <strong>Grade 6 • Maths • 10 questions</strong>
+                <div style="color:var(--muted)">Time: 10 mins • Auto-marked</div>
+              </div>
+              <div><a class="btn" href="quizzes.html?grade=6&subject=Mathematics">Take Quiz</a></div>
+            </div>
+
+            <div class="card" style="display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <strong>Grade 9 • English • Comprehension</strong>
+                <div style="color:var(--muted)">Time: 15 mins • Auto-marked</div>
+              </div>
+              <div><a class="btn" href="quizzes.html?grade=9&subject=English">Take Quiz</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside>
+        <div class="card">
+          <p class="eyebrow">Student quick progress</p>
+          <h3>Your recent progress</h3>
+          <div class="progress-grid" style="margin-top:12px">
+            <div class="progress-card">
+              <strong>Mathematics (Grade 7)</strong>
+              <div style="font-size:0.9rem;color:var(--muted);margin:6px 0">Lessons completed: <span id="mathsCompleted">0</span>/12</div>
+              <div class="progress-bar"><div id="mathsFill" class="progress-fill" style="width:0"></div></div>
+              <div style="margin-top:8px;display:flex;gap:8px"><a class="btn" href="progress.html">View</a><button class="btn secondary" id="resetProgressBtn">Reset</button></div>
+            </div>
+
+            <div class="progress-card">
+              <strong>Science (Grade 8)</strong>
+              <div style="font-size:0.9rem;color:var(--muted);margin:6px 0">Quizzes passed: <span id="sciencePassed">0</span>/6</div>
+              <div class="progress-bar"><div id="scienceFill" class="progress-fill" style="width:0"></div></div>
+              <div style="margin-top:8px"><a class="btn" href="progress.html">View</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <p class="eyebrow">Platform benefits</p>
+          <h3>Why choose CBE Nexus?</h3>
+          <ul style="margin:10px 0 0 18px;color:var(--muted)">
+            <li>Curriculum-aligned lessons for Kenyan learners</li>
+            <li>Auto-marked quizzes and quick feedback</li>
+            <li>Teacher-informed lesson designs</li>
+            <li>Progress tracking & simple reports</li>
+          </ul>
+          <div style="margin-top:10px"><a class="btn" href="about.html">Learn more</a></div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- Benefits grid -->
+    <section class="benefits card" aria-label="Benefits">
+      <div>
+        <p class="eyebrow">Platform benefits</p>
+        <h2>Designed for Kenyan learners & teachers</h2>
+        <p style="color:var(--muted)">Modern teaching techniques, locally relevant examples and fast practice tests help learners build confidence and improve outcomes.</p>
+      </div>
+      <div style="margin-top:12px;display:grid;gap:12px">
+        <div class="benefit"><strong>Curriculum-aligned</strong><div style="color:var(--muted)">Mapped to CBC/CBE learning outcomes</div></div>
+        <div class="benefit"><strong>Trusted content</strong><div style="color:var(--muted)">Teacher-reviewed lessons and resources</div></div>
+        <div class="benefit"><strong>Interactive practice</strong><div style="color:var(--muted)">Timed quizzes with instant feedback</div></div>
+        <div class="benefit"><strong>Progress tracking</strong><div style="color:var(--muted)">Student-facing reports and teacher insights</div></div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div>
+          <strong style="font-size:1.05rem">CBE Nexus</strong>
+          <div style="color:#cbd5e1;margin-top:6px">Connecting learners to excellence — CBC & CBE resources for Kenyan learners and teachers.</div>
+        </div>
+        <div>
+          <div style="display:flex;gap:12px">
+            <div>
+              <h4 style="margin:0 0 8px">Explore</h4>
+              <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="grades.html">Grades</a>
+                <a href="subjects.html">Subjects</a>
+                <a href="resource-category.html">Learning Materials</a>
+              </div>
+            </div>
+            <div>
+              <h4 style="margin:0 0 8px">Support</h4>
+              <div class="footer-links">
+                <a href="quizzes.html">Quizzes</a>
+                <a href="progress.html">Progress</a>
+                <a href="contact.html">Contact</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h4 style="margin:0 0 8px">Contact</h4>
+          <div style="color:#cbd5e1">WhatsApp: <strong>+254 798 462 815</strong></div>
+          <div style="color:#cbd5e1;margin-top:8px">Subscribe for updates</div>
+          <form id="footerSubscribe" style="margin-top:8px;display:flex;gap:8px">
+            <input type="email" id="subscribeEmail" placeholder="you@example.com" style="padding:8px;border-radius:8px;border:1px solid var(--line);min-width:0">
+            <button class="btn" type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      <div style="max-width:var(--max-width);margin:14px auto 0;color:#94a3b8;font-size:0.88rem;text-align:center">© CBE Nexus — Designed for Kenyan learners • Privacy · Terms</div>
+    </footer>
+  </main>
+
+  <script>
+    // Mobile nav toggles
+    const openBtn = document.getElementById('openMobileNav');
+    const closeBtn = document.getElementById('closeMobileNav');
+    const mobileNav = document.getElementById('mobileNav');
+    if(openBtn){openBtn.addEventListener('click', ()=>{mobileNav.style.display='block';mobileNav.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'});
+    }
+    if(closeBtn){closeBtn.addEventListener('click', ()=>{mobileNav.style.display='none';mobileNav.setAttribute('aria-hidden','true');document.body.style.overflow=''});
+    }
+
+    // Student progress (simple localStorage demo)
+    function updateProgressUI(){
+      const mathsCompleted = parseInt(localStorage.getItem('mathsCompleted')||0,10);
+      const sciencePassed = parseInt(localStorage.getItem('sciencePassed')||0,10);
+      const mathsTotal = 12;
+      const scienceTotal = 6;
+      document.getElementById('mathsCompleted').textContent = mathsCompleted;
+      document.getElementById('sciencePassed').textContent = sciencePassed;
+      document.getElementById('mathsFill').style.width = Math.min(100,Math.round((mathsCompleted/mathsTotal)*100)) + '%';
+      document.getElementById('scienceFill').style.width = Math.min(100,Math.round((sciencePassed/scienceTotal)*100)) + '%';
+    }
+    document.getElementById('resetProgressBtn').addEventListener('click', ()=>{localStorage.removeItem('mathsCompleted');localStorage.removeItem('sciencePassed');updateProgressUI();});
+    // simulate some progress for demo purposes on first load
+    if(!localStorage.getItem('mathsCompleted')){localStorage.setItem('mathsCompleted','4')}
+    if(!localStorage.getItem('sciencePassed')){localStorage.setItem('sciencePassed','2')}
+    updateProgressUI();
+
+    // Footer subscribe form
+    document.getElementById('footerSubscribe').addEventListener('submit', function(e){e.preventDefault();const email=document.getElementById('subscribeEmail').value; if(!email){alert('Enter your email');return;} this.querySelector('button').textContent='Subscribed'; setTimeout(()=>{this.querySelector('button').textContent='Subscribe'},2000);
+    });
+
+    // Buttons real actions: hero start learning scroll
+    document.getElementById('startLearningBtn').addEventListener('click', function(e){e.preventDefault(); document.getElementById('startLearning').scrollIntoView({behavior:'smooth'});});
+    document.getElementById('viewMaterialsBtn').addEventListener('click', function(e){/* default link navigates */});
+  </script>
 </body>
 </html>
