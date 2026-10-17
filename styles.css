@@ -5139,3 +5139,53 @@ a[href="tuition.html"] * {
   .interactive-questions-header-btn,
   .interactive-questions-header-btn::before { animation: none; }
 }
+
+
+/* Compact, professional header labels: bold, smaller, and never split words */
+.site-header .nav-menu > .nav-link,
+.site-header .nav-menu > .nav-dropdown > summary,
+.site-header .nav-actions > a,
+.site-header .nav-actions > button {
+  font-size: clamp(0.76rem, 0.9vw, 0.9rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+}
+.site-header .nav-menu,
+.site-header .nav-actions {
+  gap: clamp(5px, 0.7vw, 10px) !important;
+  min-width: 0;
+}
+.site-header .nav-menu > .nav-link,
+.site-header .nav-menu > .nav-dropdown > summary {
+  padding: 8px clamp(6px, 0.75vw, 11px) !important;
+  flex: 0 0 auto;
+}
+.site-header .brand strong,
+.site-header .brand small,
+.site-header .brand-mark {
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+}
+@media (max-width: 900px) {
+  .site-header .nav-menu > .nav-link,
+  .site-header .nav-menu > .nav-dropdown > summary,
+  .site-header .nav-actions > a,
+  .site-header .nav-actions > button {
+    font-size: 0.78rem !important;
+    padding: 7px 7px !important;
+  }
+}
+@media (max-width: 640px) {
+  .site-header .nav-menu > .nav-link,
+  .site-header .nav-menu > .nav-dropdown > summary,
+  .site-header .nav-actions > a,
+  .site-header .nav-actions > button {
+    font-size: 0.72rem !important;
+    padding: 6px 5px !important;
+  }
+}
