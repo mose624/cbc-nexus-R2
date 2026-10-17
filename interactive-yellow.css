@@ -1,0 +1,27 @@
+/* CBE Nexus Interactive Questions — yellow/gold theme only for the learning and assessment area */
+:root{--iq-yellow:#ffd629;--iq-yellow-deep:#f4bd00;--iq-yellow-soft:#fff3ad;--iq-ink:#171717;--iq-line:#e6bd18}
+body{background:#fff9d6!important;color:#171717}
+.site-header,.hub-header,header.site-header,.top-strip{background:var(--iq-yellow)!important;color:var(--iq-ink)!important;border-bottom:4px solid var(--iq-yellow-deep)!important;box-shadow:0 5px 18px #8a6b001c!important}
+.site-header a,.hub-header a,.top-strip a,.nav-links a{color:var(--iq-ink)!important}
+.brand-mark,.hub-header .brand-mark{background:var(--iq-ink)!important;color:var(--iq-yellow)!important;border:2px solid var(--iq-yellow-deep)!important}
+.brand-title small{color:#403400!important}
+.nav-links a:hover,.nav-actions a:hover{background:var(--iq-yellow-soft)!important;color:#000!important}
+.interactive-page,.container,.subjects-container{color:var(--iq-ink)}
+.interactive-hero,.hero,.info-band,.curriculum-subject-picker,.quiz-panel,.progress-panel,.quiz-setter-panel,.learning-gaps-panel,.subjects-container>header{background:linear-gradient(135deg,#fff7c2,#ffe45c)!important;border-color:var(--iq-line)!important}
+.interactive-hero:before{background:var(--iq-yellow-deep)!important}
+.interactive-hero h1,.hero h1,.info-band h1,.info-band h2,.section-heading h2{color:#171717!important}
+.card,.grade-card,.subject-card,.progress-card,.benefit,.quiz-review,.quiz-result-panel,.quiz-questions>*,.subjects-list .subject-card{background:#fffdf0!important;border:1px solid #e8c72b!important;box-shadow:0 5px 16px #71590012!important}
+.grade-card:hover,.subject-card:hover,.benefit:hover{background:#fff0a0!important;border-color:#d6a900!important}
+.btn,.primary-button,.interactive-launch,.secondary-button,.ghost-button,.resources-toggle,.price-pill{background:var(--iq-yellow)!important;color:#171717!important;border:2px solid #d4a900!important;font-weight:800!important;box-shadow:0 3px 0 #c99f00!important}
+.btn:hover,.primary-button:hover,.interactive-launch:hover,.secondary-button:hover,.ghost-button:hover{background:#ffe976!important;color:#000!important}
+.btn.secondary{background:#fff1a3!important;color:#171717!important;border-color:#d4a900!important}
+input,select,textarea{background:#fffef7!important;color:#171717!important;border-color:#d9b91b!important}
+input:focus,select:focus,textarea:focus{outline:3px solid #ffd62988!important;border-color:#b88d00!important}
+.eyebrow,.interactive-back,.curriculum-subject-picker label{color:#755700!important}
+.progress-bar{background:#f6e8a0!important}.progress-fill{background:linear-gradient(90deg,#dba900,#ffd629)!important}
+footer.site-footer,footer,.site-footer{background:var(--iq-yellow)!important;color:#171717!important;border-top:5px solid var(--iq-yellow-deep)!important}
+footer.site-footer a,footer a,.footer-links a{color:#171717!important;text-decoration:underline}
+footer.site-footer div,footer.site-footer p,footer.site-footer small{color:#302600!important}
+.mobile-nav{background:#ffe45c!important}.mobile-nav a,.mobile-nav .close{color:#171717!important;border-color:#d7b00d!important}
+.interactive-embed{border:2px solid #e2bb00!important;background:#fff5b8!important}
+@media(max-width:720px){.site-header,.hub-header,.top-strip{border-bottom-width:3px!important}.container{padding:12px!important}}
