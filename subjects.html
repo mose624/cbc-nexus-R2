@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Subjects • CBE Nexus</title>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    .subjects-container{max-width:980px;margin:18px auto;padding:18px}
+    .search-row{display:flex;gap:12px;align-items:center}
+    .subjects-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:12px}
+    .subject-card{background:#fff;border-radius:12px;padding:14px;border:1px solid #e6e9ee}
+    .breadcrumb{font-size:0.92rem;color:#475569;margin-bottom:8px}
+    @media(max-width:720px){.search-row{flex-direction:column;align-items:stretch}}
+  </style>
+</head>
+<body>
+  <main class="subjects-container">
+    <nav class="breadcrumb"><a href="/learning-hub.html">Learning Hub</a> › <strong>Subjects</strong></nav>
+    <header>
+      <p class="eyebrow">Subjects</p>
+      <h1>Browse subjects</h1>
+      <p style="color:#475569">Select a grade to filter subjects or search for a subject or topic.</p>
+    </header>
+
+    <div class="search-row" style="margin-top:12px">
+      <select id="gradeSelect" style="padding:8px;border-radius:8px;border:1px solid #e6e9ee">
+        <option value="">All Grades</option>
+        <option value="grade-6">Grade 6</option>
+        <option value="grade-7">Grade 7</option>
+        <option value="grade-8">Grade 8</option>
+        <option value="grade-9">Grade 9</option>
+        <option value="grade-10">Grade 10</option>
+      </select>
+      <input id="subjectSearch" placeholder="Search subjects or topics" style="flex:1;padding:8px;border-radius:8px;border:1px solid #e6e9ee">
+      <button class="btn" id="filterBtn">Search</button>
+    </div>
+
+    <div class="subjects-list" id="subjectsList" aria-live="polite"></div>
+  </main>
+
+  <script src="/scripts/curriculum.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded',()=>{
+      window.renderSubjectsIndex();
+      document.getElementById('filterBtn').addEventListener('click',()=>{const g=document.getElementById('gradeSelect').value;const q=document.getElementById('subjectSearch').value;window.renderSubjectsIndex(g,q)});
+    });
+  </script>
+</body>
+</html>
