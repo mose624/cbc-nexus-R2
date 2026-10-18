@@ -235,6 +235,7 @@
   // File-based bulk importer: Excel/CSV, DOCX and text-based PDF. Publishing still
   // goes through the authenticated existing endpoint, preserving current storage and permissions.
   const importFile = $("iqBulkImportFile");
+  const importImages = $("iqBulkImageFiles");
   const analyzeImport = $("iqBulkAnalyze");
   const publishImport = $("iqBulkPublish");
   const downloadReport = $("iqBulkDownloadReport");
@@ -291,6 +292,7 @@
     ];
     const correctIndex = answerIndex(first(row, ["Correct Answer","CorrectAnswer","Answer Key","Correct Option","Answer"]));
     const explanation = first(row, ["Explanation","Rationale","Solution"]);
+    const imageUrl = first(row, ["Image URL","ImageURL","Diagram URL","Image"]);
     
     const errors = [];
     if (!/^Grade (?:[1-9]|1[0-2])$/i.test(grade)) errors.push("Grade must be Grade 1–12");
@@ -301,7 +303,8 @@
     if (options.some(x => x.length > 600)) errors.push("An option exceeds 600 characters");
     if (correctIndex < 0) errors.push("Correct answer must be A, B, C, D or 1–4");
     if (explanation.length > 2000) errors.push("Explanation exceeds 2,000 characters");
-    return {rowNumber:index+2, grade, subject, strand, question, options, correctIndex, explanation, difficulty:first(row,["Difficulty","Level"]), errors};
+    if (imageUrl && !/^https:\/\//i.test(imageUrl)) errors.push("Image URL must begin with https://");
+    return {rowNumber:index+2, grade, subject, strand, question, options, correctIndex, explanation, imageUrl, imageData:"", imageAlt:question.slice(0,160), difficulty:first(row,["Difficulty","Level"]), errors};
   }
   function parseQuestionText(text) {
     const normalized = String(text || "").replace(/\r/g,"").replace(/\u00a0/g," ");
@@ -341,7 +344,7 @@
         "Question": stem,
         "Option A": options[0], "Option B": options[1], "Option C": options[2], "Option D": options[3],
         "Correct Answer": correctMatch ? correctMatch[1].toUpperCase() : "",
-        "Explanation": explanationMatch ? explanationMatch[1].trim() : ""
+        "Explanation": explanationMatch ? explanationMatch[1].trim() : "", "Image URL": (block.match(/(?:Image|Diagram)\s+URL\s*:\s*(https:\/\/\S+)/i)||[])[1] || ""
       };
       if(/^Grade\s*\d+$/i.test(row.Grade)) row.Grade=row.Grade.replace(/\s+/g," ");
       rows.push(row);
@@ -403,7 +406,7 @@
   if ($("iqDownloadTemplate")) $("iqDownloadTemplate").addEventListener("click", async()=>{
     try {
       const XLSX=await loadBrowserScript("https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js","XLSX");
-      const headers=["Grade","Subject","Topic","Question","Option A","Option B","Option C","Option D","Correct Answer","Explanation","Difficulty"];
+      const headers=["Grade","Subject","Topic","Question","Option A","Option B","Option C","Option D","Correct Answer","Explanation","Difficulty","Image URL"];
       const example=["Grade 10","Physics","Electricity","Which instrument measures electric current?","Voltmeter","Ammeter","Thermometer","Barometer","B","An ammeter is connected in series to measure current.","Easy"];
       const ws=XLSX.utils.aoa_to_sheet([headers,example]); ws["!cols"]=headers.map(()=>({wch:22})); ws["!cols"][3]={wch:55};ws["!cols"][9]={wch:55};
       const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"Questions");XLSX.writeFile(wb,"CBE-Nexus-Bulk-Question-Template.xlsx");
@@ -420,6 +423,20 @@
     try {
       const rows=await readImportFile(file);
       if(!rows.length) throw new Error("No questions were detected. Check the template or the required question format.");
+      const imageFiles=Array.from(importImages && importImages.files || []);
+      for(const imageFile of imageFiles){
+        if(!/^image\/(png|jpeg|gif|webp|svg\+xml)$/i.test(imageFile.type)) throw new Error("Image attachments must be PNG, JPG, GIF, WEBP or SVG files.");
+        if(imageFile.size>1024*1024) throw new Error("Each image must be 1 MB or smaller. Resize large diagrams before importing.");
+      }
+      for(const imageFile of imageFiles){
+        const stem=imageFile.name.replace(/\.[^.]+$/,"").toLowerCase().replace(/^(?:question|q|image|img)[-_ ]*/,"");
+        const number=Number(stem);
+        if(!Number.isInteger(number)||number<1) continue;
+        const target=rows.find(r=>r.rowNumber===number) || rows[number-1];
+        if(target) target.imageData=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result||""));reader.onerror=()=>reject(new Error("Could not read image "+imageFile.name));reader.readAsDataURL(imageFile);});
+      }
+      const unmatchedImages=imageFiles.filter(f=>!Number.isInteger(Number(f.name.replace(/\.[^.]+$/,"").toLowerCase().replace(/^(?:question|q|image|img)[-_ ]*/,""))));
+      if(unmatchedImages.length) setImportStatus("Image files must be named with their question row/number (for example 2.png or q1.jpg). Unmatched filenames will be ignored.");
       const seen=new Set();
       for(const row of rows){
         const key=norm(row.grade)+"|"+norm(row.subject)+"|"+norm(row.question);
@@ -457,7 +474,7 @@
     setImportStatus("Publishing valid questions… keep this page open. 0 / "+ready.length);
     for(const r of ready){
       try {
-        await request(api,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({grade:r.grade,subject:r.subject,strand:r.strand||"All Topics",question:r.question,options:r.options,correctIndex:r.correctIndex,explanation:r.explanation||""})});
+        await request(api,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({grade:r.grade,subject:r.subject,strand:r.strand||"All Topics",question:r.question,options:r.options,correctIndex:r.correctIndex,explanation:r.explanation||"",imageUrl:r.imageUrl||"",imageData:r.imageData||"",imageAlt:r.imageAlt||r.question.slice(0,160)})});
         published++;
       } catch(e) { failed.push({"Source row":r.rowNumber,"Grade":r.grade,"Subject":r.subject,"Question":r.question,"Status":"Failed to publish","Errors":e.message||"Save failed"}); }
       if(published%5===0 || published+failed.length===ready.length) setImportStatus("Publishing valid questions… "+(published+failed.length)+" / "+ready.length+" processed.");
