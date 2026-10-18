@@ -1013,7 +1013,7 @@
         strand.value = targetTopic;
 
         mode.value = "practice";
-        length.value = "10";
+        length.value = "50";
         if (instructions) {
           instructions.innerHTML = "<strong>Remedial Practice</strong> — " +
             escapeHtml(targetGrade + " " + targetSubject + " — " + targetTopic) +
