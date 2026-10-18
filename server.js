@@ -788,7 +788,7 @@ async function handleApi(req,res,url){
   // Public learner-facing question bank. Only published questions are exposed.
   if(req.method==="GET"&&url.pathname==="/api/interactive-questions"){
     const questions=await readJsonStore("interactive-questions.json");
-    sendJson(res,200,{ok:true,questions:questions.filter(q=>q&&q.published!==false).map(q=>({id:q.id,grade:q.grade,subject:q.subject,strand:q.strand||"All Topics",question:q.question,options:q.options,correctIndex:Number(q.correctIndex),explanation:q.explanation||"",createdAt:q.createdAt||null}))});
+    sendJson(res,200,{ok:true,questions:questions.filter(q=>q&&q.published!==false).map(q=>({id:q.id,grade:q.grade,subject:q.subject,strand:q.strand||"All Topics",question:q.question,options:q.options,correctIndex:Number(q.correctIndex),explanation:q.explanation||"",imageUrl:q.imageUrl||"",imageData:q.imageData||"",imageAlt:q.imageAlt||q.question||"",createdAt:q.createdAt||null}))});
     return true;
   }
   // Admin-only management endpoints for the isolated Interactive Questions module.
@@ -809,6 +809,11 @@ async function handleApi(req,res,url){
       const options=Array.isArray(p.options)?p.options.map(x=>String(x||"").trim().slice(0,600)):[];
       const correctIndex=Number(p.correctIndex);
       const explanation=String(p.explanation||"").trim().slice(0,2000);
+      const imageUrl=String(p.imageUrl||"").trim().slice(0,2000);
+      const imageData=String(p.imageData||"").trim();
+      const imageAlt=String(p.imageAlt||question).trim().slice(0,200);
+      if(imageUrl&&!/^https:\/\//i.test(imageUrl)){sendJson(res,400,{ok:false,error:"Image URL must use HTTPS."});return true;}
+      if(imageData&&(!/^data:image\/(?:png|jpeg|gif|webp|svg\+xml);base64,[A-Za-z0-9+/=\r\n]+$/.test(imageData)||imageData.length>1400000)){sendJson(res,400,{ok:false,error:"Image attachment must be a supported image under 1 MB."});return true;}
       if(!/^Grade (?:[1-9]|1[0-2])$/.test(grade)){sendJson(res,400,{ok:false,error:"Choose a valid grade from Grade 1 to Grade 12."});return true;}
       if(!subject||!question||options.length!==4||options.some(x=>!x)||![0,1,2,3].includes(correctIndex)){sendJson(res,400,{ok:false,error:"Enter a subject, question, four answer options and a valid correct answer."});return true;}
       await ensureDataDir();
@@ -816,7 +821,7 @@ async function handleApi(req,res,url){
       const normalized=question.toLowerCase().replace(/\s+/g," ");
       const duplicate=rows.find(q=>q&&q.grade===grade&&String(q.subject||"").toLowerCase()===subject.toLowerCase()&&String(q.question||"").toLowerCase().replace(/\s+/g," ")===normalized);
       if(duplicate){sendJson(res,409,{ok:false,error:"A matching question already exists for this grade and subject."});return true;}
-      const item={id:"iq-"+Date.now()+"-"+Math.random().toString(36).slice(2,8),grade,subject,strand,question,options,correctIndex,explanation,published:true,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};
+      const item={id:"iq-"+Date.now()+"-"+Math.random().toString(36).slice(2,8),grade,subject,strand,question,options,correctIndex,explanation,imageUrl,imageData,imageAlt,published:true,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};
       rows.unshift(item);
       await fs.writeFile(path.join(DATA_DIR,"interactive-questions.json"),JSON.stringify(rows.slice(0,5000),null,2));
       sendJson(res,201,{ok:true,question:item,message:"Question published."});
