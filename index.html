@@ -921,10 +921,14 @@
                 <button type="button" id="iqDownloadTemplate" class="secondary-button">Download Excel template</button>
                 <a href="#iqBulkImportPanel" id="iqTemplateHelp" style="font-size:.9rem;text-decoration:underline">View required columns</a>
               </div>
-              <p style="font-size:.88rem;color:#536174;margin:0 0 12px">Template columns: Grade, Subject, Topic, Question, Option A, Option B, Option C, Option D, Correct Answer, Explanation and Difficulty (optional). For Word/PDF, use numbered questions with A–D options and “Correct answer: A” plus optional “Explanation: …”. Text-based PDFs work best; diagrams embedded in PDFs may need to be added separately.</p>
-              <label for="iqBulkImportFile" style="display:block;font-weight:700;margin-bottom:8px">Choose file (.xlsx, .xls, .csv, .docx, .pdf)
+              <p style="font-size:.88rem;color:#536174;margin:0 0 12px">Template columns: Grade, Subject, Topic, Question, Option A–D, Correct Answer, Explanation, Difficulty and optional Image URL. For attached image files, choose them below and name each image with its question row/number (for example 2.png or q1.jpg). Word/PDF text is imported; embedded diagrams should be uploaded separately as image files.</p>
+              <label for="iqBulkImportFile" style="display:block;font-weight:700;margin-bottom:8px">Choose question file (.xlsx, .xls, .csv, .docx, .pdf)
                 <input id="iqBulkImportFile" type="file" accept=".xlsx,.xls,.csv,.docx,.pdf" style="display:block;margin-top:6px;max-width:100%">
               </label>
+              <label for="iqBulkImageFiles" style="display:block;font-weight:700;margin:10px 0">Optional question images / diagrams (PNG, JPG, GIF, WEBP, SVG; up to 1 MB each)
+                <input id="iqBulkImageFiles" type="file" accept="image/png,image/jpeg,image/gif,image/webp,image/svg+xml" multiple style="display:block;margin-top:6px;max-width:100%">
+              </label>
+              <p style="font-size:.85rem;color:#536174;margin:0 0 12px">Match image filenames to question rows: <b>2.png</b> attaches to spreadsheet row 2; <b>q1.jpg</b> attaches to the first detected question. Or provide an HTTPS Image URL in the template.</p>
               <label style="display:flex;gap:8px;align-items:center;margin:8px 0 12px;font-weight:600"><input type="checkbox" id="iqBulkAutoPublish" checked> Automatically publish valid questions after validation (recommended)</label>
               <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
                 <button type="button" id="iqBulkAnalyze" class="iq-admin-submit">Read file & preview</button>
