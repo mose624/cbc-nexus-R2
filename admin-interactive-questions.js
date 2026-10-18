@@ -231,6 +231,239 @@
     });
   }
 
+
+  // File-based bulk importer: Excel/CSV, DOCX and text-based PDF. Publishing still
+  // goes through the authenticated existing endpoint, preserving current storage and permissions.
+  const importFile = $("iqBulkImportFile");
+  const analyzeImport = $("iqBulkAnalyze");
+  const publishImport = $("iqBulkPublish");
+  const downloadReport = $("iqBulkDownloadReport");
+  const importStatus = $("iqBulkImportStatus");
+  const importPreview = $("iqBulkImportPreview");
+  let importRows = [];
+  let importErrors = [];
+  let importReportRows = [];
+  const setImportStatus = (message, bad) => {
+    if (!importStatus) return;
+    importStatus.textContent = message || "";
+    importStatus.style.color = bad ? "#9f1d1d" : "";
+  };
+  const norm = (v) => String(v == null ? "" : v).toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g," ").trim();
+  const headerKey = (v) => norm(v).replace(/[^a-z0-9]/g,"");
+  function loadBrowserScript(src, globalName) {
+    if (window[globalName]) return Promise.resolve(window[globalName]);
+    return new Promise((resolve,reject) => {
+      const existing = document.querySelector('script[data-iq-import-lib="' + globalName + '"]');
+      const script = existing || document.createElement("script");
+      script.src = src; script.async = true; script.dataset.iqImportLib = globalName;
+      script.onload = () => window[globalName] ? resolve(window[globalName]) : reject(new Error("Could not load file reader library."));
+      script.onerror = () => reject(new Error("Could not load file reader library. Check your internet connection and try again."));
+      if (!existing) document.head.appendChild(script);
+      else if (window[globalName]) resolve(window[globalName]);
+    });
+  }
+  function first(row, aliases) {
+    const map = {};
+    Object.keys(row || {}).forEach(k => map[headerKey(k)] = row[k]);
+    for (const alias of aliases) if (map[headerKey(alias)] != null && String(map[headerKey(alias)]).trim() !== "") return String(map[headerKey(alias)]).trim();
+    return "";
+  }
+  function answerIndex(value) {
+    const v = String(value || "").trim().toUpperCase();
+    if (/^[ABCD]$/.test(v)) return "ABCD".indexOf(v);
+    if (/^[1-4]$/.test(v)) return Number(v)-1;
+    return -1;
+  }
+  function mapRow(row, index) {
+    const grade = first(row, ["Grade","Class"]) || $("iqAdminGrade").value;
+    const subject = first(row, ["Subject","Learning Area","LearningArea"]) || $("iqAdminSubject").value;
+    const strand = first(row, ["Topic","Strand","Sub-strand","Substrand"]) || $("iqAdminTopic").value || "All Topics";
+    const question = first(row, ["Question","Question Text","Prompt","Stem"]);
+    const options = [
+      first(row, ["Option A","A","Choice A","Answer A"]),
+      first(row, ["Option B","B","Choice B","Answer B"]),
+      first(row, ["Option C","C","Choice C","Answer C"]),
+      first(row, ["Option D","D","Choice D","Answer D"])
+    ];
+    const correctIndex = answerIndex(first(row, ["Correct Answer","CorrectAnswer","Answer Key","Correct Option","Answer"]));
+    const explanation = first(row, ["Explanation","Rationale","Solution"]);
+    const imageUrl = first(row, ["Image URL","ImageURL","Diagram URL","DiagramURL"]);
+    const errors = [];
+    if (!/^Grade (?:[1-9]|1[0-2])$/i.test(grade)) errors.push("Grade must be Grade 1–12");
+    if (!subject) errors.push("Subject is missing");
+    if (!question) errors.push("Question text is missing");
+    if (question.length > 2500) errors.push("Question exceeds 2,500 characters");
+    if (options.some(x => !x)) errors.push("All four options (A–D) are required");
+    if (options.some(x => x.length > 600)) errors.push("An option exceeds 600 characters");
+    if (correctIndex < 0) errors.push("Correct answer must be A, B, C, D or 1–4");
+    if (explanation.length > 2000) errors.push("Explanation exceeds 2,000 characters");
+    if (imageUrl && !/^https?:\/\/\S+/i.test(imageUrl)) errors.push("Image URL must be an http(s) URL");
+    return {rowNumber:index+2, grade, subject, strand, question, options, correctIndex, explanation, imageUrl, difficulty:first(row,["Difficulty","Level"]), errors};
+  }
+  function parseQuestionText(text) {
+    const normalized = String(text || "").replace(/\r/g,"").replace(/\u00a0/g," ");
+    const starts = [...normalized.matchAll(/(?:^|\n)\s*(?:Question\s*)?(\d{1,3})\s*[.)]\s*/gi)];
+    const chunks = [];
+    for (let i=0;i<starts.length;i++) {
+      const start = starts[i].index + starts[i][0].length;
+      const end = i+1<starts.length ? starts[i+1].index : normalized.length;
+      const block = normalized.slice(start,end).trim();
+      if (block) chunks.push(block);
+    }
+    const rows = [];
+    chunks.forEach((block, idx) => {
+      const correctMatch = block.match(/(?:Correct\s+answer|Answer\s+key|Correct\s+option)\s*:\s*([ABCD1-4])/i);
+      const explanationMatch = block.match(/(?:Explanation|Rationale|Solution)\s*:\s*([\s\S]*?)(?=\n\s*(?:Question\s*)?\d{1,3}\s*[.)]\s*|$)/i);
+      const optRe = /(?:^|\n|\s)([ABCD])\s*[.)]\s+/g;
+      const matches = [...block.matchAll(optRe)];
+      const ordered = matches.filter(m => !correctMatch || m.index < block.search(/(?:Correct\s+answer|Answer\s+key|Correct\s+option)\s*:/i));
+      const firstOption = ordered.length ? ordered[0].index : -1;
+      const stem = (firstOption >= 0 ? block.slice(0,firstOption) : "").replace(/^\s+/,"").trim();
+      const options = ["A","B","C","D"].map(letter => {
+        const at = ordered.findIndex(m=>m[1].toUpperCase()===letter);
+        if (at < 0) return "";
+        const m=ordered[at], contentStart=m.index+m[0].length;
+        let contentEnd=block.length;
+        for (const next of ordered) if(next.index>m.index && next.index<contentEnd) contentEnd=next.index;
+        const answerPos=block.search(/(?:Correct\s+answer|Answer\s+key|Correct\s+option)\s*:/i);
+        if(answerPos>=0) contentEnd=Math.min(contentEnd,answerPos);
+        const explPos=block.search(/(?:Explanation|Rationale|Solution)\s*:/i);
+        if(explPos>=0) contentEnd=Math.min(contentEnd,explPos);
+        return block.slice(contentStart,contentEnd).replace(/\s+/g," ").trim();
+      });
+      const row = {
+        "Grade": (block.match(/Grade\s*(?:\/\s*)?[:\-]?\s*(1[0-2]|[1-9])\b/i)||[])[0] || $("iqAdminGrade").value,
+        "Subject": (block.match(/Subject\s*:\s*([^\n]+)/i)||[])[1] || $("iqAdminSubject").value,
+        "Topic": (block.match(/(?:Topic|Strand)\s*:\s*([^\n]+)/i)||[])[1] || $("iqAdminTopic").value || "All Topics",
+        "Question": stem,
+        "Option A": options[0], "Option B": options[1], "Option C": options[2], "Option D": options[3],
+        "Correct Answer": correctMatch ? correctMatch[1].toUpperCase() : "",
+        "Explanation": explanationMatch ? explanationMatch[1].trim() : ""
+      };
+      if(/^Grade\s*\d+$/i.test(row.Grade)) row.Grade=row.Grade.replace(/\s+/g," ");
+      rows.push(row);
+    });
+    return rows;
+  }
+  async function readImportFile(file) {
+    const ext = file.name.split(".").pop().toLowerCase();
+    if (["xlsx","xls","csv"].includes(ext)) {
+      const XLSX = await loadBrowserScript("https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js","XLSX");
+      const data = await file.arrayBuffer();
+      const workbook = XLSX.read(data,{type:"array"});
+      const sheet = workbook.Sheets[workbook.SheetNames[0]];
+      return XLSX.utils.sheet_to_json(sheet,{defval:"",raw:false}).map((row,i)=>mapRow(row,i));
+    }
+    if (ext === "docx") {
+      const mammoth = await loadBrowserScript("https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.9.0/mammoth.browser.min.js","mammoth");
+      const result = await mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()});
+      return parseQuestionText(result.value).map((row,i)=>mapRow(row,i));
+    }
+    if (ext === "pdf") {
+      const pdfjsLib = await loadBrowserScript("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js","pdfjsLib");
+      pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+      const pdf = await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;
+      let text = "";
+      for (let p=1;p<=pdf.numPages;p++) {
+        const page = await pdf.getPage(p);
+        const content = await page.getTextContent();
+        text += "\n" + content.items.map(x=>x.str).join(" ") + "\n";
+      }
+      return parseQuestionText(text).map((row,i)=>mapRow(row,i));
+    }
+    throw new Error("Unsupported file type. Upload Excel, CSV, Word (.docx) or PDF.");
+  }
+  function renderImportPreview(rows) {
+    importPreview.replaceChildren();
+    const table = document.createElement("table");
+    table.style.cssText="border-collapse:collapse;width:100%;font-size:.86rem;background:#fff";
+    const headers=["Row","Status","Grade","Subject","Question","Correct answer","Issue"];
+    const thead=document.createElement("thead"), tr=document.createElement("tr");
+    headers.forEach(h=>{const th=document.createElement("th");th.textContent=h;th.style.cssText="border:1px solid #d5e0e8;padding:8px;text-align:left;background:#eaf2f8";tr.appendChild(th);});
+    thead.appendChild(tr); table.appendChild(thead);
+    const tbody=document.createElement("tbody");
+    rows.slice(0,250).forEach(r=>{
+      const tr=document.createElement("tr");
+      const vals=[r.rowNumber,r.errors.length?"Needs fixing":"Ready",r.grade,r.subject,r.question,r.correctIndex>=0?"ABCD"[r.correctIndex]:"",r.errors.join("; ")];
+      vals.forEach((v,i)=>{const td=document.createElement("td");td.textContent=String(v||"");td.style.cssText="border:1px solid #d5e0e8;padding:7px;vertical-align:top;max-width:320px;overflow-wrap:anywhere";tr.appendChild(td);});
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody); importPreview.appendChild(table);
+    if(rows.length>250){const note=document.createElement("p");note.textContent="Preview limited to first 250 rows. All rows will be validated.";importPreview.appendChild(note);}
+  }
+  function csvEscape(v){const s=String(v==null?"":v);return /[",\n\r]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;}
+  function downloadCsv(filename, rows, headers) {
+    const csv=[headers.map(csvEscape).join(","),...rows.map(r=>headers.map(h=>csvEscape(r[h])).join(","))].join("\r\n");
+    const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"});
+    const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=filename;a.click();URL.revokeObjectURL(url);
+  }
+  if ($("iqDownloadTemplate")) $("iqDownloadTemplate").addEventListener("click", async()=>{
+    try {
+      const XLSX=await loadBrowserScript("https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js","XLSX");
+      const headers=["Grade","Subject","Topic","Question","Option A","Option B","Option C","Option D","Correct Answer","Explanation","Difficulty","Image URL"];
+      const example=["Grade 10","Physics","Electricity","Which instrument measures electric current?","Voltmeter","Ammeter","Thermometer","Barometer","B","An ammeter is connected in series to measure current.","Easy",""];
+      const ws=XLSX.utils.aoa_to_sheet([headers,example]); ws["!cols"]=headers.map(()=>({wch:22})); ws["!cols"][3]={wch:55};ws["!cols"][9]={wch:55};
+      const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"Questions");XLSX.writeFile(wb,"CBE-Nexus-Bulk-Question-Template.xlsx");
+    } catch(e) {
+      downloadCsv("CBE-Nexus-Bulk-Question-Template.csv",[{"Grade":"Grade 10","Subject":"Physics","Topic":"Electricity","Question":"Which instrument measures electric current?","Option A":"Voltmeter","Option B":"Ammeter","Option C":"Thermometer","Option D":"Barometer","Correct Answer":"B","Explanation":"An ammeter is connected in series to measure current.","Difficulty":"Easy","Image URL":""}],["Grade","Subject","Topic","Question","Option A","Option B","Option C","Option D","Correct Answer","Explanation","Difficulty","Image URL"]);
+      setImportStatus("Excel template library could not load, so a compatible CSV template was downloaded instead.");
+    }
+  });
+  if (analyzeImport) analyzeImport.addEventListener("click", async()=>{
+    const file=importFile.files && importFile.files[0];
+    if(!file){setImportStatus("Choose an Excel, Word or PDF file first.",true);return;}
+    if(file.size>15*1024*1024){setImportStatus("For reliable browser processing, keep each file under 15 MB.",true);return;}
+    analyzeImport.disabled=true; publishImport.disabled=true; setImportStatus("Reading and validating file…"); importPreview.replaceChildren();
+    try {
+      const rows=await readImportFile(file);
+      if(!rows.length) throw new Error("No questions were detected. Check the template or the required question format.");
+      const seen=new Set();
+      for(const row of rows){
+        const key=norm(row.grade)+"|"+norm(row.subject)+"|"+norm(row.question);
+        if(!row.errors.length && seen.has(key)) row.errors.push("Duplicate question within this file");
+        if(key.endsWith("||") || !row.question) { if(!row.errors.includes("Question text is missing")) row.errors.push("Question text is missing"); }
+        seen.add(key);
+      }
+      let existing=[];
+      try { const data=await request(api); existing=Array.isArray(data.questions)?data.questions:[]; }
+      catch(e){throw new Error("Could not check existing questions. Sign in to the admin dashboard and try again. "+e.message);}
+      rows.forEach(row=>{
+        if(!row.errors.length && existing.some(q=>norm(q.grade)===norm(row.grade)&&norm(q.subject)===norm(row.subject)&&norm(q.question)===norm(row.question))) row.errors.push("Already exists in the published question bank");
+      });
+      importRows=rows; importErrors=rows.filter(r=>r.errors.length);
+      importReportRows=rows.map(r=>({"Source row":r.rowNumber,"Grade":r.grade,"Subject":r.subject,"Question":r.question,"Status":r.errors.length?"Skipped":"Ready","Errors":r.errors.join("; ")}));
+      renderImportPreview(rows);
+      const ready=rows.length-importErrors.length;
+      setImportStatus("Read "+rows.length+" questions: "+ready+" ready to publish, "+importErrors.length+" needing correction or skipped. Preview is limited to 250 rows.");
+      publishImport.disabled=ready===0; downloadReport.disabled=importErrors.length===0;
+    } catch(e) {setImportStatus(e.message||"Could not read this file.",true);}
+    finally {analyzeImport.disabled=false;}
+  });
+  if (publishImport) publishImport.addEventListener("click",async()=>{
+    const ready=importRows.filter(r=>!r.errors.length);
+    if(!ready.length){setImportStatus("There are no valid questions to publish.",true);return;}
+    publishImport.disabled=true; analyzeImport.disabled=true;
+    let published=0, failed=[];
+    setImportStatus("Publishing valid questions… keep this page open. 0 / "+ready.length);
+    for(const r of ready){
+      try {
+        await request(api,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({grade:r.grade,subject:r.subject,strand:r.strand||"All Topics",question:r.question,options:r.options,correctIndex:r.correctIndex,explanation:r.explanation||""})});
+        published++;
+      } catch(e) { failed.push({"Source row":r.rowNumber,"Grade":r.grade,"Subject":r.subject,"Question":r.question,"Status":"Failed to publish","Errors":e.message||"Save failed"}); }
+      if(published%5===0 || published+failed.length===ready.length) setImportStatus("Publishing valid questions… "+(published+failed.length)+" / "+ready.length+" processed.");
+    }
+    const combined=[...importReportRows.filter(r=>r.Errors),...failed];
+    importReportRows=combined;
+    downloadReport.disabled=combined.length===0;
+    await loadQuestions();
+    window.dispatchEvent(new Event("cbe:interactive-questions-updated"));
+    setImportStatus("Finished: "+published+" published; "+(importErrors.length+failed.length)+" skipped or failed. Download the report to review issues.",failed.length>0);
+    analyzeImport.disabled=false;
+  });
+  if(downloadReport) downloadReport.addEventListener("click",()=>{
+    downloadCsv("CBE-Nexus-Question-Import-Report.csv",importReportRows,["Source row","Grade","Subject","Question","Status","Errors"]);
+  });
+
   window.loadAdminInteractiveQuestions = loadQuestions;
   const watchAdmin = () => {
     if (document.body.classList.contains("admin-unlocked")) loadQuestions();
