@@ -1049,6 +1049,12 @@
     if (window.CBENexusAdminQuestionsReady) {
       await window.CBENexusAdminQuestionsReady;
     }
+    if (window.CBENexusAdminQuestionsLoadError) {
+      status.textContent = "Published questions could not be loaded from CBE Nexus. Please refresh the page and try again; built-in questions have not been substituted.";
+      questionsBox.innerHTML = "";
+      submitButton.disabled = true;
+      return;
+    }
     const selectedBank = getGradeQuestionBank(grade.value, subject.value);
     if (!selectedBank.length) {
       status.textContent = "No question bank is available for " + grade.value + " — " + subject.value + (strand && strand.value !== "All Topics" ? " — " + strand.value : "") + ". Please choose another topic or subject.";
