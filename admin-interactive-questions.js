@@ -305,9 +305,9 @@
     if (!/^Grade (?:[1-9]|1[0-2])$/i.test(grade)) errors.push("Grade must be Grade 1–12");
     if (!subject) errors.push("Subject is missing");
     if (!question) errors.push("Question text is missing");
-    if (question.length > 2500) errors.push("Question exceeds 2,500 characters");
+    if (question.length > 7000) errors.push("Question or passage exceeds 7,000 characters");
     if (options.some(x => !x)) errors.push("All four options (A–D) are required");
-    if (options.some(x => x.length > 600)) errors.push("An option exceeds 600 characters");
+    if (options.some(x => x.length > 1500)) errors.push("An option exceeds 1,500 characters");
     if (correctIndex < 0) errors.push("Correct answer must be A, B, C, D or 1–4");
     if (explanation.length > 2000) errors.push("Explanation exceeds 2,000 characters");
     if (imageUrl && !/^https:\/\//i.test(imageUrl)) errors.push("Image URL must begin with https://");
