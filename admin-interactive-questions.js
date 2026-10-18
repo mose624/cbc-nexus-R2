@@ -315,17 +315,25 @@
   }
   function parseQuestionText(text) {
     const normalized = String(text || "").replace(/\r/g,"").replace(/\u00a0/g," ");
+    // Read answer keys placed at the end of a complete paper, including Markdown tables.
+    const answerKey = new Map();
+    const keyPatterns = [
+      /^\s*\|\s*(\d{1,3})\s*\|\s*([ABCD])\s*(?:\||$)/gim,
+      /^\s*(\d{1,3})\s*[.)]?\s*[-:|]?\s*(?:Answer\s*[:=]?\s*)?([ABCD])\s*$/gim
+    ];
+    keyPatterns.forEach(re => { let m; while ((m = re.exec(normalized)) !== null) answerKey.set(Number(m[1]), m[2].toUpperCase()); });
     const starts = [...normalized.matchAll(/(?:^|\n)\s*(?:Question\s*)?(\d{1,3})\s*[.)]\s*/gi)];
     const chunks = [];
     for (let i=0;i<starts.length;i++) {
       const start = starts[i].index + starts[i][0].length;
       const end = i+1<starts.length ? starts[i+1].index : normalized.length;
       const block = normalized.slice(start,end).trim();
-      if (block) chunks.push(block);
+      if (block) chunks.push({number:Number(starts[i][1]), block});
     }
     const rows = [];
-    chunks.forEach((block, idx) => {
-      const correctMatch = block.match(/(?:Correct\s+answer|Answer\s+key|Correct\s+option)\s*:\s*([ABCD1-4])/i);
+    chunks.forEach(({number, block}, idx) => {
+      const correctMatch = block.match(/(?:Correct\s+answer|Answer\s+key|Correct\s+option|Answer)\s*:\s*([ABCD1-4])\b/i);
+      const keyedAnswer = answerKey.get(number) || "";
       const explanationMatch = block.match(/(?:Explanation|Rationale|Solution)\s*:\s*([\s\S]*?)(?=\n\s*(?:Question\s*)?\d{1,3}\s*[.)]\s*|$)/i);
       const optRe = /(?:^|\n|\s)([ABCD])\s*[.)]\s+/g;
       const matches = [...block.matchAll(optRe)];
@@ -350,7 +358,7 @@
         "Topic": (block.match(/(?:Topic|Strand)\s*:\s*([^\n]+)/i)||[])[1] || $("iqAdminTopic").value || "All Topics",
         "Question": stem,
         "Option A": options[0], "Option B": options[1], "Option C": options[2], "Option D": options[3],
-        "Correct Answer": correctMatch ? correctMatch[1].toUpperCase() : "",
+        "Correct Answer": correctMatch ? correctMatch[1].toUpperCase() : keyedAnswer,
         "Explanation": explanationMatch ? explanationMatch[1].trim() : "", "Image URL": (block.match(/(?:Image|Diagram)\s+URL\s*:\s*(https:\/\/\S+)/i)||[])[1] || ""
       };
       if(/^Grade\s*\d+$/i.test(row.Grade)) row.Grade=row.Grade.replace(/\s+/g," ");
