@@ -914,6 +914,26 @@
               <button type="button" id="iqAdminPublishBatch" class="iq-admin-submit" hidden style="margin-top:12px">Publish all questions</button>
               <p id="iqAdminBatchStatus" class="iq-admin-status" role="status" aria-live="polite"></p>
             </div>
+            <section id="iqBulkImportPanel" style="margin-top:18px;padding:18px;border:2px solid #9ac7f4;border-radius:12px;background:#f5faff">
+              <h4 style="margin:0 0 6px">Bulk Importer — Excel, Word or PDF</h4>
+              <p style="margin:0 0 12px">Upload a structured question bank. Valid questions are published automatically after preview; duplicates and invalid rows are skipped and listed in a downloadable report.</p>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px">
+                <button type="button" id="iqDownloadTemplate" class="secondary-button">Download Excel template</button>
+                <a href="#iqBulkImportPanel" id="iqTemplateHelp" style="font-size:.9rem;text-decoration:underline">View required columns</a>
+              </div>
+              <p style="font-size:.88rem;color:#536174;margin:0 0 12px">Template columns: Grade, Subject, Topic, Question, Option A, Option B, Option C, Option D, Correct Answer, Explanation, Difficulty, Image URL (optional). For Word/PDF, use numbered questions with A–D options and “Correct answer: A” plus optional “Explanation: …”. Text-based PDFs work best; diagrams embedded in PDFs may need to be added separately.</p>
+              <label for="iqBulkImportFile" style="display:block;font-weight:700;margin-bottom:8px">Choose file (.xlsx, .xls, .csv, .docx, .pdf)
+                <input id="iqBulkImportFile" type="file" accept=".xlsx,.xls,.csv,.docx,.pdf" style="display:block;margin-top:6px;max-width:100%">
+              </label>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+                <button type="button" id="iqBulkAnalyze" class="iq-admin-submit">Read file & preview</button>
+                <button type="button" id="iqBulkPublish" class="iq-admin-submit" disabled>Publish valid questions</button>
+                <button type="button" id="iqBulkDownloadReport" class="secondary-button" disabled>Download error report</button>
+              </div>
+              <p id="iqBulkImportStatus" class="iq-admin-status" role="status" aria-live="polite"></p>
+              <div id="iqBulkImportPreview" style="overflow:auto;margin-top:12px"></div>
+              <div id="iqBulkImportReport" hidden></div>
+            </section>
             <div style="margin-top:20px">
               <h4 style="margin:0 0 6px">Published question bank</h4>
               <p>Review questions already published and remove any that should no longer be shown.</p>
