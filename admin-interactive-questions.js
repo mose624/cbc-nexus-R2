@@ -433,19 +433,57 @@
     const anchor = importFile.closest("section, .admin-card, .iq-admin-import, div") || importFile.parentElement;
     if (anchor && anchor.parentElement) anchor.parentElement.insertBefore(pastePanel, anchor);
     else form.parentElement.insertBefore(pastePanel, form.nextSibling);
-    $("iqBulkPastePublish").addEventListener("click", () => {
-      setImportStatus("Publish button clicked. Checking the preview…");
-      const publishButton = $("iqBulkPublish");
-      if (!importRows.some(r => !r.errors.length)) {
-        setImportStatus("Paste your questions and click Preview pasted questions first.", true);
+    $("iqBulkPastePublish").addEventListener("click", async (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const pastePublish = $("iqBulkPastePublish");
+      const ready = importRows.filter(r => !r.errors.length);
+      if (!ready.length) {
+        setImportStatus("Preview the pasted questions first. Only questions marked Ready can be published.", true);
         return;
       }
-      if (!publishButton || publishButton.disabled) {
-        setImportStatus("No valid questions are ready. Correct the issues in the preview and preview again.", true);
-        return;
+      if (pastePublish.dataset.publishing === "1") return;
+      pastePublish.dataset.publishing = "1";
+      pastePublish.disabled = true;
+      pastePublish.textContent = "Publishing…";
+      let published = 0;
+      const failed = [];
+      try {
+        setImportStatus("Publishing " + ready.length + " valid questions… keep this page open. 0 / " + ready.length);
+        for (const r of ready) {
+          try {
+            await request(api, {
+              method: "POST",
+              headers: {"Content-Type":"application/json"},
+              body: JSON.stringify({
+                grade:r.grade, subject:r.subject, strand:r.strand||"All Topics",
+                question:r.question, options:r.options, correctIndex:r.correctIndex,
+                explanation:r.explanation||"", imageUrl:r.imageUrl||"",
+                imageData:r.imageData||"", imageAlt:r.imageAlt||r.question.slice(0,160)
+              })
+            });
+            published++;
+          } catch (e) {
+            failed.push({"Source row":r.rowNumber,"Grade":r.grade,"Subject":r.subject,"Question":r.question,"Status":"Failed to publish","Errors":e.message||"Save failed"});
+          }
+          setImportStatus("Publishing questions… " + (published + failed.length) + " / " + ready.length + " processed.");
+        }
+        const skipped = importReportRows.filter(r => r.Errors);
+        importReportRows = [...skipped, ...failed];
+        downloadReport.disabled = importReportRows.length === 0;
+        await loadQuestions();
+        window.dispatchEvent(new Event("cbe:interactive-questions-updated"));
+        setImportStatus("Finished: " + published + " questions published; " + (importErrors.length + failed.length) + " skipped or failed." + (failed.length ? " Download the report to review failures." : ""), failed.length > 0);
+        pastePublish.textContent = published ? "Published " + published + " question" + (published===1?"":"s") : "Nothing published — review errors";
+      } catch (e) {
+        setImportStatus("Publishing stopped: " + (e.message || "Unexpected error"), true);
+        pastePublish.textContent = "Retry publishing";
+      } finally {
+        delete pastePublish.dataset.publishing;
+        pastePublish.disabled = !importRows.some(r => !r.errors.length);
+        if (pastePublish.disabled) pastePublish.style.opacity = ".55";
+        else pastePublish.style.opacity = "1";
       }
-      // Invoke the existing authenticated publisher directly; avoid a synthetic click being blocked.
-      publishButton.click();
     });
     $("iqBulkPasteClear").addEventListener("click", () => {
       $("iqBulkPasteText").value = "";
