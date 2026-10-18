@@ -404,7 +404,7 @@
     try {
       const XLSX=await loadBrowserScript("https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js","XLSX");
       const headers=["Grade","Subject","Topic","Question","Option A","Option B","Option C","Option D","Correct Answer","Explanation","Difficulty"];
-      const example=["Grade 10","Physics","Electricity","Which instrument measures electric current?","Voltmeter","Ammeter","Thermometer","Barometer","B","An ammeter is connected in series to measure current.","Easy",""];
+      const example=["Grade 10","Physics","Electricity","Which instrument measures electric current?","Voltmeter","Ammeter","Thermometer","Barometer","B","An ammeter is connected in series to measure current.","Easy"];
       const ws=XLSX.utils.aoa_to_sheet([headers,example]); ws["!cols"]=headers.map(()=>({wch:22})); ws["!cols"][3]={wch:55};ws["!cols"][9]={wch:55};
       const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"Questions");XLSX.writeFile(wb,"CBE-Nexus-Bulk-Question-Template.xlsx");
     } catch(e) {
