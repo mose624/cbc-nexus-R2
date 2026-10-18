@@ -445,11 +445,11 @@
       setImportStatus("Reading and validating pasted questions…");
       try {
         // Accept defaults supplied above the first numbered question, or use the main form.
-        const firstQuestionAt = raw.search(/(?:^|\\n)\\s*(?:Question\\s*)?\\d{1,3}\\s*[.)]\\s*/i);
+        const firstQuestionAt = raw.search(/(?:^|\n)\s*(?:Question\s*)?\d{1,3}\s*[.)]\s*/i);
         const headerText = firstQuestionAt > 0 ? raw.slice(0, firstQuestionAt) : "";
-        const headerGrade = (headerText.match(/Grade\\s*:\\s*(Grade\\s*)?(1[0-2]|[1-9])\\b/i) || []);
-        const headerSubject = (headerText.match(/Subject\\s*:\\s*([^\\n]+)/i) || [])[1];
-        const headerTopic = (headerText.match(/(?:Topic|Strand)\\s*:\\s*([^\\n]+)/i) || [])[1];
+        const headerGrade = (headerText.match(/Grade\s*:\s*(Grade\s*)?(1[0-2]|[1-9])\b/i) || []);
+        const headerSubject = (headerText.match(/Subject\s*:\s*([^\n]+)/i) || [])[1];
+        const headerTopic = (headerText.match(/(?:Topic|Strand)\s*:\s*([^\n]+)/i) || [])[1];
         const parsedRows = parseQuestionText(raw);
         if (!parsedRows.length) throw new Error("No questions detected. Number each question (1., 2., 3.) and include options A–D and Correct answer: A/B/C/D.");
         const globalGrade = headerGrade.length ? "Grade " + Number(headerGrade[2]) : $("iqAdminGrade").value;
