@@ -784,6 +784,59 @@ async function handleApi(req,res,url){
     }catch(error){console.error("Rating save error:",error);sendJson(res,500,{ok:false,error:"Rating could not be saved."});}
     return true;
   }
+
+  // Public learner-facing question bank. Only published questions are exposed.
+  if(req.method==="GET"&&url.pathname==="/api/interactive-questions"){
+    const questions=await readJsonStore("interactive-questions.json");
+    sendJson(res,200,{ok:true,questions:questions.filter(q=>q&&q.published!==false).map(q=>({id:q.id,grade:q.grade,subject:q.subject,strand:q.strand||"All Topics",question:q.question,options:q.options,correctIndex:Number(q.correctIndex),explanation:q.explanation||"",createdAt:q.createdAt||null}))});
+    return true;
+  }
+  // Admin-only management endpoints for the isolated Interactive Questions module.
+  if(req.method==="GET"&&url.pathname==="/api/admin/interactive-questions"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    const questions=await readJsonStore("interactive-questions.json");
+    sendJson(res,200,{ok:true,questions:questions.filter(Boolean)});
+    return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/interactive-questions"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{
+      const p=JSON.parse((await readBody(req))||"{}");
+      const grade=String(p.grade||"").trim();
+      const subject=String(p.subject||"").trim().slice(0,100);
+      const strand=String(p.strand||"All Topics").trim().slice(0,140)||"All Topics";
+      const question=String(p.question||"").trim().slice(0,2500);
+      const options=Array.isArray(p.options)?p.options.map(x=>String(x||"").trim().slice(0,600)):[];
+      const correctIndex=Number(p.correctIndex);
+      const explanation=String(p.explanation||"").trim().slice(0,2000);
+      if(!/^Grade (?:[1-9]|1[0-2])$/.test(grade)){sendJson(res,400,{ok:false,error:"Choose a valid grade from Grade 1 to Grade 12."});return true;}
+      if(!subject||!question||options.length!==4||options.some(x=>!x)||![0,1,2,3].includes(correctIndex)){sendJson(res,400,{ok:false,error:"Enter a subject, question, four answer options and a valid correct answer."});return true;}
+      await ensureDataDir();
+      const rows=await readJsonStore("interactive-questions.json");
+      const normalized=question.toLowerCase().replace(/\s+/g," ");
+      const duplicate=rows.find(q=>q&&q.grade===grade&&String(q.subject||"").toLowerCase()===subject.toLowerCase()&&String(q.question||"").toLowerCase().replace(/\s+/g," ")===normalized);
+      if(duplicate){sendJson(res,409,{ok:false,error:"A matching question already exists for this grade and subject."});return true;}
+      const item={id:"iq-"+Date.now()+"-"+Math.random().toString(36).slice(2,8),grade,subject,strand,question,options,correctIndex,explanation,published:true,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};
+      rows.unshift(item);
+      await fs.writeFile(path.join(DATA_DIR,"interactive-questions.json"),JSON.stringify(rows.slice(0,5000),null,2));
+      sendJson(res,201,{ok:true,question:item,message:"Question published."});
+    }catch(error){console.error("Interactive question publish error:",error);sendJson(res,500,{ok:false,error:"Question could not be saved. Please try again."});}
+    return true;
+  }
+  if(req.method==="DELETE"&&url.pathname.startsWith("/api/admin/interactive-questions/")){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{
+      const id=decodeURIComponent(url.pathname.slice("/api/admin/interactive-questions/".length));
+      const rows=await readJsonStore("interactive-questions.json");
+      const remaining=rows.filter(q=>q&&String(q.id)!==id);
+      if(remaining.length===rows.length){sendJson(res,404,{ok:false,error:"Question not found."});return true;}
+      await ensureDataDir();
+      await fs.writeFile(path.join(DATA_DIR,"interactive-questions.json"),JSON.stringify(remaining,null,2));
+      sendJson(res,200,{ok:true,message:"Question deleted."});
+    }catch(error){console.error("Interactive question delete error:",error);sendJson(res,500,{ok:false,error:"Question could not be deleted."});}
+    return true;
+  }
+
   if(req.method==="GET"&&url.pathname==="/api/admin/dashboard"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}let resources=await readJsonStore("resources.json");const [localSellerAccounts,payments,mpesaRequests,tuition,localUsers]=await Promise.all([readJsonStore("seller-accounts.json"),readJsonStore("payments.json"),readJsonStore("mpesa-requests.json"),readJsonStore("tuition-registrations.json"),readJsonStore("admin-users.json")]);if(supabaseConfigured){try{const {data:resourceData,error:resourceError}=await supabase.from("resources").select("*").eq("status","approved").order("created_at",{ascending:false});if(resourceError)throw resourceError;resources=(resourceData||[]).map(resourcePayloadFromRow);}catch(error){console.error("Supabase resource dashboard lookup error:",error);}}let sellerAccounts=localSellerAccounts,users=localUsers,verifiedPurchases=[];if(supabaseConfigured){try{const {data,error}=await supabase.from("purchases").select("*").order("created_at",{ascending:false}).limit(100);if(error)throw error;verifiedPurchases=(data||[]).map(p=>({...p,id:p.id,resource:p.resource_id,resourceId:p.resource_id,customerPhone:p.customer_phone,checkoutRequestID:p.checkout_request_id,merchantRequestID:p.merchant_request_id,mpesaReceipt:p.mpesa_receipt,createdAt:p.created_at}));}catch(error){console.error("Supabase payment dashboard lookup error:",error);}}if(supabaseConfigured){try{const [{data:sellersData,error:sellersError},{data:usersData,error:usersError}]=await Promise.all([supabase.from("sellers").select("id,user_id,phone,username,status,created_at"),supabase.from("users").select("id,name,phone,role,status,created_at")]);if(sellersError)throw sellersError;if(usersError)throw usersError;sellerAccounts=sellersData||[];users=usersData||[];}catch(error){console.error("Supabase admin dashboard lookup error:",error);}}const userMap=new Map();[...users].forEach(u=>userMap.set(u.phone||u.username||u.id,u));[...payments,...mpesaRequests,...tuition].forEach(item=>{const phone=item.customerPhone||item.phone;if(phone&&!userMap.has(phone))userMap.set(phone,{id:"user-"+phone,name:item.learner||item.name||"Customer",phone,status:"active",source:"transaction"});});const allUsers=[...userMap.values()],sales=payments.filter(p=>["paid","completed","success"].includes(String(p.status||"").toLowerCase())),totalDownloads=resources.reduce((s,r)=>s+Number(r.downloads||0),0),popularResources=[...resources].map(r=>({...r,downloads:Number(r.downloads||0),purchases:Number(r.purchases||0)})).sort((a,b)=>(b.downloads+b.purchases*3)-(a.downloads+a.purchases*3)).slice(0,10);const dashboardPayments=[...payments,...mpesaRequests,...verifiedPurchases];const dashboardSales=[...payments,...verifiedPurchases].filter(p=>["paid","completed","success"].includes(String(p.status||"").toLowerCase()));sendJson(res,200,{ok:true,stats:{sellers:sellerAccounts.length,pendingSellers:sellerAccounts.filter(x=>x.status==="pending").length,resources:resources.length,pendingResources:resources.filter(x=>x.status==="pending").length,users:allUsers.length,sales:dashboardSales.length,purchases:dashboardSales.length,revenue:dashboardSales.reduce((s,x)=>s+Number(x.amount||0),0),downloads:totalDownloads},popularResources,sellers:sellerAccounts,resources,users:allUsers,sales:dashboardSales,payments:dashboardPayments.slice(0,100)});return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/resource"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const p=JSON.parse((await readBody(req))||"{}"),items=await readJsonStore("resources.json"),item={...p,status:p.status||"approved",updatedAt:new Date().toISOString()};await fs.writeFile(path.join(DATA_DIR,"resources.json"),JSON.stringify([item,...items.filter(x=>x.id!==item.id)],null,2));sendJson(res,200,{ok:true,resource:item});return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/resource-delete"){
