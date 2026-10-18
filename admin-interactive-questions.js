@@ -130,6 +130,107 @@
       submit.textContent = "Publish question";
     }
   });
+  // Bulk authoring for the main admin dashboard: grade, subject and topic are shared,
+  // while each question has its own prompt, options, correct answer and explanation.
+  const batchCount = $("iqAdminBulkCount");
+  const generateBatch = $("iqAdminGenerateBatch");
+  const batchEditor = $("iqAdminBatchEditor");
+  const publishBatch = $("iqAdminPublishBatch");
+  const batchStatus = $("iqAdminBatchStatus");
+  function setBatchStatus(message, bad) {
+    if (!batchStatus) return;
+    batchStatus.textContent = message || "";
+    batchStatus.style.color = bad ? "#9f1d1d" : "";
+  }
+  function generateBatchForms() {
+    const count = Number.parseInt(batchCount.value, 10);
+    if (!Number.isInteger(count) || count < 1 || count > 50) {
+      setBatchStatus("Enter a number from 1 to 50.", true);
+      batchCount.focus();
+      return;
+    }
+    if (!$("iqAdminGrade").value || !$("iqAdminSubject").value) {
+      setBatchStatus("Choose the grade and subject in the main form above first.", true);
+      return;
+    }
+    batchEditor.replaceChildren();
+    for (let i = 0; i < count; i++) {
+      const card = document.createElement("fieldset");
+      card.className = "iq-admin-batch-question";
+      card.style.cssText = "border:1px solid #cbd5e1;border-radius:10px;padding:14px;margin:12px 0;background:#fff";
+      card.innerHTML = `
+        <legend style="font-weight:800;padding:0 6px">Question ${i + 1}</legend>
+        <label style="display:block;margin:8px 0">Question<textarea data-bulk="question" required maxlength="2500" rows="3" style="display:block;width:100%;box-sizing:border-box"></textarea></label>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px">
+          <label>Option A<input data-bulk="A" required maxlength="600" style="display:block;width:100%;box-sizing:border-box"></label>
+          <label>Option B<input data-bulk="B" required maxlength="600" style="display:block;width:100%;box-sizing:border-box"></label>
+          <label>Option C<input data-bulk="C" required maxlength="600" style="display:block;width:100%;box-sizing:border-box"></label>
+          <label>Option D<input data-bulk="D" required maxlength="600" style="display:block;width:100%;box-sizing:border-box"></label>
+          <label>Correct answer<select data-bulk="correct" style="display:block"><option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option></select></label>
+          <label>Explanation (optional)<input data-bulk="explanation" maxlength="2000" style="display:block;width:100%;box-sizing:border-box"></label>
+        </div>`;
+      batchEditor.appendChild(card);
+    }
+    batchEditor.hidden = false;
+    publishBatch.hidden = false;
+    setBatchStatus(count + " question forms created. Complete each one, then publish the batch.");
+    batchEditor.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+  if (generateBatch && batchEditor && publishBatch) {
+    generateBatch.addEventListener("click", generateBatchForms);
+    publishBatch.addEventListener("click", async () => {
+      const grade = $("iqAdminGrade").value;
+      const subject = $("iqAdminSubject").value.trim();
+      const strand = $("iqAdminTopic").value.trim() || "All Topics";
+      if (!grade || !subject) {
+        setBatchStatus("Choose the grade and subject in the main form above.", true);
+        return;
+      }
+      const cards = Array.from(batchEditor.querySelectorAll(".iq-admin-batch-question"));
+      if (!cards.length) {
+        setBatchStatus("Create question forms first.", true);
+        return;
+      }
+      const payloads = [];
+      for (let i = 0; i < cards.length; i++) {
+        const card = cards[i];
+        const get = (key) => card.querySelector('[data-bulk="' + key + '"]').value.trim();
+        const question = get("question");
+        const options = ["A","B","C","D"].map(get);
+        if (!question || options.some((option) => !option)) {
+          setBatchStatus("Complete the question text and all four options for Question " + (i + 1) + ".", true);
+          card.querySelector(":invalid")?.focus();
+          return;
+        }
+        payloads.push({grade, subject, strand, question, options, correctIndex:Number(get("correct")), explanation:get("explanation")});
+      }
+      publishBatch.disabled = true;
+      generateBatch.disabled = true;
+      publishBatch.textContent = "Publishing batch…";
+      setBatchStatus("Publishing " + payloads.length + " questions. Please keep this page open.");
+      let published = 0;
+      try {
+        for (const payload of payloads) {
+          await request(api, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload)});
+          published++;
+        }
+        batchEditor.replaceChildren();
+        batchEditor.hidden = true;
+        publishBatch.hidden = true;
+        setBatchStatus("Successfully published all " + published + " questions. They are available to learners.");
+        await loadQuestions();
+        window.dispatchEvent(new Event("cbe:interactive-questions-updated"));
+      } catch (error) {
+        setBatchStatus(published + " of " + payloads.length + " questions were published before an error: " + (error.message || "request failed") + ". Do not republish the entire batch without checking the published question bank first.", true);
+        await loadQuestions();
+      } finally {
+        publishBatch.disabled = false;
+        generateBatch.disabled = false;
+        publishBatch.textContent = "Publish all questions";
+      }
+    });
+  }
+
   window.loadAdminInteractiveQuestions = loadQuestions;
   const watchAdmin = () => {
     if (document.body.classList.contains("admin-unlocked")) loadQuestions();
