@@ -325,11 +325,11 @@
     // Read answer keys placed at the end of a complete paper, including Markdown tables.
     const answerKey = new Map();
     const keyPatterns = [
-      /^\\s*\\|\\s*(\\d{1,3})\\s*\\|\\s*([ABCD])\\s*(?:\\||$)/gim,
-      /^\\s*(\\d{1,3})\\s*[.)]?\\s*[-:|]?\\s*(?:Answer\\s*[:=]?\\s*)?([ABCD])\\s*$/gim
+      /^\s*\|\s*(\d{1,3})\s*\|\s*([ABCD])\s*(?:\||$)/gim,
+      /^\s*(\d{1,3})\s*[.)]?\s*[-:|]?\s*(?:Answer\s*[:=]?\s*)?([ABCD])\s*$/gim
     ];
     keyPatterns.forEach(re => { let m; while ((m = re.exec(normalized)) !== null) answerKey.set(Number(m[1]), m[2].toUpperCase()); });
-    const starts = [...normalized.matchAll(/(?:^|\\n)\\s*(?:Question\\s*)?(\\d{1,3})\\s*[.)\]:]\\s*/gi)];
+    const starts = [...normalized.matchAll(/(?:^|\n)\s*(?:Question\s*)?(\d{1,3})\s*[.)\]:]\s*/gi)];
     const chunks = [];
     for (let i=0;i<starts.length;i++) {
       const start = starts[i].index + starts[i][0].length;
