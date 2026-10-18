@@ -319,9 +319,9 @@
     const normalized = String(text || "")
       .replace(/\r/g,"")
       .replace(/\u00a0/g," ")
-      .replace(/^[ \t]*(?:[-*+]\s+)?(?=(?:\\*\\*|__)?(?:Question\\s*)?\\d{1,3}\\s*[.)\]:])/gim, "")
-      .replace(/\\*\\*(?=(?:Question\\s*)?\\d{1,3}\\s*[.)\]:])/gi, "")
-      .replace(/(?<=(?:Question\\s*)?\\d{1,3}\\s*[.)\]:])\\*\\*/gi, "");
+      .replace(/^[ \t]*(?:[-*+]\s+)?(?=(?:\*\*|__)?(?:Question\s*)?\d{1,3}\s*[.)\]:])/gim, "")
+      .replace(/\*\*(?=(?:Question\s*)?\d{1,3}\s*[.)\]:])/gi, "")
+      .replace(/(?<=(?:Question\s*)?\d{1,3}\s*[.)\]:])\*\*/gi, "");
     // Read answer keys placed at the end of a complete paper, including Markdown tables.
     const answerKey = new Map();
     const keyPatterns = [
