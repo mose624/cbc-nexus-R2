@@ -115,19 +115,16 @@
     (function(){
       const toggle = document.getElementById('resourcesToggle');
       const panel = document.getElementById('resourcesPanel');
-      // Ensure panel is open by default on page load
+      // The resources panel is optional on this page; bind it only when both elements exist.
+      if (!toggle || !panel) return;
       toggle.setAttribute('aria-expanded', 'true');
       panel.hidden = false;
 
       toggle.addEventListener('click', function(){
         const expanded = this.getAttribute('aria-expanded') === 'true';
         this.setAttribute('aria-expanded', String(!expanded));
-        if (expanded) {
-          panel.hidden = true;
-        } else {
-          panel.hidden = false;
-          panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        panel.hidden = expanded;
+        if (!expanded) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     })();
 
