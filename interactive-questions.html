@@ -41,7 +41,7 @@
     .iq-tools input,.iq-tools select{width:100%;min-height:48px;border:1px solid #cbd5d1;border-radius:10px;background:#fff;padding:11px 13px;color:#17202a;font:inherit}
     .iq-tools input:focus,.iq-tools select:focus{outline:3px solid #16803d25;border-color:#16803d}
     .iq-subject-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-    .iq-subject{display:flex;gap:11px;align-items:center;min-height:84px;padding:14px;background:#fff;border:1px solid var(--portal-line);border-radius:13px;text-decoration:none;color:inherit;transition:transform .16s ease,border-color .16s ease}
+    .iq-subject[hidden]{display:none!important}.iq-subject{display:flex;gap:11px;align-items:center;min-height:84px;padding:14px;background:#fff;border:1px solid var(--portal-line);border-radius:13px;text-decoration:none;color:inherit;transition:transform .16s ease,border-color .16s ease}
     .iq-subject-icon{flex:0 0 40px;height:40px;display:grid;place-items:center;border-radius:11px;background:#fff4bf;color:#614b00;font-weight:900}
     .iq-subject strong{display:block;font-size:.96rem}
     .iq-subject small{display:block;color:var(--portal-muted);margin-top:3px}
@@ -133,7 +133,7 @@
 
     <section class="iq-section" id="subjects" aria-labelledby="subject-heading">
       <div class="iq-section-head">
-        <div><h2 id="subject-heading">2. Find a subject</h2><p>Search the directory or filter by learning area. Select a subject to open the quiz centre.</p></div>
+        <div><h2 id="subject-heading">2. Find a subject</h2><p>Search the directory or filter by learning area. Choose a subject to open the quiz centre and select the matching option where available.</p></div>
       </div>
       <div class="iq-tools">
         <input id="subjectSearch" type="search" placeholder="Search subjects, e.g. Physics or English" aria-label="Search subjects">
