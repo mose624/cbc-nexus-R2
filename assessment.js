@@ -746,7 +746,8 @@
         item.strand || "All Topics",
         "All Sub-Strands",
         "All Outcomes",
-        item.strand || ""
+        item.strand || "",
+        item.imageData || item.imageUrl || ""
       ]);
 
     let combined = (Array.isArray(gradeBank) ? gradeBank.slice() : []).concat(customBank, publishedBank);
@@ -1038,6 +1039,15 @@
       const legend = document.createElement("legend");
       legend.textContent = (index + 1) + ". " + item[0];
       fieldset.appendChild(legend);
+      if (item[9]) {
+        const questionImage = document.createElement("img");
+        questionImage.src = item[9];
+        questionImage.alt = item.imageAlt || "Question diagram";
+        questionImage.loading = "lazy";
+        questionImage.style.cssText = "display:block;max-width:min(100%,680px);max-height:420px;object-fit:contain;margin:10px 0 16px;border:1px solid #dbe3ea;border-radius:8px;background:#fff";
+        questionImage.onerror = () => questionImage.remove();
+        fieldset.appendChild(questionImage);
+      }
 
       const optionOrder = item[1].map((optionText, optionIndex) => ({
         text: optionText,
