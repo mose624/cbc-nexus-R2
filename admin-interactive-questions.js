@@ -160,7 +160,7 @@
       card.style.cssText = "border:1px solid #cbd5e1;border-radius:10px;padding:14px;margin:12px 0;background:#fff";
       card.innerHTML = `
         <legend style="font-weight:800;padding:0 6px">Question ${i + 1}</legend>
-        <label style="display:block;margin:8px 0">Question<textarea data-bulk="question" required maxlength="2500" rows="3" style="display:block;width:100%;box-sizing:border-box"></textarea></label>
+        <label style="display:block;margin:8px 0">Question<textarea data-bulk="question" required maxlength="20000" rows="3" style="display:block;width:100%;box-sizing:border-box"></textarea></label>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px">
           <label>Option A<input data-bulk="A" required maxlength="600" style="display:block;width:100%;box-sizing:border-box"></label>
           <label>Option B<input data-bulk="B" required maxlength="600" style="display:block;width:100%;box-sizing:border-box"></label>
@@ -305,7 +305,7 @@
     if (!/^Grade (?:[1-9]|1[0-2])$/i.test(grade)) errors.push("Grade must be Grade 1–12");
     if (!subject) errors.push("Subject is missing");
     if (!question) errors.push("Question text is missing");
-    if (question.length > 7000) errors.push("Question or passage exceeds 7,000 characters");
+    if (question.length > 20000) errors.push("Question or passage exceeds 20,000 characters");
     if (options.some(x => !x)) errors.push("All four options (A–D) are required");
     if (options.some(x => x.length > 1500)) errors.push("An option exceeds 1,500 characters");
     if (correctIndex < 0) errors.push("Correct answer must be A, B, C, D or 1–4");
@@ -371,7 +371,7 @@
           const candidateContext = contextLines.join("\n");
           // Keep passage/source/graph instructions, but do not carry a previous answer
           // or explanation into the next question.
-          if (candidateContext.length <= 7000 && !/^(?:Correct answer|Explanation|Rationale|Solution)\s*:/i.test(candidateContext)) {
+          if (candidateContext.length <= 20000 && !/^(?:Correct answer|Explanation|Rationale|Solution)\s*:/i.test(candidateContext)) {
             sharedContext = candidateContext;
           }
         }
