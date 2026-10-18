@@ -412,20 +412,31 @@
         <button type="button" id="iqBulkPastePublish" disabled style="background:#0b5ed7;color:#fff;border:0;border-radius:8px;padding:10px 16px;font-weight:800;cursor:pointer;opacity:.55">Publish previewed questions</button>
         <button type="button" id="iqBulkPasteClear" style="background:#e5e7eb;color:#111827;border:0;border-radius:8px;padding:10px 16px;font-weight:700;cursor:pointer">Clear text</button>
       </div>
+      <p id="iqBulkPasteStatus" role="status" aria-live="polite" style="margin:8px 0 0;padding:8px 10px;border-radius:6px;background:#fff;border:1px solid #cbd5e1;min-height:1.3em">Paste questions, then choose Preview.</p>
       <p id="iqBulkPasteHelp" style="margin:8px 0 0;font-size:.9rem">Tip: add “Grade: 10”, “Subject: English”, and “Topic: Reading” above a question if you want to override the defaults. Otherwise choose grade and subject in the main form first.</p>`;
     const anchor = importFile.closest("section, .admin-card, .iq-admin-import, div") || importFile.parentElement;
     if (anchor && anchor.parentElement) anchor.parentElement.insertBefore(pastePanel, anchor);
     else form.parentElement.insertBefore(pastePanel, form.nextSibling);
+    const pasteStatus = $("iqBulkPasteStatus");
+    const setPasteStatus = (message, bad) => {
+      if (pasteStatus) {
+        pasteStatus.textContent = message || "";
+        pasteStatus.style.color = bad ? "#9f1d1d" : "#14532d";
+        pasteStatus.style.borderColor = bad ? "#efaaaa" : "#cbd5e1";
+      }
+      setImportStatus(message, bad);
+    };
     $("iqBulkPastePublish").addEventListener("click", () => {
       const publishButton = $("iqBulkPublish");
       if (!importRows.some(r => !r.errors.length)) {
-        setImportStatus("Paste your questions and click Preview pasted questions first.", true);
+        setPasteStatus("Paste your questions and click Preview pasted questions first.", true);
         return;
       }
       if (!publishButton || publishButton.disabled) {
-        setImportStatus("No valid questions are ready. Correct the issues in the preview and preview again.", true);
+        setPasteStatus("No valid questions are ready. Correct the issues in the preview and preview again.", true);
         return;
       }
+      setPasteStatus("Publishing previewed questions…", false);
       publishButton.click();
     });
     $("iqBulkPasteClear").addEventListener("click", () => {
@@ -433,18 +444,18 @@
       const pastePublish = $("iqBulkPastePublish");
       if (pastePublish) { pastePublish.disabled = true; pastePublish.style.opacity = ".55"; pastePublish.textContent = "Publish previewed questions"; }
       $("iqBulkImportPreview").replaceChildren();
-      setImportStatus("");
+      setPasteStatus("Text cleared. Paste questions to begin.", false);
       $("iqBulkPasteText").focus();
     });
     $("iqBulkPastePreview").addEventListener("click", async () => {
       const raw = $("iqBulkPasteText").value.trim();
-      if (!raw) { setImportStatus("Paste your numbered questions first.", true); return; }
+      if (!raw) { setPasteStatus("Paste your numbered questions first.", true); return; }
       if (!$("iqAdminGrade").value || !$("iqAdminSubject").value) {
         setImportStatus("Choose the grade and subject in the main form first, or include Grade and Subject labels in each question.", true); return;
       }
       const btn = $("iqBulkPastePreview");
       btn.disabled = true;
-      setImportStatus("Reading and validating pasted questions…");
+      setPasteStatus("Reading and validating pasted questions…", false);
       try {
         let rows = parseQuestionText(raw).map((row,i) => mapRow(row,i));
         if (!rows.length) throw new Error("No questions detected. Number each question (1., 2., 3.) and include options A–D and Correct answer: A/B/C/D.");
@@ -465,7 +476,7 @@
         importReportRows = rows.map(r => ({"Source row":r.rowNumber,"Grade":r.grade,"Subject":r.subject,"Question":r.question,"Status":r.errors.length?"Skipped":"Ready","Errors":r.errors.join("; ")}));
         renderImportPreview(rows);
         const ready = rows.length - importErrors.length;
-        setImportStatus("Pasted "+rows.length+" questions: "+ready+" ready to publish, "+importErrors.length+" needing correction or skipped. Review the preview below.");
+        setPasteStatus("Pasted "+rows.length+" questions: "+ready+" ready to publish, "+importErrors.length+" needing correction or skipped. Review the preview below.", importErrors.length>0 && ready===0);
         publishImport.disabled = ready === 0;
         downloadReport.disabled = importErrors.length === 0;
         const pastePublish = $("iqBulkPastePublish");
@@ -478,7 +489,7 @@
       } catch (e) {
         const pastePublish = $("iqBulkPastePublish");
         if (pastePublish) { pastePublish.disabled = true; pastePublish.style.opacity = ".55"; }
-        setImportStatus(e.message || "Could not parse pasted questions.", true);
+        setPasteStatus(e.message || "Could not parse pasted questions.", true);
       }
       finally { btn.disabled = false; }
     });
