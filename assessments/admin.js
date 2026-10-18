@@ -247,6 +247,20 @@
   }
   btnNew.addEventListener('click', openEditor);
   btnAddQuestion.addEventListener('click', () => addQuestionEditor());
+  document.getElementById('btnAddQuestionBatch').addEventListener('click', () => {
+    const countInput = document.getElementById('questionBatchCount');
+    const count = Number.parseInt(countInput.value, 10);
+    if (!Number.isInteger(count) || count < 1 || count > 100) {
+      alert('Enter a number from 1 to 100.');
+      countInput.focus();
+      return;
+    }
+    for (let i = 0; i < count; i++) addQuestionEditor();
+    const added = document.createElement('p');
+    added.className = 'muted';
+    added.textContent = count + ' question editor' + (count === 1 ? '' : 's') + ' added. Fill them in, then save the assessment.';
+    questionsEditor.prepend(added);
+  });
   document.getElementById('btnCancel').addEventListener('click', () => editor.classList.add('hidden'));
   editorForm.addEventListener('submit', saveAssessment);
   try { await loadAssessments(); }
