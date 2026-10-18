@@ -2,6 +2,7 @@ const http = require("http");
 const fs = require("fs/promises");
 const path = require("path");
 const crypto = require("crypto");
+const zlib = require("zlib");
 const { createUploadUrl, createDownloadUrl, createPdfPreview, createInlineUrl, getObjectMetadata, getObjectBuffer, objectExists, uploadObject, deleteObject, verifyR2Connection } = require("./r2");
 const mammoth = require("mammoth");
 const { supabase, supabaseConfigured } = require("./supabase");
@@ -2098,4 +2099,19 @@ async function serveStatic(req,res,url){
   }
 }
 const server=http.createServer(async(req,res)=>{const url=new URL(req.url,`http://${req.headers.host||"127.0.0.1"}`);setSecurityHeaders(res);const limit=allowRequest(req,url);res.setHeader("X-RateLimit-Remaining",String(Math.max(0,limit.remaining)));if(!limit.allowed){res.setHeader("Retry-After","60");sendJson(res,429,{ok:false,error:"Too many requests. Please try again shortly."});return;}try{if(await handleApi(req,res,url))return;await serveStatic(req,res,url);}catch(error){console.error("Unhandled server error:",error);if(res.headersSent||res.writableEnded||res.destroyed){if(!res.writableEnded&&!res.destroyed)res.destroy(error);return;}sendJson(res,500,{ok:false,error:"Server error."});}});
-server.listen(PORT,"0.0.0.0",()=>console.log(`CBE website backend running on port ${PORT}`));
+async function seedInteractiveQuestions(){
+  try{
+    const packed=await fs.readFile(path.join(ROOT,"interactive-questions-seed.json.gz.b64"),"utf8");
+    const seed=JSON.parse(zlib.gunzipSync(Buffer.from(packed.trim(),"base64")).toString("utf8"));
+    await ensureDataDir();
+    const existing=await readJsonStore("interactive-questions.json");
+    const key=q=>String(q.grade||"")+"|"+String(q.subject||"").toLowerCase()+"|"+String(q.question||"").toLowerCase().replace(/\\s+/g," ").trim();
+    const keys=new Set(existing.filter(Boolean).map(key));
+    const additions=seed.filter(q=>!keys.has(key(q)));
+    if(additions.length){
+      await fs.writeFile(path.join(DATA_DIR,"interactive-questions.json"),JSON.stringify([...additions,...existing].slice(0,5000),null,2));
+      console.log("Seeded "+additions.length+" Grade 10 Physics interactive questions.");
+    }
+  }catch(error){console.error("Interactive question seed error:",error.message||error);}
+}
+seedInteractiveQuestions().finally(()=>server.listen(PORT,"0.0.0.0",()=>console.log(`CBE website backend running on port ${PORT}`)));
