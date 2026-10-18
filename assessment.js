@@ -735,7 +735,21 @@
         item.contentCovered || ""
       ]);
 
-    let combined = (Array.isArray(gradeBank) ? gradeBank.slice() : []).concat(customBank);
+    const publishedBank = (Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [])
+      .filter((item) => item.grade === selectedGrade && String(item.subject || "").toLowerCase() === String(selectedSubject || "").toLowerCase())
+      .map((item) => [
+        item.question,
+        item.options,
+        Number(item.correctIndex),
+        item.strand || "All Topics",
+        item.explanation || "",
+        item.strand || "All Topics",
+        "All Sub-Strands",
+        "All Outcomes",
+        item.strand || ""
+      ]);
+
+    let combined = (Array.isArray(gradeBank) ? gradeBank.slice() : []).concat(customBank, publishedBank);
     const selectedStrand = strand ? strand.value : "All Topics";
 
     if (selectedStrand && selectedStrand !== "All Topics") {
@@ -994,13 +1008,16 @@
     }
   }
 
-  function startQuiz() {
+  async function startQuiz() {
     if (!learner.value.trim()) {
       status.textContent = "Enter the learner name before starting.";
       learner.focus();
       return;
     }
 
+    if (window.CBENexusAdminQuestionsReady) {
+      await window.CBENexusAdminQuestionsReady;
+    }
     const selectedBank = getGradeQuestionBank(grade.value, subject.value);
     if (!selectedBank.length) {
       status.textContent = "No question bank is available for " + grade.value + " — " + subject.value + (strand && strand.value !== "All Topics" ? " — " + strand.value : "") + ". Please choose another topic or subject.";

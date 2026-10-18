@@ -207,6 +207,7 @@
  }
 }
 </style>
+  <link rel="stylesheet" href="/admin-interactive-questions.css?v=20261018-1">
 </head>
   <body>
     <header class="site-header">
@@ -851,6 +852,70 @@
         </div>
 
 <div id="adminControlPanel" class="admin-control-panel" data-nosnippet>
+          <section class="iq-admin-manager" id="adminInteractiveQuestionManager" aria-labelledby="iqAdminManagerTitle">
+            <div class="iq-admin-heading">
+              <div>
+                <h3 id="iqAdminManagerTitle">✦ Interactive Questions Manager</h3>
+                <p>Add and publish free multiple-choice questions for learners. Published questions appear in the learner quiz centre under the matching grade and subject.</p>
+              </div>
+              <span class="iq-admin-tag">FREE LEARNER ACCESS</span>
+            </div>
+            <form id="adminInteractiveQuestionForm">
+              <div class="iq-admin-form">
+                <label>Grade
+                  <select id="iqAdminGrade" required>
+                    <option value="">Choose grade</option>
+                    <option>Grade 1</option><option>Grade 2</option><option>Grade 3</option><option>Grade 4</option>
+                    <option>Grade 5</option><option>Grade 6</option><option>Grade 7</option><option>Grade 8</option>
+                    <option>Grade 9</option><option>Grade 10</option><option>Grade 11</option><option>Grade 12</option>
+                  </select>
+                </label>
+                <label>Subject / Learning Area
+                  <input id="iqAdminSubject" list="iqAdminSubjectOptions" required maxlength="100" placeholder="e.g. Mathematics, Integrated Science">
+                  <datalist id="iqAdminSubjectOptions">
+                    <option value="Mathematics"></option><option value="English"></option><option value="Kiswahili"></option>
+                    <option value="Integrated Science"></option><option value="Science"></option><option value="Biology"></option>
+                    <option value="Chemistry"></option><option value="Physics"></option><option value="Social Studies"></option>
+                    <option value="Agriculture & Nutrition"></option><option value="Creative Arts and Sports"></option>
+                    <option value="Pre-Technical Studies"></option><option value="Computer Studies"></option>
+                    <option value="Business Studies"></option><option value="Religious Education"></option>
+                  </datalist>
+                </label>
+                <label class="iq-admin-full">Topic / Strand (optional)
+                  <input id="iqAdminTopic" maxlength="140" placeholder="e.g. Fractions, Forces, Plants">
+                  <small>Questions are always available under All Topics. For topic-specific filters, use the same topic ID/label as the quiz centre.</small>
+                </label>
+                <label class="iq-admin-full">Question
+                  <textarea id="iqAdminQuestion" required maxlength="2500" placeholder="Type the question clearly…" rows="3"></textarea>
+                </label>
+                <div class="iq-admin-full iq-admin-options">
+                  <label>Option A<input id="iqAdminOptionA" required maxlength="600" placeholder="Answer option A"></label>
+                  <label>Option B<input id="iqAdminOptionB" required maxlength="600" placeholder="Answer option B"></label>
+                  <label>Option C<input id="iqAdminOptionC" required maxlength="600" placeholder="Answer option C"></label>
+                  <label>Option D<input id="iqAdminOptionD" required maxlength="600" placeholder="Answer option D"></label>
+                </div>
+                <label>Correct answer
+                  <select id="iqAdminCorrect" required>
+                    <option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option>
+                  </select>
+                </label>
+                <label>Explanation (optional)
+                  <input id="iqAdminExplanation" maxlength="2000" placeholder="Why is this answer correct?">
+                </label>
+              </div>
+              <div class="iq-admin-actions">
+                <button class="iq-admin-submit" id="adminInteractiveQuestionSubmit" type="submit">Publish question</button>
+                <span style="color:#536174;font-size:.88rem">Published questions are free for all learners.</span>
+              </div>
+              <p id="adminInteractiveQuestionStatus" class="iq-admin-status" role="status" aria-live="polite"></p>
+            </form>
+            <div style="margin-top:20px">
+              <h4 style="margin:0 0 6px">Published question bank</h4>
+              <p>Review questions already published and remove any that should no longer be shown.</p>
+              <div id="adminInteractiveQuestionList" class="iq-admin-list"><div class="iq-admin-empty">Sign in to load the published question bank.</div></div>
+            </div>
+          </section>
+
           <div class="admin-control-topbar">
             <div class="admin-title-block">
               <div class="admin-title-line">
@@ -1747,5 +1812,6 @@
   <p>Visit the <a href="/contact.html">Contact CBE Nexus page</a> for the published support options. For your safety, never share an M-Pesa PIN, password or one-time security code.</p>
 </section>
 
+  <script src="/admin-interactive-questions.js?v=20261018-1" defer></script>
 </body>
 </html>
