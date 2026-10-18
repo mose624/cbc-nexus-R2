@@ -234,63 +234,6 @@
 
   // File-based bulk importer: Excel/CSV, DOCX and text-based PDF. Publishing still
   // goes through the authenticated existing endpoint, preserving current storage and permissions.
-  // Quick paste importer: lets administrators paste a whole numbered MCQ bank without creating a file.
-  const importFile = $("iqBulkImportFile");
-  if (importFile && !document.getElementById("iqBulkPasteText")) {
-    const pastePanel = document.createElement("section");
-    pastePanel.id = "iqBulkPastePanel";
-    pastePanel.style.cssText = "border:2px solid #16803c;border-radius:12px;padding:16px;margin:16px 0;background:#f0fff5";
-    pastePanel.innerHTML = `
-      <h3 style="margin:0 0 8px;color:#14532d">Quick Paste — Add Many Questions at Once</h3>
-      <p style="margin:0 0 10px">Paste numbered multiple-choice questions below. No Excel or Word file needed. Use the format shown in the example, then preview and publish.</p>
-      <label for="iqBulkPasteText" style="display:block;font-weight:700;margin-bottom:6px">Paste your questions</label>
-      <textarea id="iqBulkPasteText" rows="12" placeholder="1. Which instrument measures electric current?\nA. Voltmeter\nB. Ammeter\nC. Thermometer\nD. Barometer\nCorrect answer: B\nExplanation: An ammeter measures current.\n\n2. ...\nA. ...\nB. ...\nC. ...\nD. ...\nCorrect answer: A" style="display:block;width:100%;box-sizing:border-box;padding:12px;border:1px solid #a7cdb3;border-radius:8px;font:inherit"></textarea>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
-        <button type="button" id="iqBulkPastePreview" style="background:#16803c;color:#fff;border:0;border-radius:8px;padding:10px 16px;font-weight:800;cursor:pointer">Preview pasted questions</button>
-        <button type="button" id="iqBulkPasteClear" style="background:#e5e7eb;color:#111827;border:0;border-radius:8px;padding:10px 16px;font-weight:700;cursor:pointer">Clear text</button>
-      </div>
-      <p id="iqBulkPasteHelp" style="margin:8px 0 0;font-size:.9rem">Tip: add “Grade: 10”, “Subject: English”, and “Topic: Reading” above a question if you want to override the defaults. Otherwise choose grade and subject in the main form first.</p>`;
-    const anchor = importFile.closest("section, .admin-card, .iq-admin-import, div") || importFile.parentElement;
-    if (anchor && anchor.parentElement) anchor.parentElement.insertBefore(pastePanel, anchor);
-    else form.parentElement.insertBefore(pastePanel, form.nextSibling);
-    $("iqBulkPasteClear").addEventListener("click", () => { $("iqBulkPasteText").value = ""; $("iqBulkPasteText").focus(); });
-    $("iqBulkPastePreview").addEventListener("click", async () => {
-      const raw = $("iqBulkPasteText").value.trim();
-      if (!raw) { setImportStatus("Paste your numbered questions first.", true); return; }
-      if (!$("iqAdminGrade").value || !$("iqAdminSubject").value) {
-        setImportStatus("Choose the grade and subject in the main form first, or include Grade and Subject labels in each question.", true); return;
-      }
-      const btn = $("iqBulkPastePreview");
-      btn.disabled = true;
-      setImportStatus("Reading and validating pasted questions…");
-      try {
-        let rows = parseQuestionText(raw).map((row,i) => mapRow(row,i));
-        if (!rows.length) throw new Error("No questions detected. Number each question (1., 2., 3.) and include options A–D and Correct answer: A/B/C/D.");
-        const seen = new Set();
-        for (const row of rows) {
-          const key = norm(row.grade)+"|"+norm(row.subject)+"|"+norm(row.question);
-          if (!row.errors.length && seen.has(key)) row.errors.push("Duplicate question within pasted text");
-          seen.add(key);
-        }
-        let existing;
-        try { const data = await request(api); existing = Array.isArray(data.questions) ? data.questions : []; }
-        catch (e) { throw new Error("Could not check existing questions. Sign in to the admin dashboard and try again. " + e.message); }
-        rows.forEach(row => {
-          if (!row.errors.length && existing.some(q => norm(q.grade)===norm(row.grade) && norm(q.subject)===norm(row.subject) && norm(q.question)===norm(row.question))) row.errors.push("Already exists in the published question bank");
-        });
-        importRows = rows;
-        importErrors = rows.filter(r => r.errors.length);
-        importReportRows = rows.map(r => ({"Source row":r.rowNumber,"Grade":r.grade,"Subject":r.subject,"Question":r.question,"Status":r.errors.length?"Skipped":"Ready","Errors":r.errors.join("; ")}));
-        renderImportPreview(rows);
-        const ready = rows.length - importErrors.length;
-        setImportStatus("Pasted "+rows.length+" questions: "+ready+" ready to publish, "+importErrors.length+" needing correction or skipped. Review the preview below.");
-        publishImport.disabled = ready === 0;
-        downloadReport.disabled = importErrors.length === 0;
-        // Keep the standard publish path, duplicate checks, report and authenticated API.
-      } catch (e) { setImportStatus(e.message || "Could not parse pasted questions.", true); }
-      finally { btn.disabled = false; }
-    });
-  }
   const importImages = $("iqBulkImageFiles");
   const analyzeImport = $("iqBulkAnalyze");
   const publishImport = $("iqBulkPublish");
@@ -453,6 +396,64 @@
     table.appendChild(tbody); importPreview.appendChild(table);
     if(rows.length>250){const note=document.createElement("p");note.textContent="Preview limited to first 250 rows. All rows will be validated.";importPreview.appendChild(note);}
   }
+  // Quick paste importer: lets administrators paste a whole numbered MCQ bank without creating a file.
+  const importFile = $("iqBulkImportFile");
+  if (importFile && !document.getElementById("iqBulkPasteText")) {
+    const pastePanel = document.createElement("section");
+    pastePanel.id = "iqBulkPastePanel";
+    pastePanel.style.cssText = "border:2px solid #16803c;border-radius:12px;padding:16px;margin:16px 0;background:#f0fff5";
+    pastePanel.innerHTML = `
+      <h3 style="margin:0 0 8px;color:#14532d">Quick Paste — Add Many Questions at Once</h3>
+      <p style="margin:0 0 10px">Paste numbered multiple-choice questions below. No Excel or Word file needed. Use the format shown in the example, then preview and publish.</p>
+      <label for="iqBulkPasteText" style="display:block;font-weight:700;margin-bottom:6px">Paste your questions</label>
+      <textarea id="iqBulkPasteText" rows="12" placeholder="1. Which instrument measures electric current?\nA. Voltmeter\nB. Ammeter\nC. Thermometer\nD. Barometer\nCorrect answer: B\nExplanation: An ammeter measures current.\n\n2. ...\nA. ...\nB. ...\nC. ...\nD. ...\nCorrect answer: A" style="display:block;width:100%;box-sizing:border-box;padding:12px;border:1px solid #a7cdb3;border-radius:8px;font:inherit"></textarea>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+        <button type="button" id="iqBulkPastePreview" style="background:#16803c;color:#fff;border:0;border-radius:8px;padding:10px 16px;font-weight:800;cursor:pointer">Preview pasted questions</button>
+        <button type="button" id="iqBulkPasteClear" style="background:#e5e7eb;color:#111827;border:0;border-radius:8px;padding:10px 16px;font-weight:700;cursor:pointer">Clear text</button>
+      </div>
+      <p id="iqBulkPasteHelp" style="margin:8px 0 0;font-size:.9rem">Tip: add “Grade: 10”, “Subject: English”, and “Topic: Reading” above a question if you want to override the defaults. Otherwise choose grade and subject in the main form first.</p>`;
+    const anchor = importFile.closest("section, .admin-card, .iq-admin-import, div") || importFile.parentElement;
+    if (anchor && anchor.parentElement) anchor.parentElement.insertBefore(pastePanel, anchor);
+    else form.parentElement.insertBefore(pastePanel, form.nextSibling);
+    $("iqBulkPasteClear").addEventListener("click", () => { $("iqBulkPasteText").value = ""; $("iqBulkPasteText").focus(); });
+    $("iqBulkPastePreview").addEventListener("click", async () => {
+      const raw = $("iqBulkPasteText").value.trim();
+      if (!raw) { setImportStatus("Paste your numbered questions first.", true); return; }
+      if (!$("iqAdminGrade").value || !$("iqAdminSubject").value) {
+        setImportStatus("Choose the grade and subject in the main form first, or include Grade and Subject labels in each question.", true); return;
+      }
+      const btn = $("iqBulkPastePreview");
+      btn.disabled = true;
+      setImportStatus("Reading and validating pasted questions…");
+      try {
+        let rows = parseQuestionText(raw).map((row,i) => mapRow(row,i));
+        if (!rows.length) throw new Error("No questions detected. Number each question (1., 2., 3.) and include options A–D and Correct answer: A/B/C/D.");
+        const seen = new Set();
+        for (const row of rows) {
+          const key = norm(row.grade)+"|"+norm(row.subject)+"|"+norm(row.question);
+          if (!row.errors.length && seen.has(key)) row.errors.push("Duplicate question within pasted text");
+          seen.add(key);
+        }
+        let existing;
+        try { const data = await request(api); existing = Array.isArray(data.questions) ? data.questions : []; }
+        catch (e) { throw new Error("Could not check existing questions. Sign in to the admin dashboard and try again. " + e.message); }
+        rows.forEach(row => {
+          if (!row.errors.length && existing.some(q => norm(q.grade)===norm(row.grade) && norm(q.subject)===norm(row.subject) && norm(q.question)===norm(row.question))) row.errors.push("Already exists in the published question bank");
+        });
+        importRows = rows;
+        importErrors = rows.filter(r => r.errors.length);
+        importReportRows = rows.map(r => ({"Source row":r.rowNumber,"Grade":r.grade,"Subject":r.subject,"Question":r.question,"Status":r.errors.length?"Skipped":"Ready","Errors":r.errors.join("; ")}));
+        renderImportPreview(rows);
+        const ready = rows.length - importErrors.length;
+        setImportStatus("Pasted "+rows.length+" questions: "+ready+" ready to publish, "+importErrors.length+" needing correction or skipped. Review the preview below.");
+        publishImport.disabled = ready === 0;
+        downloadReport.disabled = importErrors.length === 0;
+        // Keep the standard publish path, duplicate checks, report and authenticated API.
+      } catch (e) { setImportStatus(e.message || "Could not parse pasted questions.", true); }
+      finally { btn.disabled = false; }
+    });
+  }
+
   function csvEscape(v){const s=String(v==null?"":v);return /[",\n\r]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;}
   function downloadCsv(filename, rows, headers) {
     const csv=[headers.map(csvEscape).join(","),...rows.map(r=>headers.map(h=>csvEscape(r[h])).join(","))].join("\r\n");
