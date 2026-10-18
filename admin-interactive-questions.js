@@ -19,6 +19,32 @@
     if (!response.ok || data.ok === false) throw new Error(data.error || "The question request failed.");
     return data;
   }
+  const gradeSubjects = {
+    lower:["Mathematics","English Activities","Kiswahili","Environmental Activities","Creative Activities","Christian Religious Education","Islamic Religious Education","Hindu Religious Education"],
+    upper:["Mathematics","English","Kiswahili","Science & Technology","Social Studies","Agriculture","Creative Arts","Christian Religious Education","Islamic Religious Education","Hindu Religious Education","Arabic","French","German","Mandarin","Indigenous Language"],
+    junior:["English","Kiswahili","Mathematics","Integrated Science","Health Education","Pre-Technical Studies","Social Studies","Religious Education","Business Studies","Agriculture","Life Skills Education","Sports & Physical Education","Visual Arts","Performing Arts","Home Science","Computer Science","French","German","Mandarin","Arabic","Kenyan Sign Language","Indigenous Languages"],
+    senior:["English","Kiswahili","Core Mathematics","Essential Mathematics","Community Service Learning","Biology","Chemistry","Physics","General Science","Agriculture","Computer Studies","Home Science","Aviation","Building Construction","Electricity","Metalwork","Power Mechanics","Wood Technology","Media Technology","Marine & Fisheries Technology","Business Studies","History & Citizenship","Geography","Literature in English","Indigenous Languages","Fasihi ya Kiswahili","Sign Language","Arabic","French","German","Mandarin Chinese","Christian Religious Education","Islamic Religious Education","Hindu Religious Education","Sports & Recreation","Music & Dance","Theatre & Film","Fine Arts"]
+  };
+  function populateSubjects(preferred) {
+    const grade = Number(String($("iqAdminGrade").value).replace(/[^0-9]/g, ""));
+    const options = grade <= 3 ? gradeSubjects.lower : grade <= 6 ? gradeSubjects.upper : grade <= 9 ? gradeSubjects.junior : gradeSubjects.senior;
+    const subject = $("iqAdminSubject");
+    subject.replaceChildren();
+    const first = document.createElement("option");
+    first.value = "";
+    first.textContent = "Choose subject / learning area";
+    subject.appendChild(first);
+    options.forEach((name) => {
+      const option = document.createElement("option");
+      option.value = name;
+      option.textContent = name;
+      subject.appendChild(option);
+    });
+    subject.value = options.includes(preferred) ? preferred : "";
+  }
+  $("iqAdminGrade").addEventListener("change", () => populateSubjects(""));
+  populateSubjects("");
+
   async function loadQuestions() {
     if (!list) return;
     list.replaceChildren();
@@ -92,6 +118,7 @@
       await request(api, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload)});
       form.reset();
       $("iqAdminGrade").value = payload.grade;
+      populateSubjects(payload.subject);
       $("iqAdminCorrect").value = "0";
       setStatus("Question published. It is now available to learners in the matching grade and subject.");
       await loadQuestions();
