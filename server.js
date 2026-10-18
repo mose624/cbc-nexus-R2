@@ -2,7 +2,6 @@ const http = require("http");
 const fs = require("fs/promises");
 const path = require("path");
 const crypto = require("crypto");
-const zlib = require("zlib");
 const { createUploadUrl, createDownloadUrl, createPdfPreview, createInlineUrl, getObjectMetadata, getObjectBuffer, objectExists, uploadObject, deleteObject, verifyR2Connection } = require("./r2");
 const mammoth = require("mammoth");
 const { supabase, supabaseConfigured } = require("./supabase");
@@ -2101,8 +2100,7 @@ async function serveStatic(req,res,url){
 const server=http.createServer(async(req,res)=>{const url=new URL(req.url,`http://${req.headers.host||"127.0.0.1"}`);setSecurityHeaders(res);const limit=allowRequest(req,url);res.setHeader("X-RateLimit-Remaining",String(Math.max(0,limit.remaining)));if(!limit.allowed){res.setHeader("Retry-After","60");sendJson(res,429,{ok:false,error:"Too many requests. Please try again shortly."});return;}try{if(await handleApi(req,res,url))return;await serveStatic(req,res,url);}catch(error){console.error("Unhandled server error:",error);if(res.headersSent||res.writableEnded||res.destroyed){if(!res.writableEnded&&!res.destroyed)res.destroy(error);return;}sendJson(res,500,{ok:false,error:"Server error."});}});
 async function seedInteractiveQuestions(){
   try{
-    const packed=await fs.readFile(path.join(ROOT,"interactive-questions-seed.json.gz.b64"),"utf8");
-    const seed=JSON.parse(zlib.gunzipSync(Buffer.from(packed.trim(),"base64")).toString("utf8"));
+    const seed=JSON.parse(await fs.readFile(path.join(ROOT,"interactive-questions-seed.json"),"utf8"));
     await ensureDataDir();
     const existing=await readJsonStore("interactive-questions.json");
     const key=q=>String(q.grade||"")+"|"+String(q.subject||"").toLowerCase()+"|"+String(q.question||"").toLowerCase().replace(/\\s+/g," ").trim();
