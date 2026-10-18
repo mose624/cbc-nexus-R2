@@ -664,7 +664,7 @@
     const questions = getAvailableQuestions(grade.value, subject.value);
     const questionTopics = Array.from(new Set(questions.map((item) => item[3]).filter(Boolean)));
     const adminTopics = (Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [])
-      .filter((item) => String(item.grade || "").match(/\\d+/)?.[0] === String(grade.value || "").match(/\\d+/)?.[0] &&
+      .filter((item) => String(item.grade || "").match(/\d+/)?.[0] === String(grade.value || "").match(/\d+/)?.[0] &&
         String(item.subject || "").toLowerCase().replace(/[^a-z0-9]/g, "") === String(subject.value || "").toLowerCase().replace(/[^a-z0-9]/g, "") &&
         item.published !== false)
       .map((item) => String(item.strand || "").trim())
@@ -724,7 +724,7 @@
   }
 
   function getGradeQuestionBank(selectedGrade, selectedSubject) {
-    const gradeNumber = (value) => String(value == null ? "" : value).match(/\\d+/)?.[0] || "";
+    const gradeNumber = (value) => String(value == null ? "" : value).match(/\d+/)?.[0] || "";
     const normalizeSubject = (value) => String(value || "").toLowerCase().replace(/[^a-z0-9]/g, "");
     const gradeBank = window.CBENexusCBCBanks &&
       window.CBENexusCBCBanks.banks &&
