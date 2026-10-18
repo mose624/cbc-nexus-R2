@@ -408,7 +408,7 @@
       const ws=XLSX.utils.aoa_to_sheet([headers,example]); ws["!cols"]=headers.map(()=>({wch:22})); ws["!cols"][3]={wch:55};ws["!cols"][9]={wch:55};
       const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"Questions");XLSX.writeFile(wb,"CBE-Nexus-Bulk-Question-Template.xlsx");
     } catch(e) {
-      downloadCsv("CBE-Nexus-Bulk-Question-Template.csv",[{"Grade":"Grade 10","Subject":"Physics","Topic":"Electricity","Question":"Which instrument measures electric current?","Option A":"Voltmeter","Option B":"Ammeter","Option C":"Thermometer","Option D":"Barometer","Correct Answer":"B","Explanation":"An ammeter is connected in series to measure current." ,"Difficulty":"Easy"}],["Grade","Subject","Topic","Question","Option A","Option B","Option C","Option D","Correct Answer","Explanation","Difficulty","Image URL"]);
+      downloadCsv("CBE-Nexus-Bulk-Question-Template.csv",[{"Grade":"Grade 10","Subject":"Physics","Topic":"Electricity","Question":"Which instrument measures electric current?","Option A":"Voltmeter","Option B":"Ammeter","Option C":"Thermometer","Option D":"Barometer","Correct Answer":"B","Explanation":"An ammeter is connected in series to measure current." ,"Difficulty":"Easy"}],["Grade","Subject","Topic","Question","Option A","Option B","Option C","Option D","Correct Answer","Explanation","Difficulty"]);
       setImportStatus("Excel template library could not load, so a compatible CSV template was downloaded instead.");
     }
   });
