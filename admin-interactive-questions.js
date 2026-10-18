@@ -314,7 +314,14 @@
     return {rowNumber:index+2, grade, subject, strand, question, options, correctIndex, explanation, imageUrl, imageData:"", imageAlt:question.slice(0,160), difficulty:first(row,["Difficulty","Level"]), errors};
   }
   function parseQuestionText(text) {
-    const normalized = String(text || "").replace(/\r/g,"").replace(/\u00a0/g," ");
+    // Normalize common Word/Google Docs/Markdown formatting before finding numbered questions.
+    // Some pasted papers start each item with **1.**, 1), Question 1:, or a numbered-list marker.
+    const normalized = String(text || "")
+      .replace(/\r/g,"")
+      .replace(/\u00a0/g," ")
+      .replace(/^[ \t]*(?:[-*+]\s+)?(?=(?:\*\*|__)?(?:Question\s*)?\d{1,3}\s*[.)\]:])/gim, "")
+      .replace(/\*\*(?=(?:Question\s*)?\d{1,3}\s*[.)\]:])/gi, "")
+      .replace(/(?<=(?:Question\s*)?\d{1,3}\s*[.)\]:])\*\*/gi, "");
     // Read answer keys placed at the end of a complete paper, including Markdown tables.
     const answerKey = new Map();
     const keyPatterns = [
@@ -322,7 +329,7 @@
       /^\s*(\d{1,3})\s*[.)]?\s*[-:|]?\s*(?:Answer\s*[:=]?\s*)?([ABCD])\s*$/gim
     ];
     keyPatterns.forEach(re => { let m; while ((m = re.exec(normalized)) !== null) answerKey.set(Number(m[1]), m[2].toUpperCase()); });
-    const starts = [...normalized.matchAll(/(?:^|\n)\s*(?:Question\s*)?(\d{1,3})\s*[.)]\s*/gi)];
+    const starts = [...normalized.matchAll(/(?:^|\n)\s*(?:Question\s*)?(\d{1,3})\s*[.)\]:]\s*/gi)];
     const chunks = [];
     for (let i=0;i<starts.length;i++) {
       const start = starts[i].index + starts[i][0].length;
