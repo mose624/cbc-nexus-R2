@@ -265,7 +265,8 @@
       setImportStatus("Reading and validating pasted questions…");
       try {
         let rows = parseQuestionText(raw).map((row,i) => mapRow(row,i));
-        if (!rows.length) throw new Error("No questions detected. Number each question (1., 2., 3.) and include options A–D and Correct answer: A/B/C/D.");
+        if (!rows.length) throw new Error("No questions detected. Number each question (1., 2., 3.) and put each option on a new line as A. ... through D. ..., followed by Correct answer: B.");
+        if (rows.every(row => !row.question && row.options.every(option => !option))) throw new Error("Question format not recognised. Use: 1. Question text, then A. option, B. option, C. option, D. option, and Correct answer: A/B/C/D. Put each option on its own line.");
         const seen = new Set();
         for (const row of rows) {
           const key = norm(row.grade)+"|"+norm(row.subject)+"|"+norm(row.question);
@@ -335,7 +336,7 @@
   }
   function mapRow(row, index) {
     let grade = first(row, ["Grade","Class"]) || $("iqAdminGrade").value;
-    const gradeMatch = String(grade).trim().match(/^grade\s*(1[0-2]|[1-9])$/i);
+    const gradeMatch = String(grade).trim().match(/^(?:grade\s*[:\-]?\s*)?(1[0-2]|[1-9])$/i);
     if (gradeMatch) grade = "Grade " + Number(gradeMatch[1]);
     const subject = first(row, ["Subject","Learning Area","LearningArea"]) || $("iqAdminSubject").value;
     const strand = first(row, ["Topic","Strand","Sub-strand","Substrand"]) || $("iqAdminTopic").value || "All Topics";
