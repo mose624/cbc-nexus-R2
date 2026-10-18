@@ -805,8 +805,8 @@ async function handleApi(req,res,url){
       const grade=String(p.grade||"").trim();
       const subject=String(p.subject||"").trim().slice(0,100);
       const strand=String(p.strand||"All Topics").trim().slice(0,140)||"All Topics";
-      const question=String(p.question||"").trim().slice(0,2500);
-      const options=Array.isArray(p.options)?p.options.map(x=>String(x||"").trim().slice(0,600)):[];
+      const question=String(p.question||"").trim().slice(0,7000);
+      const options=Array.isArray(p.options)?p.options.map(x=>String(x||"").trim().slice(0,1500)):[];
       const correctIndex=Number(p.correctIndex);
       const explanation=String(p.explanation||"").trim().slice(0,2000);
       const imageUrl=String(p.imageUrl||"").trim().slice(0,2000);
