@@ -3,140 +3,206 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Interactive Questions | CBE Nexus</title>
-  <meta name="description" content="Interactive questions and learner practice on CBE Nexus.">
+  <title>Free Interactive Questions & Quizzes | CBE Nexus</title>
+  <meta name="description" content="Practise CBC and CBE questions for free on CBE Nexus. Find quizzes by grade and subject, get instant marking, review explanations and improve your learning.">
   <link rel="canonical" href="https://cbenexus.co.ke/interactive-questions.html">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="interactive-yellow.css?v=20261018-free-portal">
   <style>
-    .interactive-page { width:min(1280px, calc(100% - 24px)); margin:18px auto 28px; }
-    .interactive-hero { padding:18px 22px; border-radius:16px; background:linear-gradient(110deg,#ffffff 0%,#fff8c8 100%); border:1px solid #e1e5eb; box-shadow:var(--shadow); text-align:left; }
-    .interactive-hero h1 { margin:0 0 8px; color:#111; font-size:clamp(1.8rem,4vw,2.7rem); line-height:1.1; }
-    .interactive-hero p { max-width:760px; margin:0 0 16px; color:#263238; font-size:1rem; }
-    .interactive-launch { display:inline-flex; align-items:center; justify-content:center; padding:13px 20px; border-radius:999px; background:#21d94b; color:#050505; border:2px solid #15a83a; font-weight:700; text-decoration:none; }
-    .interactive-note { margin-top:22px; padding:18px; border-radius:14px; background:#fff; border:1px solid var(--line); color:var(--muted); text-align:left; }
-    .interactive-back { display:inline-block; margin-bottom:18px; color:#123447; font-weight:700; }
-    /* iframe container */
-    .interactive-embed { margin-top:14px; border:1px solid #dfe4eb; border-radius:14px; overflow:hidden; background:#f6f7f9; }
-    .interactive-embed iframe{ width:100%; height:calc(100vh - 110px); min-height:780px; border:0; display:block; background:#f6f7f9; }
-    @media(max-width:700px){ .interactive-page{width:100%;margin:0 auto 18px}.interactive-embed{margin-top:8px;border-radius:0;border-left:0;border-right:0}.interactive-embed iframe{height:calc(100vh - 76px);min-height:680px}.interactive-hero{margin:12px;padding:16px;border-radius:12px} }
-
-    .curriculum-subject-picker{max-width:960px;margin:16px auto;padding:16px 18px;background:#fff;border:1px solid #e1e5eb;border-radius:14px;box-shadow:0 4px 16px rgba(15,23,36,.04)}
-    .curriculum-subject-picker label{display:block;margin-bottom:8px;font-weight:800;color:#111}
-    .curriculum-subject-picker select{width:100%;padding:12px 14px;border:1px solid #cfd6df;border-radius:10px;background:#fff;color:#111;font:inherit}
-    .curriculum-subject-note{margin:9px 0 0;color:#536174;font-size:.88rem}
-    body{background:#f4f6f8}
-    .interactive-page{width:min(1320px,calc(100% - 32px));margin:24px auto 36px}
-    .interactive-back{margin-bottom:12px;color:#155b3a;text-decoration:none}
-    .interactive-hero{position:relative;overflow:hidden;padding:clamp(22px,3vw,36px);border-radius:20px;background:linear-gradient(115deg,#fff 0%,#fff9d9 100%);border:1px solid #e6e9ef;box-shadow:0 10px 28px rgba(15,23,42,.07)}
-    .interactive-hero:before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:#16a34a}
-    .interactive-hero h1{font-size:clamp(2rem,4vw,3rem);letter-spacing:-.035em}
-    .interactive-hero p{max-width:780px;line-height:1.65}
-    .interactive-launch{background:#16a34a;color:#fff;border:1px solid #12823b;border-radius:10px;box-shadow:0 4px 12px rgba(22,163,74,.18)}
-    .interactive-note{margin-top:18px;padding:14px 16px;border-radius:12px;border-color:#e6e9ef}
-    .curriculum-subject-picker{max-width:none;margin:18px 0;padding:22px;background:#fff;border:1px solid #e0e5ec;border-radius:16px;box-shadow:0 8px 22px rgba(15,23,42,.05)}
-    .curriculum-subject-picker label{font-size:1.05rem;display:block;margin-bottom:10px}
-    .curriculum-subject-picker select{min-height:50px;border:1px solid #cbd5e1;border-radius:10px;padding:12px 14px;font-size:1rem;box-shadow:inset 0 1px 2px rgba(15,23,42,.03)}
-    .curriculum-subject-picker select:focus{outline:3px solid rgba(22,163,74,.18);border-color:#16a34a}
-    .curriculum-subject-note{line-height:1.55}
-    .interactive-resources{max-width:none;margin:18px 0}
-    .resources-toggle{border-color:#d8e0e8;border-radius:10px}
-    .resources-panel{border-color:#e0e5ec;border-radius:12px}
-    .interactive-embed{margin-top:18px;border-radius:16px;box-shadow:0 8px 24px rgba(15,23,42,.06)}
-    @media(max-width:700px){.interactive-page{width:100%;margin:0 auto 20px}.interactive-hero{margin:12px}.curriculum-subject-picker{margin:12px;padding:16px;border-radius:12px}.interactive-embed{margin-top:12px}}
-    /* resources panel */
-    .interactive-resources { max-width:960px; margin:22px auto 0; }
-    .resources-toggle { width:100%; text-align:left; background:#fff; border:1px solid #d6eedd; padding:12px 16px; border-radius:12px; cursor:pointer; font-weight:700; color:#0b3b2e; }
-    .resources-panel { margin-top:12px; padding:14px; border-radius:12px; background:linear-gradient(180deg,#fbfffb,#ffffff); border:1px solid #e6f6ea; color:#123447; }
-    .resources-panel ul { margin:8px 0 0 20px; }
-    .resources-panel li + li { margin-top:8px; }
-    .resources-note { margin-top:12px; color:#455a58; font-size:0.95rem; }
+    :root{--portal-green:#16803d;--portal-ink:#17202a;--portal-muted:#586574;--portal-line:#e0e6eb}
+    body{background:#f5f7f8}
+    .iq-wrap{width:min(1180px,calc(100% - 32px));margin:22px auto 48px;color:var(--portal-ink)}
+    .iq-nav{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+    .iq-navlinks{display:flex;gap:8px;flex-wrap:wrap}
+    .iq-navlinks a{display:inline-flex;padding:9px 12px;border:1px solid #d7e1dc;border-radius:9px;background:#fff;color:#174b31;font-weight:700;text-decoration:none}
+    .iq-hero{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(240px,.7fr);gap:22px;align-items:center;padding:clamp(22px,4vw,42px);background:linear-gradient(120deg,#fff 0%,#f0fff4 100%);border:1px solid #d7eadc;border-radius:22px;box-shadow:0 12px 34px #1234470d}
+    .iq-kicker{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:900;color:var(--portal-green);margin:0 0 10px}
+    .iq-hero h1{font-size:clamp(2rem,4.5vw,3.3rem);line-height:1.08;letter-spacing:-.035em;margin:0 0 14px;color:#14251a}
+    .iq-hero p{font-size:1.03rem;line-height:1.7;color:#425148;max-width:690px;margin:0 0 18px}
+    .iq-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .iq-btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:12px 17px;border-radius:10px;font-weight:800;text-decoration:none;border:2px solid var(--portal-green);background:var(--portal-green);color:#fff!important}
+    .iq-btn.secondary{background:#fff;color:#155b35!important;border-color:#b9d9c4}
+    .iq-promise{border-radius:16px;background:#fff;border:1px solid #dce9df;padding:20px}
+    .iq-free{display:inline-block;background:#e0f7e7;color:#11652f;padding:6px 10px;border-radius:999px;font-weight:900;font-size:.8rem}
+    .iq-promise h2{font-size:1.15rem;margin:12px 0 8px}
+    .iq-promise ul{padding-left:20px;margin:0;color:#425148;line-height:1.8}
+    .iq-section{margin-top:30px}
+    .iq-section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+    .iq-section-head h2{font-size:clamp(1.35rem,2.7vw,1.85rem);margin:0;color:#17202a}
+    .iq-section-head p{margin:5px 0 0;color:var(--portal-muted)}
+    .iq-grade-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .iq-grade{display:flex;flex-direction:column;align-items:flex-start;min-height:180px;padding:20px;background:#fff;border:1px solid var(--portal-line);border-radius:15px;box-shadow:0 5px 18px #17202a08;text-decoration:none;color:inherit;transition:transform .16s ease,border-color .16s ease}
+    .iq-grade:hover,.iq-subject:hover{transform:translateY(-2px);border-color:#80c797}
+    .iq-grade-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:#e4f7e9;color:#126b34;font-size:1.25rem;font-weight:900}
+    .iq-grade h3{margin:13px 0 5px;font-size:1.12rem}
+    .iq-grade p{margin:0;color:var(--portal-muted);font-size:.93rem;line-height:1.5}
+    .iq-grade strong{margin-top:auto;padding-top:15px;color:#14723a;font-size:.92rem}
+    .iq-tools{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:12px;margin:15px 0}
+    .iq-tools input,.iq-tools select{width:100%;min-height:48px;border:1px solid #cbd5d1;border-radius:10px;background:#fff;padding:11px 13px;color:#17202a;font:inherit}
+    .iq-tools input:focus,.iq-tools select:focus{outline:3px solid #16803d25;border-color:#16803d}
+    .iq-subject-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .iq-subject[hidden]{display:none!important}.iq-subject{display:flex;gap:11px;align-items:center;min-height:84px;padding:14px;background:#fff;border:1px solid var(--portal-line);border-radius:13px;text-decoration:none;color:inherit;transition:transform .16s ease,border-color .16s ease}
+    .iq-subject-icon{flex:0 0 40px;height:40px;display:grid;place-items:center;border-radius:11px;background:#fff4bf;color:#614b00;font-weight:900}
+    .iq-subject strong{display:block;font-size:.96rem}
+    .iq-subject small{display:block;color:var(--portal-muted);margin-top:3px}
+    .iq-empty{display:none;padding:18px;background:#fff;border:1px dashed #b8c6bf;border-radius:12px;color:#536174}
+    .iq-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .iq-step{background:#fff;border:1px solid var(--portal-line);border-radius:13px;padding:17px}
+    .iq-step span{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#e1f5e7;color:#11652f;font-weight:900}
+    .iq-step h3{font-size:1rem;margin:10px 0 5px}
+    .iq-step p{margin:0;color:var(--portal-muted);font-size:.93rem;line-height:1.6}
+    .iq-bottom{margin-top:28px;padding:22px;border-radius:16px;background:#eaf8ee;border:1px solid #c9e8d2;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    .iq-bottom h2{margin:0 0 5px;font-size:1.25rem}.iq-bottom p{margin:0;color:#425148}
+    .iq-footer{text-align:center;padding:24px 10px 0;color:#65716a;font-size:.9rem}
+    @media(max-width:850px){.iq-hero{grid-template-columns:1fr}.iq-grade-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.iq-subject-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:560px){.iq-wrap{width:calc(100% - 20px);margin:12px auto 30px}.iq-nav{align-items:flex-start}.iq-navlinks{width:100%}.iq-navlinks a{flex:1;justify-content:center;font-size:.85rem;padding:9px 7px}.iq-hero{padding:22px 17px;border-radius:15px}.iq-grade-grid,.iq-subject-grid,.iq-steps{grid-template-columns:1fr}.iq-grade{min-height:145px}.iq-tools{grid-template-columns:1fr}.iq-subject{min-height:72px}}
+    @media(prefers-reduced-motion:reduce){.iq-grade,.iq-subject{transition:none}.iq-grade:hover,.iq-subject:hover{transform:none}}
   </style>
-  <link rel="stylesheet" href="interactive-yellow.css?v=20261017-1">
 </head>
 <body>
   <header class="site-header">
-    <nav class="main-nav" aria-label="Interactive Questions navigation">
-      <a class="brand" href="index.html#dashboard" aria-label="CBE Nexus home">
+    <nav class="main-nav" aria-label="CBE Nexus navigation">
+      <a class="brand" href="index.html" aria-label="CBE Nexus home">
         <span class="brand-mark">CBE</span>
         <span><strong>CBE Nexus</strong><small>Connecting learners to excellence</small></span>
       </a>
       <div class="nav-actions">
         <a class="interactive-questions-header-btn" href="interactive-questions.html" aria-current="page">✦ Interactive Questions</a>
-        <a class="primary-button nav-cta" href="index.html">Home</a>
+        <a class="primary-button nav-cta" href="index.html#dashboard">Home</a>
       </div>
     </nav>
   </header>
-  <main class="interactive-page">
-    <a class="interactive-back" href="index.html#dashboard">← Back to CBE Nexus dashboard</a>
-    <section class="interactive-hero">
-      <p style="margin:0 0 8px;color:#16803d;font-size:.78rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase">CBE Nexus · Learning & Assessment</p>
-      <h1>Interactive Questions</h1>
-      <p>Learn. Practise. Master. Choose a grade, learning area, topic and assessment mode. Complete interactive questions, show your working, and review your responses.</p>
-      <a class="interactive-launch" href="learning-hub.html">Open learning hub in a new tab →</a>
-      <div class="interactive-note">
-        <strong>Interactive Questions portal</strong>
-        <p>Explore the CBE Nexus Grades 4–10 learning and assessment interface below. Use the new-tab button if you want more screen space.</p>
+
+  <main class="iq-wrap">
+    <nav class="iq-nav" aria-label="Portal shortcuts">
+      <a href="index.html#dashboard" style="font-weight:800;color:#17623a;text-decoration:none">← CBE Nexus dashboard</a>
+      <div class="iq-navlinks">
+        <a href="#choose-level">Choose a Grade</a>
+        <a href="#subjects">Find a Subject</a>
+        <a href="quizzes.html#quizCentre">Take a Quiz</a>
+      </div>
+    </nav>
+
+    <section class="iq-hero" aria-labelledby="iq-title">
+      <div>
+        <p class="iq-kicker">CBE Nexus · Learning & Assessment</p>
+        <h1 id="iq-title">Free Interactive Questions</h1>
+        <p>Practise at your own pace with curriculum-focused questions. Choose your level, find a subject, test your understanding, and review your answers with instant marking where available.</p>
+        <div class="iq-actions">
+          <a class="iq-btn" href="quizzes.html#quizCentre">Start practising free →</a>
+          <a class="iq-btn secondary" href="learning-hub.html">Explore the Learning Hub</a>
+        </div>
+      </div>
+      <aside class="iq-promise" aria-label="Free practice features">
+        <span class="iq-free">100% FREE PRACTICE</span>
+        <h2>Learning support for every step</h2>
+        <ul>
+          <li>No payment required to practise</li>
+          <li>Instant marking in supported quizzes</li>
+          <li>Review answers and explanations where provided</li>
+          <li>Works on mobile, tablet and desktop</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="iq-section" id="choose-level" aria-labelledby="level-heading">
+      <div class="iq-section-head">
+        <div><h2 id="level-heading">1. Choose your learning level</h2><p>Start with the grade band that matches your class.</p></div>
+      </div>
+      <div class="iq-grade-grid">
+        <a class="iq-grade" href="quizzes.html#quizCentre">
+          <span class="iq-grade-icon" aria-hidden="true">4–6</span>
+          <h3>Upper Primary · Grades 4–6</h3>
+          <p>Build core knowledge, practise key skills and strengthen understanding.</p>
+          <strong>Find practice quizzes →</strong>
+        </a>
+        <a class="iq-grade" href="quizzes.html#quizCentre">
+          <span class="iq-grade-icon" aria-hidden="true">7–9</span>
+          <h3>Junior School · Grades 7–9</h3>
+          <p>Reinforce concepts and prepare with focused subject practice.</p>
+          <strong>Find practice quizzes →</strong>
+        </a>
+        <a class="iq-grade" href="quizzes.html#quizCentre">
+          <span class="iq-grade-icon" aria-hidden="true">10</span>
+          <h3>Senior School · Grade 10</h3>
+          <p>Practise core and pathway subjects using the available question banks.</p>
+          <strong>Find practice quizzes →</strong>
+        </a>
       </div>
     </section>
 
-    <section class="curriculum-subject-picker" aria-labelledby="curriculumSubjectHeading">
-      <label id="curriculumSubjectHeading" for="kicdSubjectSelect">Choose a KICD curriculum learning area / subject</label>
-      <select id="kicdSubjectSelect">
-        <option value="">Select a subject…</option>
-        <optgroup label="Upper Primary — Grades 4–6">
-          <option>English</option><option>Kiswahili</option><option>Kenya Sign Language</option><option>Mathematics</option><option>Science and Technology</option><option>Social Studies</option><option>Agriculture</option><option>Home Science</option><option>Creative Arts</option><option>Physical and Health Education</option><option>Christian Religious Education (CRE)</option><option>Islamic Religious Education (IRE)</option><option>Hindu Religious Education (HRE)</option><option>Indigenous Language</option><option>Arabic</option><option>French</option>
-        </optgroup>
-        <optgroup label="Junior School — Grades 7–9">
-          <option>Integrated Science</option><option>Pre-Technical Studies</option><option>Agriculture and Nutrition</option><option>Creative Arts and Sports</option><option>Social Studies</option><option>Business Studies</option><option>Computer Studies / ICT</option><option>Life Skills Education</option><option>Religious Education</option>
-        </optgroup>
-        <optgroup label="Senior School — Grade 10: Core subjects">
-          <option>English</option><option>Kiswahili</option><option>Kenya Sign Language</option><option>Community Service Learning</option><option>Physical Education</option>
-        </optgroup>
-        <optgroup label="Grade 10 — STEM pathway">
-          <option>Core Mathematics</option><option>Essential Mathematics</option><option>Biology</option><option>Chemistry</option><option>Physics</option><option>General Science</option><option>Computer Science</option><option>Computer Studies / ICT</option><option>Agriculture</option><option>Applied Sciences</option><option>Advanced Mathematics</option><option>Marine and Fisheries Technology</option><option>Aviation Technology</option><option>Electricity</option><option>Power Mechanics</option><option>Metal Work</option><option>Wood Work</option><option>Building and Construction</option><option>Media Technology</option><option>Geography</option><option>Home Science</option><option>Foods and Nutrition</option><option>Design and Technology</option>
-        </optgroup>
-        <optgroup label="Grade 10 — Social Sciences pathway">
-          <option>Business Studies</option><option>History and Citizenship</option><option>Geography</option><option>Religious Education</option><option>Christian Religious Education (CRE)</option><option>Islamic Religious Education (IRE)</option><option>Hindu Religious Education (HRE)</option><option>Literature in English</option><option>Fasihi ya Kiswahili</option><option>French</option><option>German</option><option>Arabic</option><option>Mandarin Chinese</option><option>Indigenous Language</option><option>Sign Language</option><option>Kenyan Sign Language</option><option>Psychology</option><option>Entrepreneurship</option>
-        </optgroup>
-        <optgroup label="Grade 10 — Arts and Sports Science pathway">
-          <option>Sports and Recreation</option><option>Physical Education and Sports</option><option>Music and Dance</option><option>Visual Arts</option><option>Performing Arts</option><option>Theatre and Film</option><option>Fine Arts</option><option>Crafts</option><option>Dance</option><option>Music</option><option>Sports</option><option>Media Technology</option>
-        </optgroup>
-      </select>
-      <p class="curriculum-subject-note">Subject offerings depend on grade and pathway. This menu is a curriculum guide; choose the matching grade and subject inside the learning hub to see available questions.</p>
+    <section class="iq-section" id="subjects" aria-labelledby="subject-heading">
+      <div class="iq-section-head">
+        <div><h2 id="subject-heading">2. Find a subject</h2><p>Search the directory or filter by learning area. Choose a subject to open the quiz centre and select the matching option where available.</p></div>
+      </div>
+      <div class="iq-tools">
+        <input id="subjectSearch" type="search" placeholder="Search subjects, e.g. Physics or English" aria-label="Search subjects">
+        <select id="subjectFilter" aria-label="Filter subjects">
+          <option value="all">All learning areas</option>
+          <option value="languages">Languages</option>
+          <option value="stem">STEM</option>
+          <option value="humanities">Humanities &amp; Social Sciences</option>
+          <option value="creative">Creative, Practical &amp; Life Skills</option>
+        </select>
+      </div>
+      <div class="iq-subject-grid" id="subjectGrid">
+        <a class="iq-subject" data-category="languages" data-search="english language literature" href="quizzes.html#quizCentre"><span class="iq-subject-icon">EN</span><span><strong>English</strong><small>Language &amp; literacy</small></span></a>
+        <a class="iq-subject" data-category="languages" data-search="kiswahili lugha fasihi" href="quizzes.html#quizCentre"><span class="iq-subject-icon">SW</span><span><strong>Kiswahili</strong><small>Lugha na fasihi</small></span></a>
+        <a class="iq-subject" data-category="stem" data-search="mathematics core essential advanced maths" href="quizzes.html#quizCentre"><span class="iq-subject-icon">∑</span><span><strong>Mathematics</strong><small>Numeracy &amp; problem-solving</small></span></a>
+        <a class="iq-subject" data-category="stem" data-search="integrated science science technology" href="quizzes.html#quizCentre"><span class="iq-subject-icon">SC</span><span><strong>Integrated Science</strong><small>Scientific thinking</small></span></a>
+        <a class="iq-subject" data-category="stem" data-search="biology life sciences" href="quizzes.html#quizCentre"><span class="iq-subject-icon">BI</span><span><strong>Biology</strong><small>Living things</small></span></a>
+        <a class="iq-subject" data-category="stem" data-search="chemistry matter reactions" href="quizzes.html#quizCentre"><span class="iq-subject-icon">CH</span><span><strong>Chemistry</strong><small>Matter &amp; reactions</small></span></a>
+        <a class="iq-subject" data-category="stem" data-search="physics forces energy electricity" href="quizzes.html#quizCentre"><span class="iq-subject-icon">PH</span><span><strong>Physics</strong><small>Energy, forces &amp; matter</small></span></a>
+        <a class="iq-subject" data-category="stem" data-search="computer studies ict computer science technology" href="quizzes.html#quizCentre"><span class="iq-subject-icon">IT</span><span><strong>Computer Studies / ICT</strong><small>Digital skills &amp; computing</small></span></a>
+        <a class="iq-subject" data-category="humanities" data-search="social studies citizenship history geography" href="quizzes.html#quizCentre"><span class="iq-subject-icon">SS</span><span><strong>Social Studies</strong><small>People, places &amp; society</small></span></a>
+        <a class="iq-subject" data-category="humanities" data-search="business studies entrepreneurship commerce" href="quizzes.html#quizCentre"><span class="iq-subject-icon">BS</span><span><strong>Business Studies</strong><small>Enterprise &amp; commerce</small></span></a>
+        <a class="iq-subject" data-category="creative" data-search="agriculture nutrition food farming" href="quizzes.html#quizCentre"><span class="iq-subject-icon">AG</span><span><strong>Agriculture &amp; Nutrition</strong><small>Practical life skills</small></span></a>
+        <a class="iq-subject" data-category="creative" data-search="creative arts sports music visual performing" href="quizzes.html#quizCentre"><span class="iq-subject-icon">AR</span><span><strong>Creative Arts &amp; Sports</strong><small>Creativity &amp; movement</small></span></a>
+        <a class="iq-subject" data-category="humanities" data-search="religious education cre ire hre" href="quizzes.html#quizCentre"><span class="iq-subject-icon">RE</span><span><strong>Religious Education</strong><small>Values &amp; understanding</small></span></a>
+        <a class="iq-subject" data-category="creative" data-search="pre technical studies building construction design technology" href="quizzes.html#quizCentre"><span class="iq-subject-icon">PT</span><span><strong>Pre-Technical Studies</strong><small>Design &amp; practical skills</small></span></a>
+        <a class="iq-subject" data-category="creative" data-search="home science life skills health" href="quizzes.html#quizCentre"><span class="iq-subject-icon">HS</span><span><strong>Home Science &amp; Life Skills</strong><small>Everyday skills &amp; wellbeing</small></span></a>
+        <a class="iq-subject" data-category="languages" data-search="french arabic sign language indigenous languages" href="quizzes.html#quizCentre"><span class="iq-subject-icon">LA</span><span><strong>Other Languages</strong><small>Explore available language quizzes</small></span></a>
+      </div>
+      <p id="subjectEmpty" class="iq-empty" role="status">No subjects match your search. Try another keyword or choose “All learning areas”.</p>
     </section>
 
-    <div class="interactive-embed" role="region" aria-label="Interactive quizzes embedded">
-      <iframe id="interactiveFrame" src="learning-hub.html" title="CBE Nexus Interactive Questions Learning Hub" loading="lazy"></iframe>
-    </div>
+    <section class="iq-section" aria-labelledby="how-heading">
+      <div class="iq-section-head"><div><h2 id="how-heading">3. How to practise</h2><p>Three simple steps to get started.</p></div></div>
+      <div class="iq-steps">
+        <article class="iq-step"><span>1</span><h3>Open the quiz centre</h3><p>Choose a learner name, grade, subject and topic from the available options.</p></article>
+        <article class="iq-step"><span>2</span><h3>Answer at your own pace</h3><p>Select the number of questions and practise mode, then attempt the questions.</p></article>
+        <article class="iq-step"><span>3</span><h3>Check and improve</h3><p>Submit for marking, review your score and revisit topics that need more practice.</p></article>
+      </div>
+    </section>
 
+    <section class="iq-bottom" aria-label="Start free practice">
+      <div><h2>Ready to test what you know?</h2><p>Open the free quiz centre and begin your next practice session.</p></div>
+      <a class="iq-btn" href="quizzes.html#quizCentre">Go to free quizzes →</a>
+    </section>
+    <footer class="iq-footer">CBE Nexus · Connecting learners to excellence · Free interactive practice</footer>
   </main>
+
   <script>
-    // Toggle resources panel
     (function(){
-      const toggle = document.getElementById('resourcesToggle');
-      const panel = document.getElementById('resourcesPanel');
-      // The resources panel is optional on this page; bind it only when both elements exist.
-      if (!toggle || !panel) return;
-      toggle.setAttribute('aria-expanded', 'true');
-      panel.hidden = false;
-
-      toggle.addEventListener('click', function(){
-        const expanded = this.getAttribute('aria-expanded') === 'true';
-        this.setAttribute('aria-expanded', String(!expanded));
-        panel.hidden = expanded;
-        if (!expanded) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    })();
-
-    // If quizzes.html fails to load inside the iframe (e.g. served cross-origin), show guidance to open in a new tab.
-    (function(){
-      const iframe = document.getElementById('interactiveFrame');
-      iframe.addEventListener('error', function(){
-        const note = document.createElement('div');
-        note.className = 'interactive-note';
-        note.innerHTML = '<strong>Load failed</strong><p>Quizzes could not be loaded in the embed. You can open the full learning hub in a new tab: <a href="learning-hub.html" target="_blank" rel="noopener noreferrer">Open learning hub</a></p>';
-        iframe.replaceWith(note);
-      });
+      const search = document.getElementById('subjectSearch');
+      const filter = document.getElementById('subjectFilter');
+      const cards = Array.from(document.querySelectorAll('#subjectGrid .iq-subject'));
+      const empty = document.getElementById('subjectEmpty');
+      function updateSubjects(){
+        const term = (search.value || '').trim().toLowerCase();
+        const category = filter.value;
+        let visible = 0;
+        cards.forEach(function(card){
+          const matchesTerm = !term || (card.textContent + ' ' + (card.dataset.search || '')).toLowerCase().includes(term);
+          const matchesCategory = category === 'all' || card.dataset.category === category;
+          const show = matchesTerm && matchesCategory;
+          card.hidden = !show;
+          if(show) visible++;
+        });
+        empty.style.display = visible ? 'none' : 'block';
+      }
+      search.addEventListener('input', updateSubjects);
+      filter.addEventListener('change', updateSubjects);
     })();
   </script>
 </body>
