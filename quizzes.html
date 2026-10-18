@@ -80,12 +80,8 @@
           <div class="quiz-toolbar">
             <label>
               Number of Questions
-              <select id="quizLengthInput">
-                <option value="5">5 Questions</option>
-                <option value="10" selected>10 Questions</option>
-                <option value="20">20 Questions</option>
-                <option value="40">40 Questions</option>
-              </select>
+              <input id="quizLengthInput" type="number" value="50" min="50" max="50" readonly aria-readonly="true">
+              <small>Every quiz contains exactly 50 questions.</small>
             </label>
             <label>
               Quiz Mode
