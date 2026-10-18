@@ -1062,8 +1062,19 @@
       submitButton.disabled = true;
       return;
     }
-    const requested = Number(length.value || 10);
-    active = shuffle(selectedBank).slice(0, Math.min(requested, selectedBank.length));
+    const requested = 50;
+    if (selectedBank.length < requested) {
+      status.textContent = "This quiz requires exactly 50 questions. Only " + selectedBank.length +
+        " matching questions are currently available for " + grade.value + " — " + subject.value +
+        (strand && strand.value !== "All Topics" ? " — " + strand.value : "") +
+        ". Please add more published questions or select All Topics. A shorter quiz will not start.";
+      questionsBox.innerHTML = "";
+      submitButton.disabled = true;
+      active = [];
+      return;
+    }
+    length.value = "50";
+    active = shuffle(selectedBank).slice(0, requested);
     startedAt = Date.now();
     submitted = false;
     clearInterval(timerId);
