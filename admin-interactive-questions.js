@@ -271,11 +271,15 @@
   function answerIndex(value) {
     const v = String(value || "").trim().toUpperCase();
     if (/^[ABCD]$/.test(v)) return "ABCD".indexOf(v);
+    const labelled = v.match(/^([ABCD])(?:[.)\s:\-].*)?$/);
+    if (labelled) return "ABCD".indexOf(labelled[1]);
     if (/^[1-4]$/.test(v)) return Number(v)-1;
     return -1;
   }
   function mapRow(row, index) {
-    const grade = first(row, ["Grade","Class"]) || $("iqAdminGrade").value;
+    let grade = first(row, ["Grade","Class"]) || $("iqAdminGrade").value;
+    const gradeMatch = String(grade).trim().match(/^grade\s*(1[0-2]|[1-9])$/i);
+    if (gradeMatch) grade = "Grade " + Number(gradeMatch[1]);
     const subject = first(row, ["Subject","Learning Area","LearningArea"]) || $("iqAdminSubject").value;
     const strand = first(row, ["Topic","Strand","Sub-strand","Substrand"]) || $("iqAdminTopic").value || "All Topics";
     const question = first(row, ["Question","Question Text","Prompt","Stem"]);
@@ -287,7 +291,7 @@
     ];
     const correctIndex = answerIndex(first(row, ["Correct Answer","CorrectAnswer","Answer Key","Correct Option","Answer"]));
     const explanation = first(row, ["Explanation","Rationale","Solution"]);
-    const imageUrl = first(row, ["Image URL","ImageURL","Diagram URL","DiagramURL"]);
+    
     const errors = [];
     if (!/^Grade (?:[1-9]|1[0-2])$/i.test(grade)) errors.push("Grade must be Grade 1–12");
     if (!subject) errors.push("Subject is missing");
@@ -297,8 +301,7 @@
     if (options.some(x => x.length > 600)) errors.push("An option exceeds 600 characters");
     if (correctIndex < 0) errors.push("Correct answer must be A, B, C, D or 1–4");
     if (explanation.length > 2000) errors.push("Explanation exceeds 2,000 characters");
-    if (imageUrl && !/^https?:\/\/\S+/i.test(imageUrl)) errors.push("Image URL must be an http(s) URL");
-    return {rowNumber:index+2, grade, subject, strand, question, options, correctIndex, explanation, imageUrl, difficulty:first(row,["Difficulty","Level"]), errors};
+    return {rowNumber:index+2, grade, subject, strand, question, options, correctIndex, explanation, difficulty:first(row,["Difficulty","Level"]), errors};
   }
   function parseQuestionText(text) {
     const normalized = String(text || "").replace(/\r/g,"").replace(/\u00a0/g," ");
@@ -400,12 +403,12 @@
   if ($("iqDownloadTemplate")) $("iqDownloadTemplate").addEventListener("click", async()=>{
     try {
       const XLSX=await loadBrowserScript("https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js","XLSX");
-      const headers=["Grade","Subject","Topic","Question","Option A","Option B","Option C","Option D","Correct Answer","Explanation","Difficulty","Image URL"];
+      const headers=["Grade","Subject","Topic","Question","Option A","Option B","Option C","Option D","Correct Answer","Explanation","Difficulty"];
       const example=["Grade 10","Physics","Electricity","Which instrument measures electric current?","Voltmeter","Ammeter","Thermometer","Barometer","B","An ammeter is connected in series to measure current.","Easy",""];
       const ws=XLSX.utils.aoa_to_sheet([headers,example]); ws["!cols"]=headers.map(()=>({wch:22})); ws["!cols"][3]={wch:55};ws["!cols"][9]={wch:55};
       const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"Questions");XLSX.writeFile(wb,"CBE-Nexus-Bulk-Question-Template.xlsx");
     } catch(e) {
-      downloadCsv("CBE-Nexus-Bulk-Question-Template.csv",[{"Grade":"Grade 10","Subject":"Physics","Topic":"Electricity","Question":"Which instrument measures electric current?","Option A":"Voltmeter","Option B":"Ammeter","Option C":"Thermometer","Option D":"Barometer","Correct Answer":"B","Explanation":"An ammeter is connected in series to measure current.","Difficulty":"Easy","Image URL":""}],["Grade","Subject","Topic","Question","Option A","Option B","Option C","Option D","Correct Answer","Explanation","Difficulty","Image URL"]);
+      downloadCsv("CBE-Nexus-Bulk-Question-Template.csv",[{"Grade":"Grade 10","Subject":"Physics","Topic":"Electricity","Question":"Which instrument measures electric current?","Option A":"Voltmeter","Option B":"Ammeter","Option C":"Thermometer","Option D":"Barometer","Correct Answer":"B","Explanation":"An ammeter is connected in series to measure current." ,"Difficulty":"Easy"}],["Grade","Subject","Topic","Question","Option A","Option B","Option C","Option D","Correct Answer","Explanation","Difficulty","Image URL"]);
       setImportStatus("Excel template library could not load, so a compatible CSV template was downloaded instead.");
     }
   });
