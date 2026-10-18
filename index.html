@@ -901,6 +901,19 @@
               </div>
               <p id="adminInteractiveQuestionStatus" class="iq-admin-status" role="status" aria-live="polite"></p>
             </form>
+            <div class="iq-admin-bulk-tools" style="margin-top:18px;padding:16px;border:2px solid #b9e6c9;border-radius:12px;background:#f4fff7">
+              <h4 style="margin:0 0 6px">Add multiple questions at once</h4>
+              <p style="margin:0 0 12px">Choose the grade, subject and topic in the form above, then generate a batch of question forms and publish them together.</p>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end">
+                <label for="iqAdminBulkCount">Number of questions (1–50)
+                  <input id="iqAdminBulkCount" type="number" min="1" max="50" value="10" style="display:block;max-width:150px">
+                </label>
+                <button type="button" id="iqAdminGenerateBatch" class="iq-admin-submit">Create question forms</button>
+              </div>
+              <div id="iqAdminBatchEditor" hidden style="margin-top:14px"></div>
+              <button type="button" id="iqAdminPublishBatch" class="iq-admin-submit" hidden style="margin-top:12px">Publish all questions</button>
+              <p id="iqAdminBatchStatus" class="iq-admin-status" role="status" aria-live="polite"></p>
+            </div>
             <div style="margin-top:20px">
               <h4 style="margin:0 0 6px">Published question bank</h4>
               <p>Review questions already published and remove any that should no longer be shown.</p>
