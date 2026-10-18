@@ -439,8 +439,15 @@
       const ready=rows.length-importErrors.length;
       setImportStatus("Read "+rows.length+" questions: "+ready+" ready to publish, "+importErrors.length+" needing correction or skipped. Preview is limited to 250 rows.");
       publishImport.disabled=ready===0; downloadReport.disabled=importErrors.length===0;
+      publishImport.dataset.autoPending = (ready>0 && $("iqBulkAutoPublish") && $("iqBulkAutoPublish").checked) ? "1" : "";
     } catch(e) {setImportStatus(e.message||"Could not read this file.",true);}
-    finally {analyzeImport.disabled=false;}
+    finally {
+      analyzeImport.disabled=false;
+      if (publishImport.dataset.autoPending === "1") {
+        delete publishImport.dataset.autoPending;
+        publishImport.click();
+      }
+    }
   });
   if (publishImport) publishImport.addEventListener("click",async()=>{
     const ready=importRows.filter(r=>!r.errors.length);
