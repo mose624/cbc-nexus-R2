@@ -409,13 +409,33 @@
       <textarea id="iqBulkPasteText" rows="12" placeholder="1. Which instrument measures electric current?\nA. Voltmeter\nB. Ammeter\nC. Thermometer\nD. Barometer\nCorrect answer: B\nExplanation: An ammeter measures current.\n\n2. ...\nA. ...\nB. ...\nC. ...\nD. ...\nCorrect answer: A" style="display:block;width:100%;box-sizing:border-box;padding:12px;border:1px solid #a7cdb3;border-radius:8px;font:inherit"></textarea>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
         <button type="button" id="iqBulkPastePreview" style="background:#16803c;color:#fff;border:0;border-radius:8px;padding:10px 16px;font-weight:800;cursor:pointer">Preview pasted questions</button>
+        <button type="button" id="iqBulkPastePublish" disabled style="background:#0b5ed7;color:#fff;border:0;border-radius:8px;padding:10px 16px;font-weight:800;cursor:pointer;opacity:.55">Publish previewed questions</button>
         <button type="button" id="iqBulkPasteClear" style="background:#e5e7eb;color:#111827;border:0;border-radius:8px;padding:10px 16px;font-weight:700;cursor:pointer">Clear text</button>
       </div>
       <p id="iqBulkPasteHelp" style="margin:8px 0 0;font-size:.9rem">Tip: add “Grade: 10”, “Subject: English”, and “Topic: Reading” above a question if you want to override the defaults. Otherwise choose grade and subject in the main form first.</p>`;
     const anchor = importFile.closest("section, .admin-card, .iq-admin-import, div") || importFile.parentElement;
     if (anchor && anchor.parentElement) anchor.parentElement.insertBefore(pastePanel, anchor);
     else form.parentElement.insertBefore(pastePanel, form.nextSibling);
-    $("iqBulkPasteClear").addEventListener("click", () => { $("iqBulkPasteText").value = ""; $("iqBulkPasteText").focus(); });
+    $("iqBulkPastePublish").addEventListener("click", () => {
+      const publishButton = $("iqBulkPublish");
+      if (!importRows.some(r => !r.errors.length)) {
+        setImportStatus("Paste your questions and click Preview pasted questions first.", true);
+        return;
+      }
+      if (!publishButton || publishButton.disabled) {
+        setImportStatus("No valid questions are ready. Correct the issues in the preview and preview again.", true);
+        return;
+      }
+      publishButton.click();
+    });
+    $("iqBulkPasteClear").addEventListener("click", () => {
+      $("iqBulkPasteText").value = "";
+      const pastePublish = $("iqBulkPastePublish");
+      if (pastePublish) { pastePublish.disabled = true; pastePublish.style.opacity = ".55"; pastePublish.textContent = "Publish previewed questions"; }
+      $("iqBulkImportPreview").replaceChildren();
+      setImportStatus("");
+      $("iqBulkPasteText").focus();
+    });
     $("iqBulkPastePreview").addEventListener("click", async () => {
       const raw = $("iqBulkPasteText").value.trim();
       if (!raw) { setImportStatus("Paste your numbered questions first.", true); return; }
@@ -448,8 +468,18 @@
         setImportStatus("Pasted "+rows.length+" questions: "+ready+" ready to publish, "+importErrors.length+" needing correction or skipped. Review the preview below.");
         publishImport.disabled = ready === 0;
         downloadReport.disabled = importErrors.length === 0;
+        const pastePublish = $("iqBulkPastePublish");
+        if (pastePublish) {
+          pastePublish.disabled = ready === 0;
+          pastePublish.style.opacity = ready === 0 ? ".55" : "1";
+          pastePublish.textContent = ready ? "Publish " + ready + " ready question" + (ready === 1 ? "" : "s") : "No valid questions to publish";
+        }
         // Keep the standard publish path, duplicate checks, report and authenticated API.
-      } catch (e) { setImportStatus(e.message || "Could not parse pasted questions.", true); }
+      } catch (e) {
+        const pastePublish = $("iqBulkPastePublish");
+        if (pastePublish) { pastePublish.disabled = true; pastePublish.style.opacity = ".55"; }
+        setImportStatus(e.message || "Could not parse pasted questions.", true);
+      }
       finally { btn.disabled = false; }
     });
   }
