@@ -244,9 +244,17 @@
   let importErrors = [];
   let importReportRows = [];
   const setImportStatus = (message, bad) => {
-    if (!importStatus) return;
-    importStatus.textContent = message || "";
-    importStatus.style.color = bad ? "#9f1d1d" : "";
+    const text = message || "";
+    [importStatus, $("iqBulkPasteStatus")].filter(Boolean).forEach((node) => {
+      node.textContent = text;
+      node.style.color = bad ? "#9f1d1d" : "";
+      node.style.display = text ? "block" : "";
+      node.style.padding = text ? "10px" : "";
+      node.style.marginTop = text ? "10px" : "";
+      node.style.border = text ? "1px solid " + (bad ? "#efaaaa" : "#9ac7a8") : "";
+      node.style.borderRadius = text ? "8px" : "";
+      node.style.background = text ? (bad ? "#fff1f1" : "#f0fff5") : "";
+    });
   };
   const norm = (v) => String(v == null ? "" : v).toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g," ").trim();
   const headerKey = (v) => norm(v).replace(/[^a-z0-9]/g,"");
@@ -412,11 +420,13 @@
         <button type="button" id="iqBulkPastePublish" disabled style="background:#0b5ed7;color:#fff;border:0;border-radius:8px;padding:10px 16px;font-weight:800;cursor:pointer;opacity:.55">Publish previewed questions</button>
         <button type="button" id="iqBulkPasteClear" style="background:#e5e7eb;color:#111827;border:0;border-radius:8px;padding:10px 16px;font-weight:700;cursor:pointer">Clear text</button>
       </div>
-      <p id="iqBulkPasteHelp" style="margin:8px 0 0;font-size:.9rem">Tip: add “Grade: 10”, “Subject: English”, and “Topic: Reading” above a question if you want to override the defaults. Otherwise choose grade and subject in the main form first.</p>`;
+      <p id="iqBulkPasteHelp" style="margin:8px 0 0;font-size:.9rem">Tip: add “Grade: 10”, “Subject: English”, and “Topic: Reading” above a question if you want to override the defaults. Otherwise choose grade and subject in the main form first.</p>
+      <p id="iqBulkPasteStatus" role="status" aria-live="polite" style="display:none"></p>`;
     const anchor = importFile.closest("section, .admin-card, .iq-admin-import, div") || importFile.parentElement;
     if (anchor && anchor.parentElement) anchor.parentElement.insertBefore(pastePanel, anchor);
     else form.parentElement.insertBefore(pastePanel, form.nextSibling);
     $("iqBulkPastePublish").addEventListener("click", () => {
+      setImportStatus("Publish button clicked. Checking the preview…");
       const publishButton = $("iqBulkPublish");
       if (!importRows.some(r => !r.errors.length)) {
         setImportStatus("Paste your questions and click Preview pasted questions first.", true);
@@ -437,7 +447,10 @@
       setImportStatus("");
       $("iqBulkPasteText").focus();
     });
-    $("iqBulkPastePreview").addEventListener("click", async () => {
+    $("iqBulkPastePreview").addEventListener("click", async (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      setImportStatus("Preview button clicked. Checking pasted questions…");
       const raw = $("iqBulkPasteText").value.trim();
       if (!raw) { setImportStatus("Paste your numbered questions first.", true); return; }
       const btn = $("iqBulkPastePreview");
