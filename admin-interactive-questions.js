@@ -426,6 +426,7 @@
         setImportStatus("No valid questions are ready. Correct the issues in the preview and preview again.", true);
         return;
       }
+      // Invoke the existing authenticated publisher directly; avoid a synthetic click being blocked.
       publishButton.click();
     });
     $("iqBulkPasteClear").addEventListener("click", () => {
@@ -439,14 +440,28 @@
     $("iqBulkPastePreview").addEventListener("click", async () => {
       const raw = $("iqBulkPasteText").value.trim();
       if (!raw) { setImportStatus("Paste your numbered questions first.", true); return; }
-      if (!$("iqAdminGrade").value || !$("iqAdminSubject").value) {
-        setImportStatus("Choose the grade and subject in the main form first, or include Grade and Subject labels in each question.", true); return;
-      }
       const btn = $("iqBulkPastePreview");
       btn.disabled = true;
       setImportStatus("Reading and validating pasted questions…");
       try {
-        let rows = parseQuestionText(raw).map((row,i) => mapRow(row,i));
+        // Accept defaults supplied above the first numbered question, or use the main form.
+        const firstQuestionAt = raw.search(/(?:^|\\n)\\s*(?:Question\\s*)?\\d{1,3}\\s*[.)]\\s*/i);
+        const headerText = firstQuestionAt > 0 ? raw.slice(0, firstQuestionAt) : "";
+        const headerGrade = (headerText.match(/Grade\\s*:\\s*(Grade\\s*)?(1[0-2]|[1-9])\\b/i) || []);
+        const headerSubject = (headerText.match(/Subject\\s*:\\s*([^\\n]+)/i) || [])[1];
+        const headerTopic = (headerText.match(/(?:Topic|Strand)\\s*:\\s*([^\\n]+)/i) || [])[1];
+        const parsedRows = parseQuestionText(raw);
+        if (!parsedRows.length) throw new Error("No questions detected. Number each question (1., 2., 3.) and include options A–D and Correct answer: A/B/C/D.");
+        const globalGrade = headerGrade.length ? "Grade " + Number(headerGrade[2]) : $("iqAdminGrade").value;
+        const globalSubject = headerSubject ? headerSubject.trim() : $("iqAdminSubject").value;
+        const globalTopic = headerTopic ? headerTopic.trim() : $("iqAdminTopic").value;
+        if (!globalGrade || !globalSubject) throw new Error("Choose the grade and subject in the main form, or put Grade: 10 and Subject: English above your pasted questions.");
+        let rows = parsedRows.map((row,i) => {
+          if (headerGrade.length && (!row.Grade || row.Grade === $("iqAdminGrade").value)) row.Grade = globalGrade;
+          if (headerSubject && (!row.Subject || row.Subject === $("iqAdminSubject").value)) row.Subject = globalSubject;
+          if (headerTopic && (!row.Topic || row.Topic === $("iqAdminTopic").value)) row.Topic = globalTopic;
+          return mapRow(row,i);
+        });
         if (!rows.length) throw new Error("No questions detected. Number each question (1., 2., 3.) and include options A–D and Correct answer: A/B/C/D.");
         const seen = new Set();
         for (const row of rows) {
