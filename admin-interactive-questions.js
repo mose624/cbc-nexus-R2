@@ -314,63 +314,107 @@
     return {rowNumber:index+2, grade, subject, strand, question, options, correctIndex, explanation, imageUrl, imageData:"", imageAlt:question.slice(0,160), difficulty:first(row,["Difficulty","Level"]), errors};
   }
   function parseQuestionText(text) {
-    // Normalize common Word/Google Docs/Markdown formatting before finding numbered questions.
-    // Some pasted papers start each item with **1.**, 1), Question 1:, or a numbered-list marker.
+    // Preserve meaningful layout while normalizing common Word/Docs/Markdown paste artefacts.
     const normalized = String(text || "")
-      .replace(/\r/g,"")
-      .replace(/\u00a0/g," ")
+      .replace(/\r/g, "")
+      .replace(/\u00a0/g, " ")
+      .replace(/[‐‑‒–—]/g, "-")
       .replace(/^[ \t]*(?:[-*+]\s+)?(?=(?:\*\*|__)?(?:Question\s*)?\d{1,3}\s*[.)\]:])/gim, "")
       .replace(/\*\*(?=(?:Question\s*)?\d{1,3}\s*[.)\]:])/gi, "")
       .replace(/(?<=(?:Question\s*)?\d{1,3}\s*[.)\]:])\*\*/gi, "");
-    // Read answer keys placed at the end of a complete paper, including Markdown tables.
+
     const answerKey = new Map();
     const keyPatterns = [
       /^\s*\|\s*(\d{1,3})\s*\|\s*([ABCD])\s*(?:\||$)/gim,
       /^\s*(\d{1,3})\s*[.)]?\s*[-:|]?\s*(?:Answer\s*[:=]?\s*)?([ABCD])\s*$/gim
     ];
     keyPatterns.forEach(re => { let m; while ((m = re.exec(normalized)) !== null) answerKey.set(Number(m[1]), m[2].toUpperCase()); });
-    const starts = [...normalized.matchAll(/(?:^|\n)\s*(?:Question\s*)?(\d{1,3})\s*[.)\]:]\s*/gi)];
-    const chunks = [];
-    for (let i=0;i<starts.length;i++) {
-      const start = starts[i].index + starts[i][0].length;
-      const end = i+1<starts.length ? starts[i+1].index : normalized.length;
-      const block = normalized.slice(start,end).trim();
-      if (block) chunks.push({number:Number(starts[i][1]), block});
+
+    // A question number must begin a line. This avoids mistaking ordinary numbers,
+    // algebra steps, years and numbered calculations inside a sentence for new items.
+    const starts = [...normalized.matchAll(/(?:^|\n)[ \t]*(?:Question\s*)?(\d{1,3})\s*[.)\]:]\s*/gi)];
+    const candidates = [];
+    for (let i = 0; i < starts.length; i++) {
+      const startAt = starts[i].index + starts[i][0].length;
+      const endAt = i + 1 < starts.length ? starts[i + 1].index : normalized.length;
+      const block = normalized.slice(startAt, endAt).trim();
+      // Only regard a numbered block as an MCQ if it contains recognizable option labels.
+      const optionLabels = [...block.matchAll(/(?:^|\n|[ \t])(?:\*\*)?([ABCD])(?:\*\*)?[.)][ \t]+/gim)]
+        .map(m => m[1].toUpperCase());
+      if (block && ["A","B","C","D"].every(letter => optionLabels.includes(letter))) {
+        candidates.push({ number: Number(starts[i][1]), startAt, endAt, block, sourceStart: starts[i].index });
+      }
     }
+
+    // Carry section labels and reading passages/contexts forward into related questions.
+    // They are included in each affected stem so learners see the required context.
     const rows = [];
-    chunks.forEach(({number, block}, idx) => {
+    let sharedContext = "";
+    let lastSection = "";
+    let lastNumber = null;
+    const sectionPattern = /^\s*(?:SECTION\s+[A-Z0-9IVX]+|PART\s+[A-Z0-9IVX]+|READING\s+PASSAGE|PASSAGE|SOURCE\s+[A-Z0-9]+|COMPREHENSION|USE\s+THE\s+(?:PASSAGE|INFORMATION|GRAPH|DIAGRAM|TABLE|FIGURE)[\s\S]{0,100})\s*[:\-]?\s*$/i;
+    for (let idx = 0; idx < candidates.length; idx++) {
+      const item = candidates[idx];
+      const priorBoundary = idx === 0 ? 0 : candidates[idx - 1].endAt;
+      const interstitial = normalized.slice(priorBoundary, item.sourceStart).trim();
+      if (interstitial) {
+        const lines = interstitial.split("\n").map(s => s.trim()).filter(Boolean);
+        const sectionLines = lines.filter(line => sectionPattern.test(line));
+        if (sectionLines.length) {
+          lastSection = sectionLines.join(" ");
+          sharedContext = "";
+        }
+        const contextLines = lines.filter(line => !sectionPattern.test(line) &&
+          !/^(?:Grade\s*:|Subject\s*:|Topic\s*:|Strand\s*:|Answer\s+Key\b|Answers?\s*:)/i.test(line) &&
+          !/^\|?\s*\d{1,3}\s*\|\s*[ABCD]\s*\|?$/i.test(line));
+        if (contextLines.length) {
+          const candidateContext = contextLines.join("\n");
+          // Keep passage/source/graph instructions, but do not carry a previous answer
+          // or explanation into the next question.
+          if (candidateContext.length <= 7000 && !/^(?:Correct answer|Explanation|Rationale|Solution)\s*:/i.test(candidateContext)) {
+            sharedContext = candidateContext;
+          }
+        }
+      }
+
+      const block = item.block;
       const correctMatch = block.match(/(?:Correct\s+answer|Answer\s+key|Correct\s+option|Answer)\s*:\s*([ABCD1-4])\b/i);
-      const keyedAnswer = answerKey.get(number) || "";
-      const explanationMatch = block.match(/(?:Explanation|Rationale|Solution)\s*:\s*([\s\S]*?)(?=\n\s*(?:Question\s*)?\d{1,3}\s*[.)]\s*|$)/i);
-      const optRe = /(?:^|\n|\s)([ABCD])\s*[.)]\s+/g;
-      const matches = [...block.matchAll(optRe)];
-      const ordered = matches.filter(m => !correctMatch || m.index < block.search(/(?:Correct\s+answer|Answer\s+key|Correct\s+option)\s*:/i));
+      const keyedAnswer = answerKey.get(item.number) || "";
+      const explanationMatch = block.match(/(?:Explanation|Rationale|Solution)\s*:\s*([\s\S]*?)(?=\n\s*(?:Question\s*)?\d{1,3}\s*[.)\]]\s*|$)/i);
+      const optionRe = /(?:^|\n|[ \t])(?:\*\*)?([ABCD])(?:\*\*)?[.)][ \t]+/gim;
+      const matches = [...block.matchAll(optionRe)];
+      const answerPos = block.search(/(?:Correct\s+answer|Answer\s+key|Correct\s+option|Answer)\s*:/i);
+      const explanationPos = block.search(/(?:Explanation|Rationale|Solution)\s*:/i);
+      const ordered = matches.filter(m => (answerPos < 0 || m.index < answerPos) && (explanationPos < 0 || m.index < explanationPos));
       const firstOption = ordered.length ? ordered[0].index : -1;
-      const stem = (firstOption >= 0 ? block.slice(0,firstOption) : "").replace(/^\s+/,"").trim();
-      const options = ["A","B","C","D"].map(letter => {
-        const at = ordered.findIndex(m=>m[1].toUpperCase()===letter);
+      let stem = (firstOption >= 0 ? block.slice(0, firstOption) : "").trim();
+      const optionValues = ["A","B","C","D"].map(letter => {
+        const at = ordered.findIndex(m => m[1].toUpperCase() === letter);
         if (at < 0) return "";
-        const m=ordered[at], contentStart=m.index+m[0].length;
-        let contentEnd=block.length;
-        for (const next of ordered) if(next.index>m.index && next.index<contentEnd) contentEnd=next.index;
-        const answerPos=block.search(/(?:Correct\s+answer|Answer\s+key|Correct\s+option)\s*:/i);
-        if(answerPos>=0) contentEnd=Math.min(contentEnd,answerPos);
-        const explPos=block.search(/(?:Explanation|Rationale|Solution)\s*:/i);
-        if(explPos>=0) contentEnd=Math.min(contentEnd,explPos);
-        return block.slice(contentStart,contentEnd).replace(/\s+/g," ").trim();
+        const m = ordered[at];
+        const contentStart = m.index + m[0].length;
+        let contentEnd = block.length;
+        for (const next of ordered) if (next.index > m.index && next.index < contentEnd) contentEnd = next.index;
+        [answerPos, explanationPos].filter(pos => pos >= 0).forEach(pos => { contentEnd = Math.min(contentEnd, pos); });
+        // Keep maths, units, signs and line breaks readable rather than flattening all whitespace.
+        return block.slice(contentStart, contentEnd).trim().replace(/[ \t]+\n/g, "\n").replace(/\n{3,}/g, "\n\n");
       });
+      const sectionPrefix = lastSection ? lastSection + "\n" : "";
+      const contextPrefix = sharedContext && !stem.includes(sharedContext) ? sharedContext + "\n\n" : "";
+      stem = (sectionPrefix + contextPrefix + stem).trim();
       const row = {
-        "Grade": (block.match(/Grade\s*(?:\/\s*)?[:\-]?\s*(1[0-2]|[1-9])\b/i)||[])[0] || $("iqAdminGrade").value,
-        "Subject": (block.match(/Subject\s*:\s*([^\n]+)/i)||[])[1] || $("iqAdminSubject").value,
-        "Topic": (block.match(/(?:Topic|Strand)\s*:\s*([^\n]+)/i)||[])[1] || $("iqAdminTopic").value || "All Topics",
+        "Grade": (block.match(/Grade\s*(?:\/\s*)?[:\-]?\s*(1[0-2]|[1-9])\b/i) || [])[0] || $("iqAdminGrade").value,
+        "Subject": (block.match(/Subject\s*:\s*([^\n]+)/i) || [])[1] || $("iqAdminSubject").value,
+        "Topic": (block.match(/(?:Topic|Strand)\s*:\s*([^\n]+)/i) || [])[1] || $("iqAdminTopic").value || "All Topics",
         "Question": stem,
-        "Option A": options[0], "Option B": options[1], "Option C": options[2], "Option D": options[3],
+        "Option A": optionValues[0], "Option B": optionValues[1], "Option C": optionValues[2], "Option D": optionValues[3],
         "Correct Answer": correctMatch ? correctMatch[1].toUpperCase() : keyedAnswer,
-        "Explanation": explanationMatch ? explanationMatch[1].trim() : "", "Image URL": (block.match(/(?:Image|Diagram)\s+URL\s*:\s*(https:\/\/\S+)/i)||[])[1] || ""
+        "Explanation": explanationMatch ? explanationMatch[1].trim() : "",
+        "Image URL": (block.match(/(?:Image|Diagram)\s+URL\s*:\s*(https:\/\/\S+)/i) || [])[1] || ""
       };
-      if(/^Grade\s*\d+$/i.test(row.Grade)) row.Grade=row.Grade.replace(/\s+/g," ");
       rows.push(row);
-    });
+      lastNumber = item.number;
+    }
     return rows;
   }
   async function readImportFile(file) {
