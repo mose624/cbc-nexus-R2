@@ -1,20 +1,28 @@
 (function () {
   "use strict";
-  window.CBENexusAdminQuestions = Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [];
-  window.CBENexusAdminQuestionsReady = fetch("/api/interactive-questions", {credentials:"same-origin", cache:"no-store"})
-    .then((response) => response.ok ? response.json() : Promise.reject(new Error("Question bank unavailable")))
-    .then((data) => {
-      window.CBENexusAdminQuestions = Array.isArray(data.questions) ? data.questions : [];
+  async function loadPublishedQuestions() {
+    window.CBENexusAdminQuestionsLoadError = null;
+    try {
+      const response = await fetch("/api/interactive-questions", {
+        credentials: "same-origin",
+        cache: "no-store"
+      });
+      if (!response.ok) throw new Error("HTTP " + response.status);
+      const data = await response.json();
+      if (!data || !Array.isArray(data.questions)) throw new Error("Invalid question-bank response");
+      window.CBENexusAdminQuestions = data.questions.filter((item) => item && item.published !== false);
       return window.CBENexusAdminQuestions;
-    })
-    .catch(() => {
+    } catch (error) {
       window.CBENexusAdminQuestions = [];
+      window.CBENexusAdminQuestionsLoadError = error;
+      console.error("CBE Nexus published question bank could not be loaded:", error);
       return [];
-    });
+    }
+  }
+
+  window.CBENexusAdminQuestions = Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [];
+  window.CBENexusAdminQuestionsReady = loadPublishedQuestions();
   window.addEventListener("cbe:interactive-questions-updated", () => {
-    window.CBENexusAdminQuestionsReady = fetch("/api/interactive-questions", {credentials:"same-origin", cache:"no-store"})
-      .then((response) => response.ok ? response.json() : {questions:[]})
-      .then((data) => (window.CBENexusAdminQuestions = Array.isArray(data.questions) ? data.questions : []))
-      .catch(() => (window.CBENexusAdminQuestions = []));
+    window.CBENexusAdminQuestionsReady = loadPublishedQuestions();
   });
 })();
