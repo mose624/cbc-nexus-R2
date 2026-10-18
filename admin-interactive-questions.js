@@ -370,7 +370,7 @@
       for (let p=1;p<=pdf.numPages;p++) {
         const page = await pdf.getPage(p);
         const content = await page.getTextContent();
-        text += "\n" + content.items.map(x=>x.str).join(" ") + "\n";
+        text += "\n" + content.items.map(x=>x.str).join("\n") + "\n";
       }
       return parseQuestionText(text).map((row,i)=>mapRow(row,i));
     }
