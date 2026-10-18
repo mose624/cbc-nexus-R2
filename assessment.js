@@ -663,7 +663,16 @@
     const curriculumItems = getCurriculumItems(grade.value, subject.value);
     const questions = getAvailableQuestions(grade.value, subject.value);
     const questionTopics = Array.from(new Set(questions.map((item) => item[3]).filter(Boolean)));
-    const topics = curriculumItems.length ? curriculumItems.map((item) => item.id) : questionTopics;
+    const adminTopics = (Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [])
+      .filter((item) => String(item.grade || "").match(/\\d+/)?.[0] === String(grade.value || "").match(/\\d+/)?.[0] &&
+        String(item.subject || "").toLowerCase().replace(/[^a-z0-9]/g, "") === String(subject.value || "").toLowerCase().replace(/[^a-z0-9]/g, "") &&
+        item.published !== false)
+      .map((item) => String(item.strand || "").trim())
+      .filter(Boolean);
+    const topics = [...new Set([
+      ...(curriculumItems.length ? curriculumItems.map((item) => item.id) : questionTopics),
+      ...adminTopics
+    ])];
 
     strand.innerHTML = "";
     const all = document.createElement("option");
@@ -715,72 +724,92 @@
   }
 
   function getGradeQuestionBank(selectedGrade, selectedSubject) {
-    const n = Number(String(selectedGrade).replace(/[^0-9]/g, "")) || 7;
+    const gradeNumber = (value) => String(value == null ? "" : value).match(/\\d+/)?.[0] || "";
+    const normalizeSubject = (value) => String(value || "").toLowerCase().replace(/[^a-z0-9]/g, "");
     const gradeBank = window.CBENexusCBCBanks &&
       window.CBENexusCBCBanks.banks &&
       window.CBENexusCBCBanks.banks[selectedGrade] &&
       window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject];
 
-    const customBank = readCustomQuestions()
-      .filter((item) => item.grade === selectedGrade && item.subject === selectedSubject)
-      .map((item) => [
-        item.question,
-        item.options,
-        Number(item.correctIndex),
-        item.strand || "All Topics",
-        item.explanation || "",
-        item.strand || "All Topics",
-        item.subStrand || "All Sub-Strands",
-        item.learningOutcome || "All Outcomes",
-        item.contentCovered || ""
-      ]);
+    const adminQuestions = Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [];
+    const publishedSource = adminQuestions.filter((item) =>
+      gradeNumber(item.grade) === gradeNumber(selectedGrade) &&
+      normalizeSubject(item.subject) === normalizeSubject(selectedSubject) &&
+      item.published !== false &&
+      String(item.question || "").trim() &&
+      Array.isArray(item.options) && item.options.length >= 4
+    );
+    const publishedBank = publishedSource.map((item) => [
+      item.question,
+      item.options,
+      Number(item.correctIndex),
+      item.strand || "All Topics",
+      item.explanation || "",
+      item.strand || "All Topics",
+      "All Sub-Strands",
+      "All Outcomes",
+      item.strand || "",
+      item.imageData || item.imageUrl || "",
+      item.imageAlt || "Question diagram"
+    ]);
 
-    const publishedBank = (Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [])
-      .filter((item) => item.grade === selectedGrade && String(item.subject || "").toLowerCase() === String(selectedSubject || "").toLowerCase())
-      .map((item) => [
-        item.question,
-        item.options,
-        Number(item.correctIndex),
-        item.strand || "All Topics",
-        item.explanation || "",
-        item.strand || "All Topics",
-        "All Sub-Strands",
-        "All Outcomes",
-        item.strand || "",
-        item.imageData || item.imageUrl || "",
-        item.imageAlt || "Question diagram"
-      ]);
+    // Published admin questions are the source of truth whenever that grade/subject
+    // has published items. Built-in and browser-local questions are fallback-only.
+    let combined;
+    const usingPublishedBank = publishedBank.length > 0;
+    if (usingPublishedBank) {
+      combined = publishedBank;
+    } else {
+      const customBank = readCustomQuestions()
+        .filter((item) =>
+          gradeNumber(item.grade) === gradeNumber(selectedGrade) &&
+          normalizeSubject(item.subject) === normalizeSubject(selectedSubject)
+        )
+        .map((item) => [
+          item.question, item.options, Number(item.correctIndex),
+          item.strand || "All Topics", item.explanation || "",
+          item.strand || "All Topics", item.subStrand || "All Sub-Strands",
+          item.learningOutcome || "All Outcomes", item.contentCovered || ""
+        ]);
+      combined = (Array.isArray(gradeBank) ? gradeBank.slice() : []).concat(customBank);
+    }
 
-    let combined = (Array.isArray(gradeBank) ? gradeBank.slice() : []).concat(customBank, publishedBank);
     const selectedStrand = strand ? strand.value : "All Topics";
-
     if (selectedStrand && selectedStrand !== "All Topics") {
-      const selectedCurriculum = getCurriculumItems(grade.value, subject.value)
+      const selectedCurriculum = getCurriculumItems(selectedGrade, selectedSubject)
         .find((item) => String(item.id) === String(selectedStrand));
-
-      const allowedSubStrands = selectedCurriculum && Array.isArray(selectedCurriculum.subStrands)
-        ? new Set(selectedCurriculum.subStrands.map((entry) => String(entry.id || entry.label || "")))
-        : null;
-
-      combined = combined.filter((item) => {
-        const itemStrand = String(item[5] || item[3] || "");
-        return itemStrand === String(selectedStrand) ||
-          Boolean(allowedSubStrands && allowedSubStrands.has(itemStrand));
-      });
+      const selectedLabels = new Set([
+        String(selectedStrand),
+        String(selectedCurriculum && selectedCurriculum.label || "")
+      ].filter(Boolean));
+      const matchesStrand = (item) => selectedLabels.has(String(item[5] || item[3] || ""));
+      const topicMatches = combined.filter(matchesStrand);
+      // Curriculum IDs and admin topic labels can differ. Never blank a valid
+      // published bank just because its topic label is not in the curriculum map.
+      if (topicMatches.length) combined = topicMatches;
+      else if (!usingPublishedBank) {
+        const allowedSubStrands = selectedCurriculum && Array.isArray(selectedCurriculum.subStrands)
+          ? new Set(selectedCurriculum.subStrands.map((entry) => String(entry.id || entry.label || "")))
+          : null;
+        combined = combined.filter((item) => matchesStrand(item) ||
+          Boolean(allowedSubStrands && allowedSubStrands.has(String(item[6] || ""))));
+      }
     }
 
-    const selectedSub = subStrand ? subStrand.value : "All Sub-Strands";
-    if (selectedSub && selectedSub !== "All Sub-Strands") {
-      combined = combined.filter((item) => String(item[6] || "") === String(selectedSub));
+    // Admin questions currently store a topic, not sub-strand/outcome IDs.
+    // Apply those deeper filters only to fallback banks that actually carry them.
+    if (!usingPublishedBank) {
+      const selectedSub = subStrand ? subStrand.value : "All Sub-Strands";
+      if (selectedSub && selectedSub !== "All Sub-Strands") {
+        combined = combined.filter((item) => String(item[6] || "") === String(selectedSub));
+      }
+      const selectedOutcome = outcome ? outcome.value : "All Outcomes";
+      if (selectedOutcome && selectedOutcome !== "All Outcomes") {
+        combined = combined.filter((item) => String(item[7] || "") === String(selectedOutcome));
+      }
     }
 
-    const selectedOutcome = outcome ? outcome.value : "All Outcomes";
-    if (selectedOutcome && selectedOutcome !== "All Outcomes") {
-      combined = combined.filter((item) => String(item[7] || "") === String(selectedOutcome));
-    }
-
-    const rotation = combined.length ? (n - 1) % combined.length : 0;
-    return combined.slice(rotation).concat(combined.slice(0, rotation));
+    return combined;
   };
 
   function clearQuestionSetterForm() {
