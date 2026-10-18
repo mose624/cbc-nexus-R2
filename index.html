@@ -925,9 +925,10 @@
               <label for="iqBulkImportFile" style="display:block;font-weight:700;margin-bottom:8px">Choose file (.xlsx, .xls, .csv, .docx, .pdf)
                 <input id="iqBulkImportFile" type="file" accept=".xlsx,.xls,.csv,.docx,.pdf" style="display:block;margin-top:6px;max-width:100%">
               </label>
+              <label style="display:flex;gap:8px;align-items:center;margin:8px 0 12px;font-weight:600"><input type="checkbox" id="iqBulkAutoPublish" checked> Automatically publish valid questions after validation (recommended)</label>
               <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
                 <button type="button" id="iqBulkAnalyze" class="iq-admin-submit">Read file & preview</button>
-                <button type="button" id="iqBulkPublish" class="iq-admin-submit" disabled>Publish valid questions</button>
+                <button type="button" id="iqBulkPublish" class="iq-admin-submit" disabled>Publish valid questions now</button>
                 <button type="button" id="iqBulkDownloadReport" class="secondary-button" disabled>Download error report</button>
               </div>
               <p id="iqBulkImportStatus" class="iq-admin-status" role="status" aria-live="polite"></p>
@@ -1837,6 +1838,6 @@
   <p>Visit the <a href="/contact.html">Contact CBE Nexus page</a> for the published support options. For your safety, never share an M-Pesa PIN, password or one-time security code.</p>
 </section>
 
-  <script src="/admin-interactive-questions.js?v=20261018-bulk-import-2" defer></script>
+  <script src="/admin-interactive-questions.js?v=20261018-bulk-import-3" defer></script>
 </body>
 </html>
