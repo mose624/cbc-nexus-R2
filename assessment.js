@@ -696,7 +696,25 @@
   function refreshSubjectOptions() {
     if (!subject) return;
     const current = subject.value;
-    const list = subjectsForGrade(grade.value);
+    const gradeNumber = (value) => String(value == null ? "" : value).match(/\d+/)?.[0] || "";
+    const normalizeSubject = (value) => String(value || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+    const baseList = subjectsForGrade(grade.value);
+    // Include every subject that has published Admin Dashboard questions for this grade.
+    // This changes only discoverability/filtering; saved question text and answers are untouched.
+    const adminSubjects = (Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [])
+      .filter((item) => item && item.published !== false &&
+        gradeNumber(item.grade) === gradeNumber(grade.value) &&
+        String(item.subject || "").trim() &&
+        String(item.question || "").trim() &&
+        Array.isArray(item.options) && item.options.length >= 4)
+      .map((item) => String(item.subject).trim());
+    const seen = new Set();
+    const list = [...baseList, ...adminSubjects].filter((name) => {
+      const key = normalizeSubject(name);
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
     subject.innerHTML = "";
     list.forEach((name) => {
       const option = document.createElement("option");
