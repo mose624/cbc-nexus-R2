@@ -854,12 +854,20 @@ async function handleApi(req,res,url){
       await ensureDataDir();
       const rows=await readJsonStore("interactive-questions.json");
       const normalized=question.toLowerCase().replace(/\s+/g," ");
-      const duplicate=rows.find(q=>q&&q.grade===grade&&String(q.subject||"").toLowerCase()===subject.toLowerCase()&&String(q.question||"").toLowerCase().replace(/\s+/g," ")===normalized);
+      let duplicate=rows.find(q=>q&&q.grade===grade&&String(q.subject||"").toLowerCase()===subject.toLowerCase()&&String(q.question||"").toLowerCase().replace(/\s+/g," ")===normalized);
+      if(!duplicate&&supabaseConfigured){
+        const {data:existing,error:duplicateError}=await supabase.from("interactive_questions").select("question").eq("grade",grade).eq("subject",subject);
+        if(duplicateError) throw duplicateError;
+        duplicate=(existing||[]).find(q=>String(q.question||"").toLowerCase().replace(/\s+/g," ")===normalized);
+      }
       if(duplicate){sendJson(res,409,{ok:false,error:"A matching question already exists for this grade and subject."});return true;}
       const item={id:"iq-"+Date.now()+"-"+Math.random().toString(36).slice(2,8),grade,subject,strand,question,options,correctIndex,explanation,imageUrl,imageData,imageAlt,published:true,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};
+      if(supabaseConfigured){
+        const {error}=await supabase.from("interactive_questions").insert(interactiveQuestionToDb(item));
+        if(error) throw error;
+      }
       rows.unshift(item);
       await fs.writeFile(path.join(DATA_DIR,"interactive-questions.json"),JSON.stringify(rows.slice(0,5000),null,2));
-      if(supabaseConfigured){const {error}=await supabase.from("interactive_questions").upsert(interactiveQuestionToDb(item),{onConflict:"id"});if(error)console.error("Interactive question database save failed; local copy retained:",error.message||error);}
       sendJson(res,201,{ok:true,question:item,message:"Question published."});
     }catch(error){console.error("Interactive question publish error:",error);sendJson(res,500,{ok:false,error:"Question could not be saved. Please try again."});}
     return true;
@@ -870,7 +878,14 @@ async function handleApi(req,res,url){
       const id=decodeURIComponent(url.pathname.slice("/api/admin/interactive-questions/".length));
       const rows=await readJsonStore("interactive-questions.json");
       const remaining=rows.filter(q=>q&&String(q.id)!==id);
-      if(remaining.length===rows.length){sendJson(res,404,{ok:false,error:"Question not found."});return true;}
+      const existedLocally=remaining.length!==rows.length;
+      let existedInDatabase=false;
+      if(supabaseConfigured){
+        const {data:found,error:lookupError}=await supabase.from("interactive_questions").select("id").eq("id",id).maybeSingle();
+        if(lookupError) throw lookupError;
+        existedInDatabase=Boolean(found);
+      }
+      if(!existedLocally&&!existedInDatabase){sendJson(res,404,{ok:false,error:"Question not found."});return true;}
       await ensureDataDir();
       await fs.writeFile(path.join(DATA_DIR,"interactive-questions.json"),JSON.stringify(remaining,null,2));
       if(supabaseConfigured){const {error}=await supabase.from("interactive_questions").delete().eq("id",id);if(error)throw error;}
