@@ -1069,8 +1069,14 @@
     const elapsed = Math.floor((Date.now() - startedAt) / 1000);
     const mm = String(Math.floor(elapsed / 60)).padStart(2, "0");
     const ss = String(elapsed % 60).padStart(2, "0");
-    timer.textContent = "Time: " + mm + ":" + ss + (mode.value === "assessment" ? " — assessment mode (10 min)" : " — practice mode");
-    if (mode.value === "assessment" && elapsed >= 600 && !submitted) {
+    const remaining = Math.max(0, 4500 - elapsed);
+    const remainingHours = String(Math.floor(remaining / 3600)).padStart(2, "0");
+    const remainingMinutes = String(Math.floor((remaining % 3600) / 60)).padStart(2, "0");
+    const remainingSeconds = String(remaining % 60).padStart(2, "0");
+    timer.textContent = mode.value === "assessment"
+      ? "Time remaining: " + remainingHours + ":" + remainingMinutes + ":" + remainingSeconds + " (maximum 1 hour 15 minutes)"
+      : "Time: " + mm + ":" + ss + " — practice mode";
+    if (mode.value === "assessment" && elapsed >= 4500 && !submitted) {
       markQuiz(true);
     }
   }
