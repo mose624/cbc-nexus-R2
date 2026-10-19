@@ -1217,23 +1217,23 @@
     objects[3] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>";
     pages.forEach((pageLines, pageIndex) => {
       const pageId = pageIds[pageIndex], streamId = pageId + 1;
-      let stream = "BT\\n/F1 9 Tf\\n45 795 Td\\n";
+      let stream = "BT\n/F1 9 Tf\n45 795 Td\n";
       pageLines.forEach((line, lineIndex) => {
-        const safe = pdfSafe(line).replace(/\\\\/g, "\\\\\\\\").replace(/\\(/g, "\\\\(").replace(/\\)/g, "\\\\)");
-        if (lineIndex) stream += "0 -15 Td\\n";
-        stream += "(" + safe + ") Tj\\n";
+        const safe = pdfSafe(line).replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
+        if (lineIndex) stream += "0 -15 Td\n";
+        stream += "(" + safe + ") Tj\n";
       });
       stream += "ET";
       objects[pageId] = "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 842] /Resources << /Font << /F1 3 0 R >> >> /Contents " + streamId + " 0 R >>";
-      objects[streamId] = "<< /Length " + stream.length + " >>\\nstream\\n" + stream + "\\nendstream";
+      objects[streamId] = "<< /Length " + stream.length + " >>\nstream\n" + stream + "\nendstream";
     });
-    let pdf = "%PDF-1.4\\n";
+    let pdf = "%PDF-1.4\n";
     const offsets = [0];
-    for (let i = 1; i < objects.length; i++) { offsets[i] = pdf.length; pdf += i + " 0 obj\\n" + objects[i] + "\\nendobj\\n"; }
+    for (let i = 1; i < objects.length; i++) { offsets[i] = pdf.length; pdf += i + " 0 obj\n" + objects[i] + "\nendobj\n"; }
     const xref = pdf.length;
-    pdf += "xref\\n0 " + objects.length + "\\n0000000000 65535 f \\n";
-    for (let i = 1; i < objects.length; i++) pdf += String(offsets[i]).padStart(10, "0") + " 00000 n \\n";
-    pdf += "trailer\\n<< /Size " + objects.length + " /Root 1 0 R >>\\nstartxref\\n" + xref + "\\n%%EOF";
+    pdf += "xref\n0 " + objects.length + "\n0000000000 65535 f \n";
+    for (let i = 1; i < objects.length; i++) pdf += String(offsets[i]).padStart(10, "0") + " 00000 n \n";
+    pdf += "trailer\n<< /Size " + objects.length + " /Root 1 0 R >>\nstartxref\n" + xref + "\n%%EOF";
     return new Blob([pdf], { type: "application/pdf" });
   }
   function downloadAssessmentReport(attempt) {
