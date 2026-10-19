@@ -873,6 +873,7 @@ async function handleApi(req,res,url){
       if(remaining.length===rows.length){sendJson(res,404,{ok:false,error:"Question not found."});return true;}
       await ensureDataDir();
       await fs.writeFile(path.join(DATA_DIR,"interactive-questions.json"),JSON.stringify(remaining,null,2));
+      if(supabaseConfigured){const {error}=await supabase.from("interactive_questions").delete().eq("id",id);if(error)throw error;}
       sendJson(res,200,{ok:true,message:"Question deleted."});
     }catch(error){console.error("Interactive question delete error:",error);sendJson(res,500,{ok:false,error:"Question could not be deleted."});}
     return true;
