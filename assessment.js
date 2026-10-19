@@ -1167,10 +1167,10 @@
   }
 
   function pdfSafe(value) {
-    return String(value == null ? "" : value).replace(/[\\u2018\\u2019]/g, "'").replace(/[\\u201C\\u201D]/g, '"').replace(/[\\u2013\\u2014]/g, "-").replace(/[^\\x20-\\x7E]/g, "?");
+    return String(value == null ? "" : value).replace(/[\u2018\u2019]/g, "'").replace(/[\u201C\u201D]/g, '"').replace(/[\u2013\u2014]/g, "-").replace(/[^\x20-\x7E]/g, "?");
   }
   function wrapPdfText(value, maxChars) {
-    const words = pdfSafe(value).split(/\\s+/), lines = [];
+    const words = pdfSafe(value).split(/\s+/), lines = [];
     let line = "";
     words.forEach(word => {
       if (!word) return;
