@@ -1262,7 +1262,7 @@
         const data = atob(canvas.toDataURL("image/jpeg", 0.92).split(",")[1]);
         for (let i = 0; i < data.length; i++) logoBinary += data.charAt(i);
         bitmap.close();
-        ops.push("q\\n112 0 0 58 458 744 cm\\n/Logo Do\\nQ\\n");
+        ops.push("q\n112 0 0 58 458 744 cm\n/Logo Do\nQ\n");
       }
     } catch (logoError) { /* Keep the report usable if the logo asset cannot be fetched. */ }
     const tableX=36, tableTop=704, colWidths=[88,190,92,170], rowH=27;
@@ -1313,6 +1313,8 @@
     objects[4]="<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 842] /Resources << /Font << /F1 3 0 R /F2 5 0 R >> /XObject << /Logo 7 0 R >> >> /Contents 6 0 R >>";
     objects[5]="<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>";
     objects[6]="<< /Length "+stream.length+" >>\nstream\n"+stream+"\nendstream";
+    if (logoBinary) objects[7]="<< /Type /XObject /Subtype /Image /Width 148 /Height 76 /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length "+logoBinary.length+" >>\nstream\n"+logoBinary+"\nendstream";
+    else objects[7]="<< /Type /XObject /Subtype /Image /Width 1 /Height 1 /ColorSpace /DeviceRGB /BitsPerComponent 8 /Length 3 >>\nstream\n"+String.fromCharCode(0,0,0)+"\nendstream";
     let pdf="%PDF-1.4\n"; const offsets=[0];
     for(let i=1;i<objects.length;i++){offsets[i]=pdf.length;pdf+=i+" 0 obj\n"+objects[i]+"\nendobj\n";}
     const xref=pdf.length;
