@@ -130,6 +130,41 @@ const mimeTypes={".html":"text/html; charset=utf-8",".css":"text/css; charset=ut
 const stores={"/api/projects":"projects.json","/api/tuition":"tuition-registrations.json","/api/quizzes":"quiz-attempts.json","/api/payments":"payments.json","/api/mpesa/stk-push":"mpesa-requests.json"};
 async function ensureDataDir(){await fs.mkdir(DATA_DIR,{recursive:true});}
 async function readJsonStore(f){await ensureDataDir();try{return JSON.parse(await fs.readFile(path.join(DATA_DIR,f),"utf8"));}catch{return [];}}
+let interactiveQuestionMigrationPromise=null;
+function interactiveQuestionToDb(q){
+  return {id:String(q.id),grade:String(q.grade||""),subject:String(q.subject||""),strand:String(q.strand||"All Topics"),question:String(q.question||""),options:Array.isArray(q.options)?q.options:[],correct_index:Number(q.correctIndex),explanation:String(q.explanation||""),image_url:String(q.imageUrl||""),image_data:String(q.imageData||""),image_alt:String(q.imageAlt||q.question||""),published:q.published!==false,created_at:q.createdAt||new Date().toISOString(),updated_at:q.updatedAt||q.createdAt||new Date().toISOString()};
+}
+function interactiveQuestionFromDb(q){
+  return {id:q.id,grade:q.grade,subject:q.subject,strand:q.strand||"All Topics",question:q.question,options:Array.isArray(q.options)?q.options:[],correctIndex:Number(q.correct_index),explanation:q.explanation||"",imageUrl:q.image_url||"",imageData:q.image_data||"",imageAlt:q.image_alt||q.question||"",published:q.published!==false,createdAt:q.created_at||null,updatedAt:q.updated_at||q.created_at||null};
+}
+async function readInteractiveQuestionRows(){
+  const local=await readJsonStore("interactive-questions.json");
+  if(!supabaseConfigured) return local.filter(Boolean);
+  try{
+    if(!interactiveQuestionMigrationPromise){
+      interactiveQuestionMigrationPromise=(async()=>{
+        if(local.length){
+          const legacy=local.filter(q=>q&&q.id&&q.question&&q.grade&&q.subject).map(interactiveQuestionToDb);
+          for(let i=0;i<legacy.length;i+=100){
+            const {error}=await supabase.from("interactive_questions").upsert(legacy.slice(i,i+100),{onConflict:"id",ignoreDuplicates:true});
+            if(error) throw error;
+          }
+        }
+        return true;
+      })().catch(error=>{interactiveQuestionMigrationPromise=null;throw error;});
+    }
+    await interactiveQuestionMigrationPromise;
+    const {data,error}=await supabase.from("interactive_questions").select("*").order("created_at",{ascending:false}).limit(5000);
+    if(error) throw error;
+    const dbRows=(data||[]).map(interactiveQuestionFromDb);
+    const seen=new Set(dbRows.map(q=>String(q.id)));
+    return dbRows.concat(local.filter(q=>q&&q.id&&!seen.has(String(q.id))));
+  }catch(error){
+    console.error("Persistent interactive question bank lookup/migration error:",error.message||error);
+    return local.filter(Boolean);
+  }
+}
+
 async function appendJsonStore(f,item){const c=await readJsonStore(f),s={id:item.id||`${Date.now()}`,...item,receivedAt:new Date().toISOString()};c.unshift(s);await fs.writeFile(path.join(DATA_DIR,f),JSON.stringify(c,null,2));return s;}
 function normaliseCueProgramme(p){
   return {institutionName:String(p.institutionName||p.university||"").trim(),institutionCode:String(p.institutionCode||p.code||"").trim(),county:String(p.county||"").trim(),programmeCode:String(p.programmeCode||p.programCode||"").trim(),programmeName:String(p.programmeName||p.name||"").trim(),qualificationLevel:String(p.qualificationLevel||p.level||"").trim(),field:String(p.field||"").trim(),accreditationStatus:String(p.accreditationStatus||p.status||"").trim(),sourceDate:String(p.sourceDate||"2026-07-31").trim()};
@@ -787,14 +822,14 @@ async function handleApi(req,res,url){
 
   // Public learner-facing question bank. Only published questions are exposed.
   if(req.method==="GET"&&url.pathname==="/api/interactive-questions"){
-    const questions=await readJsonStore("interactive-questions.json");
+    const questions=await readInteractiveQuestionRows();
     sendJson(res,200,{ok:true,questions:questions.filter(q=>q&&q.published!==false).map(q=>({id:q.id,grade:q.grade,subject:q.subject,strand:q.strand||"All Topics",question:q.question,options:q.options,correctIndex:Number(q.correctIndex),explanation:q.explanation||"",imageUrl:q.imageUrl||"",imageData:q.imageData||"",imageAlt:q.imageAlt||q.question||"",createdAt:q.createdAt||null}))});
     return true;
   }
   // Admin-only management endpoints for the isolated Interactive Questions module.
   if(req.method==="GET"&&url.pathname==="/api/admin/interactive-questions"){
     if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
-    const questions=await readJsonStore("interactive-questions.json");
+    const questions=await readInteractiveQuestionRows();
     sendJson(res,200,{ok:true,questions:questions.filter(Boolean)});
     return true;
   }
@@ -819,9 +854,18 @@ async function handleApi(req,res,url){
       await ensureDataDir();
       const rows=await readJsonStore("interactive-questions.json");
       const normalized=question.toLowerCase().replace(/\s+/g," ");
-      const duplicate=rows.find(q=>q&&q.grade===grade&&String(q.subject||"").toLowerCase()===subject.toLowerCase()&&String(q.question||"").toLowerCase().replace(/\s+/g," ")===normalized);
+      let duplicate=rows.find(q=>q&&q.grade===grade&&String(q.subject||"").toLowerCase()===subject.toLowerCase()&&String(q.question||"").toLowerCase().replace(/\s+/g," ")===normalized);
+      if(!duplicate&&supabaseConfigured){
+        const {data:existing,error:duplicateError}=await supabase.from("interactive_questions").select("question").eq("grade",grade).eq("subject",subject);
+        if(duplicateError) throw duplicateError;
+        duplicate=(existing||[]).find(q=>String(q.question||"").toLowerCase().replace(/\s+/g," ")===normalized);
+      }
       if(duplicate){sendJson(res,409,{ok:false,error:"A matching question already exists for this grade and subject."});return true;}
       const item={id:"iq-"+Date.now()+"-"+Math.random().toString(36).slice(2,8),grade,subject,strand,question,options,correctIndex,explanation,imageUrl,imageData,imageAlt,published:true,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};
+      if(supabaseConfigured){
+        const {error}=await supabase.from("interactive_questions").insert(interactiveQuestionToDb(item));
+        if(error) throw error;
+      }
       rows.unshift(item);
       await fs.writeFile(path.join(DATA_DIR,"interactive-questions.json"),JSON.stringify(rows.slice(0,5000),null,2));
       sendJson(res,201,{ok:true,question:item,message:"Question published."});
@@ -834,9 +878,17 @@ async function handleApi(req,res,url){
       const id=decodeURIComponent(url.pathname.slice("/api/admin/interactive-questions/".length));
       const rows=await readJsonStore("interactive-questions.json");
       const remaining=rows.filter(q=>q&&String(q.id)!==id);
-      if(remaining.length===rows.length){sendJson(res,404,{ok:false,error:"Question not found."});return true;}
+      const existedLocally=remaining.length!==rows.length;
+      let existedInDatabase=false;
+      if(supabaseConfigured){
+        const {data:found,error:lookupError}=await supabase.from("interactive_questions").select("id").eq("id",id).maybeSingle();
+        if(lookupError) throw lookupError;
+        existedInDatabase=Boolean(found);
+      }
+      if(!existedLocally&&!existedInDatabase){sendJson(res,404,{ok:false,error:"Question not found."});return true;}
       await ensureDataDir();
       await fs.writeFile(path.join(DATA_DIR,"interactive-questions.json"),JSON.stringify(remaining,null,2));
+      if(supabaseConfigured){const {error}=await supabase.from("interactive_questions").delete().eq("id",id);if(error)throw error;}
       sendJson(res,200,{ok:true,message:"Question deleted."});
     }catch(error){console.error("Interactive question delete error:",error);sendJson(res,500,{ok:false,error:"Question could not be deleted."});}
     return true;
