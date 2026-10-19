@@ -726,6 +726,15 @@
     refreshStrandOptions();
   }
 
+  // Refresh the student subject selector after the published Admin Dashboard bank loads
+  // or changes, so newly uploaded subjects are selectable without a manual page reload.
+  if (window.CBENexusAdminQuestionsReady && typeof window.CBENexusAdminQuestionsReady.then === "function") {
+    window.CBENexusAdminQuestionsReady.then(() => refreshSubjectOptions());
+  }
+  window.addEventListener("cbe:interactive-questions-updated", () => {
+    Promise.resolve(window.CBENexusAdminQuestionsReady).then(() => refreshSubjectOptions());
+  });
+
   const CUSTOM_QUESTIONS_KEY = "cbeNexusCustomQuestions";
 
   function readCustomQuestions() {
