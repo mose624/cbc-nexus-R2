@@ -1377,8 +1377,22 @@
     renderProgress();
     renderLearningGaps();
     if (attempt.mode === "assessment") {
-      try { downloadAssessmentReport(attempt); }
-      catch (error) { status.textContent += " The PDF could not download automatically. Please try submitting again or contact support."; }
+      const reportButton = document.createElement("button");
+      reportButton.type = "button";
+      reportButton.className = "primary-button";
+      reportButton.id = "generateAssessmentReportButton";
+      reportButton.textContent = "Generate Assessment Report (PDF)";
+      reportButton.style.cssText = "display:inline-flex;align-items:center;justify-content:center;margin:16px 0;padding:14px 22px;font-weight:800;font-size:1rem;background:#facc15;color:#111827;border:2px solid #ca8a04;border-radius:10px;cursor:pointer";
+      reportButton.setAttribute("aria-label", "Generate and download the assessment report PDF");
+      reportButton.addEventListener("click", () => {
+        try {
+          downloadAssessmentReport(attempt);
+          status.textContent = "Your assessment report PDF has been generated. Check your downloads.";
+        } catch (error) {
+          status.textContent = "The PDF could not be generated. Please try again.";
+        }
+      });
+      resultBox.appendChild(reportButton);
     }
     if (typeof showToast === "function") showToast("Quiz marked. Learning gaps identified and remediation updated.");
   }
