@@ -1237,11 +1237,16 @@
     };
     // Single-page, compact report with table directly below the branded header.
     rect(0,0,612,842,"0.99 0.88 0.22");
-    rect(24,24,564,794,"1 1 0.82");
-    rect(24,742,564,76,"0.93 0.72 0.06");
-    text(42,786,"CBE NEXUS",20,true);
-    text(42,766,"CONNECTING LEARNERS TO EXCELLENCE",9,true);
-    text(42,722,"ASSESSMENT SUMMARY REPORT",13,true);
+    rect(18,18,576,806,"1 1 0.88");
+    // Professional red ribbon accents with gold CBE Nexus branding.
+    rect(18,800,576,24,"0.68 0.08 0.12");
+    rect(18,742,576,58,"0.93 0.72 0.06");
+    rect(18,736,576,3,"0.68 0.08 0.12");
+    rect(18,34,576,4,"0.68 0.08 0.12");
+    rect(18,18,576,12,"0.68 0.08 0.12");
+    text(42,778,"CBE NEXUS",20,true);
+    text(42,758,"CONNECTING LEARNERS TO EXCELLENCE",9,true);
+    text(42,716,"ASSESSMENT SUMMARY REPORT",13,true);
     const tableX=36, tableTop=704, colWidths=[88,190,92,170], rowH=27;
     let y=tableTop;
     rows.forEach((row,ri)=>{
