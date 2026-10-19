@@ -1089,18 +1089,20 @@
       submitButton.disabled = true;
       return;
     }
-    const requested = 50;
-    if (selectedBank.length < requested) {
-      status.textContent = "This quiz requires exactly 50 questions. Only " + selectedBank.length +
-        " matching questions are currently available for " + grade.value + " — " + subject.value +
+    // Never hide a valid published question bank merely because it contains
+    // fewer than 50 questions. Use up to 50 questions, or all available questions
+    // when the teacher has published a smaller set.
+    const requested = Math.min(50, selectedBank.length);
+    if (requested < 1) {
+      status.textContent = "No published questions are available for " + grade.value + " — " + subject.value +
         (strand && strand.value !== "All Topics" ? " — " + strand.value : "") +
-        ". Please add more published questions or select All Topics. A shorter quiz will not start.";
+        ". Please choose another subject or ask your teacher to publish questions.";
       questionsBox.innerHTML = "";
       submitButton.disabled = true;
       active = [];
       return;
     }
-    length.value = "50";
+    length.value = String(requested);
     active = shuffle(selectedBank).slice(0, requested);
     startedAt = Date.now();
     submitted = false;
