@@ -1198,7 +1198,7 @@
     if (score >= 30) return "AE";
     return "BE";
   }
-  function buildAssessmentPdf(attempt) {
+  async function buildAssessmentPdf(attempt) {
     const standard = getPerformanceStandard(attempt.score);
     const sameLearnerAssessments = readProgress().filter(a =>
       a.mode === "assessment" &&
@@ -1247,6 +1247,24 @@
     text(42,778,"CBE NEXUS",20,true);
     text(42,758,"CONNECTING LEARNERS TO EXCELLENCE",9,true);
     text(42,716,"ASSESSMENT SUMMARY REPORT",13,true);
+    // Load the official site logo and embed it in the PDF header when available.
+    let logoBinary = "";
+    try {
+      const logoResponse = await fetch("/CBC%20Nexus%20Education%20Emblem.png", { cache: "force-cache" });
+      if (logoResponse.ok) {
+        const logoBlob = await logoResponse.blob();
+        const bitmap = await createImageBitmap(logoBlob);
+        const canvas = document.createElement("canvas");
+        canvas.width = bitmap.width; canvas.height = bitmap.height;
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(bitmap, 0, 0);
+        const data = atob(canvas.toDataURL("image/jpeg", 0.92).split(",")[1]);
+        for (let i = 0; i < data.length; i++) logoBinary += data.charAt(i);
+        bitmap.close();
+        ops.push("q\\n112 0 0 58 458 744 cm\\n/Logo Do\\nQ\\n");
+      }
+    } catch (logoError) { /* Keep the report usable if the logo asset cannot be fetched. */ }
     const tableX=36, tableTop=704, colWidths=[88,190,92,170], rowH=27;
     let y=tableTop;
     rows.forEach((row,ri)=>{
@@ -1292,7 +1310,7 @@
     objects[1]="<< /Type /Catalog /Pages 2 0 R >>";
     objects[2]="<< /Type /Pages /Kids [4 0 R] /Count 1 >>";
     objects[3]="<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>";
-    objects[4]="<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 842] /Resources << /Font << /F1 3 0 R /F2 5 0 R >> >> /Contents 6 0 R >>";
+    objects[4]="<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 842] /Resources << /Font << /F1 3 0 R /F2 5 0 R >> /XObject << /Logo 7 0 R >> >> /Contents 6 0 R >>";
     objects[5]="<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>";
     objects[6]="<< /Length "+stream.length+" >>\nstream\n"+stream+"\nendstream";
     let pdf="%PDF-1.4\n"; const offsets=[0];
@@ -1301,10 +1319,12 @@
     pdf+="xref\n0 "+objects.length+"\n0000000000 65535 f \n";
     for(let i=1;i<objects.length;i++) pdf+=String(offsets[i]).padStart(10,"0")+" 00000 n \n";
     pdf+="trailer\n<< /Size "+objects.length+" /Root 1 0 R >>\nstartxref\n"+xref+"\n%%EOF";
-    return new Blob([pdf],{type:"application/pdf"});
+    const bytes = new Uint8Array(pdf.length); for (let i = 0; i < pdf.length; i++) bytes[i] = pdf.charCodeAt(i) & 255;
+    return new Blob([bytes],{type:"application/pdf"});
   }
-  function downloadAssessmentReport(attempt) {
-    const url = URL.createObjectURL(buildAssessmentPdf(attempt));
+  async function downloadAssessmentReport(attempt) {
+    const pdfBlob = await buildAssessmentPdf(attempt);
+    const url = URL.createObjectURL(pdfBlob);
     const filename = ("CBE-Nexus-" + attempt.learner + "-" + attempt.subject + "-Assessment-Report.pdf").replace(/[^a-z0-9.-]+/gi, "-").replace(/-+/g, "-");
     const link = document.createElement("a");
     link.href = url; link.download = filename; link.textContent = "Download assessment report PDF";
