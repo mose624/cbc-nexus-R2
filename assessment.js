@@ -780,12 +780,21 @@
       item.imageAlt || "Question diagram"
     ]);
 
-    // Published admin questions are the source of truth whenever that grade/subject
-    // has published items. Built-in and browser-local questions are fallback-only.
+    // Uploaded/published Admin Dashboard questions must never be silently replaced
+    // with built-in or browser-local sample questions. Once a grade has a published
+    // admin bank, use only the exact matching subject bank for that grade.
+    const gradeHasPublishedAdminQuestions = adminQuestions.some((item) =>
+      item && item.published !== false &&
+      gradeNumber(item.grade) === gradeNumber(selectedGrade) &&
+      String(item.question || "").trim() &&
+      Array.isArray(item.options) && item.options.length >= 4
+    );
     let combined;
     const usingPublishedBank = publishedBank.length > 0;
     if (usingPublishedBank) {
       combined = publishedBank;
+    } else if (gradeHasPublishedAdminQuestions) {
+      combined = [];
     } else {
       const customBank = readCustomQuestions()
         .filter((item) =>
