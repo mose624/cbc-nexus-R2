@@ -1231,9 +1231,9 @@
     ];
     const esc = value => pdfSafe(value).replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
     const ops = [];
-    const rect = (x,y,w,h,color) => ops.push("q\\n" + color + " rg\\n" + x + " " + y + " " + w + " " + h + " re f\\nQ\\n");
+    const rect = (x,y,w,h,color) => ops.push("q\n" + color + " rg\n" + x + " " + y + " " + w + " " + h + " re f\nQ\n");
     const text = (x,y,value,size=9,bold=false,color="0.12 0.16 0.20") => {
-      ops.push("BT\\n" + (bold ? "/F2 " : "/F1 ") + size + " Tf\\n" + color + " rg\\n1 0 0 1 " + x + " " + y + " Tm\\n(" + esc(value) + ") Tj\\nET\\n");
+      ops.push("BT\n" + (bold ? "/F2 " : "/F1 ") + size + " Tf\n" + color + " rg\n1 0 0 1 " + x + " " + y + " Tm\n(" + esc(value) + ") Tj\nET\n");
     };
     // Single-page, compact report with table directly below the branded header.
     rect(0,0,612,842,"0.99 0.88 0.22");
@@ -1254,7 +1254,7 @@
       row.forEach((cell,ci)=>{
         const w=colWidths[ci];
         rect(x,y-rowH,w,rowH,ci%2===0 ? "0.96 0.91 0.61" : "1 1 0.91");
-        ops.push("q\\n0.62 0.55 0.25 RG\\n0.6 w\\n"+x+" "+(y-rowH)+" "+w+" "+rowH+" re S\\nQ\\n");
+        ops.push("q\n0.62 0.55 0.25 RG\n0.6 w\n"+x+" "+(y-rowH)+" "+w+" "+rowH+" re S\nQ\n");
         const val=String(cell==null?"-":cell);
         const max=Math.max(8,Math.floor((w-10)/5.1));
         text(x+5,y-16,val.length>max?val.slice(0,max-1)+"…":val,7.5,ci%2===0);
@@ -1294,13 +1294,13 @@
     objects[3]="<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>";
     objects[4]="<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 842] /Resources << /Font << /F1 3 0 R /F2 5 0 R >> >> /Contents 6 0 R >>";
     objects[5]="<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>";
-    objects[6]="<< /Length "+stream.length+" >>\\nstream\\n"+stream+"\\nendstream";
-    let pdf="%PDF-1.4\\n"; const offsets=[0];
-    for(let i=1;i<objects.length;i++){offsets[i]=pdf.length;pdf+=i+" 0 obj\\n"+objects[i]+"\\nendobj\\n";}
+    objects[6]="<< /Length "+stream.length+" >>\nstream\n"+stream+"\nendstream";
+    let pdf="%PDF-1.4\n"; const offsets=[0];
+    for(let i=1;i<objects.length;i++){offsets[i]=pdf.length;pdf+=i+" 0 obj\n"+objects[i]+"\nendobj\n";}
     const xref=pdf.length;
-    pdf+="xref\\n0 "+objects.length+"\\n0000000000 65535 f \\n";
-    for(let i=1;i<objects.length;i++) pdf+=String(offsets[i]).padStart(10,"0")+" 00000 n \\n";
-    pdf+="trailer\\n<< /Size "+objects.length+" /Root 1 0 R >>\\nstartxref\\n"+xref+"\\n%%EOF";
+    pdf+="xref\n0 "+objects.length+"\n0000000000 65535 f \n";
+    for(let i=1;i<objects.length;i++) pdf+=String(offsets[i]).padStart(10,"0")+" 00000 n \n";
+    pdf+="trailer\n<< /Size "+objects.length+" /Root 1 0 R >>\nstartxref\n"+xref+"\n%%EOF";
     return new Blob([pdf],{type:"application/pdf"});
   }
   function downloadAssessmentReport(attempt) {
