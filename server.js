@@ -862,10 +862,24 @@ async function handleApi(req,res,url){
       }
       if(duplicate){sendJson(res,409,{ok:false,error:"A matching question already exists for this grade and subject."});return true;}
       const item={id:"iq-"+Date.now()+"-"+Math.random().toString(36).slice(2,8),grade,subject,strand,question,options,correctIndex,explanation,imageUrl,imageData,imageAlt,published:true,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};
-      if(supabaseConfigured){
-        const {error}=await supabase.from("interactive_questions").insert(interactiveQuestionToDb(item));
-        if(error) throw error;
+      if(!supabaseConfigured){
+        throw new Error("Persistent question storage is not configured; question was not published.");
       }
+      const {error:saveError}=await supabase.from("interactive_questions").insert(interactiveQuestionToDb(item));
+      if(saveError) throw saveError;
+
+      // Verify the saved row can be read back from the same persistent source
+      // used by the learner-facing /api/interactive-questions endpoint.
+      const {data:savedQuestion,error:verifyError}=await supabase
+        .from("interactive_questions")
+        .select("id,published,grade,subject")
+        .eq("id",item.id)
+        .maybeSingle();
+      if(verifyError) throw verifyError;
+      if(!savedQuestion || savedQuestion.published!==true || savedQuestion.grade!==grade || savedQuestion.subject!==subject){
+        throw new Error("Question was saved but could not be verified in the learner question bank.");
+      }
+
       rows.unshift(item);
       await fs.writeFile(path.join(DATA_DIR,"interactive-questions.json"),JSON.stringify(rows.slice(0,5000),null,2));
       sendJson(res,201,{ok:true,question:item,message:"Question published."});
