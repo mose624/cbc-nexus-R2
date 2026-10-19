@@ -1194,6 +1194,28 @@
   }
   function buildAssessmentPdf(attempt) {
     const standard = getPerformanceStandard(attempt.score);
+    // Build a cumulative subject summary from the latest assessment per subject
+    // for this learner and grade, so 2–7 completed subjects share one average.
+    const sameLearnerAssessments = readProgress().filter(a =>
+      a.mode === "assessment" &&
+      String(a.learner || "").trim().toLowerCase() === String(attempt.learner || "").trim().toLowerCase() &&
+      a.grade === attempt.grade
+    );
+    const latestBySubject = {};
+    sameLearnerAssessments.forEach(a => {
+      const key = a.subject || "Unspecified subject";
+      if (!latestBySubject[key] || new Date(a.createdAt).getTime() > new Date(latestBySubject[key].createdAt).getTime()) {
+        latestBySubject[key] = a;
+      }
+    });
+    const subjectSummary = Object.keys(latestBySubject).sort().map(subjectName => ({
+      subject: subjectName,
+      score: Number(latestBySubject[subjectName].score || 0)
+    }));
+    const overallAverage = subjectSummary.length
+      ? Math.round(subjectSummary.reduce((sum, item) => sum + item.score, 0) / subjectSummary.length)
+      : Number(attempt.score || 0);
+    const overallStandard = getPerformanceStandard(overallAverage);
     const lines = [
       "CBE NEXUS - ASSESSMENT REPORT",
       "CONNECTING LEARNERS TO EXCELLENCE",
@@ -1205,7 +1227,14 @@
       "Score: " + attempt.score + "% (" + attempt.correct + "/" + attempt.total + " correct)",
       "Performance Standard: " + standard,
       "Answered: " + attempt.answered + "/" + attempt.total + "    Time: " + Math.floor(attempt.durationSeconds / 60) + "m " + (attempt.durationSeconds % 60) + "s",
-      "Overall feedback: " + attempt.remark, "", "QUESTION-BY-QUESTION REVIEW"
+      "Overall feedback: " + attempt.remark,
+      "", "MULTI-SUBJECT SUMMARY REPORT",
+      "Subjects assessed: " + subjectSummary.length,
+      "Average across subjects: " + overallAverage + "%",
+      "Overall performance standard: " + overallStandard,
+      ...subjectSummary.map(item => item.subject + ": " + item.score + "% (" + getPerformanceStandard(item.score) + ")"),
+      subjectSummary.length < 2 ? "Complete another subject assessment to build a multi-subject average." : "Average calculated from the latest assessment score in each subject for this learner and grade.",
+      "", "QUESTION-BY-QUESTION REVIEW"
     ];
     attempt.results.forEach((r, i) => {
       const options = active[i] && active[i][1] ? active[i][1] : [];
