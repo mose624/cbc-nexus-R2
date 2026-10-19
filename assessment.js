@@ -1200,8 +1200,6 @@
   }
   function buildAssessmentPdf(attempt) {
     const standard = getPerformanceStandard(attempt.score);
-    // Build a cumulative subject summary from the latest assessment per subject
-    // for this learner and grade, so 2–7 completed subjects share one average.
     const sameLearnerAssessments = readProgress().filter(a =>
       a.mode === "assessment" &&
       String(a.learner || "").trim().toLowerCase() === String(attempt.learner || "").trim().toLowerCase() &&
@@ -1210,9 +1208,7 @@
     const latestBySubject = {};
     sameLearnerAssessments.forEach(a => {
       const key = a.subject || "Unspecified subject";
-      if (!latestBySubject[key] || new Date(a.createdAt).getTime() > new Date(latestBySubject[key].createdAt).getTime()) {
-        latestBySubject[key] = a;
-      }
+      if (!latestBySubject[key] || new Date(a.createdAt).getTime() > new Date(latestBySubject[key].createdAt).getTime()) latestBySubject[key] = a;
     });
     const subjectSummary = Object.keys(latestBySubject).sort().map(subjectName => ({
       subject: subjectName,
@@ -1222,70 +1218,85 @@
       ? Math.round(subjectSummary.reduce((sum, item) => sum + item.score, 0) / subjectSummary.length)
       : Number(attempt.score || 0);
     const overallStandard = getPerformanceStandard(overallAverage);
-    const lines = [
-      "CBE NEXUS - ASSESSMENT REPORT",
-      "CONNECTING LEARNERS TO EXCELLENCE",
-      "Learner: " + attempt.learner,
-      "Grade: " + attempt.grade + "    Subject: " + attempt.subject,
-      "Mode: " + attempt.mode + "    Topic: " + attempt.strand,
-      "Sub-strand: " + attempt.subStrand + "    Outcome: " + attempt.learningOutcome,
-      "Date: " + new Date(attempt.createdAt).toLocaleString(),
-      "Score: " + attempt.score + "% (" + attempt.correct + "/" + attempt.total + " correct)",
-      "Performance Standard: " + standard,
-      "Answered: " + attempt.answered + "/" + attempt.total + "    Time: " + Math.floor(attempt.durationSeconds / 60) + "m " + (attempt.durationSeconds % 60) + "s",
-      "Overall feedback: " + attempt.remark,
-      "", "MULTI-SUBJECT SUMMARY REPORT",
-      "Subjects assessed: " + subjectSummary.length,
-      "Average across subjects: " + overallAverage + "%",
-      "Overall performance standard: " + overallStandard,
-      ...subjectSummary.map(item => item.subject + ": " + item.score + "% (" + getPerformanceStandard(item.score) + ")"),
-      subjectSummary.length < 2 ? "Complete another subject assessment to build a multi-subject average." : "Average calculated from the latest assessment score in each subject for this learner and grade.",
-      "", "QUESTION-BY-QUESTION REVIEW"
+    const dateText = new Date(attempt.createdAt).toLocaleString();
+    const durationText = Math.floor(attempt.durationSeconds / 60) + "m " + (attempt.durationSeconds % 60) + "s";
+    const feedback = attempt.remark || "Assessment completed";
+    const rows = [
+      ["Learner", attempt.learner || "-", "Grade", attempt.grade || "-"],
+      ["Subject", attempt.subject || "-", "Mode", "Assessment"],
+      ["Topic", attempt.strand || "All Topics", "Sub-strand", attempt.subStrand || "All Sub-Strands"],
+      ["Learning outcome", attempt.learningOutcome || "All Outcomes", "Date", dateText],
+      ["Score", attempt.score + "% (" + attempt.correct + "/" + attempt.total + ")", "Performance level", standard],
+      ["Answered", attempt.answered + "/" + attempt.total, "Time taken", durationText]
     ];
-    attempt.results.forEach((r, i) => {
-      const options = active[i] && active[i][1] ? active[i][1] : [];
-      const selected = r.selected == null ? "Not answered" : String.fromCharCode(65 + r.selected) + ". " + (options[r.selected] || "");
-      const correct = String.fromCharCode(65 + r.correctAnswer) + ". " + (options[r.correctAnswer] || "");
-      lines.push("");
-      wrapPdfText((i + 1) + ". " + r.question, 92).forEach(x => lines.push(x));
-      wrapPdfText("Your answer: " + selected, 92).forEach(x => lines.push(x));
-      wrapPdfText("Correct answer: " + correct + " [" + (r.isCorrect ? "CORRECT" : "REVIEW") + "]", 92).forEach(x => lines.push(x));
-      if (r.topic) wrapPdfText("Topic: " + r.topic, 92).forEach(x => lines.push(x));
-      if (r.explanation) wrapPdfText("Explanation: " + r.explanation, 92).forEach(x => lines.push(x));
-    });
-    lines.push("", "CBE NEXUS | CONNECTING LEARNERS TO EXCELLENCE");
-    const pages = [];
-    for (let i = 0; i < lines.length; i += 46) pages.push(lines.slice(i, i + 46));
-    const objects = [];
-    const pageIds = pages.map((_, i) => 4 + i * 2);
-    objects[1] = "<< /Type /Catalog /Pages 2 0 R >>";
-    objects[2] = "<< /Type /Pages /Kids [" + pageIds.map(id => id + " 0 R").join(" ") + "] /Count " + pages.length + " >>";
-    objects[3] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>";
-    pages.forEach((pageLines, pageIndex) => {
-      const pageId = pageIds[pageIndex], streamId = pageId + 1;
-      let stream = "q\n0.98 0.88 0.25 rg\n0 0 612 842 re f\nQ\n";
-      stream += "q\n1 1 0.78 rg\n28 28 556 786 re f\nQ\n";
-      stream += "q\n0.92 0.72 0.08 rg\n28 760 556 54 re f\nQ\n";
-      stream += "BT\n/F1 18 Tf\n45 788 Td\n(CBE NEXUS) Tj\n/F1 9 Tf\n0 -15 Td\n(CONNECTING LEARNERS TO EXCELLENCE) Tj\n/F1 9 Tf\n0 -28 Td\n";
-      pageLines.forEach((line, lineIndex) => {
-        const safe = pdfSafe(line).replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
-        if (lineIndex) stream += "0 -15 Td\n";
-        stream += "(" + safe + ") Tj\n";
+    const esc = value => pdfSafe(value).replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
+    const ops = [];
+    const rect = (x,y,w,h,color) => ops.push("q\\n" + color + " rg\\n" + x + " " + y + " " + w + " " + h + " re f\\nQ\\n");
+    const text = (x,y,value,size=9,bold=false,color="0.12 0.16 0.20") => {
+      ops.push("BT\\n" + (bold ? "/F2 " : "/F1 ") + size + " Tf\\n" + color + " rg\\n1 0 0 1 " + x + " " + y + " Tm\\n(" + esc(value) + ") Tj\\nET\\n");
+    };
+    // Single-page, compact report with table directly below the branded header.
+    rect(0,0,612,842,"0.99 0.88 0.22");
+    rect(24,24,564,794,"1 1 0.82");
+    rect(24,742,564,76,"0.93 0.72 0.06");
+    text(42,786,"CBE NEXUS",20,true);
+    text(42,766,"CONNECTING LEARNERS TO EXCELLENCE",9,true);
+    text(42,722,"ASSESSMENT SUMMARY REPORT",13,true);
+    const tableX=36, tableTop=704, colWidths=[88,190,92,170], rowH=27;
+    let y=tableTop;
+    rows.forEach((row,ri)=>{
+      let x=tableX;
+      row.forEach((cell,ci)=>{
+        const w=colWidths[ci];
+        rect(x,y-rowH,w,rowH,ci%2===0 ? "0.96 0.91 0.61" : "1 1 0.91");
+        ops.push("q\\n0.62 0.55 0.25 RG\\n0.6 w\\n"+x+" "+(y-rowH)+" "+w+" "+rowH+" re S\\nQ\\n");
+        const val=String(cell==null?"-":cell);
+        const max=Math.max(8,Math.floor((w-10)/5.1));
+        text(x+5,y-16,val.length>max?val.slice(0,max-1)+"…":val,7.5,ci%2===0);
+        x+=w;
       });
-      stream += "ET\n";
-      stream += "q\n0.92 0.72 0.08 rg\n28 28 556 24 re f\nQ\n";
-      stream += "BT\n/F1 8 Tf\n45 37 Td\n(CBE NEXUS | CONNECTING LEARNERS TO EXCELLENCE) Tj\nET";
-      objects[pageId] = "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 842] /Resources << /Font << /F1 3 0 R >> >> /Contents " + streamId + " 0 R >>";
-      objects[streamId] = "<< /Length " + stream.length + " >>\nstream\n" + stream + "\nendstream";
+      y-=rowH;
     });
-    let pdf = "%PDF-1.4\n";
-    const offsets = [0];
-    for (let i = 1; i < objects.length; i++) { offsets[i] = pdf.length; pdf += i + " 0 obj\n" + objects[i] + "\nendobj\n"; }
-    const xref = pdf.length;
-    pdf += "xref\n0 " + objects.length + "\n0000000000 65535 f \n";
-    for (let i = 1; i < objects.length; i++) pdf += String(offsets[i]).padStart(10, "0") + " 00000 n \n";
-    pdf += "trailer\n<< /Size " + objects.length + " /Root 1 0 R >>\nstartxref\n" + xref + "\n%%EOF";
-    return new Blob([pdf], { type: "application/pdf" });
+    y-=24;
+    text(42,y,"PERFORMANCE SUMMARY",11,true); y-=20;
+    text(42,y,"Overall feedback: " + feedback,9,true); y-=18;
+    const feedbackLine = Number(attempt.score) >= 75
+      ? "Strong achievement. Continue applying learning in practical contexts."
+      : Number(attempt.score) >= 50
+        ? "Developing understanding. Review the key areas identified by the assessment."
+        : "Further support and focused practice are recommended before the next assessment.";
+    text(42,y,feedbackLine,8); y-=23;
+    text(42,y,"MULTI-SUBJECT OVERVIEW",10,true); y-=18;
+    text(42,y,"Subjects assessed: " + subjectSummary.length + "     Average: " + overallAverage + "%     Overall level: " + overallStandard,8,true); y-=16;
+    const subjectLine = subjectSummary.length
+      ? subjectSummary.map(item=>item.subject + " " + item.score + "% (" + getPerformanceStandard(item.score) + ")").join("  |  ")
+      : (attempt.subject + " " + attempt.score + "% (" + standard + ")");
+    wrapPdfText(subjectLine,100).slice(0,2).forEach(line=>{text(42,y,line,7.5); y-=12;});
+    y-=10;
+    text(42,y,"STRAND / LEARNING FOCUS",9,true); y-=16;
+    text(42,y,"Topic: " + (attempt.strand || "All Topics") + " | Sub-strand: " + (attempt.subStrand || "All Sub-Strands"),7.5); y-=14;
+    text(42,y,"Outcome: " + (attempt.learningOutcome || "All Outcomes"),7.5); y-=24;
+    text(42,y,"Teacher comment: " + (Number(attempt.score) < 30 ? "Provide guided revision and additional practice." : Number(attempt.score) < 50 ? "Reinforce core concepts and monitor progress." : "Encourage continued application and extension tasks."),8);
+    // Sign-off always appears at the bottom of this one-page report.
+    rect(36,48,540,2,"0.93 0.72 0.06");
+    text(42,80,"CEO: CBENEXUS.CO.KE",9,true);
+    text(42,64,"Name: MR MOSE ISAAC",9,true);
+    text(350,64,"CONNECTING LEARNERS TO EXCELLENCE",7,true);
+    const stream=ops.join("");
+    const objects=[];
+    objects[1]="<< /Type /Catalog /Pages 2 0 R >>";
+    objects[2]="<< /Type /Pages /Kids [4 0 R] /Count 1 >>";
+    objects[3]="<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>";
+    objects[4]="<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 842] /Resources << /Font << /F1 3 0 R /F2 5 0 R >> >> /Contents 6 0 R >>";
+    objects[5]="<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>";
+    objects[6]="<< /Length "+stream.length+" >>\\nstream\\n"+stream+"\\nendstream";
+    let pdf="%PDF-1.4\\n"; const offsets=[0];
+    for(let i=1;i<objects.length;i++){offsets[i]=pdf.length;pdf+=i+" 0 obj\\n"+objects[i]+"\\nendobj\\n";}
+    const xref=pdf.length;
+    pdf+="xref\\n0 "+objects.length+"\\n0000000000 65535 f \\n";
+    for(let i=1;i<objects.length;i++) pdf+=String(offsets[i]).padStart(10,"0")+" 00000 n \\n";
+    pdf+="trailer\\n<< /Size "+objects.length+" /Root 1 0 R >>\\nstartxref\\n"+xref+"\\n%%EOF";
+    return new Blob([pdf],{type:"application/pdf"});
   }
   function downloadAssessmentReport(attempt) {
     const url = URL.createObjectURL(buildAssessmentPdf(attempt));
