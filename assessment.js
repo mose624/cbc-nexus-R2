@@ -1437,7 +1437,7 @@
 
     // Put the download control in the results immediately, before optional progress
     // widgets run, so a progress-rendering error cannot hide the marked assessment.
-    if (attempt.mode === "assessment") {
+    {
       const reportButton = document.createElement("button");
       reportButton.type = "button";
       reportButton.className = "primary-button";
@@ -1454,7 +1454,9 @@
           status.textContent = "The marked assessment PDF could not be generated. Please try again.";
         }
       });
-      resultBox.appendChild(reportButton);
+      const resultHeading = resultBox.querySelector("h3");
+      if (resultHeading) resultBox.insertBefore(reportButton, resultHeading);
+      else resultBox.appendChild(reportButton);
     }
     try { renderProgress(); } catch (error) { console.error("Learner progress display failed:", error); }
     try { renderLearningGaps(); } catch (error) { console.error("Learning gaps display failed:", error); }
