@@ -1589,6 +1589,7 @@
     }
     try { renderProgress(); } catch (error) { console.error("Learner progress display failed:", error); }
     try { renderLearningGaps(); } catch (error) { console.error("Learning gaps display failed:", error); }
+    try { renderTeacherAnalytics(); } catch (error) { console.error("Teacher analytics refresh failed:", error); }
     if (typeof showToast === "function") showToast("Quiz marked. Learning gaps identified and remediation updated.");
   }
 
@@ -1620,6 +1621,8 @@
     if (!window.confirm("Clear all quiz progress stored in this browser?")) return;
     localStorage.removeItem(QUIZ_KEY);
     renderProgress();
+    renderLearningGaps();
+    renderTeacherAnalytics();
     status.textContent = "Quiz progress cleared.";
   });
 
