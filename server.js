@@ -132,6 +132,7 @@ async function ensureDataDir(){await fs.mkdir(DATA_DIR,{recursive:true});}
 async function readJsonStore(f){await ensureDataDir();try{return JSON.parse(await fs.readFile(path.join(DATA_DIR,f),"utf8"));}catch{return [];}}
 let interactiveQuestionMigrationPromise=null;
 let interactiveQuestionLastKnownGood=null;
+let publishedResourcesLastKnownGood=new Map();
 function interactiveQuestionToDb(q){
   return {id:String(q.id),grade:String(q.grade||""),subject:String(q.subject||""),strand:String(q.strand||"All Topics"),question:String(q.question||""),options:Array.isArray(q.options)?q.options:[],correct_index:Number(q.correctIndex),explanation:String(q.explanation||""),image_url:String(q.imageUrl||""),image_data:String(q.imageData||""),image_alt:String(q.imageAlt||q.question||""),published:q.published!==false,created_at:q.createdAt||new Date().toISOString(),updated_at:q.updatedAt||q.createdAt||new Date().toISOString()};
 }
@@ -1492,7 +1493,45 @@ async function handleApi(req,res,url){
     await fs.writeFile(path.join(DATA_DIR,"resources.json"),JSON.stringify(items.filter(x=>String(x.id)!==id),null,2));
     sendJson(res,200,{ok:true,deletedId:id,storage:"local"});return true;
   }
-  if(req.method==="GET"&&url.pathname==="/api/resources"){const requestedInternational=String(url.searchParams.get("_internationalLibrary")||"").trim();const internationalCurricula=["IGCSE","Cambridge International","IB","O Level","A Level","Pearson"];if(requestedInternational&&!internationalCurricula.includes(requestedInternational)){sendJson(res,400,{ok:false,error:"Unsupported international curriculum."});return true;}if(supabaseConfigured){try{let query=supabase.from("resources").select("*").eq("status","approved").order("created_at",{ascending:false});if(requestedInternational)query=query.eq("grade",requestedInternational);else query=query.not("grade","in","(IGCSE,IB,O Level,A Level,Pearson)");const {data,error}=await query;if(error)throw error;sendJson(res,200,{ok:true,resources:(data||[]).map(resourcePayloadFromRow),storage:"supabase",curriculum:requestedInternational||"CBC/CBE"});return true;}catch(error){console.error("Supabase resource lookup error:",error);sendJson(res,500,{ok:false,error:"Resources could not be loaded from Supabase."});return true;}}let local=await readJsonStore("resources.json");if(requestedInternational)local=local.filter(r=>String(r.grade||"").trim()===requestedInternational);else local=local.filter(r=>!internationalCurricula.includes(String(r.grade||"").trim()));sendJson(res,200,{ok:true,resources:local,curriculum:requestedInternational||"CBC/CBE",storage:"local"});return true;}
+  if(req.method==="GET"&&url.pathname==="/api/resources"){
+    const requestedInternational=String(url.searchParams.get("_internationalLibrary")||"").trim();
+    const internationalCurricula=["IGCSE","Cambridge International","IB","O Level","A Level","Pearson"];
+    if(requestedInternational&&!internationalCurricula.includes(requestedInternational)){sendJson(res,400,{ok:false,error:"Unsupported international curriculum."});return true;}
+    const curriculum=requestedInternational||"CBC/CBE";
+    if(supabaseConfigured){
+      let lastError=null;
+      for(let attempt=0;attempt<3;attempt++){
+        try{
+          let query=supabase.from("resources").select("*").eq("status","approved").order("created_at",{ascending:false});
+          if(requestedInternational)query=query.eq("grade",requestedInternational);
+          else query=query.not("grade","in","(IGCSE,IB,O Level,A Level,Pearson)");
+          const {data,error}=await query;
+          if(error)throw error;
+          const resources=(data||[]).map(resourcePayloadFromRow);
+          publishedResourcesLastKnownGood.set(curriculum,resources);
+          sendJson(res,200,{ok:true,resources,storage:"supabase",curriculum});
+          return true;
+        }catch(error){
+          lastError=error;
+          if(attempt<2)await new Promise(resolve=>setTimeout(resolve,250*(attempt+1)));
+        }
+      }
+      const cached=publishedResourcesLastKnownGood.get(curriculum);
+      if(Array.isArray(cached)){
+        console.warn("Supabase resource lookup temporarily unavailable; serving last successful published-resource snapshot.");
+        sendJson(res,200,{ok:true,resources:cached,storage:"memory-cache",curriculum,stale:true});
+        return true;
+      }
+      console.error("Supabase resource lookup failed after retries:",lastError?.message||lastError);
+      sendJson(res,500,{ok:false,error:"Resources could not be loaded from Supabase. Please retry shortly."});
+      return true;
+    }
+    let local=await readJsonStore("resources.json");
+    if(requestedInternational)local=local.filter(r=>String(r.grade||"").trim()===requestedInternational);
+    else local=local.filter(r=>!internationalCurricula.includes(String(r.grade||"").trim()));
+    sendJson(res,200,{ok:true,resources:local,curriculum,storage:"local"});
+    return true;
+  }
   if(req.method==="POST"&&url.pathname==="/api/resources"){const payload=JSON.parse((await readBody(req))||"{}"),isAdmin=verifyAdminSession(req),sellerUsername=String(payload.sellerUsername||"").trim().toLowerCase(),authenticatedSeller=verifySellerSession(req),isSeller=Boolean(authenticatedSeller);if((payload.role==="admin"&&!isAdmin)||(payload.role==="seller"&&!isSeller)){sendJson(res,401,{ok:false,error:"Authorized account required."});return true;}if(!["admin","seller"].includes(payload.role)){sendJson(res,400,{ok:false,error:"Resource role is required."});return true;}if(supabaseConfigured){try{let sellerId=null;if(payload.role==="seller"){const username=authenticatedSeller||sellerUsername,{data:seller,error:sellerError}=await supabase.from("sellers").select("id,status").eq("username",username).maybeSingle();if(sellerError)throw sellerError;if(!seller||String(seller.status||"").toLowerCase()!=="approved"){sendJson(res,403,{ok:false,error:"An approved seller account is required to upload resources."});return true;}sellerId=seller.id;}let previewKey=String(payload.previewKey||"").trim();if(!previewKey&&/\.pdf$/i.test(String(payload.fileName||""))&&payload.r2Key){try{const preview=await createPdfPreview(payload.r2Key,3);previewKey=preview.previewKey;}catch(error){console.error("PDF preview generation error:",error);}}const row=resourceRowFromPayload(payload,sellerId,previewKey);if(payload.role==="seller")row.status="pending";if(!row.title||!row.grade||!row.subject||!row.resource_type||!row.r2_key){sendJson(res,400,{ok:false,error:"Resource title, grade, subject, type and R2 file are required."});return true;}const {data,error}=await supabase.from("resources").insert(row).select("*").single();if(error)throw error;if(["approved","published","active","live","available"].includes(String(data.status||"").toLowerCase()))setImmediate(()=>sendResourceUpdateEmails(data).catch(e=>console.error("Resource update notification job failed:",e.message||e)));sendJson(res,201,{ok:true,saved:resourcePayloadFromRow(data),storage:"supabase"});return true;}catch(error){console.error("Supabase resource save error:",error);sendJson(res,500,{ok:false,error:"Resource could not be saved to Supabase."});return true;}}const safePayload={...payload,status:payload.role==="seller"?"pending":String(payload.status||"approved")};const saved=await appendJsonStore("resources.json",safePayload);sendJson(res,201,{ok:true,saved,storage:"local"});return true;}
   if(req.method==="POST"&&url.pathname==="/api/ai/certification-request"){
     const p=JSON.parse((await readBody(req))||"{}");
