@@ -930,9 +930,15 @@
   }
 
   function saveAttempt(attempt) {
-    const attempts = readProgress();
-    attempts.unshift(attempt);
-    localStorage.setItem(QUIZ_KEY, JSON.stringify(attempts.slice(0, 100)));
+    try {
+      const attempts = readProgress();
+      attempts.unshift(attempt);
+      localStorage.setItem(QUIZ_KEY, JSON.stringify(attempts.slice(0, 100)));
+      return true;
+    } catch (error) {
+      console.warn("Quiz attempt could not be saved in this browser:", error);
+      return false;
+    }
   }
 
   function shuffle(items) {
@@ -1402,15 +1408,24 @@
 
     submitted = true;
     clearInterval(timerId);
-    saveAttempt(attempt);
+    const savedLocally = saveAttempt(attempt);
+
+    status.textContent = (autoSubmit
+      ? "Time ended. " + attempt.learner + " scored " + score + "%."
+      : attempt.learner + " scored " + score + "%. " + attempt.remark + ".") +
+      (savedLocally ? " Attempt saved on this device." : " Warning: this browser could not save the attempt locally.");
 
     if (typeof postToBackend === "function" && typeof API_ENDPOINTS !== "undefined") {
-      postToBackend(API_ENDPOINTS.quizzes, attempt).catch(() => {});
+      postToBackend(API_ENDPOINTS.quizzes, attempt).then((response) => {
+        if (response && response.ok !== false) {
+          status.textContent += " Progress synced to CBE Nexus.";
+        } else {
+          status.textContent += " Server sync is unavailable; keep this browser data until sync is restored.";
+        }
+      }).catch(() => {
+        status.textContent += " Server sync is unavailable; keep this browser data until sync is restored.";
+      });
     }
-
-    status.textContent = autoSubmit
-      ? "Time ended. " + attempt.learner + " scored " + score + "%."
-      : attempt.learner + " scored " + score + "%. " + attempt.remark + ".";
 
     const missed = results.filter((r) => !r.isCorrect);
     let review = "";
