@@ -448,7 +448,7 @@
       for (const node of nodes) {
         if (node.tagName !== "IMG") {
           const text = String(node.textContent || "").trim();
-          const start = text.match(/^(?:Question\\s*)?(\\d{1,3})\\s*[.)\\]:]\\s*/i);
+          const start = text.match(/^(?:Question\s*)?(\d{1,3})\s*[.)\]:]\s*/i);
           if (start) {
             const numbered = Number(start[1]);
             const matchIndex = rows.findIndex(r => Number(r.rowNumber) === numbered + 1);
@@ -461,7 +461,7 @@
         if (targetIndex < 0 && nextFallbackIndex < rows.length) targetIndex = nextFallbackIndex++;
         if (targetIndex < 0 || !rows[targetIndex] || rows[targetIndex].imageData) continue;
         const dataUrl = node.getAttribute("src") || "";
-        if (!/^data:image\\/(?:png|jpeg|gif|webp|svg\\+xml);base64,/i.test(dataUrl)) continue;
+        if (!/^data:image\/(?:png|jpeg|gif|webp|svg\+xml);base64,/i.test(dataUrl)) continue;
         if (dataUrl.length > 1400000) {
           rows[targetIndex].errors.push("Embedded Word diagram is over 1 MB; upload a resized image separately");
           continue;
