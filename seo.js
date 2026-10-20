@@ -82,7 +82,7 @@ async function match(req){
   const gradeLinks=[{url:"/interactive-questions.html",label:"Start free interactive questions"},{url:"/quizzes.html",label:"Automated marked quizzes and learner progress"},...["PP1","PP2",...Array.from({length:12},(_,i)=>"Grade "+(i+1))].map(g=>({url:"/free-interactive-questions/"+slug(g),label:"Free interactive questions for "+g}))];
   return page(req,"Free Interactive Questions for All Grades | CBE Nexus","Practise free interactive questions online for all grades and subjects. CBC and CBE practice quizzes, instant feedback and curriculum-linked questions for Kenyan learners from PP1 and PP2 through Grade 12.","/free-interactive-questions","Free Interactive Questions for All Grades","Build confidence with free online interactive questions and practice quizzes for learners across grades and subjects. Choose a grade to explore practice, or open the Interactive Questions portal to begin.",gradeLinks);
  }
- const iqGrade=p.match(/^\\/free-interactive-questions\\/(pp1|pp2|grade-(?:[1-9]|1[0-2]))$/i);
+ const iqGrade=p.match(/^\/free-interactive-questions\/(pp1|pp2|grade-(?:[1-9]|1[0-2]))$/i);
  if(iqGrade){
   const raw=iqGrade[1].toUpperCase(), grade=/^PP/.test(raw)?raw:"Grade "+raw.replace(/^GRADE-/i,"");
   const label="Free Interactive Questions for "+grade;
