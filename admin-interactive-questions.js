@@ -352,6 +352,8 @@
     let sharedContext = "";
     let lastSection = "";
     let lastNumber = null;
+    let contextShown = false;
+    let sectionShown = false;
     const sectionPattern = /^\s*(?:SECTION\s+[A-Z0-9IVX]+|PART\s+[A-Z0-9IVX]+|READING\s+PASSAGE|PASSAGE|SOURCE\s+[A-Z0-9]+|COMPREHENSION|USE\s+THE\s+(?:PASSAGE|INFORMATION|GRAPH|DIAGRAM|TABLE|FIGURE)[\s\S]{0,100})\s*[:\-]?\s*$/i;
     for (let idx = 0; idx < candidates.length; idx++) {
       const item = candidates[idx];
@@ -363,6 +365,8 @@
         if (sectionLines.length) {
           lastSection = sectionLines.join(" ");
           sharedContext = "";
+          contextShown = false;
+          sectionShown = false;
         }
         const contextLines = lines.filter(line => !sectionPattern.test(line) &&
           !/^(?:Grade\s*:|Subject\s*:|Topic\s*:|Strand\s*:|Answer\s+Key\b|Answers?\s*:)/i.test(line) &&
@@ -373,6 +377,7 @@
           // or explanation into the next question.
           if (candidateContext.length <= 20000 && !/^(?:Correct answer|Explanation|Rationale|Solution)\s*:/i.test(candidateContext)) {
             sharedContext = candidateContext;
+            contextShown = false;
           }
         }
       }
@@ -399,8 +404,12 @@
         // Keep maths, units, signs and line breaks readable rather than flattening all whitespace.
         return block.slice(contentStart, contentEnd).trim().replace(/[ \t]+\n/g, "\n").replace(/\n{3,}/g, "\n\n");
       });
-      const sectionPrefix = lastSection ? lastSection + "\n" : "";
-      const contextPrefix = sharedContext && !stem.includes(sharedContext) ? sharedContext + "\n\n" : "";
+      // Display a shared passage/context and its section heading only once,
+      // on the first question that follows it. Do not copy it into every stem.
+      const sectionPrefix = lastSection && !sectionShown ? lastSection + "\n" : "";
+      const contextPrefix = sharedContext && !contextShown && !stem.includes(sharedContext) ? sharedContext + "\n\n" : "";
+      if (sectionPrefix) sectionShown = true;
+      if (contextPrefix) contextShown = true;
       stem = (sectionPrefix + contextPrefix + stem).trim();
       const row = {
         "Grade": (block.match(/Grade\s*(?:\/\s*)?[:\-]?\s*(1[0-2]|[1-9])\b/i) || [])[0] || $("iqAdminGrade").value,
