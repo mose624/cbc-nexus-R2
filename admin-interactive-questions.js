@@ -463,7 +463,7 @@
         const dataUrl = node.getAttribute("src") || "";
         if (!/^data:image\/(?:png|jpeg|gif|webp|svg\+xml);base64,/i.test(dataUrl)) continue;
         if (dataUrl.length > 1400000) {
-          rows[targetIndex].errors.push("Embedded Word diagram is over 1 MB; upload a resized image separately");
+          rows[targetIndex].imageWarning = "Embedded Word diagram is over 1 MB; upload a resized image separately";
           continue;
         }
         rows[targetIndex].imageData = dataUrl;
@@ -496,7 +496,7 @@
     const tbody=document.createElement("tbody");
     rows.slice(0,250).forEach(r=>{
       const tr=document.createElement("tr");
-      const vals=[r.rowNumber,r.errors.length?"Needs fixing":"Ready",r.grade,r.subject,r.question,r.correctIndex>=0?"ABCD"[r.correctIndex]:"",r.errors.join("; ")];
+      const vals=[r.rowNumber,r.errors.length?"Needs fixing":"Ready",r.grade,r.subject,r.question,r.correctIndex>=0?"ABCD"[r.correctIndex]:"",[...r.errors,r.imageWarning||""].filter(Boolean).join("; ")];
       vals.forEach((v,i)=>{const td=document.createElement("td");td.textContent=String(v||"");td.style.cssText="border:1px solid #d5e0e8;padding:7px;vertical-align:top;max-width:320px;overflow-wrap:anywhere";tr.appendChild(td);});
       tbody.appendChild(tr);
     });
