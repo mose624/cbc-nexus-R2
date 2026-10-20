@@ -131,6 +131,7 @@ const stores={"/api/projects":"projects.json","/api/tuition":"tuition-registrati
 async function ensureDataDir(){await fs.mkdir(DATA_DIR,{recursive:true});}
 async function readJsonStore(f){await ensureDataDir();try{return JSON.parse(await fs.readFile(path.join(DATA_DIR,f),"utf8"));}catch{return [];}}
 let interactiveQuestionMigrationPromise=null;
+let interactiveQuestionLastKnownGood=null;
 function interactiveQuestionToDb(q){
   return {id:String(q.id),grade:String(q.grade||""),subject:String(q.subject||""),strand:String(q.strand||"All Topics"),question:String(q.question||""),options:Array.isArray(q.options)?q.options:[],correct_index:Number(q.correctIndex),explanation:String(q.explanation||""),image_url:String(q.imageUrl||""),image_data:String(q.imageData||""),image_alt:String(q.imageAlt||q.question||""),published:q.published!==false,created_at:q.createdAt||new Date().toISOString(),updated_at:q.updatedAt||q.createdAt||new Date().toISOString()};
 }
@@ -140,29 +141,44 @@ function interactiveQuestionFromDb(q){
 async function readInteractiveQuestionRows(){
   const local=await readJsonStore("interactive-questions.json");
   if(!supabaseConfigured) return local.filter(Boolean);
-  try{
-    if(!interactiveQuestionMigrationPromise){
-      interactiveQuestionMigrationPromise=(async()=>{
-        if(local.length){
-          const legacy=local.filter(q=>q&&q.id&&q.question&&q.grade&&q.subject).map(interactiveQuestionToDb);
-          for(let i=0;i<legacy.length;i+=100){
-            const {error}=await supabase.from("interactive_questions").upsert(legacy.slice(i,i+100),{onConflict:"id",ignoreDuplicates:true});
-            if(error) throw error;
+  let lastError=null;
+  // Supabase can have brief network timeouts. Retry before falling back to the
+  // ephemeral Render filesystem, which may contain only the starter questions.
+  for(let attempt=0;attempt<3;attempt++){
+    try{
+      if(!interactiveQuestionMigrationPromise){
+        interactiveQuestionMigrationPromise=(async()=>{
+          if(local.length){
+            const legacy=local.filter(q=>q&&q.id&&q.question&&q.grade&&q.subject).map(interactiveQuestionToDb);
+            for(let i=0;i<legacy.length;i+=100){
+              const {error}=await supabase.from("interactive_questions").upsert(legacy.slice(i,i+100),{onConflict:"id",ignoreDuplicates:true});
+              if(error) throw error;
+            }
           }
-        }
-        return true;
-      })().catch(error=>{interactiveQuestionMigrationPromise=null;throw error;});
+          return true;
+        })().catch(error=>{interactiveQuestionMigrationPromise=null;throw error;});
+      }
+      await interactiveQuestionMigrationPromise;
+      const {data,error}=await supabase.from("interactive_questions").select("*").order("created_at",{ascending:false}).limit(5000);
+      if(error) throw error;
+      const dbRows=(data||[]).map(interactiveQuestionFromDb);
+      const seen=new Set(dbRows.map(q=>String(q.id)));
+      const combined=dbRows.concat(local.filter(q=>q&&q.id&&!seen.has(String(q.id))));
+      interactiveQuestionLastKnownGood=combined;
+      return combined;
+    }catch(error){
+      lastError=error;
+      if(attempt<2) await new Promise(resolve=>setTimeout(resolve,250*(attempt+1)));
     }
-    await interactiveQuestionMigrationPromise;
-    const {data,error}=await supabase.from("interactive_questions").select("*").order("created_at",{ascending:false}).limit(5000);
-    if(error) throw error;
-    const dbRows=(data||[]).map(interactiveQuestionFromDb);
-    const seen=new Set(dbRows.map(q=>String(q.id)));
-    return dbRows.concat(local.filter(q=>q&&q.id&&!seen.has(String(q.id))));
-  }catch(error){
-    console.error("Persistent interactive question bank lookup/migration error:",error.message||error);
-    return local.filter(Boolean);
   }
+  console.error("Persistent interactive question bank lookup/migration failed after retries:",lastError?.message||lastError);
+  // Keep previously fetched published questions available during a temporary
+  // outage, while including any local-only questions that have not been seen.
+  if(Array.isArray(interactiveQuestionLastKnownGood)){
+    const seen=new Set(interactiveQuestionLastKnownGood.map(q=>String(q.id)));
+    return interactiveQuestionLastKnownGood.concat(local.filter(q=>q&&q.id&&!seen.has(String(q.id))));
+  }
+  return local.filter(Boolean);
 }
 
 async function appendJsonStore(f,item){const c=await readJsonStore(f),s={id:item.id||`${Date.now()}`,...item,receivedAt:new Date().toISOString()};c.unshift(s);await fs.writeFile(path.join(DATA_DIR,f),JSON.stringify(c,null,2));return s;}
