@@ -1442,26 +1442,29 @@
       (attempt.mode === "assessment" ? "<p class=\"assessment-serial-number\"><strong>Assessment serial number:</strong> " + escapeHtml(attempt.serialNumber) + "</p>" : "") +
       "<h3>" + escapeHtml(attempt.remark) + "</h3>" + review;
 
-    renderProgress();
-    renderLearningGaps();
+    // Put the download control in the results immediately, before optional progress
+    // widgets run, so a progress-rendering error cannot hide the marked assessment.
     if (attempt.mode === "assessment") {
       const reportButton = document.createElement("button");
       reportButton.type = "button";
       reportButton.className = "primary-button";
       reportButton.id = "generateAssessmentReportButton";
-      reportButton.textContent = "Generate Assessment Report (PDF)";
-      reportButton.style.cssText = "display:inline-flex;align-items:center;justify-content:center;margin:16px 0;padding:14px 22px;font-weight:800;font-size:1rem;background:#facc15;color:#111827;border:2px solid #ca8a04;border-radius:10px;cursor:pointer";
-      reportButton.setAttribute("aria-label", "Generate and download the assessment report PDF");
+      reportButton.textContent = "Download Marked Assessment (PDF)";
+      reportButton.style.cssText = "display:flex;width:100%;box-sizing:border-box;align-items:center;justify-content:center;margin:16px 0;padding:14px 18px;font-weight:800;font-size:1rem;background:#facc15;color:#111827;border:2px solid #ca8a04;border-radius:10px;cursor:pointer;min-height:52px;white-space:normal";
+      reportButton.setAttribute("aria-label", "Download the marked assessment report as a PDF");
       reportButton.addEventListener("click", () => {
         try {
           downloadAssessmentReport(attempt);
-          status.textContent = "Your assessment report PDF has been generated. Check your downloads.";
+          status.textContent = "Your marked assessment PDF is ready. If it opened in a new tab, use your browser's Download or Save option.";
         } catch (error) {
-          status.textContent = "The PDF could not be generated. Please try again.";
+          console.error("Assessment PDF generation failed:", error);
+          status.textContent = "The marked assessment PDF could not be generated. Please try again.";
         }
       });
       resultBox.appendChild(reportButton);
     }
+    try { renderProgress(); } catch (error) { console.error("Learner progress display failed:", error); }
+    try { renderLearningGaps(); } catch (error) { console.error("Learning gaps display failed:", error); }
     if (typeof showToast === "function") showToast("Quiz marked. Learning gaps identified and remediation updated.");
   }
 
