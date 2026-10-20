@@ -993,6 +993,117 @@
     }).join("");
   }
 
+
+  function renderTeacherAnalytics() {
+    const root = document.getElementById("teacherAnalytics");
+    if (!root) return;
+    const allAttempts = readProgress().slice().sort((a, b) =>
+      new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()
+    );
+    const gradeFilter = document.getElementById("analyticsGradeFilter");
+    const subjectFilter = document.getElementById("analyticsSubjectFilter");
+    const learnerFilter = document.getElementById("analyticsLearnerFilter");
+    const summaryBox = document.getElementById("analyticsClassSummary");
+    const strandBox = document.getElementById("analyticsStrandAnalysis");
+    const historyBox = document.getElementById("analyticsAttemptHistory");
+    const exportButton = document.getElementById("downloadAnalyticsCsv");
+    const unique = (values) => Array.from(new Set(values.map(v => String(v || "").trim()).filter(Boolean))).sort((a,b) => a.localeCompare(b));
+    const setOptions = (select, values, allLabel) => {
+      if (!select) return;
+      const previous = select.value;
+      select.innerHTML = '<option value="">'+escapeHtml(allLabel)+'</option>' + values.map(v => '<option value="'+escapeHtml(v)+'">'+escapeHtml(v)+'</option>').join("");
+      if (values.includes(previous)) select.value = previous;
+    };
+    setOptions(gradeFilter, unique(allAttempts.map(a => a.grade)), "All grades");
+    setOptions(subjectFilter, unique(allAttempts.map(a => a.subject)), "All subjects");
+    setOptions(learnerFilter, unique(allAttempts.map(a => a.learner)), "All learners");
+    const filtered = allAttempts.filter(a =>
+      (!gradeFilter || !gradeFilter.value || a.grade === gradeFilter.value) &&
+      (!subjectFilter || !subjectFilter.value || a.subject === subjectFilter.value) &&
+      (!learnerFilter || !learnerFilter.value || (a.learner || "Learner") === learnerFilter.value)
+    );
+    const average = filtered.length ? Math.round(filtered.reduce((sum,a) => sum + Number(a.score || 0), 0) / filtered.length) : 0;
+    const uniqueLearners = new Set(filtered.map(a => a.learner || "Learner")).size;
+    const passRate = filtered.length ? Math.round(filtered.filter(a => Number(a.score || 0) >= 50).length / filtered.length * 100) : 0;
+    if (!filtered.length) {
+      summaryBox.innerHTML = '<p class="empty-state">No saved attempts match these filters. Complete quizzes on this browser to populate class reports.</p>';
+      strandBox.innerHTML = '<p class="empty-state">Strand analysis will appear when attempts with question-level results are available.</p>';
+      historyBox.innerHTML = '<p class="empty-state">No attempt history to show.</p>';
+      if (exportButton) exportButton.disabled = true;
+      return;
+    }
+    if (exportButton) exportButton.disabled = false;
+    const classRows = {};
+    filtered.forEach(a => {
+      const name = a.learner || "Learner";
+      if (!classRows[name]) classRows[name] = {learner:name, attempts:0, total:0, best:0, latest:a};
+      const row = classRows[name];
+      row.attempts++;
+      row.total += Number(a.score || 0);
+      row.best = Math.max(row.best, Number(a.score || 0));
+      if (new Date(a.createdAt || 0) > new Date(row.latest.createdAt || 0)) row.latest = a;
+    });
+    summaryBox.innerHTML =
+      '<div class="analytics-metric-grid">' +
+      '<article><span>Learners</span><strong>'+uniqueLearners+'</strong></article>' +
+      '<article><span>Quiz attempts</span><strong>'+filtered.length+'</strong></article>' +
+      '<article><span>Class average</span><strong>'+average+'%</strong></article>' +
+      '<article><span>Scored 50%+</span><strong>'+passRate+'%</strong></article></div>' +
+      '<div class="analytics-table-wrap"><table class="analytics-table"><thead><tr><th>Learner</th><th>Attempts</th><th>Average</th><th>Best</th><th>Latest score</th><th>Latest date</th></tr></thead><tbody>' +
+      Object.values(classRows).sort((a,b)=>a.learner.localeCompare(b.learner)).map(r =>
+        '<tr><td>'+escapeHtml(r.learner)+'</td><td>'+r.attempts+'</td><td>'+Math.round(r.total/r.attempts)+'%</td><td>'+r.best+'%</td><td>'+Number(r.latest.score||0)+'%</td><td>'+escapeHtml(r.latest.createdAt ? new Date(r.latest.createdAt).toLocaleString() : "—")+'</td></tr>'
+      ).join("") + '</tbody></table></div>';
+
+    const strands = {};
+    filtered.forEach(a => (a.results || []).forEach(r => {
+      const topic = String(r.topic || a.strand || "General").trim() || "General";
+      const key = [a.grade || "", a.subject || "", topic].join("|");
+      if (!strands[key]) strands[key] = {grade:a.grade||"—",subject:a.subject||"—",topic,items:0,correct:0,missed:0,learners:new Set()};
+      const item = strands[key]; item.items++; if (r.isCorrect) item.correct++; else item.missed++;
+      item.learners.add(a.learner || "Learner");
+    }));
+    const strandRows = Object.values(strands).map(s => ({...s, mastery:s.items ? Math.round(s.correct/s.items*100) : 0}))
+      .sort((a,b)=>a.mastery-b.mastery || b.items-a.items);
+    strandBox.innerHTML = strandRows.length ?
+      '<p class="analytics-help">Lowest mastery appears first, helping teachers identify where reteaching may be needed.</p><div class="analytics-table-wrap"><table class="analytics-table"><thead><tr><th>Grade</th><th>Subject</th><th>Strand / topic</th><th>Responses</th><th>Learners</th><th>Mastery</th></tr></thead><tbody>' +
+      strandRows.map(s => '<tr><td>'+escapeHtml(s.grade)+'</td><td>'+escapeHtml(s.subject)+'</td><td>'+escapeHtml(s.topic)+'</td><td>'+s.items+'</td><td>'+s.learners.size+'</td><td><strong>'+s.mastery+'%</strong><span class="analytics-bar"><i style="width:'+s.mastery+'%"></i></span></td></tr>').join("") +
+      '</tbody></table></div>' : '<p class="empty-state">No question-level strand data found in these attempts yet.</p>';
+
+    historyBox.innerHTML = '<div class="analytics-table-wrap"><table class="analytics-table"><thead><tr><th>Date</th><th>Learner</th><th>Grade</th><th>Subject</th><th>Strand</th><th>Mode</th><th>Score</th><th>Answered</th><th>Duration</th><th>Serial</th></tr></thead><tbody>' +
+      filtered.map(a => '<tr><td>'+escapeHtml(a.createdAt ? new Date(a.createdAt).toLocaleString() : "—")+'</td><td>'+escapeHtml(a.learner||"Learner")+'</td><td>'+escapeHtml(a.grade||"—")+'</td><td>'+escapeHtml(a.subject||"—")+'</td><td>'+escapeHtml(a.strand||"All Topics")+'</td><td>'+escapeHtml(a.mode||"practice")+'</td><td><strong>'+Number(a.score||0)+'%</strong></td><td>'+Number(a.answered||0)+'/'+Number(a.total||0)+'</td><td>'+Math.floor(Number(a.durationSeconds||0)/60)+'m '+(Number(a.durationSeconds||0)%60)+'s</td><td>'+escapeHtml(a.serialNumber||"—")+'</td></tr>').join("") +
+      '</tbody></table></div>';
+  }
+
+  function downloadTeacherAnalyticsCsv() {
+    const grade = document.getElementById("analyticsGradeFilter");
+    const subject = document.getElementById("analyticsSubjectFilter");
+    const learner = document.getElementById("analyticsLearnerFilter");
+    const attempts = readProgress().filter(a =>
+      (!grade || !grade.value || a.grade === grade.value) &&
+      (!subject || !subject.value || a.subject === subject.value) &&
+      (!learner || !learner.value || (a.learner || "Learner") === learner.value)
+    );
+    const headers = ["Date","Learner","Grade","Subject","Strand","Sub-strand","Learning outcome","Mode","Score percent","Correct","Total","Answered","Duration seconds","Serial number","Question","Topic","Selected answer index","Correct answer index","Correct"];
+    const cell = value => '"' + String(value == null ? "" : value).replace(/"/g, '""').replace(/[\r\n]+/g, " ") + '"';
+    const rows = [headers];
+    attempts.forEach(a => {
+      const results = Array.isArray(a.results) && a.results.length ? a.results : [null];
+      results.forEach(r => rows.push([
+        a.createdAt || "", a.learner || "", a.grade || "", a.subject || "", a.strand || "", a.subStrand || "",
+        a.learningOutcome || "", a.mode || "", a.score ?? "", a.correct ?? "", a.total ?? "", a.answered ?? "",
+        a.durationSeconds ?? "", a.serialNumber || "", r ? r.question : "", r ? r.topic : "",
+        r && r.selected !== null ? r.selected : "", r ? r.correctAnswer : "", r ? (r.isCorrect ? "Yes" : "No") : ""
+      ]));
+    });
+    const csv = "\uFEFF" + rows.map(row => row.map(cell).join(",")).join("\r\n");
+    const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "cbe-nexus-teacher-analytics-" + new Date().toISOString().slice(0,10) + ".csv";
+    document.body.appendChild(link); link.click(); link.remove(); URL.revokeObjectURL(url);
+  }
+
   function renderLearningGaps() {
     const gapBox = document.getElementById("learningGapsReport");
     if (!gapBox) return;
@@ -1514,5 +1625,12 @@
 
   renderProgress();
   renderLearningGaps();
-  window.CBENexusQuiz = { startQuiz: startQuiz, markQuiz: markQuiz, renderProgress: renderProgress, renderLearningGaps: renderLearningGaps };
+  renderTeacherAnalytics();
+  ["analyticsGradeFilter", "analyticsSubjectFilter", "analyticsLearnerFilter"].forEach((id) => {
+    const filter = document.getElementById(id);
+    if (filter) filter.addEventListener("change", renderTeacherAnalytics);
+  });
+  const analyticsExport = document.getElementById("downloadAnalyticsCsv");
+  if (analyticsExport) analyticsExport.addEventListener("click", downloadTeacherAnalyticsCsv);
+  window.CBENexusQuiz = { startQuiz: startQuiz, markQuiz: markQuiz, renderProgress: renderProgress, renderLearningGaps: renderLearningGaps, renderTeacherAnalytics: renderTeacherAnalytics };
 })();
