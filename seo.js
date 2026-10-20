@@ -13,7 +13,8 @@ const KENYA_COUNTIES=["Baringo","Bomet","Bungoma","Busia","Elgeyo Marakwet","Emb
 const LANDINGS={
 "/cbc-notes-kenya":["CBC Notes Kenya","CBC and CBE notes for Kenyan learners and teachers. Find Grade 7–12 subject resources, revision materials and learning support from CBE Nexus."],
 "/cbc-exams-kenya":["CBC Exams Kenya & Marking Schemes","Find CBC exams, revision questions and marking schemes for Kenyan Grade 7–12 learners and teachers."],
-"/kjsea-revision":["KJSEA Revision Materials & Grade 9 Questions","Grade 9 KJSEA revision materials, questions, exams and marking schemes for learners and teachers in Kenya."]};
+"/kjsea-revision":["KJSEA Revision Materials & Grade 9 Questions","Grade 9 KJSEA revision materials, questions, exams and marking schemes for learners and teachers in Kenya."],
+"/free-interactive-questions":["Free Interactive Questions for All Grades | CBE Nexus","Practise free interactive questions online for learners across grades and subjects. Explore CBC and CBE quizzes, instant feedback and Grade 1–12 practice questions, including Grade 7–9 KJSEA preparation and senior school subjects."]};
 function esc(v){return String(v||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
 function slug(v){return String(v||"").toLowerCase().trim().replace(/&/g,"and").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");}
 function base(req){const e=String(process.env.PUBLIC_SITE_URL||"").trim().replace(/\/$/,"");if(e)return e;return "https://cbenexus.co.ke";}
@@ -77,6 +78,18 @@ async function resourcePage(req,id){
 }
 async function match(req){
  const p=new URL(req.url,"http://localhost").pathname.replace(/\/$/,"")||"/";
+ if(p==="/free-interactive-questions"){
+  const gradeLinks=[{url:"/interactive-questions.html",label:"Start free interactive questions"},{url:"/quizzes.html",label:"Automated marked quizzes and learner progress"},...["PP1","PP2",...Array.from({length:12},(_,i)=>"Grade "+(i+1))].map(g=>({url:"/free-interactive-questions/"+slug(g),label:"Free interactive questions for "+g}))];
+  return page(req,"Free Interactive Questions for All Grades | CBE Nexus","Practise free interactive questions online for all grades and subjects. CBC and CBE practice quizzes, instant feedback and curriculum-linked questions for Kenyan learners from PP1 and PP2 through Grade 12.","/free-interactive-questions","Free Interactive Questions for All Grades","Build confidence with free online interactive questions and practice quizzes for learners across grades and subjects. Choose a grade to explore practice, or open the Interactive Questions portal to begin.",gradeLinks);
+ }
+ const iqGrade=p.match(/^\\/free-interactive-questions\\/(pp1|pp2|grade-(?:[1-9]|1[0-2]))$/i);
+ if(iqGrade){
+  const raw=iqGrade[1].toUpperCase(), grade=/^PP/.test(raw)?raw:"Grade "+raw.replace(/^GRADE-/i,"");
+  const label="Free Interactive Questions for "+grade;
+  const desc="Practise free online interactive questions for "+grade+" learners on CBE Nexus. Explore curriculum-linked CBC/CBE questions, subject practice, quizzes and instant feedback. Availability depends on the questions currently published in the learner portal.";
+  const links=[{url:"/interactive-questions.html",label:"Open the Interactive Questions portal"},{url:"/quizzes.html",label:"Try automated marked quizzes"},{url:"/free-interactive-questions",label:"Browse interactive questions for all grades"},{url:"/resources.html",label:"Browse learning resources"}];
+  return page(req,label+" | CBE Nexus Kenya",desc,"/free-interactive-questions/"+slug(grade),label,"Practise and review "+grade+" questions online with CBE Nexus. Choose the learner portal to see questions currently published for your grade.",links);
+ }
  const rm=p.match(/^\/resource\/([^/]+)$/);
  if(rm){return await resourcePage(req,decodeURIComponent(rm[1]));}
  const countyMatch=p.match(/^\/kenya-education-county\/([^/]+)$/);
