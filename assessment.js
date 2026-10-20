@@ -1104,21 +1104,24 @@
       submitButton.disabled = true;
       return;
     }
-    // Never hide a valid published question bank merely because it contains
-    // fewer than 50 questions. Use up to 50 questions, or all available questions
-    // when the teacher has published a smaller set.
-    const requested = Math.min(50, selectedBank.length);
-    if (requested < 1) {
-      status.textContent = "No published questions are available for " + grade.value + " — " + subject.value +
+    // Keep the learner-facing promise consistent: every submitted quiz has exactly
+    // 50 questions. Never pad a short bank with duplicates or silently submit fewer.
+    const requiredQuestions = 50;
+    if (selectedBank.length < requiredQuestions) {
+      status.textContent = "This quiz needs exactly 50 published questions, but " +
+        selectedBank.length + " are currently available for " + grade.value + " — " + subject.value +
         (strand && strand.value !== "All Topics" ? " — " + strand.value : "") +
-        ". Please choose another subject or ask your teacher to publish questions.";
+        ". Your answers have not been started or changed. Please ask the administrator to publish " +
+        (requiredQuestions - selectedBank.length) + " more valid questions, or choose another topic.";
       questionsBox.innerHTML = "";
       submitButton.disabled = true;
       active = [];
+      length.value = String(requiredQuestions);
+      resultBox.classList.add("hidden-section");
       return;
     }
-    length.value = String(requested);
-    active = shuffle(selectedBank).slice(0, requested);
+    length.value = String(requiredQuestions);
+    active = shuffle(selectedBank).slice(0, requiredQuestions);
     startedAt = Date.now();
     submitted = false;
     clearInterval(timerId);
