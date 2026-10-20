@@ -346,8 +346,8 @@
       }
     }
 
-    // Carry section labels and reading passages/contexts forward into related questions.
-    // They are included in each affected stem so learners see the required context.
+    // Carry section labels and reading passages/contexts forward into related questions,
+    // but render each shared passage and section heading only once.
     const rows = [];
     let sharedContext = "";
     let lastSection = "";
