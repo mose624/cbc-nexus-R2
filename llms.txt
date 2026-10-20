@@ -14,7 +14,7 @@ CBE Nexus is a Kenya-focused education platform for learners, teachers, parents,
 
 - [CBE Nexus Resources](https://cbenexus.co.ke/resources.html) — CBE Nexus resource hub.
 - [Resource Category](https://cbenexus.co.ke/resource-category.html) — Searchable CBC/CBE resources by grade, subject and resource type.
-- [Free Resources](https://cbenexus.co.ke/free-resources.html) — Free learning resources.
+- [Free Resources](https://cbenexus.co.ke/free-resources.html) — Free learning resources.\n- [Free Interactive Questions for All Grades](https://cbenexus.co.ke/free-interactive-questions) — SEO landing page for free interactive practice questions from PP1 and PP2 through Grade 12.\n- [Interactive Questions Portal](https://cbenexus.co.ke/interactive-questions.html) — Online learner question practice.\n- [Automated Marked Quizzes](https://cbenexus.co.ke/quizzes.html) — Interactive quizzes, instant marking and learner progress.
 - [IGCSE Resources](https://cbenexus.co.ke/igcse.html) — IGCSE resource library.
 - [IB Resources](https://cbenexus.co.ke/ib.html) — IB resource library.
 - [O Level Resources](https://cbenexus.co.ke/o-levels.html) — O Level resource library.
@@ -35,7 +35,7 @@ CBE Nexus is a Kenya-focused education platform for learners, teachers, parents,
 
 ## Topic focus
 
-CBC, CBE, KJSEA, Grade 1–12 learning, schemes of work, lesson plans, notes, assessments, past papers, marking schemes, revision materials, teacher resources, universities, TVET, KMTC, teacher training, scholarships, international teaching opportunities and responsible educational technology.
+CBC, CBE, KJSEA, free interactive questions, free online quizzes, interactive practice questions for all grades, PP1, PP2, Grade 1–12 learning, schemes of work, lesson plans, notes, assessments, past papers, marking schemes, revision materials, teacher resources, universities, TVET, KMTC, teacher training, scholarships, international teaching opportunities and responsible educational technology.
 
 ## Resource quality and accuracy
 
