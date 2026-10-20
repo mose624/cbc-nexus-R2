@@ -921,7 +921,7 @@
                 <button type="button" id="iqDownloadTemplate" class="secondary-button">Download Excel template</button>
                 <a href="#iqBulkImportPanel" id="iqTemplateHelp" style="font-size:.9rem;text-decoration:underline">View required columns</a>
               </div>
-              <p style="font-size:.88rem;color:#536174;margin:0 0 12px">Template columns: Grade, Subject, Topic, Question, Option A–D, Correct Answer, Explanation, Difficulty and optional Image URL. For attached image files, choose them below and name each image with its question row/number (for example 2.png or q1.jpg). Word/PDF text is imported; embedded diagrams should be uploaded separately as image files.</p>
+              <p style="font-size:.88rem;color:#536174;margin:0 0 12px">Template columns: Grade, Subject, Topic, Question, Option A–D, Correct Answer, Explanation, Difficulty and optional Image URL. For attached image files, choose them below and name each image with its question row/number (for example 2.png or q1.jpg). Word (.docx) diagrams are extracted where possible and attached to the nearest matching question; oversized or unsupported embedded images can be added using separate image uploads. PDF imports extract text only, so attach PDF diagrams separately.</p>
               <label for="iqBulkImportFile" style="display:block;font-weight:700;margin-bottom:8px">Choose question file (.xlsx, .xls, .csv, .docx, .pdf)
                 <input id="iqBulkImportFile" type="file" accept=".xlsx,.xls,.csv,.docx,.pdf" style="display:block;margin-top:6px;max-width:100%">
               </label>
@@ -1842,6 +1842,6 @@
   <p>Visit the <a href="/contact.html">Contact CBE Nexus page</a> for the published support options. For your safety, never share an M-Pesa PIN, password or one-time security code.</p>
 </section>
 
-  <script src="/admin-interactive-questions.js?v=20261018-publish-1" defer></script>
+  <script src="/admin-interactive-questions.js?v=20261020-word-diagrams-1" defer></script>
 </body>
 </html>

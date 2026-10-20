@@ -428,8 +428,48 @@
     }
     if (ext === "docx") {
       const mammoth = await loadBrowserScript("https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.9.0/mammoth.browser.min.js","mammoth");
-      const result = await mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()});
-      return parseQuestionText(result.value).map((row,i)=>mapRow(row,i));
+      const arrayBuffer = await file.arrayBuffer();
+      const textResult = await mammoth.extractRawText({arrayBuffer});
+      const rows = parseQuestionText(textResult.value).map((row,i)=>mapRow(row,i));
+      // Mammoth can read embedded Word images in the browser. Convert them to data URLs,
+      // then attach each diagram to the closest preceding numbered question block where possible.
+      // The existing API stores one diagram per question; extra images for a question are ignored.
+      const htmlResult = await mammoth.convertToHtml({arrayBuffer},{
+        convertImage: mammoth.images.imgElement(async image => {
+          const base64 = await image.read("base64");
+          const dataUrl = "data:" + image.contentType + ";base64," + base64;
+          return {src: dataUrl, alt: "Embedded Word diagram"};
+        })
+      });
+      const doc = new DOMParser().parseFromString(htmlResult.value || "", "text/html");
+      const nodes = Array.from(doc.body.querySelectorAll("p, li, div, td, th, img"));
+      let currentIndex = -1;
+      let nextFallbackIndex = 0;
+      for (const node of nodes) {
+        if (node.tagName !== "IMG") {
+          const text = String(node.textContent || "").trim();
+          const start = text.match(/^(?:Question\s*)?(\d{1,3})\s*[.)\]:]\s*/i);
+          if (start) {
+            const numbered = Number(start[1]);
+            const matchIndex = rows.findIndex(r => Number(r.rowNumber) === numbered + 1);
+            if (matchIndex >= 0) currentIndex = matchIndex;
+            else if (nextFallbackIndex < rows.length) currentIndex = nextFallbackIndex++;
+          }
+          continue;
+        }
+        let targetIndex = currentIndex;
+        if (targetIndex < 0 && nextFallbackIndex < rows.length) targetIndex = nextFallbackIndex++;
+        if (targetIndex < 0 || !rows[targetIndex] || rows[targetIndex].imageData) continue;
+        const dataUrl = node.getAttribute("src") || "";
+        if (!/^data:image\/(?:png|jpeg|gif|webp|svg\+xml);base64,/i.test(dataUrl)) continue;
+        if (dataUrl.length > 1400000) {
+          rows[targetIndex].imageWarning = "Embedded Word diagram is over 1 MB; upload a resized image separately";
+          continue;
+        }
+        rows[targetIndex].imageData = dataUrl;
+        rows[targetIndex].imageAlt = String(node.getAttribute("alt") || "Diagram for " + rows[targetIndex].question).slice(0,160);
+      }
+      return rows;
     }
     if (ext === "pdf") {
       const pdfjsLib = await loadBrowserScript("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js","pdfjsLib");
@@ -456,7 +496,7 @@
     const tbody=document.createElement("tbody");
     rows.slice(0,250).forEach(r=>{
       const tr=document.createElement("tr");
-      const vals=[r.rowNumber,r.errors.length?"Needs fixing":"Ready",r.grade,r.subject,r.question,r.correctIndex>=0?"ABCD"[r.correctIndex]:"",r.errors.join("; ")];
+      const vals=[r.rowNumber,r.errors.length?"Needs fixing":"Ready",r.grade,r.subject,r.question,r.correctIndex>=0?"ABCD"[r.correctIndex]:"",[...r.errors,r.imageWarning||""].filter(Boolean).join("; ")];
       vals.forEach((v,i)=>{const td=document.createElement("td");td.textContent=String(v||"");td.style.cssText="border:1px solid #d5e0e8;padding:7px;vertical-align:top;max-width:320px;overflow-wrap:anywhere";tr.appendChild(td);});
       tbody.appendChild(tr);
     });
