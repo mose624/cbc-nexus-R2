@@ -10,6 +10,26 @@
   <link rel="stylesheet" href="customer-care.css?v=20261004-2">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Automated Marked Quizzes & Learner Progress | CBE Nexus","url":"https://cbenexus.co.ke/quizzes.html","isPartOf":{"@type":"WebSite","name":"CBE Nexus","url":"https://cbenexus.co.ke/"}}</script>
   <link rel="stylesheet" href="interactive-yellow.css?v=20261017-1">
+  <style>
+    .teacher-analytics-panel{margin-top:26px;padding:clamp(14px,2.5vw,26px);border:1px solid #dbe4ee;border-top:5px solid #dc2626;border-radius:16px;background:#fff;box-shadow:0 8px 24px rgba(15,23,42,.06)}
+    .analytics-local-notice{padding:10px 13px;border-left:4px solid #f59e0b;background:#fffbeb;border-radius:6px;color:#713f12;font-size:.92rem}
+    .analytics-filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0}
+    .analytics-filters label{display:flex;flex-direction:column;gap:6px;font-weight:700}
+    .analytics-filters select{min-width:0;padding:10px;border:1px solid #cbd5e1;border-radius:8px;background:#fff}
+    .analytics-metric-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0}
+    .analytics-metric-grid article{padding:14px;border-radius:10px;background:#eff6ff;border:1px solid #bfdbfe}
+    .analytics-metric-grid span,.analytics-metric-grid strong{display:block}.analytics-metric-grid span{font-size:.85rem;color:#334155}.analytics-metric-grid strong{font-size:1.55rem;color:#0f172a;margin-top:5px}
+    .analytics-table-wrap{width:100%;overflow-x:auto;margin:12px 0 20px;border:1px solid #e2e8f0;border-radius:10px}
+    .analytics-table{width:100%;border-collapse:collapse;font-size:.9rem;background:#fff}
+    .analytics-table th,.analytics-table td{padding:10px 12px;text-align:left;border-bottom:1px solid #e2e8f0;vertical-align:top;white-space:nowrap}
+    .analytics-table th{background:#f1f5f9;color:#0f172a;font-weight:800}
+    .analytics-table tbody tr:nth-child(even){background:#f8fafc}
+    .analytics-bar{display:block;width:90px;max-width:100%;height:6px;background:#e2e8f0;border-radius:9px;overflow:hidden;margin-top:5px}.analytics-bar i{display:block;height:100%;background:#16a34a}
+    .analytics-help{color:#475569;font-size:.9rem}
+    .teacher-analytics-panel h4{margin:22px 0 8px;color:#0f172a}
+    @media(max-width:720px){.analytics-filters{grid-template-columns:1fr}.analytics-metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.teacher-analytics-panel .progress-panel-heading{align-items:flex-start;flex-direction:column}.analytics-table{font-size:.82rem}.analytics-table th,.analytics-table td{padding:8px}}
+  </style>
+
 </head>
 <body>
   <header class="site-header">
@@ -169,6 +189,30 @@
             <button class="secondary-button" id="clearQuizProgressButton" type="button">Clear My Progress</button>
           </div>
           <div id="progressReport"></div>
+
+          <section class="teacher-analytics-panel" aria-labelledby="teacherAnalyticsHeading">
+            <div class="progress-panel-heading">
+              <div>
+                <p class="eyebrow">Teacher dashboard</p>
+                <h3 id="teacherAnalyticsHeading">Class Reports &amp; Strand Analysis</h3>
+                <p>Compare learner performance, spot difficult strands, review assessment attempts and export a spreadsheet summary.</p>
+              </div>
+              <button class="primary-button" id="downloadAnalyticsCsv" type="button" disabled>Download CSV Summary</button>
+            </div>
+            <p class="analytics-local-notice"><strong>Data scope:</strong> these reports use attempts saved in this browser. They do not yet combine records from other devices or browsers.</p>
+            <div class="analytics-filters">
+              <label>Grade <select id="analyticsGradeFilter"><option value="">All grades</option></select></label>
+              <label>Subject <select id="analyticsSubjectFilter"><option value="">All subjects</option></select></label>
+              <label>Learner <select id="analyticsLearnerFilter"><option value="">All learners</option></select></label>
+            </div>
+            <h4>Class performance summary</h4>
+            <div id="analyticsClassSummary"><p class="empty-state">Loading saved attempts…</p></div>
+            <h4>Strand / topic mastery</h4>
+            <div id="analyticsStrandAnalysis"><p class="empty-state">Loading strand analysis…</p></div>
+            <h4>Attempt history</h4>
+            <div id="analyticsAttemptHistory"><p class="empty-state">Loading attempt history…</p></div>
+          </section>
+
           <div class="learning-gaps-panel">
             <div class="progress-panel-heading">
               <div>
