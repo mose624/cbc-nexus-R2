@@ -1232,7 +1232,10 @@
       txt(36,736,"Serial: " + attempt.serialNumber + "   Date: " + new Date(attempt.createdAt).toLocaleDateString("en-GB"),8,false,red);
       line(30,48,582,48,red,2);
       line(30,42,582,42,yellow,3);
-      txt(36,25,"CBE NEXUS  |  CEO: CBENEXUS.CO.KE  |  CONNECTING LEARNERS TO EXCELLENCE",7,true);
+      txt(36,25,"CBE NEXUS  |  CBENEXUS.CO.KE  |  CONNECTING LEARNERS TO EXCELLENCE",7,true);
+      // Keep every page body below the branded header and summary area.
+      // Without resetting y here, page 2+ could start underneath the header.
+      page.y = 614;
       return page;
     };
     const addText = (page, x, y, value, size=9, bold=false, color=dark) => {
