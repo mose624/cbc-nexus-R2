@@ -1209,142 +1209,132 @@
     return "BE";
   }
   async function buildAssessmentPdf(attempt) {
-    const standard = getPerformanceStandard(attempt.score);
-    const sameLearnerAssessments = readProgress().filter(a =>
-      a.mode === "assessment" &&
-      String(a.learner || "").trim().toLowerCase() === String(attempt.learner || "").trim().toLowerCase() &&
-      a.grade === attempt.grade
-    );
-    const latestBySubject = {};
-    sameLearnerAssessments.forEach(a => {
-      const key = a.subject || "Unspecified subject";
-      if (!latestBySubject[key] || new Date(a.createdAt).getTime() > new Date(latestBySubject[key].createdAt).getTime()) latestBySubject[key] = a;
-    });
-    const subjectSummary = Object.keys(latestBySubject).sort().map(subjectName => ({
-      subject: subjectName,
-      score: Number(latestBySubject[subjectName].score || 0)
-    }));
-    const overallAverage = subjectSummary.length
-      ? Math.round(subjectSummary.reduce((sum, item) => sum + item.score, 0) / subjectSummary.length)
-      : Number(attempt.score || 0);
-    const overallStandard = getPerformanceStandard(overallAverage);
-    const dateText = new Date(attempt.createdAt).toLocaleString();
     if (!attempt.serialNumber) attempt.serialNumber = createAssessmentSerial();
-    const stampDateText = new Date(attempt.createdAt).toLocaleDateString("en-GB");
-    const durationText = Math.floor(attempt.durationSeconds / 60) + "m " + (attempt.durationSeconds % 60) + "s";
-    const feedback = attempt.remark || "Assessment completed";
-    const rows = [
-      ["Learner", attempt.learner || "-", "Grade", attempt.grade || "-"],
-      ["Subject", attempt.subject || "-", "Mode", "Assessment"],
-      ["Topic", attempt.strand || "All Topics", "Sub-strand", attempt.subStrand || "All Sub-Strands"],
-      ["Learning outcome", attempt.learningOutcome || "All Outcomes", "Date", dateText],
-      ["Score", attempt.score + "% (" + attempt.correct + "/" + attempt.total + ")", "Performance level", standard],
-      ["Answered", attempt.answered + "/" + attempt.total, "Time taken", durationText]
-    ];
-    const esc = value => pdfSafe(value).replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
-    const ops = [];
-    const rect = (x,y,w,h,color) => ops.push("q\n" + color + " rg\n" + x + " " + y + " " + w + " " + h + " re f\nQ\n");
-    const text = (x,y,value,size=9,bold=false,color="0.12 0.16 0.20") => {
-      ops.push("BT\n" + (bold ? "/F2 " : "/F1 ") + size + " Tf\n" + color + " rg\n1 0 0 1 " + x + " " + y + " Tm\n(" + esc(value) + ") Tj\nET\n");
+    const pages = [];
+    const red = "0.68 0.08 0.12";
+    const yellow = "0.98 0.82 0.12";
+    const green = "0.05 0.48 0.24";
+    const dark = "0.12 0.16 0.20";
+    const esc = value => pdfSafe(value == null ? "-" : String(value)).replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
+    const newPage = () => {
+      const page = { ops: [], y: 730 };
+      pages.push(page);
+      const rect = (x,y,w,h,color) => page.ops.push("q\n" + color + " rg\n" + x + " " + y + " " + w + " " + h + " re f\nQ\n");
+      const line = (x1,y1,x2,y2,color,width=1) => page.ops.push("q\n" + color + " RG\n" + width + " w\n" + x1 + " " + y1 + " m " + x2 + " " + y2 + " l S\nQ\n");
+      const txt = (x,y,value,size=9,bold=false,color=dark) => page.ops.push("BT\n" + (bold ? "/F2 " : "/F1 ") + size + " Tf\n" + color + " rg\n1 0 0 1 " + x + " " + y + " Tm\n(" + esc(value) + ") Tj\nET\n");
+      rect(0,0,612,842,"1 1 1");
+      rect(24,794,564,28,red);
+      rect(24,788,564,4,yellow);
+      txt(38,803,"CBE NEXUS",17,true,"1 1 1");
+      txt(390,804,"CONNECTING LEARNERS TO EXCELLENCE",7,true,"1 1 1");
+      txt(36,768,"MARKED ASSESSMENT REPORT",12,true);
+      txt(36,751,"Learner: " + (attempt.learner || "-") + "   Grade: " + (attempt.grade || "-") + "   Subject: " + (attempt.subject || "-"),8,true);
+      txt(36,736,"Serial: " + attempt.serialNumber + "   Date: " + new Date(attempt.createdAt).toLocaleDateString("en-GB"),8,false,red);
+      line(30,48,582,48,red,2);
+      line(30,42,582,42,yellow,3);
+      txt(36,25,"CBE NEXUS  |  CEO: CBENEXUS.CO.KE  |  CONNECTING LEARNERS TO EXCELLENCE",7,true);
+      return page;
     };
-    // Single-page, compact report with table directly below the branded header.
-    rect(0,0,612,842,"0.99 0.88 0.22");
-    rect(18,18,576,806,"1 1 0.88");
-    // Professional red ribbon accents with gold CBE Nexus branding.
-    rect(18,800,576,24,"0.68 0.08 0.12");
-    rect(18,742,576,58,"0.93 0.72 0.06");
-    rect(18,736,576,3,"0.68 0.08 0.12");
-    rect(18,34,576,4,"0.68 0.08 0.12");
-    rect(18,18,576,12,"0.68 0.08 0.12");
-    text(42,778,"CBE NEXUS",20,true);
-    text(42,758,"CONNECTING LEARNERS TO EXCELLENCE",9,true);
-    text(42,716,"ASSESSMENT SUMMARY REPORT",13,true);
-    text(42,698,"SERIAL NO: " + attempt.serialNumber,8,true,"0.68 0.08 0.12");
-    // Load the official site logo and embed it in the PDF header when available.
-    let logoBinary = "";
-    try {
-      const logoResponse = await fetch("/CBC%20Nexus%20Education%20Emblem.png", { cache: "force-cache" });
-      if (logoResponse.ok) {
-        const logoBlob = await logoResponse.blob();
-        const bitmap = await createImageBitmap(logoBlob);
-        const canvas = document.createElement("canvas");
-        canvas.width = bitmap.width; canvas.height = bitmap.height;
-        const ctx = canvas.getContext("2d");
-        ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(bitmap, 0, 0);
-        const data = atob(canvas.toDataURL("image/jpeg", 0.92).split(",")[1]);
-        for (let i = 0; i < data.length; i++) logoBinary += data.charAt(i);
-        bitmap.close();
-        ops.push("q\n112 0 0 58 458 744 cm\n/Logo Do\nQ\n");
+    const addText = (page, x, y, value, size=9, bold=false, color=dark) => {
+      page.ops.push("BT\n" + (bold ? "/F2 " : "/F1 ") + size + " Tf\n" + color + " rg\n1 0 0 1 " + x + " " + y + " Tm\n(" + esc(value) + ") Tj\nET\n");
+    };
+    const addRect = (page,x,y,w,h,color) => page.ops.push("q\n" + color + " rg\n" + x + " " + y + " " + w + " " + h + " re f\nQ\n");
+    const addLine = (page,x1,y1,x2,y2,color,width=1) => page.ops.push("q\n" + color + " RG\n" + width + " w\n" + x1 + " " + y1 + " m " + x2 + " " + y2 + " l S\nQ\n");
+    let page = newPage();
+    addRect(page,30,687,552,30,yellow);
+    addText(page,40,698,"ASSESSMENT SUMMARY",10,true);
+    addText(page,40,673,"Score: " + attempt.score + "%     Correct: " + attempt.correct + "/" + attempt.total + "     Answered: " + attempt.answered + "/" + attempt.total,9,true);
+    addText(page,40,657,"Performance: " + (attempt.remark || "Assessment completed"),8,false);
+    addText(page,40,638,"MARKING KEY: green tick = correct; red X = incorrect or unanswered.",8,true);
+    page.y = 614;
+
+    const results = Array.isArray(attempt.results) ? attempt.results : [];
+    results.forEach((result, index) => {
+      const question = active[index] || null;
+      const questionText = (index + 1) + ". " + (result.question || (question && question[0]) || "Question");
+      const questionLines = wrapPdfText(questionText, 94);
+      const options = question && Array.isArray(question[1]) ? question[1] : [];
+      const selectedText = result.selected === null || result.selected === undefined ? "Not answered" : (options[result.selected] || "Selected option");
+      const correctText = options[result.correctAnswer] || "Correct option";
+      const detailLines = [
+        "Your answer: " + selectedText,
+        "Correct answer: " + correctText
+      ];
+      const explanationLines = result.explanation ? wrapPdfText("Explanation: " + result.explanation, 96) : [];
+      const needed = 18 + questionLines.length * 11 + options.length * 10 + detailLines.length * 11 + explanationLines.length * 10 + 10;
+      if (page.y - needed < 65) page = newPage();
+      const top = page.y;
+      addRect(page,32,top-15,548,18,result.isCorrect ? "0.88 0.96 0.89" : "1 0.91 0.91");
+      addText(page,38,top-10,questionLines[0] || questionText,8.5,true);
+      for (let li=1; li<questionLines.length; li++) {
+        page.y -= 11;
+        addText(page,46,page.y,questionLines[li],8,false);
       }
-    } catch (logoError) { /* Keep the report usable if the logo asset cannot be fetched. */ }
-    const tableX=36, tableTop=704, colWidths=[88,190,92,170], rowH=27;
-    let y=tableTop;
-    rows.forEach((row,ri)=>{
-      let x=tableX;
-      row.forEach((cell,ci)=>{
-        const w=colWidths[ci];
-        rect(x,y-rowH,w,rowH,ci%2===0 ? "0.96 0.91 0.61" : "1 1 0.91");
-        ops.push("q\n0.62 0.55 0.25 RG\n0.6 w\n"+x+" "+(y-rowH)+" "+w+" "+rowH+" re S\nQ\n");
-        const val=String(cell==null?"-":cell);
-        const max=Math.max(8,Math.floor((w-10)/5.1));
-        text(x+5,y-16,val.length>max?val.slice(0,max-1)+"…":val,7.5,ci%2===0);
-        x+=w;
+      page.y -= 16;
+      options.forEach((option, oi) => {
+        const marker = oi === result.correctAnswer ? "[CORRECT]" : (oi === result.selected ? "[YOUR ANSWER]" : "[" + String.fromCharCode(65+oi) + "]");
+        const lines = wrapPdfText(marker + " " + option, 94);
+        lines.forEach((ln, li) => {
+          addText(page,48,page.y,ln,7.5,oi === result.correctAnswer,oi === result.correctAnswer ? green : dark);
+          page.y -= 10;
+        });
       });
-      y-=rowH;
+      addText(page,48,page.y,"Your answer: " + selectedText,8,true,result.isCorrect ? green : red);
+      page.y -= 11;
+      addText(page,48,page.y,"Correct answer: " + correctText,8,true,green);
+      page.y -= 11;
+      if (explanationLines.length) {
+        explanationLines.forEach(lineText => {
+          addText(page,48,page.y,lineText,7.5,false);
+          page.y -= 10;
+        });
+      }
+      // Draw a large vector tick or X at the right of the question heading.
+      if (result.isCorrect) {
+        addLine(page,548,top-8,553,top-13,green,2.5);
+        addLine(page,553,top-13,563,top-3,green,2.5);
+      } else {
+        addLine(page,550,top-4,562,top-16,red,2.5);
+        addLine(page,550,top-16,562,top-4,red,2.5);
+      }
+      addLine(page,38,page.y+3,574,page.y+3,"0.85 0.85 0.85",0.5);
+      page.y -= 9;
     });
-    y-=24;
-    text(42,y,"PERFORMANCE SUMMARY",11,true); y-=20;
-    text(42,y,"Overall feedback: " + feedback,9,true); y-=18;
-    const feedbackLine = Number(attempt.score) >= 75
-      ? "Strong achievement. Continue applying learning in practical contexts."
-      : Number(attempt.score) >= 50
-        ? "Developing understanding. Review the key areas identified by the assessment."
-        : "Further support and focused practice are recommended before the next assessment.";
-    text(42,y,feedbackLine,8); y-=23;
-    text(42,y,"MULTI-SUBJECT OVERVIEW",10,true); y-=18;
-    text(42,y,"Subjects assessed: " + subjectSummary.length + "     Average: " + overallAverage + "%     Overall level: " + overallStandard,8,true); y-=16;
-    const subjectLine = subjectSummary.length
-      ? subjectSummary.map(item=>item.subject + " " + item.score + "% (" + getPerformanceStandard(item.score) + ")").join("  |  ")
-      : (attempt.subject + " " + attempt.score + "% (" + standard + ")");
-    wrapPdfText(subjectLine,100).slice(0,2).forEach(line=>{text(42,y,line,7.5); y-=12;});
-    y-=10;
-    text(42,y,"STRAND / LEARNING FOCUS",9,true); y-=16;
-    text(42,y,"Topic: " + (attempt.strand || "All Topics") + " | Sub-strand: " + (attempt.subStrand || "All Sub-Strands"),7.5); y-=14;
-    text(42,y,"Outcome: " + (attempt.learningOutcome || "All Outcomes"),7.5); y-=24;
-    text(42,y,"Teacher comment: " + (Number(attempt.score) < 30 ? "Provide guided revision and additional practice." : Number(attempt.score) < 50 ? "Reinforce core concepts and monitor progress." : "Encourage continued application and extension tasks."),8);
-    // CBE Nexus certification stamp with the assessment date in red.
-    const stampX = 470, stampY = 112, stampSize = 100;
-    ops.push("q\n0.68 0.08 0.12 RG\n2 w\n" + stampX + " " + stampY + " " + stampSize + " " + stampSize + " re S\nQ\n");
-    ops.push("q\n0.68 0.08 0.12 RG\n0.8 w\n" + (stampX + 5) + " " + (stampY + 5) + " " + (stampSize - 10) + " " + (stampSize - 10) + " re S\nQ\n");
-    text(stampX + 13, stampY + 72, "CBE NEXUS", 10, true, "0.08 0.40 0.22");
-    text(stampX + 13, stampY + 54, "CERTIFIED", 11, true, "0.08 0.40 0.22");
-    text(stampX + 13, stampY + 35, "ASSESSMENT", 7, true, "0.12 0.16 0.20");
-    text(stampX + 13, stampY + 23, "DATE", 7, true, "0.12 0.16 0.20");
-    text(stampX + 13, stampY + 10, stampDateText, 8, true, "0.82 0.05 0.12");
-    // Sign-off always appears at the bottom of this one-page report.
-    rect(36,48,540,2,"0.93 0.72 0.06");
-    text(42,80,"CEO: CBENEXUS.CO.KE",9,true);
-    text(42,64,"Name: MR MOSE ISAAC",9,true);
-    text(350,64,"CONNECTING LEARNERS TO EXCELLENCE",7,true);
-    const stream=ops.join("");
-    const objects=[];
-    objects[1]="<< /Type /Catalog /Pages 2 0 R >>";
-    objects[2]="<< /Type /Pages /Kids [4 0 R] /Count 1 >>";
-    objects[3]="<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>";
-    objects[4]="<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 842] /Resources << /Font << /F1 3 0 R /F2 5 0 R >> /XObject << /Logo 7 0 R >> >> /Contents 6 0 R >>";
-    objects[5]="<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>";
-    objects[6]="<< /Length "+stream.length+" >>\nstream\n"+stream+"\nendstream";
-    if (logoBinary) objects[7]="<< /Type /XObject /Subtype /Image /Width 148 /Height 76 /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length "+logoBinary.length+" >>\nstream\n"+logoBinary+"\nendstream";
-    else objects[7]="<< /Type /XObject /Subtype /Image /Width 1 /Height 1 /ColorSpace /DeviceRGB /BitsPerComponent 8 /Length 3 >>\nstream\n"+String.fromCharCode(0,0,0)+"\nendstream";
-    let pdf="%PDF-1.4\n"; const offsets=[0];
-    for(let i=1;i<objects.length;i++){offsets[i]=pdf.length;pdf+=i+" 0 obj\n"+objects[i]+"\nendobj\n";}
-    const xref=pdf.length;
-    pdf+="xref\n0 "+objects.length+"\n0000000000 65535 f \n";
-    for(let i=1;i<objects.length;i++) pdf+=String(offsets[i]).padStart(10,"0")+" 00000 n \n";
-    pdf+="trailer\n<< /Size "+objects.length+" /Root 1 0 R >>\nstartxref\n"+xref+"\n%%EOF";
-    const bytes = new Uint8Array(pdf.length); for (let i = 0; i < pdf.length; i++) bytes[i] = pdf.charCodeAt(i) & 255;
-    return new Blob([bytes],{type:"application/pdf"});
+
+    // Add a final concise score line at the end of the marking pages.
+    if (page.y < 82) page = newPage();
+    addRect(page,32,page.y-8,548,25,yellow);
+    addText(page,42,page.y,"FINAL SCORE: " + attempt.correct + "/" + attempt.total + " (" + attempt.score + "%)",10,true);
+    const objects = [];
+    objects[1] = "<< /Type /Catalog /Pages 2 0 R >>";
+    const pageObjectIds = [];
+    let nextId = 3;
+    const fontRegularId = nextId++;
+    const fontBoldId = nextId++;
+    objects[fontRegularId] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>";
+    objects[fontBoldId] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>";
+    pages.forEach((p) => {
+      const pageId = nextId++;
+      const contentId = nextId++;
+      pageObjectIds.push(pageId);
+      const stream = p.ops.join("");
+      objects[contentId] = "<< /Length " + stream.length + " >>\nstream\n" + stream + "\nendstream";
+      objects[pageId] = "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 842] /Resources << /Font << /F1 " + fontRegularId + " 0 R /F2 " + fontBoldId + " 0 R >> >> /Contents " + contentId + " 0 R >>";
+    });
+    objects[2] = "<< /Type /Pages /Kids [" + pageObjectIds.map(id => id + " 0 R").join(" ") + "] /Count " + pageObjectIds.length + " >>";
+    let pdf = "%PDF-1.4\n";
+    const offsets = [0];
+    for (let i=1; i<nextId; i++) {
+      offsets[i] = pdf.length;
+      pdf += i + " 0 obj\n" + objects[i] + "\nendobj\n";
+    }
+    const xref = pdf.length;
+    pdf += "xref\n0 " + nextId + "\n0000000000 65535 f \n";
+    for (let i=1; i<nextId; i++) pdf += String(offsets[i]).padStart(10,"0") + " 00000 n \n";
+    pdf += "trailer\n<< /Size " + nextId + " /Root 1 0 R >>\nstartxref\n" + xref + "\n%%EOF";
+    const bytes = new Uint8Array(pdf.length);
+    for (let i=0; i<pdf.length; i++) bytes[i] = pdf.charCodeAt(i) & 255;
+    return new Blob([bytes], {type:"application/pdf"});
   }
   async function downloadAssessmentReport(attempt) {
     const pdfBlob = await buildAssessmentPdf(attempt);
