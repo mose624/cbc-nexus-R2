@@ -1172,6 +1172,16 @@
     questionsBox.scrollIntoView({behavior:"smooth", block:"start"});
   }
 
+  function createAssessmentSerial() {
+    const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ";
+    const bytes = new Uint8Array(8);
+    if (window.crypto && window.crypto.getRandomValues) window.crypto.getRandomValues(bytes);
+    else for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(Math.random() * 256);
+    let letters = "";
+    for (let i = 0; i < bytes.length; i++) letters += alphabet[bytes[i] % alphabet.length];
+    return "CBENEXUS-" + letters + "-" + Date.now().toString(36).toUpperCase();
+  }
+
   function pdfSafe(value) {
     return String(value == null ? "" : value).replace(/[\u2018\u2019]/g, "'").replace(/[\u201C\u201D]/g, '"').replace(/[\u2013\u2014]/g, "-").replace(/[^\x20-\x7E]/g, "?");
   }
@@ -1219,6 +1229,8 @@
       : Number(attempt.score || 0);
     const overallStandard = getPerformanceStandard(overallAverage);
     const dateText = new Date(attempt.createdAt).toLocaleString();
+    if (!attempt.serialNumber) attempt.serialNumber = createAssessmentSerial();
+    const stampDateText = new Date(attempt.createdAt).toLocaleDateString("en-GB");
     const durationText = Math.floor(attempt.durationSeconds / 60) + "m " + (attempt.durationSeconds % 60) + "s";
     const feedback = attempt.remark || "Assessment completed";
     const rows = [
@@ -1247,6 +1259,7 @@
     text(42,778,"CBE NEXUS",20,true);
     text(42,758,"CONNECTING LEARNERS TO EXCELLENCE",9,true);
     text(42,716,"ASSESSMENT SUMMARY REPORT",13,true);
+    text(42,698,"SERIAL NO: " + attempt.serialNumber,8,true,"0.68 0.08 0.12");
     // Load the official site logo and embed it in the PDF header when available.
     let logoBinary = "";
     try {
@@ -1300,6 +1313,15 @@
     text(42,y,"Topic: " + (attempt.strand || "All Topics") + " | Sub-strand: " + (attempt.subStrand || "All Sub-Strands"),7.5); y-=14;
     text(42,y,"Outcome: " + (attempt.learningOutcome || "All Outcomes"),7.5); y-=24;
     text(42,y,"Teacher comment: " + (Number(attempt.score) < 30 ? "Provide guided revision and additional practice." : Number(attempt.score) < 50 ? "Reinforce core concepts and monitor progress." : "Encourage continued application and extension tasks."),8);
+    // CBE Nexus certification stamp with the assessment date in red.
+    const stampX = 470, stampY = 112, stampSize = 100;
+    ops.push("q\n0.68 0.08 0.12 RG\n2 w\n" + stampX + " " + stampY + " " + stampSize + " " + stampSize + " re S\nQ\n");
+    ops.push("q\n0.68 0.08 0.12 RG\n0.8 w\n" + (stampX + 5) + " " + (stampY + 5) + " " + (stampSize - 10) + " " + (stampSize - 10) + " re S\nQ\n");
+    text(stampX + 13, stampY + 72, "CBE NEXUS", 10, true, "0.08 0.40 0.22");
+    text(stampX + 13, stampY + 54, "CERTIFIED", 11, true, "0.08 0.40 0.22");
+    text(stampX + 13, stampY + 35, "ASSESSMENT", 7, true, "0.12 0.16 0.20");
+    text(stampX + 13, stampY + 23, "DATE", 7, true, "0.12 0.16 0.20");
+    text(stampX + 13, stampY + 10, stampDateText, 8, true, "0.82 0.05 0.12");
     // Sign-off always appears at the bottom of this one-page report.
     rect(36,48,540,2,"0.93 0.72 0.06");
     text(42,80,"CEO: CBENEXUS.CO.KE",9,true);
@@ -1364,6 +1386,7 @@
     const score = Math.round((correct / total) * 100);
     const attempt = {
       id: "quiz-" + Date.now(),
+      serialNumber: createAssessmentSerial(),
       learner: learner.value.trim(),
       grade: grade.value,
       subject: subject.value,
@@ -1416,6 +1439,7 @@
       "<div><strong>" + correct + "/" + total + "</strong><span>Correct</span></div>" +
       "<div><strong>" + answered + "/" + total + "</strong><span>Answered</span></div>" +
       "<div><strong>" + Math.floor(attempt.durationSeconds / 60) + "m " + (attempt.durationSeconds % 60) + "s</strong><span>Time</span></div></div>" +
+      (attempt.mode === "assessment" ? "<p class=\"assessment-serial-number\"><strong>Assessment serial number:</strong> " + escapeHtml(attempt.serialNumber) + "</p>" : "") +
       "<h3>" + escapeHtml(attempt.remark) + "</h3>" + review;
 
     renderProgress();
