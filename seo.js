@@ -149,7 +149,10 @@ async function sitemap(req){
   "/scholarships-opportunities.html","/international-teaching-jobs.html","/professional-cv-writing.html",
   "/ai-training.html","/school-directory.html","/international-curriculum.html","/igcse.html",
   "/cambridge-international.html","/ib.html","/pearson-edexcel.html","/a-levels.html","/o-levels.html",
-  "/cbc-notes-kenya","/cbc-exams-kenya","/kjsea-revision"
+  "/cbc-notes-kenya","/cbc-exams-kenya","/kjsea-revision",
+  "/free-interactive-questions","/grade-9-kjsea-revision-questions","/grade-10-cbe-practice-questions",
+  "/free-cbc-online-quizzes","/mashujaa-day-kenyan-heroes-quiz","/free-ai-training",
+  "/free-cv-writing","/free-international-jobs","/all-schools-in-kenya"
  ];
  try{
   if(Array.isArray(KENYA_COUNTIES)) KENYA_COUNTIES.forEach(c=>urls.push("/kenya-education-county/"+slug(c)));
