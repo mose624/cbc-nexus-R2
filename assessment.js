@@ -1248,7 +1248,7 @@
     addText(page,40,698,"ASSESSMENT SUMMARY",10,true);
     addText(page,40,673,"Score: " + attempt.score + "%     Correct: " + attempt.correct + "/" + attempt.total + "     Answered: " + attempt.answered + "/" + attempt.total,9,true);
     addText(page,40,657,"Performance: " + (attempt.remark || "Assessment completed"),8,false);
-    addText(page,40,638,"MARKING KEY: green tick = correct; red X = incorrect or unanswered.",8,true);
+    addText(page,40,638,"MARKING KEY: red tick = correct; red X = incorrect or unanswered.",8,true);
     page.y = 614;
 
     const results = Array.isArray(attempt.results) ? attempt.results : [];
@@ -1294,8 +1294,8 @@
       }
       // Draw a large vector tick or X at the right of the question heading.
       if (result.isCorrect) {
-        addLine(page,548,top-8,553,top-13,green,2.5);
-        addLine(page,553,top-13,563,top-3,green,2.5);
+        addLine(page,548,top-8,553,top-13,red,2.5);
+        addLine(page,553,top-13,563,top-3,red,2.5);
       } else {
         addLine(page,550,top-4,562,top-16,red,2.5);
         addLine(page,550,top-16,562,top-4,red,2.5);
