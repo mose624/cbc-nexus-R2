@@ -5084,7 +5084,7 @@ a[href="tuition.html"] * {
 @media(max-width:520px){.home-dashboard-cards{padding:24px 13px}.home-dashboard-card-grid{grid-template-columns:1fr;gap:10px}.home-dashboard-card{min-height:0;padding:15px}}
 
 
-/* High-visibility Interactive Questions header dashboard button. */
+/* High-visibility sky-blue blinking Interactive Questions button. */
 .interactive-questions-header-btn {
   position: relative;
   isolation: isolate;
@@ -5094,15 +5094,15 @@ a[href="tuition.html"] * {
   gap: 7px;
   min-height: 42px;
   padding: 10px 16px;
-  border: 2px solid #20e85a;
+  border: 2px solid #38bdf8;
   border-radius: 999px;
-  background: #21d94b;
+  background: #7dd3fc;
   color: #050505 !important;
   font-weight: 900;
   line-height: 1.15;
   text-align: center;
   white-space: nowrap;
-  box-shadow: 0 0 0 2px rgba(20, 210, 70, .18), 0 0 16px rgba(20, 210, 70, .72);
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, .28), 0 0 16px rgba(14, 165, 233, .78);
   animation: interactive-question-pulse 1.1s ease-in-out infinite;
 }
 .interactive-questions-header-btn::before {
@@ -5112,7 +5112,7 @@ a[href="tuition.html"] * {
   inset: -4px;
   border-radius: inherit;
   padding: 3px;
-  background: conic-gradient(from 0deg, #fff700 0deg, #00ff66 65deg, #ffffff 120deg, #00ff66 190deg, #fff700 255deg, #00ff66 320deg, #fff700 360deg);
+  background: conic-gradient(from 0deg, #ffffff 0deg, #38bdf8 65deg, #e0f7ff 120deg, #0ea5e9 190deg, #ffffff 255deg, #38bdf8 320deg, #ffffff 360deg);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -5121,15 +5121,15 @@ a[href="tuition.html"] * {
 }
 .interactive-questions-header-btn:hover,
 .interactive-questions-header-btn:focus-visible {
-  background: #8dff9d;
+  background: #bae6fd;
   color: #000 !important;
   outline: 3px solid #111;
   outline-offset: 3px;
 }
 @keyframes interactive-question-snake { to { transform: rotate(360deg); } }
 @keyframes interactive-question-pulse {
-  0%, 100% { filter: brightness(1); box-shadow: 0 0 0 2px rgba(20, 210, 70, .18), 0 0 12px rgba(20, 210, 70, .6); }
-  50% { filter: brightness(1.22); box-shadow: 0 0 0 4px rgba(255, 242, 0, .25), 0 0 23px rgba(20, 210, 70, .95); }
+  0%, 100% { filter: brightness(1); box-shadow: 0 0 0 2px rgba(56, 189, 248, .3), 0 0 12px rgba(14, 165, 233, .68); }
+  50% { filter: brightness(1.22); box-shadow: 0 0 0 4px rgba(224, 247, 255, .65), 0 0 25px rgba(14, 165, 233, 1); }
 }
 @media (max-width: 760px) {
   .interactive-questions-header-btn { min-height: 38px; padding: 8px 11px; font-size: .86rem; }
