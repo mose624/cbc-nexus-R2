@@ -2253,7 +2253,7 @@ async function serveStatic(req,res,url){
 const server=http.createServer(async(req,res)=>{const url=new URL(req.url,`http://${req.headers.host||"127.0.0.1"}`);setSecurityHeaders(res);const limit=allowRequest(req,url);res.setHeader("X-RateLimit-Remaining",String(Math.max(0,limit.remaining)));if(!limit.allowed){res.setHeader("Retry-After","60");sendJson(res,429,{ok:false,error:"Too many requests. Please try again shortly."});return;}try{if(await handleApi(req,res,url))return;await serveStatic(req,res,url);}catch(error){console.error("Unhandled server error:",error);if(res.headersSent||res.writableEnded||res.destroyed){if(!res.writableEnded&&!res.destroyed)res.destroy(error);return;}sendJson(res,500,{ok:false,error:"Server error."});}});
 async function seedInteractiveQuestions(){
   try{
-    const seed=JSON.parse(await fs.readFile(path.join(ROOT,"interactive-questions-seed.json"),"utf8"));
+    const seed=[...JSON.parse(await fs.readFile(path.join(ROOT,"interactive-questions-seed.json"),"utf8")),...require("./grade10-high-order-questions.js")];
     await ensureDataDir();
     const existing=await readJsonStore("interactive-questions.json");
     const key=q=>String(q.grade||"")+"|"+String(q.subject||"").toLowerCase()+"|"+String(q.question||"").toLowerCase().replace(/\\s+/g," ").trim();
@@ -2261,7 +2261,7 @@ async function seedInteractiveQuestions(){
     const additions=seed.filter(q=>!keys.has(key(q)));
     if(additions.length){
       await fs.writeFile(path.join(DATA_DIR,"interactive-questions.json"),JSON.stringify([...additions,...existing].slice(0,5000),null,2));
-      console.log("Seeded "+additions.length+" Grade 10 Physics interactive questions.");
+      console.log("Seeded "+additions.length+" Grade 10 interactive questions across subject banks.");
     }
   }catch(error){console.error("Interactive question seed error:",error.message||error);}
 }
