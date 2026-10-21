@@ -37,6 +37,7 @@ const subjects = {
 "French":["comprehension","grammar in context","everyday vocabulary","written communication","listening strategies","spoken interaction","register and audience","verb forms","cultural context","editing for clarity"],
 "German":["comprehension","grammar in context","everyday vocabulary","written communication","listening strategies","spoken interaction","register and audience","verb forms","cultural context","editing for clarity"],
 "Arabic":["comprehension","grammar in context","everyday vocabulary","written communication","listening strategies","spoken interaction","register and audience","verb forms","cultural context","editing for clarity"],
+"Mandarin Chinese":["comprehension","characters and meaning","everyday vocabulary","written communication","listening strategies","spoken interaction","register and audience","sentence patterns","cultural context","editing for clarity"],
 "Mandarin":["comprehension","characters and meaning","everyday vocabulary","written communication","listening strategies","spoken interaction","register and audience","sentence patterns","cultural context","editing for clarity"],
 "Literature in English":["character motivation","theme and evidence","narrative perspective","imagery","tone","dramatic conflict","structure","context","interpretation","evidence-based response"],
 "Fasihi ya Kiswahili":["wahusika na motisha","maudhui na ushahidi","mandhari","tamathali za semi","mtindo","mgogoro wa tamthilia","muundo","muktadha","tafsiri","uchambuzi wa dondoo"],
