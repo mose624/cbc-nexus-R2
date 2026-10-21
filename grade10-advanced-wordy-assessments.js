@@ -129,8 +129,8 @@ for(const [subject,items] of Object.entries(templates)){
  for(let i=0;i<50;i++){
   const b=items[i%items.length], variant=Math.floor(i/items.length);
   const question=b[2]+(variant?(" In a follow-up review, the team records "+(variant+2)+" comparable observations and asks whether the conclusion still follows from the evidence."): "");
-  const options=b[3].slice(), correctIndex=(i*3+1)%4, correct=options.shift(); options.splice(correctIndex,0,correct);
-  rows.push({id:"g10-advanced-"+subject.toLowerCase().replace(/[^a-z0-9]+/g,"-")+"-"+String(i+1).padStart(3,"0"),grade:"Grade 10",subject,strand:b[0],substrand:b[1],question,options,correctIndex,explanation:b[4],learningOutcome:"Analyse a multi-step contextual problem, evaluate evidence and justify a defensible conclusion.",published:true});
+  const options=[b[3],...b[4]], correctIndex=(i*3+1)%4, correct=options.shift(); options.splice(correctIndex,0,correct);
+  rows.push({id:"g10-advanced-"+subject.toLowerCase().replace(/[^a-z0-9]+/g,"-")+"-"+String(i+1).padStart(3,"0"),grade:"Grade 10",subject,strand:b[0],substrand:b[1],question,options,correctIndex,explanation:b[5],learningOutcome:"Analyse a multi-step contextual problem, evaluate evidence and justify a defensible conclusion.",published:true});
  }
 }
 module.exports=rows;
