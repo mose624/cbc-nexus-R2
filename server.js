@@ -152,9 +152,17 @@ async function readInteractiveQuestionRows(){
           if(local.length){
             const legacy=local.filter(q=>q&&q.id&&q.question&&q.grade&&q.subject).map(interactiveQuestionToDb);
             for(let i=0;i<legacy.length;i+=100){
-              const {error}=await supabase.from("interactive_questions").upsert(legacy.slice(i,i+100),{onConflict:"id"});
+              const {error}=await supabase.from("interactive_questions").upsert(legacy.slice(i,i+100),{onConflict:"id",ignoreDuplicates:true});
               if(error) throw error;
             }
+          }
+          // Only the hand-authored curriculum-aligned bank should overwrite stable IDs.
+          // Keep the legacy migration insert-only so unrelated admin-published questions
+          // are not replaced by generated starter templates at every deployment.
+          const explicitRows=require("./grade10-kicd-question-banks.js").map(interactiveQuestionToDb);
+          for(let i=0;i<explicitRows.length;i+=100){
+            const {error}=await supabase.from("interactive_questions").upsert(explicitRows.slice(i,i+100),{onConflict:"id"});
+            if(error) throw error;
           }
           return true;
         })().catch(error=>{interactiveQuestionMigrationPromise=null;throw error;});
