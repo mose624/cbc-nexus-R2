@@ -101,7 +101,7 @@ p('Approval notes: '+(m.approval||'_____________________________________________
 ];
 const doc=new Document({styles:{default:{document:{run:{font:'Times New Roman',size:24},paragraph:{spacing:{before:0,after:0,line:240}}}}},sections:[{properties:{page:{size:{orientation:PageOrientation.LANDSCAPE,width:16838,height:11906},margin:{top:500,right:420,bottom:500,left:420}}},children:info}]});
 const blob=await Packer.toBlob(doc);const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='Scheme-of-Work-'+m.grade.replace(/[^a-z0-9]+/gi,'-')+'-'+m.subject.replace(/[^a-z0-9]+/gi,'-')+'-'+m.term.replace(/[^a-z0-9]+/gi,'-')+'-'+m.year+'.docx';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);status.textContent='Word document downloaded. Format: A4 landscape, Times New Roman 12 pt, single line spacing. Check the downloaded file before printing.'}catch(e){console.error(e);status.textContent='Could not create the Word document in this browser. Reload the page and try again.'}});
-generate();
+$('curriculumUnit').addEventListener('change',()=>{const unit=KICD_UNITS[$('curriculumUnit').value];if(unit){$('grade').value=unit.grade;$('subject').value=unit.subject;}});
 })();
 </script>
 </body></html>
