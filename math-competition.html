@@ -13,14 +13,17 @@
     .math-hero .eyebrow{color:#9d174d;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
     .math-hero h1{max-width:900px;margin:12px auto;font-size:clamp(2rem,5vw,3.6rem);line-height:1.1;color:#17202a}
     .math-hero p{max-width:760px;margin:16px auto;color:#374151;font-size:clamp(1rem,2vw,1.2rem)}
-    .math-cta{display:inline-flex;align-items:center;justify-content:center;margin:12px 6px;padding:13px 22px;border-radius:999px;background:#db2777;color:white;font-weight:800;box-shadow:0 5px 18px #db277755}
-    .math-cta.secondary{background:#123447}
-    .math-content{max-width:1050px;margin:0 auto;padding:30px 18px 54px}
+    .math-cta{display:inline-flex;align-items:center;justify-content:center;margin:8px 6px;padding:13px 22px;border:0;border-radius:999px;background:#db2777;color:white;font-weight:800;cursor:pointer;box-shadow:0 5px 18px #db277755}
+    .math-cta.secondary{background:#123447}.math-content{max-width:1050px;margin:0 auto;padding:30px 18px 54px}
     .math-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;margin:24px 0}
     .math-card{background:white;border:1px solid #f3c4dc;border-radius:16px;padding:22px;box-shadow:0 8px 24px #17202a0d}
-    .math-card h2{font-size:1.15rem;margin-top:0;color:#9d174d}
-    .math-note{padding:18px;border-left:5px solid #db2777;background:#fff1f7;border-radius:8px}
+    .math-card h2{font-size:1.15rem;margin-top:0;color:#9d174d}.math-note{padding:18px;border-left:5px solid #db2777;background:#fff1f7;border-radius:8px}
     .math-footer{text-align:center;padding:22px;background:#c62828;color:white}
+    .registration{max-width:760px;margin:0 auto 34px;padding:clamp(20px,4vw,34px);background:#fff;border:1px solid #f3c4dc;border-radius:18px;box-shadow:0 10px 32px #17202a12}
+    .registration h2{margin-top:0;color:#9d174d}.registration-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .registration label{display:block;font-weight:700;font-size:.94rem}.registration input,.registration select{width:100%;margin-top:6px;padding:12px;border:1px solid #cbd5e1;border-radius:9px;background:#fff;color:#17202a}
+    .registration .full{grid-column:1/-1}.registration-status{min-height:24px;margin:12px 0;font-weight:700}.fee-pill{display:inline-block;background:#fce7f3;color:#9d174d;font-size:1.1rem;font-weight:900;padding:8px 14px;border-radius:999px}
+    @media(max-width:600px){.registration-grid{grid-template-columns:1fr}.registration .full{grid-column:auto}}
     @media(prefers-reduced-motion:no-preference){.math-cta{animation:mathGlow 1.5s ease-in-out infinite alternate}@keyframes mathGlow{from{box-shadow:0 0 7px #db277755}to{box-shadow:0 0 20px #db2777aa}}}
   </style>
 </head>
@@ -39,10 +42,30 @@
       <p class="eyebrow">Think • Solve • Shine</p>
       <h1>🏆 CBE Nexus Maths Competition</h1>
       <p>Is your child ready for a fun mathematical challenge? Help learners build confidence, sharpen problem-solving skills and discover that mathematics can be exciting.</p>
-      <a class="math-cta" href="mailto:info@cbenexus.co.ke?subject=Maths%20Competition%20Enquiry">Enquire About the Competition</a>
-      <a class="math-cta secondary" href="interactive-questions.html">Start Practising</a>
+      <p><strong>Competition dates: 5–10 December 2026</strong></p>
+      <p class="fee-pill">Registration fee: KSh 200 per learner</p>
+      <p><a class="math-cta" href="#register">Register a Learner</a><a class="math-cta secondary" href="interactive-questions.html">Start Practising</a></p>
     </section>
     <section class="math-content">
+      <section id="register" class="registration">
+        <h2>Register for the Maths Competition</h2>
+        <p>Complete the learner details below. The fee is <strong>KSh 200 per learner</strong>. Submit the form, then use M-Pesa to request payment on your phone.</p>
+        <form id="mathCompetitionForm"><div class="registration-grid">
+          <label>Learner's full name<input name="learnerName" autocomplete="name" required maxlength="120"></label>
+          <label>Grade / class<select name="grade" required><option value="">Choose grade</option><option>Grade 1</option><option>Grade 2</option><option>Grade 3</option><option>Grade 4</option><option>Grade 5</option><option>Grade 6</option><option>Grade 7</option><option>Grade 8</option><option>Grade 9</option><option>Grade 10</option><option>Other</option></select></label>
+          <label>School name<input name="school" required maxlength="160"></label>
+          <label>Parent / guardian full name<input name="guardianName" required maxlength="120"></label>
+          <label>Parent / guardian M-Pesa phone<input name="phone" type="tel" placeholder="0712345678" autocomplete="tel" required></label>
+          <label>Email (optional)<input name="email" type="email" autocomplete="email" maxlength="160"></label>
+          <div class="full"><button class="math-cta" id="registerSubmit" type="submit">Submit Registration</button></div>
+        </div></form>
+        <p id="registrationStatus" class="registration-status" role="status" aria-live="polite"></p>
+        <div id="paymentArea" hidden><p><strong>Registration reference:</strong> <span id="registrationReference"></span></p>
+          <button class="math-cta" id="payCompetition" type="button">Pay KSh 200 with M-Pesa</button>
+          <p id="paymentStatus" class="registration-status" role="status" aria-live="polite"></p>
+        </div>
+      </section>
+      <h2>Why encourage your child to take part?</h2>
       <h2>Why encourage your child to take part?</h2>
       <div class="math-cards">
         <article class="math-card"><h2>🧠 Think Critically</h2><p>Build logical reasoning and learn to approach unfamiliar problems step by step.</p></article>
@@ -56,6 +79,38 @@
       <p><a class="math-cta" href="interactive-questions.html">Explore Interactive Questions</a></p>
     </section>
   </main>
+  <script>
+    (() => {
+      const form=document.getElementById("mathCompetitionForm"),submit=document.getElementById("registerSubmit"),status=document.getElementById("registrationStatus"),paymentArea=document.getElementById("paymentArea"),reference=document.getElementById("registrationReference"),payButton=document.getElementById("payCompetition"),paymentStatus=document.getElementById("paymentStatus");
+      let registration=null,phone="";
+      form.addEventListener("submit",async event=>{
+        event.preventDefault();submit.disabled=true;status.textContent="Submitting registration details…";
+        const data=Object.fromEntries(new FormData(form).entries());phone=String(data.phone||"").trim();
+        try{
+          const response=await fetch("/api/math-competition/register",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
+          const result=await response.json().catch(()=>({}));
+          if(!response.ok||!result.ok)throw new Error(result.error||"Registration could not be submitted.");
+          registration=result.registration;reference.textContent=registration.id;paymentArea.hidden=false;
+          status.textContent="Registration details received. Complete the KSh 200 payment below to finish registration.";
+          paymentArea.scrollIntoView({behavior:"smooth",block:"center"});
+        }catch(error){status.textContent=error.message||"Registration failed. Please try again."}
+        finally{submit.disabled=false}
+      });
+      payButton.addEventListener("click",async()=>{
+        if(!registration){paymentStatus.textContent="Submit the registration form first.";return}
+        const enteredPhone=window.prompt("Enter the M-Pesa phone number to receive the KSh 200 STK Push:",phone);
+        if(!enteredPhone)return;
+        payButton.disabled=true;paymentStatus.textContent="Starting secure M-Pesa STK Push… Check your phone for the payment prompt.";
+        try{
+          const response=await fetch("/api/mpesa/stk-push",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({customerPhone:enteredPhone,resourceId:"competition:maths"})});
+          const result=await response.json().catch(()=>({}));
+          if(!response.ok||!result.ok)throw new Error(result.error||"M-Pesa payment could not be started.");
+          paymentStatus.textContent="STK Push sent for KSh 200. Complete the prompt on your phone. Registration is not confirmed until payment is verified.";
+        }catch(error){paymentStatus.textContent=error.message||"Payment could not be started. Please try again or contact info@cbenexus.co.ke."}
+        finally{payButton.disabled=false}
+      });
+    })();
+  </script>
   <footer class="math-footer">CBE Nexus • Quality learning resources for every learner</footer>
 </body>
 </html>
