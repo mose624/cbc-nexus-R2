@@ -131,5 +131,5 @@ function toBank(rows, subject, prefix, outcome) {
 }
 module.exports = [
  ...toBank(aviationRows,"Aviation","g10-aviation","Apply aviation science, navigation, safety, maintenance and professional judgement to realistic operational situations."),
- ...toBank(buildingRows,"Building & Construction","g10-building-construction","Apply construction planning, materials knowledge, safe workmanship, quality control and sustainable building practices.")
+ ...toBank(buildingRows,"Building and Construction","g10-building-construction","Apply construction planning, materials knowledge, safe workmanship, quality control and sustainable building practices.")
 ];
