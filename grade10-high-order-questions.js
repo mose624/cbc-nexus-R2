@@ -88,6 +88,118 @@ const answerSets = [
   ["Compare the explanations against the available evidence and state any limitations.","Choose the explanation with the most technical-sounding words.","Treat both explanations as proven without checking.","Discard the evidence and rely on personal preference."],
   ["Apply the relevant principle to the situation and justify the choice with specific evidence.","Repeat a definition without connecting it to the situation.","Give an opinion without explaining its basis.","Describe an unrelated fact instead of answering the task."]
 ];
+const curriculum = {
+"Core Mathematics": {
+"linear equations":["Algebra","Linear equations","Formulate and solve linear equations from real-life situations."],
+"functions and graphs":["Algebra","Functions and graphs","Represent relationships using tables, equations and graphs."],
+"ratio and proportion":["Numbers","Ratio and proportion","Solve contextual problems involving ratio and proportion."],
+"percentages and commercial arithmetic":["Numbers","Percentages","Apply percentages to budgets, discounts and financial decisions."],
+"geometry and measurement":["Measurement","Geometrical measurement","Select and apply appropriate measurement formulae."],
+"trigonometry":["Geometry","Trigonometry","Use trigonometric ratios to solve right-angled triangle problems."],
+"statistics":["Statistics","Data representation and interpretation","Interpret data and justify conclusions from statistical displays."],
+"probability":["Statistics","Probability","Determine and interpret probabilities for simple events."],
+"indices and standard form":["Numbers","Indices and standard form","Apply index laws and standard form to calculations."],
+"sequences":["Algebra","Sequences","Identify patterns and express general terms where appropriate."]
+},
+"English": {
+"reading inference":["Reading","Comprehension and inference","Infer meaning and justify interpretations using textual evidence."],
+"argument and evidence":["Writing","Argumentative writing","Develop a coherent claim supported by relevant reasons and evidence."],
+"grammar in context":["Language use","Grammar in context","Select grammatical structures appropriate to meaning and context."],
+"sentence structure":["Language use","Sentence construction","Revise sentences for clarity, cohesion and correctness."],
+"tone and audience":["Oral communication","Audience, purpose and register","Adapt tone and language to audience and purpose."],
+"summary":["Reading","Summarising","Select main ideas and paraphrase them concisely without distortion."],
+"vocabulary in context":["Reading","Vocabulary in context","Infer word meaning from contextual clues."],
+"punctuation":["Language use","Punctuation","Use punctuation to clarify meaning and sentence relationships."],
+"creative writing":["Writing","Creative composition","Develop a coherent narrative using relevant descriptive techniques."],
+"oral communication":["Oral communication","Listening and speaking","Respond appropriately and support spoken contributions with reasons."]
+},
+"Kiswahili": {
+"ufahamu":["Kusoma","Ufahamu","Kutoa maana na hitimisho kwa kutumia ushahidi kutoka matini."],
+"sarufi katika muktadha":["Matumizi ya lugha","Sarufi","Kutumia miundo ya sarufi kwa usahihi kulingana na muktadha."],
+"uandishi wa insha":["Kuandika","Insha","Kuandika insha yenye mtiririko, hoja na matumizi sahihi ya lugha."],
+"msamiati":["Kusoma","Msamiati","Kutambua maana ya msamiati kwa kuzingatia muktadha."],
+"methali na nahau":["Fasihi simulizi","Methali na nahau","Kufasiri methali au nahau na kuitumia katika muktadha unaofaa."],
+"muundo wa sentensi":["Matumizi ya lugha","Muundo wa sentensi","Kuchanganua na kuboresha sentensi ili kuwasilisha maana wazi."],
+"fasihi":["Fasihi","Uchambuzi wa fasihi","Kuchambua maudhui na wahusika kwa kurejelea ushahidi wa kazi."],
+"mawasiliano":["Kuzungumza na kusikiliza","Mawasiliano","Kuchagua lugha inayofaa hadhira na lengo la mawasiliano."],
+"hoja na ushahidi":["Kuandika","Uwasilishaji wa hoja","Kujenga hoja zenye ushahidi unaofaa."],
+"uandishi rasmi":["Kuandika","Uandishi rasmi","Kutumia muundo na sajili inayofaa katika maandishi rasmi."]
+},
+"Electricity": {
+"electrical safety":["Electrical Technology","Electrical safety in the work environment","Identify hazards, select appropriate protective measures and follow safe isolation procedures."],
+"circuit symbols":["Electrical Technology","Electrical drawings and symbols","Interpret standard circuit symbols and use them to communicate circuit arrangements."],
+"series and parallel circuits":["Electrical Technology","Electrical circuits","Distinguish series and parallel connections and predict their effects on circuit behaviour."],
+"current voltage and resistance":["Electrical Technology","Electrical quantities and measurement","Measure and relate current, voltage and resistance using appropriate instruments."],
+"power and energy":["Electrical Technology","Electrical power and energy","Calculate electrical power and energy from supplied circuit data."],
+"fault finding":["Electrical Technology","Testing and fault diagnosis","Use a systematic and safe procedure to locate a simple circuit fault."],
+"earthing":["Electrical Technology","Protection and earthing","Explain how protective earthing reduces electric-shock risk."],
+"measurement instruments":["Electrical Technology","Electrical measuring instruments","Select and connect a suitable meter safely and correctly."],
+"load calculations":["Electrical Technology","Electrical loads and circuits","Estimate total load and assess whether a circuit rating is suitable."],
+"efficient energy use":["Electrical Technology","Energy efficiency","Recommend safe practices that reduce unnecessary electrical energy use."]
+}
+};
+const specific = {
+"Core Mathematics": [
+{q:"A school club has KSh 2,400. It spends KSh 350 on stationery and then buys notebooks costing KSh x each. If 10 notebooks leave KSh 1,300, which equation models the spending?",o:["350 + 10x = 1,100","350 + 10x = 2,400","10x - 350 = 1,300","350x + 10 = 1,300"],a:0,e:"The total spent is 2,400 - 1,300 = 1,100, so 350 + 10x = 1,100."},
+{q:"A water tank's volume is recorded every hour and plotted against time. The graph is a straight line rising at a constant rate. What does its gradient represent?",o:["The tank's initial volume only","The rate at which the volume increases","The total number of hours measured","The highest volume the tank can hold"],a:1,e:"The gradient gives the change in volume per unit time."},
+{q:"A recipe uses flour and sugar in the ratio 5:2. If 750 g of flour is used, how much sugar is needed to keep the recipe proportional?",o:["150 g","250 g","300 g","375 g"],a:2,e:"Each ratio part is 750 ÷ 5 = 150 g; sugar is 2 × 150 = 300 g."},
+{q:"A school bag marked KSh 2,500 is discounted by 12%. What is the sale price?",o:["KSh 300","KSh 2,200","KSh 2,188","KSh 2,800"],a:1,e:"12% of 2,500 is 300; sale price = 2,500 - 300 = KSh 2,200."},
+{q:"A rectangular classroom floor is 8.4 m long and 6 m wide. How many square metres of tiles are needed, ignoring wastage?",o:["14.4 m²","28.8 m²","50.4 m²","100.8 m²"],a:2,e:"Area = length × width = 8.4 × 6 = 50.4 m²."},
+{q:"A ladder 5 m long rests against a vertical wall. Its foot is 3 m from the wall. How high up the wall does it reach?",o:["2 m","3 m","4 m","8 m"],a:2,e:"Using Pythagoras, height² = 5² - 3² = 16, so height = 4 m."},
+{q:"The marks of five learners are 4, 6, 7, 7 and 11. Which measure is the median?",o:["6","7","7.0","11"],a:1,e:"The middle value in the ordered list is 7."},
+{q:"A bag contains 3 red, 2 blue and 5 green counters. One counter is selected randomly. What is the probability it is blue?",o:["1/5","1/3","2/5","1/2"],a:0,e:"There are 2 blue counters out of 10, so probability = 2/10 = 1/5."},
+{q:"A learner writes 0.00072 in standard form. Which expression is correct?",o:["7.2 × 10⁻⁴","7.2 × 10⁴","72 × 10⁻⁴","0.72 × 10⁻³"],a:0,e:"Move the decimal four places right to obtain 7.2, giving 7.2 × 10⁻⁴."},
+{q:"A sequence is 5, 9, 13, 17, ... Which expression gives the nth term?",o:["4n + 1","5n - 1","4n + 5","n + 4"],a:0,e:"The common difference is 4; the nth term is 5 + (n - 1)4 = 4n + 1."}
+],
+"English": [
+{q:"Read: 'Although the river looked calm, the warning sign remained beside the bridge.' Which inference is best supported?",o:["The river is always safe.","A hidden or changing danger may remain despite the calm appearance.","The bridge has already collapsed.","The warning sign was placed there for decoration."],a:1,e:"The contrast between the calm appearance and warning supports caution, not certainty about the river."},
+{q:"A learner writes, 'The school should extend the library hours.' Which addition would provide the strongest evidence for this argument?",o:["Everyone knows libraries are useful.","Some learners say the library is nice.","A survey showing many learners cannot access books before closing time.","The writer likes reading more than sport."],a:2,e:"A relevant survey directly supports the claim with evidence."},
+{q:"Choose the sentence with correct subject–verb agreement.",o:["The list of laboratory rules are on the wall.","The list of laboratory rules is on the wall.","The rules in the list is on the wall.","The list, together with the rules, are on the wall."],a:1,e:"The head subject is singular 'list', so the verb is 'is'."},
+{q:"Which revision best combines these ideas? 'The rain was heavy. The match continued.'",o:["The rain was heavy, because the match continued.","Although the rain was heavy, the match continued.","The rain was heavy the match continued.","The match continued, the rain was heavy because."],a:1,e:"'Although' correctly signals contrast and creates a grammatical complex sentence."},
+{q:"You are writing a formal email to the school principal requesting permission to hold a debate. Which opening is most appropriate?",o:["Hey, let us do a debate.","I demand that you allow our debate.","Dear Principal, I am writing to request permission to organise a debate.","What's up? We want a debate."],a:2,e:"The wording is respectful, clear and appropriate for a formal audience."},
+{q:"Which sentence best summarises a paragraph explaining that planting trees reduces soil erosion, provides shade and supports biodiversity?",o:["Trees are green and many people like them.","Planting trees benefits the environment by protecting soil, providing shade and supporting living things.","Soil is sometimes washed away when it rains.","Some people plant trees near schools."],a:1,e:"The option combines the central ideas without adding an unrelated opinion."},
+{q:"In 'The exhausted team trudged towards the finish line', what does 'trudged' most likely mean?",o:["Moved slowly and with effort","Ran quickly with excitement","Stopped permanently","Moved silently by flying"],a:0,e:"'Exhausted' and the context suggest slow, effortful movement."},
+{q:"Which punctuation best completes the sentence? 'The teacher asked ___ Have you submitted your project ___'",o:[", ... .","; ... ,"," : ... ?"," . ... !"],a:2,e:"A colon can introduce the direct question, which ends with a question mark."},
+{q:"Which detail would most effectively build suspense in a story about a learner returning to an empty classroom?",o:["The classroom had four windows.","A faint tapping continued from the locked cupboard after everyone had left.","The desk was made of wood.","The learner had used a blue pen."],a:1,e:"An unexplained sound in an empty room creates uncertainty and suspense."},
+{q:"During a group discussion, a learner disagrees with a proposal. Which response is most constructive?",o:["That idea is foolish; stop talking.","I disagree because the plan does not include transport for learners who live far away.","I will ignore everyone until they change it.","Only my opinion should be considered."],a:1,e:"It states disagreement respectfully and gives a relevant reason."}
+],
+"Kiswahili": [
+{q:"Soma: 'Ingawa mvua ilikuwa imekoma, njia ilikuwa na matope mengi.' Ni hitimisho lipi linaungwa mkono na sentensi hii?",o:["Njia ilikuwa kavu kabisa.","Madhara ya mvua bado yalionekana kwenye njia.","Mvua haikunyesha kamwe.","Watu wote walikuwa wameondoka."],a:1,e:"Matope yanaonyesha kuwa athari za mvua ziliendelea hata baada ya mvua kukoma."},
+{q:"Chagua sentensi yenye upatanisho sahihi wa kisarufi.",o:["Wanafunzi amefika mapema.","Wanafunzi wamefika mapema.","Wanafunzi limefika mapema.","Wanafunzi umefika mapema."],a:1,e:"Nomino ya wingi 'wanafunzi' huambatana na kitenzi 'wamefika'."},
+{q:"Ni kauli ipi inayofaa zaidi katika insha ya hoja kuhusu usafi shuleni?",o:["Usafi ni kitu tu, hamna cha kusema.","Kwa mfano, takwimu za taka zilizokusanywa kila wiki zinaweza kuonyesha kama kampeni ya usafi imefanikiwa.","Mimi sipendi kuzungumza kuhusu usafi.","Kila mtu anajua kila jambo bila ushahidi."],a:1,e:"Kauli hii inatoa ushahidi unaoweza kupimwa ili kuunga mkono hoja."},
+{q:"Katika muktadha wa mwanafunzi aliyefanya bidii hadi akafaulu, nahau 'kuweka juhudi' ina maana gani?",o:["Kukataa kufanya kazi","Kujitahidi kwa makini","Kusafiri mbali","Kusubiri wengine wafanye"],a:1,e:"'Kuweka juhudi' humaanisha kujitahidi kufanya jambo."},
+{q:"Ni sentensi ipi inayotumia kiunganishi kuonyesha sababu?",o:["Alisoma kwa bidii lakini hakufika.","Alifurahi kwa sababu alifaulu mtihani.","Alifika kisha akaondoka.","Alisoma au akacheza."],a:1,e:"'Kwa sababu' huonyesha sababu ya kufurahi."},
+{q:"Ni kipengele gani kinafaa zaidi katika barua rasmi ya kuomba vifaa vya maabara?",o:["Lugha ya matusi na utani","Madhumuni yaliyo wazi, lugha ya heshima na maelezo ya vifaa vinavyohitajika","Majina ya marafiki pekee","Misemo isiyohusiana na ombi"],a:1,e:"Barua rasmi inahitaji lugha ya heshima na ombi lililoelezwa wazi."},
+{q:"Mwandishi akitumia tashbihi 'mwepesi kama upepo', anatumia tamathali gani?",o:["Sitiari","Tashbihi","Tashihisi","Kinaya"],a:1,e:"Neno 'kama' linaonyesha ulinganisho wa moja kwa moja, yaani tashbihi."},
+{q:"Ni jibu lipi linalofaa katika mawasiliano rasmi unapohitaji ufafanuzi?",o:["Sielewi chochote, acha.","Tafadhali, unaweza kufafanua hatua ya pili ili niielewe vizuri?","Ongea upesi!","Hayo si muhimu."],a:1,e:"Jibu hili lina heshima na linaomba ufafanuzi mahsusi."},
+{q:"Ni hoja ipi inayotumia ushahidi unaofaa kuhusu matumizi ya maji shuleni?",o:["Maji ni muhimu kwa sababu nimesema hivyo.","Rekodi zinaonyesha matumizi ya maji yalipungua baada ya kurekebisha mabomba yaliyovuja.","Hakuna haja ya kupima matumizi.","Maji yote hutumika kwa kiwango sawa kila siku."],a:1,e:"Rekodi za matumizi zinaweza kuthibitisha mabadiliko baada ya hatua kuchukuliwa."},
+{q:"Ni kipengele kipi ni muhimu katika aya yenye mshikamano?",o:["Sentensi zisizohusiana","Wazo kuu linaloungwa mkono na sentensi zinazofuatana kimantiki","Kurudia neno moja bila sababu","Kubadilisha mada kila sentensi"],a:1,e:"Aya yenye mshikamano huwa na wazo kuu na sentensi zinazoliendeleza kwa mantiki."}
+],
+"Electricity": [
+{q:"Before replacing a damaged switch in a school workshop, what is the safest first action for a competent authorised person?",o:["Touch the exposed conductor to check whether it is live.","Isolate the supply, secure it against reconnection and verify absence of voltage with a suitable tester.","Ask a learner to hold the wire.","Replace the switch while the circuit is energised."],a:1,e:"Safe isolation, prevention of reconnection and proving the circuit dead are essential before work begins."},
+{q:"A learner is drawing a circuit diagram for a lamp controlled by a switch. Why should standard circuit symbols be used?",o:["They make every circuit use less current.","They provide a consistent, widely understood representation of components and connections.","They replace the need to test a circuit.","They indicate the colour of every wire."],a:1,e:"Standard symbols make circuit drawings clear and interpretable by others."},
+{q:"Two identical lamps are connected in series to a battery. One lamp becomes disconnected. What happens to the other lamp?",o:["It becomes brighter.","It remains at the same brightness.","It goes out because the circuit path is broken.","It changes into a parallel circuit."],a:2,e:"A series circuit has one path; opening it stops current through both lamps."},
+{q:"A component has a potential difference of 12 V and a resistance of 4 Ω. What current flows through it, assuming it obeys Ohm's law?",o:["0.33 A","3 A","8 A","48 A"],a:1,e:"I = V/R = 12/4 = 3 A."},
+{q:"A 1.5 kW heater operates for 2 hours. How much electrical energy does it use?",o:["0.75 kWh","1.5 kWh","3 kWh","3.5 kWh"],a:2,e:"Energy = power × time = 1.5 kW × 2 h = 3 kWh."},
+{q:"A fuse repeatedly opens when a particular appliance is switched on. What is the most responsible next step?",o:["Fit a much larger fuse without checking the circuit.","Bypass the fuse temporarily.","Disconnect the appliance and arrange safe inspection for overload or fault.","Keep replacing the fuse while the appliance runs."],a:2,e:"Repeated fuse operation indicates a possible overload or fault and requires safe diagnosis."},
+{q:"Why is protective earthing provided for the exposed conductive casing of certain appliances?",o:["To increase the appliance's power consumption.","To provide a low-resistance fault path that helps protective devices disconnect the supply.","To make the casing act as a switch.","To prevent the appliance from using voltage."],a:1,e:"Earthing supports fault-current flow so a suitable protective device can disconnect the supply."},
+{q:"Which instrument connection is correct when measuring current through a lamp?",o:["Connect an ammeter in series with the lamp.","Connect an ammeter in parallel across the supply.","Connect a voltmeter in series to measure current.","Connect either meter without regard to polarity or range."],a:0,e:"Current is measured with an ammeter connected in series, using a suitable range."},
+{q:"A circuit supplies a 60 W lamp and a 40 W lamp at their rated operating conditions. What is their combined power?",o:["20 W","60 W","100 W","2,400 W"],a:2,e:"The total power is 60 W + 40 W = 100 W."},
+{q:"Which action best reduces unnecessary electricity use in a school computer room without compromising safety?",o:["Remove protective earth connections.","Leave all equipment on overnight.","Switch off equipment when not required and use suitable efficient devices.","Overload one extension socket with every computer."],a:2,e:"Switching off unused equipment and selecting efficient devices reduces avoidable energy use safely."}
+],
+"Physics": [
+{q:"A learner records the position of a moving trolley at equal time intervals. Which graph is most useful for comparing its speed during different intervals?",o:["Mass against colour","Distance against time","Temperature against name","Length against material"],a:1,e:"The gradient of a distance-time graph represents speed."},
+{q:"Two learners measure the same length and obtain slightly different results. Which practice most improves the reliability of their result?",o:["Choose the larger value automatically.","Repeat the measurement carefully and compare or average consistent readings.","Delete all readings except the first.","Change the unit midway through measurement."],a:1,e:"Repeated measurements help identify random variation and improve reliability."},
+{q:"A trolley accelerates when a resultant force acts on it. If its mass remains constant and the resultant force doubles, what happens to its acceleration?",o:["It halves.","It remains zero.","It doubles.","It becomes independent of force."],a:2,e:"From F = ma, with mass constant acceleration is directly proportional to resultant force."},
+{q:"A sharp knife cuts more easily than a blunt knife when the same force is applied. Which explanation is correct?",o:["The sharp knife produces greater pressure because the contact area is smaller.","The sharp knife removes the force.","The blunt knife has no contact area.","Pressure is independent of area."],a:0,e:"Pressure equals force divided by area; a smaller area produces greater pressure for the same force."},
+{q:"Why are gaps included in some bridges to accommodate temperature changes?",o:["To increase the bridge's mass.","To allow materials to expand and contract without excessive stress.","To stop gravity acting on the bridge.","To make the bridge absorb all sound."],a:1,e:"Materials expand when heated and contract when cooled; expansion gaps reduce stress."},
+{q:"A metal spoon in hot tea becomes warm at its handle. Which process mainly transfers heat through the solid spoon?",o:["Conduction","Convection","Evaporation","Reflection"],a:0,e:"Thermal energy passes through the metal by conduction."},
+{q:"A learner sees lightning before hearing thunder. What best explains the delay?",o:["Light travels much faster than sound in air.","Sound travels faster than light.","Thunder is produced several minutes later.","Lightning produces no sound."],a:0,e:"Light reaches the observer much earlier because its speed is far greater than sound's."},
+{q:"A student uses a converging lens to form a sharp image on a screen. What must be adjusted to achieve focus?",o:["The lens-screen or object-lens distance, as appropriate to the setup","The colour of the screen only","The mass of the lens","The room's name"],a:0,e:"Image focus depends on the relative positions of the object, lens and screen."},
+{q:"A 6 V battery is connected across a 3 Ω resistor. What current flows?",o:["0.5 A","2 A","3 A","18 A"],a:1,e:"Ohm's law gives I = V/R = 6/3 = 2 A."},
+{q:"A solar panel powers a water pump. Which description best represents the main energy conversion?",o:["Electrical energy to nuclear energy only","Light energy to electrical energy, then electrical energy to mechanical work","Sound energy to chemical energy","Heat energy to mass without energy transfer"],a:1,e:"The panel converts light to electricity and the motor converts electrical energy to mechanical work."}
+]
+};
 const out=[];
 const seen=new Set();
 for (const [subject,topics] of Object.entries(subjects)) {
@@ -96,15 +208,24 @@ for (const [subject,topics] of Object.entries(subjects)) {
   seen.add(canonical);
   for(let i=0;i<50;i++){
     const topic=topics[i%topics.length], c=contexts[Math.floor(i/5)%contexts.length], p=prompts[i%prompts.length], set=answerSets[i%answerSets.length];
-    const opts=set.slice();
-    const correct=(i*3+Math.floor(i/5))%4;
-    const answer=opts[0]; opts[0]=opts[correct]; opts[correct]=answer;
-    const question=p(canonical,topic,c);
+    let question, options, correct, explanation, strand=topic, substrand=topic, learningOutcome="Apply subject knowledge to a contextual problem and justify a safe, evidence-based solution.";
+    const meta=curriculum[canonical]&&curriculum[canonical][topic];
+    if(meta){strand=meta[0];substrand=meta[1];learningOutcome=meta[2];}
+    const specificItems=specific[canonical];
+    if(specificItems&&specificItems[i%specificItems.length]){
+      const item=specificItems[i%specificItems.length];
+      question=item.q;options=item.o.slice();correct=item.a;explanation=item.e;
+    } else {
+      const opts=set.slice();
+      correct=(i*3+Math.floor(i/5))%4;
+      const answer=opts[0]; opts[0]=opts[correct]; opts[correct]=answer;
+      options=opts;question=p(canonical,topic,c);
+      explanation=opts[correct]+" The key is to connect "+topic+" to evidence, context, safety and the intended outcome.";
+    }
     out.push({
       id:"g10-ho-"+canonical.toLowerCase().replace(/[^a-z0-9]+/g,"-")+"-"+String(i+1).padStart(2,"0"),
-      grade:"Grade 10",subject:canonical,strand:topic,question,options:opts,correctIndex:correct,
-      explanation:opts[correct]+" The key is to connect "+topic+" to evidence, context, safety and the intended outcome.",
-      published:true
+      grade:"Grade 10",subject:canonical,strand,substrand,learningOutcome,question,options,correctIndex:correct,
+      explanation,published:true
     });
   }
 }
