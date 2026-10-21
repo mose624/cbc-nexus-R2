@@ -1368,6 +1368,7 @@
       if (right) correct++;
       results.push({
         question: item[0],
+        options: item[1],
         selected: selected,
         correctAnswer: item[2],
         isCorrect: right,
