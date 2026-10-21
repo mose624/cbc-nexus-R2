@@ -5189,3 +5189,34 @@ a[href="tuition.html"] * {
     padding: 6px 5px !important;
   }
 }
+
+
+/* Simple, high-contrast Maths Competition button. */
+.math-competition-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 10px 15px;
+  border: 2px solid #be185d;
+  border-radius: 999px;
+  background: #f9a8d4;
+  color: #111 !important;
+  font-weight: 900;
+  line-height: 1.15;
+  text-align: center;
+  box-shadow: 0 0 0 2px rgba(236, 72, 153, .18);
+  transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+.math-competition-btn:hover,
+.math-competition-btn:focus-visible {
+  background: #fbcfe8;
+  transform: translateY(-1px);
+  box-shadow: 0 0 14px rgba(219, 39, 119, .45);
+  outline: 2px solid #111;
+  outline-offset: 2px;
+}
+@media (max-width: 760px) {
+  .math-competition-btn { min-height: 38px; padding: 8px 11px; font-size: .86rem; }
+  .site-header .nav-actions { flex-wrap: wrap; }
+}
