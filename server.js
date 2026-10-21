@@ -159,7 +159,7 @@ async function readInteractiveQuestionRows(){
           // Only the hand-authored curriculum-aligned bank should overwrite stable IDs.
           // Keep the legacy migration insert-only so unrelated admin-published questions
           // are not replaced by generated starter templates at every deployment.
-          const explicitRows=[...require("./grade10-kicd-question-banks.js"),...require("./grade10-home-science-bank.js"),...require("./grade10-aviation-building-bank.js"),...require("./grade10-electricity-metal-wood-mechanics-marine-media-bank.js"),...require("./grade10-sports-music-theatre-bank.js"),...require("./grade10-language-literature-hre-bank.js")].map(interactiveQuestionToDb);
+          const explicitRows=[...require("./grade10-kicd-question-banks.js"),...require("./grade10-home-science-bank.js"),...require("./grade10-aviation-building-bank.js"),...require("./grade10-electricity-metal-wood-mechanics-marine-media-bank.js"),...require("./grade10-sports-music-theatre-bank.js"),...require("./grade10-language-literature-hre-bank.js"),...require("./grade4-8-high-order-question-banks.js")].map(interactiveQuestionToDb);
           for(let i=0;i<explicitRows.length;i+=100){
             const {error}=await supabase.from("interactive_questions").upsert(explicitRows.slice(i,i+100),{onConflict:"id"});
             if(error) throw error;
@@ -2261,7 +2261,7 @@ async function serveStatic(req,res,url){
 const server=http.createServer(async(req,res)=>{const url=new URL(req.url,`http://${req.headers.host||"127.0.0.1"}`);setSecurityHeaders(res);const limit=allowRequest(req,url);res.setHeader("X-RateLimit-Remaining",String(Math.max(0,limit.remaining)));if(!limit.allowed){res.setHeader("Retry-After","60");sendJson(res,429,{ok:false,error:"Too many requests. Please try again shortly."});return;}try{if(await handleApi(req,res,url))return;await serveStatic(req,res,url);}catch(error){console.error("Unhandled server error:",error);if(res.headersSent||res.writableEnded||res.destroyed){if(!res.writableEnded&&!res.destroyed)res.destroy(error);return;}sendJson(res,500,{ok:false,error:"Server error."});}});
 async function seedInteractiveQuestions(){
   try{
-    const explicit=[...require("./grade10-kicd-question-banks.js"),...require("./grade10-home-science-bank.js"),...require("./grade10-aviation-building-bank.js"),...require("./grade10-electricity-metal-wood-mechanics-marine-media-bank.js"),...require("./grade10-sports-music-theatre-bank.js"),...require("./grade10-language-literature-hre-bank.js")];
+    const explicit=[...require("./grade10-kicd-question-banks.js"),...require("./grade10-home-science-bank.js"),...require("./grade10-aviation-building-bank.js"),...require("./grade10-electricity-metal-wood-mechanics-marine-media-bank.js"),...require("./grade10-sports-music-theatre-bank.js"),...require("./grade10-language-literature-hre-bank.js"),...require("./grade4-8-high-order-question-banks.js")];
     const seed=[...JSON.parse(await fs.readFile(path.join(ROOT,"interactive-questions-seed.json"),"utf8")),...require("./grade10-high-order-questions.js"),...explicit];
     await ensureDataDir();
     const existing=await readJsonStore("interactive-questions.json");
