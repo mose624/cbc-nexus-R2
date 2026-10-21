@@ -110,41 +110,22 @@ const buildingRows = [
 ["Project management","Cost control","A builder chooses the cheapest material without checking the required performance. Why is this poor procurement?","Initial price alone ignores durability, safety, maintenance and specification compliance, which affect whole-life cost.",1]
 ];
 function toBank(rows, subject, prefix, outcome) {
-  const distractors = subject === "Aviation" ? [
-    "Ignore the checklist because the aircraft operated safely on the previous flight.",
-    "Proceed without checking the current weather, aircraft condition or operating limits.",
-    "Substitute an ordinary road map or guess for approved aeronautical information.",
-    "Continue despite an unresolved defect because the destination is nearby.",
-    "Assume one instrument reading is enough even when other indications conflict.",
-    "Exceed the approved mass or fuel limits to avoid delaying the journey.",
-    "Enter a runway or restricted area before receiving the required clearance.",
-    "Hide a near miss or incorrect record to avoid criticism.",
-    "Use an improvised repair without approval from qualified personnel.",
-    "Treat fatigue as harmless if the trainee feels confident."
-  ] : [
-    "Cover the defect with plaster or paint without correcting its underlying cause.",
-    "Proceed without checking the approved drawing, specification or site conditions.",
-    "Use the cheapest available material even if it fails the required performance.",
-    "Remove a guard or support temporarily to make the task faster.",
-    "Ignore a measurement error because it appears small at first.",
-    "Conceal a crack instead of reporting and assessing its cause.",
-    "Add uncontrolled water or alter a mix without following the specification.",
-    "Allow people to pass beside an unprotected excavation or unsafe work area.",
-    "Change a structural member or service route without approval.",
-    "Mix all waste together and discard reusable materials without sorting."
-  ];
   return rows.map((r,i)=>{
     const answer = r[3];
-    const wrong = [0,1,2].map(n => distractors[(i*3+n)%distractors.length]);
-    const raw = [answer,...wrong];
-    const shift = (i*7 + (subject === "Aviation" ? 1 : 2)) % 4;
-    const options = raw.map((_,j)=>raw[(j-shift+4)%4]);
-    const correctIndex = options.indexOf(answer);
+    const candidates = [];
+    for (let step=1; step<rows.length && candidates.length<3; step++) {
+      const candidate = rows[(i+step)%rows.length][3];
+      if (candidate !== answer && !candidates.includes(candidate)) candidates.push(candidate);
+    }
+    const raw = [answer,...candidates];
+    const shift = (i*7 + (subject === "Aviation" ? 1 : 2)) % raw.length;
+    const options = raw.map((_,j)=>raw[(j-shift+raw.length)%raw.length]);
     return {
       id: prefix + "-" + String(i+1).padStart(2,"0"),
       grade:"Grade 10", subject, strand:r[0], substrand:r[1],
       learningOutcome:outcome, question:r[2],
-      options, correctIndex, explanation:r[3], published:true
+      options, correctIndex:options.indexOf(answer),
+      explanation:answer, published:true
     };
   });
 }
