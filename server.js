@@ -134,7 +134,7 @@ let interactiveQuestionMigrationPromise=null;
 let interactiveQuestionLastKnownGood=null;
 let publishedResourcesLastKnownGood=new Map();
 function interactiveQuestionToDb(q){
-  return {id:String(q.id),grade:String(q.grade||""),subject:String(q.subject||""),strand:String(q.strand||"All Topics"),question:String(q.question||""),options:Array.isArray(q.options)?q.options:[],correct_index:Number(q.correctIndex),explanation:String(q.explanation||""),image_url:String(q.imageUrl||""),image_data:String(q.imageData||""),image_alt:String(q.imageAlt||q.question||""),published:q.published!==false,created_at:q.createdAt||new Date().toISOString(),updated_at:q.updatedAt||q.createdAt||new Date().toISOString()};
+  return {id:String(q.id),grade:String(q.grade||""),subject:String(q.subject||""),strand:String(q.strand||"All Topics")+(q.substrand?" — "+String(q.substrand):""),question:String(q.question||""),options:Array.isArray(q.options)?q.options:[],correct_index:Number(q.correctIndex),explanation:String(q.explanation||""),image_url:String(q.imageUrl||""),image_data:String(q.imageData||""),image_alt:String(q.imageAlt||q.question||""),published:q.published!==false,created_at:q.createdAt||new Date().toISOString(),updated_at:q.updatedAt||q.createdAt||new Date().toISOString()};
 }
 function interactiveQuestionFromDb(q){
   return {id:q.id,grade:q.grade,subject:q.subject,strand:q.strand||"All Topics",question:q.question,options:Array.isArray(q.options)?q.options:[],correctIndex:Number(q.correct_index),explanation:q.explanation||"",imageUrl:q.image_url||"",imageData:q.image_data||"",imageAlt:q.image_alt||q.question||"",published:q.published!==false,createdAt:q.created_at||null,updatedAt:q.updated_at||q.created_at||null};
@@ -152,7 +152,7 @@ async function readInteractiveQuestionRows(){
           if(local.length){
             const legacy=local.filter(q=>q&&q.id&&q.question&&q.grade&&q.subject).map(interactiveQuestionToDb);
             for(let i=0;i<legacy.length;i+=100){
-              const {error}=await supabase.from("interactive_questions").upsert(legacy.slice(i,i+100),{onConflict:"id",ignoreDuplicates:true});
+              const {error}=await supabase.from("interactive_questions").upsert(legacy.slice(i,i+100),{onConflict:"id"});
               if(error) throw error;
             }
           }
@@ -2253,16 +2253,32 @@ async function serveStatic(req,res,url){
 const server=http.createServer(async(req,res)=>{const url=new URL(req.url,`http://${req.headers.host||"127.0.0.1"}`);setSecurityHeaders(res);const limit=allowRequest(req,url);res.setHeader("X-RateLimit-Remaining",String(Math.max(0,limit.remaining)));if(!limit.allowed){res.setHeader("Retry-After","60");sendJson(res,429,{ok:false,error:"Too many requests. Please try again shortly."});return;}try{if(await handleApi(req,res,url))return;await serveStatic(req,res,url);}catch(error){console.error("Unhandled server error:",error);if(res.headersSent||res.writableEnded||res.destroyed){if(!res.writableEnded&&!res.destroyed)res.destroy(error);return;}sendJson(res,500,{ok:false,error:"Server error."});}});
 async function seedInteractiveQuestions(){
   try{
-    const seed=[...JSON.parse(await fs.readFile(path.join(ROOT,"interactive-questions-seed.json"),"utf8")),...require("./grade10-high-order-questions.js")];
+    const explicit=require("./grade10-kicd-question-banks.js");
+    const seed=[...JSON.parse(await fs.readFile(path.join(ROOT,"interactive-questions-seed.json"),"utf8")),...require("./grade10-high-order-questions.js"),...explicit];
     await ensureDataDir();
     const existing=await readJsonStore("interactive-questions.json");
     const key=q=>String(q.grade||"")+"|"+String(q.subject||"").toLowerCase()+"|"+String(q.question||"").toLowerCase().replace(/\\s+/g," ").trim();
-    const keys=new Set(existing.filter(Boolean).map(key));
-    const additions=seed.filter(q=>!keys.has(key(q)));
-    if(additions.length){
-      await fs.writeFile(path.join(DATA_DIR,"interactive-questions.json"),JSON.stringify([...additions,...existing].slice(0,5000),null,2));
-      console.log("Seeded "+additions.length+" Grade 10 interactive questions across subject banks.");
+    const explicitIds=new Set(explicit.map(q=>String(q.id)));
+    const mergedById=new Map(existing.filter(Boolean).filter(q=>!explicitIds.has(String(q.id))).map(q=>[String(q.id),q]));
+    const seenKeys=new Set([...mergedById.values()].map(key));
+    let additions=0;
+    for(const q of seed){
+      if(!q||!q.id) continue;
+      const id=String(q.id);
+      if(explicitIds.has(id)){
+        mergedById.set(id,q);
+        continue;
+      }
+      if(mergedById.has(id)) continue;
+      const k=key(q);
+      if(seenKeys.has(k)) continue;
+      mergedById.set(id,q);
+      seenKeys.add(k);
+      additions++;
     }
+    const ordered=[...explicit,...[...mergedById.values()].filter(q=>!explicitIds.has(String(q.id)))].slice(0,5000);
+    await fs.writeFile(path.join(DATA_DIR,"interactive-questions.json"),JSON.stringify(ordered,null,2));
+    console.log("Ensured "+explicit.length+" explicit Grade 10 KICD-aligned English questions; added "+additions+" additional starter questions.");
   }catch(error){console.error("Interactive question seed error:",error.message||error);}
 }
 seedInteractiveQuestions().finally(()=>server.listen(PORT,"0.0.0.0",()=>console.log(`CBE website backend running on port ${PORT}`)));
