@@ -166,6 +166,270 @@ const hre=[
 ["Religion and society","Charity","A community organises food support for families facing hardship. Which ethical value does this illustrate?","Compassion and generosity toward people in need.","A belief that vulnerable people should be ignored.","A requirement to publicise every recipient’s identity.","A rule that service must be paid.","The action reflects compassion and giving, values present in many religious and ethical traditions."],
 ["Comparative understanding","Interpretation","Two Hindu learners explain a ritual differently because their families follow different traditions. What should a learner conclude?","Religious practices can have different meanings across communities and lineages.","One learner must be dishonest.","All Hindu traditions are identical.","Rituals cannot have any meaning.","Interpretations can differ within a broad religious tradition; context matters."]
 ];
+
+/* Additional 30 questions per subject to bring each bank to 50. */
+function addSupplement(target, prefix, items, frames, distractors) {
+  items.forEach((item, i) => {
+    const frame = frames[i % frames.length];
+    const correct = item[2], wrong = distractors[i % distractors.length];
+    const options = [correct, ...wrong];
+    const row = [
+      item[0], item[1],
+      frame.replace(/\{topic\}/g, item[0]).replace(/\{context\}/g, item[3] || item[0]),
+      correct, ...wrong, item[4]
+    ];
+    target.push(row);
+  });
+}
+const litExtra = [
+["Character development","Inference","A character changes their behaviour after recognising the harm they caused.","a character who apologises and repairs damage","This change supports an inference about growth rather than a fixed personality."],
+["Theme","Evidence","A learner argues that a story values courage. Which evidence is strongest?","A scene where a character accepts a real risk to protect others","A theme must be supported by meaningful events in the text."],
+["Narrative structure","Flashback","A narrative pauses the present action to reveal a childhood memory. What is the function?","To provide background that helps explain the character’s present choices","A flashback supplies earlier information relevant to current events."],
+["Narrative structure","Foreshadowing","A writer repeatedly mentions a weak roof before a storm. How does this detail function?","It prepares readers for a possible later event","Foreshadowing plants clues that make a later event feel prepared for."],
+["Language","Metaphor","A poem calls hope “a lamp in a long tunnel.” What is implied?","Hope gives direction during a difficult period","The image compares hope to a source of light and guidance."],
+["Language","Personification","A writer says “the impatient wind knocked at every door.” What device is used?","Personification","The wind is given a human quality and action."],
+["Language","Symbolism","A broken watch recurs after a family loses a loved one. What might it suggest?","A disrupted sense of time or life after loss","A recurring object can gather symbolic meaning from its context."],
+["Poetry","Tone","A speaker describes injustice with controlled, bitter questions. Which tone fits best?","Indignant and critical","Word choice and repeated questioning establish a critical tone."],
+["Poetry","Enjambment","A sentence continues from one poetic line into the next without a pause. What effect may result?","A flowing movement that carries the reader forward","Enjambment allows syntax to run across line breaks."],
+["Poetry","Repetition","A phrase is repeated at the end of several stanzas. What should a reader examine?","How the refrain reinforces the poem’s central idea or feeling","A refrain gains force through repetition and its changing context."],
+["Drama","Subtext","A character says “I am delighted” while tearing a letter and avoiding eye contact. What should an actor consider?","The action may reveal feelings that contradict the spoken words","Subtext is suggested by behaviour and context beneath dialogue."],
+["Drama","Conflict","Two characters both have reasonable but incompatible goals. Why can this strengthen a scene?","It creates a dilemma whose outcome matters to both characters","Competing understandable aims create credible dramatic tension."],
+["Drama","Stage directions","A direction says a character pauses before answering a question. What can that pause communicate?","Hesitation, uncertainty or concealed information","A pause can convey meaning beyond the spoken dialogue."],
+["Prose","Point of view","A narrator reveals only one character’s thoughts while describing other people externally. What viewpoint is likely?","Third-person limited","Access is restricted mainly to one character’s inner experience."],
+["Prose","Setting","A story is set during a prolonged drought and centres on water access. How does setting operate?","It creates pressures that shape decisions and conflict","Setting can actively influence events rather than merely provide a backdrop."],
+["Prose","Irony","A character who condemns dishonesty is exposed for falsifying records. What is this?","Situational irony","The outcome contradicts expectations created by the character’s public stance."],
+["Literary criticism","Textual evidence","A learner makes an interpretation that conflicts with a quoted passage. What should they do?","Reconsider the claim against the full context of the passage","Interpretations should fit the language and evidence in the text."],
+["Comparative reading","Adaptation","A stage version removes a minor character but preserves the main conflict. How should the change be judged?","By whether the adaptation remains coherent and effective for its medium","Adaptations may alter details while preserving or reinterpreting core meanings."],
+["Characterisation","Indirect characterisation","A character shares food before anyone asks and never mentions it. What does this reveal?","The character may be generous through actions rather than self-description","Actions can indirectly reveal traits."],
+["Theme","Ambiguity","A story ends without revealing whether a reconciliation succeeds. What is a sound response?","Explain plausible readings using details from the story","Ambiguous endings invite evidence-based interpretation rather than certainty."],
+["Poetry","Imagery","A poem describes dust, cracked earth and empty water pots. Which sense is most directly engaged by the images?","Sight, while the details also evoke hardship","Concrete visual details build imagery and atmosphere."],
+["Drama","Dramatic irony","The audience knows a witness is hiding the key fact, but the investigator does not. What may this create?","Suspense as the audience anticipates discovery","Unequal knowledge between audience and character creates dramatic irony."],
+["Prose","Motif","A red scarf appears at several turning points in a novel. What should a reader investigate?","Whether its repeated appearances connect events or themes","A motif is a recurring element that can develop meaning."],
+["Literary context","Social criticism","A novel depicts qualified people denied work because of their background. What issue is foregrounded?","Discrimination and unequal access to opportunity","The repeated exclusion invites analysis of social structures."],
+["Language","Hyperbole","A speaker says “I waited a thousand years” for a late bus. What is the likely effect?","To exaggerate frustration for emphasis","Hyperbole deliberately overstates for rhetorical effect."],
+["Language","Simile","“The crowd moved like a river through the gate.” What does the comparison emphasise?","The crowd’s continuous, flowing movement","A simile compares using a word such as “like”."],
+["Narrative structure","Pacing","A writer slows down a crucial decision by describing small gestures in detail. Why?","To heighten tension and focus attention on the moment","Slower pacing can make a consequential moment feel more intense."],
+["Characterisation","Motivation","A character risks criticism to report unsafe conditions at school. Which motivation is most supported?","Concern for safety and responsibility","The action provides evidence of a protective or ethical motive."],
+["Literary response","Counterargument","A peer offers a different interpretation supported by two relevant quotations. What is the best response?","Compare both interpretations against the text before deciding","Strong literary discussion tests interpretations with evidence."],
+["Genre","Conventions","A play uses dialogue, entrances and stage directions to tell a story. Which feature most clearly signals drama?","Its action is structured for performance through dialogue and directions","Drama is designed to be enacted, with performance cues and dialogue."]
+];
+const fasihiExtra = [
+["Fasihi simulizi","Methali","Mwanafunzi anatumia methali “Umoja ni nguvu” wakati wa mradi wa shule. Maana yake ni ipi?","Ushirikiano unaweza kusaidia kufanikisha lengo la pamoja.","Methali hueleza thamani ya watu kushirikiana."],
+["Fasihi simulizi","Vitendawili","Kitendawili kinaeleza kitu kwa mafumbo badala ya kukitaja moja kwa moja. Msikilizaji anapaswa kufanya nini?","Kuchanganua vidokezo na kuviunganisha ili kupata jibu.","Vitendawili hujenga fikra kwa kutumia mafumbo na vidokezo."],
+["Fasihi simulizi","Ngano","Katika ngano, mhusika mwenye kiburi hupoteza msaada wa marafiki. Funzo linalowezekana ni lipi?","Kiburi kinaweza kuharibu mahusiano na ushirikiano.","Matokeo ya mhusika yanaunga mkono funzo kuhusu kiburi."],
+["Fasihi simulizi","Nyimbo","Wimbo wa jamii unaimbwa wakati wa shughuli ya pamoja. Unaweza kuwa na jukumu gani?","Kuratibu shughuli na kuimarisha mshikamano wa washiriki.","Nyimbo zinaweza kuunganisha washiriki na kuratibu kazi."],
+["Fasihi simulizi","Miviga","Mtafiti anataka kurekodi miviga ya jamii. Ni hatua ipi ya kwanza inayofaa?","Kuomba ruhusa na kuelewa masharti ya jamii husika.","Utafiti wa kitamaduni unahitaji ridhaa na heshima kwa jamii."],
+["Fasihi simulizi","Utendaji","Mtambaji anabadilisha sauti na ishara za mwili anapoigiza wahusika. Athari yake ni ipi?","Kufanya wahusika na matukio yaeleweke kwa uhai zaidi.","Sauti na ishara ni sehemu ya utendaji wa fasihi simulizi."],
+["Fasihi simulizi","Hadithi za wanyama","Mnyama mdogo anamshinda mkubwa kwa kutumia busara badala ya nguvu. Dhamira inayoweza kujitokeza ni ipi?","Busara inaweza kuwa na nguvu kuliko ukubwa au mamlaka.","Matukio ya hadithi yanaunga mkono umuhimu wa busara."],
+["Fasihi andishi","Riwaya","Riwaya inaonyesha wanafunzi wanaokosa vifaa kwa sababu ya umaskini. Mwandishi anaweza kuangazia nini?","Athari za hali ya kiuchumi kwa fursa za elimu.","Matukio yanaonyesha uhusiano wa rasilimali na fursa."],
+["Fasihi andishi","Tamthilia","Mhusika anaficha barua muhimu na kitendo hicho husababisha kutoelewana. Barua hiyo ina jukumu gani?","Kuchochea mgogoro na kuendeleza ploti.","Tukio la kuficha barua husababisha matukio yanayofuata."],
+["Fasihi andishi","Ushairi","Mshairi anarudia neno “lini?” katika kila ubeti akizungumzia haki. Mbinu hiyo inasisitiza nini?","Kusubiri kwa uchungu na kutaka mabadiliko.","Takriri huongeza msisitizo wa swali na hisia."],
+["Tamathali za semi","Tashbihi","Kauli “alikuwa jasiri kama simba” hutumia mbinu gani?","Tashbihi.","Neno “kama” linaunganisha vitu viwili kwa ulinganisho."],
+["Tamathali za semi","Sitiari","Kauli “elimu ni ufunguo wa maisha” ina maana gani ya kimajazi?","Elimu hufungua fursa na kusaidia kutatua changamoto.","Sitiari huonyesha uhusiano wa maana bila ulinganisho wa moja kwa moja."],
+["Tamathali za semi","Tashihisi","Mwandishi anasema “mti uliomboleza upepo ulipovuma.” Mbinu ni ipi?","Tashihisi.","Mti umepewa uwezo wa kuomboleza kama binadamu."],
+["Tamthilia","Kinaya","Kiongozi anayehubiri usawa anawapa ndugu zake nafasi zote. Hali hii inaonyesha nini?","Kinaya kati ya kauli na matendo.","Matendo yanapingana na ujumbe anaoutangaza kiongozi."],
+["Tamthilia","Maelekezo ya jukwaani","Mhusika anatabasamu lakini anakunja barua kwa nguvu. Mwigizaji anaweza kuwasilisha nini?","Hisia zinazokinzana au hasira iliyofichwa.","Vitendo vinaweza kufichua hisia zilizo chini ya maneno."],
+["Riwaya","Mandhari","Hadithi ya wakulima wakati wa mafuriko inaonyesha familia zikihama. Mandhari inaathirije ploti?","Mafuriko yanasababisha matukio na maamuzi ya wahusika.","Mandhari ya mafuriko inachochea mabadiliko katika matukio."],
+["Riwaya","Mhusika","Mhusika hubadilika baada ya kukubali kosa na kurekebisha madhara. Huyu ni mhusika wa aina gani?","Mhusika anayebadilika.","Mabadiliko ya tabia kutokana na matukio huonyesha ukuaji wa mhusika."],
+["Ushairi","Dhamira","Shairi linaonyesha sauti za vijana wanaodai uwajibikaji. Dhamira inayowezekana ni ipi?","Ushiriki wa vijana na uwajibikaji wa viongozi.","Picha na kauli za shairi zinaelekeza kwenye uwajibikaji."],
+["Fasihi simulizi","Hadhira","Mtambaji anabadilisha hadithi kulingana na umri wa wasikilizaji. Hili linaonyesha nini?","Fasihi simulizi huathiriwa na hadhira na mazingira ya utendaji.","Uwasilishaji wa simulizi unaweza kubadilika kulingana na hadhira."],
+["Fasihi andishi","Ushahidi","Mwanafunzi anadai mhusika ni mkarimu. Ushahidi bora ni upi?","Tukio linaloonyesha mhusika akigawana rasilimali zake kwa hiari.","Dai la uchambuzi linahitaji tukio linaloliunga mkono."],
+["Fasihi na jamii","Ubaguzi","Hadithi inaonyesha mhusika akitengwa kwa sababu ya asili yake. Mwandishi anaweza kukosoa nini?","Ubaguzi na madhara yake kwa mtu na jamii.","Kutengwa kwa mhusika kunafichua athari za ubaguzi."],
+["Fasihi andishi","Muundo","Hadithi inaanza na matokeo ya ajali kisha inarudi kueleza kilichotokea. Mbinu ni ipi?","Rejeshi.","Usimulizi unarudi nyuma kueleza matukio ya awali."],
+["Ushairi","Taswira","Taswira za matope, mawingu mazito na mashamba yaliyofurika hujenga hali gani?","Hali ya hatari na usumbufu unaotokana na mafuriko.","Maelezo ya hisi hujenga mandhari na hisia."],
+["Riwaya","Mgogoro","Ndugu wanatofautiana kuhusu kuuza ardhi ili kulipia ada. Mgogoro huu una nguvu kwa sababu gani?","Pande zote zina mahitaji yanayoeleweka na matokeo muhimu.","Migongano ya mahitaji halisi hujenga mvutano wa kuaminika."],
+["Fasihi simulizi","Mabadiliko ya simulizi","Hadithi ileile inasimuliwa kwa namna tofauti na wasimuliaji wawili. Hitimisho lipi linafaa?","Uwasilishaji unaweza kubadilika huku baadhi ya vipengele vikibaki.","Fasihi simulizi hupokea mabadiliko katika utendaji na muktadha."],
+["Fasihi andishi","Toni","Msimulizi anatumia maneno makali na maswali ya kejeli kukosoa rushwa. Toni ni ipi?","Ya kukosoa na kukerwa.","Msamiati na maswali ya kejeli huonyesha mtazamo wa mkosoaji."],
+["Tamthilia","Dhamira","Wahusika wanaficha ukweli ili kulinda sifa ya familia, lakini siri hiyo huumiza wengine. Dhamira ipi inajitokeza?","Gharama ya kuficha ukweli na umuhimu wa uwajibikaji.","Matokeo yanaonyesha athari za siri na kukwepa wajibu."],
+["Fasihi andishi","Ulinganisho","Unapolinganisha riwaya na filamu yake, ni njia ipi bora?","Kuchunguza jinsi kila kazi inavyowasilisha wahusika, dhamira na migogoro.","Ulinganisho bora hutegemea ushahidi na sifa za kila aina ya kazi."],
+["Ushairi","Vina","Mwanafunzi anagundua shairi halina vina vya kawaida. Hitimisho bora ni lipi?","Kuchunguza muundo mzima kabla ya kuliamua kuwa shairi huru.","Mashairi yana miundo tofauti; vina pekee havitoshi kutoa hitimisho."],
+["Fasihi na jamii","Muktadha","Mwandishi anatumia maisha ya mjini kuonyesha tofauti ya wenye nacho na wasio nacho. Msomaji achunguze nini?","Jinsi mazingira ya kijamii na kiuchumi yanavyoathiri wahusika.","Muktadha husaidia kuelewa migogoro na maana ya matini."]
+];
+const frenchExtra = [
+["Grammaire","Pronoms","Amina et Paul arrivent. ___ sont ponctuels.","Ils","Nous","Elle","Tu","« Ils » remplace deux personnes, Amina et Paul."],
+["Grammaire","Accord","Complétez : « Les filles sont ___ après la course. »","fatiguées","fatigué","fatiguée","fatigués","L’adjectif s’accorde au féminin pluriel avec « les filles »."],
+["Grammaire","Articles partitifs","Complétez : « Je voudrais ___ eau, s’il vous plaît. »","de l’","du","des","un","Devant « eau », on emploie « de l’ »."],
+["Grammaire","Passé composé","Complétez : « Elles ___ arrivées tôt. »","sont","ont","est","avons","Le verbe arriver se conjugue avec être au passé composé."],
+["Grammaire","Imparfait","Dans un récit, « Quand j’étais petit, je ___ au village chaque été. »","passais","passerai","passe","passer","L’imparfait exprime ici une habitude passée."],
+["Grammaire","Futur proche","Choisissez la phrase correcte pour un projet imminent.","Nous allons visiter le musée demain.","Nous allons visitons le musée demain.","Nous visiter hier le musée.","Nous sommes visiter demain.","Aller au présent suivi de l’infinitif forme le futur proche."],
+["Grammaire","Comparaison","Quel mot complète : « Ce chemin est ___ long que l’autre. »","plus","très de","autant de","beaucoup que","« Plus… que » exprime une comparaison de supériorité."],
+["Grammaire","Négation","Transformez : « Ils ont encore des billets. »","Ils n’ont plus de billets.","Ils ne ont encore billets.","Ils ont pas des billets encore.","Ils plus n’ont billets.","« Ne…plus » exprime la cessation; « de » remplace généralement l’article après la négation."],
+["Vocabulaire","Environnement","Quel geste aide à réduire les déchets à l’école?","Réutiliser les bouteilles adaptées et trier les déchets.","Jeter tous les papiers dans la rivière.","Brûler les déchets près des salles.","Acheter un nouvel objet après chaque usage.","Réutiliser et trier réduit certains déchets."],
+["Compréhension","Intention","Un message dit : « Réunion du club vendredi à 15 h dans la bibliothèque. » Quelle information est donnée?","Le jour, l’heure et le lieu de la réunion.","Le prix d’un repas.","La météo de l’année prochaine.","Le résultat d’un match passé.","Le message précise les détails pratiques de la réunion."],
+["Communication","Demande polie","Vous empruntez un dictionnaire. Quelle phrase convient?","Pourrais-je emprunter votre dictionnaire, s’il vous plaît ?","Donne le dictionnaire, vite !","Le dictionnaire est une chaussure.","Je hier emprunte.","La formulation utilise une demande polie."],
+["Communication","Exprimer une opinion","Quel début exprime clairement une opinion personnelle?","À mon avis, cette solution est plus durable.","Il est impossible de donner un avis.","Hier est une opinion.","La table pense.","« À mon avis » introduit une opinion."],
+["Grammaire","Pronoms objets","Remplacez « Je regarde le film » par un pronom : « Je ___ regarde. »","le","lui","leur","y","« Film » est masculin singulier; le pronom COD est « le »."],
+["Grammaire","Prépositions","Complétez : « Nous habitons ___ Kenya. »","au","à la","aux","en le","On dit « au Kenya » avec cet article de pays."],
+["Vocabulaire","Santé","Vous avez rendez-vous chez le médecin. Quelle phrase explique un symptôme?","J’ai mal à la gorge depuis hier.","Je suis une bibliothèque.","Le médicament est une fenêtre.","Je mange le calendrier.","La phrase décrit un symptôme et sa durée."],
+["Compréhension","Cause","« Le match a été reporté parce qu’il pleuvait fortement. » Pourquoi a-t-il été reporté?","À cause de la forte pluie.","Parce que les joueurs ont changé d’école.","Parce que le stade était une lettre.","Parce que le soleil était fermé.","La pluie est explicitement donnée comme cause."],
+["Écriture","Connecteurs","Quel connecteur introduit le contraste?","Cependant","Donc","Parce que","D’abord","« Cependant » introduit une opposition ou une concession."],
+["Écriture","Organisation","Pour donner des instructions claires, quelle organisation aide le lecteur?","Présenter les étapes dans un ordre logique avec des connecteurs.","Mélanger les étapes au hasard.","Supprimer tous les verbes.","Répéter la même phrase sans but.","L’ordre logique facilite le suivi des consignes."],
+["Grammaire","Accord du participe","Complétez : « Elles sont ___ au marché. »","allées","allé","allés","aller","Avec être, le participe passé s’accorde ici avec le sujet féminin pluriel."],
+["Communication","Invitation","Quelle phrase invite poliment un camarade à étudier?","Veux-tu réviser avec moi après les cours ?","Tu dois étudier chez moi maintenant.","Je suis une invitation hier.","Le cours mange un livre.","La question propose une activité sans imposer la réponse."],
+["Vocabulaire","Transport","Le bus est complet. Quelle solution raisonnable peut-on envisager?","Attendre le prochain bus ou choisir un autre transport sûr.","S’accrocher à l’extérieur du bus.","Courir devant le bus.","Ignorer les règles de sécurité.","Attendre ou choisir une option sûre réduit les risques."],
+["Compréhension","Fait et opinion","« La bibliothèque ferme à 17 h » est principalement quel type d’énoncé si l’horaire est vérifiable?","Un fait.","Une métaphore.","Une question rhétorique.","Une hypothèse impossible à vérifier.","Un horaire peut être vérifié auprès de la bibliothèque."],
+["Grammaire","Impératif","Quel énoncé donne un conseil direct à plusieurs personnes?","Écoutez attentivement les consignes.","Écoutes attentivement.","Écouteons attentivement.","Vous écouter hier.","« Écoutez » est l’impératif à la deuxième personne du pluriel."],
+["Grammaire","Adverbes","Dans « Elle parle doucement pour ne pas réveiller le bébé », quel mot précise la manière?","doucement","elle","bébé","pour","« Doucement » indique comment elle parle."],
+["Communication","Clarification","Vous ne comprenez pas une instruction. Quelle réaction est la plus utile?","Pourriez-vous expliquer cette étape une nouvelle fois, s’il vous plaît ?","Faire semblant de comprendre.","Changer de sujet sans prévenir.","Dire que toute instruction est inutile.","Demander poliment une clarification évite les erreurs."],
+["Vocabulaire","École","Quel objet est le plus utile pour noter les devoirs?","Un cahier.","Une casserole.","Un parapluie cassé.","Une chaussure.","Un cahier permet de consigner les devoirs."],
+["Compréhension","Inférence","Une élève arrive avec des vêtements mouillés et un parapluie retourné. Quelle inférence est raisonnable?","Elle a probablement rencontré de fortes pluies ou du vent.","Elle vient forcément de nager dans une piscine.","Elle a certainement pris l’avion.","Elle a oublié comment lire.","Les indices rendent la pluie ou le vent plausibles, sans certitude absolue."],
+["Grammaire","Conditionnel de politesse","Quelle demande est la plus polie?","Pourriez-vous m’aider, s’il vous plaît ?","Aide-moi immédiatement sans discuter.","Tu m’aider hier.","Aider est une table.","Le conditionnel rend la demande plus courtoise."],
+["Écriture","Courriel","Quel élément aide le destinataire à comprendre rapidement un courriel formel?","Un objet précis et un message organisé.","Un objet vide et des phrases sans ponctuation.","Des informations contradictoires.","Uniquement des émoticônes.","Un objet clair et une structure logique facilitent la compréhension."],
+["Interculturel","Respect","Lors d’un échange culturel, quelle attitude est la plus appropriée?","Poser des questions respectueuses et éviter les généralisations.","Se moquer des accents.","Supposer que tous les francophones vivent de la même façon.","Refuser d’écouter les autres.","L’ouverture et le respect aident à comprendre la diversité."]
+];
+const germanExtra = [
+["Grammatik","Perfekt","Ergänze: „Mariam ___ ihre Aufgabe gemacht.“","hat","haben","ist","seid","„Mariam“ ist dritte Person Singular; das Hilfsverb lautet „hat“."],
+["Grammatik","Dativ","Ergänze: „Ich helfe ___ Freund.“","dem","den","der","die","„Helfen“ verlangt hier den Dativ; „Freund“ ist maskulin."],
+["Grammatik","Akkusativ","Ergänze: „Wir kaufen ___ neuen Computer.“","einen","ein","einem","einer","„Computer“ ist maskulin und direktes Objekt im Akkusativ."],
+["Grammatik","Wortstellung","Welche Wortstellung ist in einem deutschen Hauptsatz richtig?","Heute lerne ich Deutsch.","Heute ich Deutsch lerne.","Lerne heute Deutsch ich.","Deutsch ich heute lerne immer.","Im Hauptsatz steht das finite Verb gewöhnlich an zweiter Stelle."],
+["Grammatik","Modalverben","Ergänze: „Du ___ beim Überqueren der Straße vorsichtig sein.“","musst","muss","müssen","müsst","Bei „du“ lautet die Form von müssen „musst“."],
+["Grammatik","Trennbare Verben","Ergänze: „Der Unterricht ___ um acht Uhr ___.“","fängt … an","an … fängt","fangen … an","anfangen … ist","Bei „anfangen“ steht die Verbpartikel im Hauptsatz am Ende."],
+["Grammatik","Weil-Satz","Welche Satzstellung ist richtig?","Ich bleibe zu Hause, weil ich krank bin.","Ich bleibe zu Hause, weil bin ich krank.","Weil ich bin krank, bleibe ich zu Hause.","Weil krank ich bin zu Hause.","Im weil-Nebensatz steht das finite Verb am Ende."],
+["Grammatik","Adjektivdeklination","Ergänze: „Ich trinke einen ___ Tee.“","heißen","heiße","heißer","heißes","Nach „einen“ im Akkusativ maskulin erhält das Adjektiv hier die Endung -en."],
+["Wortschatz","Umwelt","Welche Handlung spart in der Schule sinnvoll Wasser?","Einen tropfenden Wasserhahn melden und Wasserhähne schließen.","Wasser laufen lassen, obwohl niemand es braucht.","Abfälle in den Fluss werfen.","Jeden Tag einen neuen Wasserbehälter wegwerfen.","Undichte Hähne zu melden und Wasser zu schließen reduziert Verschwendung."],
+["Leseverstehen","Textabsicht","Ein Aushang nennt Freitag, 14 Uhr, Raum 5 und „Debattierclub“. Was ist der Zweck?","Über Zeit und Ort des Treffens informieren.","Ein Kochrezept erklären.","Die Schule dauerhaft schließen.","Ein Fußballergebnis aus dem Vorjahr nennen.","Der Aushang gibt praktische Informationen zu einer Veranstaltung."],
+["Kommunikation","Höfliche Bitte","Du brauchst ein Wörterbuch. Welche Bitte ist höflich?","Könnte ich bitte dein Wörterbuch ausleihen?","Gib es sofort, ohne zu fragen!","Das Wörterbuch ist ein Fahrrad.","Ich gestern Wörterbuch.","Die Frage bittet höflich um Erlaubnis."],
+["Kommunikation","Meinung","Welche Formulierung kennzeichnet eine persönliche Meinung?","Meiner Meinung nach ist diese Lösung sinnvoll.","Das ist überprüfbar immer ein Fakt.","Gestern ist ein Meinung.","Der Tisch denkt blau.","„Meiner Meinung nach“ signalisiert eine Einschätzung."],
+["Grammatik","Pronomen","Ersetze „Ich sehe den Lehrer“: „Ich sehe ___.“","ihn","ihm","sie","es","„Lehrer“ ist maskulin und direktes Objekt; das Akkusativpronomen ist „ihn“."],
+["Grammatik","Präpositionen","Ergänze: „Wir fahren ___ dem Bus zur Schule.“","mit","ohne","gegen","durch den","„Mit“ steht hier mit dem Dativ und bezeichnet das Verkehrsmittel."],
+["Wortschatz","Gesundheit","Welche Aussage beschreibt ein Symptom klar?","Seit gestern habe ich Halsschmerzen.","Ich bin eine Bibliothek.","Die Tablette ist ein Fenster.","Der Kalender trinkt Wasser.","Die Aussage nennt ein Symptom und seinen Beginn."],
+["Leseverstehen","Ursache","„Das Spiel wurde wegen starken Regens verschoben.“ Warum wurde es verschoben?","Wegen des starken Regens.","Weil die Spieler Bücher verkauften.","Weil das Stadion eine Schule war.","Weil die Uhr gegessen hat.","Der Satz nennt den starken Regen als Ursache."],
+["Schreiben","Konnektoren","Welches Wort signalisiert einen Gegensatz?","Trotzdem","Deshalb","Weil","Zuerst","„Trotzdem“ leitet einen Gegensatz oder eine unerwartete Folge ein."],
+["Schreiben","Reihenfolge","Wie werden Anweisungen am verständlichsten?","Mit logisch geordneten Schritten und passenden Verbindungswörtern.","Mit zufällig gemischten Schritten.","Ohne Verben.","Mit widersprüchlichen Zeitangaben.","Eine logische Reihenfolge macht Anweisungen nachvollziehbar."],
+["Grammatik","Perfekt mit sein","Ergänze: „Die Kinder ___ früh angekommen.“","sind","haben","ist","seid","„Ankommen“ bildet das Perfekt mit „sein“; „Kinder“ ist Plural."],
+["Kommunikation","Einladung","Wie lädst du einen Mitschüler höflich zum Lernen ein?","Möchtest du nach dem Unterricht mit mir lernen?","Du musst sofort zu mir kommen.","Ich Einladung gestern Tisch.","Der Stuhl liest ein Buch.","Die Frage lädt ein, ohne Druck auszuüben."],
+["Wortschatz","Verkehr","Der Bus ist voll. Was ist eine sichere Lösung?","Auf den nächsten Bus warten oder eine sichere Alternative wählen.","Außen am Bus mitfahren.","Vor den Bus laufen.","Sicherheitsregeln ignorieren.","Eine sichere Alternative vermeidet unnötige Gefahr."],
+["Leseverstehen","Fakt und Meinung","„Die Bibliothek schließt um 17 Uhr“ ist, sofern überprüfbar, was?","Eine überprüfbare Tatsache.","Eine Metapher.","Eine rhetorische Frage.","Eine unmögliche Behauptung.","Die Öffnungszeit lässt sich überprüfen."],
+["Grammatik","Imperativ","Welche Form ist eine höfliche Aufforderung an mehrere Personen?","Bitte öffnen Sie das Fenster.","Du öffnen das Fenster.","Ihr öffnet gestern das Fenster.","Fenster ist öffnen blau.","„Öffnen Sie“ ist die höfliche Imperativform."],
+["Grammatik","Adverbien","In „Sie spricht leise, damit das Baby nicht aufwacht“, welches Wort beschreibt die Art des Sprechens?","leise","sie","Baby","damit","„Leise“ beschreibt, wie sie spricht."],
+["Kommunikation","Nachfragen","Du verstehst eine Anweisung nicht. Was solltest du sagen?","Könnten Sie diesen Schritt bitte noch einmal erklären?","So tun, als hättest du alles verstanden.","Ohne Erklärung das Thema wechseln.","Jede Anweisung als nutzlos bezeichnen.","Eine höfliche Rückfrage hilft, Fehler zu vermeiden."],
+["Wortschatz","Schule","Was ist am besten geeignet, um Hausaufgaben aufzuschreiben?","Ein Heft.","Ein Kochtopf.","Ein kaputter Regenschirm.","Ein Schuh.","In einem Heft kann man Hausaufgaben notieren."],
+["Leseverstehen","Schlussfolgern","Eine Schülerin kommt mit nasser Kleidung und einem umgedrehten Regenschirm an. Was ist plausibel?","Sie war wahrscheinlich starkem Regen oder Wind ausgesetzt.","Sie war sicher in einem Flugzeug.","Sie hat bestimmt nie eine Schule besucht.","Sie hat garantiert ein Buch gekocht.","Die Hinweise sprechen für Regen oder Wind, beweisen es aber nicht."],
+["Grammatik","Höflichkeit","Welche Frage ist besonders höflich?","Könnten Sie mir bitte helfen?","Hilf mir sofort und schweig!","Du helfen gestern.","Helfen ist ein Tisch.","Der Konjunktiv II macht die Bitte höflicher."],
+["Schreiben","E-Mail","Was macht eine formelle E-Mail übersichtlich?","Ein klarer Betreff und logisch gegliederte Absätze.","Ein leerer Betreff und widersprüchliche Angaben.","Nur Großbuchstaben ohne Satzzeichen.","Alle Informationen in zufälliger Reihenfolge.","Betreff und Struktur helfen dem Empfänger, den Zweck schnell zu erkennen."],
+["Interkulturelles Lernen","Respekt","Wie verhält man sich in einem kulturellen Austausch respektvoll?","Respektvoll nachfragen und Verallgemeinerungen vermeiden.","Über Akzente lachen.","Annehmen, alle deutschsprachigen Menschen lebten gleich.","Andere nicht ausreden lassen.","Respektvolle Fragen unterstützen das Verständnis kultureller Vielfalt."]
+];
+const arabicExtra = [
+["القواعد","المثنى","ما الصيغة المناسبة للمثنى في «طالب ___» إذا كان الطالبان مجتهدين؟","طالبانِ","طلاب","طالبة","طالباً فقط","صيغة المثنى المرفوع من طالب هي طالبان."],
+["القواعد","جمع التكسير","ما جمع كلمة «مدينة»؟","مدن","مدينتان","مدني","مدينة واحدة","«مدن» جمع تكسير لكلمة مدينة."],
+["القواعد","الفعل الماضي","أي جملة تدل على عمل انتهى؟","كتبَ الطالبُ الواجبَ أمس.","يكتب الطالب الآن.","سيكتب الطالب غداً.","اكتب الواجب الآن.","الفعل «كتب» يدل على حدث ماضٍ."],
+["القواعد","الفعل المضارع","أكمل: «الطالبات ___ الدرس كل يوم».","يدرسنَ","يدرسون","تدرس","أدرس","الفعل «يدرسن» يناسب جمع المؤنث الغائب."],
+["القواعد","الصفة والموصوف","أكمل: «قرأتُ قصةً ___».","مفيدةً","مفيدٌ","مفيدون","مفيدان","الصفة توافق «قصة» في التأنيث والإعراب هنا."],
+["القواعد","حروف العطف","أي أداة تربط بين شيئين على سبيل الجمع؟","و","لكن","لأن","هل","الواو تفيد الجمع والعطف في هذا السياق."],
+["القواعد","الاستفهام","أي أداة تسأل عن المكان؟","أين","متى","لماذا","كم","«أين» للسؤال عن المكان."],
+["القواعد","الضمائر","أكمل: «فاطمة طالبة، ___ مجتهدة».","هي","هو","هم","نحن","الضمير «هي» يعود على فاطمة."],
+["المفردات","البيئة","أي عمل يساعد على حماية النهر؟","جمع النفايات وعدم رميها في الماء.","رمي البلاستيك في النهر.","قطع الأشجار قرب الضفة بلا سبب.","ترك الصنبور مفتوحاً.","منع النفايات من الوصول إلى الماء يحمي البيئة."],
+["الفهم القرائي","الغرض","تعلن المدرسة عن اجتماع يوم الخميس الساعة الثالثة في المكتبة. ما الغرض من الإعلان؟","إبلاغ الطلبة بموعد الاجتماع ومكانه.","شرح وصفة طعام.","بيع حافلة.","وصف الطقس في العام الماضي.","الإعلان يوضح وقت الاجتماع ومكانه."],
+["التواصل","طلب مهذب","تريد استعارة قاموس من معلمك. أي عبارة أنسب؟","هل يمكنني استعارة القاموس من فضلك؟","أعطني القاموس فوراً!","القاموس يأكل النافذة.","أنا أمس كتاب.","السؤال الأول يطلب الإذن بأدب."],
+["التعبير","الرأي","أي عبارة تقدم رأياً شخصياً؟","في رأيي، القراءة توسع المعرفة.","المدرسة تفتح الساعة الثامنة، ويمكن التحقق من ذلك.","القلم أزرق حقيقةً إذا كان كذلك.","أين تقع المكتبة؟","«في رأيي» علامة واضحة على تقديم رأي."],
+["القواعد","النفي","ما النفي المناسب لـ«الطلاب حاضرون»؟","الطلاب ليسوا حاضرين.","الطلاب حاضرون لا أمس.","ليس الطالبات كتاباً.","الطلاب سوف حاضرون.","«ليسوا» تناسب جمع المذكر في هذا التركيب."],
+["القواعد","الإضافة","في «كتاب الطالب»، ما العلاقة بين الكلمتين؟","الكتاب منسوب إلى الطالب أو مملوك له في السياق.","الطالب فعل ماضٍ.","الكلمتان لا ترتبطان.","الكتاب هو حرف جر.","الإضافة تربط الاسم بالمضاف إليه."],
+["المفردات","الصحة","تريد إخبار الطبيب عن ألم بدأ أمس. أي عبارة مفيدة؟","أشعر بألم في رأسي منذ أمس.","أنا نافذة كبيرة.","المستشفى يأكل القلم.","الدواء يكتب المدرسة.","العبارة تحدد موضع الألم وبدايته."],
+["الفهم القرائي","السبب","«بسبب المطر الغزير، تأخر وصول الحافلة». ما سبب التأخر؟","المطر الغزير.","الطلاب باعوا الكتب.","الطريق كان أغنية.","الحافلة نامت.","النص يذكر المطر الغزير سبباً للتأخر."],
+["الكتابة","ترتيب الأفكار","ما الذي يجعل الفقرة واضحة؟","ترتيب الأفكار واستخدام روابط مناسبة.","تغيير الموضوع في كل جملة دون رابط.","حذف علامات الترقيم كلها.","تكرار فكرة واحدة بلا تفسير.","التسلسل والروابط يساعدان القارئ على متابعة الفكرة."],
+["التواصل","الاعتذار","تأخرت عن موعد مع زميلك. أي عبارة مناسبة؟","أعتذر عن التأخير، وشكراً لانتظارك.","التأخير ليس مهماً أبداً.","أنت ساعة زرقاء.","أنا لا أتكلم أمس.","العبارة تعترف بالتأخير وتقدم اعتذاراً مهذباً."],
+["القواعد","حروف الجر","أكمل: «ذهبتُ ___ المدرسة».","إلى","منذ","عن","لكن","«إلى» تدل على الاتجاه نحو المكان."],
+["القواعد","الترتيب","أي جملة عربية سليمة المعنى؟","قرأَتْ مريمُ القصةَ.","القصة مريم قرأ أمس إلى.","قرأوا مريم هي القصة.","مريم القصة إلى قرأت.","الجملة الأولى مرتبة وتطابق الفعل مع الفاعل."],
+["المفردات","الوقت","ما السؤال الذي يطلب وقت بدء الدرس؟","متى يبدأ الدرس؟","أين يبدأ اللون؟","من يأكل الساعة؟","لماذا يقرأ المكان؟","«متى» للسؤال عن الزمن."],
+["الفهم القرائي","الاستنتاج","قرأ طالب إعلاناً عن حملة تنظيف، ثم أحضر قفازات وأكياساً. ماذا يُرجح أنه سيفعل؟","سيشارك في حملة التنظيف.","سيبيع الحافلة.","سيغلق المكتبة للأبد.","سيكتب وصفة طعام.","الأدوات التي أحضرها تناسب نشاط التنظيف."],
+["التواصل","التعاون","اختلف أعضاء المجموعة حول حل مسألة. ما أفضل خطوة؟","الاستماع إلى الحلول ومقارنة الأدلة قبل اختيار حل.","رفض سماع أي رأي.","إخفاء المعطيات عن الآخرين.","اختيار حل عشوائي.","المقارنة المبنية على الأدلة تدعم حلاً مشتركاً."],
+["القواعد","المستقبل","أي عبارة تدل على عمل سيحدث غداً؟","سأزور جدتي غداً.","زرت جدتي أمس.","أزور جدتي الآن.","زُر جدتي الآن.","السين وسوف يمكن أن تدلا على المستقبل؛ «سأزور» هنا للمستقبل."],
+["القواعد","التوكيد","ما الغرض من تكرار كلمة في سياق مناسب؟","تأكيد المعنى أو إبراز الفكرة.","إلغاء كل معنى للجملة.","تحويل كل اسم إلى فعل.","جعل النص بلا علاقة.","التكرار قد يحقق التوكيد بحسب السياق."],
+["المفردات","المدرسة","أي أداة تستخدم غالباً لتدوين الواجبات؟","دفتر","مقلاة","حذاء","وسادة","الدفتر مناسب لتسجيل الواجبات."],
+["التعبير","الرسالة","تكتب إلى مدير المدرسة لطلب موعد. ما الأسلوب الأفضل؟","السيد المدير المحترم، أرجو تحديد موعد مناسب للقاء.","أعطني موعداً حالاً وإلا.","يا نافذة، أين القلم؟","أنا لا أكتب أبداً.","الافتتاح محترم ويناسب طلباً رسمياً."],
+["الفهم القرائي","الحقيقة والرأي","أي عبارة تمثل رأياً؟","أرى أن القراءة اليومية مفيدة.","تبدأ الحصة في الساعة الثامنة حسب الجدول.","المكتبة تقع بجانب المختبر وفق الخريطة.","عدد الطلاب المسجلين هو خمسون في السجل.","عبارة «أرى أن» تعرض حكماً شخصياً."],
+["التواصل","الشكر","ساعدك زميلك في مشروع. كيف تشكره؟","شكراً جزيلاً لمساعدتك.","لماذا لون الكتاب؟","أنا طاولة أمس.","لن أسمع أحداً أبداً.","العبارة الأولى تعبر عن الامتنان."],
+["اللغة والمجتمع","احترام التنوع","في نقاش ثقافي، ما السلوك الأفضل؟","طرح أسئلة محترمة وتجنب التعميم على جميع الناس.","السخرية من لهجات الآخرين.","افتراض أن الجميع يعيشون بالطريقة نفسها.","رفض الاستماع إلى التجارب المختلفة.","الاحترام والإنصات يساعدان على فهم التنوع."]
+];
+const mandarinExtra = [
+["语法","否定句","把“他喜欢咖啡”改成否定句，哪句正确？","他不喜欢咖啡。","他喜欢不咖啡。","不他咖啡喜欢。","他咖啡昨天。","一般现在的否定常在动词前使用“不”。"],
+["语法","疑问词","你想知道图书馆在哪里，应该问什么？","图书馆在哪里？","图书馆什么时候颜色？","谁吃图书馆？","为什么昨天蓝色？","“哪里”用于询问地点。"],
+["语法","量词","哪一个短语表示“两位老师”？","两位老师","两本老师","两辆老师","两个位老师","“位”是称呼人的礼貌量词之一。"],
+["语法","时间表达","哪句话表示“我昨天学习了”？","我昨天学习了。","我明天昨天学习。","昨天我会学习明天。","我学习桌子。","“昨天”标记过去时间，句子表达过去发生的学习活动。"],
+["语法","形容词谓语","哪句话自然地表示“天气很冷”？","天气很冷。","天气是很冷昨天。","很冷天气吃。","冷天气在书。","汉语形容词可直接作谓语，如“天气很冷”。"],
+["语法","比较","哪句话表达“这本书比那本书贵”？","这本书比那本书贵。","这本书那本书比贵是。","这本书昨天贵那本。","比贵书桌子。","“A比B+形容词”是常见比较结构。"],
+["语法","在字句","哪句话表示“学生在教室里”？","学生在教室里。","学生教室昨天。","教室吃学生。","学生是教室里昨天。","“在……里”表示所在位置。"],
+["语法","连词","哪一个词通常表示原因？","因为","但是","或者","然后","“因为”引出原因。"],
+["词汇","环境","学校想减少塑料垃圾，哪项行动更有效？","重复使用合适的容器并分类回收。","把塑料扔进河里。","每天把仍可用的容器丢掉。","把垃圾留在操场上。","重复使用和分类有助于减少垃圾。" ],
+["阅读理解","文本目的","通知写着“周五下午三点在图书馆开会”。通知主要提供什么？","会议的时间和地点。","一道菜的做法。","去年的天气记录。","一辆公交车的价格。","通知给出会议的具体安排。" ],
+["交际","礼貌请求","你想借同学的词典，哪句话比较礼貌？","我可以借一下你的词典吗？","马上把词典给我！","词典是一扇窗户。","我昨天词典。","疑问形式礼貌地征求对方同意。" ],
+["交际","表达意见","哪句话明确表达个人看法？","我认为每天阅读很有帮助。","图书馆五点关门，这是公告上的时间。","今天有三节课，这是课表记录。","你住在哪里？","“我认为”明确引出个人意见。" ],
+["语法","结果补语","“他找到了钥匙”中的“到”表达什么作用？","表示寻找的结果已经实现。","表示钥匙是颜色。","表示动作必定发生在未来。","表示疑问地点。","“找到”表示寻找并成功发现。" ],
+["语法","把字句","哪句话自然地表达“我把书放在桌子上”？","我把书放在桌子上。","我书把桌子昨天。","把我桌子书吃。","我放书把昨天在。","“把”字句突出对宾语的处置及其结果或位置。" ],
+["词汇","健康","你想告诉医生昨天开始头疼，哪句话合适？","我从昨天开始头疼。","我是一本图书馆。","头疼喝桌子。","医生是蓝色的。","这句话清楚地说明症状开始的时间。" ],
+["阅读理解","因果关系","“因为道路被水淹了，学生们改走另一条路。”为什么换路？","因为道路被水淹了。","因为学生卖了学校。","因为书本会游泳。","因为公交车睡觉。","“因为”后面的内容说明原因。" ],
+["写作","顺序词","写操作步骤时，哪个安排最清楚？","先说明准备工作，再按逻辑顺序列出步骤。","随机打乱步骤。","删掉所有动词。","每一步都互相矛盾。","有序的步骤能帮助读者正确执行。" ],
+["交际","道歉","你迟到了，哪句话适合表达歉意？","对不起，我迟到了，谢谢你等我。","迟到永远没有关系。","昨天椅子很蓝。","我不听任何人。","这句话承认迟到并礼貌地道歉。" ],
+["语法","疑问时间","哪句话询问课程什么时候开始？","课程几点开始？","课程吃什么颜色？","谁是窗户？","昨天在哪里蓝色？","“几点”用于询问具体时间。" ],
+["语法","存在句","哪句话表示“桌子上有一本书”？","桌子上有一本书。","桌子吃书一本。","书昨天桌子蓝色。","有桌子书吗颜色。","“处所+有+名词”可以表示某处存在某物。" ],
+["词汇","学校","学生通常用什么记录作业？","笔记本","平底锅","枕头","鞋子","笔记本适合记录作业。" ],
+["阅读理解","推断","一个学生带着手套和垃圾袋去河边参加学校活动。最合理的推断是什么？","他可能要参加清洁活动。","他一定要参加烹饪比赛。","他要关闭图书馆。","他正在开飞机。","手套和垃圾袋与清洁活动相符，但不能证明所有细节。" ],
+["交际","合作","小组成员对项目方案有不同意见。怎样做更有建设性？","先听取不同意见，再比较理由并共同决定。","拒绝听任何人的意见。","故意隐藏重要资料。","随便选一个方案。","倾听和比较理由有助于合作决策。" ],
+["语法","将来时间","哪句话表示“明天我会去学校”？","我明天会去学校。","我昨天去学校明天。","我现在昨天学校。","学校吃我。","“明天”与“会”表达将来计划或可能性。" ],
+["语法","结构助词","“认真地学习”中的“地”有什么作用？","连接状语和动词，说明学习的方式。","表示书的量词。","表示过去时间。","表示地点疑问。","“地”常用于连接修饰动词的状语。" ],
+["词汇","方向","你想问医院在哪里，哪句话合适？","请问，医院在哪里？","医院吃什么颜色？","谁喝医院？","昨天窗户。","这句话礼貌地询问地点。" ],
+["写作","正式请求","给校长写信申请会面，哪种表达合适？","校长您好，我想申请一个方便的会面时间。","你必须现在见我。","椅子打开书。","我永远不写信。","表达清楚且礼貌，适合正式请求。" ],
+["阅读理解","事实与观点","哪句话最明显地表达个人观点？","我觉得阅读能帮助学生开阔视野。","通知写着会议在星期五举行。","课表列出三节数学课。","地图标明图书馆在学校东侧。","“我觉得”标明这是个人观点。" ],
+["交际","感谢","同学帮你完成小组任务后，你应该说什么？","谢谢你帮助我们完成任务。","我昨天是一张桌子。","为什么窗户吃饭？","书包是蓝色的昨天。","这句话表达感谢并指出对方的帮助。" ],
+["跨文化理解","尊重差异","与不同文化背景的人交流时，哪种做法最合适？","礼貌提问，认真倾听，避免把个人经验推广到所有人。","嘲笑对方的口音。","认为所有人都必须有相同习惯。","拒绝听对方解释。","尊重与倾听有助于理解文化差异。" ]
+];
+const hreExtra = [
+["Ethics","Truthfulness","A learner discovers an error in a group report that makes the result look better than it is. What is the most responsible action?","Correct the report and explain the error honestly.","Ethical responsibility includes correcting misleading information."],
+["Ethics","Compassion","A family in the neighbourhood loses belongings in a fire. Which response best expresses compassion while respecting dignity?","Offer practical help and ask what support the family needs.","Compassion combines concern with respectful, useful action."],
+["Beliefs","Dharma","A learner must choose between copying homework and submitting incomplete work honestly. Which approach best reflects ethical duty?","Submit their own work and seek help to improve it.","Dharma is associated with appropriate duty and right conduct."],
+["Beliefs","Karma","A learner repeatedly treats classmates unfairly and loses their trust. How can this illustrate karma as an ethical idea?","Actions can have consequences for relationships and future circumstances.","Karma is commonly discussed in relation to actions and consequences."],
+["Beliefs","Moksha","A text describes spiritual liberation from samsara. Which concept is being discussed?","Moksha.","Moksha is commonly understood as liberation from the cycle of rebirth."],
+["Beliefs","Samsara","Which idea is most closely associated with samsara in many Hindu traditions?","The cycle of birth, death and rebirth.","Samsara refers to the cycle of rebirth."],
+["Sacred texts","Upanishads","A class compares philosophical discussions of self and ultimate reality in Hindu texts. Which collection is especially relevant?","The Upanishads.","The Upanishads explore philosophical questions including self and ultimate reality."],
+["Sacred texts","Ramayana","A learner reads a retelling of Rama’s story and compares different versions. What is a careful conclusion?","Retellings may vary by region and tradition, so compare each version in context.","The Ramayana has diverse tellings and interpretations across communities."],
+["Sacred texts","Mahabharata","A story presents relatives facing a moral conflict before a major battle. Which epic is associated with such a narrative and includes the Bhagavad Gita?","The Mahabharata.","The Bhagavad Gita appears within the Mahabharata."],
+["Worship","Puja","A visitor is unsure whether shoes should be removed before entering a mandir. What should they do?","Observe signs and respectfully ask a host or temple attendant.","Practices differ, so local guidance is the respectful choice."],
+["Worship","Prasad","During a religious gathering, food is shared as prasad. What is a respectful interpretation?","It is food offered in devotion and then shared as a blessing in that tradition.","Prasad has devotional significance in many Hindu communities."],
+["Festivals","Diwali","A class presentation compares Diwali celebrations in different regions. Which approach is most accurate?","Explain common themes while noting that stories and customs vary.","Diwali practices and meanings differ across regions and communities."],
+["Festivals","Holi","A school discusses Holi. What should learners avoid when describing the festival?","Assuming every community celebrates it in the same way.","Holi customs and interpretations vary by region and community."],
+["Ethics","Ahimsa","A disagreement is escalating. Which response best reflects ahimsa in practice?","Seek a non-harmful solution while protecting people from immediate danger.","Ahimsa emphasises non-harm, applied thoughtfully to circumstances."],
+["Ethics","Seva","Learners volunteer to support older residents without publicising private details. Which value is demonstrated?","Service to others combined with respect for dignity.","Seva is associated with service; privacy supports dignity."],
+["Beliefs","Atman","A text discusses the enduring self and how it relates to the body. Which concept may be relevant in many Hindu philosophies?","Atman.","Atman is often discussed as the self or inner essence, though views differ."],
+["Beliefs","Brahman","A learner compares philosophical explanations of ultimate reality. Which term is commonly used in many Hindu traditions?","Brahman.","Brahman is commonly described as ultimate reality or a supreme cosmic principle."],
+["Religious diversity","Plurality","Two Hindu families explain a ceremony differently. What is the most respectful academic response?","Describe each explanation in context without declaring one family representative of all Hindus.","Religious traditions contain internal diversity."],
+["Ethics","Generosity","A community shares food with people experiencing hardship without humiliating recipients. Which value is most visible?","Generosity and compassion.","Giving that preserves dignity reflects compassion and generosity."],
+["Religious practice","Fasting","A learner asks why some Hindu families fast on certain days and others do not. What answer is sound?","Fasting varies by tradition, family, purpose and individual circumstances.","Hindu observances are diverse rather than universally identical."],
+["Religious practice","Pilgrimage","A family visits a sacred place to pray and learn about its history. What can the journey provide?","Spiritual reflection, community connection and learning.","Pilgrimage can carry devotional, communal and educational meanings."],
+["Ethics","Truth and responsibility","A learner notices a friend spreading an unverified accusation. What is a responsible first step?","Avoid repeating it and seek reliable information before drawing conclusions.","Truthfulness includes checking claims and avoiding unjust harm."],
+["Religion and society","Environmental care","Students organise a clean-up inspired by their shared ethical values. What broader lesson does this show?","Ethical and religious values can motivate practical service to the community.","Values can be expressed through responsible action."],
+["Sacred texts","Interpretation","Two readers interpret a sacred passage differently. What is a careful way to study the difference?","Consider context, tradition and the reasoning each reader gives.","Interpretation should consider context and acknowledge diversity."],
+["Worship","Respect","A visitor attends a ceremony unfamiliar to them. What should they do if unsure when to participate?","Follow the host’s guidance and participate only in ways that are appropriate and comfortable.","Respectful participation involves learning local expectations."],
+["Ethics","Self-discipline","A learner sets aside time daily for reflection and study despite distractions. Which quality is demonstrated?","Self-discipline and commitment.","Consistent effort despite distractions reflects discipline."],
+["Ethics","Non-attachment","A learner works carefully but accepts that the final result may not fully match expectations. Which idea may this resemble in some Hindu teachings?","Acting responsibly without being wholly controlled by attachment to outcomes.","Some teachings encourage attention to duty rather than fixation on results."],
+["Religious diversity","Sects and traditions","Why should a textbook avoid claiming that every Hindu worships the same deity in the same way?","Hindu traditions include diverse beliefs, practices and interpretations.","Accurate religious education acknowledges diversity."],
+["Ethics","Justice","A school club allocates support according to need using transparent criteria. Which ethical concern does this address?","Fairness and responsible treatment of community members.","Transparent, need-based decisions can support fairness."],
+["Comparative understanding","Respectful dialogue","A learner compares Hindu concepts with another tradition. What is the best method?","Explain each tradition accurately in its own context before comparing similarities and differences.","Fair comparison avoids oversimplifying either tradition."]
+];
+function makeRows(items, subject, prefix, kind) {
+  const rows=[];
+  items.forEach((it,i)=>{
+    const topic=it[0], sub=it[1], q=it[2], correct=it[3], explanation=it[4];
+    const wrongSets={
+      lit:["The detail has no relationship to the text’s meaning.","A reader should ignore character actions and language.","The interpretation is correct only if it matches a film version."],
+      fas:["Jibu hutegemea kukariri bila kuangalia muktadha.","Kipengele hicho hakihusiani na maana ya matini.","Hitimisho linafaa hata bila ushahidi wowote."],
+      french:["Cette réponse ne tient pas compte du contexte ni de la grammaire.","Il faut choisir une formule sans rapport avec la situation.","La phrase est correcte uniquement si elle est traduite mot à mot."],
+      german:["Die Antwort berücksichtigt weder Kontext noch Grammatik.","Man sollte eine unpassende Formulierung wählen.","Der Satz ist nur richtig, wenn man ihn Wort für Wort übersetzt."],
+      arabic:["لا تراعي هذه الإجابة السياق أو القاعدة.","ينبغي اختيار عبارة لا علاقة لها بالموقف.","الجملة صحيحة فقط إذا تُرجمت حرفياً."],
+      mandarin:["这个答案没有考虑语境或语法。","应该选择与情境无关的表达。","只有逐字翻译时这句话才正确。"],
+      hre:["This response ignores context and the diversity of Hindu traditions.","The concept has no ethical or religious meaning.","Every Hindu community must interpret the practice identically."]
+    };
+    rows.push([topic,sub,q,correct,...wrongSets[kind],explanation]);
+  });
+  return rows;
+}
+literature.push(...makeRows(litExtra,"English Literature","g10-english-lit-x","lit"));
+fasihi.push(...makeRows(fasihiExtra,"Fasihi ya Kiswahili","g10-fasihi-kiswahili-x","fas"));
+french.push(...makeRows(frenchExtra,"French","g10-french-x","french"));
+german.push(...makeRows(germanExtra,"German","g10-german-x","german"));
+arabic.push(...makeRows(arabicExtra,"Arabic","g10-arabic-x","arabic"));
+mandarin.push(...makeRows(mandarinExtra,"Mandarin","g10-mandarin-x","mandarin"));
+hre.push(...makeRows(hreExtra,"HRE","g10-hre-x","hre"));
+
 module.exports=[
  ...bank("English Literature","g10-english-lit","Interpret literary texts using evidence, analyse language and structure, and evaluate themes and characterisation.",literature),
  ...bank("Fasihi ya Kiswahili","g10-fasihi-kiswahili","Kuchambua fasihi simulizi na andishi kwa kutumia ushahidi, tamathali, dhamira na muktadha.",fasihi),
