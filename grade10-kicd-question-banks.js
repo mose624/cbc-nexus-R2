@@ -885,7 +885,7 @@ const agriculture = agricultureRows.slice(0, 50).map((r, i) => ({
 
 const coreMathRows = [
 ["Number","Ratio and proportion","A school mixes concentrate and water in the ratio 2:7. If 27 litres of drink are prepared, how many litres are concentrate?",["4 L","6 L","9 L","18 L"],1,"There are 9 total parts; 27 ÷ 9 = 3 L per part, so concentrate is 2 × 3 = 6 L."],
-["Number","Percentage change","A jacket costs KSh 2,400. Its price is reduced by 15%, then the reduced price is increased by 10%. What is the final price?",["KSh 2,244","KSh 2,400","KSh 2,244?","KSh 2,640"],0,"2,400 × 0.85 × 1.10 = KSh 2,244. Percentage changes apply successively, not by simply subtracting 5%."],
+["Number","Percentage change","A jacket costs KSh 2,400. Its price is reduced by 15%, then the reduced price is increased by 10%. What is the final price?",["KSh 2,244","KSh 2,280","KSh 2,400","KSh 2,640"],0,"2,400 × 0.85 × 1.10 = KSh 2,244. Percentage changes apply successively, not by simply subtracting 5%."],
 ["Number","Rates and unit conversion","A water tank fills at 18 litres per minute. How long will it take to deliver 1.35 m³ of water at that rate?",["25 minutes","50 minutes","75 minutes","135 minutes"],2,"1.35 m³ = 1,350 L; 1,350 ÷ 18 = 75 minutes."],
 ["Number","Standard form","A bacterium is approximately 0.0000048 m long. Which is its length in standard form?",["4.8 × 10⁻⁶ m","48 × 10⁻⁶ m","4.8 × 10⁶ m","0.48 × 10⁻⁴ m"],0,"0.0000048 = 4.8 × 10⁻⁶."],
 ["Number","Bounds and rounding","A rectangular board is measured as 2.4 m to the nearest 0.1 m. What is the lower bound of its actual length?",["2.30 m","2.35 m","2.40 m","2.45 m"],1,"A value rounded to 2.4 m to the nearest 0.1 m lies from 2.35 m inclusive to 2.45 m exclusive."],
