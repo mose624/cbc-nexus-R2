@@ -85,7 +85,15 @@
       let registration=null,phone="";
       form.addEventListener("submit",async event=>{
         event.preventDefault();submit.disabled=true;status.textContent="Submitting registration details…";
-        const data=Object.fromEntries(new FormData(form).entries());phone=String(data.phone||"").trim();
+        const data=Object.fromEntries(new FormData(form).entries());
+        for(const key of ["learnerName","grade","school","guardianName","phone"])data[key]=String(data[key]||"").trim();
+        phone=data.phone;
+        const missing=[["learnerName","learner name"],["grade","grade/class"],["school","school name"],["guardianName","parent/guardian name"],["phone","parent/guardian M-Pesa phone"]].filter(([key])=>!data[key]).map(([,label])=>label);
+        if(missing.length){status.textContent="Please complete: "+missing.join(", ")+".";
+          submit.disabled=false;return;}
+        const compactPhone=phone.replace(/[\\s()-]/g,"").replace(/^\\+/,"");
+        if(!/^(?:0[17]\\d{8}|254[17]\\d{8})$/.test(compactPhone)){status.textContent="Enter a valid Kenyan M-Pesa number, e.g. 0712345678 or +254712345678.";submit.disabled=false;return;}
+        data.phone=compactPhone.startsWith("0")?"254"+compactPhone.slice(1):compactPhone;
         try{
           const response=await fetch("/api/math-competition/register",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
           const result=await response.json().catch(()=>({}));
