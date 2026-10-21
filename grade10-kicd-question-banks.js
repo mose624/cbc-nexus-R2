@@ -465,7 +465,7 @@ const businessRows = [
 ["Business Planning","Performance indicators","A business wants to know whether a new delivery service is improving customer experience. Which indicators are most relevant?",["The owner’s mood and the colour of the delivery van.","On-time delivery rate, complaint rate, repeat purchases and customer feedback.","The number of unrelated posters.","Only total stock purchased."],1,"Indicators should directly measure reliability, service problems and customer response."],
 ["Business Planning","Decision under uncertainty","A business is deciding whether to expand before the holiday season. Demand forecasts differ widely. What is a prudent approach?",["Treat the highest forecast as certain.","Use scenarios, assess cash reserves and downside risk, and consider a reversible pilot or staged expansion.","Ignore cash flow because sales are seasonal.","Commit all available funds without a contingency."],1,"Scenario planning and staged decisions limit losses when forecasts are uncertain."]
 ];
-const business = businessRows.map((r, i) => ({
+const business = businessRows.slice(0, 50).map((r, i) => ({
   id: "g10-ho-business-studies-" + String(i + 1).padStart(2, "0"),
   grade: "Grade 10",
   subject: "Business Studies",
