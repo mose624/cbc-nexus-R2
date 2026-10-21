@@ -265,11 +265,12 @@ const input=$('jobSearchInput'),region=$('regionFilter'),level=$('levelFilter'),
 .country-guide-card h3{margin:0 0 8px}.guide-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px}.guide-item{margin:8px 0;font-size:12px;color:#4b5563}.guide-item strong{color:#18202b}.official-links a{display:block;font-size:12px;margin-top:4px}@media(max-width:900px){.guide-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:650px){.guide-grid{grid-template-columns:1fr}}
 </style>
 <script>
-(async function(){
+(function(){
 const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]));
 const grid=document.getElementById("countryGuideGrid");
+async function loadGuides(){
 try{
- const r=await fetch("/api/international-countries?_="+Date.now()),d=await r.json(); if(!r.ok||!d.ok)throw Error(d.error||"Could not load country guides.");
+ const r=await fetch("/api/international-countries",{credentials:"same-origin",cache:"default",headers:{"Accept":"application/json"}}),d=await r.json(); if(!r.ok||!d.ok)throw Error(d.error||"Could not load country guides.");
  const rows=d.countries||[];
  grid.innerHTML=rows.length?'<div class="guide-grid">'+rows.map(x=>{
   const links=String(x.official_links||"").split(/\n+/).filter(Boolean).map(u=>{let safe="";try{const q=new URL(u);if(/^https?:$/.test(q.protocol))safe=q.href}catch{}return safe?'<a href="'+esc(safe)+'" target="_blank" rel="noopener">'+esc(safe)+'</a>':""}).join("");
@@ -290,6 +291,8 @@ try{
   (x.notes?'<div class="guide-item"><strong>⚠️ Notes:</strong> '+esc(x.notes)+'</div>':"")+'</article>'
  }).join("")+'</div>':'<div class="card"><p>Country guides are being prepared. Check back soon.</p></div>';
 }catch(e){grid.innerHTML='<div class="card"><p>'+esc(e.message)+'</p></div>'}
+}
+if(grid && "IntersectionObserver" in window){const observer=new IntersectionObserver(entries=>{if(entries.some(entry=>entry.isIntersecting)){observer.disconnect();loadGuides();}},{rootMargin:"300px"});observer.observe(grid);}else{loadGuides();}
 function calc(){const s=Number(document.getElementById("calcSalary").value||0),l=Number(document.getElementById("calcLiving").value||0),h=document.getElementById("calcHousing").value==="1",rent=Number(document.getElementById("calcRent").value||0),cost=l+(h?0:rent),save=s-cost;document.getElementById("calcResult").innerHTML=s?'Estimated monthly balance: <strong>'+save.toLocaleString()+'</strong> (before taxes and other deductions).':''}
 ["calcSalary","calcLiving","calcHousing","calcRent"].forEach(id=>document.getElementById(id).addEventListener("input",calc));document.getElementById("calcHousing").addEventListener("change",calc);
 })();
@@ -316,7 +319,7 @@ function calc(){const s=Number(document.getElementById("calcSalary").value||0),l
   const safeUrl=v=>{try{const u=new URL(String(v||""),location.href);return /^https?:$/.test(u.protocol)?u.href:"#";}catch{return "#";}};
   async function load(){
     try{
-      const r=await fetch("/api/vacancies?_="+Date.now(),{credentials:"same-origin",cache:"no-store",headers:{"Accept":"application/json","Cache-Control":"no-cache"}});
+      const r=await fetch("/api/vacancies",{credentials:"same-origin",cache:"default",headers:{"Accept":"application/json"}});
       const d=await r.json().catch(()=>({}));
       if(!r.ok||!d.ok) throw new Error(d.error||"Vacancies could not be loaded.");
       const rows=Array.isArray(d.vacancies)?d.vacancies:[];
