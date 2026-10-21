@@ -2286,7 +2286,19 @@ async function seedInteractiveQuestions(){
     }
     const ordered=[...explicit,...[...mergedById.values()].filter(q=>!explicitIds.has(String(q.id)))].slice(0,5000);
     await fs.writeFile(path.join(DATA_DIR,"interactive-questions.json"),JSON.stringify(ordered,null,2));
-    console.log("Ensured "+explicit.length+" explicit Grade 10 KICD-aligned English questions; added "+additions+" additional starter questions.");
+    if(supabaseConfigured){
+      try{
+        const explicitRows=explicit.map(interactiveQuestionToDb);
+        for(let i=0;i<explicitRows.length;i+=100){
+          const {error}=await supabase.from("interactive_questions").upsert(explicitRows.slice(i,i+100),{onConflict:"id"});
+          if(error) throw error;
+        }
+        console.log("Persisted "+explicitRows.length+" explicit Grade 10 curriculum questions to Supabase.");
+      }catch(dbError){
+        console.error("Persistent curriculum question seeding failed:",dbError.message||dbError);
+      }
+    }
+    console.log("Ensured "+explicit.length+" explicit Grade 10 curriculum questions; added "+additions+" additional starter questions.");
   }catch(error){console.error("Interactive question seed error:",error.message||error);}
 }
 seedInteractiveQuestions().finally(()=>server.listen(PORT,"0.0.0.0",()=>console.log(`CBE website backend running on port ${PORT}`)));
