@@ -72,6 +72,7 @@
   }
 
   const learner = document.getElementById("quizLearnerInput");
+  const learnerId = document.getElementById("quizLearnerIdInput");
   const grade = document.getElementById("quizGradeInput");
   const subject = document.getElementById("quizSubjectInput");
   const strand = document.getElementById("quizStrandInput");
@@ -1381,6 +1382,7 @@
       id: "quiz-" + Date.now(),
       serialNumber: createAssessmentSerial(),
       learner: learner.value.trim(),
+      learnerId: learnerId ? learnerId.value.trim() : "",
       grade: grade.value,
       subject: subject.value,
       strand: strand ? strand.value : "All Topics",
