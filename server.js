@@ -882,10 +882,18 @@ async function handleApi(req,res,url){
       if(supabaseConfigured){
         const {error}=await supabase.from("interactive_questions").insert(interactiveQuestionToDb(item));
         if(error) throw error;
+        // Verify the shared database write before telling the admin it is published.
+        const {data:saved,error:verifyError}=await supabase.from("interactive_questions").select("id,published").eq("id",item.id).maybeSingle();
+        if(verifyError) throw verifyError;
+        if(!saved||saved.published!==true) throw new Error("Question save could not be verified in the shared question bank.");
       }
       rows.unshift(item);
       await fs.writeFile(path.join(DATA_DIR,"interactive-questions.json"),JSON.stringify(rows.slice(0,5000),null,2));
-      sendJson(res,201,{ok:true,question:item,message:"Question published."});
+      // Keep the in-process fallback current as well, so a short Supabase outage
+      // immediately after publishing does not hide this newly saved question.
+      const known=Array.isArray(interactiveQuestionLastKnownGood)?interactiveQuestionLastKnownGood:[];
+      interactiveQuestionLastKnownGood=[item,...known.filter(q=>q&&String(q.id)!==String(item.id))].slice(0,5000);
+      sendJson(res,201,{ok:true,question:item,message:"Question published and verified in the shared question bank."});
     }catch(error){console.error("Interactive question publish error:",error);sendJson(res,500,{ok:false,error:"Question could not be saved. Please try again."});}
     return true;
   }
