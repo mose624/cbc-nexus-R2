@@ -4,6 +4,9 @@
 */
 "use strict";
 const subjects = {
+"Core Mathematics":["linear equations","functions and graphs","ratio and proportion","percentages and commercial arithmetic","geometry and measurement","trigonometry","statistics","probability","indices and standard form","sequences"],
+"Essential Mathematics":["budgeting and percentages","ratio and proportion","measurement","data interpretation","linear relationships","financial decisions","probability","graphs","estimation","problem solving"],
+"Sign Language":["sign vocabulary","facial expression and non-manual signals","spatial grammar","fingerspelling","turn-taking","visual attention","sentence structure","interpreting meaning","audience and context","clear communication"],
 "Mathematics":["linear equations","functions and graphs","ratio and proportion","percentages and commercial arithmetic","geometry and measurement","trigonometry","statistics","probability","indices and standard form","sequences"],
 "English":["reading inference","argument and evidence","grammar in context","sentence structure","tone and audience","summary","vocabulary in context","punctuation","creative writing","oral communication"],
 "Kiswahili":["ufahamu","sarufi katika muktadha","uandishi wa insha","msamiati","methali na nahau","muundo wa sentensi","fasihi","mawasiliano","hoja na ushahidi","uandishi rasmi"],
@@ -59,7 +62,7 @@ const subjects = {
 "Indigenous Languages":["comprehension","oral traditions","vocabulary in context","sentence structure","storytelling","proverbs","respectful communication","translation choices","cultural context","writing for audience"]
 };
 const aliases = {
-"History and Citizenship":"History & Citizenship","Building and Construction":"Building Construction",
+"History and Citizenship":"History & Citizenship","Core Mathematics":"Core Mathematics","Essential Mathematics":"Essential Mathematics","Mandarin Chinese":"Mandarin Chinese","Sign Language":"Sign Language","Indigenous Languages":"Indigenous Languages","Building and Construction":"Building Construction",
 "Marine and Fisheries Technology":"Marine & Fisheries Technology","Wood Technology":"Woodwork",
 "Sports and Recreation":"Sports & Recreation","Home Science":"Home Science"
 };
