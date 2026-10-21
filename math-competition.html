@@ -25,6 +25,31 @@
     .registration .full{grid-column:1/-1}.registration-status{min-height:24px;margin:12px 0;font-weight:700}.fee-pill{display:inline-block;background:#fce7f3;color:#9d174d;font-size:1.1rem;font-weight:900;padding:8px 14px;border-radius:999px}
     @media(max-width:600px){.registration-grid{grid-template-columns:1fr}.registration .full{grid-column:auto}}
     @media(prefers-reduced-motion:no-preference){.math-cta{animation:mathGlow 1.5s ease-in-out infinite alternate}@keyframes mathGlow{from{box-shadow:0 0 7px #db277755}to{box-shadow:0 0 20px #db2777aa}}}
+
+    /* Christmas 2026 and New Year 2027 festive page decoration */
+    body{background:linear-gradient(180deg,#eaf6ff 0%,#fff 38%,#fff8f0 100%)}
+    .holiday-ribbon{position:relative;overflow:hidden;text-align:center;padding:11px 16px;background:linear-gradient(100deg,#075b37,#0c7a45 48%,#b51224);color:#fff;font-weight:900;letter-spacing:.02em;text-shadow:0 2px 3px #0004}
+    .holiday-ribbon .holiday-icons{display:block;font-size:1.3rem;letter-spacing:.25em;margin-bottom:3px}
+    .math-hero{position:relative;overflow:hidden;border-bottom:5px solid #c51d2b;background:radial-gradient(circle at 15% 10%,#fff 0 2px,transparent 3px),linear-gradient(135deg,#e7f5ff,#fff 48%,#fff1f2)}
+    .math-hero:before,.math-hero:after{position:absolute;top:10px;font-size:clamp(2.5rem,7vw,5.5rem);line-height:1;pointer-events:none;filter:drop-shadow(0 3px 2px #0002)}
+    .math-hero:before{content:"🎄🎁";left:clamp(5px,3vw,35px)}
+    .math-hero:after{content:"🎄🔔";right:clamp(5px,3vw,35px)}
+    .math-hero h1{position:relative;color:#0b477e;text-shadow:0 2px 0 #fff}
+    .math-hero .eyebrow{color:#087443}
+    .math-content{position:relative}
+    .math-card,.registration{border-color:#b9dfd0;box-shadow:0 8px 24px #0b477e10}
+    .math-card h2,.registration h2{color:#075b37}
+    .registration{border:2px solid #b51f2b;background:linear-gradient(135deg,#fff,#f4fbff 70%,#fff8f0)}
+    .registration:before{content:"🎄 ✨ 🎁 ✨ 🎄";display:block;text-align:center;font-size:1.2rem;letter-spacing:.15em;margin-bottom:10px}
+    .fee-pill{background:#b51224;color:#fff;box-shadow:0 4px 0 #075b37}
+    .math-cta{background:linear-gradient(110deg,#c51636,#e72b4c);border:1px solid #fff8}
+    .math-cta.secondary{background:linear-gradient(110deg,#075b37,#0c7a45)}
+    .holiday-greeting{margin:0;text-align:center;padding:23px 16px;background:linear-gradient(120deg,#063b72,#0876ad,#063b72);color:white;border-top:4px solid #c51d2b;border-bottom:4px solid #c51d2b}
+    .holiday-greeting strong{display:block;font-size:clamp(1.35rem,3.5vw,2.35rem);line-height:1.25}
+    .holiday-greeting p{margin:8px 0 0}
+    .math-footer{border-top:5px solid #0b7b48;background:linear-gradient(100deg,#b51224,#d71920,#a80e1d)}
+    @media(max-width:600px){.math-hero:before,.math-hero:after{font-size:2rem;top:5px}.math-hero{padding-top:55px}.holiday-ribbon{font-size:.9rem}}
+
   </style>
 </head>
 <body>
@@ -38,8 +63,9 @@
     </nav>
   </header>
   <main>
+    <div class="holiday-ribbon"><span class="holiday-icons">🎄 ✨ 🔔 🎁 ❄️ 🎁 🔔 ✨ 🎄</span>MERRY CHRISTMAS 2026 <span aria-hidden="true">•</span> HAPPY NEW YEAR 2027</div>
     <section class="math-hero">
-      <p class="eyebrow">Think • Solve • Shine</p>
+      <p class="eyebrow">🎄 Think • Solve • Shine • Celebrate 🎄</p>
       <h1>🏆 CBE Nexus Maths Competition</h1>
       <p>Is your child ready for a fun mathematical challenge? Help learners build confidence, sharpen problem-solving skills and discover that mathematics can be exciting.</p>
       <p><strong>Competition dates: 5–10 December 2026</strong></p>
@@ -65,7 +91,6 @@
           <p id="paymentStatus" class="registration-status" role="status" aria-live="polite"></p>
         </div>
       </section>
-      <h2>Why encourage your child to take part?</h2>
       <h2>Why encourage your child to take part?</h2>
       <div class="math-cards">
         <article class="math-card"><h2>🧠 Think Critically</h2><p>Build logical reasoning and learn to approach unfamiliar problems step by step.</p></article>
