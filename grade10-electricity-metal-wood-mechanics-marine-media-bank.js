@@ -213,7 +213,7 @@ module.exports = [
  ...makeBank(electricityRows,"Electricity","g10-electricity","Apply electrical principles, safe installation, measurement, fault finding and energy efficiency."),
  ...makeBank(metalRows,"Metal Work","g10-metal-work","Select tools and materials and apply safe metal fabrication, joining, measurement and quality-control practices."),
  ...makeBank(woodRows,"Wood Work","g10-wood-work","Apply timber science, tool selection, joints, furniture construction, finishing and workshop safety."),
- ...makeBank(mechanicsRows,"Power Mechanics","g10-power-mechanics","Apply mechanical, engine, transmission, braking, electrical diagnosis and maintenance principles."),
- ...makeBank(marineRows,"Marine & Fisheries","g10-marine-fisheries","Apply marine safety, navigation, vessel systems, responsible fishing and marine environmental stewardship."),
+ ...makeBank(mechanicsRows,"Power and Mechanics","g10-power-mechanics","Apply mechanical, engine, transmission, braking, electrical diagnosis and maintenance principles."),
+ ...makeBank(marineRows,"Marine and Fisheries","g10-marine-fisheries","Apply marine safety, navigation, vessel systems, responsible fishing and marine environmental stewardship."),
  ...makeBank(mediaRows,"Media Technology","g10-media-technology","Apply media literacy, production, editing, design, digital publishing, ethics and planning.")
 ];
