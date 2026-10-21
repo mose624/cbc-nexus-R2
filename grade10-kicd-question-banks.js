@@ -130,7 +130,7 @@ const kiswahiliRows = [
 ["Kuandika","Kuepuka upendeleo","Ripoti ya uchaguzi wa viongozi wa klabu inapaswa kueleza matokeo kwa haki. Ni njia ipi bora?",["Kutaja tu matokeo ya mgombea anayependwa na mwandishi.","Kuwasilisha takwimu za kura kwa usahihi, kueleza mbinu ya kuhesabu na kutenganisha ukweli na maoni.","Kuficha kura zisizomfaa mwandishi.","Kudai kuwa kila mtu alifurahia matokeo bila kuuliza."],1,"Takwimu sahihi na maelezo ya mbinu huongeza uwazi na kupunguza upendeleo."],
 ["Matumizi ya lugha","Uteuzi wa sajili","Mwanafunzi anaandika tangazo kwa umma kuhusu kufungwa kwa barabara. Ni taarifa ipi inayopaswa kuwekwa wazi zaidi?",["Jina la rafiki wa mwandishi.","Sehemu iliyoathiriwa, muda wa kufungwa, njia mbadala na mawasiliano ya kupata taarifa.","Maoni yasiyothibitishwa kuhusu dereva.","Hadithi ndefu isiyohusiana na barabara."],1,"Tangazo la umma linahitaji taarifa sahihi na hatua ambazo msomaji anaweza kuchukua."]
 ];
-const kiswahili = kiswahiliRows.map((r, i) => ({
+const kiswahili = kiswahiliRows.slice(0, 50).map((r, i) => ({
   id: "g10-ho-kiswahili-" + String(i + 1).padStart(2, "0"),
   grade: "Grade 10",
   subject: "Kiswahili",
