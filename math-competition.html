@@ -91,7 +91,7 @@
           const result=await response.json().catch(()=>({}));
           if(!response.ok||!result.ok)throw new Error(result.error||"Registration could not be submitted.");
           registration=result.registration;reference.textContent=registration.id;paymentArea.hidden=false;
-          status.textContent="Registration details received. Complete the KSh 200 payment below to finish registration.";
+          status.textContent="Registration submitted successfully! Your reference is "+registration.id+". Complete the KSh 200 M-Pesa payment below to finish registration.";
           paymentArea.scrollIntoView({behavior:"smooth",block:"center"});
         }catch(error){status.textContent=error.message||"Registration failed. Please try again."}
         finally{submit.disabled=false}
