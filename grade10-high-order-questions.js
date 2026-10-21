@@ -46,6 +46,7 @@ const subjects = {
 "Building Construction":["site safety","materials selection","measurement and setting out","foundation planning","structural loads","drawing interpretation","tools and maintenance","cost estimation","sustainable construction","quality inspection"],
 "Electricity":["electrical safety","circuit symbols","series and parallel circuits","current voltage and resistance","power and energy","fault finding","earthing","measurement instruments","load calculations","efficient energy use"],
 "Metalwork":["workshop safety","material selection","measuring and marking out","cutting and shaping","joining methods","tool selection","drawing interpretation","tolerances","quality control","waste reduction"],
+"Metal Work":["workshop safety","material selection","measuring and marking out","cutting and shaping","joining methods","tool selection","drawing interpretation","tolerances","quality control","waste reduction"],
 "Power Mechanics":["engine systems","energy conversion","lubrication","cooling systems","transmission","fault diagnosis","workshop safety","maintenance schedules","fuel efficiency","technical measurement"],
 "Wood Technology":["timber selection","grain and defects","measuring and marking out","joints","tool safety","finishing","drawing interpretation","strength and load","sustainable sourcing","quality inspection"],
 "Woodwork":["timber selection","grain and defects","measuring and marking out","joints","tool safety","finishing","drawing interpretation","strength and load","sustainable sourcing","quality inspection"],
@@ -64,6 +65,7 @@ const subjects = {
 };
 const aliases = {
 "History and Citizenship":"History & Citizenship","Core Mathematics":"Core Mathematics","Essential Mathematics":"Essential Mathematics","Mandarin Chinese":"Mandarin Chinese","Sign Language":"Sign Language","Indigenous Languages":"Indigenous Languages","Building and Construction":"Building Construction",
+"Metalwork":"Metal Work",
 "Marine and Fisheries Technology":"Marine & Fisheries Technology","Wood Technology":"Woodwork",
 "Sports and Recreation":"Sports & Recreation","Home Science":"Home Science"
 };
@@ -227,19 +229,86 @@ const specific = {
 {q:"A circuit supplies a 60 W lamp and a 40 W lamp at their rated operating conditions. What is their combined power?",o:["20 W","60 W","100 W","2,400 W"],a:2,e:"The total power is 60 W + 40 W = 100 W."},
 {q:"Which action best reduces unnecessary electricity use in a school computer room without compromising safety?",o:["Remove protective earth connections.","Leave all equipment on overnight.","Switch off equipment when not required and use suitable efficient devices.","Overload one extension socket with every computer."],a:2,e:"Switching off unused equipment and selecting efficient devices reduces avoidable energy use safely."}
 ],
-"Physics": [
-{q:"A learner records the position of a moving trolley at equal time intervals. Which graph is most useful for comparing its speed during different intervals?",o:["Mass against colour","Distance against time","Temperature against name","Length against material"],a:1,e:"The gradient of a distance-time graph represents speed."},
-{q:"Two learners measure the same length and obtain slightly different results. Which practice most improves the reliability of their result?",o:["Choose the larger value automatically.","Repeat the measurement carefully and compare or average consistent readings.","Delete all readings except the first.","Change the unit midway through measurement."],a:1,e:"Repeated measurements help identify random variation and improve reliability."},
-{q:"A trolley accelerates when a resultant force acts on it. If its mass remains constant and the resultant force doubles, what happens to its acceleration?",o:["It halves.","It remains zero.","It doubles.","It becomes independent of force."],a:2,e:"From F = ma, with mass constant acceleration is directly proportional to resultant force."},
-{q:"A sharp knife cuts more easily than a blunt knife when the same force is applied. Which explanation is correct?",o:["The sharp knife produces greater pressure because the contact area is smaller.","The sharp knife removes the force.","The blunt knife has no contact area.","Pressure is independent of area."],a:0,e:"Pressure equals force divided by area; a smaller area produces greater pressure for the same force."},
-{q:"Why are gaps included in some bridges to accommodate temperature changes?",o:["To increase the bridge's mass.","To allow materials to expand and contract without excessive stress.","To stop gravity acting on the bridge.","To make the bridge absorb all sound."],a:1,e:"Materials expand when heated and contract when cooled; expansion gaps reduce stress."},
-{q:"A metal spoon in hot tea becomes warm at its handle. Which process mainly transfers heat through the solid spoon?",o:["Conduction","Convection","Evaporation","Reflection"],a:0,e:"Thermal energy passes through the metal by conduction."},
-{q:"A learner sees lightning before hearing thunder. What best explains the delay?",o:["Light travels much faster than sound in air.","Sound travels faster than light.","Thunder is produced several minutes later.","Lightning produces no sound."],a:0,e:"Light reaches the observer much earlier because its speed is far greater than sound's."},
-{q:"A student uses a converging lens to form a sharp image on a screen. What must be adjusted to achieve focus?",o:["The lens-screen or object-lens distance, as appropriate to the setup","The colour of the screen only","The mass of the lens","The room's name"],a:0,e:"Image focus depends on the relative positions of the object, lens and screen."},
-{q:"A 6 V battery is connected across a 3 Ω resistor. What current flows?",o:["0.5 A","2 A","3 A","18 A"],a:1,e:"Ohm's law gives I = V/R = 6/3 = 2 A."},
-{q:"A solar panel powers a water pump. Which description best represents the main energy conversion?",o:["Electrical energy to nuclear energy only","Light energy to electrical energy, then electrical energy to mechanical work","Sound energy to chemical energy","Heat energy to mass without energy transfer"],a:1,e:"The panel converts light to electricity and the motor converts electrical energy to mechanical work."}
+  "Physics": [
+{q:"A trolley of mass 6 kg experiences a resultant force of 18 N. Calculate its acceleration.",o:["0.3 m/s²","3 m/s²","12 m/s²","108 m/s²"],a:1,e:"F=ma, so a=18/6=3 m/s²."},
+{q:"A cyclist travels 240 m in 20 s. Find the average speed.",o:["10 m/s","12 m/s","20 m/s","4,800 m/s"],a:1,e:"Speed=distance/time=240/20=12 m/s."},
+{q:"Velocity increases from 4 m/s to 16 m/s in 3 s. Find acceleration.",o:["4 m/s²","6 m/s²","12 m/s²","20 m/s²"],a:0,e:"a=(v−u)/t=(16−4)/3=4 m/s²."},
+{q:"A machine does 900 J of work in 15 s. Calculate power.",o:["15 W","60 W","885 W","13,500 W"],a:1,e:"P=W/t=900/15=60 W."},
+{q:"A 25 N force moves a box 4 m in the force direction. Calculate work done.",o:["6.25 J","21 J","100 J","400 J"],a:2,e:"W=Fd=25×4=100 J."},
+{q:"A 2 kg object is lifted 5 m. Take g=10 N/kg. Find its gain in gravitational potential energy.",o:["10 J","25 J","50 J","100 J"],a:3,e:"GPE=mgh=2×10×5=100 J."},
+{q:"A 12 V supply drives 0.5 A through a component. Calculate power.",o:["6 W","12.5 W","24 W","0.04 W"],a:0,e:"P=VI=12×0.5=6 W."},
+{q:"A component has 9 V across it and current 0.3 A. Find resistance.",o:["0.03 Ω","2.7 Ω","30 Ω","90 Ω"],a:2,e:"R=V/I=9/0.3=30 Ω."},
+{q:"A wave has frequency 5 Hz and wavelength 2 m. Find wave speed.",o:["2.5 m/s","7 m/s","10 m/s","0.4 m/s"],a:2,e:"v=fλ=5×2=10 m/s."},
+{q:"A measuring cylinder rises from 35 cm³ to 52 cm³ when a metal object is immersed. Find the object's volume.",o:["17 cm³","35 cm³","52 cm³","87 cm³"],a:0,e:"Volume displaced=52−35=17 cm³."},
+{q:"Which abbreviation represents the SI unit of force?",o:["J","W","N","Pa"],a:2,e:"N stands for newton, the SI unit of force."},
+{q:"What does Hz stand for?",o:["Hertz, unit of frequency","Henry, unit of force","Heat zone","Height zero"],a:0,e:"Hertz (Hz) measures frequency in cycles per second."},
+{q:"What does SI mean in physics measurements?",o:["Standard Instruments","International System of Units","Scientific Index","System of Inertia"],a:1,e:"SI refers to the International System of Units."},
+{q:"Which pairing is correct?",o:["W — power","Pa — electric charge","C — temperature","kg — force"],a:0,e:"Watt (W) is the unit of power."},
+{q:"A 1,200 kg car moves at 10 m/s. Calculate momentum.",o:["120 kg m/s","1,200 kg m/s","12,000 kg m/s","120,000 kg m/s"],a:2,e:"p=mv=1,200×10=12,000 kg m/s."}
+],
+  "Power Mechanics": [
+{q:"An effort of 150 N lifts a load of 600 N. Calculate mechanical advantage.",o:["0.25","2","4","750"],a:2,e:"MA=load/effort=600/150=4."},
+{q:"A machine has MA=4 and VR=5. Calculate efficiency.",o:["20%","45%","80%","125%"],a:2,e:"Efficiency=MA/VR×100=4/5×100=80%."},
+{q:"An engine delivers 24 kW for 30 s. Calculate useful work.",o:["720 J","800 J","7,200 J","720,000 J"],a:3,e:"W=Pt=24,000×30=720,000 J."},
+{q:"A force of 500 N moves a component 0.8 m. Find work done.",o:["400 J","625 J","500.8 J","40 J"],a:0,e:"W=Fd=500×0.8=400 J."},
+{q:"A machine takes in 2,000 J and gives 1,500 J useful output. Find efficiency.",o:["25%","50%","75%","133%"],a:2,e:"Efficiency=1,500/2,000×100=75%."},
+{q:"What does RPM mean on an engine tachometer?",o:["Resistance per metre","Revolutions per minute","Rate per motion","Rotation pressure measure"],a:1,e:"RPM means revolutions per minute."},
+{q:"In engine terminology, what does TDC mean?",o:["Top dead centre","Total drive control","Torque direction change","Thermal density coefficient"],a:0,e:"TDC is the piston position furthest from the crankshaft."},
+{q:"What does BDC mean in a reciprocating engine?",o:["Brake disc calibration","Bottom dead centre","Basic drive cycle","Bearing direction control"],a:1,e:"BDC is the piston position nearest the crankshaft."},
+{q:"A crankshaft turns at 1,800 rpm. How many revolutions occur in 10 seconds?",o:["30","180","300","1,800"],a:2,e:"10 seconds is 1/6 minute; 1,800÷6=300 revolutions."},
+{q:"Torque is 40 N m and angular speed is 25 rad/s. Calculate power.",o:["1.6 W","65 W","1,000 W","10,000 W"],a:2,e:"P=torque×angular speed=40×25=1,000 W."},
+{q:"What does ABS stand for in vehicle systems?",o:["Automatic Battery Supply","Anti-lock Braking System","Advanced Belt Setting","Air Balance Sensor"],a:1,e:"ABS means Anti-lock Braking System."},
+{q:"A vehicle travels 180 km using 15 L of fuel. Calculate km/L.",o:["8","10","12","15"],a:2,e:"Fuel economy=180/15=12 km/L."},
+{q:"Which abbreviation is commonly used for an internal combustion engine?",o:["ICE","ECU","ABS","RPM"],a:0,e:"ICE commonly means internal combustion engine."},
+{q:"What does ECU mean in vehicle technology?",o:["Engine Control Unit","Energy Conversion Utility","Exhaust Cooling Unit","Electronic Clutch Use"],a:0,e:"An ECU is an electronic control unit managing specified engine or vehicle functions."},
+{q:"A shaft makes 900 revolutions in 30 seconds. Calculate its speed in rpm.",o:["30 rpm","300 rpm","900 rpm","1,800 rpm"],a:3,e:"30 seconds is 0.5 minute, so 900/0.5=1,800 rpm."}
+],
+  "Computer Studies": [
+{q:"Convert binary 101101₂ to denary.",o:["41","43","45","53"],a:2,e:"101101₂=32+8+4+1=45."},
+{q:"Convert denary 26 to an 8-bit binary number.",o:["00011010","00010110","00101010","00001110"],a:0,e:"26=16+8+2, so binary is 00011010."},
+{q:"A file is 3.5 MB. Using 1 MB=1,024 KB, how many KB is it?",o:["3,584 KB","3,500 KB","358.4 KB","35,840 KB"],a:0,e:"3.5×1,024=3,584 KB."},
+{q:"What does CPU stand for?",o:["Central Processing Unit","Computer Power Utility","Central Program Upload","Control Peripheral Unit"],a:0,e:"CPU means Central Processing Unit."},
+{q:"What does RAM stand for, and what is its usual role?",o:["Read Access Memory; permanent storage","Random Access Memory; temporary working memory","Rapid Archive Module; printing","Remote Application Mode; networking"],a:1,e:"RAM temporarily stores data and instructions in current use and is generally volatile."},
+{q:"What is the full meaning of ROM?",o:["Read-Only Memory","Random Output Machine","Remote Online Mode","Read Operating Method"],a:0,e:"ROM stands for Read-Only Memory."},
+{q:"A network connects computers in one school laboratory. Which type is most suitable?",o:["LAN","WAN","PAN only","International WAN"],a:0,e:"A Local Area Network connects devices in a limited area."},
+{q:"What does URL stand for?",o:["Uniform Resource Locator","Universal Reading Link","User Routing Language","Unified Record Location"],a:0,e:"URL means Uniform Resource Locator."},
+{q:"Which abbreviation means graphical user interface?",o:["GUI","GPA","GPU","GSM"],a:0,e:"GUI stands for Graphical User Interface."},
+{q:"A fake email link asks for a learner's password. What type of attack is this likely to be?",o:["Defragmentation","Phishing","Formatting","Compression"],a:1,e:"Phishing tricks users into revealing credentials or other sensitive data."},
+{q:"A processor handles two billion cycles per second. What unit best expresses this frequency?",o:["2 MHz","2 GHz","2 kB","2 Gbps"],a:1,e:"One GHz is one billion cycles per second; the frequency is 2 GHz."},
+{q:"A spreadsheet formula in C2 is =A2*B2. What does it become when copied to C3 with relative references?",o:["=A3*B3","=A2*B2","=A2+B2","It deletes row 3"],a:0,e:"Relative references adjust by one row when copied down."},
+{q:"What does SSD stand for?",o:["Solid-State Drive","System Software Data","Serial Storage Device","Secure Screen Display"],a:0,e:"SSD means Solid-State Drive."},
+{q:"Using decimal units, 1 GB=1,000 MB. How many MB are in 2 GB?",o:["200 MB","2,000 MB","2,048 MB","20,000 MB"],a:1,e:"2×1,000=2,000 MB."},
+{q:"Which abbreviation means Uninterruptible Power Supply?",o:["USB","UPS","URL","UML"],a:1,e:"UPS means Uninterruptible Power Supply."},
+{q:"What does HTTP stand for?",o:["Hypertext Transfer Protocol","High Transfer Text Program","Host Terminal Tracking Process","Hyperlink Text Translation Package"],a:0,e:"HTTP means Hypertext Transfer Protocol."},
+{q:"Which device forwards data packets between different IP networks?",o:["Router","Keyboard","Scanner","Plotter"],a:0,e:"A router forwards packets between networks."},
+{q:"What does IP stand for in IP address?",o:["Internet Protocol","Internal Program","Input Port","Integrated Processor"],a:0,e:"IP means Internet Protocol."},
+{q:"Which memory normally loses unsaved data when power is removed?",o:["ROM","RAM","SSD","Optical disc"],a:1,e:"RAM is volatile memory."},
+{q:"What does AI stand for?",o:["Artificial Intelligence","Automatic Internet","Applied Input","Advanced Interface"],a:0,e:"AI means Artificial Intelligence."}
+],
+  "Metal Work": [
+{q:"A steel bar measures 125 mm. Express this length in metres.",o:["0.0125 m","0.125 m","1.25 m","12.5 m"],a:1,e:"125 mm÷1,000=0.125 m."},
+{q:"A metal plate is 80 mm long and 35 mm wide. Calculate its area.",o:["115 mm²","280 mm²","2,800 mm²","28,000 mm²"],a:2,e:"Area=80×35=2,800 mm²."},
+{q:"A workshop needs 12 blanks each 145 mm long. Ignore cutting loss. What stock length is needed?",o:["1,140 mm","1,440 mm","1,740 mm","17,400 mm"],a:2,e:"12×145=1,740 mm."},
+{q:"What does PPE mean in workshop safety?",o:["Personal Protective Equipment","Power Production Engine","Practical Processing Estimate","Pressure Protection Element"],a:0,e:"PPE means Personal Protective Equipment."},
+{q:"Which tool accurately measures an external diameter to a small fraction of a millimetre?",o:["Ball-peen hammer","Outside micrometer","Cold chisel","Try square only"],a:1,e:"An outside micrometer measures external diameters and thickness accurately."},
+{q:"A drawing specifies 20.00 ± 0.05 mm. Which measurement is within tolerance?",o:["19.90 mm","19.97 mm","20.08 mm","20.10 mm"],a:1,e:"The acceptable range is 19.95–20.05 mm; 19.97 mm is within tolerance."},
+{q:"Why is a try square used during marking out?",o:["To check whether surfaces meet at 90°","To measure current","To harden the workpiece","To measure compression"],a:0,e:"A try square checks and marks right angles."},
+{q:"What is the purpose of a centre punch before drilling metal?",o:["Cool the drill","Create a locating indentation","Increase the hole after drilling","Polish the plate"],a:1,e:"The indentation helps prevent the drill bit from wandering."},
+{q:"Which operation produces a hole using a rotating toothed cutting tool?",o:["Drilling","Soldering","Annealing","Painting"],a:0,e:"Drilling produces a hole using a rotating drill bit."},
+{q:"A plate has thickness 4 mm and face area 0.02 m². Calculate volume.",o:["0.00008 m³","0.0008 m³","0.008 m³","0.08 m³"],a:0,e:"Thickness=0.004 m; volume=0.02×0.004=0.00008 m³."},
+{q:"What does HSS mean for a cutting tool?",o:["High-Speed Steel","Heavy Safety Shield","Heat Storage System","Hard Surface Setting"],a:0,e:"HSS means High-Speed Steel."},
+{q:"Which operation finishes a previously drilled hole for improved accuracy?",o:["Reaming","Forging","Casting","Painting"],a:0,e:"Reaming improves the size accuracy and finish of a drilled hole."},
+{q:"Why clamp a workpiece before filing or drilling?",o:["To soften it","To prevent movement and reduce injury risk","To increase speed without limit","To avoid eye protection"],a:1,e:"Secure clamping stabilises the workpiece and reduces slipping."},
+{q:"What does MIG mean in welding?",o:["Metal Inert Gas","Manual Iron Grinding","Machine Internal Gauge","Metal Inspection Grade"],a:0,e:"MIG stands for Metal Inert Gas welding."},
+{q:"What does TPI mean when describing a hacksaw blade?",o:["Turns per inch","Teeth per inch","Tool pressure index","Thickness per item"],a:1,e:"TPI means teeth per inch."},
+{q:"A 600 mm rod is cut into six equal pieces, ignoring kerf. What is each length?",o:["60 mm","100 mm","120 mm","360 mm"],a:1,e:"600÷6=100 mm."},
+{q:"What is the safest way to remove sharp burrs?",o:["Run a bare finger over the edge","Use a suitable file or deburring tool while securing the work and wearing PPE","Blow chips toward another learner","Leave every burr"],a:1,e:"Use controlled deburring with appropriate tools and PPE."},
+{q:"What is a vernier caliper used for?",o:["External, internal and depth measurements within its range","Temperature only","Applying welding current","Cutting threads automatically"],a:0,e:"Vernier calipers measure outside, inside and depth dimensions."},
+{q:"A 2.4 m bar is cut into 300 mm pieces with no cutting loss. How many full pieces?",o:["6","7","8","9"],a:2,e:"2.4 m=2,400 mm; 2,400÷300=8."},
+{q:"What does TIG mean in welding?",o:["Tungsten Inert Gas","Thermal Iron Grinding","Tool Inspection Gauge","Tension in Gear"],a:0,e:"TIG stands for Tungsten Inert Gas welding."}
 ]
 };
+specific["Metalwork"] = specific["Metal Work"];
 specific["Mathematics"] = specific["Core Mathematics"];
 curriculum["Mathematics"] = curriculum["Core Mathematics"];
 const out=[];
