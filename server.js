@@ -159,7 +159,7 @@ async function readInteractiveQuestionRows(){
           // Only the hand-authored curriculum-aligned bank should overwrite stable IDs.
           // Keep the legacy migration insert-only so unrelated admin-published questions
           // are not replaced by generated starter templates at every deployment.
-          const explicitRows=require("./grade10-kicd-question-banks.js").map(interactiveQuestionToDb);
+          const explicitRows=[...require("./grade10-kicd-question-banks.js"),...require("./grade10-home-science-bank.js"),...require("./grade10-aviation-building-bank.js"),...require("./grade10-electricity-metal-wood-mechanics-marine-media-bank.js")].map(interactiveQuestionToDb);
           for(let i=0;i<explicitRows.length;i+=100){
             const {error}=await supabase.from("interactive_questions").upsert(explicitRows.slice(i,i+100),{onConflict:"id"});
             if(error) throw error;
