@@ -261,7 +261,7 @@ async function getMpesaAccessToken(){
   try{return await mpesaTokenCache.pending;}
   finally{mpesaTokenCache.pending=null;}
 }
-function normalizeMpesaPhone(p){p=String(p||"").replace(/\s+/g,"");if(/^0[17]\d{8}$/.test(p))return"254"+p.slice(1);if(/^254[17]\d{8}$/.test(p))return p;return"";}
+function normalizeMpesaPhone(p){p=String(p||"").trim().replace(/[\s()-]/g,"");if(p.startsWith("+"))p=p.slice(1);if(/^0[17]\d{8}$/.test(p))return"254"+p.slice(1);if(/^254[17]\d{8}$/.test(p))return p;return"";}
 function mpesaBase(){return String(process.env.MPESA_ENVIRONMENT||"sandbox").toLowerCase()==="production"?"https://api.safaricom.co.ke":"https://sandbox.safaricom.co.ke";}
 function mpesaTimestamp(){const d=new Date();return d.getFullYear().toString()+String(d.getMonth()+1).padStart(2,"0")+String(d.getDate()).padStart(2,"0")+String(d.getHours()).padStart(2,"0")+String(d.getMinutes()).padStart(2,"0")+String(d.getSeconds()).padStart(2,"0");}
 function mpesaPassword(shortCode,passkey,timestamp){return Buffer.from(String(shortCode)+String(passkey)+String(timestamp)).toString("base64");}
@@ -1006,7 +1006,7 @@ async function handleApi(req,res,url){
     try{
       const p=JSON.parse((await readBody(req))||"{}");
       const learner=String(p.learnerName||"").trim(),grade=String(p.grade||"").trim(),school=String(p.school||"").trim(),guardian=String(p.guardianName||"").trim(),phone=normalizeMpesaPhone(p.phone||""),email=String(p.email||"").trim().slice(0,160);
-      if(!learner||!grade||!school||!guardian||!phone){sendJson(res,400,{ok:false,error:"Learner name, grade, school, parent/guardian name and a valid phone number are required."});return true;}
+      if(!learner||!grade||!school||!guardian){sendJson(res,400,{ok:false,error:"Please complete the learner name, grade, school and parent/guardian name fields."});return true;}if(!phone){sendJson(res,400,{ok:false,error:"Enter a valid Kenyan M-Pesa number, for example 0712345678 or +254712345678."});return true;}
       const registration={id:"mathcomp-"+crypto.randomBytes(8).toString("hex"),learnerName:learner.slice(0,120),grade:grade.slice(0,30),school:school.slice(0,160),guardianName:guardian.slice(0,120),phone,email,fee:200,paymentStatus:"pending",competitionDates:"2026-12-05 to 2026-12-10",createdAt:new Date().toISOString()};
       await appendJsonStore("math-competition-registrations.json",registration);
       sendJson(res,201,{ok:true,registration:{id:registration.id,learnerName:registration.learnerName,paymentStatus:registration.paymentStatus},message:"Registration details received. Complete the KSh 200 M-Pesa payment to finish registration."});
