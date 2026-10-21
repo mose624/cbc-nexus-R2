@@ -1828,6 +1828,21 @@ async function getTvetaCourses(){
     }
     return true;
   }
+  if(req.method==="POST"&&url.pathname==="/api/quizzes"){
+    try{
+      const p=JSON.parse((await readBody(req))||"{}"), learner=String(p.learner||"").trim().slice(0,180), grade=String(p.grade||"").trim().slice(0,40), subject=String(p.subject||"").trim().slice(0,100), total=Math.max(0,Math.min(50,Number(p.total)||0)), now=new Date().toISOString();
+      if(!learner||!grade||!subject||!total){sendJson(res,400,{ok:false,error:"Learner name, grade, subject and assessment questions are required."});return true;}
+      const row={id:String(p.id||("quiz-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"))).slice(0,120),serial_number:String(p.serialNumber||"").slice(0,120),learner,learner_id:String(p.learnerId||"").trim().slice(0,100),grade,subject,strand:String(p.strand||"All Topics").slice(0,140),sub_strand:String(p.subStrand||"All Sub-Strands").slice(0,140),learning_outcome:String(p.learningOutcome||"All Outcomes").slice(0,180),mode:String(p.mode||"practice").slice(0,30),total,answered:Math.max(0,Math.min(total,Number(p.answered)||0)),correct:Math.max(0,Math.min(total,Number(p.correct)||0)),score:Math.max(0,Math.min(100,Number(p.score)||0)),duration_seconds:Math.max(0,Number(p.durationSeconds)||0),results:Array.isArray(p.results)?p.results.slice(0,50):[],remark:String(p.remark||"").slice(0,240),created_at:p.createdAt&&Number.isFinite(Date.parse(p.createdAt))?new Date(p.createdAt).toISOString():now};
+      if(supabaseConfigured){const {error}=await supabase.from("assessment_records").insert(row);if(error)throw error;sendJson(res,201,{ok:true,saved:{id:row.id,createdAt:row.created_at},storage:"supabase"});return true;}
+      const saved=await appendJsonStore("assessment-records.json",{...row,createdAt:row.created_at});sendJson(res,201,{ok:true,saved,storage:"local"});return true;
+    }catch(error){console.error("Assessment record save error:",error?.message||error);sendJson(res,500,{ok:false,error:"Assessment record could not be saved. Check the assessment_records Supabase table migration."});return true;}
+  }
+  if(req.method==="GET"&&url.pathname==="/api/admin/assessment-records"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{if(supabaseConfigured){const {data,error}=await supabase.from("assessment_records").select("*").order("created_at",{ascending:false}).limit(5000);if(error)throw error;sendJson(res,200,{ok:true,records:data||[],storage:"supabase"});return true;}
+      const records=await readJsonStore("assessment-records.json");sendJson(res,200,{ok:true,records,storage:"local"});return true;
+    }catch(error){console.error("Admin assessment records lookup error:",error?.message||error);const records=await readJsonStore("assessment-records.json");sendJson(res,200,{ok:true,records,storage:"local-fallback",warning:"Supabase table unavailable. Apply migrations/assessment_records.sql for permanent records."});return true;}
+  }
   if(req.method==="POST"&&stores[url.pathname]){const p=JSON.parse((await readBody(req))||"{}");sendJson(res,201,{ok:true,saved:await appendJsonStore(stores[url.pathname],p)});return true;}
   if(req.method==="GET"&&url.pathname==="/api/international-countries"){
     try{
