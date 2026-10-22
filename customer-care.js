@@ -176,7 +176,7 @@
   try{
     let first=Number(localStorage.getItem(VISIT_KEY)||0);
     if(!first){first=now;localStorage.setItem(VISIT_KEY,String(first));}
-    if(now-first<DELAY_MS||Number(localStorage.getItem(DISMISS_KEY)||0)>now)return;
+    if(Number(localStorage.getItem(DISMISS_KEY)||0)>now)return;
   }catch{return;}
   let timer=null,shown=false;
   function showOffer(){
