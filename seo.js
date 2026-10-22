@@ -136,7 +136,11 @@ async function blogArticlePage(req,slugValue){
  return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(title)+'</title><meta name="description" content="'+esc(description)+'"><meta name="robots" content="index,follow"><link rel="canonical" href="'+esc(b+canonical)+'"><meta property="og:type" content="article"><meta property="og:title" content="'+esc(String(r.title||title))+'"><meta property="og:description" content="'+esc(description)+'"><meta property="og:url" content="'+esc(b+canonical)+'">'+(image?'<meta property="og:image" content="'+esc(json.image[0])+'">':"")+'<meta property="article:published_time" content="'+esc(published)+'"><meta property="article:modified_time" content="'+esc(modified)+'"><script type="application/ld+json">'+JSON.stringify(json).replace(/</g,"\\u003c")+'</script><link rel="alternate" type="application/rss+xml" title="CBE Nexus Education Hub RSS" href="/rss.xml"><style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;max-width:900px;margin:auto;padding:24px;line-height:1.7;color:#172033}header{padding:18px 0;border-bottom:1px solid #ddd}.meta{color:#5b6770;font-size:.9rem}.hero{padding:30px 0 15px}article img{max-width:100%;height:auto;border-radius:12px}article{font-size:1.05rem}a{color:#075985}</style></head><body><header><strong>CBE Nexus</strong> — Connecting learners to excellence | Kenya</header><main><section class="hero"><p class="meta">'+esc(String(r.category||"Education"))+' · '+esc(author)+' · '+esc(new Date(published).toLocaleDateString("en-KE"))+'</p><h1>'+esc(String(r.title||title))+'</h1><p>'+esc(description)+'</p>'+(image?'<img src="'+esc(json.image[0])+'" alt="'+esc(String(r.title||title))+'">':"")+'</section><article>'+body+'</article><p><a href="/blog.html">← More CBE Nexus articles</a> · <a href="/rss.xml">Subscribe to RSS</a></p></main></body></html>';
 }
 function xml(v){return String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&apos;");}
+let sitemapCache = { expiresAt: 0, body: "" };
+const SITEMAP_CACHE_TTL_MS = 15 * 60 * 1000;
+
 async function sitemap(req){
+ if (sitemapCache.body && sitemapCache.expiresAt > Date.now()) return sitemapCache.body;
  const b="https://cbenexus.co.ke";
  const urls=[
   "/","/resources.html","/free-resources.html","/quizzes.html","/projects.html","/tuition.html",
@@ -200,6 +204,8 @@ async function sitemap(req){
  }catch(e){console.warn("SEO sitemap static-page discovery failed:",e.message||e);}
  const unique=[...new Set(urls)].filter(u=>typeof u==="string"&&u.startsWith("/"));
  const body=unique.map(u=>"<url><loc>"+xml(b+u)+"</loc></url>").join("");
- return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+body+"\n</urlset>";
+ const output = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+body+"\n</urlset>";
+ sitemapCache = { expiresAt: Date.now() + SITEMAP_CACHE_TTL_MS, body: output };
+ return output;
 }
 module.exports={match,sitemap,base};
