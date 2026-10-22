@@ -164,6 +164,80 @@
   form.addEventListener("submit",e=>{e.preventDefault();const v=input.value.trim();if(!v)return;addMessage(v,"user");input.value="";reply(answer(v))});
 })();
 
+
+/* CBE Nexus: delayed discovery popup for returning site visitors. */
+(function cbeDelayedWelcomeOffer(){
+  "use strict";
+  const VISIT_KEY="cbe_nexus_first_visit_at_v1";
+  const DISMISS_KEY="cbe_nexus_offer_dismissed_until_v1";
+  const DELAY_MS=60*60*1000;
+  const DISMISS_MS=7*24*60*60*1000;
+  const now=Date.now();
+  try{
+    let first=Number(localStorage.getItem(VISIT_KEY)||0);
+    if(!first){first=now;localStorage.setItem(VISIT_KEY,String(first));}
+    if(now-first<DELAY_MS||Number(localStorage.getItem(DISMISS_KEY)||0)>now)return;
+  }catch{return;}
+  let timer=null,shown=false;
+  function showOffer(){
+    if(shown||document.visibilityState==="hidden")return;
+    shown=true;
+    if(!document.getElementById("cbe-discovery-offer-style")){
+      const style=document.createElement("style");style.id="cbe-discovery-offer-style";
+      style.textContent=`
+        #cbe-discovery-offer{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(15,23,42,.68);backdrop-filter:blur(3px)}
+        #cbe-discovery-offer[hidden]{display:none}
+        #cbe-discovery-offer .cdo-card{position:relative;box-sizing:border-box;width:min(620px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:20px;padding:28px;color:#172033;box-shadow:0 24px 80px rgba(0,0,0,.3);font-family:Arial,sans-serif}
+        #cbe-discovery-offer .cdo-close{position:absolute;right:12px;top:10px;border:0;background:#f1f5f9;border-radius:50%;width:38px;height:38px;font-size:25px;cursor:pointer;color:#334155}
+        #cbe-discovery-offer .cdo-kicker{display:inline-block;background:#dcfce7;color:#166534;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:800}
+        #cbe-discovery-offer h2{font-size:clamp(23px,4vw,32px);line-height:1.15;margin:14px 42px 8px 0;color:#0f172a}
+        #cbe-discovery-offer .cdo-intro{color:#475569;line-height:1.55;margin:0 0 18px}
+        #cbe-discovery-offer .cdo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+        #cbe-discovery-offer .cdo-link{display:block;padding:15px;border:1px solid #dbeafe;border-radius:13px;text-decoration:none!important;background:#f8fbff;color:#0f172a!important;transition:transform .15s,box-shadow .15s}
+        #cbe-discovery-offer .cdo-link:hover{transform:translateY(-2px);box-shadow:0 6px 18px #0f172a12}
+        #cbe-discovery-offer .cdo-link strong{display:block;margin-bottom:5px;font-size:15px}
+        #cbe-discovery-offer .cdo-link span{display:block;font-size:12px;line-height:1.45;color:#475569}
+        #cbe-discovery-offer .cdo-link.cdo-green{background:#f0fdf4;border-color:#bbf7d0}
+        #cbe-discovery-offer .cdo-link.cdo-pink{background:#fdf2f8;border-color:#fbcfe8}
+        #cbe-discovery-offer .cdo-link.cdo-yellow{background:#fffbeb;border-color:#fde68a}
+        #cbe-discovery-offer .cdo-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:18px}
+        #cbe-discovery-offer .cdo-dismiss{border:0;background:transparent;color:#64748b;text-decoration:underline;padding:8px;cursor:pointer}
+        #cbe-discovery-offer .cdo-note{font-size:11px;color:#64748b;line-height:1.4}
+        @media(max-width:480px){#cbe-discovery-offer .cdo-card{padding:22px 16px;border-radius:16px}#cbe-discovery-offer .cdo-grid{grid-template-columns:1fr}#cbe-discovery-offer .cdo-link{padding:12px}#cbe-discovery-offer .cdo-footer{align-items:flex-start;flex-direction:column}}
+        @media(prefers-reduced-motion:reduce){#cbe-discovery-offer *{transition:none!important}}
+      `;
+      document.head.appendChild(style);
+    }
+    const overlay=document.createElement("div");overlay.id="cbe-discovery-offer";overlay.setAttribute("role","dialog");overlay.setAttribute("aria-modal","true");overlay.setAttribute("aria-labelledby","cdo-title");
+    overlay.innerHTML=`
+      <section class="cdo-card">
+        <button class="cdo-close" type="button" aria-label="Close this message">×</button>
+        <span class="cdo-kicker">WELCOME TO CBE NEXUS</span>
+        <h2 id="cdo-title">Make your next hour count!</h2>
+        <p class="cdo-intro">Discover practical learning tools and opportunities for learners, parents and teachers. Choose what you need and continue exploring.</p>
+        <div class="cdo-grid">
+          <a class="cdo-link cdo-green" href="/ai-training.html"><strong>🤖 Free AI Training</strong><span>Learn practical AI skills, prompting and productivity at your own pace.</span></a>
+          <a class="cdo-link" href="/quizzes.html"><strong>🧠 Interactive Questions</strong><span>Practise questions and check your understanding.</span></a>
+          <a class="cdo-link cdo-pink" href="/professional-cv-writing.html"><strong>📄 CV Builder & CV Support</strong><span>Prepare a professional CV for local or international applications. Check service options on the page.</span></a>
+          <a class="cdo-link cdo-yellow" href="/international-teaching-jobs.html"><strong>🌍 International Teaching Jobs</strong><span>Explore teaching opportunity information and employer links worldwide.</span></a>
+          <a class="cdo-link" href="/free-resources.html"><strong>📚 Free Learning Resources</strong><span>Find selected learning materials available at no cost.</span></a>
+          <a class="cdo-link cdo-green" href="/scholarships-opportunities.html"><strong>🎓 Scholarships & Opportunities</strong><span>Explore funding and education opportunities; verify eligibility and deadlines.</span></a>
+        </div>
+        <div class="cdo-footer"><span class="cdo-note">This reminder appears after an hour on the site. You can close it at any time.</span><button class="cdo-dismiss" type="button">Not now</button></div>
+      </section>`;
+    const dismiss=()=>{overlay.remove();try{localStorage.setItem(DISMISS_KEY,String(Date.now()+DISMISS_MS));}catch{}};
+    overlay.querySelector(".cdo-close").addEventListener("click",dismiss);
+    overlay.querySelector(".cdo-dismiss").addEventListener("click",dismiss);
+    overlay.addEventListener("click",e=>{if(e.target===overlay)dismiss();});
+    overlay.addEventListener("keydown",e=>{if(e.key==="Escape")dismiss();});
+    overlay.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{try{localStorage.setItem(DISMISS_KEY,String(Date.now()+DISMISS_MS));}catch{}}));
+    document.body.appendChild(overlay);
+    overlay.querySelector(".cdo-close").focus();
+  }
+  function schedule(){if(timer)clearTimeout(timer);timer=setTimeout(showOffer,0);}
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",schedule,{once:true});else schedule();
+})();
+
 (function syncPublishedResources(){
   "use strict";
   const STORAGE_KEY="cbeResources";
