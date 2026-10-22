@@ -78,7 +78,7 @@ function catalogueUnits(){
  const db=window.CBENexusCBCBanks&&window.CBENexusCBCBanks.curriculum||{};
  Object.entries(db).forEach(([grade,subjects])=>Object.entries(subjects||{}).forEach(([subject,units])=>(units||[]).forEach((u,index)=>{
   const id='catalogue-'+grade.replace(/[^a-z0-9]/gi,'-')+'-'+subject.replace(/[^a-z0-9]/gi,'-')+'-'+(u.id||index);
-  out.push({id,grade,subject,strand:u.label||u.id||subject,topic:u.label||u.id||subject,subStrands:u.subStrands||[],sourceNote:'Available from the existing KICD-linked curriculum dataset in CBE Nexus. Confirm the official design for full coverage.',kind:'catalogue'});
+  out.push({id,grade,subject,strand:u.strand||u.strandName||u.label||u.id||subject,topic:u.label||u.topic||u.id||subject,slos:u.learningOutcomes||u.slos||[],experiences:u.learningExperiences||u.experiences||[],inquiry:u.inquiry||u.keyInquiryQuestion||'',resources:u.resources||'',assessment:u.assessment||'',subStrands:u.subStrands||[],source:u.source||u.sourceUrl||'',sourceNote:'Available from the existing KICD-linked curriculum dataset in CBE Nexus. Confirm the official design for full coverage.',kind:'catalogue'});
  })));
  return out;
 }
@@ -98,7 +98,7 @@ function syncCurriculumSelectors(){
  if(!unit){strand.innerHTML='<option value="">Select a verified curriculum unit first</option>';sub.innerHTML='<option value="">Choose strand first</option>';from.innerHTML='<option value="">Choose a unit first</option>';to.innerHTML='<option value="">Choose a unit first</option>';return}
  const strands=unit.kind==='catalogue'?[{value:unit.strand,label:unit.strand}]:[{value:unit.strand,label:unit.strand}];
  strands.forEach(s=>{const o=document.createElement('option');o.value=s.value;o.textContent=s.label;strand.appendChild(o)});
- const subs=unit.kind==='catalogue'?(unit.subStrands||[]):[{id:unit.topic,label:unit.topic,learningOutcomes:unit.slos||[]}];
+ const subs=unit.subStrands&&unit.subStrands.length?unit.subStrands:[{id:unit.topic,label:unit.topic,learningOutcomes:unit.slos||[]}];
  subs.forEach(s=>{const o=document.createElement('option');o.value=s.id||s.label;o.textContent=s.label||s.id;sub.appendChild(o)});
  function fillOutcomes(){
   const selected=subs.find(s=>(s.id||s.label)===sub.value)||subs[0];
@@ -116,10 +116,10 @@ function generate(){
  if(!unit){$('status').textContent='No verified strand/sub-strand dataset is available for this grade and learning area yet. The generator will not invent official KICD content.';updateProgress();return}
  const grade=unit.grade,subject=unit.subject;$('grade').value=grade;$('subject').value=subject;
  const first=Math.max(0,Number($('sloFrom').value)||0),last=Math.max(first,Number($('sloTo').value)||0);
- const selectedSub=(unit.kind==='catalogue'?(unit.subStrands||[]):[{id:unit.topic,label:unit.topic,learningOutcomes:unit.slos||[]}]).find(s=>(s.id||s.label)===$('substrandSelect').value);
- const outcomes=unit.kind==='catalogue'?(selectedSub&&selectedSub.learningOutcomes||[]):unit.slos||[];
+ const subs=unit.subStrands&&unit.subStrands.length?unit.subStrands:[{id:unit.topic,label:unit.topic,learningOutcomes:unit.slos||[]}];const selectedSub=subs.find(s=>(s.id||s.label)===$('substrandSelect').value)||subs[0];
+ const outcomes=selectedSub&&selectedSub.learningOutcomes&&selectedSub.learningOutcomes.length?selectedSub.learningOutcomes:(unit.slos||[]);
  const chosen=outcomes.slice(first,last+1);
- chosen.forEach((outcome,i)=>addRow({week:'Week '+(Math.floor(i/Math.max(1,Number($('lessons').value)||5))+1),lesson:'Lesson '+(i+1),strand:$('strandSelect').value||unit.strand,topic:selectedSub&&(selectedSub.label||selectedSub.id)||unit.topic,outcomes:outcome,experiences:unit.kind==='lesson'?(unit.experiences[first+i]||'Add learning experience aligned to the selected outcome.'):'Add learning experiences aligned to the selected KICD learning outcome.',inquiry:unit.kind==='lesson'?unit.inquiry:'Add a key inquiry question aligned to the selected outcome.',resources:unit.kind==='lesson'?unit.resources:'Select resources appropriate to the learning experience.',assessment:unit.kind==='lesson'?unit.assessment:'Assess achievement of the selected learning outcome.',reflection:''}));
+ chosen.forEach((outcome,i)=>addRow({week:'Week '+(Math.floor(i/Math.max(1,Number($('lessons').value)||5))+1),lesson:'Lesson '+(i+1),strand:$('strandSelect').value||unit.strand,topic:selectedSub&&(selectedSub.label||selectedSub.id)||unit.topic,outcomes:outcome,experiences:(unit.experiences&&unit.experiences[first+i])||'Add learner-centred learning experiences aligned to the selected KICD learning outcome.',inquiry:unit.inquiry||'Add a key inquiry question aligned to the selected outcome.',resources:unit.resources||'Select resources appropriate to the learning experience.',assessment:unit.assessment||'Assess achievement of the selected learning outcome.',reflection:''}));
  $('status').textContent='Loaded '+chosen.length+' learning outcome(s) from '+unit.grade+' / '+unit.subject+'. '+(unit.source?'Source: '+unit.source+' ':'')+(unit.sourceNote||'Check the official KICD design for full coverage.');updateProgress();
 }
 function buildTerm(){const weeks=Math.max(1,Math.min(24,Number($('weeks').value)||13)),perWeek=Math.max(1,Math.min(15,Number($('lessons').value)||5));const breaks=new Set(($('breakWeeks').value.match(/\d+/g)||[]).map(Number));const assessments=new Set(($('assessmentWeeks').value.match(/\d+/g)||[]).map(Number));body.innerHTML='';let count=0;for(let w=1;w<=weeks;w++){if(breaks.has(w)){addRow({week:'Week '+w,lesson:'Break / interruption',topic:'School break / interruption',experiences:'No scheduled teaching; adjust according to the school calendar.',reflection:'Confirm dates with school calendar'});continue}for(let l=1;l<=perWeek;l++){count++;addRow({week:'Week '+w,lesson:'Lesson '+l,strand:'',topic:assessments.has(w)?'Assessment / revision':'',outcomes:'',experiences:assessments.has(w)?'Administer planned assessment; provide feedback.':'',inquiry:'',resources:'',assessment:assessments.has(w)?'Written / practical assessment as applicable':'',reflection:''})}}$('status').textContent='Built '+count+' lesson slots across '+weeks+' weeks. Break weeks and assessment weeks are marked; add verified strand, sub-strand and KICD learning content before official use.';updateProgress();}
