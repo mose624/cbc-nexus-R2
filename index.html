@@ -206,6 +206,16 @@
  }
 }
 </style>
+  <style id="homepage-seo-content-style">
+      .homepage-seo-content{margin:22px 0;padding:22px;background:#fff;border:1px solid #dbe5ef;border-radius:14px;color:#1f2937;line-height:1.65}
+      .homepage-seo-content h2{margin:0 0 10px;font-size:clamp(1.2rem,2vw,1.55rem);line-height:1.3;color:#123b63}
+      .homepage-seo-content p{margin:10px 0}
+      .homepage-seo-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:14px 0}
+      .homepage-seo-links a{display:block;padding:10px 12px;border-radius:9px;background:#e3f4ff;border:1px solid #b7def5;color:#124d79;font-weight:750;text-decoration:none}
+      .homepage-seo-links a:hover{background:#d2ecfc;text-decoration:underline}
+      .homepage-benefit-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+      @media(max-width:650px){.homepage-seo-content{padding:16px}.homepage-seo-links,.homepage-benefit-grid{grid-template-columns:1fr}}
+    </style>
   <link rel="stylesheet" href="/admin-interactive-questions.css?v=20261018-1">
 </head>
   <body>
@@ -299,13 +309,24 @@
             <a href="resource-category.html" data-hero-resource="Bookshop"><strong>Bookshop</strong><span>Books &amp; learning items</span></a>
           </div>
 
-          <div class="summary-grid" aria-label="Library statistics">
-            <div><strong id="statResources">0</strong><span>Resources</span></div>
-            <div><strong id="statPurchases">24</strong><span>Purchases · starting activity</span></div>
-            <div><strong id="statDownloads">31</strong><span>Downloads · starting activity</span></div>
-            <div><strong id="statViews">47</strong><span>Views · starting activity</span></div>
-            <div><strong>12</strong><span>Grades</span></div>
-            <div><strong>KES 150</strong><span>Uniform Price</span></div>
+          <section class="homepage-seo-content" aria-labelledby="homepage-learning-heading">
+            <h2 id="homepage-learning-heading">CBC and CBE Learning Resources for Kenyan Learners and Teachers</h2>
+            <p>CBE Nexus helps learners, parents and teachers find curriculum-focused learning materials for Kenya’s Competency Based Education (CBE) and Competency Based Curriculum (CBC). Browse by grade, subject and resource type to find revision support for classroom learning, homework and holiday study.</p>
+            <div class="homepage-seo-links">
+              <a href="free-resources.html">Free CBC learning resources</a>
+              <a href="interactive-questions.html">Interactive questions and self-assessment</a>
+              <a href="kjsea-revision">Grade 9 KJSEA revision</a>
+              <a href="free-interactive-questions/grade-10">Grade 10 practice questions</a>
+              <a href="resource-category.html?type=Notes">Notes and study guides</a>
+              <a href="resource-category.html?type=Marking%20Schemes">Marking schemes and assessment support</a>
+            </div>
+            <p>Students can practise with interactive questions and review their answers. Teachers can explore notes, schemes of work, lesson plans, assessment tests, topical questions and marking schemes. Use the library filters to find materials for the grade, subject and topic you need.</p>
+          </section>
+          <div class="summary-grid homepage-benefit-grid" aria-label="CBE Nexus learning features">
+            <div><strong>12</strong><span>Grades supported</span></div>
+            <div><strong>CBC / CBE</strong><span>Kenyan curriculum focus</span></div>
+            <div><strong>Free</strong><span>Selected resources available</span></div>
+            <div><strong>Interactive</strong><span>Practice and self-assessment</span></div>
           </div>
 
           <div class="portal-announcement">
