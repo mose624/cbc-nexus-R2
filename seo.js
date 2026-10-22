@@ -181,7 +181,7 @@ async function sitemap(req){
    if(!entry.isFile() || !/^[a-z0-9][a-z0-9._-]*\.html$/i.test(entry.name)) continue;
    const filename=entry.name.toLowerCase();
    // Do not publish error, account, payment, upload, or administration pages.
-   if(filename==="404.html" ||
+   if(filename==="404.html" || filename==="resource-category.html" ||
       ["blog-article.html","upload.html","admin.html","admin-login.html","login.html"].includes(filename) ||
       /(^|[-_.])(admin|login|upload|dashboard|checkout|payment|account|reset-password)([-_.]|$)/i.test(filename)) continue;
    let html="";
