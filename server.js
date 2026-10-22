@@ -2087,6 +2087,47 @@ function buildAdsTxt(){
   if(!cfg.enabled) return "# AdSense is not enabled yet. Set ADSENSE_ENABLED=true and ADSENSE_PUBLISHER_ID=pub-XXXXXXXXXXXXXXX in Render.\n";
   return 'google.com, '+cfg.publisherId+', DIRECT, f08c47fec0942fa0\n';
 }
+
+function escapeSeoAttribute(value){
+  return String(value||"").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+function injectPageMetadata(html, pathname, req){
+  let out=String(html||"");
+  if(!/<head\\b[^>]*>/i.test(out)) return out;
+  const pathOnly=String(pathname||"/").split("?")[0];
+  const fileLabel=pathOnly==="/" ? "CBC & CBE Learning Resources in Kenya" :
+    pathOnly.split("/").filter(Boolean).pop().replace(/\\.html?$/i,"").replace(/[-_]+/g," ").replace(/\\b\\w/g,c=>c.toUpperCase());
+  const titleMatch=out.match(/<title\\b[^>]*>([\\s\\S]*?)<\\/title>/i);
+  const titleText=titleMatch?titleMatch[1].replace(/<[^>]*>/g,"").replace(/\\s+/g," ").trim():fileLabel+" | CBE Nexus Kenya";
+  const title=titleText.toLowerCase().includes("cbe nexus")?titleText:titleText+" | CBE Nexus Kenya";
+  const descriptionMatch=out.match(/<meta\\b(?=[^>]*\\bname\\s*=\\s*["']description["'])[^>]*\\bcontent\\s*=\\s*["']([^"']*)["'][^>]*>/i)
+    ||out.match(/<meta\\b(?=[^>]*\\bcontent\\s*=\\s*["'][^"']*["'])[^>]*\\bcontent\\s*=\\s*["']([^"']*)["'][^>]*\\bname\\s*=\\s*["']description["'][^>]*>/i);
+  const h1Match=out.match(/<h1\\b[^>]*>([\\s\\S]*?)<\\/h1>/i);
+  const h1=h1Match?h1Match[1].replace(/<[^>]*>/g," ").replace(/\\s+/g," ").trim():fileLabel;
+  const description=(descriptionMatch&&descriptionMatch[1].trim()) ||
+    (h1+" — Explore CBC and CBE learning resources, revision questions, teaching materials and education support in Kenya on CBE Nexus.");
+  const canonicalUrl=seo.base(req)+pathOnly;
+  const privatePage=/admin|login|dashboard|checkout|payment|account|upload|reset-password/i.test(pathOnly);
+  const additions=[];
+  if(!/<meta\\b[^>]*\\bname=["']description["']/i.test(out)) additions.push('<meta name="description" content="'+escapeSeoAttribute(description.slice(0,300))+'">');
+  if(!/<meta\\b[^>]*\\bname=["']robots["']/i.test(out)) additions.push('<meta name="robots" content="'+(privatePage?"noindex, nofollow":"index, follow")+'">');
+  if(!/<link\\b[^>]*\\brel=["']canonical["']/i.test(out)) additions.push('<link rel="canonical" href="'+escapeSeoAttribute(canonicalUrl)+'">');
+  if(!/<meta\\b[^>]*\\bproperty=["']og:title["']/i.test(out)) additions.push('<meta property="og:title" content="'+escapeSeoAttribute(title)+'">');
+  if(!/<meta\\b[^>]*\\bproperty=["']og:description["']/i.test(out)) additions.push('<meta property="og:description" content="'+escapeSeoAttribute(description.slice(0,300))+'">');
+  if(!/<meta\\b[^>]*\\bproperty=["']og:url["']/i.test(out)) additions.push('<meta property="og:url" content="'+escapeSeoAttribute(canonicalUrl)+'">');
+  if(!/<meta\\b[^>]*\\bproperty=["']og:type["']/i.test(out)) additions.push('<meta property="og:type" content="website">');
+  if(!/<meta\\b[^>]*\\bname=["']twitter:card["']/i.test(out)) additions.push('<meta name="twitter:card" content="summary">');
+  if(!/<meta\\b[^>]*\\bname=["']twitter:title["']/i.test(out)) additions.push('<meta name="twitter:title" content="'+escapeSeoAttribute(title)+'">');
+  if(!/<meta\\b[^>]*\\bname=["']twitter:description["']/i.test(out)) additions.push('<meta name="twitter:description" content="'+escapeSeoAttribute(description.slice(0,300))+'">');
+  if(!/<script\\b[^>]*type=["']application\\/ld\\+json["']/i.test(out)){
+    const schema={"@context":"https://schema.org","@type":"WebPage","name":title,"description":description.slice(0,300),"url":canonicalUrl,"isPartOf":{"@type":"WebSite","name":"CBE Nexus","url":seo.base(req)}};
+    additions.push('<script type="application/ld+json">'+JSON.stringify(schema).replace(/</g,"\\\\u003c")+'</script>');
+  }
+  if(additions.length) out=out.replace(/<head([^>]*)>/i,'<head$1>\\n'+additions.join("\\n"));
+  if(titleMatch && !titleText.toLowerCase().includes("cbe nexus")) out=out.replace(titleMatch[0],'<title>'+escapeSeoAttribute(title)+'</title>');
+  return out;
+}
+
 function injectAnalyticsTags(html){
   const measurementId=String(process.env.GA_MEASUREMENT_ID||"G-8E0HGCJM8W").trim();
   const clarityId=String(process.env.CLARITY_PROJECT_ID||"ysl6ujcrkf").trim();
@@ -2261,7 +2302,7 @@ async function serveStatic(req,res,url){
       if (!data.toString("utf8").includes("resource-centre-bridge.js")) data = Buffer.from(data.toString("utf8").replace("</body>", bridgeScript + "</body>"));
     }
     const ext=path.extname(target).toLowerCase();
-    if(ext===".html") data=Buffer.from(injectAdSenseTags(injectAnalyticsTags(data.toString("utf8")),url.pathname));
+    if(ext===".html") data=Buffer.from(injectAdSenseTags(injectAnalyticsTags(injectPageMetadata(data.toString("utf8"),url.pathname,req)),url.pathname));
     const isHtml=ext===".html";
     const isVersionedAsset=/[?&]v=|-[0-9]{8,}/.test(url.search||"") && [".css",".js"].includes(ext);
     const cacheControl=isHtml
