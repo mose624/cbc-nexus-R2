@@ -234,7 +234,7 @@
     document.body.appendChild(overlay);
     overlay.querySelector(".cdo-close").focus();
   }
-  function schedule(){if(timer)clearTimeout(timer);timer=setTimeout(showOffer,0);}
+  function schedule(){if(timer)clearTimeout(timer);let delay=0;try{const first=Number(localStorage.getItem(VISIT_KEY)||Date.now());delay=Math.max(0,DELAY_MS-(Date.now()-first));}catch{}timer=setTimeout(showOffer,delay);}
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",schedule,{once:true});else schedule();
 })();
 
