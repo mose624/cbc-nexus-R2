@@ -5220,3 +5220,32 @@ a[href="tuition.html"] * {
   .math-competition-btn { min-height: 38px; padding: 8px 11px; font-size: .86rem; }
   .site-header .nav-actions { flex-wrap: wrap; }
 }
+
+
+/* Performance: defer rendering of long below-the-fold sections until they approach view.
+   Keeps the existing layout and content while reducing initial rendering work. */
+@supports (content-visibility: auto) {
+  .trust-band,
+  .content-band,
+  .info-band,
+  .promo-band,
+  .seller-band,
+  .refer-band,
+  .urgent-band,
+  .site-footer {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 650px;
+  }
+}
+
+/* Avoid costly motion effects for visitors who request reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
