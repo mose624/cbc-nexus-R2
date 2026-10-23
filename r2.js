@@ -278,7 +278,9 @@ async function createDownloadUrl(key, fileName = "") {
     ResponseContentType: contentTypes[ext] || "application/octet-stream",
     ResponseCacheControl: "private, no-store"
   });
-  return getSignedUrl(client, command, { expiresIn: 300 });
+  // Give mobile browsers and slower connections enough time to start the transfer.
+  // The URL remains short-lived and is still signed for this exact object.
+  return getSignedUrl(client, command, { expiresIn: 1800 });
 }
 
 
