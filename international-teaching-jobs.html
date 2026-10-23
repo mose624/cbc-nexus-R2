@@ -352,13 +352,16 @@ function init(){
  const build=(id,key)=>{const select=els[id],current=select.value,cards=[...grid.querySelectorAll(".vacancy-card")],vals=[...new Set(cards.map(c=>c.dataset[key]).filter(Boolean))].sort((a,b)=>a.localeCompare(b));select.innerHTML='<option value="all">'+labels[id]+'</option>'+vals.map(v=>'<option value="'+v.replace(/&/g,"&amp;").replace(/"/g,"&quot;")+'">'+v.replace(/&/g,"&amp;").replace(/</g,"&lt;")+'</option>').join("");if(vals.includes(current))select.value=current;};
  const buildAll=()=>{build("vacancyCountryFilter","country");build("vacancyRegionFilter","region");build("vacancyCurriculumFilter","curriculum");build("vacancySubjectFilter","subject");build("vacancyLevelFilter","level");build("vacancyVisaFilter","visa");build("vacancyEmploymentFilter","employment");build("vacancyStartFilter","start");};
  function apply(){
-  buildAll();const cards=[...grid.querySelectorAll(".vacancy-card")],vals={country:els.vacancyCountryFilter.value,region:els.vacancyRegionFilter.value,curriculum:els.vacancyCurriculumFilter.value,subject:els.vacancySubjectFilter.value,level:els.vacancyLevelFilter.value,visa:els.vacancyVisaFilter.value,employment:els.vacancyEmploymentFilter.value,start:els.vacancyStartFilter.value,verification:els.vacancyVerificationFilter.value},k=(keyword.value||"").trim().toLowerCase();let shown=0;
+  const cards=[...grid.querySelectorAll(".vacancy-card")],vals={country:els.vacancyCountryFilter.value,region:els.vacancyRegionFilter.value,curriculum:els.vacancyCurriculumFilter.value,subject:els.vacancySubjectFilter.value,level:els.vacancyLevelFilter.value,visa:els.vacancyVisaFilter.value,employment:els.vacancyEmploymentFilter.value,start:els.vacancyStartFilter.value,verification:els.vacancyVerificationFilter.value},k=(keyword.value||"").trim().toLowerCase();let shown=0;
   cards.forEach(c=>{const ok=Object.entries(vals).every(([key,val])=>val==="all"||c.dataset[key]===val)&&(!k||c.textContent.toLowerCase().includes(k));c.classList.toggle("vacancy-filter-hidden",!ok);if(ok)shown++;});
   status.textContent=cards.length?(shown+" of "+cards.length+" vacancies shown"):"Loading published vacancies…";
  }
  Object.values(els).forEach(x=>x&&x.addEventListener("change",apply));keyword&&keyword.addEventListener("input",apply);
  reset&&reset.addEventListener("click",()=>{Object.values(els).forEach(x=>{if(x)x.value="all"});keyword.value="";apply();});
- new MutationObserver(()=>apply()).observe(grid,{childList:true});setTimeout(apply,100);
+ // Rebuild filter choices only when vacancy cards change, not on every keystroke.
+ const observer=new MutationObserver(()=>{buildAll();apply();});
+ observer.observe(grid,{childList:true});
+ buildAll();setTimeout(apply,0);
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
 })();
