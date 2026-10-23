@@ -1847,7 +1847,14 @@ async function getTvetaCourses(){
   }
   if(req.method==="GET"&&url.pathname==="/api/admin/assessment-records"){
     if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
-    try{if(supabaseConfigured){const {data,error}=await supabase.from("assessment_records").select("*").order("created_at",{ascending:false}).limit(5000);if(error)throw error;sendJson(res,200,{ok:true,records:data||[],storage:"supabase"});return true;}
+    try{if(supabaseConfigured){const {data,error}=await supabase.from("assessment_records").select("*").order("created_at",{ascending:false}).limit(5000);if(error)throw error;
+        // Include attempts that were saved to the local fallback after a database write
+        // failed; otherwise they would be hidden whenever Supabase itself is reachable.
+        const localRecords=await readJsonStore("assessment-records.json");
+        const byId=new Map((data||[]).map(row=>[String(row.id),row]));
+        for(const row of localRecords){const key=String(row.id||"");if(key&&!byId.has(key))byId.set(key,row);}
+        const records=Array.from(byId.values()).sort((a,b)=>Date.parse(b.created_at||b.createdAt||0)-Date.parse(a.created_at||a.createdAt||0)).slice(0,5000);
+        sendJson(res,200,{ok:true,records,storage:localRecords.length?"supabase+local-fallback":"supabase",...(localRecords.length?{warning:"Some attempts were saved to the local fallback after a database write failed. Apply/check migrations/assessment_records.sql and review service logs to ensure every record is permanently stored."}:{})});return true;}
       const records=await readJsonStore("assessment-records.json");sendJson(res,200,{ok:true,records,storage:"local"});return true;
     }catch(error){console.error("Admin assessment records lookup error:",error?.message||error);const records=await readJsonStore("assessment-records.json");sendJson(res,200,{ok:true,records,storage:"local-fallback",warning:"Supabase table unavailable. Apply migrations/assessment_records.sql for permanent records."});return true;}
   }
