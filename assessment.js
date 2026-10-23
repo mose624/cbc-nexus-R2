@@ -1404,9 +1404,27 @@
     clearInterval(timerId);
     saveAttempt(attempt);
 
-    if (typeof postToBackend === "function" && typeof API_ENDPOINTS !== "undefined") {
-      postToBackend(API_ENDPOINTS.quizzes, attempt).catch(() => {});
-    }
+    // quizzes.html does not load app.js, so submit directly to the durable
+    // assessment API rather than relying on app.js's optional postToBackend helper.
+    // Keep the local history for the learner, but confirm whether the admin copy saved.
+    status.textContent = "Quiz marked. Saving this attempt to the CBE Nexus admin records…";
+    fetch("/api/quizzes", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(attempt)
+    }).then(async function (response) {
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok || !payload.ok) {
+        throw new Error(payload.error || "The attempt could not be saved to admin records.");
+      }
+      status.textContent += payload.storage === "supabase"
+        ? " Saved permanently for administrator evaluation."
+        : " Saved, but permanent database storage needs verification.";
+    }).catch(function (error) {
+      console.error("CBE Nexus assessment record submission failed:", error);
+      status.textContent += " WARNING: this attempt is only in this browser and was not confirmed in admin records. Please retry or notify the administrator.";
+    });
 
     status.textContent = autoSubmit
       ? "Time ended. " + attempt.learner + " scored " + score + "%."
