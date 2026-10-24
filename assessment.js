@@ -1222,15 +1222,15 @@
       pages.push(page);
       const rect = (x,y,w,h,color) => page.ops.push("q\n" + color + " rg\n" + x + " " + y + " " + w + " " + h + " re f\nQ\n");
       const line = (x1,y1,x2,y2,color,width=1) => page.ops.push("q\n" + color + " RG\n" + width + " w\n" + x1 + " " + y1 + " m " + x2 + " " + y2 + " l S\nQ\n");
-      const txt = (x,y,value,size=9,bold=false,color=dark) => page.ops.push("BT\n" + (bold ? "/F2 " : "/F1 ") + size + " Tf\n" + color + " rg\n1 0 0 1 " + x + " " + y + " Tm\n(" + esc(value) + ") Tj\nET\n");
+      const txt = (x,y,value,size=12,bold=false,color=dark) => page.ops.push("BT\n" + (bold ? "/F2 " : "/F1 ") + size + " Tf\n" + color + " rg\n1 0 0 1 " + x + " " + y + " Tm\n(" + esc(value) + ") Tj\nET\n");
       rect(0,0,612,842,"1 1 1");
       rect(24,794,564,28,red);
       rect(24,788,564,4,yellow);
       txt(38,803,"CBE NEXUS",17,true,"1 1 1");
       txt(390,804,"CONNECTING LEARNERS TO EXCELLENCE",7,true,"1 1 1");
       txt(36,768,"MARKED ASSESSMENT REPORT",12,true);
-      txt(36,751,"Learner: " + (attempt.learner || "-") + "   Grade: " + (attempt.grade || "-") + "   Subject: " + (attempt.subject || "-"),8,true);
-      txt(36,736,"Serial: " + attempt.serialNumber + "   Date: " + new Date(attempt.createdAt).toLocaleDateString("en-GB"),8,false,red);
+      txt(36,751,"Learner: " + (attempt.learner || "-") + "   Grade: " + (attempt.grade || "-") + "   Subject: " + (attempt.subject || "-"),12,true);
+      txt(36,736,"Serial: " + attempt.serialNumber + "   Date: " + new Date(attempt.createdAt).toLocaleDateString("en-GB"),12,false,red);
       line(30,48,582,48,red,2);
       line(30,42,582,42,yellow,3);
       txt(36,25,"CBE NEXUS  |  CBENEXUS.CO.KE  |  CONNECTING LEARNERS TO EXCELLENCE",7,true);
@@ -1239,7 +1239,7 @@
       page.y = 614;
       return page;
     };
-    const addText = (page, x, y, value, size=9, bold=false, color=dark) => {
+    const addText = (page, x, y, value, size=12, bold=false, color=dark) => {
       page.ops.push("BT\n" + (bold ? "/F2 " : "/F1 ") + size + " Tf\n" + color + " rg\n1 0 0 1 " + x + " " + y + " Tm\n(" + esc(value) + ") Tj\nET\n");
     };
     const addRect = (page,x,y,w,h,color) => page.ops.push("q\n" + color + " rg\n" + x + " " + y + " " + w + " " + h + " re f\nQ\n");
