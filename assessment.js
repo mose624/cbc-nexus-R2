@@ -1271,27 +1271,28 @@
       const top = page.y;
       addRect(page,32,top-15,548,18,result.isCorrect ? "0.88 0.96 0.89" : "1 0.91 0.91");
       addText(page,38,top-10,questionLines[0] || questionText,12,true);
+      page.y = top - 24;
       for (let li=1; li<questionLines.length; li++) {
-        page.y -= 11;
-        addText(page,46,page.y,questionLines[li],8,false);
+        page.y -= 14;
+        addText(page,46,page.y,questionLines[li],12,false);
       }
-      page.y -= 16;
+      page.y -= 14;
       options.forEach((option, oi) => {
         const marker = oi === result.correctAnswer ? "[CORRECT]" : (oi === result.selected ? "[YOUR ANSWER]" : "[" + String.fromCharCode(65+oi) + "]");
         const lines = wrapPdfText(marker + " " + option, 78);
         lines.forEach((ln, li) => {
           addText(page,48,page.y,ln,12,oi === result.correctAnswer,oi === result.correctAnswer ? green : dark);
-          page.y -= 10;
+          page.y -= 14;
         });
       });
       addText(page,48,page.y,"Your answer: " + selectedText,12,true,result.isCorrect ? green : red);
-      page.y -= 11;
-      addText(page,48,page.y,"Correct answer: " + correctText,8,true,green);
-      page.y -= 11;
+      page.y -= 14;
+      addText(page,48,page.y,"Correct answer: " + correctText,12,true,green);
+      page.y -= 14;
       if (explanationLines.length) {
         explanationLines.forEach(lineText => {
-          addText(page,48,page.y,lineText,7.5,false);
-          page.y -= 10;
+          addText(page,48,page.y,lineText,12,false);
+          page.y -= 14;
         });
       }
       // Draw a large vector tick or X at the right of the question heading.
