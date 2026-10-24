@@ -1256,7 +1256,7 @@
     results.forEach((result, index) => {
       const question = active[index] || null;
       const questionText = (index + 1) + ". " + (result.question || (question && question[0]) || "Question");
-      const questionLines = wrapPdfText(questionText, 94);
+      const questionLines = wrapPdfText(questionText, 82);
       const options = question && Array.isArray(question[1]) ? question[1] : [];
       const selectedText = result.selected === null || result.selected === undefined ? "Not answered" : (options[result.selected] || "Selected option");
       const correctText = options[result.correctAnswer] || "Correct option";
@@ -1264,8 +1264,8 @@
         "Your answer: " + selectedText,
         "Correct answer: " + correctText
       ];
-      const explanationLines = result.explanation ? wrapPdfText("Explanation: " + result.explanation, 96) : [];
-      const needed = 18 + questionLines.length * 11 + options.length * 10 + detailLines.length * 11 + explanationLines.length * 10 + 10;
+      const explanationLines = result.explanation ? wrapPdfText("Explanation: " + result.explanation, 82) : [];
+      const optionLineCount = options.reduce((sum, option, oi) => { const marker = oi === result.correctAnswer ? "[CORRECT]" : (oi === result.selected ? "[YOUR ANSWER]" : "[" + String.fromCharCode(65+oi) + "]"); return sum + wrapPdfText(marker + " " + option, 78).length; }, 0);\n      const needed = 24 + questionLines.length * 14 + optionLineCount * 14 + detailLines.length * 14 + explanationLines.length * 14 + 10;
       if (page.y - needed < 65) page = newPage();
       const top = page.y;
       addRect(page,32,top-15,548,18,result.isCorrect ? "0.88 0.96 0.89" : "1 0.91 0.91");
@@ -1277,13 +1277,13 @@
       page.y -= 16;
       options.forEach((option, oi) => {
         const marker = oi === result.correctAnswer ? "[CORRECT]" : (oi === result.selected ? "[YOUR ANSWER]" : "[" + String.fromCharCode(65+oi) + "]");
-        const lines = wrapPdfText(marker + " " + option, 94);
+        const lines = wrapPdfText(marker + " " + option, 78);
         lines.forEach((ln, li) => {
-          addText(page,48,page.y,ln,7.5,oi === result.correctAnswer,oi === result.correctAnswer ? green : dark);
+          addText(page,48,page.y,ln,12,oi === result.correctAnswer,oi === result.correctAnswer ? green : dark);
           page.y -= 10;
         });
       });
-      addText(page,48,page.y,"Your answer: " + selectedText,8,true,result.isCorrect ? green : red);
+      addText(page,48,page.y,"Your answer: " + selectedText,12,true,result.isCorrect ? green : red);
       page.y -= 11;
       addText(page,48,page.y,"Correct answer: " + correctText,8,true,green);
       page.y -= 11;
@@ -1302,21 +1302,21 @@
         addLine(page,550,top-16,562,top-4,red,2.5);
       }
       addLine(page,38,page.y+3,574,page.y+3,"0.85 0.85 0.85",0.5);
-      page.y -= 9;
+      page.y -= 14;
     });
 
     // Add a final concise score line at the end of the marking pages.
     if (page.y < 82) page = newPage();
     addRect(page,32,page.y-8,548,25,yellow);
-    addText(page,42,page.y,"FINAL SCORE: " + attempt.correct + "/" + attempt.total + " (" + attempt.score + "%)",10,true);
+    addText(page,42,page.y,"FINAL SCORE: " + attempt.correct + "/" + attempt.total + " (" + attempt.score + "%)",12,true);
     const objects = [];
     objects[1] = "<< /Type /Catalog /Pages 2 0 R >>";
     const pageObjectIds = [];
     let nextId = 3;
     const fontRegularId = nextId++;
     const fontBoldId = nextId++;
-    objects[fontRegularId] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>";
-    objects[fontBoldId] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>";
+    objects[fontRegularId] = "<< /Type /Font /Subtype /Type1 /BaseFont /Times-Roman >>";
+    objects[fontBoldId] = "<< /Type /Font /Subtype /Type1 /BaseFont /Times-Bold >>";
     pages.forEach((p) => {
       const pageId = nextId++;
       const contentId = nextId++;
