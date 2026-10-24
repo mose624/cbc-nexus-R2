@@ -1246,10 +1246,10 @@
     const addLine = (page,x1,y1,x2,y2,color,width=1) => page.ops.push("q\n" + color + " RG\n" + width + " w\n" + x1 + " " + y1 + " m " + x2 + " " + y2 + " l S\nQ\n");
     let page = newPage();
     addRect(page,30,687,552,30,yellow);
-    addText(page,40,698,"ASSESSMENT SUMMARY",10,true);
-    addText(page,40,673,"Score: " + attempt.score + "%     Correct: " + attempt.correct + "/" + attempt.total + "     Answered: " + attempt.answered + "/" + attempt.total,9,true);
-    addText(page,40,657,"Performance: " + (attempt.remark || "Assessment completed"),8,false);
-    addText(page,40,638,"MARKING KEY: red tick = correct; red X = incorrect or unanswered.",8,true);
+    addText(page,40,698,"ASSESSMENT SUMMARY",12,true);
+    addText(page,40,673,"Score: " + attempt.score + "%     Correct: " + attempt.correct + "/" + attempt.total + "     Answered: " + attempt.answered + "/" + attempt.total,12,true);
+    addText(page,40,657,"Performance: " + (attempt.remark || "Assessment completed"),12,false);
+    addText(page,40,638,"MARKING KEY: red tick = correct; red X = incorrect or unanswered.",12,true);
     page.y = 614;
 
     const results = Array.isArray(attempt.results) ? attempt.results : [];
@@ -1269,7 +1269,7 @@
       if (page.y - needed < 65) page = newPage();
       const top = page.y;
       addRect(page,32,top-15,548,18,result.isCorrect ? "0.88 0.96 0.89" : "1 0.91 0.91");
-      addText(page,38,top-10,questionLines[0] || questionText,8.5,true);
+      addText(page,38,top-10,questionLines[0] || questionText,12,true);
       for (let li=1; li<questionLines.length; li++) {
         page.y -= 11;
         addText(page,46,page.y,questionLines[li],8,false);
