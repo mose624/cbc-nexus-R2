@@ -4,3 +4,9 @@ create index if not exists assessment_records_created_at_idx on public.assessmen
 create index if not exists assessment_records_learner_id_idx on public.assessment_records (learner_id);
 create index if not exists assessment_records_grade_subject_idx on public.assessment_records (grade, subject);
 alter table public.assessment_records enable row level security;
+
+-- Allow the server's service-role client to write/read assessment history.
+grant select, insert, update, delete on table public.assessment_records to service_role;
+
+-- Refresh PostgREST's schema cache so /api/quizzes can see the table immediately.
+notify pgrst, 'reload schema';
