@@ -1265,7 +1265,8 @@
         "Correct answer: " + correctText
       ];
       const explanationLines = result.explanation ? wrapPdfText("Explanation: " + result.explanation, 82) : [];
-      const optionLineCount = options.reduce((sum, option, oi) => { const marker = oi === result.correctAnswer ? "[CORRECT]" : (oi === result.selected ? "[YOUR ANSWER]" : "[" + String.fromCharCode(65+oi) + "]"); return sum + wrapPdfText(marker + " " + option, 78).length; }, 0);\n      const needed = 24 + questionLines.length * 14 + optionLineCount * 14 + detailLines.length * 14 + explanationLines.length * 14 + 10;
+      const optionLineCount = options.reduce((sum, option, oi) => { const marker = oi === result.correctAnswer ? "[CORRECT]" : (oi === result.selected ? "[YOUR ANSWER]" : "[" + String.fromCharCode(65+oi) + "]"); return sum + wrapPdfText(marker + " " + option, 78).length; }, 0);
+      const needed = 24 + questionLines.length * 14 + optionLineCount * 14 + detailLines.length * 14 + explanationLines.length * 14 + 10;
       if (page.y - needed < 65) page = newPage();
       const top = page.y;
       addRect(page,32,top-15,548,18,result.isCorrect ? "0.88 0.96 0.89" : "1 0.91 0.91");
