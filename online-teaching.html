@@ -93,6 +93,44 @@ body{font-family:Inter,"Segoe UI",Arial,sans-serif;background:#f8fbff;color:#101
 @media(max-width:430px){.navlinks .btn{font-size:10px;padding:9px}.hero h1{font-size:36px}.hero-actions{flex-direction:column}.choice{padding-left:140px}.choice:before{width:128px}.choice h3{font-size:18px}.choice p,.choice li{font-size:12px}}
 
 .learner-request-form{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.learner-request-form .field.full{grid-column:1/-1}.learner-request-form input,.learner-request-form select,.learner-request-form textarea{width:100%;box-sizing:border-box}.learner-request-form .checkbox-label{display:flex;align-items:flex-start;gap:10px;margin:4px 0 14px}.learner-request-form .checkbox-label input{width:auto;margin-top:4px}.learner-preview-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.learner-preview-card{border-top:3px solid #08a84e}.redacted{color:#65748b;background:#f1f5fa;border-radius:6px;padding:4px 7px;font-size:12px}.learner-preview-card .btn{margin-top:10px}.teacher-results{margin-top:22px}.teacher-results-heading{display:flex;align-items:center;justify-content:space-between;margin:0 0 14px;color:#122449;font-size:14px}.teacher-results-heading span{color:#64748b;font-size:12px}.teacher-card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.teacher-card{position:relative;background:#fff;border:1px solid #dce7f5;border-radius:17px;padding:19px;box-shadow:0 8px 24px #0a2a520b;min-width:0}.teacher-card-top{display:flex;gap:11px;align-items:center;margin-bottom:13px}.teacher-avatar{width:46px;height:46px;display:grid;place-items:center;border-radius:50%;background:#e4f2ff;color:#075bc4;font-size:20px;font-weight:850;flex-shrink:0}.teacher-card h3{margin:0;font-size:16px;color:#10254c}.teacher-country{margin:2px 0 0!important;color:#64748b!important;font-size:12px!important}.teacher-card>p{font-size:13px;color:#43536b;overflow-wrap:anywhere}.teacher-card dl{display:grid;grid-template-columns:85px minmax(0,1fr);gap:7px 9px;font-size:12px;margin:15px 0}.teacher-card dt{color:#64748b}.teacher-card dd{margin:0;font-weight:650;overflow-wrap:anywhere}.teacher-card .btn{width:100%;margin-top:8px}.teacher-rate{font-weight:850;color:#087b4a}.teacher-rate small{font-weight:500;color:#64748b}.teacher-promoted{position:absolute;top:12px;right:12px;border-radius:999px;padding:4px 8px;background:#fff4ce;color:#8a5100;font-size:10px;font-weight:850}.directory-empty,.directory-loading{padding:22px;border:1px dashed #c8d8ed;border-radius:15px;background:#fff;color:#4a5b75;text-align:center;font-size:13px}.directory-empty strong{display:block;color:#122449;font-size:15px}.directory-empty p{margin:6px auto 0;max-width:600px}.status{white-space:pre-line}@media(max-width:900px){.teacher-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){.teacher-card-grid{grid-template-columns:1fr}.teacher-card{padding:16px}}
+
+/* Compact learner request form: three columns on desktop, two on tablets, one on phones */
+#learnerRequestForm.learner-request-form,
+.learner-request-form {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.learner-request-form > .field,
+.learner-request-form > div { min-width: 0; }
+.learner-request-form .field.full,
+.learner-request-form .full-width { grid-column: 1 / -1; }
+.learner-request-form .field label { font-size: 12px; margin-bottom: 4px; }
+.learner-request-form input,
+.learner-request-form select,
+.learner-request-form textarea {
+  width: 100%;
+  min-width: 0;
+  min-height: 38px;
+  padding: 8px 10px;
+  font-size: 13px;
+  box-sizing: border-box;
+}
+.learner-request-form textarea { min-height: 76px; }
+.learner-request-form .checkbox-label { grid-column: 1 / -1; }
+.learner-request-form button[type="submit"] { min-height: 42px; }
+@media (max-width: 900px) {
+  #learnerRequestForm.learner-request-form,
+  .learner-request-form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  #learnerRequestForm.learner-request-form,
+  .learner-request-form { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .learner-request-form .field.full,
+  .learner-request-form .full-width,
+  .learner-request-form .checkbox-label { grid-column: 1; }
+}
+
 </style>
 </head>
 <body>
