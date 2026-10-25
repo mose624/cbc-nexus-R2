@@ -2162,6 +2162,63 @@ function injectAnalyticsTags(html){
   return out;
 }
 
+
+function injectAccessibilityEnhancements(html){
+  let out=String(html||"");
+  if(!/<html\b/i.test(out)||!/<body\b/i.test(out)) return out;
+  if(!/id=["']cbe-global-accessibility-style["']/i.test(out)){
+    const style=String.raw\`<style id="cbe-global-accessibility-style">
+.cbe-skip-link{position:fixed;left:12px;top:12px;z-index:2147483647;transform:translateY(-180%);padding:12px 16px;border-radius:6px;background:#111827;color:#fff;font-weight:800;text-decoration:underline;box-shadow:0 3px 12px rgba(0,0,0,.28)}
+.cbe-skip-link:focus,.cbe-skip-link:focus-visible{transform:translateY(0);outline:3px solid #facc15;outline-offset:3px}
+:where(a,button,input,select,textarea,summary,[tabindex]:not([tabindex="-1"]),[role="button"]):focus-visible{outline:3px solid #005fcc!important;outline-offset:3px!important;box-shadow:0 0 0 2px #fff!important}
+:where(input,select,textarea){color:#17202a}
+::placeholder{color:#59636e!important;opacity:1}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+@media(forced-colors:active){:where(a,button,input,select,textarea,summary,[tabindex]:not([tabindex="-1"])):focus-visible{outline:3px solid Highlight!important;outline-offset:3px!important}}
+</style>\`;
+    out=out.replace(/<\/head>/i,style+"</head>");
+  }
+  if(/<main\b/i.test(out)){
+    out=out.replace(/<main\b([^>]*)>/i,function(match,attrs){
+      let next=attrs;
+      if(!/\bid=["'][^"']+["']/i.test(next)) next+=' id="main-content"';
+      if(!/\btabindex\s*=/i.test(next)) next+=' tabindex="-1"';
+      return "<main"+next+">";
+    });
+    if(!/class=["'][^"']*\bcbe-skip-link\b/i.test(out)){
+      out=out.replace(/<body\b[^>]*>/i,function(match){return match+'<a class="cbe-skip-link" href="#main-content">Skip to main content</a>';});
+    }
+  }
+  if(!/id=["']cbe-global-accessibility-script["']/i.test(out)){
+    const script=String.raw\`<script id="cbe-global-accessibility-script">
+(function(){
+"use strict";
+function labelText(v){return String(v||"").replace(/([a-z0-9])([A-Z])/g,"$1 $2").replace(/[_-]+/g," ").replace(/\s+/g," ").trim();}
+function enhance(root){
+(root||document).querySelectorAll("input:not([type=hidden]),select,textarea").forEach(function(el){
+if((el.labels&&el.labels.length)||el.getAttribute("aria-label")||el.getAttribute("aria-labelledby"))return;
+var n=el.getAttribute("placeholder")||el.getAttribute("title")||el.getAttribute("name")||el.id;
+if(n)el.setAttribute("aria-label",labelText(n));
+});
+(root||document).querySelectorAll("button,[role=button]").forEach(function(el){
+if(el.getAttribute("aria-label")||el.getAttribute("aria-labelledby")||el.textContent.trim())return;
+var n=el.getAttribute("title")||el.getAttribute("data-label")||el.getAttribute("name");
+if(n)el.setAttribute("aria-label",labelText(n));
+});
+(root||document).querySelectorAll("img:not([alt])").forEach(function(el){
+var n=el.getAttribute("title")||(el.getAttribute("src")||"").split("/").pop().split("?")[0].replace(/\.[a-z0-9]+$/i,"");
+n=labelText(n);el.setAttribute("alt",n||"Image");
+});
+}
+function start(){enhance(document);if("MutationObserver"in window)new MutationObserver(function(records){records.forEach(function(r){r.addedNodes.forEach(function(n){if(n.nodeType===1)enhance(n);});});}).observe(document.body,{childList:true,subtree:true});}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});else start();
+})();
+</script>\`;
+    out=out.replace(/<\/body>/i,script+"</body>");
+  }
+  return out;
+}
+
 let homepageHtmlCache=null;
 let homepageHtmlGzipCache=null;
 let homepageHtmlCacheTime=0;
@@ -2179,7 +2236,7 @@ async function getHomepageHtml(req){
     .replace("CBE E-Learning Resources for Grades 1-12","CBE Nexus | CBC & CBE Learning Resources for Grades 1-12 in Kenya");
   const bridgeScript='<script src="/resource-centre-bridge.js?v=20260930-4" defer></script><script src="/admin-fallback.js?v=20260930-4" defer></script>';
   if(!data.includes("resource-centre-bridge.js")) data=data.replace("</body>",bridgeScript+"</body>");
-  data=injectAdSenseTags(injectAnalyticsTags(data),"/");
+  data=injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(data),"/"));
   homepageHtmlCache=Buffer.from(data);
   homepageHtmlGzipCache=null;
   homepageHtmlCacheTime=now;
@@ -2336,7 +2393,7 @@ async function serveStatic(req,res,url){
       if (!data.toString("utf8").includes("resource-centre-bridge.js")) data = Buffer.from(data.toString("utf8").replace("</body>", bridgeScript + "</body>"));
     }
     const ext=path.extname(target).toLowerCase();
-    if(ext===".html") data=Buffer.from(injectAdSenseTags(injectAnalyticsTags(injectPageMetadata(data.toString("utf8"),url.pathname,req)),url.pathname));
+    if(ext===".html") data=Buffer.from(injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(injectPageMetadata(data.toString("utf8"),url.pathname,req)),url.pathname)));
     const isHtml=ext===".html";
     const isVersionedAsset=/[?&]v=|-[0-9]{8,}/.test(url.search||"") && [".css",".js"].includes(ext);
     const cacheControl=isHtml
