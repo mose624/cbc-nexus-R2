@@ -2152,7 +2152,7 @@ function injectPageMetadata(html, pathname, req){
       items.push({"@type":"ListItem","position":index+2,"name":name,"item":seo.base(req)+current});
     });
     const breadcrumb={"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":items};
-    additions.push('<script type="application/ld+json">'+JSON.stringify(breadcrumb).replace(/</g,"\\\\u003c")+'</script>');
+    additions.push('<script type="application/ld+json">'+JSON.stringify(breadcrumb).replace(/</g,"\\u003c")+'</script>');
   }
   if(additions.length) out=out.replace(/<head([^>]*)>/i,'<head$1>\n'+additions.join("\n"));
   if(privatePage) out=out.replace(/<meta\b(?=[^>]*\bname=["\']robots["\'])[^>]*>/i, '<meta name="robots" content="noindex, nofollow">');
