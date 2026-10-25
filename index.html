@@ -357,6 +357,38 @@
   }
 }
 </style>
+
+<style id="force-tight-mobile-desktop-header-v2">
+/* Force compact horizontal alignment on actual phones, including browsers set to Desktop site. */
+@media screen and (max-device-width: 760px) {
+  .site-header.cbe-header-v2 .cbe-primary-nav {
+    justify-content: flex-start !important;
+    column-gap: 3px !important;
+    padding: 3px 4px !important;
+  }
+  .site-header.cbe-header-v2 .cbe-primary-nav .nav-menu {
+    display: flex !important;
+    flex: 0 0 auto !important;
+    width: max-content !important;
+    min-width: 0 !important;
+    gap: 2px !important;
+    margin: 0 2px 0 0 !important;
+  }
+  .site-header.cbe-header-v2 .cbe-primary-nav .nav-link,
+  .site-header.cbe-header-v2 .cbe-primary-nav .nav-dropdown > summary {
+    padding: 3px 4px !important;
+    margin: 0 !important;
+  }
+  .site-header.cbe-header-v2 .cbe-primary-nav .cbe-header-search,
+  .site-header.cbe-header-v2 .cbe-primary-nav form.cbe-header-search {
+    flex: 0 0 100px !important;
+    width: 100px !important;
+    min-width: 100px !important;
+    max-width: 100px !important;
+    margin: 0 !important;
+  }
+}
+</style>
 </style>
 
 </head>
