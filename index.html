@@ -393,30 +393,17 @@
 
 
 <style id="screenshot-style-main-dashboard-layout">
-/* Main dashboard follows the supplied compact overview: 3x3 cards left, quick links and resource centre right. */
+/* Compact dashboard cards based on the supplied reference; keep all existing cards and links functional. */
 .home-dashboard-cards { padding: 14px 12px !important; }
 .home-dashboard-cards-inner { max-width: 1440px !important; margin: 0 auto !important; }
 .home-dashboard-cards-heading { border-radius: 12px !important; padding: 14px 18px !important; margin-bottom: 10px !important; color: #fff !important; background: linear-gradient(105deg,#103f69,#087e83,#00a878) !important; }
 .home-dashboard-cards-heading .eyebrow,.home-dashboard-cards-heading h2,.home-dashboard-cards-heading p { color: #fff !important; }
 .home-dashboard-cards-heading h2 { margin: 2px 0 3px !important; }
-.home-dashboard-card-grid { display:grid !important; grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(230px,1.8fr) !important; grid-template-rows:repeat(3,minmax(90px,auto)) !important; gap:8px !important; align-items:stretch !important; }
+.home-dashboard-card-grid { display:grid !important; grid-template-columns:repeat(3,minmax(0,1fr)) !important; gap:8px !important; align-items:stretch !important; }
 .home-dashboard-card { min-width:0 !important; padding:12px !important; border:1px solid #dce7ef !important; border-radius:9px !important; background:#fff !important; box-shadow:0 2px 7px rgba(20,55,80,.08) !important; display:flex !important; flex-direction:column !important; gap:5px !important; }
 .home-dashboard-card strong { font-size:clamp(11px,1vw,14px) !important; line-height:1.2 !important; }
 .home-dashboard-card>span:last-child { font-size:11px !important; line-height:1.35 !important; }
 .home-dashboard-card .dashboard-card-icon { font-size:22px !important; }
-.home-dashboard-card:nth-child(1){grid-column:1;grid-row:1}
-.home-dashboard-card:nth-child(2){grid-column:2;grid-row:1}
-.home-dashboard-card:nth-child(3){grid-column:3;grid-row:1}
-.home-dashboard-card:nth-child(4){grid-column:1;grid-row:2}
-.home-dashboard-card:nth-child(5){grid-column:2;grid-row:2}
-.home-dashboard-card:nth-child(6){grid-column:3;grid-row:2}
-.home-dashboard-card:nth-child(7){grid-column:1;grid-row:3}
-.home-dashboard-card:nth-child(8){grid-column:2;grid-row:3}
-.home-dashboard-card:nth-child(9){grid-column:3;grid-row:3}
-.home-dashboard-card-grid:after { content:""; grid-column:4; grid-row:1 / span 3; display:block; min-width:0; }
-.home-dashboard-card-grid { position:relative; }
-.home-dashboard-card-grid:before { content:"Website Pages • Competitive CBE resource centre"; position:absolute; right:0; top:0; width:calc((100% - 24px) * .36); height:100%; box-sizing:border-box; padding:12px; border-radius:9px; border:1px solid #d5e4ec; background:linear-gradient(#eaf5fb,#d9f5ef); color:#124564; font-size:14px; font-weight:700; pointer-events:none; opacity:0; }
-@media(max-width:900px) { .home-dashboard-card-grid { grid-template-columns:repeat(3,minmax(0,1fr)) !important; grid-template-rows:repeat(3,minmax(85px,auto)) !important; } .home-dashboard-card-grid:after {display:none;} }
 @media(max-width:560px) { .home-dashboard-cards {padding:8px 6px!important;} .home-dashboard-cards-heading {padding:10px!important;} .home-dashboard-card-grid {gap:5px!important;} .home-dashboard-card {padding:8px!important;} .home-dashboard-card .dashboard-card-icon {font-size:18px!important;} .home-dashboard-card strong {font-size:10px!important;} .home-dashboard-card>span:last-child {font-size:9px!important;} }
 </style>
 </head>
