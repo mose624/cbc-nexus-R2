@@ -505,6 +505,58 @@ async function submitSchoolDirectory(payload){
 }
 
 async function handleApi(req,res,url){
+  // CBE Nexus Global Online Teaching Marketplace: public approved listings and private applications.
+  if(req.method==="GET"&&url.pathname==="/api/global-teachers"){
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Teacher directory is temporarily unavailable because the database is not configured."});return true;}
+      let q=supabase.from("global_teachers").select("id,full_name,country,languages,subjects,levels,curriculum,experience,qualifications,bio,hourly_rate,rate_currency,listing_plan,promoted_until,verified_at,created_at").eq("status","approved").in("payment_status",["paid","waived"]).order("created_at",{ascending:false}).limit(100);
+      const subject=String(url.searchParams.get("subject")||"").trim().slice(0,100);
+      const level=String(url.searchParams.get("level")||"").trim().slice(0,100);
+      const curriculum=String(url.searchParams.get("curriculum")||"").trim().slice(0,120);
+      const language=String(url.searchParams.get("language")||"").trim().slice(0,100);
+      const country=String(url.searchParams.get("country")||"").trim().slice(0,100);
+      if(subject)q=q.ilike("subjects","%"+subject.replace(/[%_]/g,"")+"%");
+      if(level)q=q.ilike("levels","%"+level.replace(/[%_]/g,"")+"%");
+      if(curriculum)q=q.ilike("curriculum","%"+curriculum.replace(/[%_]/g,"")+"%");
+      if(language)q=q.ilike("languages","%"+language.replace(/[%_]/g,"")+"%");
+      if(country)q=q.ilike("country","%"+country.replace(/[%_]/g,"")+"%");
+      const {data,error}=await q;if(error)throw error;
+      const now=Date.now(),teachers=(data||[]).sort((a,b)=>{
+        const ap=a.listing_plan!=="basic"&&a.promoted_until&&Date.parse(a.promoted_until)>now?1:0;
+        const bp=b.listing_plan!=="basic"&&b.promoted_until&&Date.parse(b.promoted_until)>now?1:0;
+        return bp-ap;
+      });
+      sendJson(res,200,{ok:true,teachers,count:teachers.length});return true;
+    }catch(error){console.error("Global teacher directory lookup error:",error);sendJson(res,500,{ok:false,error:"Teacher profiles could not be loaded. Please try again."});return true;}
+  }
+  if(req.method==="POST"&&url.pathname==="/api/global-teachers/register"){
+    try{
+      const p=JSON.parse((await readBody(req))||"{}");
+      const clean=(v,n=500)=>String(v??"").trim().slice(0,n);
+      const full_name=clean(p.name||p.full_name,160),email=clean(p.email,254).toLowerCase(),country=clean(p.country,100);
+      const languages=clean(p.languages,300),subjects=clean(p.subjects,500),levels=clean(p.levels,160),curriculum=clean(p.curriculum,240);
+      const experience=clean(p.experience,100),bio=clean(p.note||p.bio,2500),qualifications=clean(p.qualifications,1000);
+      if(!full_name||!email||!country||!languages||!subjects){sendJson(res,400,{ok:false,error:"Name, valid email, country, teaching languages and subjects are required."});return true;}
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){sendJson(res,400,{ok:false,error:"Enter a valid email address."});return true;}
+      if(String(p.website||"").trim()){sendJson(res,201,{ok:true,message:"Your teacher application has been received for review."});return true;}
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Teacher registration is temporarily unavailable because the database is not configured."});return true;}
+      const row={full_name,email,country,languages,subjects,levels,curriculum,experience,bio,qualifications,status:"pending",payment_status:"unpaid",listing_plan:"basic",updated_at:new Date().toISOString()};
+      const {data,error}=await supabase.from("global_teachers").insert(row).select("id,full_name,email,status,payment_status,created_at").single();
+      if(error&&String(error.code)==="23505"){sendJson(res,409,{ok:false,error:"A teacher application with this email already exists. Contact info@cbenexus.co.ke if you need help updating it."});return true;}
+      if(error)throw error;
+      sendJson(res,201,{ok:true,application:{id:data.id,name:data.full_name,email:data.email,status:data.status,paymentStatus:data.payment_status},message:"Your teacher application has been saved. It is pending review. The $1 listing checkout will be activated after the payment integration is configured."});return true;
+    }catch(error){console.error("Global teacher registration error:",error);sendJson(res,500,{ok:false,error:"Your teacher application could not be saved. Please try again later."});return true;}
+  }
+  if(req.method==="GET"&&url.pathname==="/api/admin/global-teachers"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Supabase is not configured."});return true;}const status=String(url.searchParams.get("status")||"").trim();let q=supabase.from("global_teachers").select("*").order("created_at",{ascending:false}).limit(500);if(["pending","approved","rejected","suspended"].includes(status))q=q.eq("status",status);const {data,error}=await q;if(error)throw error;sendJson(res,200,{ok:true,teachers:data||[]});}
+    catch(error){console.error("Admin global teacher lookup error:",error);sendJson(res,500,{ok:false,error:"Teacher applications could not be loaded."});}return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/global-teachers/status"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"").trim(),status=String(p.status||"").trim(),payment_status=String(p.paymentStatus||"").trim();if(!id||!["pending","approved","rejected","suspended"].includes(status)){sendJson(res,400,{ok:false,error:"A teacher ID and valid review status are required."});return true;}const patch={status,updated_at:new Date().toISOString()};if(payment_status){if(!["unpaid","pending","paid","waived","refunded"].includes(payment_status)){sendJson(res,400,{ok:false,error:"Invalid payment status."});return true;}patch.payment_status=payment_status;}if(status==="approved"&&!payment_status){sendJson(res,400,{ok:false,error:"Set payment status to paid or waived before approving a public listing."});return true;}if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Supabase is not configured."});return true;}const {data,error}=await supabase.from("global_teachers").update(patch).eq("id",id).select("id,full_name,status,payment_status,updated_at").single();if(error)throw error;sendJson(res,200,{ok:true,teacher:data});}
+    catch(error){console.error("Admin global teacher moderation error:",error);sendJson(res,500,{ok:false,error:"Teacher application could not be updated."});}return true;
+  }
   if(req.method==="GET"&&url.pathname==="/api/resource-updates/unsubscribe"){
     const email=String(url.searchParams.get("email")||"").trim().toLowerCase(),token=String(url.searchParams.get("token")||""),expected=resourceUnsubscribeToken(email);
     if(!email||!expected||!safeEqual(token,expected)){sendJson(res,400,{ok:false,error:"This unsubscribe link is invalid or expired."});return true;}
