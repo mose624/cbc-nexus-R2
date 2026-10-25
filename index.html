@@ -236,6 +236,28 @@
 @media(max-width:850px){.cbe-header-v2 .cbe-primary-nav{overflow-x:auto;align-items:flex-start}.cbe-header-v2 .cbe-primary-nav .nav-menu{overflow:visible;flex:0 0 auto}.cbe-header-v2 .cbe-header-search{flex:0 0 150px}.cbe-header-v2 .cbe-primary-nav .nav-link,.cbe-header-v2 .cbe-primary-nav .nav-dropdown>summary{font-size:9px;padding:5px}}
 @media(max-width:600px){.cbe-header-v2 .cbe-brandbar{align-items:flex-start;padding:7px 9px;gap:6px}.cbe-header-v2 .cbe-brand{flex-wrap:wrap;gap:5px}.cbe-header-v2 .cbe-tagline{width:100%;border-left:0;padding-left:0;margin-left:27px;font-size:9px}.cbe-header-v2 .cbe-account-links{gap:8px;flex-wrap:wrap;justify-content:flex-end}.cbe-header-v2 .cbe-account-links a{font-size:9px}.cbe-header-v2 .cbe-primary-nav{padding:6px;gap:6px!important}.cbe-header-v2 .cbe-header-search{flex-basis:135px}.cbe-header-v2 .cbe-resource-strip{padding:7px;gap:5px}.cbe-header-v2 .cbe-resource-strip a{font-size:9px;min-height:25px;padding:5px 7px}}
 </style>
+<style id="cbe-header-resource-spacing-fix">
+/* Match the reference header: clean white gaps between each resource shortcut. */
+.site-header.cbe-header-v2 .top-strip.cbe-resource-strip{
+  display:flex!important;align-items:center!important;justify-content:flex-start!important;
+  flex-wrap:wrap!important;gap:6px!important;
+  padding:8px 17px!important;margin:0!important;
+  background:#fff!important;border-bottom:1px solid #d8d8d8!important;
+  box-sizing:border-box!important;
+}
+.site-header.cbe-header-v2 .top-strip.cbe-resource-strip>a{
+  display:inline-flex!important;flex:0 0 auto!important;
+  margin:0!important;float:none!important;
+  border-radius:5px!important;box-sizing:border-box!important;
+  min-height:26px!important;height:auto!important;
+  padding:5px 10px!important;line-height:1.1!important;
+  white-space:nowrap!important;
+}
+@media(max-width:600px){
+ .site-header.cbe-header-v2 .top-strip.cbe-resource-strip{gap:5px!important;padding:7px!important}
+ .site-header.cbe-header-v2 .top-strip.cbe-resource-strip>a{padding:5px 7px!important}
+}
+</style>
 </head>
   <body>
     <a class="cbe-skip-link" href="#main-content">Skip to main content</a>
