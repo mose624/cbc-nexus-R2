@@ -24,7 +24,7 @@ const GRADE10_NATIONAL_SOURCE="https://arena.co.ke/knec-list-of-senior-schools-p
 const GRADE10_OFFICIAL_SOURCE="https://selection.education.go.ke/files/senior-schools-in-kenya.pdf";
 let grade10NationalCache={expiresAt:0,schools:[]};
 function decodeHtml(s){return String(s||"").replace(/&nbsp;/gi," ").replace(/&amp;/gi,"&").replace(/&quot;/gi,'\"').replace(/&#39;|&apos;/gi,"'").replace(/&lt;/gi,"<").replace(/&gt;/gi,">");}
-function stripHtml(s){return decodeHtml(String(s||"").replace(/<br\s*\/?>/gi," ").replace(/<[^>]+>/g," ")).replace(/\\s+/g," ").trim();}
+function stripHtml(s){return decodeHtml(String(s||"").replace(/<br\s*\/?>/gi," ").replace(/<[^>]+>/g," ")).replace(/\s+/g," ").trim();}
 function parseGrade10NationalHtml(html){
   const rows=[];
   const counties=["Baringo","Bomet","Bungoma","Busia","Elgeyo Marakwet","Embu","Garissa","Homa Bay","Isiolo","Kajiado","Kakamega","Kericho","Kiambu","Kilifi","Kirinyaga","Kisii","Kisumu","Kitui","Kwale","Laikipia","Lamu","Machakos","Makueni","Mandera","Marsabit","Meru","Migori","Mombasa","Murang'a","Nairobi","Nakuru","Nandi","Narok","Nyamira","Nyandarua","Nyeri","Samburu","Siaya","Taita Taveta","Tana River","Tharaka Nithi","Trans Nzoia","Turkana","Uasin Gishu","Vihiga","Wajir","West Pokot"];
@@ -126,7 +126,7 @@ function adminCookie(t){return `__Host-cbe_admin_session=${encodeURIComponent(t)
 const TEACHER_SESSION_TTL_MS=8*60*60*1000;
 function createTeacherSession(id){const secret=String(process.env.ADMIN_SESSION_SECRET||"");if(!secret)throw new Error("Teacher sign-in is not configured.");const p=Buffer.from(JSON.stringify({id:String(id),exp:Date.now()+TEACHER_SESSION_TTL_MS})).toString("base64url");return p+"."+crypto.createHmac("sha256",secret).update("teacher:"+p).digest("base64url");}
 function verifyTeacherToken(token){const secret=String(process.env.ADMIN_SESSION_SECRET||"");if(!secret||!token)return null;const [p,s]=String(token).split(".");if(!p||!s||!safeEqual(s,crypto.createHmac("sha256",secret).update("teacher:"+p).digest("base64url")))return null;try{const d=JSON.parse(Buffer.from(p,"base64url").toString("utf8"));return d.exp>Date.now()?String(d.id):null;}catch{return null;}}
-function teacherSessionId(req){const m=String(req.headers.cookie||"").match(/(?:^|;\\s*)__Host-cbe_teacher_session=([^;]+)/);try{return m?verifyTeacherToken(decodeURIComponent(m[1])):null;}catch{return null;}}
+function teacherSessionId(req){const m=String(req.headers.cookie||"").match(/(?:^|;\s*)__Host-cbe_teacher_session=([^;]+)/);try{return m?verifyTeacherToken(decodeURIComponent(m[1])):null;}catch{return null;}}
 function teacherSessionCookie(token){return "__Host-cbe_teacher_session="+encodeURIComponent(token)+"; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=28800";}
 async function eligibleTeacher(req){if(!supabaseConfigured)return null;const id=teacherSessionId(req);if(!id)return null;const {data,error}=await supabase.from("global_teachers").select("id,full_name,email,status,payment_status").eq("id",id).maybeSingle();if(error)throw error;return data&&data.status==="approved"&&["paid","waived"].includes(String(data.payment_status||""))?data:null;}
 
@@ -568,7 +568,7 @@ async function handleApi(req,res,url){
     }catch(error){console.error("Global teacher registration error:",error);sendJson(res,500,{ok:false,error:"Your teacher application could not be saved. Please try again later."});return true;}
   }
   if(req.method==="POST"&&url.pathname==="/api/global-teachers/login"){
-    try{if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Teacher sign-in is unavailable."});return true;}const p=JSON.parse((await readBody(req))||"{}"),email=String(p.email||"").trim().toLowerCase(),password=String(p.password||"");if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)||!password){sendJson(res,400,{ok:false,error:"Enter your registered email and password."});return true;}const {data:t,error}=await supabase.from("global_teachers").select("id,full_name,email,status,payment_status,password_hash").eq("email",email).maybeSingle();if(error)throw error;if(!t||!t.password_hash||!(await verifyPassword(password,t.password_hash))){sendJson(res,401,{ok:false,error:"Email or password is incorrect."});return true;}if(t.status!=="approved"||!["paid","waived"].includes(String(t.payment_status||""))){sendJson(res,403,{ok:false,error:"Access requires an approved application and verified registration payment."});return true;}res.setHeader("Set-Cookie",teacherSessionCookie(createTeacherSession(t.id)));sendJson(res,200,{ok:true,teacher:{id:t.id,name:t.full_name,email:t.email}});return true;}catch(e){console.error("Teacher login failed:",e);sendJson(res,500,{ok:false,error:"Teacher sign-in failed."});return true;}
+    try{if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Teacher sign-in is unavailable."});return true;}const p=JSON.parse((await readBody(req))||"{}"),email=String(p.email||"").trim().toLowerCase(),password=String(p.password||"");if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||!password){sendJson(res,400,{ok:false,error:"Enter your registered email and password."});return true;}const {data:t,error}=await supabase.from("global_teachers").select("id,full_name,email,status,payment_status,password_hash").eq("email",email).maybeSingle();if(error)throw error;if(!t||!t.password_hash||!(await verifyPassword(password,t.password_hash))){sendJson(res,401,{ok:false,error:"Email or password is incorrect."});return true;}if(t.status!=="approved"||!["paid","waived"].includes(String(t.payment_status||""))){sendJson(res,403,{ok:false,error:"Access requires an approved application and verified registration payment."});return true;}res.setHeader("Set-Cookie",teacherSessionCookie(createTeacherSession(t.id)));sendJson(res,200,{ok:true,teacher:{id:t.id,name:t.full_name,email:t.email}});return true;}catch(e){console.error("Teacher login failed:",e);sendJson(res,500,{ok:false,error:"Teacher sign-in failed."});return true;}
   }
   if(req.method==="POST"&&url.pathname==="/api/global-teachers/logout"){res.setHeader("Set-Cookie","__Host-cbe_teacher_session=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0");sendJson(res,200,{ok:true});return true;}
   if(req.method==="GET"&&url.pathname==="/api/global-teachers/session"){try{const t=await eligibleTeacher(req);if(!t){res.setHeader("Set-Cookie","__Host-cbe_teacher_session=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0");sendJson(res,401,{ok:false,error:"Approved, payment-verified teacher sign-in required."});return true;}sendJson(res,200,{ok:true,teacher:{id:t.id,name:t.full_name,email:t.email}});return true;}catch(e){console.error("Teacher session check failed:",e);sendJson(res,500,{ok:false,error:"Could not verify teacher session."});return true;}}
@@ -578,8 +578,8 @@ async function handleApi(req,res,url){
       const p=JSON.parse((await readBody(req))||"{}"),clean=(v,n=500)=>String(v??"").trim().slice(0,n);
       const row={learner_name:clean(p.learnerName,120),guardian_name:clean(p.guardianName,120),contact_email:clean(p.email,254).toLowerCase(),contact_phone:clean(p.phone,40),learner_country:clean(p.country,100),education_level:clean(p.level,100),subjects:clean(p.subjects,500),curriculum:clean(p.curriculum,160),preferred_times:clean(p.times,300),time_zone:clean(p.timeZone,100),lesson_mode:clean(p.lessonMode,40)||"Online",sessions_per_week:clean(p.sessionsPerWeek,40),budget:clean(p.budget,100),learner_notes:clean(p.notes,1500),status:"pending"};
       if(!row.learner_name||!row.guardian_name||!row.contact_email||!row.contact_phone||!row.learner_country||!row.education_level||!row.subjects||!row.preferred_times){sendJson(res,400,{ok:false,error:"Please complete all required learner and parent/guardian contact fields, country, level, subjects and preferred times."});return true;}
-      if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(row.contact_email)){sendJson(res,400,{ok:false,error:"Enter a valid parent/guardian email address."});return true;}
-      if(row.contact_phone.replace(/[\\s()+.-]/g,"").length<9){sendJson(res,400,{ok:false,error:"Enter a valid parent/guardian phone number."});return true;}
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(row.contact_email)){sendJson(res,400,{ok:false,error:"Enter a valid parent/guardian email address."});return true;}
+      if(row.contact_phone.replace(/[\s()+.-]/g,"").length<9){sendJson(res,400,{ok:false,error:"Enter a valid parent/guardian phone number."});return true;}
       const {data,error}=await supabase.from("active_learner_requests").insert(row).select("id,education_level,learner_country,subjects,status,created_at").single();
       if(error)throw error;
       sendJson(res,201,{ok:true,message:"Learner request submitted. CBE Nexus will review it before it appears on the teacher board.",request:data});return true;
@@ -1885,8 +1885,8 @@ async function getTvetaCourses(){
   if(!response.ok) throw new Error("TVETA returned "+response.status);
   const html=await response.text();
   const rows=[];
-  const trRe=new RegExp("<tr[^>]*>([\\s\\S]*?)</tr>","gi");
-  const tdRe=new RegExp("<t[dh][^>]*>([\\s\\S]*?)</t[dh]>","gi");
+  const trRe=new RegExp("<tr[^>]*>([\s\\S]*?)</tr>","gi");
+  const tdRe=new RegExp("<t[dh][^>]*>([\s\\S]*?)</t[dh]>","gi");
   const strip=s=>String(s).replace(/<[^>]+>/g," ").replace(/&amp;/g,"&").replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/&nbsp;/g," ").replace(/\s+/g," ").trim();
   let m;
   while((m=trRe.exec(html))){
@@ -1909,10 +1909,10 @@ async function getTvetaCourses(){
       const response=await fetch(source,{headers:{"User-Agent":"CBE-Nexus-Education-Directory/1.0"}});
       if(!response.ok) throw new Error("TVETA returned "+response.status);
       const html=await response.text(),rows=[];
-      const trRe=new RegExp("<tr[^>]*>([\\s\\S]*?)</tr>","gi");
-      const tdRe=new RegExp("<t[dh][^>]*>([\\s\\S]*?)</t[dh]>","gi");
-      const clean=s=>String(s).replace(/<[^>]+>/g," ").replace(/&amp;/g,"&").replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/&nbsp;/g," ").replace(/\\s+/g," ").trim();
-      const linkRe=new RegExp('<a[^>]+href=["\\\']([^"\\\']+)["\\\'][^>]*>([\\s\\S]*?)</a>',"gi");
+      const trRe=new RegExp("<tr[^>]*>([\s\\S]*?)</tr>","gi");
+      const tdRe=new RegExp("<t[dh][^>]*>([\s\\S]*?)</t[dh]>","gi");
+      const clean=s=>String(s).replace(/<[^>]+>/g," ").replace(/&amp;/g,"&").replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/&nbsp;/g," ").replace(/\s+/g," ").trim();
+      const linkRe=new RegExp('<a[^>]+href=["\\\']([^"\\\']+)["\\\'][^>]*>([\s\\S]*?)</a>',"gi");
       let tr;
       while((tr=trRe.exec(html))){
         const cells=[];let td;
@@ -1966,7 +1966,7 @@ async function getTvetaCourses(){
       const dres=await fetch(detailUrl,{headers:{"User-Agent":"CBE-Nexus-Education-Directory/1.0"}});
       if(!dres.ok) throw new Error("TVETA details returned "+dres.status);
       const page=await dres.text();
-      const rows=[];const trRe=new RegExp("<tr[^>]*>([\\s\\S]*?)</tr>","gi");const tdRe=new RegExp("<t[dh][^>]*>([\\s\\S]*?)</t[dh]>","gi");let tr;
+      const rows=[];const trRe=new RegExp("<tr[^>]*>([\s\\S]*?)</tr>","gi");const tdRe=new RegExp("<t[dh][^>]*>([\s\\S]*?)</t[dh]>","gi");let tr;
       while((tr=trRe.exec(page))){const cells=[];let td;while((td=tdRe.exec(tr[1])))cells.push(clean(td[1]));if(cells.length>=3&&!/^#?$/.test(cells[0])&&cells[1]&&cells[2])rows.push({courseName:cells[1]||cells[0],level:cells[2],examBody:cells[3]||""});}
       const textPage=clean(page);
       const pick=(label,next)=>{const i=textPage.toLowerCase().indexOf(label.toLowerCase());return i>=0?textPage.slice(i+label.length,(next?textPage.toLowerCase().indexOf(next.toLowerCase(),i+label.length):i+label.length+180)).trim():"";};
@@ -2587,7 +2587,7 @@ async function seedInteractiveQuestions(){
     const seed=[...JSON.parse(await fs.readFile(path.join(ROOT,"interactive-questions-seed.json"),"utf8")),...require("./grade10-high-order-questions.js"),...explicit];
     await ensureDataDir();
     const existing=await readJsonStore("interactive-questions.json");
-    const key=q=>String(q.grade||"")+"|"+String(q.subject||"").toLowerCase()+"|"+String(q.question||"").toLowerCase().replace(/\\s+/g," ").trim();
+    const key=q=>String(q.grade||"")+"|"+String(q.subject||"").toLowerCase()+"|"+String(q.question||"").toLowerCase().replace(/\s+/g," ").trim();
     const explicitIds=new Set(explicit.map(q=>String(q.id)));
     const mergedById=new Map(existing.filter(Boolean).filter(q=>!explicitIds.has(String(q.id))).map(q=>[String(q.id),q]));
     const seenKeys=new Set([...mergedById.values()].map(key));
