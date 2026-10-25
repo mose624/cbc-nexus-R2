@@ -537,16 +537,19 @@ async function handleApi(req,res,url){
       const languages=clean(p.languages,300),subjects=clean(p.subjects,500),levels=clean(p.levels,160),curriculum=clean(p.curriculum,240);
       const experience=clean(p.experience,100),bio=clean(p.note||p.bio,2500),qualifications=clean(p.qualifications,1000);
       const preferredCountries=Array.isArray(p.preferredCountries)?[...new Set(p.preferredCountries.map(v=>clean(v,80)).filter(Boolean))].slice(0,10):[];
+      const allowedAvailability=["Morning (6:00-10:00 AM)","Midmorning (10:00 AM-12:00 PM)","Afternoon (12:00-3:00 PM)","Evening (4:00-7:00 PM)"];
+      const availability_times=Array.isArray(p.availabilityTimes)?[...new Set(p.availabilityTimes.map(v=>clean(v,80)).filter(v=>allowedAvailability.includes(v)))]:[];
       const hourlyRateRaw=p.hourlyRate===undefined||p.hourlyRate===null||String(p.hourlyRate).trim()===""?null:Number(p.hourlyRate);
       const hourly_rate=hourlyRateRaw===null?NaN:(Number.isFinite(hourlyRateRaw)&&hourlyRateRaw>0&&hourlyRateRaw<=1000000?hourlyRateRaw:NaN);
       const rate_currency=clean(p.rateCurrency||"USD",3).toUpperCase();
       if(!full_name||!email||!country||!languages||!subjects){sendJson(res,400,{ok:false,error:"Name, valid email, country, teaching languages and subjects are required."});return true;}
       if(Number.isNaN(hourly_rate)||!/^[A-Z]{3}$/.test(rate_currency)){sendJson(res,400,{ok:false,error:"Enter a valid hourly teaching charge greater than zero and select a valid three-letter currency code."});return true;}
+      if(!availability_times.length){sendJson(res,400,{ok:false,error:"Select at least one teaching availability time window."});return true;}
       const photoMatch=String(p.passportPhoto||"").match(/^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/=]+)$/);if(!photoMatch){sendJson(res,400,{ok:false,error:"A valid passport-size photo is required. Upload a JPG, PNG or WebP image."});return true;}const photoBytes=Buffer.from(photoMatch[2],"base64");if(!photoBytes.length||photoBytes.length>2*1024*1024){sendJson(res,400,{ok:false,error:"Passport photo must be no larger than 2 MB."});return true;}
       if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){sendJson(res,400,{ok:false,error:"Enter a valid email address."});return true;}
       if(String(p.website||"").trim()){sendJson(res,201,{ok:true,message:"Your teacher application has been received for review."});return true;}
       if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Teacher registration is temporarily unavailable because the database is not configured."});return true;}
-      const row={full_name,email,country,preferred_countries:preferredCountries,languages,subjects,levels,curriculum,experience,bio,qualifications,hourly_rate,rate_currency,status:"pending",payment_status:"unpaid",listing_plan:"basic",updated_at:new Date().toISOString()};
+      const row={full_name,email,country,preferred_countries:preferredCountries,availability_times,languages,subjects,levels,curriculum,experience,bio,qualifications,hourly_rate,rate_currency,status:"pending",payment_status:"unpaid",listing_plan:"basic",updated_at:new Date().toISOString()};
       const {data,error}=await supabase.from("global_teachers").insert(row).select("id,full_name,email,status,payment_status,created_at").single();
       if(error&&String(error.code)==="23505"){sendJson(res,409,{ok:false,error:"A teacher application with this email already exists. Contact info@cbenexus.co.ke if you need help updating it."});return true;}
       if(error)throw error;
