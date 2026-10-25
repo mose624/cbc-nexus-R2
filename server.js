@@ -2180,7 +2180,7 @@ function injectAccessibilityEnhancements(html){
   let out=String(html||"");
   if(!/<html\b/i.test(out)||!/<body\b/i.test(out)) return out;
   if(!/id=["']cbe-global-accessibility-style["']/i.test(out)){
-    const style=String.raw\`<style id="cbe-global-accessibility-style">
+    const style=String.raw`<style id="cbe-global-accessibility-style">
 .cbe-skip-link{position:fixed;left:12px;top:12px;z-index:2147483647;transform:translateY(-180%);padding:12px 16px;border-radius:6px;background:#111827;color:#fff;font-weight:800;text-decoration:underline;box-shadow:0 3px 12px rgba(0,0,0,.28)}
 .cbe-skip-link:focus,.cbe-skip-link:focus-visible{transform:translateY(0);outline:3px solid #facc15;outline-offset:3px}
 :where(a,button,input,select,textarea,summary,[tabindex]:not([tabindex="-1"]),[role="button"]):focus-visible{outline:3px solid #005fcc!important;outline-offset:3px!important;box-shadow:0 0 0 2px #fff!important}
@@ -2188,7 +2188,7 @@ function injectAccessibilityEnhancements(html){
 ::placeholder{color:#59636e!important;opacity:1}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 @media(forced-colors:active){:where(a,button,input,select,textarea,summary,[tabindex]:not([tabindex="-1"])):focus-visible{outline:3px solid Highlight!important;outline-offset:3px!important}}
-</style>\`;
+</style>`;
     out=out.replace(/<\/head>/i,style+"</head>");
   }
   if(/<main\b/i.test(out)){
@@ -2203,7 +2203,7 @@ function injectAccessibilityEnhancements(html){
     }
   }
   if(!/id=["']cbe-global-accessibility-script["']/i.test(out)){
-    const script=String.raw\`<script id="cbe-global-accessibility-script">
+    const script=String.raw`<script id="cbe-global-accessibility-script">
 (function(){
 "use strict";
 function labelText(v){return String(v||"").replace(/([a-z0-9])([A-Z])/g,"$1 $2").replace(/[_-]+/g," ").replace(/\s+/g," ").trim();}
@@ -2226,7 +2226,7 @@ n=labelText(n);el.setAttribute("alt",n||"Image");
 function start(){enhance(document);if("MutationObserver"in window)new MutationObserver(function(records){records.forEach(function(r){r.addedNodes.forEach(function(n){if(n.nodeType===1)enhance(n);});});}).observe(document.body,{childList:true,subtree:true});}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});else start();
 })();
-</script>\`;
+</script>`;
     out=out.replace(/<\/body>/i,script+"</body>");
   }
   return out;
