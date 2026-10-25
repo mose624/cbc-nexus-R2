@@ -1055,8 +1055,22 @@
           <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="analytics">📊 CBE Nexus Analytics</button>
           <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="seo">SEO Center <span class="admin-seo-badge">Ubersuggest</span></button>
           <button class="admin-module-tab ad-revenue-tab" type="button" role="tab" aria-selected="false" data-admin-module="ad-revenue">💰 Ad Revenue</button>
+            <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="global-teachers">🌍 Global Teacher Review <span id="globalTeacherBadge">0</span></button>
           </div>
           <a class="admin-module-tab" href="/admin-assessment-records.html" style="display:inline-flex;align-items:center;text-decoration:none;background:#0284c7!important;color:#fff!important">📋 Learner Assessment Records</a>
+          <div class="admin-module-panel" data-admin-module-panel="global-teachers" hidden>
+            <div class="admin-module-heading">
+              <div><p class="eyebrow">GLOBAL ONLINE TEACHING MARKETPLACE</p><h3>🌍 Global Teacher Applications</h3><span>Review applicants, check payment status, and control which teacher profiles appear in the public directory.</span></div>
+              <button id="globalTeacherRefresh" type="button" class="secondary-button">↻ Refresh applications</button>
+            </div>
+            <div class="admin-seo-note" style="margin:12px 0"><strong>Publishing rule:</strong> a profile appears publicly only when its status is Approved and payment status is Paid or Waived. Registration does not charge the applicant; confirm payment before marking it Paid.</div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:end;margin:16px 0">
+              <label class="admin-filter"><span>Application status</span><select id="globalTeacherStatusFilter"><option value="">All applications</option><option value="pending" selected>Pending review</option><option value="approved">Approved</option><option value="rejected">Rejected</option><option value="suspended">Suspended</option></select></label>
+              <span id="globalTeacherAdminMessage" role="status" aria-live="polite">Applications have not been loaded yet.</span>
+            </div>
+            <div id="globalTeacherAdminList" style="display:grid;gap:14px"><p>Open this tab or press Refresh applications to load applications.</p></div>
+          </div>
+
           <div class="admin-module-panel" data-admin-module-panel="analytics">
             <div class="admin-module-heading">
               <div><p class="eyebrow">CBE NEXUS ADMIN</p><h3>📊 CBE Nexus Analytics</h3><span>One central analytics page for understanding visitors, engagement, resources, sales and customer behaviour.</span></div>
@@ -1652,6 +1666,7 @@
       if(name==='analytics' && window.CBENexusAnalytics)window.CBENexusAnalytics.track('admin_analytics_open',{page:'admin'});
       if(name==='ad-revenue' && window.CBENexusAdRevenue)window.CBENexusAdRevenue.load();
       if(name==='resources' && typeof window.loadAdminResourceModeration==='function')window.loadAdminResourceModeration();
+      if(name==='global-teachers' && typeof window.CBENexusLoadGlobalTeachersAdmin==='function')window.CBENexusLoadGlobalTeachersAdmin();
       if(name==='ai-notes' && typeof window.initAICourseNotesAdmin==='function')window.initAICourseNotesAdmin();
         if(name==='scholarships' && typeof window.CBENexusLoadOpportunitiesAdmin==='function')window.CBENexusLoadOpportunitiesAdmin();
         if(name==='school-directory' && typeof window.CBENexusLoadSchoolDirectoryAdmin==='function')window.CBENexusLoadSchoolDirectoryAdmin();
@@ -1670,6 +1685,58 @@
     openModule('resources');
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();
+</script>
+
+
+<!-- CBE NEXUS GLOBAL TEACHER APPLICATION REVIEW -->
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  const nice=v=>String(v||'Not provided').replace(/[_-]+/g,' ').replace(/\\b\\w/g,m=>m.toUpperCase());
+  let loading=false;
+  async function load(){
+    if(loading)return;loading=true;
+    const list=$('globalTeacherAdminList'),msg=$('globalTeacherAdminMessage'),filter=$('globalTeacherStatusFilter');
+    if(!list||!msg){loading=false;return;}
+    list.innerHTML='<p>Loading applications…</p>';msg.textContent='Loading…';
+    try{
+      const status=filter?filter.value:'';
+      const r=await fetch('/api/admin/global-teachers'+(status?'?status='+encodeURIComponent(status):''),{credentials:'same-origin',cache:'no-store',headers:{'Accept':'application/json'}});
+      const d=await r.json().catch(()=>({}));
+      if(!r.ok||!d.ok)throw new Error(r.status===401?'Admin login required. Please sign in to the admin dashboard again.':(d.error||'Applications could not be loaded.'));
+      const teachers=Array.isArray(d.teachers)?d.teachers:[];
+      const badge=$('globalTeacherBadge');if(badge)badge.textContent=String(teachers.filter(t=>t.status==='pending').length);
+      msg.textContent=teachers.length+' application'+(teachers.length===1?'':'s')+' loaded.';
+      if(!teachers.length){list.innerHTML='<div class="analytics-kpi"><strong>No applications found</strong><span>Try another status filter or refresh later.</span></div>';return;}
+      list.innerHTML=teachers.map(t=>{
+        const id=esc(t.id),status=String(t.status||'pending'),payment=String(t.payment_status||'unpaid');
+        const values=[['Country',t.country],['Languages',Array.isArray(t.languages)?t.languages.join(', '):t.languages],['Subjects',Array.isArray(t.subjects)?t.subjects.join(', '):t.subjects],['Learner levels',Array.isArray(t.levels)?t.levels.join(', '):t.levels],['Curriculum',t.curriculum],['Experience',t.experience],['Qualifications',t.qualifications],['Hourly rate',t.hourly_rate?(String(t.rate_currency||'USD')+' '+t.hourly_rate):'Not provided'],['Bio / note',t.bio]];
+        return '<article class="analytics-integration-card" style="display:block;padding:18px;border:1px solid #dbe3ee;border-radius:14px;background:#fff;color:#172033"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:start"><div><h4 style="margin:0 0 5px">'+esc(t.full_name)+'</h4><a href="mailto:'+esc(t.email)+'">'+esc(t.email)+'</a><p style="margin:5px 0;color:#64748b;font-size:13px">Application '+id+' · Submitted '+esc(t.created_at?new Date(t.created_at).toLocaleString():'date unavailable')+'</p></div><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="admin-module-summary">'+esc(nice(status))+'</span><span class="admin-module-summary">Payment: '+esc(nice(payment))+'</span></div></div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:9px;margin:14px 0">'+values.map(v=>'<div style="background:#f8fafc;border-radius:8px;padding:9px"><strong style="display:block;font-size:12px;color:#475569">'+esc(v[0])+'</strong><span style="white-space:pre-wrap;overflow-wrap:anywhere">'+esc(v[1]||'Not provided')+'</span></div>').join('')+'</div><div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;border-top:1px solid #e2e8f0;padding-top:13px"><label style="display:grid;gap:4px;font-size:12px;font-weight:700">Payment status<select data-gt-payment="'+id+'" style="padding:9px;border:1px solid #cbd5e1;border-radius:8px"><option value="unpaid"'+(payment==='unpaid'?' selected':'')+'>Unpaid</option><option value="pending"'+(payment==='pending'?' selected':'')+'>Pending</option><option value="paid"'+(payment==='paid'?' selected':'')+'>Paid (verified)</option><option value="waived"'+(payment==='waived'?' selected':'')+'>Waived (approved exception)</option><option value="refunded"'+(payment==='refunded'?' selected':'')+'>Refunded</option></select></label><button type="button" class="secondary-button" data-gt-action="pending" data-gt-id="'+id+'">Mark pending</button><button type="button" class="primary-button" data-gt-action="approved" data-gt-id="'+id+'">Approve listing</button><button type="button" class="secondary-button" data-gt-action="rejected" data-gt-id="'+id+'">Reject</button><button type="button" class="secondary-button" data-gt-action="suspended" data-gt-id="'+id+'">Suspend</button></div></article>';
+      }).join('');
+    }catch(e){msg.textContent=e.message||'Could not load applications.';list.innerHTML='<div class="analytics-kpi"><strong>Unable to load teacher applications</strong><span>'+esc(e.message||'Please retry.')+'</span></div>';}
+    finally{loading=false;}
+  }
+  async function update(id,status){
+    const msg=$('globalTeacherAdminMessage'),pay=$('globalTeacherAdminList')?.querySelector('[data-gt-payment="'+CSS.escape(id)+'"]');
+    const paymentStatus=pay?pay.value:'';
+    if(status==='approved'&&!['paid','waived'].includes(paymentStatus)){if(msg)msg.textContent='To approve a public listing, set payment to Paid only after verifying payment, or Waived for an approved exception.';return;}
+    if(status==='approved'&&!window.confirm('Approve this teacher for the public directory? Ensure the selected payment status is verified.'))return;
+    if(status==='rejected'&&!window.confirm('Reject this teacher application?'))return;
+    if(status==='suspended'&&!window.confirm('Suspend this teacher listing?'))return;
+    try{
+      if(msg)msg.textContent='Saving review decision…';
+      const r=await fetch('/api/admin/global-teachers/status',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({id,status,paymentStatus})});
+      const d=await r.json().catch(()=>({}));if(!r.ok||!d.ok)throw new Error(d.error||'Could not update application.');
+      if(msg)msg.textContent='Saved: '+(d.teacher?.full_name||'Teacher')+' — '+nice(d.teacher?.status)+' / '+nice(d.teacher?.payment_status)+'.';
+      await load();
+    }catch(e){if(msg)msg.textContent=e.message||'Could not save review decision.';}
+  }
+  window.CBENexusLoadGlobalTeachersAdmin=load;
+  document.addEventListener('click',e=>{const b=e.target.closest('[data-gt-action]');if(b){e.preventDefault();update(b.getAttribute('data-gt-id'),b.getAttribute('data-gt-action'));}});
+  document.addEventListener('change',e=>{if(e.target&&e.target.id==='globalTeacherStatusFilter')load();});
+  document.addEventListener('click',e=>{if(e.target&&e.target.id==='globalTeacherRefresh')load();});
 })();
 </script>
 
