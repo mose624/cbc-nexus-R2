@@ -327,6 +327,36 @@
     justify-content:center!important;
   }
 }
+
+<style id="compact-header-spacing-mobile-desktop">
+/* Tighten the brand, Home navigation and search spacing on phones using desktop-mode viewport sizing. */
+@media (max-device-width: 760px), (pointer: coarse) and (max-width: 1300px) {
+  .site-header.cbe-header-v2 .cbe-brandbar {
+    gap: 4px !important;
+    padding-left: 7px !important;
+    padding-right: 7px !important;
+  }
+  .site-header.cbe-header-v2 .cbe-primary-nav {
+    gap: 2px !important;
+    padding: 4px 5px !important;
+  }
+  .site-header.cbe-header-v2 .cbe-primary-nav .nav-menu {
+    flex: 0 1 auto !important;
+    gap: 2px !important;
+    margin-right: 2px !important;
+  }
+  .site-header.cbe-header-v2 .cbe-primary-nav .nav-link,
+  .site-header.cbe-header-v2 .cbe-primary-nav .nav-dropdown > summary {
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+  }
+  .site-header.cbe-header-v2 .cbe-header-search {
+    flex: 0 0 112px !important;
+    min-width: 112px !important;
+    margin-left: 2px !important;
+  }
+}
+</style>
 </style>
 
 </head>
