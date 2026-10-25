@@ -478,6 +478,28 @@ function init(){
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
 })();
-</script><script src="section-shell.js?v=20261009-6" defer></script><script src="customer-care.js?v=20261010-subscribe1" defer></script>
+</script><script src="section-shell.js?v=20261026-headerguard1" defer></script><script src="customer-care.js?v=20261010-subscribe1" defer></script>
+
+<!-- International header guard: keep this page-specific header above the page content. -->
+<script>
+(function(){
+  'use strict';
+  function keepInternationalHeader(){
+    var header=document.querySelector('body > header.international-brand-header');
+    if(!header) return;
+    document.querySelectorAll('body > header.cbe-section-header, body > header:not(.international-brand-header)').forEach(function(node){node.remove();});
+    if(document.body.firstElementChild!==header) document.body.insertBefore(header,document.body.firstElementChild);
+    header.style.setProperty('display','block','important');
+    header.style.setProperty('visibility','visible','important');
+    header.style.setProperty('opacity','1','important');
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',keepInternationalHeader);
+  else keepInternationalHeader();
+  window.addEventListener('load',keepInternationalHeader);
+  var guard=new MutationObserver(function(){keepInternationalHeader();});
+  if(document.body) guard.observe(document.body,{childList:true});
+  else document.addEventListener('DOMContentLoaded',function(){guard.observe(document.body,{childList:true});keepInternationalHeader();});
+})();
+</script>
 </body>
 </html>
