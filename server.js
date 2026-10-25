@@ -537,6 +537,7 @@ async function handleApi(req,res,url){
       const languages=clean(p.languages,300),subjects=clean(p.subjects,500),levels=clean(p.levels,160),curriculum=clean(p.curriculum,240);
       const experience=clean(p.experience,100),bio=clean(p.note||p.bio,2500),qualifications=clean(p.qualifications,1000);
       if(!full_name||!email||!country||!languages||!subjects){sendJson(res,400,{ok:false,error:"Name, valid email, country, teaching languages and subjects are required."});return true;}
+      const photoMatch=String(p.passportPhoto||"").match(/^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/=]+)$/);if(!photoMatch){sendJson(res,400,{ok:false,error:"A valid passport-size photo is required. Upload a JPG, PNG or WebP image."});return true;}const photoBytes=Buffer.from(photoMatch[2],"base64");if(!photoBytes.length||photoBytes.length>2*1024*1024){sendJson(res,400,{ok:false,error:"Passport photo must be no larger than 2 MB."});return true;}
       if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){sendJson(res,400,{ok:false,error:"Enter a valid email address."});return true;}
       if(String(p.website||"").trim()){sendJson(res,201,{ok:true,message:"Your teacher application has been received for review."});return true;}
       if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Teacher registration is temporarily unavailable because the database is not configured."});return true;}
@@ -544,7 +545,8 @@ async function handleApi(req,res,url){
       const {data,error}=await supabase.from("global_teachers").insert(row).select("id,full_name,email,status,payment_status,created_at").single();
       if(error&&String(error.code)==="23505"){sendJson(res,409,{ok:false,error:"A teacher application with this email already exists. Contact info@cbenexus.co.ke if you need help updating it."});return true;}
       if(error)throw error;
-      sendJson(res,201,{ok:true,application:{id:data.id,name:data.full_name,email:data.email,status:data.status,paymentStatus:data.payment_status},message:"Your teacher application has been saved. It is pending review. The $2 listing checkout will be activated after the payment integration is configured."});return true;
+      const photoExt=photoMatch[1]==="image/png"?"png":photoMatch[1]==="image/webp"?"webp":"jpg";const photoUpload=await uploadObject({grade:"global-teachers",subject:"passport-photos",type:"profile",fileName:`passport-${data.id}.${photoExt}`,resourceId:data.id,contentType:photoMatch[1]},photoBytes,photoBytes.length);const {error:photoSaveError}=await supabase.from("global_teachers").update({photo_url:photoUpload.key,updated_at:new Date().toISOString()}).eq("id",data.id);if(photoSaveError)throw photoSaveError;
+      sendJson(res,201,{ok:true,application:{id:data.id,name:data.full_name,email:data.email,status:data.status,paymentStatus:data.payment_status},message:"Your teacher application and passport photo have been saved. It is pending review."});return true;
     }catch(error){console.error("Global teacher registration error:",error);sendJson(res,500,{ok:false,error:"Your teacher application could not be saved. Please try again later."});return true;}
   }
   // Paystack hosted checkout for the one-time USD $2 teacher listing fee.
