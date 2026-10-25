@@ -2369,7 +2369,7 @@ async function serveStatic(req,res,url){
   const seoPage=await seo.match(req);
   if(req.method==="GET" && seoPage){
     res.writeHead(200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"public, max-age=600"});
-    res.end(injectAdSenseTags(injectAnalyticsTags(injectSeoFooter(seoPage,url.pathname)),url.pathname));
+    res.end(injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(injectPageMetadata(injectSeoFooter(seoPage,url.pathname),url.pathname,req)),url.pathname)));
     return;
   }
   const requestedPath=decodeURIComponent(url.pathname==="/"?"/index.html":url.pathname);
