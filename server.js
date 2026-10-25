@@ -2,6 +2,7 @@ const http = require("http");
 const fs = require("fs/promises");
 const path = require("path");
 const crypto = require("crypto");
+const zlib = require("zlib");
 const { createUploadUrl, createDownloadUrl, createPdfPreview, createInlineUrl, getObjectMetadata, getObjectBuffer, objectExists, uploadObject, deleteObject, verifyR2Connection } = require("./r2");
 const mammoth = require("mammoth");
 const { supabase, supabaseConfigured } = require("./supabase");
@@ -2162,6 +2163,7 @@ function injectAnalyticsTags(html){
 }
 
 let homepageHtmlCache=null;
+let homepageHtmlGzipCache=null;
 let homepageHtmlCacheTime=0;
 const HOMEPAGE_CACHE_TTL_MS=5*60*1000;
 
@@ -2179,12 +2181,14 @@ async function getHomepageHtml(req){
   if(!data.includes("resource-centre-bridge.js")) data=data.replace("</body>",bridgeScript+"</body>");
   data=injectAdSenseTags(injectAnalyticsTags(data),"/");
   homepageHtmlCache=Buffer.from(data);
+  homepageHtmlGzipCache=null;
   homepageHtmlCacheTime=now;
   return homepageHtmlCache;
 }
 
 function invalidateHomepageHtmlCache(){
   homepageHtmlCache=null;
+  homepageHtmlGzipCache=null;
   homepageHtmlCacheTime=0;
 }
 
@@ -2286,11 +2290,23 @@ async function serveStatic(req,res,url){
   }
   if(req.method==="GET" && url.pathname==="/"){
     const data=await getHomepageHtml(req);
-    res.writeHead(200,{
+    const acceptsGzip=/\bgzip\b/i.test(String(req.headers["accept-encoding"]||""));
+    const headers={
       "Content-Type":"text/html; charset=utf-8",
-      "Cache-Control":"public, max-age=300, must-revalidate"
-    });
-    res.end(data);
+      "Cache-Control":"public, max-age=300, must-revalidate",
+      "Vary":"Accept-Encoding"
+    };
+    if(acceptsGzip && data.length>1024){
+      // Keep a compressed copy alongside the existing five-minute HTML cache so
+      // repeat mobile visits do not spend CPU recompressing the homepage.
+      if(!homepageHtmlGzipCache) homepageHtmlGzipCache=zlib.gzipSync(data,{level:zlib.constants.Z_BEST_SPEED});
+      headers["Content-Encoding"]="gzip";
+      res.writeHead(200,headers);
+      res.end(homepageHtmlGzipCache);
+    }else{
+      res.writeHead(200,headers);
+      res.end(data);
+    }
     return;
   }
   const seoPage=await seo.match(req);
