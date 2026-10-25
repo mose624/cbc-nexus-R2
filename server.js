@@ -538,10 +538,10 @@ async function handleApi(req,res,url){
       const experience=clean(p.experience,100),bio=clean(p.note||p.bio,2500),qualifications=clean(p.qualifications,1000);
       const preferredCountries=Array.isArray(p.preferredCountries)?[...new Set(p.preferredCountries.map(v=>clean(v,80)).filter(Boolean))].slice(0,10):[];
       const hourlyRateRaw=p.hourlyRate===undefined||p.hourlyRate===null||String(p.hourlyRate).trim()===""?null:Number(p.hourlyRate);
-      const hourly_rate=hourlyRateRaw===null?null:(Number.isFinite(hourlyRateRaw)&&hourlyRateRaw>=0&&hourlyRateRaw<=1000000?hourlyRateRaw:NaN);
+      const hourly_rate=hourlyRateRaw===null?NaN:(Number.isFinite(hourlyRateRaw)&&hourlyRateRaw>0&&hourlyRateRaw<=1000000?hourlyRateRaw:NaN);
       const rate_currency=clean(p.rateCurrency||"USD",3).toUpperCase();
       if(!full_name||!email||!country||!languages||!subjects){sendJson(res,400,{ok:false,error:"Name, valid email, country, teaching languages and subjects are required."});return true;}
-      if(Number.isNaN(hourly_rate)||!/^[A-Z]{3}$/.test(rate_currency)){sendJson(res,400,{ok:false,error:"Enter a valid hourly rate and three-letter currency code."});return true;}
+      if(Number.isNaN(hourly_rate)||!/^[A-Z]{3}$/.test(rate_currency)){sendJson(res,400,{ok:false,error:"Enter a valid hourly teaching charge greater than zero and select a valid three-letter currency code."});return true;}
       const photoMatch=String(p.passportPhoto||"").match(/^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/=]+)$/);if(!photoMatch){sendJson(res,400,{ok:false,error:"A valid passport-size photo is required. Upload a JPG, PNG or WebP image."});return true;}const photoBytes=Buffer.from(photoMatch[2],"base64");if(!photoBytes.length||photoBytes.length>2*1024*1024){sendJson(res,400,{ok:false,error:"Passport photo must be no larger than 2 MB."});return true;}
       if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){sendJson(res,400,{ok:false,error:"Enter a valid email address."});return true;}
       if(String(p.website||"").trim()){sendJson(res,201,{ok:true,message:"Your teacher application has been received for review."});return true;}
