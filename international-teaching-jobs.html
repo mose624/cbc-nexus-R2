@@ -101,35 +101,65 @@
 }
 </style>
 <style id="international-jobs-reference-layout">
-/* Reference-inspired classroom backdrop and centered dashboard; all existing tools and sections remain intact. */
-body:has(main.page) {
-  background: linear-gradient(rgba(8,28,52,.30),rgba(8,28,52,.48)),url("https://images.unsplash.com/photo-1524178180094-2e2f6e5f7f3d?auto=format&fit=crop&w=2200&q=85") center/cover fixed no-repeat!important;
+/* Classroom scene and compact centered dashboard inspired by the supplied reference. Existing job tools, CV builder and vacancy data remain untouched. */
+html{scroll-behavior:smooth}
+body:has(main.page){
+  background-color:#dbeafe!important;
+  background-image:linear-gradient(180deg,rgba(7,25,44,.12) 0%,rgba(7,25,44,.20) 48%,rgba(225,241,255,.94) 100%),url("https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=2200&q=85")!important;
+  background-position:center top!important;background-size:cover!important;background-attachment:fixed!important;background-repeat:no-repeat!important;
 }
-.site-header{background:#10345d!important;color:#fff!important;border-bottom:1px solid rgba(255,255,255,.22)!important}
-.site-header .main-nav{max-width:1220px;margin:auto;padding:12px 18px}
+.site-header{
+  position:relative!important;z-index:5!important;
+  max-width:1040px!important;margin:105px auto -1px!important;
+  background:linear-gradient(110deg,#0a2d54,#174b7e)!important;color:#fff!important;
+  border:1px solid rgba(255,255,255,.75)!important;border-radius:15px 15px 0 0!important;
+  box-shadow:0 10px 30px rgba(3,20,38,.22)!important;
+}
+.site-header .main-nav{max-width:none!important;margin:auto!important;padding:13px 20px!important;min-height:66px;box-sizing:border-box}
 .site-header .brand,.site-header .brand strong,.site-header .brand small{color:#fff!important}
 .site-header .brand-mark{background:#fff!important;color:#12385f!important;border-radius:50%!important}
-.page{max-width:1040px!important;margin:28px auto 60px!important;padding:0!important;background:rgba(255,255,255,.97)!important;border-radius:16px!important;overflow:hidden;box-shadow:0 20px 55px rgba(0,0,0,.24)!important}
-.page>.back{display:inline-flex;margin:16px 22px 0!important}
-.page>.hero{border:0!important;border-radius:0!important;border-bottom:1px solid #cfe3f4!important;background:linear-gradient(110deg,#e7f4ff,#fafdff)!important;padding:32px 28px!important;box-shadow:none!important}
-.page>.hero .badge{background:#f6ca45!important;border-color:#e6b82b!important;color:#173657!important}
-.page>.hero h1{color:#12365f!important;font-size:clamp(30px,3.2vw,42px)!important;max-width:800px}
-.page>.hero p{color:#26394d!important}
-.page>.hero .actions{display:flex;flex-wrap:wrap;gap:9px}
-.page>.section{margin:0!important;padding:26px 28px!important;border-top:1px solid #e6edf4!important;background:rgba(255,255,255,.98)!important}
-.page>.section:nth-of-type(even){background:#f7fbff!important}
-.page .section h2{color:#153a60}
-.page .job-tools,.page .builder,.page .preview-wrap{border-radius:12px}
+.site-header .nav-actions{gap:8px!important}
+.site-header .nav-actions a{font-size:11px!important;padding:9px 12px!important;border-radius:999px!important}
+.page{
+  max-width:1040px!important;margin:0 auto 60px!important;padding:0!important;
+  background:rgba(255,255,255,.975)!important;border:1px solid #d5e7f5!important;
+  border-top:0!important;border-radius:0 0 16px 16px!important;overflow:hidden;
+  box-shadow:0 20px 55px rgba(0,0,0,.24)!important;
+}
+.page>.back{display:none!important}
+.page>.hero{
+  border:0!important;border-radius:0!important;border-bottom:1px solid #cfe3f4!important;
+  background:linear-gradient(110deg,#e8f5ff,#fbfeff)!important;
+  padding:24px 26px!important;box-shadow:none!important;
+}
+.page>.hero .badge{background:#e1f5ff!important;border:1px solid #8bdcf5!important;color:#0d5a83!important;font-size:10px!important}
+.page>.hero h1{color:#12365f!important;font-size:clamp(25px,3vw,34px)!important;line-height:1.13!important;max-width:850px!important;margin:8px 0!important}
+.page>.hero p{color:#344b62!important;font-size:13px!important;line-height:1.55!important;max-width:900px!important;margin:7px 0!important}
+.page>.hero .actions{display:flex;flex-wrap:wrap;gap:8px!important;margin-top:13px!important}
+.page>.hero .actions a{font-size:11px!important;padding:9px 13px!important;border-radius:999px!important}
+.page>.section{margin:0!important;padding:23px 25px!important;border-top:1px solid #e6edf4!important;background:rgba(255,255,255,.99)!important}
+.page>.section:nth-of-type(even){background:#f5faff!important}
+.page .section h2{color:#153a60!important}
+.page .grid{gap:12px!important}
+.page .card{border-radius:11px!important;box-shadow:0 3px 10px rgba(14,50,80,.05)!important}
+.page .job-tools,.page .builder,.page .preview-wrap{border-radius:12px!important}
 .page .job-tools{background:#f0f8ff!important}
-.page #internationalVacanciesPublic{margin:0!important;padding:26px 28px!important;background:#f8fcff!important}
+.page #internationalVacanciesPublic{margin:0!important;padding:23px 25px!important;background:#f5faff!important}
 .page .country-card{background:#f5fbff!important;border-color:#cfe4f2!important}
+@media(max-width:1080px){
+ .site-header{margin-left:14px!important;margin-right:14px!important}
+ .page{margin-left:14px!important;margin-right:14px!important}
+}
 @media(max-width:700px){
  body:has(main.page){background-attachment:scroll!important}
- .page{margin:10px!important;border-radius:12px!important}
- .page>.hero{padding:24px 18px!important}
- .page>.section,#internationalVacanciesPublic{padding:20px 16px!important}
- .page>.hero h1{font-size:29px!important}
- .site-header .main-nav{padding:10px 12px}
+ .site-header{margin:78px 8px -1px!important;border-radius:12px 12px 0 0!important}
+ .site-header .main-nav{padding:10px 12px!important;align-items:flex-start!important;gap:8px!important}
+ .site-header .nav-actions{flex-wrap:wrap!important;justify-content:flex-end!important}
+ .site-header .nav-actions a{font-size:10px!important;padding:7px 9px!important}
+ .page{margin:0 8px 24px!important;border-radius:0 0 12px 12px!important}
+ .page>.hero{padding:21px 16px!important}
+ .page>.section,#internationalVacanciesPublic{padding:19px 15px!important}
+ .page>.hero h1{font-size:25px!important}
 }
 </style>
 
