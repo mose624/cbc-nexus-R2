@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node server.js",
-    "prestart": "node scripts/ensure-admin-physics.js && node scripts/ensure-free-downloads.js && node scripts/seed-teaching-vacancies.js",
+    "prestart": "node scripts/ensure-admin-physics.js && node scripts/ensure-free-downloads.js && node scripts/seed-teaching-vacancies.js && node scripts/build-assets.js",
     "import:cue": "node scripts/import-cue-data.js"
   },
   "dependencies": {
@@ -13,7 +13,9 @@
     "@aws-sdk/credential-provider-node": "3.879.0",
     "pdf-lib": "^1.17.1",
     "@supabase/supabase-js": "^2.57.4",
-    "mammoth": "^1.9.1"
+    "mammoth": "^1.9.1",
+    "terser": "^5.44.0",
+    "clean-css": "^5.3.3"
   },
   "resolutions": {
     "@aws-sdk/credential-provider-node": "3.879.0"
