@@ -5298,3 +5298,26 @@ html { scroll-behavior: auto; }
 
 
 /* Use the same desktop layout on phones; the fixed 1200px layout viewport is set in index.html. */
+
+
+/* Keep the eight primary resource buttons on one continuous row, including on phones using desktop viewport mode. */
+.site-header.cbe-header-v2 .top-strip.cbe-resource-strip {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  justify-content: space-between !important;
+  gap: 4px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  overflow-x: auto !important;
+  white-space: nowrap !important;
+}
+.site-header.cbe-header-v2 .top-strip.cbe-resource-strip > a {
+  flex: 1 1 0 !important;
+  min-width: max-content !important;
+  white-space: nowrap !important;
+  padding: 5px 6px !important;
+  font-size: 9px !important;
+  line-height: 1.1 !important;
+  text-align: center !important;
+}
