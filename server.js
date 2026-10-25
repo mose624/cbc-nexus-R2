@@ -1372,7 +1372,18 @@ async function handleApi(req,res,url){
       if(!entitlement){sendJson(res,403,{ok:false,error:"Verified payment or active access plan is required for this protected download."});return true;}
       const fileName=String(resource.filename||resource.fileName||key.split("/").pop()||"resource");
       const downloadUrl=await createDownloadUrl(key,fileName);
-      if(supabaseConfigured){const {error}=await supabase.from("downloads").insert({resource_id:resourceId,customer_phone:phone,purchase_id:entitlement.id||null});if(error)console.error("Download log error:",error);}
+      if(supabaseConfigured){
+        const downloadLog={resource_id:resourceId,purchase_id:entitlement.id||null};
+        const {error}=await supabase.from("downloads").insert({...downloadLog,customer_phone:phone});
+        if(error){
+          // Older Supabase downloads tables may not have customer_phone yet.
+          // Retry without this optional analytics field so a schema mismatch never blocks the secure download.
+          if(String(error.code||"")==="PGRST204"&&/customer_phone/i.test(String(error.message||""))){
+            const retry=await supabase.from("downloads").insert(downloadLog);
+            if(retry.error)console.error("Download log error (compatibility retry):",retry.error);
+          }else console.error("Download log error:",error);
+        }
+      }
       sendJson(res,200,{ok:true,downloadUrl,expiresIn:300,fileName});return true;
     }catch(error){console.error("Protected download error:",error);sendJson(res,500,{ok:false,error:"Secure download could not be created."});return true;}
   }
