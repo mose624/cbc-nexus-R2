@@ -547,6 +547,50 @@ async function handleApi(req,res,url){
       sendJson(res,201,{ok:true,application:{id:data.id,name:data.full_name,email:data.email,status:data.status,paymentStatus:data.payment_status},message:"Your teacher application has been saved. It is pending review. The $1 listing checkout will be activated after the payment integration is configured."});return true;
     }catch(error){console.error("Global teacher registration error:",error);sendJson(res,500,{ok:false,error:"Your teacher application could not be saved. Please try again later."});return true;}
   }
+  // Paystack hosted checkout for the one-time USD $1 teacher listing fee.
+  if(req.method==="POST"&&url.pathname==="/api/global-teachers/checkout"){
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Teacher checkout is temporarily unavailable."});return true;}
+      const secret=String(process.env.PAYSTACK_SECRET_KEY||"").trim();
+      if(!secret){sendJson(res,503,{ok:false,error:"International checkout is not configured yet. Please contact info@cbenexus.co.ke."});return true;}
+      const p=JSON.parse((await readBody(req))||"{}"),id=String(p.applicationId||"").trim();
+      if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id)){sendJson(res,400,{ok:false,error:"A valid teacher application reference is required."});return true;}
+      const {data:teacher,error}=await supabase.from("global_teachers").select("id,full_name,email,status,payment_status,listing_plan,payment_reference").eq("id",id).maybeSingle();
+      if(error)throw error;
+      if(!teacher){sendJson(res,404,{ok:false,error:"Teacher application not found."});return true;}
+      if(teacher.payment_status==="paid"){sendJson(res,409,{ok:false,error:"This application already has a verified payment."});return true;}
+      if(teacher.listing_plan!=="basic"){sendJson(res,400,{ok:false,error:"This checkout is only for the $1 Basic Listing."});return true;}
+      const reference="CBET-"+crypto.randomBytes(18).toString("hex");
+      const origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.co.ke").replace(/\/$/,"");
+      const response=await fetch("https://api.paystack.co/transaction/initialize",{method:"POST",headers:{"Authorization":"Bearer "+secret,"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({email:teacher.email,amount:100,currency:"USD",reference,callback_url:origin+"/online-teaching.html?checkout=global-teacher",metadata:{application_id:teacher.id,product:"global_teacher_basic_listing",amount_usd:"1.00",custom_fields:[{display_name:"Teacher name",variable_name:"teacher_name",value:teacher.full_name}]}})});
+      const result=await response.json().catch(()=>({}));
+      if(!response.ok||!result.status||!result.data?.authorization_url)throw new Error("Payment provider could not initialize checkout.");
+      const {error:updateError}=await supabase.from("global_teachers").update({payment_status:"pending",payment_reference:reference,updated_at:new Date().toISOString()}).eq("id",teacher.id);
+      if(updateError)throw updateError;
+      sendJson(res,200,{ok:true,authorizationUrl:result.data.authorization_url,reference,amount:1,currency:"USD"});return true;
+    }catch(error){console.error("Global teacher checkout initialization error:",error);sendJson(res,502,{ok:false,error:"Secure checkout could not be started. Please try again or contact info@cbenexus.co.ke."});return true;}
+  }
+  if(req.method==="GET"&&url.pathname==="/api/global-teachers/checkout/verify"){
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Payment verification is temporarily unavailable."});return true;}
+      const secret=String(process.env.PAYSTACK_SECRET_KEY||"").trim(),reference=String(url.searchParams.get("reference")||"").trim();
+      if(!secret){sendJson(res,503,{ok:false,error:"Payment verification is not configured."});return true;}
+      if(!/^CBET-[a-f0-9]{36}$/i.test(reference)){sendJson(res,400,{ok:false,error:"Invalid payment reference."});return true;}
+      const {data:teacher,error}=await supabase.from("global_teachers").select("id,full_name,email,status,payment_status,payment_reference").eq("payment_reference",reference).maybeSingle();
+      if(error)throw error;
+      if(!teacher){sendJson(res,404,{ok:false,error:"No application matches this payment reference."});return true;}
+      if(teacher.payment_status==="paid"){sendJson(res,200,{ok:true,paid:true,message:"Payment has already been verified. Your application still requires administrator review."});return true;}
+      const response=await fetch("https://api.paystack.co/transaction/verify/"+encodeURIComponent(reference),{headers:{"Authorization":"Bearer "+secret,"Accept":"application/json"}});
+      const result=await response.json().catch(()=>({})),tx=result.data||{};
+      if(!response.ok||!result.status){sendJson(res,502,{ok:false,error:"The payment provider could not verify this transaction yet. Please retry shortly."});return true;}
+      if(tx.status!=="success"||Number(tx.amount)!==100||String(tx.currency||"").toUpperCase()!=="USD"||String(tx.customer?.email||"").toLowerCase()!==teacher.email.toLowerCase()||String(tx.metadata?.application_id||"")!==teacher.id){
+        sendJson(res,200,{ok:true,paid:false,status:String(tx.status||"pending"),message:"Payment is not yet verified. Your application will remain unpublished."});return true;
+      }
+      const {data:updated,error:updateError}=await supabase.from("global_teachers").update({payment_status:"paid",updated_at:new Date().toISOString()}).eq("id",teacher.id).eq("payment_reference",reference).select("id,full_name,status,payment_status").single();
+      if(updateError)throw updateError;
+      sendJson(res,200,{ok:true,paid:true,application:{id:updated.id,name:updated.full_name,status:updated.status,paymentStatus:updated.payment_status},message:"Payment verified. Your teacher application is now awaiting administrator review."});return true;
+    }catch(error){console.error("Global teacher payment verification error:",error);sendJson(res,500,{ok:false,error:"Payment verification failed. Contact info@cbenexus.co.ke if you were charged."});return true;}
+  }
   if(req.method==="GET"&&url.pathname==="/api/admin/global-teachers"){
     if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
     try{if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Supabase is not configured."});return true;}const status=String(url.searchParams.get("status")||"").trim();let q=supabase.from("global_teachers").select("*").order("created_at",{ascending:false}).limit(500);if(["pending","approved","rejected","suspended"].includes(status))q=q.eq("status",status);const {data,error}=await q;if(error)throw error;sendJson(res,200,{ok:true,teachers:data||[]});}
