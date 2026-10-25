@@ -57,7 +57,7 @@ async function resourcePage(req,id){
  try{
   let r=null;
   if(supabaseConfigured){
-   const {data,error}=await supabase.from("resources").select("id,title,description,grade,subject,resource_type,price,discount_price,status,created_at,updated_at,filename").eq("id",id).eq("status","approved").maybeSingle();
+   const {data,error}=await supabase.from("resources").select("id,title,description,grade,subject,resource_type,price,discount_price,status,created_at,filename").eq("id",id).eq("status","approved").maybeSingle();
    if(error)throw error;
    r=data||null;
   }
@@ -76,8 +76,10 @@ async function resourcePage(req,id){
   const b=base(req);
   const json=JSON.stringify({"@context":"https://schema.org","@type":"LearningResource","name":title,"description":description,"url":b+canonical,"learningResourceType":type,"educationalLevel":grade,"inLanguage":"en","publisher":{"@type":"EducationalOrganization","name":"CBE Nexus","url":b},"about":{"@type":"Thing","name":subject}});
   let related=[];
-  const q=await supabase.from("resources").select("id,title,grade,subject,resource_type").eq("status","approved").eq("grade",grade).eq("subject",subject).neq("id",r.id).order("created_at",{ascending:false}).limit(8);
-  if(!q.error)related=q.data||[];
+  if(supabaseConfigured){
+   const q=await supabase.from("resources").select("id,title,grade,subject,resource_type").eq("status","approved").eq("grade",grade).eq("subject",subject).neq("id",r.id).order("created_at",{ascending:false}).limit(8);
+   if(!q.error)related=q.data||[];
+  }
   const relatedHtml=related.map(x=>'<li><a href="/resource/'+encodeURIComponent(String(x.id))+'">'+esc(String(x.title||"Resource"))+'</a> — '+esc(String(x.resource_type||"Learning Resource"))+'</li>').join("")||"<li>No related resources yet.</li>";
   const gradeUrl="/grade-"+slug(grade);
   const subjectUrl=gradeUrl+"/"+slug(subject);
