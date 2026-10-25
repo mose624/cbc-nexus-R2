@@ -509,7 +509,7 @@ async function handleApi(req,res,url){
   if(req.method==="GET"&&url.pathname==="/api/global-teachers"){
     try{
       if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Teacher directory is temporarily unavailable because the database is not configured."});return true;}
-      let q=supabase.from("global_teachers").select("id,full_name,country,languages,subjects,levels,curriculum,experience,qualifications,bio,hourly_rate,rate_currency,listing_plan,promoted_until,verified_at,created_at").eq("status","approved").in("payment_status",["paid","waived"]).order("created_at",{ascending:false}).limit(100);
+      let q=supabase.from("global_teachers").select("id,full_name,country,languages,subjects,levels,curriculum,experience,qualifications,bio,hourly_rate,rate_currency,availability_times,listing_plan,promoted_until,verified_at,created_at").eq("status","approved").in("payment_status",["paid","waived"]).order("created_at",{ascending:false}).limit(100);
       const subject=String(url.searchParams.get("subject")||"").trim().slice(0,100);
       const level=String(url.searchParams.get("level")||"").trim().slice(0,100);
       const curriculum=String(url.searchParams.get("curriculum")||"").trim().slice(0,120);
