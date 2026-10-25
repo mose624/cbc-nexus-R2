@@ -1589,8 +1589,8 @@
 })();
 </script>
 <script src="app.min.js?v=20261025-perf1" defer></script>
-<script src="admin-bulk-upload.min.js?v=20261025-perf1" defer></script>
-<script src="admin-subject-stability.min.js?v=20261025-perf1" defer></script>
+
+
 
 
     <script>
@@ -1865,6 +1865,41 @@
   <p>Visit the <a href="/contact.html">Contact CBE Nexus page</a> for the published support options. For your safety, never share an M-Pesa PIN, password or one-time security code.</p>
 </section>
 
-  <script src="/admin-interactive-questions.min.js?v=20261025-perf1" defer></script>
+  
+
+<!-- Admin-only bundles are loaded after the public page settles, or immediately when the owner opens admin. -->
+<script id="cbe-admin-lazy-loader">
+(function(){
+  var files=[
+    "admin-bulk-upload.min.js?v=20261025-perf1",
+    "admin-subject-stability.min.js?v=20261025-perf1",
+    "/admin-interactive-questions.min.js?v=20261025-perf1"
+  ];
+  var started=false;
+  function loadNext(i){
+    if(i>=files.length)return;
+    var s=document.createElement("script");
+    s.src=files[i];
+    s.async=false;
+    s.onload=function(){loadNext(i+1);};
+    s.onerror=function(){console.error("CBE Nexus admin bundle failed to load:",files[i]);};
+    document.body.appendChild(s);
+  }
+  function start(){if(started)return;started=true;loadNext(0);}
+  document.addEventListener("click",function(e){
+    if(e.target&&e.target.closest&&e.target.closest("#adminAreaButton, #adminLoginForm, #admin .admin-module-tab, #admin [data-admin-upload-link]"))start();
+  },true);
+  document.addEventListener("focusin",function(e){
+    if(e.target&&e.target.closest&&e.target.closest("#adminLoginForm, #admin"))start();
+  },true);
+  function schedule(){
+    if("requestIdleCallback" in window)window.requestIdleCallback(start,{timeout:4500});
+    else window.setTimeout(start,3000);
+  }
+  if(document.readyState==="complete")schedule();
+  else window.addEventListener("load",schedule,{once:true});
+})();
+</script>
+
 </body>
 </html>
