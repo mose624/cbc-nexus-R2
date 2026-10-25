@@ -2142,7 +2142,20 @@ function injectPageMetadata(html, pathname, req){
     const schema={"@context":"https://schema.org","@type":"WebPage","name":title,"description":description.slice(0,300),"url":canonicalUrl,"isPartOf":{"@type":"WebSite","name":"CBE Nexus","url":seo.base(req)}};
     additions.push('<script type="application/ld+json">'+JSON.stringify(schema).replace(/</g,"\\u003c")+'</script>');
   }
+  if(!privatePage && pathOnly!=="/" && !/"@type"\s*:\s*"BreadcrumbList"/i.test(out)){
+    const parts=pathOnly.split("/").filter(Boolean);
+    const items=[{"@type":"ListItem","position":1,"name":"Home","item":seo.base(req)+"/"}];
+    let current="";
+    parts.forEach((part,index)=>{
+      current+="/"+part;
+      const name=index===parts.length-1?h1:part.replace(/\.html?$/i,"").replace(/[-_]+/g," ").replace(/\b\w/g,c=>c.toUpperCase());
+      items.push({"@type":"ListItem","position":index+2,"name":name,"item":seo.base(req)+current});
+    });
+    const breadcrumb={"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":items};
+    additions.push('<script type="application/ld+json">'+JSON.stringify(breadcrumb).replace(/</g,"\\u003c")+'</script>');
+  }
   if(additions.length) out=out.replace(/<head([^>]*)>/i,'<head$1>\n'+additions.join("\n"));
+  if(privatePage) out=out.replace(/<meta\b(?=[^>]*\bname=["\']robots["\'])[^>]*>/i, '<meta name="robots" content="noindex, nofollow">');
   if(titleMatch && !titleText.toLowerCase().includes("cbe nexus")) out=out.replace(titleMatch[0],'<title>'+escapeSeoAttribute(title)+'</title>');
   return out;
 }
@@ -2369,7 +2382,7 @@ async function serveStatic(req,res,url){
   const seoPage=await seo.match(req);
   if(req.method==="GET" && seoPage){
     res.writeHead(200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"public, max-age=600"});
-    res.end(injectAdSenseTags(injectAnalyticsTags(injectSeoFooter(seoPage,url.pathname)),url.pathname));
+    res.end(injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(injectPageMetadata(injectSeoFooter(seoPage,url.pathname),url.pathname,req)),url.pathname)));
     return;
   }
   const requestedPath=decodeURIComponent(url.pathname==="/"?"/index.html":url.pathname);
