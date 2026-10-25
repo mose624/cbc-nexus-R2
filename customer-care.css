@@ -80,3 +80,20 @@
 #cbe-resource-subscribe .crs-privacy{font-size:10px;color:#64748b;line-height:1.4}
 #cbe-resource-subscribe .crs-hp{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;opacity:0!important}
 @media(max-width:640px){#cbe-resource-subscribe{right:12px;bottom:82px}#cbe-resource-subscribe .crs-launcher{padding:11px 13px;font-size:12px}#cbe-resource-subscribe .crs-panel{right:0;width:min(340px,calc(100vw - 24px));bottom:52px}}
+
+
+/* Accessible floating support controls: high contrast, visible keyboard focus and reduced motion. */
+#cbe-customer-care :where(button, a, input, [tabindex]):focus-visible,
+#cbe-resource-subscribe :where(button, a, input, [tabindex]):focus-visible {
+  outline: 3px solid #005fcc !important; outline-offset: 3px !important;
+  box-shadow: 0 0 0 2px #fff !important;
+}
+#cbe-customer-care .cc-input::placeholder { color: #4b5563; opacity: 1; }
+#cbe-customer-care .cc-close, #cbe-resource-subscribe .crs-close { min-width: 44px; min-height: 44px; }
+#cbe-customer-care .cc-input, #cbe-resource-subscribe input { min-height: 44px; }
+@media (prefers-reduced-motion: reduce) {
+  #cbe-customer-care *, #cbe-resource-subscribe *, .summary-grid .holiday-program-card {
+    animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important; scroll-behavior: auto !important;
+  }
+}

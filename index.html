@@ -219,6 +219,7 @@
   <link rel="stylesheet" href="/admin-interactive-questions.min.css?v=20261025-perf1">
 </head>
   <body>
+    <a class="cbe-skip-link" href="#main-content">Skip to main content</a>
     <header class="site-header">
       <div class="top-strip">
         <a href="resource-category.html?type=Notes">Notes</a>
@@ -287,7 +288,7 @@
       </nav>
     </header>
 
-    <main>
+    <main id="main-content" tabindex="-1">
       <section id="dashboard" class="portal-dashboard">
         <section class="portal-main">
           <div class="portal-welcome">
@@ -1898,6 +1899,49 @@
   }
   if(document.readyState==="complete")schedule();
   else window.addEventListener("load",schedule,{once:true});
+})();
+</script>
+
+
+<script id="cbe-accessibility-enhancements">
+(function () {
+  "use strict";
+  function readableName(value) {
+    return String(value || "").replace(/([a-z0-9])([A-Z])/g, "$1 $2").replace(/[_-]+/g, " ").replace(/\s+/g, " ").trim();
+  }
+  function enhance(root) {
+    (root || document).querySelectorAll("input:not([type=hidden]), select, textarea").forEach(function (field) {
+      if (field.labels && field.labels.length) return;
+      if (field.getAttribute("aria-label") || field.getAttribute("aria-labelledby")) return;
+      var name = field.getAttribute("placeholder") || field.getAttribute("title") || field.getAttribute("name") || field.id;
+      if (name) field.setAttribute("aria-label", readableName(name));
+    });
+    (root || document).querySelectorAll("button, [role=button]").forEach(function (button) {
+      if (button.getAttribute("aria-label") || button.getAttribute("aria-labelledby")) return;
+      if (button.textContent.trim()) return;
+      var name = button.getAttribute("title") || button.getAttribute("data-label") || button.getAttribute("name");
+      if (name) button.setAttribute("aria-label", readableName(name));
+    });
+    (root || document).querySelectorAll("img:not([alt])").forEach(function (img) {
+      var name = img.getAttribute("title") || (img.getAttribute("src") || "").split("/").pop().split("?")[0].replace(/\.[a-z0-9]+$/i, "");
+      name = readableName(name);
+      img.setAttribute("alt", name || "Image");
+    });
+  }
+  function start() {
+    enhance(document);
+    if ("MutationObserver" in window) {
+      new MutationObserver(function (records) {
+        records.forEach(function (record) {
+          record.addedNodes.forEach(function (node) {
+            if (node.nodeType === 1) enhance(node);
+          });
+        });
+      }).observe(document.body, { childList: true, subtree: true });
+    }
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start, { once: true });
+  else start();
 })();
 </script>
 
