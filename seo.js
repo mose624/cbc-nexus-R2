@@ -248,4 +248,42 @@ async function sitemap(req){
  sitemapCache = { expiresAt: Date.now() + SITEMAP_CACHE_TTL_MS, body: output };
  return output;
 }
-module.exports={match,sitemap,base};
+
+const SECTION_SITEMAPS = {
+ core: ["/","/resources.html","/free-resources.html","/quizzes.html","/projects.html","/tuition.html","/blog.html","/learning-hub.html","/answer-hub.html","/contact.html","/privacy-policy.html","/terms-and-conditions.html","/copyright.html"],
+ education: ["/cbc-notes-kenya","/cbc-exams-kenya","/kjsea-revision","/free-interactive-questions","/daily-quiz","/grade-9-kjsea-revision-questions","/grade-10-cbe-practice-questions","/free-cbc-online-quizzes","/mashujaa-day-kenyan-heroes-quiz"],
+ opportunities: ["/kenya-universities-colleges.html","/public-universities.html","/private-universities.html","/specialized-universities.html","/university-constituent-colleges.html","/interim-universities.html","/university-course-catalogue.html","/technical-vocational-catalogue.html","/tvet-colleges.html","/teacher-training-colleges.html","/kmtc.html","/technical-institutions.html","/higher-education-jobs.html","/scholarships-opportunities.html","/international-teaching-jobs.html","/professional-cv-writing.html","/ai-training.html","/school-directory.html","/international-curriculum.html","/igcse.html","/cambridge-international.html","/ib.html","/pearson-edexcel.html","/a-levels.html","/o-levels.html","/free-ai-training","/free-cv-writing","/free-international-jobs","/all-schools-in-kenya"]
+};
+const sitemapSectionCache = new Map();
+async function sitemapSection(req, section) {
+ const allowed = ["core","education","opportunities","resources","blog"];
+ if (!allowed.includes(section)) return null;
+ const now=Date.now(), cached=sitemapSectionCache.get(section);
+ if(cached && cached.expiresAt>now) return cached.body;
+ const b=base(req), urls=[...(SECTION_SITEMAPS[section]||[])];
+ if(section==="education"){
+  KENYA_COUNTIES.forEach(c=>urls.push("/kenya-education-county/"+slug(c)));
+  GRADES.forEach(g=>{urls.push("/grade-"+g);(SUBJECTS[g]||[]).forEach(s=>urls.push("/grade-"+g+"/"+slug(s)));});
+ }
+ if(section==="resources" && supabaseConfigured){
+  try { const {data,error}=await supabase.from("resources").select("id").eq("status","approved").limit(5000); if(!error)(data||[]).forEach(r=>{if(r&&r.id)urls.push("/resource/"+encodeURIComponent(String(r.id)));}); }
+  catch(e){console.warn("Resource sitemap generation failed:",e.message||e);}
+ }
+ if(section==="blog"){
+  urls.push("/blog.html");
+  if(supabaseConfigured){
+   try { const {data,error}=await supabase.from("blog_posts").select("slug").eq("status","published").limit(5000); if(!error)(data||[]).forEach(p=>{if(p&&p.slug)urls.push("/blog-article.html?slug="+encodeURIComponent(String(p.slug)));}); }
+   catch(e){console.warn("Blog sitemap generation failed:",e.message||e);}
+  }
+ }
+ const unique=[...new Set(urls)].filter(u=>typeof u==="string"&&u.startsWith("/"));
+ const body='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+unique.map(u=>"<url><loc>"+xml(b+u)+"</loc></url>").join("")+"\n</urlset>";
+ sitemapSectionCache.set(section,{expiresAt:now+15*60*1000,body});
+ return body;
+}
+function sitemapIndex(req) {
+ const b=base(req);
+ const names=["sitemap.xml","sitemap-core.xml","sitemap-education.xml","sitemap-opportunities.xml","sitemap-resources.xml","sitemap-blog.xml"];
+ return '<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+names.map(n=>"<sitemap><loc>"+xml(b+"/"+n)+"</loc></sitemap>").join("")+"\n</sitemapindex>";
+}
+\nmodule.exports={match,sitemap,sitemapSection,sitemapIndex,base};
