@@ -572,6 +572,35 @@ async function handleApi(req,res,url){
   }
   if(req.method==="POST"&&url.pathname==="/api/global-teachers/logout"){res.setHeader("Set-Cookie","__Host-cbe_teacher_session=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0");sendJson(res,200,{ok:true});return true;}
   if(req.method==="GET"&&url.pathname==="/api/global-teachers/session"){try{const t=await eligibleTeacher(req);if(!t){res.setHeader("Set-Cookie","__Host-cbe_teacher_session=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0");sendJson(res,401,{ok:false,error:"Approved, payment-verified teacher sign-in required."});return true;}sendJson(res,200,{ok:true,teacher:{id:t.id,name:t.full_name,email:t.email}});return true;}catch(e){console.error("Teacher session check failed:",e);sendJson(res,500,{ok:false,error:"Could not verify teacher session."});return true;}}
+  if(req.method==="POST"&&url.pathname==="/api/active-learner-requests/submit"){
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Learner request form is temporarily unavailable."});return true;}
+      const p=JSON.parse((await readBody(req))||"{}"),clean=(v,n=500)=>String(v??"").trim().slice(0,n);
+      const row={learner_name:clean(p.learnerName,120),guardian_name:clean(p.guardianName,120),contact_email:clean(p.email,254).toLowerCase(),contact_phone:clean(p.phone,40),learner_country:clean(p.country,100),education_level:clean(p.level,100),subjects:clean(p.subjects,500),curriculum:clean(p.curriculum,160),preferred_times:clean(p.times,300),time_zone:clean(p.timeZone,100),lesson_mode:clean(p.lessonMode,40)||"Online",sessions_per_week:clean(p.sessionsPerWeek,40),budget:clean(p.budget,100),learner_notes:clean(p.notes,1500),status:"pending"};
+      if(!row.learner_name||!row.guardian_name||!row.contact_email||!row.contact_phone||!row.learner_country||!row.education_level||!row.subjects||!row.preferred_times){sendJson(res,400,{ok:false,error:"Please complete all required learner and parent/guardian contact fields, country, level, subjects and preferred times."});return true;}
+      if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(row.contact_email)){sendJson(res,400,{ok:false,error:"Enter a valid parent/guardian email address."});return true;}
+      if(row.contact_phone.replace(/[\\s()+.-]/g,"").length<9){sendJson(res,400,{ok:false,error:"Enter a valid parent/guardian phone number."});return true;}
+      const {data,error}=await supabase.from("active_learner_requests").insert(row).select("id,education_level,learner_country,subjects,status,created_at").single();
+      if(error)throw error;
+      sendJson(res,201,{ok:true,message:"Learner request submitted. CBE Nexus will review it before it appears on the teacher board.",request:data});return true;
+    }catch(e){console.error("Public learner request submission failed:",e);sendJson(res,500,{ok:false,error:"Learner request could not be saved. Please try again later."});return true;}
+  }
+  if(req.method==="GET"&&url.pathname==="/api/admin/active-learner-requests"){
+    try{
+      if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Administrator sign-in required."});return true;}
+      const {data,error}=await supabase.from("active_learner_requests").select("*").order("created_at",{ascending:false}).limit(500);
+      if(error)throw error;sendJson(res,200,{ok:true,requests:data||[]});return true;
+    }catch(e){console.error("Admin learner request list failed:",e);sendJson(res,500,{ok:false,error:"Could not load learner requests. Check the Supabase migration."});return true;}
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/active-learner-requests/status"){
+    try{
+      if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Administrator sign-in required."});return true;}
+      const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"").trim(),status=String(p.status||"");
+      if(!/^[0-9a-f-]{36}$/i.test(id)||!["pending","active","closed","filled"].includes(status)){sendJson(res,400,{ok:false,error:"Choose a valid learner request and status."});return true;}
+      const {data,error}=await supabase.from("active_learner_requests").update({status,updated_at:new Date().toISOString()}).eq("id",id).select("id,status").single();
+      if(error)throw error;sendJson(res,200,{ok:true,request:data});return true;
+    }catch(e){console.error("Admin learner request status update failed:",e);sendJson(res,500,{ok:false,error:"Could not update learner request."});return true;}
+  }
   if(req.method==="GET"&&url.pathname==="/api/active-learner-requests"){try{const t=await eligibleTeacher(req);if(!t){sendJson(res,401,{ok:false,error:"Approved, payment-verified teacher sign-in required."});return true;}const {data,error}=await supabase.from("active_learner_requests").select("id,learner_name,learner_country,education_level,subjects,curriculum,preferred_times,time_zone,lesson_mode,learner_notes,created_at,status").eq("status","active").order("created_at",{ascending:false}).limit(200);if(error)throw error;sendJson(res,200,{ok:true,requests:data||[]});return true;}catch(e){console.error("Learner board lookup failed:",e);sendJson(res,500,{ok:false,error:"Learner requests unavailable. Check the Supabase migration."});return true;}}
   if(req.method==="POST"&&url.pathname==="/api/active-learner-requests"){try{if(!verifyAdminSession(req)){sendJson(res,403,{ok:false,error:"Only administrators can publish learner requests."});return true;}const p=JSON.parse((await readBody(req))||"{}"),clean=(v,n=500)=>String(v??"").trim().slice(0,n);const row={learner_name:clean(p.learnerName,120),learner_country:clean(p.country,100),education_level:clean(p.level,100),subjects:clean(p.subjects,500),curriculum:clean(p.curriculum,160),preferred_times:clean(p.times,300),time_zone:clean(p.timeZone,100),lesson_mode:clean(p.lessonMode,40)||"Online",learner_notes:clean(p.notes,1500),status:"active"};if(!row.learner_name||!row.learner_country||!row.education_level||!row.subjects||!row.preferred_times){sendJson(res,400,{ok:false,error:"Name, country, level, subjects and preferred times are required."});return true;}const {data,error}=await supabase.from("active_learner_requests").insert(row).select("*").single();if(error)throw error;sendJson(res,201,{ok:true,request:data});return true;}catch(e){console.error("Learner request save failed:",e);sendJson(res,500,{ok:false,error:"Learner request could not be saved."});return true;}}
   // Paystack hosted checkout for the one-time USD $2 teacher listing fee.
