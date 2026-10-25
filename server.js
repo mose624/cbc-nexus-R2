@@ -570,6 +570,61 @@ async function handleApi(req,res,url){
       sendJson(res,200,{ok:true,authorizationUrl:result.data.authorization_url,reference,amount:2,currency:"USD"});return true;
     }catch(error){console.error("Global teacher checkout initialization error:",error);sendJson(res,502,{ok:false,error:"Secure checkout could not be started. Please try again or contact info@cbenexus.co.ke."});return true;}
   }
+  // Optional Stripe Checkout for eligible Stripe accounts. Configure STRIPE_SECRET_KEY in Render.
+  if(req.method==="POST"&&url.pathname==="/api/global-teachers/stripe-checkout"){
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Teacher checkout is temporarily unavailable."});return true;}
+      const secret=String(process.env.STRIPE_SECRET_KEY||"").trim();
+      if(!secret){sendJson(res,503,{ok:false,error:"Stripe checkout is not configured for this business account yet. Use Paystack or contact info@cbenexus.co.ke."});return true;}
+      const p=JSON.parse((await readBody(req))||"{}"),id=String(p.applicationId||"").trim();
+      if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id)){sendJson(res,400,{ok:false,error:"A valid teacher application reference is required."});return true;}
+      const {data:teacher,error}=await supabase.from("global_teachers").select("id,full_name,email,payment_status,listing_plan").eq("id",id).maybeSingle();
+      if(error)throw error;
+      if(!teacher){sendJson(res,404,{ok:false,error:"Teacher application not found."});return true;}
+      if(teacher.payment_status==="paid"){sendJson(res,409,{ok:false,error:"This application already has a verified payment."});return true;}
+      if(teacher.listing_plan!=="basic"){sendJson(res,400,{ok:false,error:"This checkout is only for the $2 Basic Listing."});return true;}
+      const origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.co.ke").replace(/\/$/,"");
+      const body=new URLSearchParams({
+        mode:"payment",
+        success_url:origin+"/online-teaching.html?checkout=global-teacher-stripe&session_id={CHECKOUT_SESSION_ID}",
+        cancel_url:origin+"/online-teaching.html?checkout=global-teacher-stripe-cancelled",
+        customer_email:teacher.email,
+        "line_items[0][price_data][currency]":"usd",
+        "line_items[0][price_data][unit_amount]":"200",
+        "line_items[0][price_data][product_data][name]":"CBE Nexus Global Teacher Basic Listing",
+        "line_items[0][price_data][product_data][description]":"One-time teacher directory listing fee",
+        "line_items[0][quantity]":"1",
+        "metadata[application_id]":teacher.id,
+        "metadata[product]":"global_teacher_basic_listing"
+      });
+      const response=await fetch("https://api.stripe.com/v1/checkout/sessions",{method:"POST",headers:{"Authorization":"Bearer "+secret,"Content-Type":"application/x-www-form-urlencoded","Accept":"application/json"},body:body.toString()});
+      const result=await response.json().catch(()=>({}));
+      if(!response.ok||!result.id||!result.url)throw new Error(result.error?.message||"Stripe could not initialize checkout.");
+      const {error:updateError}=await supabase.from("global_teachers").update({payment_status:"pending",payment_reference:result.id,updated_at:new Date().toISOString()}).eq("id",teacher.id);
+      if(updateError)throw updateError;
+      sendJson(res,200,{ok:true,checkoutUrl:result.url,sessionId:result.id,amount:2,currency:"USD"});return true;
+    }catch(error){console.error("Global teacher Stripe checkout initialization error:",error);sendJson(res,502,{ok:false,error:"Stripe checkout could not be started. Confirm your Stripe account and configuration, or use Paystack."});return true;}
+  }
+  if(req.method==="GET"&&url.pathname==="/api/global-teachers/stripe-checkout/verify"){
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Payment verification is temporarily unavailable."});return true;}
+      const secret=String(process.env.STRIPE_SECRET_KEY||"").trim(),sessionId=String(url.searchParams.get("session_id")||"").trim();
+      if(!secret){sendJson(res,503,{ok:false,error:"Stripe payment verification is not configured."});return true;}
+      if(!/^cs_(test|live)_[A-Za-z0-9]+$/.test(sessionId)){sendJson(res,400,{ok:false,error:"Invalid Stripe checkout session."});return true;}
+      const {data:teacher,error}=await supabase.from("global_teachers").select("id,full_name,email,status,payment_status,payment_reference").eq("payment_reference",sessionId).maybeSingle();
+      if(error)throw error;
+      if(!teacher){sendJson(res,404,{ok:false,error:"No application matches this Stripe checkout session."});return true;}
+      if(teacher.payment_status==="paid"){sendJson(res,200,{ok:true,paid:true,message:"Payment has already been verified. Your application still requires administrator review."});return true;}
+      const response=await fetch("https://api.stripe.com/v1/checkout/sessions/"+encodeURIComponent(sessionId),{headers:{"Authorization":"Bearer "+secret,"Accept":"application/json"}});
+      const session=await response.json().catch(()=>({}));
+      if(!response.ok||!session.id){sendJson(res,502,{ok:false,error:"Stripe could not verify this transaction yet. Please retry shortly."});return true;}
+      const paid=session.payment_status==="paid"&&session.status==="complete"&&Number(session.amount_total)===200&&String(session.currency||"").toLowerCase()==="usd"&&String(session.customer_details?.email||session.customer_email||"").toLowerCase()===teacher.email.toLowerCase()&&String(session.metadata?.application_id||"")===teacher.id&&session.metadata?.product==="global_teacher_basic_listing";
+      if(!paid){sendJson(res,200,{ok:true,paid:false,status:String(session.payment_status||session.status||"pending"),message:"Stripe payment is not yet verified. Your application remains unpublished."});return true;}
+      const {data:updated,error:updateError}=await supabase.from("global_teachers").update({payment_status:"paid",updated_at:new Date().toISOString()}).eq("id",teacher.id).eq("payment_reference",sessionId).select("id,full_name,status,payment_status").single();
+      if(updateError)throw updateError;
+      sendJson(res,200,{ok:true,paid:true,application:{id:updated.id,name:updated.full_name,status:updated.status,paymentStatus:updated.payment_status},message:"Stripe payment verified. Your teacher application is awaiting administrator review."});return true;
+    }catch(error){console.error("Global teacher Stripe payment verification error:",error);sendJson(res,500,{ok:false,error:"Stripe payment verification failed. If charged, contact info@cbenexus.co.ke."});return true;}
+  }
   if(req.method==="GET"&&url.pathname==="/api/global-teachers/checkout/verify"){
     try{
       if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Payment verification is temporarily unavailable."});return true;}
