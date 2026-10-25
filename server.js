@@ -2193,7 +2193,7 @@ function injectAccessibilityEnhancements(html){
     const script=String.raw\`<script id="cbe-global-accessibility-script">
 (function(){
 "use strict";
-function labelText(v){return String(v||"").replace(/([a-z0-9])([A-Z])/g,"$1 $2").replace(/[_-]+/g," ").replace(/\\s+/g," ").trim();}
+function labelText(v){return String(v||"").replace(/([a-z0-9])([A-Z])/g,"$1 $2").replace(/[_-]+/g," ").replace(/\s+/g," ").trim();}
 function enhance(root){
 (root||document).querySelectorAll("input:not([type=hidden]),select,textarea").forEach(function(el){
 if((el.labels&&el.labels.length)||el.getAttribute("aria-label")||el.getAttribute("aria-labelledby"))return;
@@ -2206,7 +2206,7 @@ var n=el.getAttribute("title")||el.getAttribute("data-label")||el.getAttribute("
 if(n)el.setAttribute("aria-label",labelText(n));
 });
 (root||document).querySelectorAll("img:not([alt])").forEach(function(el){
-var n=el.getAttribute("title")||(el.getAttribute("src")||"").split("/").pop().split("?")[0].replace(/\\.[a-z0-9]+$/i,"");
+var n=el.getAttribute("title")||(el.getAttribute("src")||"").split("/").pop().split("?")[0].replace(/\.[a-z0-9]+$/i,"");
 n=labelText(n);el.setAttribute("alt",n||"Image");
 });
 }
