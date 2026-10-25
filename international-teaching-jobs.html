@@ -99,7 +99,41 @@
   .section h2{font-size:18px}
   #internationalVacancyGrid .vacancy-card{padding:11px!important}
 }
-</style></head>
+</style>
+<style id="international-jobs-reference-layout">
+/* Reference-inspired classroom backdrop and centered dashboard; all existing tools and sections remain intact. */
+body:has(main.page) {
+  background: linear-gradient(rgba(8,28,52,.30),rgba(8,28,52,.48)),url("https://images.unsplash.com/photo-1524178180094-2e2f6e5f7f3d?auto=format&fit=crop&w=2200&q=85") center/cover fixed no-repeat!important;
+}
+.site-header{background:#10345d!important;color:#fff!important;border-bottom:1px solid rgba(255,255,255,.22)!important}
+.site-header .main-nav{max-width:1220px;margin:auto;padding:12px 18px}
+.site-header .brand,.site-header .brand strong,.site-header .brand small{color:#fff!important}
+.site-header .brand-mark{background:#fff!important;color:#12385f!important;border-radius:50%!important}
+.page{max-width:1040px!important;margin:28px auto 60px!important;padding:0!important;background:rgba(255,255,255,.97)!important;border-radius:16px!important;overflow:hidden;box-shadow:0 20px 55px rgba(0,0,0,.24)!important}
+.page>.back{display:inline-flex;margin:16px 22px 0!important}
+.page>.hero{border:0!important;border-radius:0!important;border-bottom:1px solid #cfe3f4!important;background:linear-gradient(110deg,#e7f4ff,#fafdff)!important;padding:32px 28px!important;box-shadow:none!important}
+.page>.hero .badge{background:#f6ca45!important;border-color:#e6b82b!important;color:#173657!important}
+.page>.hero h1{color:#12365f!important;font-size:clamp(30px,3.2vw,42px)!important;max-width:800px}
+.page>.hero p{color:#26394d!important}
+.page>.hero .actions{display:flex;flex-wrap:wrap;gap:9px}
+.page>.section{margin:0!important;padding:26px 28px!important;border-top:1px solid #e6edf4!important;background:rgba(255,255,255,.98)!important}
+.page>.section:nth-of-type(even){background:#f7fbff!important}
+.page .section h2{color:#153a60}
+.page .job-tools,.page .builder,.page .preview-wrap{border-radius:12px}
+.page .job-tools{background:#f0f8ff!important}
+.page #internationalVacanciesPublic{margin:0!important;padding:26px 28px!important;background:#f8fcff!important}
+.page .country-card{background:#f5fbff!important;border-color:#cfe4f2!important}
+@media(max-width:700px){
+ body:has(main.page){background-attachment:scroll!important}
+ .page{margin:10px!important;border-radius:12px!important}
+ .page>.hero{padding:24px 18px!important}
+ .page>.section,#internationalVacanciesPublic{padding:20px 16px!important}
+ .page>.hero h1{font-size:29px!important}
+ .site-header .main-nav{padding:10px 12px}
+}
+</style>
+
+</head>
 <body>
 <header class="site-header"><nav class="main-nav"><a class="brand" href="index.html#dashboard"><span class="brand-mark">CBE</span><span><strong>CBE Nexus</strong><small>Connecting learners to excellence</small></span></a><div class="nav-actions"><a class="secondary-button" href="index.html#dashboard">← Home</a><a class="primary-button" href="professional-cv-writing.html">Professional CV Writing</a></div></nav></header>
 
