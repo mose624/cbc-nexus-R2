@@ -185,11 +185,6 @@ $('teacherInterest').addEventListener('submit',async e=>{
     try{const checkout=await fetch('/api/global-teachers/checkout',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({applicationId})});const result=await checkout.json().catch(()=>({}));if(!checkout.ok||!result.ok)throw new Error(result.error||'Checkout could not be started.');window.location.assign(result.authorizationUrl);}
     catch(err){status.appendChild(document.createTextNode(' '+(err.message||'Checkout could not be started.')));pay.disabled=false;pay.textContent='Retry $2 checkout';}
    });status.appendChild(pay);
-   const stripe=document.createElement('button');stripe.type='button';stripe.className='btn btn-dark';stripe.style.marginLeft='8px';stripe.textContent='Pay with Stripe';stripe.addEventListener('click',async()=>{
-    stripe.disabled=true;stripe.textContent='Opening Stripe Checkout…';
-    try{const checkout=await fetch('/api/global-teachers/stripe-checkout',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({applicationId})});const result=await checkout.json().catch(()=>({}));if(!checkout.ok||!result.ok)throw new Error(result.error||'Stripe checkout could not be started.');window.location.assign(result.checkoutUrl);}
-    catch(err){status.appendChild(document.createTextNode(' '+(err.message||'Stripe checkout could not be started.')));stripe.disabled=false;stripe.textContent='Retry Stripe checkout';}
-   });status.appendChild(stripe);
   }
   form.reset();
  }catch(error){status.textContent=error.message||'Application could not be submitted. Please try again.';}
@@ -198,20 +193,18 @@ $('teacherInterest').addEventListener('submit',async e=>{
 (async function verifyReturnedCheckout(){
  const params=new URLSearchParams(window.location.search);
  const checkoutType=params.get('checkout');
- if(checkoutType==='global-teacher-stripe-cancelled'){const status=$('interestStatus');status.style.display='block';status.textContent='Stripe checkout was cancelled. Your application is saved, but payment is not complete.';return;}
- if(checkoutType!=='global-teacher'&&checkoutType!=='global-teacher-stripe')return;
- const isStripe=checkoutType==='global-teacher-stripe';
- const reference=params.get('reference'),sessionId=params.get('session_id');
+ if(checkoutType!=='global-teacher')return;
+ const reference=params.get('reference');
  const status=$('interestStatus');status.style.display='block';status.textContent='Checking payment status securely…';
- if((isStripe&&!sessionId)||(!isStripe&&!reference)){status.textContent='Returned from checkout, but the payment reference was not supplied. If you completed payment, contact info@cbenexus.co.ke with your receipt.';return;}
+ if(!reference){status.textContent='Returned from checkout, but the payment reference was not supplied. If you completed payment, contact info@cbenexus.co.ke with your receipt.';return;}
  try{
-  const verifyUrl=isStripe?('/api/global-teachers/stripe-checkout/verify?session_id='+encodeURIComponent(sessionId)):('/api/global-teachers/checkout/verify?reference='+encodeURIComponent(reference));
+  const verifyUrl='/api/global-teachers/checkout/verify?reference='+encodeURIComponent(reference);
   const r=await fetch(verifyUrl,{headers:{'Accept':'application/json'},cache:'no-store'});
   const d=await r.json().catch(()=>({}));
   if(!r.ok||!d.ok)throw new Error(d.error||'Payment verification is not available yet.');
   status.textContent=d.paid?d.message:(d.message||'Payment has not been verified yet. Do not pay again until you check your provider receipt.');
  }catch(err){status.textContent=err.message||'Payment verification is temporarily unavailable. If charged, contact info@cbenexus.co.ke.';}
- const clean=new URL(window.location.href);clean.searchParams.delete('checkout');clean.searchParams.delete('reference');clean.searchParams.delete('session_id');window.history.replaceState({},'',clean.pathname+clean.hash);
+ const clean=new URL(window.location.href);clean.searchParams.delete('checkout');clean.searchParams.delete('reference');window.history.replaceState({},'',clean.pathname+clean.hash);
 })();
 loadTeachers();
 </script>
