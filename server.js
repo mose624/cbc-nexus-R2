@@ -148,7 +148,28 @@ function interactiveQuestionToDb(q){
 function interactiveQuestionFromDb(q){
   return {id:q.id,grade:q.grade,subject:q.subject,strand:q.strand||"All Topics",question:q.question,options:Array.isArray(q.options)?q.options:[],correctIndex:Number(q.correct_index),explanation:q.explanation||"",imageUrl:q.image_url||"",imageData:q.image_data||"",imageAlt:q.image_alt||q.question||"",published:q.published!==false,createdAt:q.created_at||null,updatedAt:q.updated_at||q.created_at||null};
 }
+let interactiveQuestionsCache = null;
+let interactiveQuestionsCacheAt = 0;
+let interactiveQuestionsRefresh = null;
 async function readInteractiveQuestionRows(){
+  const now = Date.now();
+  if (interactiveQuestionsCache && now - interactiveQuestionsCacheAt < 30000) return interactiveQuestionsCache;
+  if (interactiveQuestionsRefresh) {
+    if (interactiveQuestionsCache) return interactiveQuestionsCache;
+    return interactiveQuestionsRefresh;
+  }
+  interactiveQuestionsRefresh = readInteractiveQuestionRowsUncached().then(rows => {
+    interactiveQuestionsCache = rows;
+    interactiveQuestionsCacheAt = Date.now();
+    return rows;
+  }).finally(() => { interactiveQuestionsRefresh = null; });
+  if (interactiveQuestionsCache) {
+    interactiveQuestionsRefresh.catch(error => console.warn("Background interactive-question refresh failed:", error.message || error));
+    return interactiveQuestionsCache;
+  }
+  return interactiveQuestionsRefresh;
+}
+async function readInteractiveQuestionRowsUncached(){
   const local=await readJsonStore("interactive-questions.json");
   if(!supabaseConfigured) return local.filter(Boolean);
   let lastError=null;
