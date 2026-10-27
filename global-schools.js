@@ -36,6 +36,10 @@ function renderCountry(){
  text($("verificationNote"),d.sources?"Some official-source links are curated below. This is not a complete national school or vacancy register. Check each linked record and its date before relying on it.":"Data status: detailed country-specific information is not yet curated in this directory. No school totals, exam dates, vacancies, salary figures, teacher rules or scholarship listings are being invented. Official sources must be researched before any field is marked verified.");
  text($("countryLanguages"),d.officialLanguages||"Not yet verified for this page. Confirm language status with the country's government or education authority.");
  text($("countryAuthority"),d.authority||"Not yet curated. The responsible national or subnational education authority must be identified and linked before this field is marked verified.");
+ text($("countryCurriculum"),d.curriculum||"Not yet verified for this country. The curriculum name, responsible authority, grade coverage and approved international programmes need country-specific sources.");
+ linkList("curriculumLinks",d.curriculumSources,null);
+ text($("countryTerms"),d.termCalendar||"Not yet verified for this country. No start dates, closing dates or academic-year dates are supplied until a current official calendar is located.");
+ text($("countryQualifications"),d.qualificationRequirements||"Not yet verified for this country. Confirm the minimum academic qualification, teacher-training award, registration/licence, subject grades, language rules and work authorisation with the relevant regulator and employer.");
  text($("countrySystem"),d.system||"Not yet verified. School stages, grade equivalents and curriculum information need country-specific official sources.");
  text($("countryCalendar"),d.calendar||"Not yet verified. Check the relevant ministry, state, province, district or individual school calendar.");
  linkList("schoolLinks",d.schools,"schoolEmpty","No verified school directory records have been added for this country yet.");
