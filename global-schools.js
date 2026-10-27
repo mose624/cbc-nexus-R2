@@ -148,6 +148,35 @@ function renderCountry(){
   liveSearches.forEach(item=>{const a=node("a");a.href=safeUrl(item.url);a.textContent=item.name+" — live search; confirm deadline and visa eligibility";a.target="_blank";a.rel="noopener noreferrer";jobsHost.appendChild(a);});
  }
  linkList("teacherLinks",d.teachers,null);linkList("furtherLinks",d.further,null);linkList("sourceLinks",d.sources,null);
+ // Research starter pack is available for every country, including those with incomplete
+ // country-specific records. These are authoritative discovery portals, not country facts.
+ const sourceHost=$("sourceLinks");
+ if(sourceHost){
+  const researchLinks=[
+   {name:"UNESCO UIS — official international education statistics and country profiles",url:"https://www.uis.unesco.org/en/data"},
+   {name:"UNESCO IICBA — African country education policy briefs (where applicable)",url:"https://www.iicba.unesco.org/en/country-briefs"},
+   {name:"World Bank — education data and country indicators",url:"https://data.worldbank.org/topic/education"},
+   {name:"UNESCO Global Education Monitoring — country policy profiles",url:"https://www.education-profiles.org/"},
+   {name:"Official government education authority search for "+c.name,url:"https://www.google.com/search?q="+encodeURIComponent("site:gov "+c.name+" ministry education official") }
+  ];
+  const existing=new Set(Array.from(sourceHost.querySelectorAll("a")).map(a=>a.href));
+  researchLinks.forEach(item=>{const url=safeUrl(item.url);if(existing.has(url))return;const a=node("a");a.href=url;a.textContent=item.name+" — research source; verify country-specific details";a.target="_blank";a.rel="noopener noreferrer";sourceHost.appendChild(a);});
+ }
+ // Missing country-specific fields stay explicitly unverified; add direct research entry points
+ // beside the relevant empty sections rather than filling them with guessed facts.
+ const researchBySection=[
+  ["schoolLinks","schoolEmpty","school directory", "official school registry "+c.name],
+  ["examLinks","examEmpty","national examinations", "national examinations assessment authority "+c.name],
+  ["paperLinks",null,"past papers and assessment samples","official sample examination papers "+c.name],
+  ["teacherLinks",null,"teacher registration and licensing","teacher registration licensing regulator "+c.name],
+  ["furtherLinks",null,"scholarships and further education","official scholarships higher education ministry "+c.name]
+ ];
+ researchBySection.forEach(([hostId,emptyId,label,query])=>{
+  const host=$(hostId);if(!host)return;
+  const link=node("a");link.href="https://www.google.com/search?q="+encodeURIComponent("site:gov "+query);
+  link.textContent="Research official "+label+" for "+c.name+" — confirm results on the government/regulator website";
+  link.target="_blank";link.rel="noopener noreferrer";host.appendChild(link);
+ });
  applyCountryLocale(slug);
  const title=c.name+" Schools, Education System & Teaching Vacancies | CBE Nexus Global Schools";
  document.title=title;
