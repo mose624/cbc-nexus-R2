@@ -197,8 +197,9 @@ async function sitemap(req){
   "/cbc-notes-kenya","/cbc-exams-kenya","/kjsea-revision",
   "/free-interactive-questions","/daily-quiz","/grade-9-kjsea-revision-questions","/grade-10-cbe-practice-questions",
   "/free-cbc-online-quizzes","/mashujaa-day-kenyan-heroes-quiz","/free-ai-training",
-  "/free-cv-writing","/free-international-jobs","/all-schools-in-kenya"
+  "/free-cv-writing","/free-international-jobs","/all-schools-in-kenya","/global-schools"
  ];
+ try{(globalSchools.countries||[]).forEach(c=>urls.push(c.url));}catch(e){console.warn("Global schools sitemap lookup failed:",e.message||e);}
  try{
   if(Array.isArray(KENYA_COUNTIES)) KENYA_COUNTIES.forEach(c=>urls.push("/kenya-education-county/"+slug(c)));
  }catch(e){console.warn("SEO sitemap county lookup failed:",e.message||e);}
