@@ -15,9 +15,13 @@ function renderCountries(filter){
  const q=String(filter||"").trim().toLowerCase();
  const matches=countries.filter(c=>!q||c.name.toLowerCase().includes(q)||c.slug.includes(q)||c.code.toLowerCase()===q);
  text($("countryCount"),matches.length+" countries shown · "+countries.length+" country routes in registry");
- const vacancySnapshot={
-  "kenya":{count:13,checked:"16 Oct 2026"},
-  "thailand":{count:7,checked:"16 Oct 2026"}
+ // Snapshot counts are sourced from the public vacancy indexes checked 27 Oct 2026.
+ // They are labelled as directory snapshots, not guaranteed open jobs; the employer advert is authoritative.
+ const taaCounts={
+  "egypt":30,"poland":25,"indonesia":24,"japan":21,"malaysia":21,"germany":17,"china":13,"kenya":13,"kuwait":12,"romania":12,"spain":12,"hong-kong":9,"italy":8,"pakistan":8,"saudi-arabia":7,"thailand":7,"bahrain":5,"bangladesh":5,"vietnam":4,"gibraltar":3,"jersey":3,"morocco":3,"sri-lanka":3,"cayman-islands":2,"czechia":2,"hungary":2,"iraq":2,"israel":2,"jordan":2,"south-korea":2,"ukraine":2,"bermuda":1,"malawi":1,"singapore":1,"sweden":1,"switzerland":1,"taiwan":1,"united-arab-emirates":1
+ };
+ const skolberaCounts={
+  "brazil":418,"united-arab-emirates":411,"thailand":331,"malaysia":266,"vietnam":210,"germany":184,"philippines":101,"italy":79,"spain":69,"portugal":60,"switzerland":57,"kazakhstan":54,"france":47,"netherlands":45,"cambodia":44,"belgium":37,"cyprus":37,"czechia":37,"ecuador":32,"romania":30,"hungary":30,"latvia":28,"mauritius":26,"turkiye":26,"greece":25,"nepal":23,"argentina":22,"azerbaijan":22,"lithuania":21,"uzbekistan":18,"austria":17,"chile":17,"serbia":17,"norway":15,"armenia":15,"senegal":15,"slovakia":11,"denmark":10,"estonia":10,"croatia":10,"kyrgyzstan":10,"sweden":9,"ireland":9,"laos":9,"luxembourg":8,"gabon":8,"bulgaria":7,"cote-divoire":6,"slovenia":6,"namibia":5,"rwanda":5,"uruguay":5,"paraguay":4,"finland":4,"seychelles":3,"bermuda":2,"bosnia-and-herzegovina":2,"brunei":1,"malta":1
  };
  matches.forEach(c=>{
   const card=node("div","gs-country");
@@ -25,12 +29,22 @@ function renderCountries(filter){
   const body=node("span","gs-country-body");
   const nameLink=node("a","gs-country-name");nameLink.href=c.url;nameLink.style.color="inherit";nameLink.style.textDecoration="none";
   const name=node("strong");name.textContent=c.name;nameLink.append(name);
-  const small=node("small");small.textContent=details[c.slug]?"Country sources curated · verify each record":"Country page available · detailed records not yet verified";
-  const jobs=node("a","gs-vacancy-link");jobs.href="https://www.teachabroadagencies.com/jobs/"+c.slug+"/";jobs.target="_blank";jobs.rel="noopener noreferrer";
-  const snapshot=vacancySnapshot[c.slug];
-  jobs.textContent=snapshot?("↗ "+snapshot.count+" vacancies listed · checked "+snapshot.checked):"↗ Check vacancies by country";
-  jobs.setAttribute("aria-label","Check teaching vacancies in "+c.name+" on Teach Abroad Agencies");
-  body.append(nameLink,small,jobs);card.append(flag,body);grid.appendChild(card);
+  const small=node("small");small.textContent="Vacancy indexes checked 27 Oct 2026 · verify each employer advert";
+  const snapshot=node("small","gs-vacancy-snapshot");
+  const counts=[];
+  if(taaCounts[c.slug])counts.push("Teach Abroad Agencies: "+taaCounts[c.slug]);
+  if(skolberaCounts[c.slug])counts.push("Skolbera: "+skolberaCounts[c.slug]);
+  snapshot.textContent=counts.length?counts.join(" · ")+" listed":"Open vacancy searches below";
+  const links=node("span","gs-country-vacancy-sources");
+  const qCountry=encodeURIComponent(c.name);
+  const sourceLinks=[
+   {label:"Tes",url:"https://www.tes.com/jobs/search/international?keywords="+qCountry},
+   {label:"Teach Abroad",url:"https://www.teachabroadagencies.com/jobs/"},
+   {label:"Skolbera",url:"https://skolbera.com/teaching-jobs"},
+   {label:"ISS",url:"https://www.iss.edu/for-individuals/find-a-job/current-openings/"}
+  ];
+  sourceLinks.forEach(source=>{const a=node("a");a.href=safeUrl(source.url);a.textContent=source.label;a.target="_blank";a.rel="noopener noreferrer";a.setAttribute("aria-label","Search "+c.name+" teaching vacancies on "+source.label);links.appendChild(a);});
+  body.append(nameLink,small,snapshot,links);card.append(flag,body);grid.appendChild(card);
  });
  if(!matches.length){const p=node("p","gs-empty");p.textContent="No matching country found. Try another spelling.";grid.appendChild(p);}
 }
