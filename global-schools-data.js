@@ -9,6 +9,9 @@ function flag(code){return code.toUpperCase().replace(/[A-Z]/g,c=>String.fromCod
 const countryRegistry = rows.split("\n").filter(Boolean).map(line=>{const [name,code]=line.split("|");return {name,code,slug:slug(name),flag:flag(code),url:"/global-schools/"+slug(name)};});
 const countryData = {
  "kenya": {
+  curriculum:"Kenya Competency-Based Curriculum (CBC/CBE); KICD publishes curriculum designs and approved materials. Some learners remain in the legacy 8-4-4 transition pathway; confirm cohort-specific arrangements with the Ministry.",
+  termCalendar:"2026 basic-education calendar reported from the Ministry circular: Term 1 Jan 5–Apr 2; Term 2 Apr 27–Jul 31; Term 3 Aug 24–Oct 23 (some reports differ on closing day). National assessment/exam period follows from late October. Recheck the official Ministry circular and school notice.",
+  qualificationRequirements:"Kenya: teachers must meet TSC registration requirements for the relevant teaching category. The exact academic grades and subject grades depend on certificate/diploma/degree route and current TSC regulations. Do not treat one KCSE pass grade as sufficient for every teaching post.",
   officialLanguages:"Swahili and English (official languages)",
   authority:"Ministry of Education; Kenya Institute of Curriculum Development (KICD); Kenya National Examinations Council (KNEC)",
   system:"2-6-3-3 structure: 2 years pre-primary, 6 primary, 3 junior school and 3 senior school; post-school pathways include TVET and higher education.",
@@ -22,6 +25,9 @@ const countryData = {
   sources:[{label:"Ministry NEMIS institution list",url:"https://nemis.education.go.ke/Reports/InstitutionList.aspx"},{label:"KICD curriculum materials",url:"https://kicd.ac.ke/cbc-materials/"},{label:"KNEC",url:"https://www.knec.ac.ke/"},{label:"TSC",url:"https://www.tsc.go.ke/"}]
  },
  "japan": {
+  curriculum:"Japan's national Course of Study is set by MEXT; schools deliver subjects within national standards. International schools may instead offer authorised curricula such as IB, Cambridge or national curricula from another country.",
+  termCalendar:"The school year normally runs April to March. Exact term dates and holidays vary by municipality, prefecture and school.",
+  qualificationRequirements:"Teacher licensing and employment rules depend on school type and licence category. Public-school teaching commonly requires the relevant Japanese teaching licence; international schools may set separate degree, teacher-certification, experience and language requirements. Confirm with the school and prefectural authority.",
   officialLanguages:"Japanese is the principal language of instruction; official-language status is not asserted here.",
   authority:"Ministry of Education, Culture, Sports, Science and Technology (MEXT)",
   system:"Commonly described as 6 years elementary, 3 years lower secondary and 3 years upper secondary, followed by higher education or vocational pathways. Verify special programme and equivalency details with MEXT.",
@@ -35,6 +41,9 @@ const countryData = {
   sources:[{label:"MEXT (English)",url:"https://www.mext.go.jp/en/"},{label:"Study in Japan",url:"https://www.studyinjapan.go.jp/en/"}]
  },
  "united-states": {
+  curriculum:"No single national K–12 curriculum. State standards and district/local curricula predominate; schools may also offer IB, AP, Cambridge or other programmes.",
+  termCalendar:"No single national term calendar. School years commonly begin in August or September and finish in May or June, but dates are set by states, districts and schools.",
+  qualificationRequirements:"Public-school teacher licensure is state-specific. Common requirements include a bachelor's degree, approved teacher preparation, background checks and required exams; exact routes vary. Private and international schools may set different requirements.",
   officialLanguages:"English; language policy, services and instruction vary by state and locality. Verify current legal details with federal and state sources.",
   authority:"U.S. Department of Education; state and local education agencies administer many school and assessment functions.",
   system:"Education stages, standards, assessment rules and calendars vary by state, district and school.",
@@ -48,6 +57,9 @@ const countryData = {
   sources:[{label:"U.S. Department of Education",url:"https://www.ed.gov/"},{label:"NCES",url:"https://nces.ed.gov/"}]
  },
  "united-kingdom": {
+  curriculum:"Education is devolved: England uses the National Curriculum in relevant schools; Wales, Scotland and Northern Ireland have distinct frameworks. Schools may offer IB, Cambridge or other curricula where authorised.",
+  termCalendar:"Term dates vary across England, Scotland, Wales and Northern Ireland, and by local authority/school. Many schools use autumn, spring and summer terms; check the specific school's calendar.",
+  qualificationRequirements:"In England, QTS is required for teaching in maintained primary, secondary and special schools, subject to exceptions. Training routes commonly require a bachelor's degree and specified GCSE-equivalent English and maths, plus science for primary routes. Requirements differ in the other UK nations and by school type.",
   officialLanguages:"English is the principal language of instruction across most schools; education policy differs across England, Scotland, Wales and Northern Ireland.",
   authority:"Education is devolved across the UK; use the relevant national department and regulator.",
   system:"School stages, qualifications and exam arrangements differ between England, Scotland, Wales and Northern Ireland.",
