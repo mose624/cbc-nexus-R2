@@ -7,7 +7,7 @@ function node(tag,cls){const e=document.createElement(tag);if(cls)e.className=cl
 function safeUrl(value){try{const u=new URL(value,location.origin);return ["http:","https:"].includes(u.protocol)?u.href:"#";}catch{return "#";}}
 function linkList(id,items,emptyId,emptyText){
  const host=$(id); if(!host)return; host.replaceChildren();
- (items||[]).forEach(item=>{if(!item||!item.name&&!item.label)return;const a=node("a");a.href=safeUrl(item.url);a.textContent=(item.name||item.label)+(item.type?" — "+item.type:"");if(/^https?:/.test(item.url||"")){a.target="_blank";a.rel="noopener noreferrer";}host.appendChild(a);});
+ (items||[]).forEach(item=>{if(!item||!item.name&&!item.label)return;const a=node("a");a.href=safeUrl(item.url);a.textContent=(item.name||item.label)+(item.body?" — "+item.body:"")+(item.level?" · "+item.level:"")+(item.type?" — "+item.type:"");if(/^https?:/.test(item.url||"")){a.target="_blank";a.rel="noopener noreferrer";}host.appendChild(a);});
  if(emptyId){const e=$(emptyId);if(e){e.classList.toggle("gs-hidden",!!(items||[]).length);text(e,emptyText||"No verified records have been added for this section yet.");}}
 }
 function renderCountries(filter){
