@@ -214,6 +214,7 @@ function teacherCard(t){
 async function loadTeachers(){
  const results=$('teacherResults'),msg=$('directoryMessage');
  const params=new URLSearchParams({subject:$('subjectSearch').value.trim(),level:$('levelSearch').value,curriculum:$('curriculumSearch').value,language:$('languageSearch').value});
+ const countryParam=new URLSearchParams(window.location.search).get('country');if(countryParam)params.set('country',countryParam);
  results.innerHTML='<p class="directory-loading">Loading approved teacher profiles…</p>';
  try{
   const response=await fetch('/api/global-teachers?'+params.toString(),{headers:{Accept:'application/json'}});
@@ -298,6 +299,18 @@ function showBoard(t){$('teacherBoardLogin').hidden=true;$('teacherBoardPrivate'
 $('teacherBoardLoginForm').addEventListener('submit',async e=>{e.preventDefault();const b=e.currentTarget.querySelector('button[type=submit]'),s=$('teacherBoardStatus');b.disabled=true;s.style.display='block';s.textContent='Verifying teacher account…';try{const d=await boardApi('/api/global-teachers/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:$('boardEmail').value.trim(),password:$('boardPassword').value})});$('boardPassword').value='';s.style.display='none';showBoard(d.teacher);}catch(err){s.textContent=err.message;}finally{b.disabled=false;}});
 $('teacherBoardLogout').addEventListener('click',async()=>{try{await boardApi('/api/global-teachers/logout',{method:'POST'});}catch{}$('teacherBoardPrivate').hidden=true;$('teacherBoardLogin').hidden=false;$('boardPassword').value='';$('activeLearnerRequests').innerHTML='';});
 (async()=>{try{const d=await boardApi('/api/global-teachers/session');showBoard(d.teacher);}catch{}})();
+// Country-specific entry links from Global Schools preselect country and filter public teacher profiles.
+(function(){
+ const params=new URLSearchParams(window.location.search),country=params.get('country');
+ if(!country)return;
+ const teacherCountry=$('teacherCountry');if(teacherCountry){teacherCountry.value=country;}
+ const learnerCountry=$('lrCountry');if(learnerCountry){learnerCountry.value=country;}
+ const heading=document.querySelector('#teacher-directory h2');if(heading)heading.textContent='Approved Online Teachers in '+country;
+ const intro=document.querySelector('#teacher-directory .section-heading p');if(intro)intro.textContent='Browse eligible, approved teacher profiles registered for '+country+'. Teacher contact details are shared only through the platform’s approved process.';
+ const title='Online Teaching & Learning in '+country+' | CBE Nexus';
+ document.title=title;
+ const meta=document.querySelector('meta[name="description"]');if(meta)meta.content='Register as a learner or teacher and explore approved online teaching profiles for '+country+' with CBE Nexus.';
+})();
 loadTeachers();
 </script>
 </body>
