@@ -2577,7 +2577,7 @@ async function serveStatic(req,res,url){
     res.end(injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(injectPageMetadata(injectSeoFooter(seoPage,url.pathname),url.pathname,req)),url.pathname)));
     return;
   }
-  const globalSchoolsRoute=url.pathname.match(/^\\/global-schools(?:\\/([a-z0-9-]+))?\\/?$/i);
+  const globalSchoolsRoute=url.pathname.match(/^\/global-schools(?:\/([a-z0-9-]+))?\/?$/i);
   if(req.method==="GET"&&globalSchoolsRoute){
     const countrySlug=String(globalSchoolsRoute[1]||"").toLowerCase();
     const country=countrySlug?(globalSchools.countries||[]).find(c=>c.slug===countrySlug):null;
@@ -2594,7 +2594,7 @@ async function serveStatic(req,res,url){
     const description=country
       ? "Explore school directories, education systems, national examinations, sample papers, teaching vacancies, teacher requirements and further education in "+country.name+". Verify each listing with official sources."
       : "Explore country-by-country school directories, education systems, national examinations, sample papers, teaching vacancies, teacher requirements and further education on CBE Nexus Global Schools.";
-    html=html.replace(/<title>[\\s\\S]*?<\\/title>/i,"<title>"+escapeSeoAttribute(title)+"</title>");
+    html=html.replace(/<title>[\s\S]*?<\/title>/i,"<title>"+escapeSeoAttribute(title)+"</title>");
     html=html.replace(/<meta name="description" content="[^"]*">/i,'<meta name="description" content="'+escapeSeoAttribute(description)+'">');
     html=html.replace(/<link rel="canonical" href="[^"]*">/i,'<link rel="canonical" href="'+escapeSeoAttribute(canonical)+'">');
     html=injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(injectPageMetadata(html,url.pathname,req)),url.pathname));
