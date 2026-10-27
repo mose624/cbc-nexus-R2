@@ -554,6 +554,20 @@ async function submitSchoolDirectory(payload){
 
 async function handleApi(req,res,url){
   // CBE Nexus Global Online Teaching Marketplace: public approved listings and private applications.
+  // Aggregate-only country marketplace counts; never expose learner identities or contact details.
+  if(req.method==="GET"&&url.pathname==="/api/global-country-stats"){
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Country marketplace statistics are temporarily unavailable."});return true;}
+      const country=String(url.searchParams.get("country")||"").trim().slice(0,100);
+      if(!country){sendJson(res,400,{ok:false,error:"A country is required."});return true;}
+      const [{count:teacherCount,error:teacherError},{count:learnerCount,error:learnerError}]=await Promise.all([
+        supabase.from("global_teachers").select("id",{count:"exact",head:true}).eq("status","approved").in("payment_status",["paid","waived"]).ilike("country",country),
+        supabase.from("active_learner_requests").select("id",{count:"exact",head:true}).eq("status","active").ilike("learner_country",country)
+      ]);
+      if(teacherError)throw teacherError;if(learnerError)throw learnerError;
+      sendJson(res,200,{ok:true,country,approvedTeachers:teacherCount||0,activeLearnerRequests:learnerCount||0});return true;
+    }catch(error){console.error("Country marketplace statistics error:",error);sendJson(res,500,{ok:false,error:"Country marketplace statistics could not be loaded."});return true;}
+  }
   if(req.method==="GET"&&url.pathname==="/api/global-teachers"){
     try{
       if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Teacher directory is temporarily unavailable because the database is not configured."});return true;}
