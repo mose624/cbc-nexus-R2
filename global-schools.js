@@ -15,11 +15,22 @@ function renderCountries(filter){
  const q=String(filter||"").trim().toLowerCase();
  const matches=countries.filter(c=>!q||c.name.toLowerCase().includes(q)||c.slug.includes(q)||c.code.toLowerCase()===q);
  text($("countryCount"),matches.length+" countries shown · "+countries.length+" country routes in registry");
+ const vacancySnapshot={
+  "kenya":{count:13,checked:"16 Oct 2026"},
+  "thailand":{count:7,checked:"16 Oct 2026"}
+ };
  matches.forEach(c=>{
-  const a=node("a","gs-country");a.href=c.url;
+  const card=node("div","gs-country");
   const flag=node("span","gs-flag");flag.textContent=c.flag;flag.setAttribute("aria-hidden","true");
-  const body=node("span");const name=node("strong");name.textContent=c.name;const small=node("small");small.textContent=details[c.slug]?"Country sources curated · verify each record":"Country page available · detailed records not yet verified";
-  body.append(name,small);a.append(flag,body);grid.appendChild(a);
+  const body=node("span","gs-country-body");
+  const nameLink=node("a","gs-country-name");nameLink.href=c.url;nameLink.style.color="inherit";nameLink.style.textDecoration="none";
+  const name=node("strong");name.textContent=c.name;nameLink.append(name);
+  const small=node("small");small.textContent=details[c.slug]?"Country sources curated · verify each record":"Country page available · detailed records not yet verified";
+  const jobs=node("a","gs-vacancy-link");jobs.href="https://www.teachabroadagencies.com/jobs/"+c.slug+"/";jobs.target="_blank";jobs.rel="noopener noreferrer";
+  const snapshot=vacancySnapshot[c.slug];
+  jobs.textContent=snapshot?("↗ "+snapshot.count+" vacancies listed · checked "+snapshot.checked):"↗ Check vacancies by country";
+  jobs.setAttribute("aria-label","Check teaching vacancies in "+c.name+" on Teach Abroad Agencies");
+  body.append(nameLink,small,jobs);card.append(flag,body);grid.appendChild(card);
  });
  if(!matches.length){const p=node("p","gs-empty");p.textContent="No matching country found. Try another spelling.";grid.appendChild(p);}
 }
