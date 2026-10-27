@@ -44,7 +44,20 @@ function renderCountry(){
  text($("countryCalendar"),d.calendar||"Not yet verified. Check the relevant ministry, state, province, district or individual school calendar.");
  linkList("schoolLinks",d.schools,"schoolEmpty","No verified school directory records have been added for this country yet.");
  linkList("examLinks",d.exams,"examEmpty","No verified national examination records or current examination dates have been added for this country yet.");
- linkList("paperLinks",d.papers,null);linkList("jobLinks",d.jobs,null);linkList("teacherLinks",d.teachers,null);linkList("furtherLinks",d.further,null);linkList("sourceLinks",d.sources,null);
+ linkList("paperLinks",d.papers,null);linkList("jobLinks",d.jobs,null);
+ // Add country-specific live search links for every registered country. These are discovery links,
+ // not claims that a vacancy is open; deadlines must be checked on the original employer advert.
+ const jobsHost=$("jobLinks");
+ if(jobsHost){
+  const q=encodeURIComponent(c.name);
+  const liveSearches=[
+   {name:"Search current international teaching vacancies in "+c.name+" on Tes",url:"https://www.tes.com/jobs/search/international?keywords="+q},
+   {name:"Browse international school vacancies worldwide (filter by country)",url:"https://www.teachabroadagencies.com/jobs/"},
+   {name:"Browse worldwide school openings on ISS",url:"https://www.iss.edu/for-individuals/find-a-job/current-openings/"}
+  ];
+  liveSearches.forEach(item=>{const a=node("a");a.href=safeUrl(item.url);a.textContent=item.name+" — live search; confirm deadline and visa eligibility";a.target="_blank";a.rel="noopener noreferrer";jobsHost.appendChild(a);});
+ }
+ linkList("teacherLinks",d.teachers,null);linkList("furtherLinks",d.further,null);linkList("sourceLinks",d.sources,null);
  const title=c.name+" Schools, Education System & Teaching Vacancies | CBE Nexus Global Schools";
  document.title=title;
  const desc="Explore school directories, education systems, national examinations, sample papers, teaching vacancies and teacher requirements in "+c.name+". Verify each listing with official sources.";
