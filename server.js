@@ -7,6 +7,7 @@ const { createUploadUrl, createDownloadUrl, createPdfPreview, createInlineUrl, g
 const mammoth = require("mammoth");
 const { supabase, supabaseConfigured } = require("./supabase");
 const seo = require("./seo");
+const globalSchools = require("./global-schools-data.js");
 
 const PORT = Number(process.env.PORT || 8000);
 const ROOT = __dirname;
@@ -2574,6 +2575,31 @@ async function serveStatic(req,res,url){
   if(req.method==="GET" && seoPage){
     res.writeHead(200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"public, max-age=600"});
     res.end(injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(injectPageMetadata(injectSeoFooter(seoPage,url.pathname),url.pathname,req)),url.pathname)));
+    return;
+  }
+  const globalSchoolsRoute=url.pathname.match(/^\/global-schools(?:\/([a-z0-9-]+))?\/?$/i);
+  if(req.method==="GET"&&globalSchoolsRoute){
+    const countrySlug=String(globalSchoolsRoute[1]||"").toLowerCase();
+    const country=countrySlug?(globalSchools.countries||[]).find(c=>c.slug===countrySlug):null;
+    if(countrySlug&&!country){
+      res.writeHead(404,{"Content-Type":"text/plain; charset=utf-8","Cache-Control":"public, max-age=300"});
+      res.end("Country not found in the CBE Nexus Global Schools registry.");
+      return;
+    }
+    let html=await fs.readFile(path.join(ROOT,"global-schools.html"),"utf8");
+    const canonical=seo.base(req)+(country?country.url:"/global-schools");
+    const title=country
+      ? country.name+" Schools, Education System & Teaching Vacancies | CBE Nexus Global Schools"
+      : "Global Schools Directory by Country | CBE Nexus";
+    const description=country
+      ? "Explore school directories, education systems, national examinations, sample papers, teaching vacancies, teacher requirements and further education in "+country.name+". Verify each listing with official sources."
+      : "Explore country-by-country school directories, education systems, national examinations, sample papers, teaching vacancies, teacher requirements and further education on CBE Nexus Global Schools.";
+    html=html.replace(/<title>[\s\S]*?<\/title>/i,"<title>"+escapeSeoAttribute(title)+"</title>");
+    html=html.replace(/<meta name="description" content="[^"]*">/i,'<meta name="description" content="'+escapeSeoAttribute(description)+'">');
+    html=html.replace(/<link rel="canonical" href="[^"]*">/i,'<link rel="canonical" href="'+escapeSeoAttribute(canonical)+'">');
+    html=injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(injectPageMetadata(html,url.pathname,req)),url.pathname));
+    res.writeHead(200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"public, max-age=300, must-revalidate"});
+    res.end(html);
     return;
   }
   const requestedPath=decodeURIComponent(url.pathname==="/"?"/index.html":url.pathname);
