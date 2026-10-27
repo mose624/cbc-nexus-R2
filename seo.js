@@ -1,6 +1,7 @@
 const { supabase, supabaseConfigured } = require("./supabase");
 const fs = require("fs/promises");
 const path = require("path");
+const globalSchools = require("./global-schools-data.js");
 const GRADES=["7","8","9","10","11","12"];
 const SUBJECTS={
 "7":["Mathematics","Integrated Science","English","Kiswahili","Social Studies","Agriculture","Creative Arts","Pre-Technical Studies"],
