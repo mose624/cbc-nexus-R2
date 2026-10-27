@@ -23,6 +23,54 @@ function renderCountries(filter){
  });
  if(!matches.length){const p=node("p","gs-empty");p.textContent="No matching country found. Try another spelling.";grid.appendChild(p);}
 }
+// Learner photography is selected deterministically by country so all country pages have a visual hero.
+const learnerPhotos=[
+ 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1800&q=82',
+ 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=1800&q=82',
+ 'https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=1800&q=82'
+];
+function photoForCountry(slug){let n=0;for(let i=0;i<slug.length;i++)n=(n*31+slug.charCodeAt(i))>>>0;return learnerPhotos[n%learnerPhotos.length];}
+const localeCopy={
+ 'zh-CN':{
+  title:'全球学校、教育与教师招聘',intro:'查看学校目录、教育体系、国家考试、教师资格要求及教学职位。请通过学校或官方机构核实所有信息。',
+  home:'← CBE Nexus 首页',directory:'← 返回所有国家',profile:'国家概况',schools:'学校目录',curriculum:'课程与学校项目',academic:'学年与学期日期',qualifications:'教师资格与要求',system:'教育体系',exams:'国家考试',papers:'样卷与复习资源',vacancies:'教师招聘',teachers:'教师注册与要求',further:'继续教育',
+  languages:'官方语言',authority:'教育主管机构',search:'搜索国家，例如中国、法国或德国',find:'搜索国家',back:'返回所有国家',missing:'该国家的详细资料尚未核实。请查看官方教育部门及学校网站。',verify:'部分官方来源已整理；每项招聘及日期仍需核实。',generic:'该国家的具体信息尚未核实。请通过政府、教育主管部门或学校确认。',countryIntro:'本页面汇集学校目录、教育体系、国家考试、教学职位和教师资格信息。申请前请核实招聘截止日期及工作签证要求。',
+  footer:'CBE Nexus 全球学校目录。学校职位、截止日期、资格要求及签证信息可能变化，请向雇主或主管机构核实。'
+ },
+ 'fr':{
+  title:'Écoles, éducation et offres d’enseignement dans le monde',intro:'Consultez les annuaires scolaires, les systèmes éducatifs, les examens nationaux, les qualifications des enseignants et les offres d’emploi. Vérifiez les informations auprès des écoles ou des organismes officiels.',
+  home:'← Accueil CBE Nexus',directory:'← Retour à tous les pays',profile:'Profil du pays',schools:'Annuaire des écoles',curriculum:'Programmes scolaires',academic:'Année scolaire et dates des trimestres',qualifications:'Qualifications et conditions des enseignants',system:'Système éducatif',exams:'Examens nationaux',papers:'Sujets types et ressources de révision',vacancies:'Offres d’enseignement',teachers:'Inscription et exigences professionnelles',further:'Études supérieures et formation',
+  languages:'Langues officielles',authority:'Autorité éducative',search:'Rechercher un pays, par ex. Chine, France ou Allemagne',find:'Rechercher',back:'Retour à tous les pays',missing:'Les informations détaillées sur ce pays n’ont pas encore été vérifiées. Consultez les sites officiels du ministère et des écoles.',verify:'Certaines sources officielles sont répertoriées ; chaque offre et chaque date doivent être vérifiées.',generic:'Cette information n’a pas encore été vérifiée pour ce pays. Consultez le gouvernement, l’autorité éducative ou les écoles.',countryIntro:'Cette page rassemble des liens vers les écoles, le système éducatif, les examens, les postes d’enseignants et les conditions professionnelles. Vérifiez les dates limites et les exigences de visa avant de postuler.',
+  footer:'Annuaire mondial CBE Nexus. Les offres, dates limites, qualifications et règles de visa peuvent changer : confirmez-les auprès de l’employeur ou de l’autorité compétente.'
+ },
+ 'de':{
+  title:'Schulen, Bildung und internationale Lehrstellen weltweit',intro:'Entdecken Sie Schulverzeichnisse, Bildungssysteme, nationale Prüfungen, Lehrkräftequalifikationen und Stellenangebote. Prüfen Sie Angaben direkt bei Schulen oder offiziellen Stellen.',
+  home:'← CBE Nexus Startseite',directory:'← Zurück zu allen Ländern',profile:'Länderprofil',schools:'Schulverzeichnis',curriculum:'Lehrpläne und Schulprogramme',academic:'Schuljahr und Ferientermine',qualifications:'Qualifikationen und Anforderungen für Lehrkräfte',system:'Bildungssystem',exams:'Nationale Prüfungen',papers:'Musterprüfungen und Lernmaterialien',vacancies:'Lehrstellen',teachers:'Lehrkräftezulassung und Anforderungen',further:'Weiterbildung und Hochschulbildung',
+  languages:'Amtssprachen',authority:'Bildungsbehörde',search:'Land suchen, z. B. China, Frankreich oder Deutschland',find:'Land suchen',back:'Zurück zu allen Ländern',missing:'Detaillierte Angaben zu diesem Land wurden noch nicht verifiziert. Bitte prüfen Sie die offiziellen Ministeriums- und Schulwebsites.',verify:'Einige offizielle Quellen sind zusammengestellt; jede Stelle und Frist muss einzeln geprüft werden.',generic:'Diese Angaben wurden für dieses Land noch nicht verifiziert. Bitte prüfen Sie Regierungs-, Bildungsbehörden- oder Schulwebsites.',countryIntro:'Diese Seite bündelt Links zu Schulen, Bildungssystem, Prüfungen, Lehrstellen und beruflichen Anforderungen. Prüfen Sie Bewerbungsfristen und Visabestimmungen vor der Bewerbung.',
+  footer:'CBE Nexus weltweites Schulverzeichnis. Stellenangebote, Fristen, Qualifikationen und Visabestimmungen können sich ändern. Bitte direkt beim Arbeitgeber oder der zuständigen Behörde bestätigen.'
+ }
+};
+function applyCountryLocale(slug){
+ const locale=slug==='china'?'zh-CN':slug==='france'?'fr':slug==='germany'?'de':'en';
+ document.documentElement.lang=locale;
+ const hero=$('gsHero');if(hero)hero.style.setProperty('--gs-learner-bg','url("'+photoForCountry(slug)+'")');
+ const head=document.querySelector('.gs-country-head');if(head)head.style.setProperty('--gs-learner-bg','url("'+photoForCountry(slug)+'")');
+ if(locale==='en')return;
+ const t=localeCopy[locale];if(!t)return;
+ const put=(id,value)=>{const el=$(id);if(el&&value)el.textContent=value;};
+ put('gsTitle',t.title);put('gsIntro',t.intro);put('countryIntro',t.countryIntro);
+ const home=document.querySelector('.gs-top a[href="/"]');if(home)home.textContent=t.home;
+ const back=document.querySelector('.gs-back');if(back)back.textContent=t.directory;
+ const search=$('countrySearch');if(search)search.placeholder=t.search;
+ const searchButton=$('searchButton');if(searchButton)searchButton.textContent=t.find;
+ const labels={'profile':t.profile,'schools':t.schools,'curriculum':t.curriculum,'academic-year':t.academic,'qualification-requirements':t.qualifications,'system':t.system,'exams':t.exams,'papers':t.papers,'vacancies':t.vacancies,'teachers':t.teachers,'further':t.further};
+ Object.keys(labels).forEach(id=>{const el=document.querySelector('.gs-side nav a[href="#'+id+'"]');if(el)el.textContent=labels[id];});
+ const hs=document.querySelectorAll('#profile .gs-card h3');if(hs[0])hs[0].textContent=t.languages;if(hs[1])hs[1].textContent=t.authority;
+ const empty=$('schoolEmpty');if(empty)empty.textContent=t.generic;
+ const note=$('verificationNote');if(note)note.textContent=t.missing;
+ const status=$('countryStatus');if(status&&status.firstElementChild)status.firstElementChild.textContent=t.verify;
+ const foot=document.querySelector('.gs-footer');if(foot)foot.textContent=t.footer;
+}
 function routeSlug(){const m=location.pathname.match(/^\/global-schools\/([^/]+)\/?$/);return m?decodeURIComponent(m[1]).toLowerCase():"";}
 function renderCountry(){
  const slug=routeSlug();if(!slug)return;
@@ -58,6 +106,7 @@ function renderCountry(){
   liveSearches.forEach(item=>{const a=node("a");a.href=safeUrl(item.url);a.textContent=item.name+" — live search; confirm deadline and visa eligibility";a.target="_blank";a.rel="noopener noreferrer";jobsHost.appendChild(a);});
  }
  linkList("teacherLinks",d.teachers,null);linkList("furtherLinks",d.further,null);linkList("sourceLinks",d.sources,null);
+ applyCountryLocale(slug);
  const title=c.name+" Schools, Education System & Teaching Vacancies | CBE Nexus Global Schools";
  document.title=title;
  const desc="Explore school directories, education systems, national examinations, sample papers, teaching vacancies and teacher requirements in "+c.name+". Verify each listing with official sources.";
@@ -67,5 +116,7 @@ function renderCountry(){
 $("searchButton").addEventListener("click",()=>{const q=$("countrySearch").value.trim();const match=countries.find(c=>c.name.toLowerCase()===q.toLowerCase()||c.slug===q.toLowerCase().replace(/\s+/g,"-"));if(match){location.href=match.url;return;}renderCountries(q);});
 $("countrySearch").addEventListener("input",e=>renderCountries(e.target.value));
 $("countrySearch").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();$("searchButton").click();}});
-renderCountries("");renderCountry();
+renderCountries("");
+ const directoryHero=$("gsHero");if(directoryHero)directoryHero.style.setProperty("--gs-learner-bg",'url("https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1800&q=82")');
+ renderCountry();
 })();
