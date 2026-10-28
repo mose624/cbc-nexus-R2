@@ -71,7 +71,7 @@ const countryData = {
   teachers:[{name:"Teaching Regulation Agency (England)",url:"https://www.gov.uk/government/organisations/teaching-regulation-agency"},{name:"National education departments",url:"https://www.gov.uk/browse/education"}],
   further:[{name:"UCAS",url:"https://www.ucas.com/"},{name:"GOV.UK student finance",url:"https://www.gov.uk/student-finance"}],
   sources:[{label:"GOV.UK education",url:"https://www.gov.uk/browse/education"},{label:"Get Information about Schools",url:"https://get-information-schools.service.gov.uk/"},{label:"Ofqual",url:"https://www.gov.uk/government/organisations/ofqual"}]
- }
+ },
  "kosovo": {
   curriculum:"Kosovo's public education system is overseen by the Ministry of Education, Science, Technology and Innovation (MESTI). Curriculum frameworks and school programmes should be checked against current ministry publications; private and international schools may follow additional approved programmes.",
   termCalendar:"School-year and holiday dates are set through official ministry calendars and may be updated. Check the latest MESTI school calendar and the relevant municipality or school notice before relying on dates.",
