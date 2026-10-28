@@ -48,6 +48,7 @@ const languages = {
 "republic-of-the-congo":"French",
 "costa-rica":"Spanish",
 "cote-divoire":"French (official; national languages have constitutional recognition)",
+"cote-d-ivoire":"French (official; national languages have constitutional recognition)",
 "croatia":"Croatian",
 "cuba":"Spanish",
 "cyprus":"Greek and Turkish",
