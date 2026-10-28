@@ -2622,7 +2622,9 @@ async function serveStatic(req,res,url){
     res.end(html);
     return;
   }
-  const requestedPath=decodeURIComponent(url.pathname==="/"?"/index.html":url.pathname);
+  const rawRequestedPath=decodeURIComponent(url.pathname==="/"?"/index.html":url.pathname);
+  // Support the clean public URL as well as the existing HTML filename.
+  const requestedPath=rawRequestedPath==="/school-directory"?"/school-directory.html":rawRequestedPath;
   const filePath=path.resolve(ROOT,"."+requestedPath);
   if(!filePath.startsWith(ROOT)){
     res.writeHead(403,{"Content-Type":"text/plain; charset=utf-8"});
