@@ -1109,6 +1109,74 @@ Object.keys(otherContinentsProfilesBatch1).forEach(function(slug){
  Object.keys(otherContinentsProfilesBatch1[slug]).forEach(function(field){target[field]=otherContinentsProfilesBatch1[slug][field];});
 });
 
+/* Canada: researched national overview plus official provincial/territorial entry points.
+ * Canada has 13 education jurisdictions; do not imply one national K–12 curriculum, calendar, school register or teacher licence.
+ */
+countryData["canada"]={
+ researchStatus:"Expanded using Government of Canada, Council of Ministers of Education Canada (CMEC), and Canadian Information Centre for International Credentials (CICIC) sources. Official province/territory portals and school/job discovery routes are supplied. Curriculum, school calendars, assessments, school directories and teacher certification vary across the 10 provinces and 3 territories; verify the specific jurisdiction and each current vacancy.",
+ officialLanguages:"English and French are Canada's two official languages at the federal level. School language rights and delivery depend on the province or territory, minority-language rights and local school board; French is the principal language of instruction in Québec's public system subject to applicable exceptions. Indigenous languages are also used and taught in many communities.",
+ authority:"There is no federal department of education and no single national K–12 system. Each of Canada's 10 provinces and 3 territories has its own education ministry/department responsible for elementary and secondary schooling, curriculum, assessment and teacher certification. The Council of Ministers of Education, Canada (CMEC) supports intergovernmental coordination. Federal responsibilities include particular programmes and support for Indigenous education, among other defined areas.",
+ curriculum:"No single national K–12 curriculum. Each province/territory publishes its own curriculum, learning outcomes, grade/subject programmes and assessment policies. School boards and schools implement the applicable jurisdictional requirements. Confirm the province/territory, grade, subject, language and current curriculum edition before using or publishing resources.",
+ system:"Commonly kindergarten followed by elementary and secondary schooling, often through Grade 12, but grade structure, school entry age, compulsory attendance, graduation requirements and school-board arrangements differ by jurisdiction. Options may include public, separate/faith-based where provided, French-language, private, Indigenous, alternative and home education. Postsecondary education includes colleges, institutes and universities.",
+ termCalendar:"There is no single national school calendar. Many schools operate from late August or September through June, but school-year dates, holidays, winter/spring breaks, professional-development days and closures are set by each province/territory, school board and sometimes school. Check the current official calendar for the target school board.",
+ calendar:"Academic-year dates and term breaks are jurisdiction-specific. The official provincial/territorial ministry and the local school board are the authoritative sources for the current calendar and any updates.",
+ qualificationRequirements:"K–12 teacher certification is regulated by the province or territory, not by one national licensing body. Applicants commonly need a recognised teacher-education qualification and assessment of academic/professional credentials, but required degrees, practicum, language proficiency, subject qualifications, background checks and application processes vary. Teachers trained abroad should contact the regulator in the province/territory where they intend to work before applying; recognition in one jurisdiction does not automatically guarantee certification in another. Immigration/work authorisation and employer requirements are separate from teacher certification.",
+ exams:[
+  {name:"Provincial and territorial assessments",body:"Each jurisdiction sets its own student assessment and graduation requirements. Examples include Ontario's EQAO assessments, Alberta diploma examinations and British Columbia's graduation assessments; coverage and requirements change by grade and jurisdiction.",level:"K–12; jurisdiction-specific",url:"https://www.cmec.ca/"},
+  {name:"Pan-Canadian Assessment Program (PCAP)",body:"CMEC-coordinated assessment of student achievement in selected subject areas among a sample of students; it is not an individual student's graduation examination.",level:"Pan-Canadian sample assessment",url:"https://www.cmec.ca/"},
+  {name:"Programme for International Student Assessment (PISA)",body:"International assessment of 15-year-olds, with Canadian participation coordinated through relevant national/provincial partners; not a school-leaving exam.",level:"International comparative assessment",url:"https://www.cmec.ca/"},
+  {name:"Ontario EQAO",body:"Official provincial assessment agency; use its current assessment pages, sample materials and schedule for Ontario only.",level:"Ontario; assessment-specific",url:"https://www.eqao.com/"},
+  {name:"Alberta diploma examinations",body:"Official Alberta assessment and diploma-exam information; confirm current subjects, dates and candidate rules with Alberta Education.",level:"Alberta; senior secondary",url:"https://www.alberta.ca/education-and-childcare"}
+ ],
+ schools:[
+  {name:"CMEC — education in Canada",type:"Official intergovernmental overview and gateway to the 13 provincial/territorial education systems.",url:"https://www.cmec.ca/680/Overview.html"},
+  {name:"CICIC — provincial and territorial ministries/departments",type:"Directory of the competent education authorities for Canada's 10 provinces and 3 territories.",url:"https://www.cicic.ca/1301/ministries_departments_responsible_.canada"},
+  {name:"Government of Canada — elementary and secondary schools",type:"Official overview of school types, school boards and links to provincial/territorial ministries; use local school-board directories to find individual schools.",url:"https://www.canada.ca/en/immigration-refugees-citizenship/services/settle-canada/education/school-types/elementary-secondary.html"},
+  {name:"Statistics Canada — education data",type:"Official statistical datasets and indicators; these are not a real-time school-by-school directory.",url:"https://www.statcan.gc.ca/en/subjects-start/education_training_and_learning"},
+  {name:"British Columbia school directory",type:"Official provincial school and district information.",url:"https://www2.gov.bc.ca/gov/content/education-training/k-12"},
+  {name:"Ontario school information",type:"Official provincial school information and education ministry portal.",url:"https://www.ontario.ca/page/ministry-education"},
+  {name:"Québec education ministry",type:"Official provincial portal for schools, programmes and French-language education.",url:"https://www.quebec.ca/gouvernement/ministeres-organismes/education"}
+ ],
+ papers:[
+  {name:"CMEC — Pan-Canadian Assessment Program",type:"Official information about PCAP, assessment frameworks and results; not a repository of every provincial exam paper.",url:"https://www.cmec.ca/"},
+  {name:"Ontario EQAO resources",type:"Official Ontario assessment information and available sample/released materials; applies to Ontario.",url:"https://www.eqao.com/"},
+  {name:"Alberta curriculum and assessment",type:"Official provincial curriculum, assessment and diploma-exam resources; check grade, subject and current edition.",url:"https://www.alberta.ca/education-and-childcare"},
+  {name:"British Columbia curriculum and assessment",type:"Official provincial curriculum, learning standards and graduation assessment resources.",url:"https://curriculum.gov.bc.ca/"},
+  {name:"Government of Canada — education in Canada",type:"Starting point for locating the correct provincial/territorial curriculum authority.",url:"https://www.canada.ca/en/immigration-refugees-citizenship/services/settle-canada/education.html"}
+ ],
+ jobs:[
+  {name:"Official provincial/territorial education authorities",type:"Find school-board career portals and public recruitment notices through the authority for the target province/territory; Canada has no single public-school teacher vacancy portal.",url:"https://www.cicic.ca/1301/ministries_departments_responsible_.canada"},
+  {name:"Make a Future — BC education careers",type:"Recruitment portal used by participating British Columbia school districts and education employers; verify each employer's current vacancy and eligibility.",url:"https://www.makeafuture.ca/"},
+  {name:"ApplyToEducation",type:"Third-party application platform used by some Canadian school boards; listings depend on participating employers and can change.",url:"https://www.applytoeducation.com/"},
+  {name:"Government of Canada Job Bank",type:"Search current teacher-related jobs across Canada; verify licensing, location, employer, work authorisation and deadline for each listing.",url:"https://www.jobbank.gc.ca/"},
+  {name:"CBE Nexus international teaching jobs",type:"Discovery route for CBE Nexus listings; confirm each vacancy is current and verify conditions directly with the employer.",url:"/international-teaching-jobs.html"}
+ ],
+ teachers:[
+  {name:"CICIC — teacher certification and regulated occupations",type:"Official guidance for foreign-trained professionals and links to competent provincial/territorial authorities; contact the teacher regulator in the intended jurisdiction.",url:"https://www.cicic.ca/"},
+  {name:"CICIC — provincial/territorial education ministries",type:"Find the responsible education ministry and the jurisdiction's certification information.",url:"https://www.cicic.ca/1301/ministries_departments_responsible_.canada"},
+  {name:"Government of Canada — education system",type:"Overview of provincial/territorial responsibility and differences between education systems.",url:"https://www.canada.ca/en/immigration-refugees-citizenship/services/settle-canada/education.html"},
+  {name:"Government of Canada Job Bank",type:"Employment search; job eligibility and licensing must be confirmed with the employer and regulator.",url:"https://www.jobbank.gc.ca/"}
+ ],
+ further:[
+  {name:"EduCanada — understand the Canadian education system",url:"https://www.educanada.ca/study-plan-etudes/system-education-systeme.aspx?lang=eng"},
+  {name:"Statistics Canada — education, training and learning",url:"https://www.statcan.gc.ca/en/subjects-start/education_training_and_learning"},
+  {name:"CMEC — overview of elementary-secondary education",url:"https://www.cmec.ca/680/Overview.html"},
+  {name:"International education partners — provinces and territories",url:"https://www.international.gc.ca/education/international_partners-partenaires_internationaux/index.aspx?lang=eng"}
+ ],
+ sources:[
+  {label:"Government of Canada — Learn about education in Canada",url:"https://www.canada.ca/en/immigration-refugees-citizenship/services/settle-canada/education.html"},
+  {label:"Government of Canada — elementary and secondary school",url:"https://www.canada.ca/en/immigration-refugees-citizenship/services/settle-canada/education/school-types/elementary-secondary.html"},
+  {label:"Council of Ministers of Education, Canada — overview",url:"https://www.cmec.ca/680/Overview.html"},
+  {label:"Canadian Information Centre for International Credentials — ministries/departments responsible for education",url:"https://www.cicic.ca/1301/ministries_departments_responsible_.canada"},
+  {label:"EduCanada — understand the Canadian education system",url:"https://www.educanada.ca/study-plan-etudes/system-education-systeme.aspx?lang=eng"},
+  {label:"Statistics Canada — education, training and learning",url:"https://www.statcan.gc.ca/en/subjects-start/education_training_and_learning"},
+  {label:"Ontario Education Quality and Accountability Office (EQAO)",url:"https://www.eqao.com/"},
+  {label:"Alberta Education and Childcare",url:"https://www.alberta.ca/education-and-childcare"},
+  {label:"British Columbia curriculum",url:"https://curriculum.gov.bc.ca/"},
+  {label:"Government of Canada Job Bank",url:"https://www.jobbank.gc.ca/"}
+ ]
+};
+
 /* Türkiye: transcontinental education profile */
 countryData["turkiye"]={
  researchStatus:"Research profile added. Verify current national curriculum, examination notices and school directory directly with the ministry before marking every field fully verified.",
