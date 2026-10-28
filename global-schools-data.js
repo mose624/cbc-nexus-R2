@@ -2116,6 +2116,95 @@ Object.assign(countryData, {
  }
 });
 
+
+/* Official-source research batch: additional Asian country profiles. */
+Object.assign(countryData, {
+ "china": {
+  officialLanguages:"Standard Chinese (Putonghua) is the national common spoken language; Chinese characters are the standard written form. Minority languages and regional arrangements also apply.",
+  authority:"Ministry of Education of the People's Republic of China; provincial and local education departments administer many school services.",
+  curriculum:"The Ministry of Education sets national policy and curriculum standards for basic education. Local education authorities and schools implement approved curricula and teaching materials.",
+  system:"Preschool, nine-year compulsory education (primary and junior secondary), senior secondary general or vocational education, and higher education.",
+  termCalendar:"No single nationwide term calendar is asserted. Start dates, holidays and examination schedules are set or implemented by provincial/local education authorities and may differ by region and school.",
+  calendar:"Confirm the academic calendar with the provincial or municipal education authority and the individual school.",
+  qualificationRequirements:"Teacher qualification certificates and recruitment rules apply; eligibility and hiring procedures vary by teaching level, subject, province and employer. Foreign teachers must verify current work-permit and employer requirements.",
+  schools:[{name:"Ministry of Education of China",type:"Official national education authority and policy portal",url:"https://en.moe.gov.cn/"},{name:"National education policy and responsibilities",type:"Official Ministry of Education overview",url:"https://en.moe.gov.cn/about_MOE/what_we_do/"}],
+  jobs:[{name:"Ministry of Education of China",type:"Official national authority; not a consolidated live school-vacancy directory",url:"https://en.moe.gov.cn/"},{name:"Provincial and municipal education departments",type:"Check the relevant local government's official recruitment notices; no individual vacancy asserted here",url:"https://en.moe.gov.cn/"}],
+  teachers:[{name:"Ministry of Education of China",url:"https://en.moe.gov.cn/"},{name:"Official government service portal",url:"https://www.gov.cn/"}],
+  sources:[{label:"Ministry of Education: responsibilities and education administration",url:"https://en.moe.gov.cn/about_MOE/what_we_do/"},{label:"Ministry of Education of China",url:"https://en.moe.gov.cn/"}],
+  researchStatus:"National education authority and curriculum-policy responsibility verified from the official ministry. A national school directory, uniform school calendar and live national vacancy list were not confirmed."
+ },
+ "singapore": {
+  officialLanguages:"English, Malay, Mandarin Chinese and Tamil are Singapore's four official languages. English is the main language of instruction in most mainstream schools; Mother Tongue Language learning is part of the curriculum.",
+  authority:"Ministry of Education (MOE), Singapore; SkillsFuture Singapore and other agencies oversee specific post-secondary or vocational pathways.",
+  curriculum:"MOE develops the national curriculum, subject syllabuses and assessment pathways. School offerings and programme options vary by institution.",
+  system:"Primary, secondary and post-secondary education, with pathways including junior colleges, Millennia Institute, polytechnics and the Institute of Technical Education.",
+  termCalendar:"Use MOE's current official school-terms-and-holidays page for the academic year and school level. Exact dates can differ for junior colleges, polytechnics, international schools and specialised institutions; this profile does not infer unverified future dates.",
+  calendar:"MOE school terms and holidays: https://www.moe.gov.sg/calendar",
+  qualificationRequirements:"Teacher recruitment and training requirements are set by MOE and the National Institute of Education. Confirm current eligibility, subject needs and application routes through official careers information.",
+  schools:[{name:"MOE SchoolFinder",type:"Official search tool for Singapore schools",url:"https://www.moe.gov.sg/schoolfinder"},{name:"Ministry of Education Singapore",type:"Official national education authority",url:"https://www.moe.gov.sg/"}],
+  jobs:[{name:"MOE Careers",type:"Official teaching and education-sector career information; check live roles and eligibility",url:"https://www.moe.gov.sg/careers"},{name:"MOE teaching careers",type:"Official teacher recruitment and training information",url:"https://www.moe.gov.sg/careers/become-teachers"}],
+  teachers:[{name:"Become a teacher — MOE",url:"https://www.moe.gov.sg/careers/become-teachers"},{name:"National Institute of Education",url:"https://www.ntu.edu.sg/nie"}],
+  sources:[{label:"MOE SchoolFinder",url:"https://www.moe.gov.sg/schoolfinder"},{label:"MOE school calendar",url:"https://www.moe.gov.sg/calendar"},{label:"MOE teaching careers",url:"https://www.moe.gov.sg/careers/become-teachers"}],
+  researchStatus:"Official school search, calendar entry point and teacher-career route identified. Confirm dates on the current MOE calendar and verify each live vacancy with the employer."
+ },
+ "malaysia": {
+  officialLanguages:"Malay (Bahasa Melayu) is the national language. English is widely used; other languages are used in communities and in permitted school settings.",
+  authority:"Ministry of Education Malaysia (Kementerian Pendidikan Malaysia, KPM); state education departments and district education offices administer local services.",
+  curriculum:"The national school curriculum includes the Standard Curriculum for Primary Schools (KSSR) and Standard Curriculum for Secondary Schools (KSSM), with implementation and language arrangements varying by school type.",
+  system:"Preschool, primary, secondary, post-secondary and technical/vocational pathways. Public-school academic calendars may be grouped by state/region.",
+  termCalendar:"KPM has published a 2027 academic calendar for government and government-aided schools. Use the official current-calendar page and the applicable group/state calendar for exact dates; private and international schools may differ.",
+  calendar:"Official KPM academic calendars: https://www.moe.gov.my/index.php/kalendar-akademik-semasa",
+  qualificationRequirements:"Public-school teacher appointments and qualification requirements follow KPM and public-service rules; private and international schools have employer-specific criteria. Verify current recruitment notices and recognition requirements.",
+  schools:[{name:"Ministry of Education Malaysia",type:"Official national education authority",url:"https://www.moe.gov.my/"},{name:"KPM academic calendar",type:"Official calendar archive including 2027",url:"https://www.moe.gov.my/index.php/kalendar-akademik-semasa"}],
+  jobs:[{name:"KPM official announcements",type:"Official notices for education-service recruitment and vacancies; check the closing date and eligibility",url:"https://www.moe.gov.my/pemberitahuan/Surat-Siaran"},{name:"KPM announcements",type:"Current official notices and recruitment information",url:"https://www.moe.gov.my/list-page/183"}],
+  teachers:[{name:"Ministry of Education Malaysia",url:"https://www.moe.gov.my/"},{name:"Official KPM notices",url:"https://www.moe.gov.my/pemberitahuan/Surat-Siaran"}],
+  sources:[{label:"KPM academic calendar, including 2027",url:"https://www.moe.gov.my/index.php/kalendar-akademik-semasa"},{label:"KPM official circulars",url:"https://www.moe.gov.my/pemberitahuan/Surat-Siaran"},{label:"KPM official announcements",url:"https://www.moe.gov.my/list-page/183"}],
+  researchStatus:"Official 2027 academic-calendar listing and current KPM notice pages checked. Specific regional dates and active teacher vacancies must be verified in the relevant official notice."
+ },
+ "philippines": {
+  officialLanguages:"Filipino and English are the official languages for communication and instruction under the Constitution; regional languages serve as auxiliary official languages and are used in regional education contexts.",
+  authority:"Department of Education (DepEd); Commission on Higher Education (CHED) and Technical Education and Skills Development Authority (TESDA) oversee higher and technical-vocational sectors.",
+  curriculum:"DepEd sets basic-education curriculum and school-calendar policy. The strengthened Senior High School curriculum is being implemented in stages; confirm current grade-level guidance in official issuances.",
+  system:"Kindergarten, elementary, junior high school and senior high school, with separate higher education and technical-vocational pathways.",
+  termCalendar:"DepEd's 2026–2027 guidance states that the school year opens on 8 June 2026 and ends on 8 April 2027, comprising 201 class days across three terms. Check subsequent DepEd issuances and regional/school notices for adjustments.",
+  calendar:"Check current DepEd Orders and regional issuances: https://www.deped.gov.ph/deped-orders/",
+  qualificationRequirements:"Public-school teacher qualification and appointment rules are set by DepEd and civil-service requirements, including position-specific education, licensure and experience criteria. Private schools may set additional requirements.",
+  schools:[{name:"Department of Education",type:"Official national basic-education authority",url:"https://www.deped.gov.ph/"},{name:"DepEd Orders",type:"Official issuances for curriculum, calendar and school policy",url:"https://www.deped.gov.ph/deped-orders/"}],
+  jobs:[{name:"DepEd official issuances and announcements",type:"Check regional and Schools Division Office recruitment notices; no individual vacancy asserted here",url:"https://www.deped.gov.ph/"},{name:"DepEd regional and division offices",type:"Local recruitment notices and school information",url:"https://www.deped.gov.ph/"}],
+  teachers:[{name:"Department of Education",url:"https://www.deped.gov.ph/"},{name:"Professional Regulation Commission",type:"Teacher licensure and professional regulation",url:"https://www.prc.gov.ph/"}],
+  sources:[{label:"DepEd Order 009, s. 2026: three-term calendar guidelines",url:"https://www.deped.gov.ph/deped-orders/"},{label:"DepEd official orders",url:"https://www.deped.gov.ph/deped-orders/"},{label:"DepEd official website",url:"https://www.deped.gov.ph/"}],
+  researchStatus:"Official 2026–2027 three-term school-year framework and national education authority identified. Verify any subsequent amendments and regional implementation notices before relying on exact dates."
+ },
+ "indonesia": {
+  officialLanguages:"Indonesian (Bahasa Indonesia) is the national and official language. Local languages are widely used; language-of-instruction arrangements may vary by region and school.",
+  authority:"Ministry of Primary and Secondary Education (Kementerian Pendidikan Dasar dan Menengah, Kemendikdasmen); provincial and district education offices manage many school services.",
+  curriculum:"National curriculum policy is set by the ministry; school implementation and local calendars are coordinated with education offices. Religious schools may fall under the Ministry of Religious Affairs.",
+  system:"Early-childhood education, primary, junior secondary and senior secondary education, including vocational pathways.",
+  termCalendar:"Indonesia does not have one single set of term dates applicable to every school nationwide. Academic calendars are set by provincial or local education authorities; the 2026–2027 calendar for East Java, for example, is published by its provincial education authority. Verify the relevant province and school.",
+  calendar:"National ministry portal: https://www.kemendikdasmen.go.id/kalender-kegiatan ; check the relevant provincial education office for the local academic calendar.",
+  qualificationRequirements:"Teacher qualification, certification and recruitment requirements depend on the role, school type and applicable national and regional rules. Check the ministry and the official recruitment notice before applying.",
+  schools:[{name:"Kemendikdasmen",type:"Official Ministry of Primary and Secondary Education",url:"https://www.kemendikdasmen.go.id/"},{name:"Dapodik education data",type:"Official school and education data portal linked by the ministry",url:"https://dapo.kemendikdasmen.go.id/"}],
+  jobs:[{name:"Kemendikdasmen",type:"Official ministry announcements and teacher policy; not a single live all-school vacancy list",url:"https://www.kemendikdasmen.go.id/"},{name:"Official teacher and education recruitment notices",type:"Verify current requirements and closing dates in the relevant government announcement",url:"https://www.kemendikdasmen.go.id/"}],
+  teachers:[{name:"Kemendikdasmen",url:"https://www.kemendikdasmen.go.id/"},{name:"Official education data portal",url:"https://dapo.kemendikdasmen.go.id/"}],
+  sources:[{label:"Kemendikdasmen official portal and education data",url:"https://setjen.kemendikdasmen.go.id/"},{label:"Official ministry activity calendar",url:"https://www.kemendikdasmen.go.id/kalender-kegiatan"},{label:"Dapodik education data portal",url:"https://dapo.kemendikdasmen.go.id/"}],
+  researchStatus:"Current national ministry, official school-data portal and ministry calendar identified. Academic term dates and vacancies must be verified at province/district level."
+ },
+ "thailand": {
+  officialLanguages:"Thai is the official language. Ethnic and regional languages are also spoken; language arrangements differ by school and programme.",
+  authority:"Ministry of Education, Thailand; Office of the Basic Education Commission (OBEC) oversees much of basic education.",
+  curriculum:"The national Basic Education Core Curriculum and related standards are administered through the Ministry of Education and relevant education agencies. Programme-specific and local arrangements can vary.",
+  system:"Early-childhood, primary, lower-secondary and upper-secondary education, with vocational and higher-education pathways.",
+  termCalendar:"The commonly used school-year pattern has terms beginning around May and November, but official opening and closing dates can vary by school, agency and programme. No exact 2026–2027 national dates are asserted here without a current calendar notice.",
+  calendar:"Confirm dates with the Ministry of Education, OBEC and the individual school.",
+  qualificationRequirements:"Teacher qualifications, licences and public recruitment procedures depend on role, employer and applicable Thai regulations. Foreign applicants should confirm current licensing, work-permit and language requirements with the employer and relevant authorities.",
+  schools:[{name:"Ministry of Education Thailand",type:"Official national education authority",url:"https://www.moe.go.th/"},{name:"Office of the Basic Education Commission",type:"Official basic-education agency",url:"https://www.obec.go.th/"}],
+  jobs:[{name:"Ministry of Education Thailand",type:"Official policy and announcements portal; not a consolidated live school-vacancy list",url:"https://www.moe.go.th/"},{name:"Office of the Basic Education Commission",type:"Check official recruitment and school-system notices",url:"https://www.obec.go.th/"}],
+  teachers:[{name:"Ministry of Education Thailand",url:"https://www.moe.go.th/"},{name:"Teachers' Council of Thailand",type:"Teacher professional standards and licensing information",url:"https://www.ksp.or.th/"}],
+  sources:[{label:"Ministry of Education Thailand",url:"https://www.moe.go.th/"},{label:"Office of the Basic Education Commission",url:"https://www.obec.go.th/"},{label:"Teachers' Council of Thailand",url:"https://www.ksp.or.th/"}],
+  researchStatus:"Official national ministry, basic-education agency and teacher-licensing body identified. A single current nationwide 2026–2027 calendar and live vacancy list were not verified."
+ }
+});
+
 if(typeof window!=="undefined"){window.CBE_GLOBAL_COUNTRIES=countryRegistry;window.CBE_GLOBAL_COUNTRY_DATA=countryData;}
 if(typeof module!=="undefined"&&module.exports){module.exports={countries:countryRegistry,countryData};}
 })();
