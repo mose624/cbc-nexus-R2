@@ -898,6 +898,95 @@ Object.keys(africaResearchProfilesBatch4).forEach(function(slug){
  Object.keys(africaResearchProfilesBatch4[slug]).forEach(function(field){target[field]=africaResearchProfilesBatch4[slug][field];});
 });
 
+
+/* Africa research batch 5: current ministry portals and official-source guidance. */
+const africaResearchProfilesBatch5 = {
+ "libya": {
+  researchStatus:"The Ministry of Education portal and Educational Curricula and Educational Research Centre publish current school information. The ministry website reported the 2026–2027 school-year launch and school/examination dates in September 2026; always open the latest official notice before using exact dates.",
+  authority:"Ministry of Education; Educational Curricula and Educational Research Centre for curriculum and schoolbooks.",
+  officialLanguages:"Arabic is the official language; other languages are spoken in communities. Confirm the language-of-instruction rules for the relevant school and programme.",
+  curriculum:"The Educational Curricula and Educational Research Centre is responsible for preparing and developing basic and secondary curricula and textbooks. Check the portal for the current grade, subject and academic-year edition.",
+  system:"School education includes basic and secondary stages, alongside technical/vocational and higher education. Verify current cycle names, grade progression and qualification rules from ministry publications.",
+  termCalendar:"The Ministry of Education published information for the 2026–2027 school year in September 2026; use the current official calendar and later amendments.",
+  calendar:"Official 2026–2027 dates are available through the Ministry of Education's current notices. Verify the relevant grade/stage and latest amendments before publishing dates.",
+  exams:[{name:"Ministry of Education",body:"Official school and public-examination notices; consult the current 2026–2027 schedule and amendments.",level:"Basic and secondary",url:"https://moe.gov.ly/"},{name:"Educational Curricula and Educational Research Centre",body:"Official curriculum and textbook portal with grade/subject/year filters.",level:"Basic and secondary",url:"https://cerc.moe.gov.ly/educational-curricul/"}],
+  schools:[{name:"Ministry of Education",type:"Official ministry portal; verify current school directories and local education-monitorate coverage",url:"https://moe.gov.ly/"}],
+  papers:[{name:"Educational Curricula and Educational Research Centre",type:"Official curriculum and textbook portal; check academic year, grade and subject",url:"https://cerc.moe.gov.ly/educational-curricul/"}],
+  jobs:[{name:"Ministry of Education",type:"Check dated official recruitment and education-sector announcements; confirm application deadlines",url:"https://moe.gov.ly/"}],
+  teachers:[{name:"Ministry of Education",type:"Verify current teacher appointment, qualification and professional requirements through official notices",url:"https://moe.gov.ly/"}],
+  further:[{name:"Ministry of Higher Education and Scientific Research",url:"https://mhesr.gov.ly/"}],
+  sources:[{label:"Libya Ministry of Education",url:"https://moe.gov.ly/"},{label:"Educational Curricula and Educational Research Centre",url:"https://cerc.moe.gov.ly/educational-curricul/"}]
+ },
+ "sudan": {
+  researchStatus:"The Ministry of National Education portal lists curricula, examination materials, school calendar resources and examination schedules. Confirm the current notice and whether it applies nationally or to a particular examination session/region.",
+  authority:"Ministry of National Education; verify current division of responsibilities for general education and higher education through official government sources.",
+  officialLanguages:"Arabic is the principal official language of national education and government; English and Sudan's many local languages are also used in education and communities. Confirm current policy and regional language-of-instruction rules.",
+  curriculum:"The ministry portal provides curriculum materials for primary, intermediate and secondary stages. Check the class, subject and publication year because some visible resources relate to earlier years.",
+  system:"School pathways include primary, intermediate and secondary education, alongside technical/vocational and higher education. Confirm current grade and certificate requirements in official notices.",
+  termCalendar:"A 2026 school-calendar resource is listed on the Ministry of National Education portal. Verify the latest version and any revisions before using dates.",
+  calendar:"Official school-calendar and examination resources are available from the ministry portal; confirm current dates and the applicable jurisdiction/session.",
+  exams:[{name:"Ministry of National Education",body:"Portal lists national examination schedules, including Sudanese Certificate notices; check the latest session and date.",level:"Primary/intermediate/secondary",url:"https://gmoe.gov.sd/"}],
+  schools:[{name:"Ministry of National Education",type:"Official education portal; verify current school directory, state coverage and statistics",url:"https://gmoe.gov.sd/"}],
+  papers:[{name:"Ministry of National Education",type:"Curriculum, subject materials and examination resources; confirm grade and year",url:"https://gmoe.gov.sd/"}],
+  jobs:[{name:"Ministry of National Education",type:"Check current official ministry and public-service recruitment announcements",url:"https://gmoe.gov.sd/"}],
+  teachers:[{name:"Ministry of National Education",type:"Verify teacher recruitment and qualification requirements through current ministry notices",url:"https://gmoe.gov.sd/"}],
+  further:[{name:"Ministry of Higher Education and Scientific Research",url:"https://mohe.gov.sd/"}],
+  sources:[{label:"Ministry of National Education",url:"https://gmoe.gov.sd/"}]
+ },
+ "south-sudan": {
+  researchStatus:"The Ministry of General Education and Instruction has an active official portal with curriculum, education statistics, job and scholarship information. It announced the 2026 national examination timetable in October 2026; use the current official timetable and later notices.",
+  authority:"Ministry of General Education and Instruction (MoGEI); state ministries of education also have implementation responsibilities.",
+  officialLanguages:"English is the official working language; numerous national languages are spoken. Verify actual language-of-instruction policy by level and location.",
+  curriculum:"MoGEI is responsible for national curriculum development, teaching and learning materials, assessment policy, teacher standards and school inspection. Use the current curriculum portal and confirm the grade/version.",
+  system:"General education includes primary and secondary schooling, with technical/vocational and higher-education pathways. Confirm current grade progression and qualification details from MoGEI notices.",
+  termCalendar:"Current school term dates not entered; consult the latest MoGEI circular and state-level notices.",
+  calendar:"Check MoGEI's current calendar and state-specific notices; do not infer dates from older school-year documents.",
+  exams:[{name:"Ministry of General Education and Instruction",body:"Official press releases include the 2026 national CPE/CSE examination timetable; consult the latest timetable and candidate notices.",level:"Primary and secondary",url:"https://www.mogei.gov.ss/"}],
+  schools:[{name:"Ministry of General Education and Instruction",type:"Official national authority; verify current school register and state-level coverage",url:"https://www.mogei.gov.ss/"}],
+  papers:[{name:"Ministry of General Education and Instruction",type:"Official curriculum portal and teaching/learning materials; verify current versions",url:"https://www.mogei.gov.ss/"}],
+  jobs:[{name:"Ministry of General Education and Instruction",type:"Official jobs/opportunities section; verify each notice, eligibility and deadline",url:"https://www.mogei.gov.ss/"}],
+  teachers:[{name:"Ministry of General Education and Instruction",type:"National authority for teacher recruitment, training and deployment policy; check current requirements",url:"https://www.mogei.gov.ss/"}],
+  further:[{name:"Ministry of Higher Education, Science and Technology",url:"https://www.mohest.gov.ss/"}],
+  sources:[{label:"Ministry of General Education and Instruction",url:"https://www.mogei.gov.ss/"},{label:"MoGEI mandate and responsibilities",url:"https://mogei.gov.ss/about"}]
+ },
+ "somalia": {
+  researchStatus:"The Federal Ministry of Education, Culture and Higher Education has an active official portal covering national policy, curriculum, basic education, technical/vocational and higher education. Federal member-state implementation and school details may vary; verify jurisdiction and document date.",
+  authority:"Federal Ministry of Education, Culture and Higher Education; Federal Member States have education ministries and implementation responsibilities.",
+  officialLanguages:"Somali and Arabic are official languages. English and Arabic are also used in parts of schooling and higher education; verify language of instruction for the specific institution and region.",
+  curriculum:"The federal ministry is responsible for national education policy, curriculum and quality standards. Confirm current curriculum documents and the relevant Federal Member State's implementation.",
+  system:"Education includes early childhood, primary, secondary, technical/vocational and higher education. Confirm current grade structure, assessment and equivalency rules from official federal/state publications.",
+  termCalendar:"Current nationwide school dates not entered; consult the federal ministry and relevant Federal Member State ministry for the latest calendar.",
+  calendar:"Check current federal and state-level circulars; school calendars may vary by region and education authority.",
+  exams:[{name:"Federal Ministry of Education, Culture and Higher Education",body:"Official national education and curriculum policy source; verify current national examination notices and the relevant state authority.",level:"Basic and secondary",url:"https://moe.gov.so/"}],
+  schools:[{name:"Federal Ministry of Education, Culture and Higher Education",type:"Official federal authority; verify school lists and regional coverage with relevant state ministries",url:"https://moe.gov.so/"}],
+  papers:[{name:"Federal Ministry of Education, Culture and Higher Education",type:"Official curriculum and learning-resource starting point; verify grade, year and regional applicability",url:"https://moe.gov.so/"}],
+  jobs:[{name:"Federal Ministry of Education, Culture and Higher Education",type:"Check official federal and state-level education recruitment notices",url:"https://moe.gov.so/"}],
+  teachers:[{name:"Federal Ministry of Education, Culture and Higher Education",type:"Confirm current teacher standards, training and recruitment requirements with the federal/state authority",url:"https://moe.gov.so/"}],
+  further:[{name:"Federal Ministry of Education, Culture and Higher Education",url:"https://moe.gov.so/"}],
+  sources:[{label:"Federal Ministry of Education, Culture and Higher Education",url:"https://moe.gov.so/"},{label:"Office of the Prime Minister government directory",url:"https://opm.gov.so/en/government-directory/m72z0hlsodkct3c7ldkzx3xm"}]
+ },
+ "mauritania": {
+  researchStatus:"The Ministry of National Education and Education System Reform has an active official portal with ministry announcements, online services and education-sector information. Verify each notice's date, status and applicability before presenting it as current.",
+  authority:"Ministry of National Education and Education System Reform; separate national portfolios oversee higher education and vocational training.",
+  officialLanguages:"Arabic is the official language. French is used in some educational and professional settings; Pulaar, Soninke and Wolof are also national languages. Confirm current language-of-instruction rules by level.",
+  curriculum:"Use the ministry's current approved curricula, programmes and education-system reform publications; confirm edition and applicable grade.",
+  system:"The system includes preschool, primary, lower/upper secondary, technical/vocational and higher education. Confirm current grade progression and qualification rules from ministry publications.",
+  termCalendar:"Current school dates not entered; consult the latest official ministry circular and school notices.",
+  calendar:"Check the ministry's current school-year calendar and any amendments before publishing exact dates.",
+  exams:[{name:"Ministry of National Education and Education System Reform",body:"Official education announcements and online services; confirm current examination body, candidate requirements and timetable.",level:"School examinations",url:"https://education.gov.mr/"}],
+  schools:[{name:"Ministry of National Education and Education System Reform",type:"Official ministry portal; verify current school register, regional coverage and statistics",url:"https://education.gov.mr/"}],
+  papers:[{name:"Ministry of National Education and Education System Reform",type:"Official curriculum and education resources; confirm grade, year and approval status",url:"https://education.gov.mr/"}],
+  jobs:[{name:"Ministry of National Education and Education System Reform",type:"Ministry news includes recruitment competitions; verify the active notice, eligibility and deadline",url:"https://education.gov.mr/"}],
+  teachers:[{name:"Ministry of National Education and Education System Reform",type:"Verify teacher recruitment, qualification and competition requirements in current official notices",url:"https://education.gov.mr/"}],
+  further:[{name:"Government of Mauritania",url:"https://www.gov.mr/"}],
+  sources:[{label:"Ministry of National Education and Education System Reform",url:"https://education.gov.mr/"}]
+ }
+};
+Object.keys(africaResearchProfilesBatch5).forEach(function(slug){
+ const target=countryData[slug]||(countryData[slug]={});
+ Object.keys(africaResearchProfilesBatch5[slug]).forEach(function(field){target[field]=africaResearchProfilesBatch5[slug][field];});
+});
+
 /* Ensure every registered country has a visible, honest research record.
  * These are discovery links and verification prompts, not claims that the fields have been researched.
  * Country facts are only promoted to verified when checked against a national authority or other primary source.
