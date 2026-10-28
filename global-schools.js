@@ -163,8 +163,53 @@ function renderCountry(){
   globalDirectory.rel="noopener noreferrer";
   globalDirectory.className="gs-global-school-source";
   schoolHost.appendChild(globalDirectory);
+  // Curated directory sources with identifiable public/official provenance.
+  // These are linked as sources only; records are not represented as imported or fully verified.
+  const countryDirectorySources={
+   "kenya":[
+    {name:"Kenya Ministry of Education — NEMIS institution list",url:"https://nemis.education.go.ke/Reports/InstitutionList.aspx",note:"Official national institution lookup"},
+    {name:"Open Schools Kenya — downloadable community school data",url:"https://openschoolskenya.org/data/",note:"ODbL; partial coverage of Kibera, Kangemi and parts of Nairobi"}
+   ],
+   "india":[
+    {name:"ADS Open Schools — India bulk dataset and release notes",url:"https://github.com/learnram/ads-schools-data/releases",note:"Apache-2.0 dataset; check release caveats and duplicate status"},
+    {name:"Ministry of Education, Government of India",url:"https://www.education.gov.in/",note:"Official education authority"}
+   ],
+   "united-states":[
+    {name:"NCES — Common Core of Data school directory and downloads",url:"https://nces.ed.gov/ccd/",note:"Official national public-school data; private-school coverage is separate"},
+    {name:"NCES school search",url:"https://nces.ed.gov/globallocator/",note:"Official school lookup"}
+   ],
+   "united-kingdom":[
+    {name:"Get Information About Schools (GIAS)",url:"https://get-information-schools.service.gov.uk/",note:"Official England school register; devolved nations publish separate registers"}
+   ],
+   "nigeria":[
+    {name:"EDTEF — Nigerian secondary-school directory and CSV/API access",url:"https://edtef.org/developers",note:"CC BY 4.0; free API key required for data access"},
+    {name:"Federal Ministry of Education, Nigeria",url:"https://education.gov.ng/",note:"Official education authority"}
+   ],
+   "singapore":[
+    {name:"Singapore Ministry of Education — school information",url:"https://www.moe.gov.sg/schoolfinder",note:"Official school finder"},
+    {name:"Singapore open data portal",url:"https://data.gov.sg/",note:"Check each dataset's licence and update date"}
+   ],
+   "hong-kong":[
+    {name:"Hong Kong Education Bureau",url:"https://www.edb.gov.hk/",note:"Official education authority and school information"},
+    {name:"Hong Kong open data portal",url:"https://data.gov.hk/",note:"Check individual dataset coverage and licence"}
+   ],
+   "australia":[
+    {name:"ACARA My School",url:"https://www.myschool.edu.au/",note:"National school profiles; data reuse terms apply"},
+    {name:"Australian Curriculum, Assessment and Reporting Authority",url:"https://www.acara.edu.au/",note:"Official national education data authority"}
+   ],
+   "sierra-leone":[
+    {name:"Ministry of Basic and Senior Secondary Education — EMIS portal",url:"https://emis.gov.school.edu.sl/",note:"School directory and published open-data downloads"}
+   ]
+  };
+  const specificSources=countryDirectorySources[c.slug]||[];
+  if(specificSources.length){
+   const sourceHeading=node("p","gs-muted");sourceHeading.textContent="Additional country-specific directory sources:";schoolHost.appendChild(sourceHeading);
+   specificSources.forEach(source=>{
+    const a=node("a");a.href=safeUrl(source.url);a.textContent=source.name+" — "+source.note;a.target="_blank";a.rel="noopener noreferrer";schoolHost.appendChild(a);
+   });
+  }
   const sourceNote=node("p","gs-muted");
-  sourceNote.textContent="CBE Nexus school-record target: 1,000 per country where reliable records are available. These external records have not been copied into this directory; confirm each school's identity, status, website and contact details with the relevant education authority.";
+  sourceNote.textContent="CBE Nexus school-record target: 1,000 per country where reliable records are available. External source links are not imported school records. Confirm each school's identity, current status, website and contact details with the relevant education authority. Countries with fewer than 1,000 schools should show the verified total available rather than fabricated entries.";
   schoolHost.appendChild(sourceNote);
  }
  linkList("examLinks",d.exams,"examEmpty","No verified national examination records or current examination dates have been added for this country yet.");
