@@ -175,7 +175,13 @@ function renderCountry(){
  const schoolFlagStyle=node("style");
  schoolFlagStyle.textContent=".gs-school-link-row{display:flex;align-items:flex-start;gap:10px;padding:9px 10px;margin:0 0 7px;border:1px solid #e7edf2;border-radius:9px;background:#fff}.gs-school-link-row .gs-school-flag{font-size:23px;line-height:1.25;flex:0 0 auto}.gs-school-link-row a{display:block;min-width:0;overflow-wrap:anywhere}.gs-school-link-row a:hover{text-decoration:underline}";
  document.head.appendChild(schoolFlagStyle);
- linkList("schoolLinks",d.schools,"schoolEmpty","No verified school directory records have been added for this country yet.",c.flag);
+ // Link each country dashboard to the matching Schools of the World directory.
+ // This is a source link for the external live directory, not a claim that its full dataset is imported into CBE Nexus.
+ const worldDirectorySlug=String(c.slug||"").toLowerCase();
+ const worldDirectoryLink={name:"Browse Schools of the World — "+c.name,url:"https://schools.brasa.education/"+worldDirectorySlug+"/schools/",type:"External global school directory",body:"Browse the source directory; coverage and record counts vary by country"};
+ const countrySchoolLinks=Array.isArray(d.schools)?d.schools.slice():[];
+ if(!countrySchoolLinks.some(s=>s&&s.url===worldDirectoryLink.url))countrySchoolLinks.push(worldDirectoryLink);
+ linkList("schoolLinks",countrySchoolLinks,"schoolEmpty","No verified school directory records have been added for this country yet.",c.flag);
  linkList("examLinks",d.exams,"examEmpty","No verified national examination records or current examination dates have been added for this country yet.");
  linkList("paperLinks",d.papers,null);linkList("jobLinks",d.jobs,null);
  // Add country-specific live search links for every registered country. These are discovery links,
