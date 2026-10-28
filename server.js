@@ -2300,10 +2300,15 @@ function optimizeHtmlForAds(html){
 }
 function injectAdSenseTags(html,pathname){
   const cfg=getAdSenseConfig();
-  if(!cfg.enabled || isAdExcludedPath(pathname)) return html;
   let out=String(html||"");
-  if(/pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js/i.test(out)) return out;
-  const head='<link rel="preconnect" href="https://pagead2.googlesyndication.com"><link rel="preconnect" href="https://googleads.g.doubleclick.net"><meta name="google-adsense-account" content="'+cfg.publisherId+'"><script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-'+cfg.publisherId+'"></script>';
+  // Publisher verification belongs in every HTML page header, even before ads are enabled.
+  if(!/<meta\\b(?=[^>]*\\bname\\s*=\\s*["']google-adsense-account["'])[^>]*>/i.test(out)){
+    const publisherId=String(cfg.publisherId||"pub-5389130412342963").replace(/^ca-/,"").trim();
+    if(publisherId) out=out.replace(/<head([^>]*)>/i,'<head$1><meta name="google-adsense-account" content="ca-'+publisherId+'">');
+  }
+  if(!cfg.enabled || isAdExcludedPath(pathname)) return out;
+  if(/pagead2\\.googlesyndication\\.com\\/pagead\\/js\\/adsbygoogle\\.js/i.test(out)) return out;
+  const head='<link rel="preconnect" href="https://pagead2.googlesyndication.com"><link rel="preconnect" href="https://googleads.g.doubleclick.net"><script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-'+cfg.publisherId+'"></script>';
   out=out.replace(/<head([^>]*)>/i,'<head$1>'+head);
   return optimizeHtmlForAds(out);
 }
