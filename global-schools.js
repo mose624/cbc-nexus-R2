@@ -134,7 +134,23 @@ function renderCountry(){
  const browseLink=node("a","gs-market-btn");browseLink.href="/online-teaching.html?country="+encodeURIComponent(c.name)+"#teacher-directory";browseLink.textContent="Browse approved teachers";
  const boardNote=node("p","gs-muted");boardNote.textContent="For privacy, learner names and contact details are not displayed publicly. Eligible approved teachers sign in to view appropriate learner requests.";
  actions.append(learnerLink,teacherLink,browseLink);marketplace.append(marketTitle,marketIntro,stats,actions,boardNote);
- const countryLayout=document.querySelector(".gs-country-layout");if(countryLayout){const main=countryLayout.querySelector(".gs-main-content");if(main)main.prepend(marketplace);else countryLayout.prepend(marketplace);}
+ const countryLayout=document.querySelector(".gs-country-layout");
+ // Country portal quick navigation: shared layout, with country context retained in resource links.
+ const portalNav=node("nav","gs-country-portal-nav");
+ portalNav.setAttribute("aria-label","Country learning and career resources");
+ const countryQuery=encodeURIComponent(c.name);
+ const portalItems=[
+  {label:"📘 Notes & Learning Resources",url:"/resources.html?country="+countryQuery+"&type=notes"},
+  {label:"📝 Past National Exam Papers",url:"/resources.html?country="+countryQuery+"&type=past-papers"},
+  {label:"🎯 Interactive Questions",url:"/interactive-questions.html?country="+countryQuery},
+  {label:"💼 Teaching Vacancies",url:"#vacancies"},
+  {label:"🌍 Global Online Teaching",url:"/online-teaching.html?country="+countryQuery}
+ ];
+ portalItems.forEach(item=>{const a=node("a");a.href=item.url;a.textContent=item.label;portalNav.appendChild(a);});
+ const portalStyle=node("style");
+ portalStyle.textContent=".gs-country-portal-nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:16px 0 20px}.gs-country-portal-nav a{display:flex;align-items:center;justify-content:center;min-height:52px;padding:10px 12px;text-align:center;border:1px solid #d8e5ef;border-radius:11px;background:#fff;color:#075080!important;font-weight:850;font-size:13px;text-decoration:none;box-shadow:0 3px 10px #173b5910;transition:transform .18s,background .18s}.gs-country-portal-nav a:hover{background:#e0f2fe;transform:translateY(-2px)}.gs-country-head{background:linear-gradient(90deg,rgba(4,28,48,.76),rgba(7,89,133,.38)),var(--gs-learner-bg)!important;background-size:cover!important;background-position:center!important;color:#fff!important;min-height:180px}.gs-country-head h1,.gs-country-head .gs-muted{color:#fff!important;text-shadow:0 1px 3px rgba(0,0,0,.38)}@media(max-width:900px){.gs-country-portal-nav{grid-template-columns:repeat(2,minmax(0,1fr))}.gs-country-portal-nav a:last-child{grid-column:1/-1}}@media(max-width:460px){.gs-country-portal-nav{grid-template-columns:1fr}.gs-country-portal-nav a:last-child{grid-column:auto}}";
+ document.head.appendChild(portalStyle);
+ if(countryLayout){countryLayout.parentNode.insertBefore(portalNav,countryLayout);const main=countryLayout.querySelector(".gs-main-content");if(main)main.prepend(marketplace);else countryLayout.prepend(marketplace);}
  fetch("/api/global-country-stats?country="+encodeURIComponent(c.name),{headers:{Accept:"application/json"},cache:"no-store"}).then(r=>r.json()).then(data=>{if(data&&data.ok){teacherNum.textContent=String(data.approvedTeachers||0);teacherLabel.textContent=(data.approvedTeachers===1?"approved teacher":"approved teachers")+" registered for "+c.name;learnerNum.textContent=String(data.activeLearnerRequests||0);learnerLabel.textContent=(data.activeLearnerRequests===1?"active learner request":"active learner requests")+" in "+c.name+" (identities kept private)";}else{teacherNum.textContent="—";teacherLabel.textContent="Teacher count temporarily unavailable";learnerNum.textContent="—";learnerLabel.textContent="Learner count temporarily unavailable";}}).catch(()=>{teacherNum.textContent="—";teacherLabel.textContent="Teacher count temporarily unavailable";learnerNum.textContent="—";learnerLabel.textContent="Learner count temporarily unavailable";});
 
  text($("verificationNote"),d.sources?"Some official-source links are curated below. This is not a complete national school or vacancy register. Check each linked record and its date before relying on it.":"Data status: detailed country-specific information is not yet curated in this directory. No school totals, exam dates, vacancies, salary figures, teacher rules or scholarship listings are being invented. Official sources must be researched before any field is marked verified.");
