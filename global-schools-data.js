@@ -1048,6 +1048,23 @@ Object.keys(otherContinentsProfilesBatch1).forEach(function(slug){
  const target=countryData[slug]||(countryData[slug]={});
  Object.keys(otherContinentsProfilesBatch1[slug]).forEach(function(field){target[field]=otherContinentsProfilesBatch1[slug][field];});
 });
+
+/* Türkiye: transcontinental education profile */
+countryData["turkiye"]={
+ researchStatus:"Research profile added. Verify current national curriculum, examination notices and school directory directly with the ministry before marking every field fully verified.",
+ authority:"Ministry of National Education (Millî Eğitim Bakanlığı); higher education is overseen separately by the Council of Higher Education.",
+ officialLanguages:"Turkish is the official language; minority-language education and language provision are subject to applicable national rules.",
+ curriculum:"Consult the Ministry of National Education for current national curricula, grade/subject syllabuses and textbooks; confirm the current academic-year edition.",
+ system:"School education includes pre-primary, primary, lower secondary and upper secondary stages, with vocational and higher-education pathways. Confirm current regulations from official notices.",
+ termCalendar:"Current term dates not independently verified here; consult the latest ministry academic calendar and amendments.",
+ calendar:"Use the Ministry of National Education's current school-year calendar; verify examination and school closure notices.",
+ exams:[{name:"Ministry of National Education",body:"Official curriculum, school and examination announcements; confirm the current session and timetable.",level:"School education",url:"https://www.meb.gov.tr/"}],
+ schools:[{name:"Ministry of National Education",type:"Official national authority; verify current school directories and provincial coverage.",url:"https://www.meb.gov.tr/"}],
+ papers:[{name:"Ministry of National Education",type:"Official curriculum and textbook starting point; check grade, subject and academic year.",url:"https://www.meb.gov.tr/"}],
+ jobs:[{name:"Ministry of National Education",type:"Check official teacher and education-sector recruitment notices, eligibility and deadlines.",url:"https://www.meb.gov.tr/"}],
+ teachers:[{name:"Ministry of National Education",type:"Verify teacher appointment, qualification and recruitment requirements in current official notices.",url:"https://www.meb.gov.tr/"}],
+ sources:[{label:"Türkiye Ministry of National Education",url:"https://www.meb.gov.tr/"},{label:"UNESCO national education systems",url:"https://gem-report-education-profiles.unesco.org/national-education-systems.html"}]
+};
 /* Ensure every registered country has a visible, honest research record.
  * These are discovery links and verification prompts, not claims that the fields have been researched.
  * Country facts are only promoted to verified when checked against a national authority or other primary source.
