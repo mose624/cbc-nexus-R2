@@ -2314,8 +2314,9 @@ function injectAdSenseTags(html,pathname){
 }
 function buildAdsTxt(){
   const cfg=getAdSenseConfig();
-  if(!cfg.enabled) return "# AdSense is not enabled yet. Set ADSENSE_ENABLED=true and ADSENSE_PUBLISHER_ID=pub-XXXXXXXXXXXXXXX in Render.\n";
-  return 'google.com, '+cfg.publisherId+', DIRECT, f08c47fec0942fa0\n';
+  const publisherId=String(cfg.publisherId||"pub-5389130412342963").replace(/^ca-/,"").trim();
+  if(!/^pub-[A-Za-z0-9]+$/.test(publisherId)) return "# AdSense publisher ID is not configured correctly.\n";
+  return 'google.com, '+publisherId+', DIRECT, f08c47fec0942fa0\n';
 }
 
 function escapeSeoAttribute(value){
