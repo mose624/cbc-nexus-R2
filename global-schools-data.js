@@ -2322,6 +2322,44 @@ if(countryData["new-zealand"]){
  ]);
 }
 
+
+/* Additional school directory records. Official directory portals are included for validation and wider searches. */
+Object.assign(countryData,{
+ "india":Object.assign(countryData["india"]||{},{
+  schools:(countryData["india"]&&countryData["india"].schools||[]).concat([
+   {name:"Kendriya Vidyalaya IIT Bombay",type:"Central government school",city:"Mumbai, Maharashtra",url:"https://iitpowai.kvs.ac.in/",source:"https://kvsangathan.nic.in/"},
+   {name:"Kendriya Vidyalaya No. 1 Delhi Cantt",type:"Central government school",city:"New Delhi, Delhi",url:"https://no1delhicantt.kvs.ac.in/",source:"https://kvsangathan.nic.in/"},
+   {name:"Kendriya Vidyalaya, Pattom",type:"Central government school",city:"Thiruvananthapuram, Kerala",url:"https://pattom.kvs.ac.in/",source:"https://kvsangathan.nic.in/"},
+   {name:"Jawahar Navodaya Vidyalaya, Jaffarpur Kalan",type:"Government residential school",city:"South West Delhi, Delhi",url:"https://navodaya.gov.in/",source:"https://navodaya.gov.in/"},
+   {name:"Delhi Public School, R.K. Puram",type:"Private senior secondary school",city:"New Delhi, Delhi",url:"https://www.dpsrkp.net/",source:"https://www.dpsrkp.net/"},
+   {name:"The Doon School",type:"Independent boarding school",city:"Dehradun, Uttarakhand",url:"https://www.doonschool.com/",source:"https://www.doonschool.com/"}
+  ]),
+  schoolDirectory:"Official national school search: https://www.kys.udiseplus.gov.in/ ; Kendriya Vidyalaya Sangathan: https://kvsangathan.nic.in/ ; Navodaya Vidyalaya Samiti: https://navodaya.gov.in/"
+ }),
+ "malaysia":Object.assign(countryData["malaysia"]||{},{
+  schools:(countryData["malaysia"]&&countryData["malaysia"].schools||[]).concat([
+   {name:"Garden International School",type:"International school",city:"Kuala Lumpur",url:"https://www.gardenschool.edu.my/",source:"https://www.gardenschool.edu.my/"},
+   {name:"Nexus International School Malaysia",type:"International school",city:"Putrajaya",url:"https://www.nexus.edu.my/",source:"https://www.nexus.edu.my/"},
+   {name:"The Malay College Kuala Kangsar",type:"National residential secondary school",city:"Kuala Kangsar, Perak",url:"https://mckk.edu.my/",source:"https://www.mckk.edu.my/"},
+   {name:"Sekolah Seri Puteri",type:"National residential secondary school",city:"Cyberjaya, Selangor",url:"https://www.ssp.edu.my/",source:"https://www.moe.gov.my/"},
+   {name:"Sekolah Sultan Alam Shah",type:"National residential secondary school",city:"Putrajaya",url:"https://www.sas.edu.my/",source:"https://www.moe.gov.my/"},
+   {name:"The International School @ ParkCity",type:"International school",city:"Kuala Lumpur",url:"https://isp.edu.my/",source:"https://isp.edu.my/"}
+  ]),
+  schoolDirectory:"Ministry of Education Malaysia: https://www.moe.gov.my/ ; official school information system and directories are managed by KPM."
+ }),
+ "philippines":Object.assign(countryData["philippines"]||{},{
+  schools:(countryData["philippines"]&&countryData["philippines"].schools||[]).concat([
+   {name:"Philippine Science High School Main Campus",type:"Public science high school",city:"Quezon City, Metro Manila",url:"https://pshs.edu.ph/",source:"https://pshs.edu.ph/"},
+   {name:"Ateneo de Manila University Senior High School",type:"Private senior high school",city:"Quezon City, Metro Manila",url:"https://www.ateneo.edu/",source:"https://www.ateneo.edu/"},
+   {name:"De La Salle Santiago Zobel School",type:"Private basic education school",city:"Muntinlupa City, Metro Manila",url:"https://www.dlszobel.edu.ph/",source:"https://www.dlszobel.edu.ph/"},
+   {name:"Xavier School",type:"Private basic education school",city:"San Juan City, Metro Manila",url:"https://www.xs.edu.ph/",source:"https://www.xs.edu.ph/"},
+   {name:"Manila Science High School",type:"Public science high school",city:"Ermita, Manila",url:"https://mshs.depedmanila.com/",source:"https://www.deped.gov.ph/"},
+   {name:"Quezon City Science High School",type:"Public science high school",city:"Quezon City, Metro Manila",url:"https://qcsci.depedqc.ph/",source:"https://www.deped.gov.ph/"}
+  ]),
+  schoolDirectory:"Department of Education Philippines: https://www.deped.gov.ph/ ; DepEd Schools Division Offices provide official public-school information."
+ })
+});
+
 if(typeof window!=="undefined"){window.CBE_GLOBAL_COUNTRIES=countryRegistry;window.CBE_GLOBAL_COUNTRY_DATA=countryData;}
 if(typeof module!=="undefined"&&module.exports){module.exports={countries:countryRegistry,countryData};}
 })();
