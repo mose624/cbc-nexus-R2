@@ -499,7 +499,7 @@ Object.keys(africaResearchProfilesBatch2).forEach(function(slug){
 
 /* Africa research batch 3: official-authority starting points and conservative status notes. */
 const africaResearchProfilesBatch3 = {
- "the-gambia": {
+ "gambia": {
   researchStatus:"The Ministry of Basic and Secondary Education website identifies national services, school lists, examinations guidance and published education statistics. Check each publication date before using figures or deadlines.",
   authority:"Ministry of Basic and Secondary Education (MoBSE); Ministry of Higher Education, Research, Science and Technology for tertiary education.",
   officialLanguages:"English is the official language; Mandinka, Wolof, Fula, Jola and other Gambian languages are widely used. Confirm language-of-instruction policy by level and programme.",
