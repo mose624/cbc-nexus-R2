@@ -35,9 +35,12 @@ function renderCountries(filter){
  };
  matches.forEach(c=>{
   const card=node("div","gs-country");
+  card.setAttribute("role","link");card.setAttribute("tabindex","0");card.setAttribute("aria-label","Open the "+c.name+" country dashboard");card.title="Open "+c.name+" country dashboard";
+  card.addEventListener("click",event=>{if(event.target.closest("a,button,input,select,textarea"))return;location.href=c.url;});
+  card.addEventListener("keydown",event=>{if(event.target===card&&(event.key==="Enter"||event.key===" ")){event.preventDefault();location.href=c.url;}});
   const flag=node("span","gs-flag");flag.textContent=c.flag;flag.setAttribute("aria-hidden","true");
   const body=node("span","gs-country-body");
-  const nameLink=node("a","gs-country-name");nameLink.href=c.url;nameLink.style.color="inherit";nameLink.style.textDecoration="none";
+  const nameLink=node("a","gs-country-name");nameLink.href=c.url;nameLink.style.color="inherit";nameLink.style.textDecoration="none";nameLink.setAttribute("aria-label","Open "+c.name+" country dashboard");
   const name=node("strong");name.textContent=c.name;nameLink.append(name);
   const small=node("small");small.textContent="Vacancy indexes checked 27 Oct 2026 · verify each employer advert";
   const snapshot=node("small","gs-vacancy-snapshot");
