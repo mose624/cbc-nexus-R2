@@ -2665,7 +2665,15 @@ async function serveStatic(req,res,url){
     catch{if(res.headersSent||res.writableEnded||res.destroyed)return;res.writeHead(404,{"Content-Type":"text/plain; charset=utf-8"});res.end("Not found");}
   }
 }
-const server=http.createServer(async(req,res)=>{const url=new URL(req.url,`http://${req.headers.host||"127.0.0.1"}`);setSecurityHeaders(res);const crawlerDiscoveryRequest=req.method==="GET"&&(url.pathname==="/robots.txt"||url.pathname==="/sitemap.xml");const limit=crawlerDiscoveryRequest?{allowed:true,remaining:120}:allowRequest(req,url);res.setHeader("X-RateLimit-Remaining",String(Math.max(0,limit.remaining)));if(!limit.allowed){res.setHeader("Retry-After","60");sendJson(res,429,{ok:false,error:"Too many requests. Please try again shortly."});return;}try{if(await handleApi(req,res,url))return;await serveStatic(req,res,url);}catch(error){console.error("Unhandled server error:",error);if(res.headersSent||res.writableEnded||res.destroyed){if(!res.writableEnded&&!res.destroyed)res.destroy(error);return;}sendJson(res,500,{ok:false,error:"Server error."});}});
+const server=http.createServer(async(req,res)=>{const url=new URL(req.url,`http://${req.headers.host||"127.0.0.1"}`);setSecurityHeaders(res);const crawlerDiscoveryRequest=req.method==="GET"&&(url.pathname==="/robots.txt"||url.pathname==="/sitemap.xml");const limit=crawlerDiscoveryRequest?{allowed:true,remaining:120}:allowRequest(req,url);res.setHeader("X-RateLimit-Remaining",String(Math.max(0,limit.remaining)));if(!limit.allowed){res.setHeader("Retry-After","60");sendJson(res,429,{ok:false,error:"Too many requests. Please try again shortly."});return;}const requestHost=String(req.headers.host||"").toLowerCase().replace(/:\\d+$/,"").replace(/\\.$/,"");
+const isSecondaryDomain=requestHost==="cbenexus.com"||requestHost==="www.cbenexus.com";
+const isOperationalPath=/^\\/api(?:\\/|$)/i.test(url.pathname)||url.pathname==="/ads.txt"||url.pathname==="/health";
+if(isSecondaryDomain&&(req.method==="GET"||req.method==="HEAD")&&!isOperationalPath){
+  res.writeHead(301,{"Location":"https://cbenexus.co.ke"+url.pathname+url.search,"Cache-Control":"public, max-age=3600"});
+  res.end();
+  return;
+}
+try{if(await handleApi(req,res,url))return;await serveStatic(req,res,url);}catch(error){console.error("Unhandled server error:",error);if(res.headersSent||res.writableEnded||res.destroyed){if(!res.writableEnded&&!res.destroyed)res.destroy(error);return;}sendJson(res,500,{ok:false,error:"Server error."});}});
 async function seedInteractiveQuestions(){
   try{
     const explicit=[...require("./grade10-kicd-question-banks.js"),...require("./grade10-home-science-bank.js"),...require("./grade10-aviation-building-bank.js"),...require("./grade10-electricity-metal-wood-mechanics-marine-media-bank.js"),...require("./grade10-sports-music-theatre-bank.js"),...require("./grade10-language-literature-hre-bank.js"),...require("./grade10-advanced-wordy-assessments.js"),...require("./grade4-8-high-order-question-banks.js")];
