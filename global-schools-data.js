@@ -1014,13 +1014,73 @@ Object.keys(asiaResearchProfilesBatch1).forEach(function(slug){
  const target=countryData[slug]||(countryData[slug]={});
  Object.keys(asiaResearchProfilesBatch1[slug]).forEach(function(field){target[field]=asiaResearchProfilesBatch1[slug][field];});
 });
-/* United States: enrich existing profile with authoritative national and state directory resources. */
-countryData["united-states"]=countryData["united-states"]||{};
-countryData["united-states"].authority="The U.S. Department of Education provides federal policy and data; education is primarily administered by state and local authorities, and teacher licensure is state-specific.";
-countryData["united-states"].officialLanguages="There is no single official language at the federal level; English is the primary language of instruction in most schools, with multilingual and bilingual programmes varying by state and district.";
-countryData["united-states"].schools=[{name:"NCES School and District Navigator",type:"Official federal public-school and district directory; data reflect the stated school year.",url:"https://nces.ed.gov/ccd/schoolmap/"},{name:"NCES school locator",type:"Search public schools nationwide",url:"https://nces.ed.gov/ccd/schoolsearch/"},{name:"NCES private school locator",type:"Search private schools",url:"https://nces.ed.gov/surveys/pss/privateschoolsearch/"},{name:"State Education Agencies",type:"Official state education agency directory",url:"https://nces.ed.gov/ccd/ccseas.asp"}];
-countryData["united-states"].teachers=[{name:"U.S. Department of Education",type:"Teacher certification/licensure is set by each state; consult the relevant state education agency.",url:"https://www.ed.gov/about/contact-us/faqs/Elementary%20and%20Secondary%20Education"},{name:"State Education Agencies",type:"Find state-specific licensure and certification requirements",url:"https://nces.ed.gov/ccd/ccseas.asp"}];
-countryData["united-states"].sources=(countryData["united-states"].sources||[]).concat([{label:"NCES Common Core of Data",url:"https://nces.ed.gov/ccd/aboutccd.asp"},{label:"NCES state education agencies",url:"https://nces.ed.gov/ccd/ccseas.asp"}]);
+/* United States: researched national framework and official discovery resources.
+ * School governance, curricula, calendars, examinations and public-school teacher licensing are largely state/local.
+ * National directories are entry points; individual schools, district vacancies and current requirements must be verified at source.
+ */
+countryData["united-states"]={
+ researchStatus:"Expanded using U.S. Department of Education, White House Executive Order 14224, NCES and NAEP primary sources. National school-finder and state-agency links are provided. There is no single national K–12 curriculum, term calendar, teacher licence or live vacancy register; state/district details and each vacancy must be checked individually.",
+ officialLanguages:"English was designated the official language of the United States by Executive Order 14224 on 1 March 2025. Schools and state/local authorities may still provide multilingual education and services; language-of-instruction policies vary by state, district and school.",
+ authority:"Federal: U.S. Department of Education (federal programmes, civil-rights responsibilities, data and funding). State education agencies and local school districts set and administer many K–12 standards, curricula, calendars, assessments, school operations and teacher licensure. Other relevant systems include the District of Columbia, U.S. territories, Department of Defense Education Activity (DoDEA) and Bureau of Indian Education (BIE).",
+ curriculum:"There is no single federally mandated national K–12 curriculum. States adopt academic standards and state assessment systems; districts and schools implement local curricula. Common Core standards are used by some states, not a federal curriculum. Schools may also offer Advanced Placement (AP), International Baccalaureate (IB), career/technical pathways or other programmes. Check the state education agency and individual district for current standards and course requirements.",
+ system:"Typical pathway: kindergarten through Grade 12 (K–12), usually elementary, middle/junior high and high school; exact grade groupings vary. Early childhood/pre-K, charter schools, private schools, homeschooling, alternative provision and special education are also present. Compulsory school ages, promotion, graduation credits and diploma requirements are state-specific. Higher education includes community colleges, universities and career/technical institutions.",
+ termCalendar:"There is no single national school calendar. Many K–12 schools start in August or September and finish in May or June, but dates, breaks, teacher workdays and emergency closures are set by states, districts or individual schools. Use the official school-district calendar for the specific school year; do not apply a national date to every school.",
+ calendar:"Current academic-year dates are local. Find the relevant district through the state education agency or NCES, then check that district/school's published calendar and any amendments. Public, private, charter and international schools may follow different calendars.",
+ qualificationRequirements:"Public-school teacher licensing/certification is determined by each state or territory; there is no single teaching certificate automatically accepted in all states. Common routes may require a bachelor's degree, approved teacher-preparation programme, subject/grade-level requirements, examinations, background checks and state application, but details and alternative routes vary. Private and international schools may set their own criteria. Applicants with foreign qualifications should ask the target state's licensing authority and employer about credential evaluation, English proficiency, visa/work authorisation and any additional coursework before applying.",
+ exams:[
+  {name:"Statewide student assessments",body:"Each state defines its own standards-aligned assessment system and schedule. Confirm tested grades, subjects, accommodations and dates with the state education agency.",level:"K–12; state-specific",url:"https://www.ed.gov/laws-and-policy/laws-preschool-grade-12-education/esea/what-is-the-every-student-succeeds-act"},
+  {name:"National Assessment of Educational Progress (NAEP)",body:"Known as The Nation's Report Card; a national/state-level sample assessment used to report group performance, not an individual student's school grade or graduation exam.",level:"Commonly Grades 4 and 8 in major subjects; schedule varies",url:"https://nces.ed.gov/nationsreportcard/"},
+  {name:"SAT and ACT",body:"College-admission tests administered by independent testing organisations. Whether scores are required or considered varies by institution and admissions cycle; check each college's current policy.",level:"Postsecondary admissions; not a universal school-leaving exam",url:"https://bigfuture.collegeboard.org/"},
+  {name:"State high-school graduation requirements",body:"Diploma credits, exit exams and alternative pathways vary by state and sometimes district; verify the current state rules.",level:"High school; state-specific",url:"https://www.ed.gov/"}
+ ],
+ schools:[
+  {name:"NCES Public School Search",type:"Official federal locator for public schools; check school year and the NCES record for each institution.",url:"https://nces.ed.gov/ccd/schoolsearch/"},
+  {name:"NCES Private School Search",type:"Official private-school search tool based on the Private School Universe Survey; coverage and reporting year should be checked.",url:"https://nces.ed.gov/surveys/pss/privateschoolsearch/"},
+  {name:"NCES Common Core of Data (CCD)",type:"Official public-school and district directory/data files; includes school and district identifiers and basic attributes.",url:"https://nces.ed.gov/ccd/"},
+  {name:"State Education Agencies directory",type:"Official starting point to reach each state's education department and local school information.",url:"https://nces.ed.gov/ccd/ccseas.asp"},
+  {name:"Department of Defense Education Activity (DoDEA)",type:"Official school system serving eligible military-connected communities; separate from ordinary local districts.",url:"https://www.dodea.edu/"},
+  {name:"Bureau of Indian Education (BIE)",type:"Official information on BIE-funded schools and education services.",url:"https://www.bie.edu/"}
+ ],
+ papers:[
+  {name:"NAEP released assessment questions",type:"Official released items, sample questions and frameworks; these are not a comprehensive archive of state exams.",url:"https://nces.ed.gov/nationsreportcard/"},
+  {name:"State assessment sample items and practice tests",type:"Official sample papers vary by state, subject, grade and assessment year; use the relevant state education agency.",url:"https://nces.ed.gov/ccd/ccseas.asp"},
+  {name:"U.S. Department of Education — ESSA assessment and state report-card guidance",type:"Federal policy context; state report cards and assessment arrangements are state-specific.",url:"https://www.ed.gov/laws-and-policy/laws-preschool-grade-12-education/esea/what-is-the-every-student-succeeds-act"},
+  {name:"College Board — SAT preparation",type:"Official SAT preparation and practice resources; not a K–12 state examination archive.",url:"https://satsuite.collegeboard.org/sat/practice-preparation"}
+ ],
+ jobs:[
+  {name:"Official state education agencies",type:"Use the relevant state agency to locate district/employer career pages, public recruitment rules and certification requirements; this is not one nationwide vacancy list.",url:"https://nces.ed.gov/ccd/ccseas.asp"},
+  {name:"Teach.org",type:"Teaching career and pathway information; confirm each role and requirement with the hiring employer and licensing authority.",url:"https://www.teach.org/"},
+  {name:"U.S. Department of Education careers",type:"Federal agency employment, not a nationwide public-school teacher vacancy board.",url:"https://www.ed.gov/about/jobs"},
+  {name:"ISS — International Schools Services jobs",type:"Third-party international-school recruitment. Search by location and verify each school's vacancy, deadline, visa sponsorship and contract directly.",url:"https://www.iss.edu/for-individuals/find-a-job/current-openings/"},
+  {name:"TES international teaching jobs — United States search",type:"Third-party job search. Listings and deadlines can change; verify the school and eligibility directly.",url:"https://www.tes.com/jobs/search?keywords=United%20States"},
+  {name:"CBE Nexus international teaching jobs",type:"CBE Nexus listings are a discovery route only; confirm vacancy status and conditions with the employer.",url:"/international-teaching-jobs.html"}
+ ],
+ teachers:[
+  {name:"U.S. Department of Education — teacher licensure guidance",type:"Explains that certification/licensure requirements are set by states; the federal department does not issue a universal classroom-teacher licence.",url:"https://www.ed.gov/about/contact-us/faqs/Teaching%20Initiatives%20and%20Resources"},
+  {name:"State Education Agencies directory",type:"Find the correct state/territory authority for licensing, reciprocity, alternative certification and foreign credential guidance.",url:"https://nces.ed.gov/ccd/ccseas.asp"},
+  {name:"U.S. Department of Education — recognition of foreign qualifications",type:"Explains who evaluates foreign credentials for study, employment and licensed professions; the Department itself does not evaluate foreign degrees.",url:"https://www.ed.gov/about/initiatives/international-affairs/recognition-of-foreign-qualifications"},
+  {name:"U.S. Department of Education — professional licensure",type:"General guidance on state-level professional licensing and the importance of checking the competent jurisdiction.",url:"https://www.ed.gov/about/initiatives/international-affairs/professional-licensure"}
+ ],
+ further:[
+  {name:"Federal Student Aid",url:"https://studentaid.gov/"},
+  {name:"College Navigator (NCES)",url:"https://nces.ed.gov/collegenavigator/"},
+  {name:"U.S. Department of Education — recognition of foreign qualifications",url:"https://www.ed.gov/about/initiatives/international-affairs/recognition-of-foreign-qualifications"}
+ ],
+ sources:[
+  {label:"U.S. Department of Education — Federal Role in Education",url:"https://www.ed.gov/about/ed-overview/federal-role-in-education"},
+  {label:"U.S. Department of Education — ESSA and state assessments",url:"https://www.ed.gov/laws-and-policy/laws-preschool-grade-12-education/esea/what-is-the-every-student-succeeds-act"},
+  {label:"White House Executive Order 14224 — English designated official language (1 March 2025)",url:"https://www.whitehouse.gov/presidential-actions/2025/03/designating-english-as-the-official-language-of-the-united-states/"},
+  {label:"NCES public school search",url:"https://nces.ed.gov/ccd/schoolsearch/"},
+  {label:"NCES private school search",url:"https://nces.ed.gov/surveys/pss/privateschoolsearch/"},
+  {label:"NCES Common Core of Data",url:"https://nces.ed.gov/ccd/"},
+  {label:"NCES state education agencies",url:"https://nces.ed.gov/ccd/ccseas.asp"},
+  {label:"NAEP — The Nation's Report Card",url:"https://nces.ed.gov/nationsreportcard/"},
+  {label:"Teacher certification and licensing FAQ",url:"https://www.ed.gov/about/contact-us/faqs/Teaching%20Initiatives%20and%20Resources"},
+  {label:"Recognition of foreign qualifications",url:"https://www.ed.gov/about/initiatives/international-affairs/recognition-of-foreign-qualifications"},
+  {label:"Department of Defense Education Activity",url:"https://www.dodea.edu/"},
+  {label:"Bureau of Indian Education",url:"https://www.bie.edu/"}
+ ]
+};
 
 /* Other continents batch 1: national/subnational education authority starting points for Europe, the Americas and Oceania.
  * These are research profiles, not a claim that every ministry URL, school register, calendar or exam schedule has been independently verified.
