@@ -1964,6 +1964,93 @@ further:[{name:"MBSSE",url:"https://mbsse.gov.sl/"},{name:"WAEC Sierra Leone exa
 sources:[{label:"Ministry of Basic and Senior Secondary Education",url:"https://mbsse.gov.sl/"},{label:"WAEC Sierra Leone national examinations",url:"https://www.waecsierraleone.org/examinations"},{label:"Basic and Senior Secondary Education Act 2023",url:"https://sierralii.gov.sl/akn/sl/act/2023/23/eng%402023-06-19"}]
 };
 
+
+countryData["gambia"]={
+researchStatus:"Starter profile using national education portals; confirm current calendar, school directory records and job advertisements directly with the Ministry.",
+officialLanguages:"English is the official language of instruction; Mandinka, Wolof, Fula and other Gambian languages are widely spoken.",
+authority:"Ministry of Basic and Secondary Education (MoBSE); tertiary education and skills pathways may involve other government agencies.",
+curriculum:"Use MoBSE curriculum frameworks, syllabuses and teaching materials for the current grade and subject.",
+system:"Early childhood development, lower and upper basic education, senior secondary, technical/vocational and tertiary pathways.",
+termCalendar:"School-term dates and national examination timetables are issued through current ministry and WAEC notices; verify the applicable academic year.",
+calendar:"No exact current-year dates are asserted here; check official announcements for term dates and holidays.",
+qualificationRequirements:"Teaching qualifications depend on level and employer. Verify teacher registration, required certificates and recruitment conditions with MoBSE and the relevant training institutions.",
+exams:[{name:"Grade 6 national assessment",body:"Check current MoBSE assessment guidance and the applicable national examination arrangements.",level:"Upper basic transition",url:"https://www.mobsse.gov.gm/"},{name:"WASSCE",body:"West African Senior School Certificate Examination; verify current timetable and candidate guidance with WAEC.",level:"Senior secondary",url:"https://www.waecheadquarters.org/"}],
+schools:[{name:"MoBSE",type:"Official education ministry information; not a complete school directory",url:"https://www.mobsse.gov.gm/"}],
+papers:[{name:"MoBSE curriculum and teaching resources",type:"Consult current curriculum and syllabus publications",url:"https://www.mobsse.gov.gm/"}],
+jobs:[{name:"MoBSE official announcements",type:"Check current recruitment notices; vacancies not individually verified",url:"https://www.mobsse.gov.gm/"}],
+teachers:[{name:"MoBSE",type:"Confirm teacher qualification, professional development and recruitment requirements",url:"https://www.mobsse.gov.gm/"}],
+further:[{name:"Ministry of Basic and Secondary Education",url:"https://www.mobsse.gov.gm/"},{name:"WAEC",url:"https://www.waecheadquarters.org/"}],
+sources:[{label:"Ministry of Basic and Secondary Education",url:"https://www.mobsse.gov.gm/"},{label:"West African Examinations Council",url:"https://www.waecheadquarters.org/"}]
+};
+countryData["guinea-bissau"]={
+researchStatus:"Starter profile; official ministry pages and current examination or recruitment notices should be checked before relying on dates or individual listings.",
+officialLanguages:"Portuguese is the official language; Guinea-Bissau Creole and national languages are widely spoken.",
+authority:"Ministério da Educação Nacional, Ensino Superior e Investigação Científica (confirm current ministerial structure through the government portal).",
+curriculum:"Consult the national education ministry for current curricula, syllabuses and language-of-instruction policy.",
+system:"Preschool, basic education, secondary education, technical/vocational pathways and higher education.",
+termCalendar:"Academic dates and national assessment schedules should be confirmed through current ministry circulars.",
+calendar:"No unverified term dates are listed; consult official government notices for the current year.",
+qualificationRequirements:"Teaching requirements vary by level and employer. Verify teacher-training credentials, recruitment procedures and public-service requirements with the responsible ministry.",
+exams:[{name:"Basic education completion assessment",body:"Confirm the current official examination name and arrangements with the education ministry.",level:"Basic education",url:"https://www.gov.gw/"},{name:"Secondary school examinations",body:"Consult current ministry notices for examination names, registration and dates.",level:"Secondary",url:"https://www.gov.gw/"}],
+schools:[{name:"Government of Guinea-Bissau portal",type:"Government information; not a complete school directory",url:"https://www.gov.gw/"}],
+papers:[{name:"National education ministry notices",type:"Check current official curriculum and assessment documents",url:"https://www.gov.gw/"}],
+jobs:[{name:"Government education announcements",type:"Check current public recruitment notices; vacancies not individually verified",url:"https://www.gov.gw/"}],
+teachers:[{name:"National education authorities",type:"Confirm teacher qualification and recruitment requirements through official government notices",url:"https://www.gov.gw/"}],
+further:[{name:"Government of Guinea-Bissau",url:"https://www.gov.gw/"}],
+sources:[{label:"Government of Guinea-Bissau portal",url:"https://www.gov.gw/"}]
+};
+countryData["cabo-verde"]={
+researchStatus:"Official Ministry of Education guidance for 2026–2027 is available; check the current school-specific calendar and any later ministry amendments.",
+officialLanguages:"Portuguese is the official language; Cape Verdean Creole (Kriolu) is widely spoken.",
+authority:"Ministério da Educação, Formação Profissional, Ensino Superior, Ciência e Inovação.",
+curriculum:"The Ministry publishes study plans, curriculum guidance and school-year organisation documents for basic and secondary education.",
+system:"Preschool, basic education, secondary general and technical pathways, adult basic education and higher education.",
+termCalendar:"The Ministry's approved 2026–2027 guidance sets school organisation and enrolment procedures; school-level periods differ by subsystem. The official education start was reported as 21 September 2026.",
+calendar:"Use the Ministry's 2026–2027 guidance and school-specific calendar for exact term dates, holidays and examinations.",
+qualificationRequirements:"Teacher qualifications and recruitment are regulated by the relevant public-service and education rules. Check Ministry announcements for required degrees, professional training and current openings.",
+exams:[{name:"Basic education assessments",body:"Consult the Ministry's current guidance for grade-level assessments and transition requirements.",level:"Basic education",url:"https://minedu.gov.cv/recursos_educativosorientacoes"},{name:"Secondary school examinations",body:"Use current Ministry orientation documents for examination and progression arrangements.",level:"Secondary",url:"https://minedu.gov.cv/recursos_educativosorientacoes"}],
+schools:[{name:"Ministry of Education",type:"Official education information and school-year guidance; not a complete school directory",url:"https://minedu.gov.cv/"}],
+papers:[{name:"2026–2027 school-year guidance",type:"Official school-year organisation, procedures and learning guidance",url:"https://minedu.gov.cv/recursos_educativosorientacoes"}],
+jobs:[{name:"Ministry of Education",type:"Check official recruitment notices; vacancies not individually verified",url:"https://minedu.gov.cv/"}],
+teachers:[{name:"Ministry of Education",type:"Official guidance for school organisation and teaching practice",url:"https://minedu.gov.cv/recursos_educativosorientacoes"}],
+further:[{name:"Ministry of Education",url:"https://minedu.gov.cv/"},{name:"Official 2026–2027 school-year guidance",url:"https://minedu.gov.cv/recursos_educativosorientacoes/16"},{name:"Official Gazette: Order 81/2026",url:"https://boe.incv.cv/Bulletins/View?id=112578"}],
+sources:[{label:"Ministry of Education — 2026–2027 school-year guidance",url:"https://minedu.gov.cv/recursos_educativosorientacoes/16"},{label:"Official Gazette, Order 81/2026",url:"https://boe.incv.cv/Bulletins/View?id=112578"},{label:"Radio Educativa report on 2026–2027 opening",url:"https://radioeducativa.gov.cv/noticias/302"}]
+};
+countryData["sao-tome-and-principe"]={
+researchStatus:"Starter profile; confirm current policies, school calendar and exam details with the national government and education ministry.",
+officialLanguages:"Portuguese is the official language; Forro, Angolar, Principense and other local languages are also spoken.",
+authority:"Ministério da Educação, Cultura, Ciência e Comunicação (ministerial names and responsibilities can change; verify the current government structure).",
+curriculum:"Consult the national education authority for current curricula, subject syllabuses and approved textbooks.",
+system:"Preschool, basic education, secondary education, technical/vocational training and higher education.",
+termCalendar:"Use the current ministry calendar and official notices for school opening, holidays and national examinations.",
+calendar:"Exact dates are not asserted without a current official calendar; check government announcements.",
+qualificationRequirements:"Teacher qualifications depend on teaching level and employer. Confirm training, credential recognition and recruitment requirements with the education authority.",
+exams:[{name:"Basic education completion assessments",body:"Check current ministry notices for the official examination name and assessment structure.",level:"Basic education",url:"https://www.gov.st/"},{name:"Secondary leaving examinations",body:"Consult the education authority for current national examination and certification procedures.",level:"Secondary",url:"https://www.gov.st/"}],
+schools:[{name:"Government of São Tomé and Príncipe",type:"Official government portal; not a complete school directory",url:"https://www.gov.st/"}],
+papers:[{name:"Government education notices",type:"Check for current curriculum, textbook and examination publications",url:"https://www.gov.st/"}],
+jobs:[{name:"Government recruitment announcements",type:"Check current official vacancies; no individual opening verified",url:"https://www.gov.st/"}],
+teachers:[{name:"National education authority",type:"Confirm teacher-training and professional requirements through current government notices",url:"https://www.gov.st/"}],
+further:[{name:"Government of São Tomé and Príncipe",url:"https://www.gov.st/"}],
+sources:[{label:"Government of São Tomé and Príncipe portal",url:"https://www.gov.st/"}]
+};
+countryData["equatorial-guinea"]={
+researchStatus:"Starter profile; verify current ministry names, curriculum publications, examination schedules and recruitment notices directly with the government.",
+officialLanguages:"Spanish, French and Portuguese have official-language status; Spanish is the principal language used in much formal schooling.",
+authority:"Ministry responsible for education and higher education in the Government of Equatorial Guinea; confirm the current ministry name and portfolio on the government portal.",
+curriculum:"Use government-approved curricula, subject programmes and official education-sector publications for the current grade.",
+system:"Preschool, primary, secondary, technical/vocational and higher education.",
+termCalendar:"Consult current government or ministry circulars for the school calendar, holidays and national examinations.",
+calendar:"No exact term dates are asserted here without a verified current official calendar.",
+qualificationRequirements:"Teacher qualifications and public recruitment rules vary by level and employer. Confirm credential, training and application requirements through current government notices.",
+exams:[{name:"Primary completion assessment",body:"Confirm the current official name, candidate requirements and dates with the education authority.",level:"Primary",url:"https://www.guineaecuatorialpress.com/"},{name:"Secondary examinations",body:"Consult official notices for national examination and certificate arrangements.",level:"Secondary",url:"https://www.guineaecuatorialpress.com/"}],
+schools:[{name:"Government press and official notices",type:"Government information; not a complete school directory",url:"https://www.guineaecuatorialpress.com/"}],
+papers:[{name:"Official education-sector notices",type:"Check current curriculum and examination publications",url:"https://www.guineaecuatorialpress.com/"}],
+jobs:[{name:"Government recruitment announcements",type:"Check official announcements; current vacancies not individually verified",url:"https://www.guineaecuatorialpress.com/"}],
+teachers:[{name:"Education authority announcements",type:"Confirm teacher qualification and recruitment requirements through government notices",url:"https://www.guineaecuatorialpress.com/"}],
+further:[{name:"Equatorial Guinea official government press portal",url:"https://www.guineaecuatorialpress.com/"}],
+sources:[{label:"Official government press and announcements portal",url:"https://www.guineaecuatorialpress.com/"}]
+};
+
 if(typeof window!=="undefined"){window.CBE_GLOBAL_COUNTRIES=countryRegistry;window.CBE_GLOBAL_COUNTRY_DATA=countryData;}
 if(typeof module!=="undefined"&&module.exports){module.exports={countries:countryRegistry,countryData};}
 })();
