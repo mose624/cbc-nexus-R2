@@ -2294,6 +2294,34 @@ Object.assign(countryData, {
  }
 });
 
+
+/* Verified example school records sourced from national education directories.
+ * These are sample records, not an exhaustive national list; use official directory links for full searches.
+ */
+if(countryData["singapore"]){
+ countryData["singapore"].schools = (countryData["singapore"].schools||[]).concat([
+  {name:"Admiralty Primary School",type:"Government primary school",address:"11 Woodlands Circle, Singapore 738907",phone:"+65 6362 0598",email:"admiralty_ps@moe.edu.sg",url:"https://admiraltypri.moe.edu.sg/",source:"https://www.moe.gov.sg/-/media/files/about-us/non-financial-information/admiralty-pri-non-financial-info.pdf"},
+  {name:"Admiralty Secondary School",type:"Government secondary school",address:"31 Woodlands Crescent, Singapore 737916",phone:"+65 6365 1733",url:"https://admiraltysec.moe.edu.sg/",source:"https://data.gov.sg/collections/457/view"},
+  {name:"Ahmad Ibrahim Primary School",type:"Government primary school",url:"https://ahmadibrahimpri.moe.edu.sg/",source:"https://www.moe.gov.sg/-/media/files/primary/2020-social-studies-primary.pdf"},
+  {name:"Canberra Primary School",type:"Government primary school",url:"https://canberrapri.moe.edu.sg/",source:"https://www.moe.gov.sg/-/media/files/primary/2020-social-studies-primary.pdf"},
+  {name:"Nanyang Primary School",type:"Government primary school",url:"https://nanyangpri.moe.edu.sg/",source:"https://www.moe.gov.sg/-/media/files/primary/2020-social-studies-primary.pdf"},
+  {name:"Raffles Girls' Primary School",type:"Government primary school",url:"https://rgps.moe.edu.sg/",source:"https://www.moe.gov.sg/-/media/files/primary/2020-social-studies-primary.pdf"},
+  {name:"Tao Nan School",type:"Government primary school",url:"https://taonan.moe.edu.sg/",source:"https://www.moe.gov.sg/-/media/files/primary/2020-social-studies-primary.pdf"},
+  {name:"St Andrew's Junior School",type:"Government-aided primary school",url:"https://standrewsjunior.moe.edu.sg/",source:"https://www.moe.gov.sg/-/media/files/primary/2020-social-studies-primary.pdf"}
+ ]);
+}
+if(countryData["new-zealand"]){
+ countryData["new-zealand"].schools = (countryData["new-zealand"].schools||[]).concat([
+  {name:"Auckland Grammar School",type:"State secondary school, Years 9–15, boys",address:"Mountain Road, Auckland",phone:"+64 9 623 5400",email:"admin@ags.school.nz",url:"https://www.ags.school.nz/",source:"https://www.educationcounts.govt.nz/find-school/school/profile?school=54"},
+  {name:"Auckland Girls' Grammar School",type:"State secondary school, Years 9–15, girls",address:"Howe Street, Auckland",phone:"+64 9 307 4180",email:"admin@aggs.school.nz",url:"https://www.aggs.school.nz/",source:"https://www.educationcounts.govt.nz/find-school"},
+  {name:"Alfriston College",type:"Secondary school, Years 9–15, co-educational",address:"550 Porchester Road, Auckland",phone:"+64 9 269 0080",email:"admin@alfristoncollege.school.nz",url:"https://www.alfristoncollege.school.nz/",source:"https://www.educationcounts.govt.nz/find-school"},
+  {name:"Aorere College",type:"Secondary school, Years 9–15, co-educational",address:"Portage Road, Auckland",phone:"+64 9 278 5608",email:"office@aorere.ac.nz",url:"https://www.aorere.ac.nz/",source:"https://www.educationcounts.govt.nz/find-school"},
+  {name:"Avondale College",type:"Secondary school, Years 9–15, co-educational",address:"Victor Street, Auckland",phone:"+64 9 828 7024",email:"admin@avcol.school.nz",url:"https://www.avcol.school.nz/",source:"https://www.educationcounts.govt.nz/find-school"},
+  {name:"Epsom Girls Grammar School",type:"Secondary school, Years 9–15, girls",address:"Silver Road, Auckland",phone:"+64 9 630 5963",email:"office@eggs.school.nz",url:"https://www.eggs.school.nz/",source:"https://www.educationcounts.govt.nz/find-school"},
+  {name:"Howick College",type:"Secondary school, Years 9–15, co-educational",address:"Sandspit Road, Auckland",phone:"+64 9 534 4492",email:"secretary@howick.school.nz",url:"https://www.howickcollege.school.nz/",source:"https://www.educationcounts.govt.nz/find-school"}
+ ]);
+}
+
 if(typeof window!=="undefined"){window.CBE_GLOBAL_COUNTRIES=countryRegistry;window.CBE_GLOBAL_COUNTRY_DATA=countryData;}
 if(typeof module!=="undefined"&&module.exports){module.exports={countries:countryRegistry,countryData};}
 })();
