@@ -496,6 +496,207 @@ Object.keys(africaResearchProfilesBatch2).forEach(function(slug){
  Object.keys(africaResearchProfilesBatch2[slug]).forEach(function(field){target[field]=africaResearchProfilesBatch2[slug][field];});
 });
  
+
+/* Africa research batch 3: official-authority starting points and conservative status notes. */
+const africaResearchProfilesBatch3 = {
+ "the-gambia": {
+  researchStatus:"The Ministry of Basic and Secondary Education website identifies national services, school lists, examinations guidance and published education statistics. Check each publication date before using figures or deadlines.",
+  authority:"Ministry of Basic and Secondary Education (MoBSE); Ministry of Higher Education, Research, Science and Technology for tertiary education.",
+  officialLanguages:"English is the official language; Mandinka, Wolof, Fula, Jola and other Gambian languages are widely used. Confirm language-of-instruction policy by level and programme.",
+  curriculum:"Use MoBSE curriculum and policy publications for basic and secondary education; verify current syllabus editions with the ministry.",
+  system:"Basic and secondary education are overseen by MoBSE, with separate tertiary-education oversight. Confirm current grade structure and qualification equivalencies from official publications.",
+  termCalendar:"Use the latest school-year calendar issued by MoBSE; dates are not hard-coded here.",
+  calendar:"Check MoBSE's latest circular and school-specific notices for changes.",
+  exams:[{name:"Ministry of Basic and Secondary Education",body:"Official examinations guidance and education notices; confirm the current examining body and timetable for each qualification.",level:"Basic and secondary",url:"https://www.mobse-website.org/"}],
+  schools:[{name:"Ministry of Basic and Secondary Education",type:"Official starting point for school lists and education statistics; check the date and coverage of each list",url:"https://www.mobse-website.org/"}],
+  papers:[{name:"Ministry of Basic and Secondary Education",type:"Curriculum and examination guidance; confirm availability of past papers",url:"https://www.mobse-website.org/"}],
+  jobs:[{name:"Ministry of Basic and Secondary Education",type:"Check current official recruitment notices and closing dates",url:"https://www.mobse-website.org/"}],
+  teachers:[{name:"Ministry of Basic and Secondary Education",type:"Verify teacher qualifications, recruitment and professional requirements with the ministry",url:"https://www.mobse-website.org/"}],
+  further:[{name:"Ministry of Higher Education, Research, Science and Technology",url:"https://www.gov.gm/"}],
+  sources:[{label:"Ministry of Basic and Secondary Education",url:"https://www.mobse-website.org/"},{label:"Government of The Gambia",url:"https://gambia.gov.gm/government/"}]
+ },
+ "liberia": {
+  researchStatus:"The Ministry of Education publishes national curriculum and education-sector documents. Treat draft curriculum material as draft until formally approved; verify current examination and calendar notices separately.",
+  authority:"Ministry of Education, Republic of Liberia; national examination and higher-education bodies should be checked through current government publications.",
+  officialLanguages:"English is Liberia's official language; many Liberian languages are spoken. Verify the approved language-of-instruction policy for the relevant school level.",
+  curriculum:"The Ministry of Education is the starting point for national curriculum frameworks, syllabuses and education-sector plans. Check whether a document is draft or approved.",
+  system:"The system includes early childhood, primary, secondary, technical/vocational and higher education. Confirm current grade, promotion and qualification rules from official sources.",
+  termCalendar:"Current dates not entered; use the latest Ministry of Education academic calendar or circular.",
+  calendar:"Confirm school-year dates against the latest ministry notice and any subsequent updates.",
+  exams:[{name:"Ministry of Education",body:"Consult current official guidance for national examinations, candidate requirements and timetables.",level:"School examinations",url:"https://moe.gov.lr/"}],
+  schools:[{name:"Ministry of Education",type:"National authority; check current school census, school lists and education statistics",url:"https://moe.gov.lr/"}],
+  papers:[{name:"Ministry of Education",type:"Official curriculum and assessment information; confirm whether materials are draft or final",url:"https://moe.gov.lr/"}],
+  jobs:[{name:"Ministry of Education",type:"Official recruitment and education-sector announcements; verify deadline and eligibility",url:"https://moe.gov.lr/"}],
+  teachers:[{name:"Ministry of Education",type:"Confirm teacher qualifications, recruitment and professional standards with the ministry",url:"https://moe.gov.lr/"}],
+  further:[{name:"Ministry of Education",url:"https://moe.gov.lr/"}],
+  sources:[{label:"Ministry of Education, Liberia",url:"https://moe.gov.lr/"}]
+ },
+ "sierra-leone": {
+  researchStatus:"The Ministry of Basic and Senior Secondary Education maintains an official website. Confirm the current approved curriculum, examination notices, calendar and teacher-service requirements from dated official publications.",
+  authority:"Ministry of Basic and Senior Secondary Education (MBSSE); Ministry of Technical and Higher Education for tertiary and technical pathways.",
+  officialLanguages:"English is the official language; Krio and other Sierra Leonean languages are widely used. Check official language-of-instruction guidance by level.",
+  curriculum:"Use MBSSE curriculum and policy publications and verify the edition and approval status before listing a syllabus as current.",
+  system:"Basic and senior secondary education are overseen by MBSSE; technical and higher education have separate oversight. Confirm grade and qualification rules in official documents.",
+  termCalendar:"Current term dates not entered; consult the latest MBSSE circular and school notices.",
+  calendar:"Do not rely on historical calendars; check the most recent ministry announcement.",
+  exams:[{name:"Ministry of Basic and Senior Secondary Education",body:"Official assessment and examination notices; verify current examination arrangements and timetable.",level:"Basic and senior secondary",url:"https://mbsse.gov.sl/"}],
+  schools:[{name:"Ministry of Basic and Senior Secondary Education",type:"Official starting point for school information and education statistics; verify the current register",url:"https://mbsse.gov.sl/"}],
+  papers:[{name:"Ministry of Basic and Senior Secondary Education",type:"Curriculum, syllabus and assessment guidance; verify current editions",url:"https://mbsse.gov.sl/"}],
+  jobs:[{name:"Ministry of Basic and Senior Secondary Education",type:"Check official notices and public-service recruitment channels for active vacancies",url:"https://mbsse.gov.sl/"}],
+  teachers:[{name:"Ministry of Basic and Senior Secondary Education",type:"Confirm teacher recruitment and service requirements through the ministry and relevant teacher-service authority",url:"https://mbsse.gov.sl/"}],
+  further:[{name:"Ministry of Technical and Higher Education",url:"https://www.mthe.gov.sl/"}],
+  sources:[{label:"Ministry of Basic and Senior Secondary Education",url:"https://mbsse.gov.sl/"}]
+ },
+ "togo": {
+  researchStatus:"The national Ministry of Education portal is available. Verify the latest official programme, examination announcements and school calendar before publishing dates or eligibility rules.",
+  authority:"Ministry of National Education (Ministère de l'Éducation nationale); other ministries oversee technical training and higher education.",
+  officialLanguages:"French is the official language; Ewe, Kabiyè and other national languages are used. Confirm current language-of-instruction arrangements by level.",
+  curriculum:"Consult the Ministry's official programmes, circulars and examination information; verify the version applicable to each cycle.",
+  system:"The system includes preschool, primary, secondary, technical/vocational and higher education. Confirm current grade progression and certificate equivalencies from official documents.",
+  termCalendar:"Current dates not entered; use the latest ministry school-year circular.",
+  calendar:"Confirm calendar dates from the ministry's current notice; later circulars may amend them.",
+  exams:[{name:"Ministry of National Education",body:"Official ministry announcements and school examination information; confirm current examination body and dates.",level:"School education",url:"https://education.gouv.tg/"}],
+  schools:[{name:"Ministry of National Education",type:"National authority and official starting point for school-sector information; confirm availability of a current directory",url:"https://education.gouv.tg/"}],
+  papers:[{name:"Ministry of National Education",type:"Official programmes and examination notices; verify current syllabus editions",url:"https://education.gouv.tg/"}],
+  jobs:[{name:"Ministry of National Education",type:"Check current ministry announcements and official public-service recruitment notices",url:"https://education.gouv.tg/"}],
+  teachers:[{name:"Ministry of National Education",type:"Verify teacher training, recruitment and service rules with the ministry",url:"https://education.gouv.tg/"}],
+  further:[{name:"Ministry of National Education",url:"https://education.gouv.tg/"}],
+  sources:[{label:"Ministry of National Education, Togo",url:"https://education.gouv.tg/"}]
+ },
+ "burkina-faso": {
+  researchStatus:"Education responsibilities are distributed across national ministries, including basic education and higher education. Confirm the current ministry names, official domains and document status before treating records as verified.",
+  authority:"National ministry responsible for basic education and literacy; separate national ministry responsible for higher education, scientific research and innovation.",
+  officialLanguages:"French is used in government and education administration; Burkina Faso also recognizes national languages. Verify the current legal and instructional-language policy from official sources.",
+  curriculum:"Use the responsible ministry's approved curriculum, literacy and examination publications; confirm the date and approval status of each document.",
+  system:"The system includes preschool, primary, post-primary, secondary, technical/vocational and higher education. Confirm current cycles and certificates in official documents.",
+  termCalendar:"Current school dates not entered; consult the latest official ministry circular.",
+  calendar:"Verify the current school calendar with the responsible ministry and later circulars.",
+  exams:[{name:"Responsible national education ministry",body:"Check official examination notices and the current national assessment arrangements before publishing dates.",level:"School examinations",url:"https://www.education.gov.bf/"}],
+  schools:[{name:"Government of Burkina Faso",type:"Government portal as a discovery point; identify the current responsible ministry and validate any school register",url:"https://www.gouvernement.gov.bf/"}],
+  papers:[{name:"Government of Burkina Faso",type:"Use official ministry publications for approved syllabuses and examinations; direct ministry portal requires validation",url:"https://www.gouvernement.gov.bf/"}],
+  jobs:[{name:"Government of Burkina Faso",type:"Check current public-service recruitment notices and the responsible ministry's announcements",url:"https://www.gouvernement.gov.bf/"}],
+  teachers:[{name:"Responsible national education ministry",type:"Confirm teacher qualification and recruitment rules through current official notices",url:"https://www.gouvernement.gov.bf/"}],
+  further:[{name:"Government of Burkina Faso",url:"https://www.gouvernement.gov.bf/"}],
+  sources:[{label:"Government of Burkina Faso (discovery portal; verify ministry links)",url:"https://www.gouvernement.gov.bf/"}]
+ },
+ "mali": {
+  researchStatus:"Official education authority pages and current legal notices should be checked for the responsible ministry, curriculum, exams and school calendar. No dates or vacancies are asserted here.",
+  authority:"National ministry responsible for education; separate portfolio(s) may oversee higher education and scientific research. Confirm current official ministry structure.",
+  officialLanguages:"Bambara and other national languages are widely spoken; French has historically been used in administration and schooling. Because language policy can change, verify the current legal status and school-language rules with official sources.",
+  curriculum:"Use the current approved national curriculum and ministry circulars; check the issue date and applicable education cycle.",
+  system:"The system includes basic, secondary, technical/vocational and higher education pathways. Confirm the current structure and certificates with official ministry documents.",
+  termCalendar:"Current school calendar not entered; consult the latest official ministry notice.",
+  calendar:"Verify dates and any revisions through the current ministry circular.",
+  exams:[{name:"National education authority",body:"Check the current official examination calendar and candidate notices; no dates are asserted here.",level:"School examinations",url:"https://www.education.gouv.ml/"}],
+  schools:[{name:"Government of Mali",type:"Official government discovery point; confirm the current education ministry and school-register link",url:"https://www.gouvernement.ml/"}],
+  papers:[{name:"Government of Mali",type:"Locate approved curriculum and examination publications through the current ministry",url:"https://www.gouvernement.ml/"}],
+  jobs:[{name:"Government of Mali",type:"Check official public-service and education ministry recruitment notices",url:"https://www.gouvernement.ml/"}],
+  teachers:[{name:"National education authority",type:"Verify teacher qualification and recruitment requirements from current official notices",url:"https://www.gouvernement.ml/"}],
+  further:[{name:"Government of Mali",url:"https://www.gouvernement.ml/"}],
+  sources:[{label:"Government of Mali (discovery portal; validate current ministry links)",url:"https://www.gouvernement.ml/"}]
+ },
+ "niger": {
+  researchStatus:"Education responsibilities and ministry portfolios may be reorganized. Verify the current ministry name, official portal and dated curriculum/examination circulars before marking details as verified.",
+  authority:"National ministry responsible for primary/secondary education and literacy; confirm the current structure and separate higher-education authority from official government notices.",
+  officialLanguages:"Hausa, Zarma-Songhai, Tamasheq, Fulfulde, Kanuri and other national languages are spoken; French has been used in administration and schooling. Verify current official-language and instructional-language policy from current law and ministry guidance.",
+  curriculum:"Consult current approved curriculum and official examination publications once the responsible ministry portal is validated.",
+  system:"The system includes basic, secondary, technical/vocational and higher education. Confirm current cycle names and qualification requirements from official documents.",
+  termCalendar:"Current school dates not entered; consult the latest official ministry circular.",
+  calendar:"Check the latest dated ministry calendar and any amendments.",
+  exams:[{name:"National education authority",body:"Use current official examination notices; no timetable is assumed here.",level:"School examinations",url:"https://www.gouv.ne/"}],
+  schools:[{name:"Government of Niger",type:"Government discovery portal; verify current ministry and school-register links",url:"https://www.gouv.ne/"}],
+  papers:[{name:"Government of Niger",type:"Locate approved curriculum and examination resources through the current responsible ministry",url:"https://www.gouv.ne/"}],
+  jobs:[{name:"Government of Niger",type:"Check current government and ministry recruitment notices",url:"https://www.gouv.ne/"}],
+  teachers:[{name:"National education authority",type:"Verify teacher recruitment and professional requirements through current official notices",url:"https://www.gouv.ne/"}],
+  further:[{name:"Government of Niger",url:"https://www.gouv.ne/"}],
+  sources:[{label:"Government of Niger (discovery portal; validate current ministry links)",url:"https://www.gouv.ne/"}]
+ },
+ "burundi": {
+  researchStatus:"The responsible national ministry and its current official portal should be confirmed against government sources. School calendars, examination dates and recruitment notices are intentionally not guessed.",
+  authority:"Ministry responsible for national education and scientific research; confirm the current official ministry title and division of responsibilities.",
+  officialLanguages:"Kirundi and French are official languages; English is also an official language under Burundi's legal framework. Verify the language-of-instruction policy for each cycle.",
+  curriculum:"Consult current ministry-approved curricula, programmes and examination guidance; check the edition and applicable grade.",
+  system:"The system includes preschool, basic education, post-basic/secondary, technical/vocational and higher education. Confirm current grade structure and certificate names from official sources.",
+  termCalendar:"Current dates not entered; use the latest official ministry calendar or circular.",
+  calendar:"Check the ministry's most recent dated school calendar and amendments.",
+  exams:[{name:"Responsible national education ministry",body:"Confirm current national examination arrangements and timetables with official notices.",level:"School examinations",url:"https://www.gov.bi/"}],
+  schools:[{name:"Government of Burundi",type:"Government discovery point; verify the responsible ministry's school directory and statistics",url:"https://www.gov.bi/"}],
+  papers:[{name:"Government of Burundi",type:"Find approved curriculum and examination resources through the current ministry",url:"https://www.gov.bi/"}],
+  jobs:[{name:"Government of Burundi",type:"Check current public-service and ministry recruitment notices",url:"https://www.gov.bi/"}],
+  teachers:[{name:"Responsible national education ministry",type:"Verify teacher qualifications, recruitment and service rules with current official notices",url:"https://www.gov.bi/"}],
+  further:[{name:"Government of Burundi",url:"https://www.gov.bi/"}],
+  sources:[{label:"Government of Burundi (discovery portal; validate current ministry links)",url:"https://www.gov.bi/"}]
+ },
+ "seychelles": {
+  researchStatus:"The Ministry of Education site provides school-year calendar resources, job-vacancy information and education resources. Use the latest calendar file and verify its coverage before listing dates.",
+  authority:"Ministry of Education; relevant higher-education and human-resource agencies should be confirmed through current government publications.",
+  officialLanguages:"Seychelles has three official languages: Seychellois Creole, English and French. Verify the language used for instruction by level and school.",
+  curriculum:"Use Ministry of Education curriculum, policy, past-paper and resource publications; record the date/version of each resource.",
+  system:"The system includes early childhood, primary, secondary, professional/technical and post-secondary pathways. Confirm current grade and qualification details from the ministry.",
+  termCalendar:"The ministry publishes calendar-of-operations resources for state primary and secondary schools and professional centres; use the current file.",
+  calendar:"Official school calendar resource is available from the Ministry of Education website; check for the newest file and any later notices.",
+  exams:[{name:"Ministry of Education",body:"Official education resources and past-paper links; confirm current examination notices and dates.",level:"School education",url:"https://edu.gov.sc/"}],
+  schools:[{name:"Ministry of Education",type:"National authority; check the current school list and state/private school coverage",url:"https://edu.gov.sc/"}],
+  papers:[{name:"Ministry of Education",type:"Official resources and past papers where published",url:"https://edu.gov.sc/"}],
+  jobs:[{name:"Ministry of Education",type:"Official vacancies section; check the live posting, eligibility and deadline",url:"https://edu.gov.sc/"}],
+  teachers:[{name:"Ministry of Education",type:"Confirm current recruitment, qualifications and professional requirements through ministry notices",url:"https://edu.gov.sc/"}],
+  further:[{name:"Ministry of Education",url:"https://edu.gov.sc/"}],
+  sources:[{label:"Ministry of Education, Seychelles",url:"https://edu.gov.sc/"}]
+ },
+ "egypt": {
+  researchStatus:"National education and higher-education responsibilities are split between ministries. Use the current official portals for the relevant school stage and verify curriculum, examination and calendar publications by year.",
+  authority:"Ministry of Education and Technical Education; Ministry of Higher Education and Scientific Research for tertiary education.",
+  officialLanguages:"Arabic is the official language. English and French may be taught as foreign languages; the language of instruction varies by programme and institution.",
+  curriculum:"Consult the Ministry of Education and Technical Education for current school curricula, assessment and examination announcements. Verify the year and stage.",
+  system:"The system includes kindergarten, basic education, secondary general and technical education, and higher education. Confirm current pathways, admission rules and qualification equivalencies from official publications.",
+  termCalendar:"Current school-year dates not entered; use the latest ministry-announced academic calendar.",
+  calendar:"Check the current Ministry of Education and Technical Education school-year announcement for dates and subsequent changes.",
+  exams:[{name:"Ministry of Education and Technical Education",body:"Official school assessment and examination announcements; verify current grade-specific schedules.",level:"School examinations",url:"https://moe.gov.eg/"}],
+  schools:[{name:"Ministry of Education and Technical Education",type:"National authority; check official school directories and current education statistics",url:"https://moe.gov.eg/"}],
+  papers:[{name:"Ministry of Education and Technical Education",type:"Official curricula, assessment and examination notices; verify current versions",url:"https://moe.gov.eg/"}],
+  jobs:[{name:"Ministry of Education and Technical Education",type:"Check official ministry and civil-service recruitment announcements for active vacancies",url:"https://moe.gov.eg/"}],
+  teachers:[{name:"Ministry of Education and Technical Education",type:"Confirm teacher appointment, qualifications and recruitment requirements from current official notices",url:"https://moe.gov.eg/"}],
+  further:[{name:"Ministry of Higher Education and Scientific Research",url:"https://mohesr.gov.eg/"}],
+  sources:[{label:"Ministry of Education and Technical Education",url:"https://moe.gov.eg/"},{label:"Ministry of Higher Education and Scientific Research",url:"https://mohesr.gov.eg/"}]
+ },
+ "tunisia": {
+  researchStatus:"The national Ministry of Education is the primary starting point for school-level information. Confirm the current official portal, school-year circulars, examination schedules and approved curriculum editions before marking details verified.",
+  authority:"Ministry of Education (Ministère de l'Éducation); separate ministry responsible for higher education and scientific research.",
+  officialLanguages:"Arabic is the official language. French is widely used in parts of education, particularly in some scientific and technical subjects; actual instruction depends on level and programme.",
+  curriculum:"Use current Ministry of Education programmes, official circulars and national examination information; verify each document's year and cycle.",
+  system:"The system includes preschool, primary, preparatory/basic, secondary, technical/vocational and higher education. Confirm current pathway names and qualification rules from ministry publications.",
+  termCalendar:"Current dates not entered; consult the latest official ministry school calendar.",
+  calendar:"Verify the current school-year circular and any amendments from the ministry.",
+  exams:[{name:"Ministry of Education",body:"Official examination announcements and education circulars; check the current timetable for the relevant examination.",level:"School examinations",url:"https://www.education.gov.tn/"}],
+  schools:[{name:"Ministry of Education",type:"National authority; verify the current school directory and official education statistics",url:"https://www.education.gov.tn/"}],
+  papers:[{name:"Ministry of Education",type:"Official curriculum and examination guidance; confirm current editions",url:"https://www.education.gov.tn/"}],
+  jobs:[{name:"Ministry of Education",type:"Check current official recruitment notices and public-service procedures",url:"https://www.education.gov.tn/"}],
+  teachers:[{name:"Ministry of Education",type:"Verify teacher recruitment and qualification rules through current ministry notices",url:"https://www.education.gov.tn/"}],
+  further:[{name:"Ministry responsible for higher education",type:"Confirm current official portal through the Tunisian government directory",url:"https://www.tunisie.gov.tn/"}],
+  sources:[{label:"Tunisian government portal (confirm current education ministry links)",url:"https://www.tunisie.gov.tn/"}]
+ },
+ "democratic-republic-of-the-congo": {
+  researchStatus:"Education administration is divided across national portfolios, including primary/secondary education and higher education. Confirm the current official ministry domains and dated circulars before treating school lists, calendars or vacancies as verified.",
+  authority:"National ministry responsible for primary, secondary and technical education; separate ministry responsible for higher education and universities.",
+  officialLanguages:"French is the official language. Lingala, Swahili, Kikongo ya leta and Tshiluba are national languages; use of languages in early learning and instruction varies by region and programme.",
+  curriculum:"Use current approved curricula and official ministry guidance for the relevant education cycle; check the edition, language and effective date.",
+  system:"The system includes preschool, primary, secondary, technical/vocational and higher education. Confirm current grade progression and state examination requirements from official sources.",
+  termCalendar:"Current school-year dates not entered; consult the latest ministry circular and any subsequent notices.",
+  calendar:"Verify the current calendar through the responsible national ministry; do not infer dates from older circulars.",
+  exams:[{name:"National education authority",body:"Check current official examination and state-test notices with the responsible ministry.",level:"School examinations",url:"https://www.primature.gouv.cd/"}],
+  schools:[{name:"Government of the Democratic Republic of the Congo",type:"Government discovery portal; verify current ministry and official school-register links",url:"https://www.primature.gouv.cd/"}],
+  papers:[{name:"Government of the Democratic Republic of the Congo",type:"Locate approved curriculum and examination materials through the current ministry",url:"https://www.primature.gouv.cd/"}],
+  jobs:[{name:"Government of the Democratic Republic of the Congo",type:"Check official government and ministry recruitment notices; verify all deadlines",url:"https://www.primature.gouv.cd/"}],
+  teachers:[{name:"National education authority",type:"Confirm teacher qualification, recruitment and service requirements through current official ministry notices",url:"https://www.primature.gouv.cd/"}],
+  further:[{name:"Government of the Democratic Republic of the Congo",url:"https://www.primature.gouv.cd/"}],
+  sources:[{label:"Government of the Democratic Republic of the Congo (discovery portal; validate ministry links)",url:"https://www.primature.gouv.cd/"}]
+ }
+};
+Object.keys(africaResearchProfilesBatch3).forEach(function(slug){
+ const target=countryData[slug]||(countryData[slug]={});
+ Object.keys(africaResearchProfilesBatch3[slug]).forEach(function(field){target[field]=africaResearchProfilesBatch3[slug][field];});
+});
+
 /* Ensure every registered country has a visible, honest research record.
  * These are discovery links and verification prompts, not claims that the fields have been researched.
  * Country facts are only promoted to verified when checked against a national authority or other primary source.
