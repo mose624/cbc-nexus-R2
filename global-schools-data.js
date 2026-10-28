@@ -1877,6 +1877,93 @@ further:[{name:"Ministry of National Education",url:"https://education.gouv.tg/"
 sources:[{label:"Ministry of National Education",url:"https://education.gouv.tg/"},{label:"Official education planning and statistics portal",url:"https://planifeducation.gouv.tg/"}]
 };
 
+
+countryData["niger"]={
+researchStatus:"Profile assembled from government education information and national news sources; verify current school directories and vacancies directly.",
+officialLanguages:"French remains widely used in administration and schooling; Niger's language policy has evolved, so verify current official status and language-of-instruction guidance with the government.",
+authority:"Ministère de l’Éducation nationale, de l’Alphabétisation et de la Promotion des Langues.",
+curriculum:"Use current ministry programmes and official pedagogical guidance for each grade and language pathway.",
+system:"Preschool, primary, lower and upper secondary, technical/vocational and non-formal education.",
+termCalendar:"The 2026–2027 school year was announced to begin on 1 October 2026; confirm term breaks and examination dates in current ministry circulars.",
+calendar:"Opening date is based on a current national news-agency report; consult ministry notices for amendments and full exam schedules.",
+qualificationRequirements:"Teacher recruitment and qualifications depend on cadre and level. Verify required certificates, training and current recruitment notices with the ministry.",
+exams:[{name:"CFEPD / CEPE",body:"Primary-school completion examination naming may vary by programme; confirm the current official designation and procedures.",level:"Primary",url:"https://www.gouv.ne/"},{name:"BEPC",body:"Lower-secondary certificate examination; check current official notices.",level:"Lower secondary",url:"https://www.gouv.ne/"},{name:"Baccalauréat",body:"Upper-secondary leaving examination; verify timetable and candidate requirements with the ministry.",level:"Upper secondary",url:"https://www.gouv.ne/"}],
+schools:[{name:"Government of Niger portal",type:"Official government information; not a complete school directory",url:"https://www.gouv.ne/"}],
+papers:[{name:"Ministry notices and pedagogical resources",type:"Check current official curriculum and examination publications",url:"https://www.gouv.ne/"}],
+jobs:[{name:"Ministry of National Education",type:"Check official recruitment announcements; vacancies not individually verified",url:"https://www.gouv.ne/"}],
+teachers:[{name:"Ministry of National Education",type:"Confirm teacher recruitment and training requirements with the ministry",url:"https://www.gouv.ne/"}],
+further:[{name:"Government of Niger",url:"https://www.gouv.ne/"}],
+sources:[{label:"Nigerien News Agency: 2026–2027 school-year opening",url:"https://anp.ne/rentree-scolaire-2026-2027-au-niger-pres-de-4-millions-deleves-et-94-800-enseignants-reprennent-le-chemin-de-lecole-le-1er-octobre/"}]
+};
+countryData["guinea"]={
+researchStatus:"Curriculum information reflects the official 2026 reform announcement; verify ministry circulars, school records and current vacancies.",
+officialLanguages:"French is the principal language of schooling and administration; Guinea also has many national languages and multilingual education initiatives.",
+authority:"Ministère de l’Enseignement Pré-Universitaire et de l’Alphabétisation; Institut National de Recherche et d’Action Pédagogique (INRAP) supports curriculum development.",
+curriculum:"New official primary curricula were authorised for publication in September 2026 for implementation from the 2026–2027 school year, according to UNESCO's International Bureau of Education.",
+system:"Preschool, primary, lower and upper secondary, technical/vocational training, and higher education.",
+termCalendar:"Check current ministry announcements for the 2026–2027 school calendar and national exam timetables.",
+calendar:"No unverified term dates are asserted here; follow ministry notices for changes.",
+qualificationRequirements:"Teacher requirements vary by level and recruitment route. Check current ministry and teacher-training institution requirements before applying.",
+exams:[{name:"CEE / entrance examination",body:"Primary completion and transition assessment; confirm current official title and arrangements.",level:"Primary",url:"https://www.ibe.unesco.org/en/articles/guinea-curriculum-reform"},{name:"BEPC",body:"Lower-secondary certificate examination; check ministry notices for current arrangements.",level:"Lower secondary",url:"https://www.ibe.unesco.org/en/articles/guinea-curriculum-reform"},{name:"Baccalauréat",body:"Upper-secondary leaving examination; check official candidate and timetable notices.",level:"Upper secondary",url:"https://www.ibe.unesco.org/en/articles/guinea-curriculum-reform"}],
+schools:[{name:"INRAP curriculum development",type:"Curriculum authority information; not a complete school directory",url:"https://www.ibe.unesco.org/en/articles/guinea-curriculum-reform"}],
+papers:[{name:"2026 official primary curriculum reform",type:"Curriculum reform announcement and implementation context",url:"https://www.ibe.unesco.org/en/articles/guinea-curriculum-reform"}],
+jobs:[{name:"National education ministry announcements",type:"Check official recruitment notices; live vacancies not individually verified",url:"https://www.ibe.unesco.org/en/articles/guinea-curriculum-reform"}],
+teachers:[{name:"INRAP and ministry curriculum guidance",type:"Check current teacher orientation and training information",url:"https://www.ibe.unesco.org/en/articles/guinea-curriculum-reform"}],
+further:[{name:"UNESCO International Bureau of Education — Guinea curriculum reform",url:"https://www.ibe.unesco.org/en/articles/guinea-curriculum-reform"}],
+sources:[{label:"UNESCO-IBE: Guinea's new official primary curricula, September 2026",url:"https://www.ibe.unesco.org/en/articles/guinea-curriculum-reform"}]
+};
+countryData["mauritania"]={
+researchStatus:"Profile links to the Ministry's education portal and current school-year information; confirm exact dates and individual listings directly.",
+officialLanguages:"Arabic is the official language; French is also used in some educational and administrative contexts, and national languages include Pulaar, Soninke and Wolof.",
+authority:"Ministère de l’Éducation et de la Réforme du Système d’Enseignement.",
+curriculum:"Consult the ministry for current national curricula, programme updates and subject guidance.",
+system:"Basic education, secondary education, technical and vocational training, and higher education.",
+termCalendar:"The ministry announced the 2026–2027 school year opening for 5 October 2026; consult the official portal for full calendar and changes.",
+calendar:"Current opening information is reported by a national news source quoting ministry notices; verify the full official calendar directly.",
+qualificationRequirements:"Teacher eligibility varies by grade, language and employment route. Check ministry recruitment notices and the relevant training requirements.",
+exams:[{name:"Concours d’entrée / primary completion assessments",body:"Check the ministry portal for current national assessment names and procedures.",level:"Primary",url:"https://decv2.education.gov.mr/"},{name:"Brevet",body:"Lower-secondary certificate examination information is published through the ministry's exam portal.",level:"Lower secondary",url:"https://decv2.education.gov.mr/"},{name:"Baccalauréat",body:"The ministry exam portal publishes Baccalauréat results and related notices.",level:"Upper secondary",url:"https://decv2.education.gov.mr/"}],
+schools:[{name:"Ministry examinations and education portal",type:"Official education and examination information; not a complete school directory",url:"https://decv2.education.gov.mr/"}],
+papers:[{name:"Ministry examinations portal",type:"Official exam announcements and results; availability varies",url:"https://decv2.education.gov.mr/"}],
+jobs:[{name:"Ministry of Education and System Reform",type:"Check official recruitment announcements; vacancies not individually verified",url:"https://decv2.education.gov.mr/"}],
+teachers:[{name:"Ministry of Education and System Reform",type:"Confirm teacher recruitment and qualification requirements with the ministry",url:"https://decv2.education.gov.mr/"}],
+further:[{name:"Mauritania Ministry education and examinations portal",url:"https://decv2.education.gov.mr/"}],
+sources:[{label:"Ministry of Education and System Reform portal",url:"https://decv2.education.gov.mr/"},{label:"2026–2027 opening date report quoting ministry notice",url:"https://elhadeth.mr/node/33691"}]
+};
+countryData["liberia"]={
+researchStatus:"Official Ministry of Education portal provides national curriculum, sector plan and recruitment notices; individual school and vacancy entries need direct verification.",
+officialLanguages:"English is the official language of instruction; many Liberian languages are spoken nationwide.",
+authority:"Ministry of Education, Republic of Liberia.",
+curriculum:"The Ministry publishes the National Curriculum and has announced a draft revised national curriculum for stakeholder input; check the latest approved version before use.",
+system:"Early childhood, primary, junior and senior secondary, technical/vocational, non-formal and higher education.",
+termCalendar:"Use current Ministry of Education announcements for the academic calendar, examination windows and term breaks.",
+calendar:"Confirm current school dates and changes on the ministry portal.",
+qualificationRequirements:"Public-sector teacher hiring may include credential verification, assessment and interview steps. Consult current Ministry and Civil Service Agency notices for required qualifications.",
+exams:[{name:"WAEC national examinations",body:"Liberia participates in West African examinations; verify current exam and candidate information with the Ministry and WAEC.",level:"Secondary",url:"https://moe.gov.lr/"},{name:"WASSCE",body:"West African Senior School Certificate Examination; confirm current Liberian timetable and requirements.",level:"Senior secondary",url:"https://moe.gov.lr/"}],
+schools:[{name:"Ministry of Education",type:"Official curriculum and education-sector information; not a complete school directory",url:"https://moe.gov.lr/"}],
+papers:[{name:"National Curriculum",type:"Ministry-published curriculum documents; check approved edition",url:"https://moe.gov.lr/"}],
+jobs:[{name:"Ministry of Education — bids and vacancies",type:"Official announcements; verify that each vacancy is open before applying",url:"https://moe-liberia.org/"}],
+teachers:[{name:"Ministry of Education teacher workforce information",type:"Teacher workforce strategy and recruitment guidance",url:"https://www.moe.gov.lr/wp-content/uploads/2019/09/Teaching-Workforce-Management-Strategy-2023-2035.pdf"}],
+further:[{name:"Ministry of Education",url:"https://moe.gov.lr/"},{name:"Ministry portal with curriculum and vacancies",url:"https://moe-liberia.org/"}],
+sources:[{label:"Liberia Ministry of Education: curriculum and sector plan",url:"https://moe.gov.lr/"},{label:"Ministry portal: National Curriculum and vacancies",url:"https://moe-liberia.org/"}]
+};
+countryData["sierra-leone"]={
+researchStatus:"Profile based on the Ministry and WAEC official sources; school-level directory details and active job vacancies should be verified individually.",
+officialLanguages:"English is the official language of schooling and administration; Krio and other community languages are widely used.",
+authority:"Ministry of Basic and Senior Secondary Education (MBSSE); Sierra Leone Teaching Service Commission supports teacher workforce management; WAEC conducts national examinations.",
+curriculum:"MBSSE publishes basic and senior secondary curriculum frameworks, subject syllabuses and curriculum resources through official portals.",
+system:"Three years pre-primary, six years primary and three years junior secondary form the 12-year basic education structure, followed by senior secondary and technical/vocational pathways.",
+termCalendar:"The MBSSE website publishes school dates and calendar notices; the displayed 2025–2026 calendar should not be treated as the 2026–2027 calendar.",
+calendar:"Check the ministry's current school dates page for the latest academic-year schedule.",
+qualificationRequirements:"Teacher registration, qualifications and recruitment are subject to national requirements and employer notices. Check the Teaching Service Commission and ministry for current rules.",
+exams:[{name:"NPSE",body:"National Primary School Examination at the end of primary school.",level:"Primary",url:"https://www.waecsierraleone.org/examinations"},{name:"BECE",body:"Basic Education Certificate Examination at the end of junior secondary school.",level:"Junior secondary",url:"https://www.waecsierraleone.org/examinations/bece"},{name:"WASSCE",body:"West African Senior School Certificate Examination for senior secondary candidates.",level:"Senior secondary",url:"https://www.waecsierraleone.org/examinations"}],
+schools:[{name:"MBSSE official portal",type:"Education policy, school dates and sector information; not a complete school directory",url:"https://mbsse.gov.sl/"},{name:"MBSSE learning management system",type:"Online secondary learning resources; available courses vary",url:"https://lmis.mbsse.datahub.gov.sl/"}],
+papers:[{name:"MBSSE curriculum and knowledge resources",type:"Official curriculum frameworks, subject syllabuses and learning resources",url:"https://mbsse.gov.sl/senior-secondary-education-curriculum/"}],
+jobs:[{name:"MBSSE and Teaching Service Commission announcements",type:"Check current official notices; vacancies not individually verified",url:"https://mbsse.gov.sl/"}],
+teachers:[{name:"MBSSE curriculum resources",type:"Curriculum and teaching support resources",url:"https://mbsse.gov.sl/senior-secondary-education-curriculum/"}],
+further:[{name:"MBSSE",url:"https://mbsse.gov.sl/"},{name:"WAEC Sierra Leone examinations",url:"https://www.waecsierraleone.org/examinations"},{name:"MBSSE learning platform",url:"https://lmis.mbsse.datahub.gov.sl/"}],
+sources:[{label:"Ministry of Basic and Senior Secondary Education",url:"https://mbsse.gov.sl/"},{label:"WAEC Sierra Leone national examinations",url:"https://www.waecsierraleone.org/examinations"},{label:"Basic and Senior Secondary Education Act 2023",url:"https://sierralii.gov.sl/akn/sl/act/2023/23/eng%402023-06-19"}]
+};
+
 if(typeof window!=="undefined"){window.CBE_GLOBAL_COUNTRIES=countryRegistry;window.CBE_GLOBAL_COUNTRY_DATA=countryData;}
 if(typeof module!=="undefined"&&module.exports){module.exports={countries:countryRegistry,countryData};}
 })();
