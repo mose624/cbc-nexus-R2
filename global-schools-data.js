@@ -2205,6 +2205,95 @@ Object.assign(countryData, {
  }
 });
 
+
+/* Official-source batch: South Korea, Vietnam, Pakistan, Bangladesh, Sri Lanka and Maldives. */
+Object.assign(countryData, {
+ "south-korea": {
+  officialLanguages:"Korean is the official language of the Republic of Korea; English and other foreign languages are taught as subjects, with additional language programmes in some schools.",
+  authority:"Ministry of Education, Republic of Korea; metropolitan and provincial offices of education administer local schools.",
+  curriculum:"The national curriculum is issued by the Ministry of Education. School implementation, elective offerings and local arrangements are managed by schools and offices of education.",
+  system:"Six years of elementary school, three years of middle school and three years of high school, followed by higher or vocational pathways.",
+  termCalendar:"The school year generally begins in March. Summer and winter vacation dates are set by individual schools and may vary; confirm the current calendar with the school or local office of education.",
+  calendar:"Check the Ministry of Education and the relevant local office of education for current school calendars.",
+  qualificationRequirements:"Teacher licensing and recruitment depend on grade, subject and employer. The EPIK programme recruits eligible English-language teachers for public schools; eligibility restrictions and current intake dates must be checked directly.",
+  schools:[{name:"Ministry of Education, Republic of Korea",type:"Official national education authority",url:"https://english.moe.go.kr/"},{name:"National Institute for International Education — EPIK",type:"Official English-teacher programme and eligibility information",url:"https://www.niied.go.kr/web/NIIED/contents/niiedEng/eng_EPIK"}],
+  jobs:[{name:"English Program in Korea (EPIK)",type:"Official programme with term-based recruitment; check current eligibility and open intake",url:"https://epik.go.kr/web/epik/contents/How"},{name:"Ministry of Education",type:"Official national authority; not a consolidated live list of all school vacancies",url:"https://english.moe.go.kr/"}],
+  teachers:[{name:"National Institute for International Education — EPIK",url:"https://www.niied.go.kr/web/NIIED/contents/niiedEng/eng_EPIK"},{name:"Ministry of Education",url:"https://english.moe.go.kr/"}],
+  sources:[{label:"Ministry of Education, Republic of Korea",url:"https://english.moe.go.kr/"},{label:"EPIK official application guide",url:"https://epik.go.kr/web/epik/contents/How"},{label:"National Institute for International Education: EPIK",url:"https://www.niied.go.kr/web/NIIED/contents/niiedEng/eng_EPIK"}],
+  researchStatus:"Official ministry and teacher-recruitment programme sources checked. Exact local school calendars and active vacancies must be verified at school or office-of-education level."
+ },
+ "vietnam": {
+  officialLanguages:"Vietnamese is the official and national language. Ethnic minority languages may be used in local and educational contexts under applicable policy.",
+  authority:"Ministry of Education and Training (MOET); provincial and municipal People's Committees and education departments implement local school-year plans.",
+  curriculum:"MOET sets the national general-education curriculum and standards. Local authorities issue annual implementation plans within the national framework.",
+  system:"Preschool, primary, lower-secondary and upper-secondary education, with vocational and higher-education pathways.",
+  termCalendar:"The national 2026–2027 framework sets school opening ceremony for 5 September; first semester must end before 18 January, and the school year must finish before 31 May 2027. Provinces publish local schedules and may set detailed dates within the framework.",
+  calendar:"Use the national government announcement and the relevant provincial education department for the complete local calendar.",
+  qualificationRequirements:"Teacher qualification and recruitment requirements depend on teaching level, public/private employer and current national rules. Check the relevant local education department's official recruitment notice.",
+  schools:[{name:"Ministry of Education and Training",type:"Official national education authority",url:"https://moet.gov.vn/"},{name:"Government of Vietnam policy portal: 2026–2027 school-year framework",type:"Official government announcement of national time framework",url:"https://xaydungchinhsach.chinhphu.vn/khung-ke-hoach-thoi-gian-nam-hoc-toan-quoc-tu-nam-hoc-2026-2027-119260808104932719.htm"}],
+  jobs:[{name:"MOET",type:"Official national policy and announcement portal; not a consolidated live vacancy list",url:"https://moet.gov.vn/"},{name:"Provincial education departments",type:"Check current local teacher recruitment notices and eligibility",url:"https://moet.gov.vn/"}],
+  teachers:[{name:"Ministry of Education and Training",url:"https://moet.gov.vn/"},{name:"Official government policy portal",url:"https://xaydungchinhsach.chinhphu.vn/"}],
+  sources:[{label:"Government: national 2026–2027 school-year framework",url:"https://xaydungchinhsach.chinhphu.vn/khung-ke-hoach-thoi-gian-nam-hoc-toan-quoc-tu-nam-hoc-2026-2027-119260808104932719.htm"},{label:"Government: provincial 2026–2027 schedules",url:"https://xaydungchinhsach.chinhphu.vn/khung-ke-hoach-thoi-gian-nam-hoc-2026-2027-cua-cac-tinh-thanh-119260815172148367.htm"},{label:"Ministry of Education and Training",url:"https://moet.gov.vn/"}],
+  researchStatus:"National 2026–2027 school-year framework verified from official government sources. Local provincial calendars and current vacancies require separate confirmation."
+ },
+ "pakistan": {
+  officialLanguages:"Urdu and English are official languages for national purposes under Pakistan's constitutional and legal framework; regional languages are important in provincial education and daily life.",
+  authority:"Federal Ministry of Federal Education and Professional Training; provincial and territorial education departments are responsible for many school operations.",
+  curriculum:"National curriculum coordination exists alongside provincial curricula, textbooks, boards and examination arrangements. Confirm the relevant province/territory and board before using syllabus or exam details.",
+  system:"Primary, middle, secondary and higher-secondary education, plus technical and vocational pathways; structures and calendars vary across provinces and school systems.",
+  termCalendar:"There is no single calendar safely applicable to every province, territory and school system. The official EMIS academic-calendar portal provides grade-level calendars; check the applicable local authority for current dates.",
+  calendar:"Official EMIS academic calendar: https://emis.gob.pk/website/EducationalAcadamicCalander.aspx",
+  qualificationRequirements:"Public teacher recruitment is usually province- or territory-specific and follows advertised qualifications, testing and appointment rules. Verify the live advertisement and district statement before applying.",
+  schools:[{name:"Federal Ministry of Federal Education and Professional Training",type:"Official federal education authority",url:"https://mofept.gov.pk/"},{name:"Education Management Information System (EMIS)",type:"Official academic-calendar and education information portal",url:"https://emis.gob.pk/website/EducationalAcadamicCalander.aspx"}],
+  jobs:[{name:"EMIS official vacancies",type:"Officially published teacher vacancy advertisements and district-wise vacancy statements; check each notice's status",url:"https://emis.gob.pk/website/Jobs.aspx"},{name:"Federal Ministry of Federal Education and Professional Training",type:"Official federal authority; provincial recruitment is handled separately",url:"https://mofept.gov.pk/"}],
+  teachers:[{name:"Federal Ministry of Federal Education and Professional Training",url:"https://mofept.gov.pk/"},{name:"EMIS academic calendar and education resources",url:"https://emis.gob.pk/website/EducationalAcadamicCalander.aspx"}],
+  sources:[{label:"Official EMIS academic calendar by grade",url:"https://emis.gob.pk/website/EducationalAcadamicCalander.aspx"},{label:"Official EMIS jobs and district vacancy statements",url:"https://emis.gob.pk/website/Jobs.aspx"},{label:"Federal Ministry of Federal Education and Professional Training",url:"https://mofept.gov.pk/"}],
+  researchStatus:"Official federal ministry, grade-level calendar portal and EMIS vacancy portal identified. Vacancy details must be checked for current status and the relevant jurisdiction."
+ },
+ "bangladesh": {
+  officialLanguages:"Bangla (Bengali) is the state language. English is used as a subject and in some institutions and programmes.",
+  authority:"Ministry of Education; Secondary and Higher Education Division (SHED); Directorate of Secondary and Higher Education (DSHE); Directorate of Primary Education (DPE).",
+  curriculum:"The National Curriculum and Textbook Board (NCTB) develops national curriculum and textbooks. Education administration differs between primary and secondary/higher-secondary sectors.",
+  system:"Pre-primary, primary, secondary, higher-secondary, technical/vocational and higher education; examination and school calendars depend on sector and official circulars.",
+  termCalendar:"The official SHED notices page publishes amended holiday lists and education-sector circulars. Use the latest dated notice for the current academic year rather than assuming earlier calendars remain unchanged.",
+  calendar:"Official Secondary and Higher Education Division notices: https://shed.gov.bd/pages/notices/",
+  qualificationRequirements:"Public-sector teacher recruitment depends on sector, post and the responsible directorate or recruitment authority. Verify current circulars, eligibility, application deadline and examination requirements in the official notice.",
+  schools:[{name:"Ministry of Education",type:"Official national education authority",url:"https://moedu.gov.bd/"},{name:"Secondary and Higher Education Division",type:"Official notices, circulars and school-holiday updates",url:"https://shed.gov.bd/pages/notices/"},{name:"Directorate of Primary Education",type:"Official primary education authority",url:"https://dpe.gov.bd/"}],
+  jobs:[{name:"Secondary and Higher Education Division notices",type:"Official education circulars; check for current recruitment announcements",url:"https://shed.gov.bd/pages/notices/"},{name:"Directorate of Primary Education",type:"Official primary-sector recruitment and notices",url:"https://dpe.gov.bd/"}],
+  teachers:[{name:"Directorate of Secondary and Higher Education",url:"https://dshe.gov.bd/"},{name:"Directorate of Primary Education",url:"https://dpe.gov.bd/"}],
+  sources:[{label:"SHED official notices and revised holiday-list notices",url:"https://shed.gov.bd/pages/notices/"},{label:"Ministry of Education",url:"https://moedu.gov.bd/"},{label:"Directorate of Primary Education",url:"https://dpe.gov.bd/"},{label:"National Curriculum and Textbook Board",url:"https://nctb.gov.bd/"}],
+  researchStatus:"Official education divisions, curriculum body and current notices page identified. The latest calendar circular and live vacancies should be rechecked before publishing specific dates or openings."
+ },
+ "sri-lanka": {
+  officialLanguages:"Sinhala and Tamil are official and national languages; English is the link language under Sri Lanka's constitutional framework. School medium may be Sinhala, Tamil or English depending on the school.",
+  authority:"Ministry of Education, Sri Lanka; provincial education ministries and departments administer many school services.",
+  curriculum:"The Ministry of Education and National Institute of Education oversee national curriculum and educational policy. Subject syllabuses and examination notices should be taken from official education bodies.",
+  system:"Primary, junior-secondary and senior-secondary schooling, with national examinations and technical/vocational pathways.",
+  termCalendar:"The Ministry published a 2026 school-term plan covering Sinhala/Tamil and Muslim schools, with different term and holiday arrangements. Consult the official ministry circular for the current/revised dates and applicable school category.",
+  calendar:"Ministry of Education official portal: https://moe.gov.lk/ ; verify the current 2026 term circular and any revisions.",
+  qualificationRequirements:"Public-school teacher recruitment and appointment requirements depend on the post, province and official recruitment circular. Check the relevant ministry/provincial notice for qualifications and closing dates.",
+  schools:[{name:"Ministry of Education Sri Lanka",type:"Official national education authority",url:"https://moe.gov.lk/"},{name:"Department of Examinations",type:"Official national examination authority",url:"https://www.doenets.lk/"}],
+  jobs:[{name:"Ministry of Education",type:"Official circulars and recruitment announcements; verify current status",url:"https://moe.gov.lk/"},{name:"Provincial education authorities",type:"Check province-specific teacher recruitment notices and eligibility",url:"https://moe.gov.lk/"}],
+  teachers:[{name:"Ministry of Education Sri Lanka",url:"https://moe.gov.lk/"},{name:"Department of Examinations",url:"https://www.doenets.lk/"}],
+  sources:[{label:"Ministry of Education Sri Lanka",url:"https://moe.gov.lk/"},{label:"Department of Examinations",url:"https://www.doenets.lk/"}],
+  researchStatus:"Official ministry and examination authority identified. Current term-calendar revisions and live teacher vacancies require confirmation against the latest official circular."
+ },
+ "maldives": {
+  officialLanguages:"Dhivehi is the official language. English is widely used in education, especially in teaching materials and some subjects.",
+  authority:"Ministry of Education, Higher Education and Skills Development, Maldives.",
+  curriculum:"The Ministry of Education sets national curriculum and school policy; national schools and private institutions may differ in programme and language arrangements.",
+  system:"Primary and secondary schooling, including lower- and upper-secondary pathways and national/international examination routes.",
+  termCalendar:"The Ministry's official academic-calendar page publishes calendar entries and downloadable calendars. The 2026 calendar lists the academic year beginning 27 January 2026, first term 25 January–16 July, and second term 2 August–17 December; check the official 2027 download for the following year.",
+  calendar:"Official academic calendar: https://www.education.gov.mv/en/academic-calendar",
+  qualificationRequirements:"Teacher recruitment and qualification requirements depend on the employer and role. Confirm current requirements and vacancy announcements with the Ministry or school.",
+  schools:[{name:"Ministry of Education, Higher Education and Skills Development",type:"Official national education authority",url:"https://www.education.gov.mv/"},{name:"Official academic calendar",type:"Ministry calendar with downloadable year schedules",url:"https://www.education.gov.mv/en/academic-calendar"}],
+  jobs:[{name:"Ministry of Education official portal",type:"Official announcements and recruitment information; verify current openings",url:"https://www.education.gov.mv/"},{name:"Official Ministry academic calendar",type:"Academic-year and school scheduling information",url:"https://www.education.gov.mv/en/academic-calendar"}],
+  teachers:[{name:"Ministry of Education, Higher Education and Skills Development",url:"https://www.education.gov.mv/"}],
+  sources:[{label:"Official Maldives academic calendar",url:"https://www.education.gov.mv/en/academic-calendar"},{label:"Ministry of Education official portal",url:"https://www.education.gov.mv/"}],
+  researchStatus:"Official Ministry calendar and education authority checked. Confirm the 2027 calendar download and current recruitment notices before asserting future term dates or open vacancies."
+ }
+});
+
 if(typeof window!=="undefined"){window.CBE_GLOBAL_COUNTRIES=countryRegistry;window.CBE_GLOBAL_COUNTRY_DATA=countryData;}
 if(typeof module!=="undefined"&&module.exports){module.exports={countries:countryRegistry,countryData};}
 })();
