@@ -2360,6 +2360,31 @@ Object.assign(countryData,{
  })
 });
 
+
+/* Additional named schools backed by official school sites and government directory portals. */
+if(countryData["united-arab-emirates"]){
+ countryData["united-arab-emirates"].schools=(countryData["united-arab-emirates"].schools||[]).concat([
+  {name:"Dubai College",type:"Independent secondary school",city:"Al Sufouh, Dubai, UAE",url:"https://www.dubaicollege.org/",source:"https://web.khda.gov.ae/en/Education-Directory/schools"},
+  {name:"Dubai English Speaking School",type:"Private primary school",city:"Oud Metha, Dubai, UAE",url:"https://www.dess.org/",source:"https://web.khda.gov.ae/en/Education-Directory/schools"},
+  {name:"Jumeirah English Speaking School",type:"Private school",city:"Dubai, UAE",url:"https://www.jess.sch.ae/",source:"https://web.khda.gov.ae/en/Education-Directory/schools"},
+  {name:"GEMS Dubai American Academy",type:"Private international school",city:"Al Barsha, Dubai, UAE",url:"https://www.gemsaa-dubai.com/",source:"https://web.khda.gov.ae/en/Education-Directory/schools"},
+  {name:"Deira International School",type:"Private international school",city:"Dubai Festival City, Dubai, UAE",url:"https://www.disdubai.ae/",source:"https://web.khda.gov.ae/en/Education-Directory/schools"},
+  {name:"Kings' School Dubai",type:"Private school",city:"Umm Suqeim, Dubai, UAE",url:"https://kings-edu.com/kings-school-dubai/",source:"https://web.khda.gov.ae/en/Education-Directory/schools"}
+ ]);
+ countryData["united-arab-emirates"].schoolDirectory="Official UAE government school finder: https://u.ae/en/information-and-services/education/school-education-k-12/find-schools-in-the-uae ; Dubai KHDA school directory: https://web.khda.gov.ae/en/Education-Directory/schools";
+}
+if(countryData["japan"]){
+ countryData["japan"].schools=(countryData["japan"].schools||[]).concat([
+  {name:"Tokyo Metropolitan Hibiya High School",type:"Metropolitan senior high school",city:"Chiyoda, Tokyo, Japan",url:"https://www.hibiya-h.metro.tokyo.jp/",source:"https://www.intlschools.metro.tokyo.lg.jp/en/schools-search/"},
+  {name:"Tokyo Metropolitan Kokusai High School",type:"Metropolitan senior high school",city:"Meguro, Tokyo, Japan",url:"https://www.kokusai-h.metro.tokyo.jp/",source:"https://www.intlschools.metro.tokyo.lg.jp/en/schools-search/"},
+  {name:"Tokyo Metropolitan Shinjuku High School",type:"Metropolitan senior high school",city:"Shinjuku, Tokyo, Japan",url:"https://www.shinjuku-h.metro.tokyo.jp/",source:"https://www.intlschools.metro.tokyo.lg.jp/en/schools-search/"},
+  {name:"Tokyo Metropolitan Nishi High School",type:"Metropolitan senior high school",city:"Suginami, Tokyo, Japan",url:"https://www.nishi-h.metro.tokyo.jp/",source:"https://www.intlschools.metro.tokyo.lg.jp/en/schools-search/"},
+  {name:"Tokyo Metropolitan Toyama High School",type:"Metropolitan senior high school",city:"Shinjuku, Tokyo, Japan",url:"https://www.toyama-h.metro.tokyo.jp/",source:"https://www.intlschools.metro.tokyo.lg.jp/en/schools-search/"},
+  {name:"Tokyo Metropolitan Koyamadai High School",type:"Metropolitan senior high school",city:"Shinagawa, Tokyo, Japan",url:"https://www.koyamadai-h.metro.tokyo.jp/",source:"https://www.intlschools.metro.tokyo.lg.jp/en/schools-search/"}
+ ]);
+ countryData["japan"].schoolDirectory="Tokyo Metropolitan Government international school search portal: https://www.intlschools.metro.tokyo.lg.jp/en/schools-search/ ; Japan e-Gov school data portal: https://data.e-gov.go.jp/";
+}
+
 if(typeof window!=="undefined"){window.CBE_GLOBAL_COUNTRIES=countryRegistry;window.CBE_GLOBAL_COUNTRY_DATA=countryData;}
 if(typeof module!=="undefined"&&module.exports){module.exports={countries:countryRegistry,countryData};}
 })();
