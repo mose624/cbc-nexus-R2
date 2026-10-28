@@ -151,6 +151,22 @@ function renderCountry(){
  schoolFlagStyle.textContent=".gs-school-link-row{display:flex;align-items:flex-start;gap:10px;padding:9px 10px;margin:0 0 7px;border:1px solid #e7edf2;border-radius:9px;background:#fff}.gs-school-link-row .gs-school-flag{font-size:23px;line-height:1.25;flex:0 0 auto}.gs-school-link-row a{display:block;min-width:0;overflow-wrap:anywhere}.gs-school-link-row a:hover{text-decoration:underline}";
  document.head.appendChild(schoolFlagStyle);
  linkList("schoolLinks",d.schools,"schoolEmpty","No verified school directory records have been added for this country yet.",c.flag);
+ // Global school-data expansion: provide a reliable external browse path on every country page.
+ // The external registry is a discovery source, not a claim that its records have been imported
+ // into CBE Nexus or that every listing is government-verified.
+ const schoolHost=$("schoolLinks");
+ if(schoolHost){
+  const globalDirectory=node("a");
+  globalDirectory.href="https://schools.brasa.education/";
+  globalDirectory.textContent="Browse the wider Schools of the World directory — search "+c.name+" and open available school records (external directory; coverage and source quality vary)";
+  globalDirectory.target="_blank";
+  globalDirectory.rel="noopener noreferrer";
+  globalDirectory.className="gs-global-school-source";
+  schoolHost.appendChild(globalDirectory);
+  const sourceNote=node("p","gs-muted");
+  sourceNote.textContent="CBE Nexus school-record target: 1,000 per country where reliable records are available. These external records have not been copied into this directory; confirm each school's identity, status, website and contact details with the relevant education authority.";
+  schoolHost.appendChild(sourceNote);
+ }
  linkList("examLinks",d.exams,"examEmpty","No verified national examination records or current examination dates have been added for this country yet.");
  linkList("paperLinks",d.papers,null);linkList("jobLinks",d.jobs,null);
  // Add country-specific live search links for every registered country. These are discovery links,
