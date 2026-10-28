@@ -1099,6 +1099,66 @@ countryRegistry.forEach(function(country){
  if(!existing.sources)existing.sources=researchSources;
 });
 
+
+/* Argentina: researched national framework and official discovery sources.
+ * School administration and many employment/calendar rules are jurisdictional (23 provinces + CABA).
+ * Links are official starting points; individual school records and vacancies are not implied verified.
+ */
+countryData["argentina"]={
+ researchStatus:"National framework and primary-source links added from Argentina.gob.ar, the national education data portal and the 2026 Federal School Calendar. School-level records, provincial teacher-entry rules and live vacancies must still be checked individually.",
+ officialLanguages:"Spanish is the predominant language of government and schooling. Argentina's Constitution does not declare Spanish a single nationwide official language; Indigenous and immigrant community languages are also used, with intercultural bilingual education recognised in national law.",
+ authority:"National: Secretaría de Educación, Ministerio de Capital Humano; Consejo Federal de Educación (CFE) coordinates national-provincial policy. School administration, curriculum implementation, calendars, hiring and many licensing rules are handled by the 23 provinces and the Autonomous City of Buenos Aires (CABA).",
+ curriculum:"Argentina has shared national learning priorities (Núcleos de Aprendizajes Prioritarios, NAP) agreed nationally through the CFE, alongside jurisdiction-specific curriculum designs and implementation. NAP areas include Language, Mathematics, Social Sciences, Natural Sciences, Arts, Physical Education, Technology and Digital Education. Always check the province/CABA curriculum and school type; international/private schools may offer authorised additional programmes.",
+ termCalendar:"Official 2026 national calendar lists start, winter recess and end dates for all 23 provinces and CABA. Start dates range from 18 February to 2 March 2026; winter recess varies by jurisdiction in July; most published end dates fall in December. Use the official calendar for the exact province/city rather than applying one national date to every school. Dates can be amended by local authorities.",
+ qualificationRequirements:"There is no single nationwide teacher 'pass grade' that guarantees employment. For recognised school teaching, applicants generally need an officially recognised teacher-training qualification appropriate to the level/subject, and must meet the relevant provincial or CABA registration, title-recognition, subject-credit, ranking-list and recruitment rules. National Law 26.206 places teacher education within higher education and provides a four-year teacher-training duration for initial and primary education; individual routes and implementation must be confirmed with the jurisdiction. Foreign applicants should verify credential recognition, Spanish proficiency where required, work authorisation and employer-specific conditions.",
+ system:"National Law 26.206 defines four levels: Initial, Primary, Secondary and Higher Education, with modalities including technical-professional, artistic, special, youth/adult, rural, intercultural bilingual, education in detention settings, and home/hospital education. School structure and grade/year organisation vary by jurisdiction (commonly 6+6 or 7+5 years across primary and secondary). Compulsory education extends from age 4 through completion of secondary education under the amended national framework. Confirm local age cut-offs and grade equivalencies with the relevant authority.",
+ calendar:"Academic year is generally February/March to December, with a winter recess in July; exact dates are jurisdiction-specific. Argentina's official 2026 calendar is published for each province and CABA and was agreed through the CFE. The national policy target for 2026 is 190 effective school days, but the official local calendar and subsequent amendments control.",
+ exams:[
+  {name:"Aprender — national learning assessment",body:"Official national assessment programme; editions, areas and grades vary by year. It is diagnostic/system-monitoring, not a single universal school-leaving exam.",level:"Primary and secondary; check the current edition",url:"https://www.argentina.gob.ar/educacion/evaluacion-informacion-educativa/aprender"},
+  {name:"Aprender 2025",body:"Official edition page and materials; check current release and participating grades",level:"National assessment",url:"https://www.argentina.gob.ar/educacion/evaluacion-informacion-educativa/aprender"},
+  {name:"Jurisdictional examinations and completion requirements",body:"Provincial/CABA authorities set school assessment, promotion, completion and recovery rules; no single nationwide exam timetable applies to all learners.",level:"Province/CABA dependent",url:"https://www.argentina.gob.ar/capital-humano/educacion"}
+ ],
+ schools:[
+  {name:"National Education Data System — official school finder (Buscador de escuelas)",type:"Search by CUE, jurisdiction, department, locality, management sector, name or address. Use results to confirm individual school details.",url:"https://data.educacion.gob.ar/"},
+  {name:"Integrated Education Data and Indicators System (SICDIE)",type:"Official national education indicators, school statistics and school-search entry point.",url:"https://data.educacion.gob.ar/index.php"},
+  {name:"National Education Ministry / Secretariat",type:"Official national education portal; provincial/CABA authorities remain responsible for many school records.",url:"https://www.argentina.gob.ar/capital-humano/educacion"}
+ ],
+ papers:[
+  {name:"Aprender official assessment materials and previous editions",type:"Official national assessment information, reports and available materials; availability varies by edition. Do not represent every item as a past paper.",url:"https://www.argentina.gob.ar/educacion/evaluacion-informacion-educativa/aprender"},
+  {name:"National Priority Learning Nuclei (NAP)",type:"Official national curriculum learning priorities and subject materials for teachers and learners.",url:"https://www.argentina.gob.ar/nivelesymodalidades/direccion-nacional-de-educacion-primaria-0/nucleos-de-aprendizajes-prioritarios"},
+  {name:"National Education Law 26.206",type:"Official legal framework for levels, compulsory education, modalities and teacher education.",url:"https://www.argentina.gob.ar/normativa/nacional/123542/actualizacion"}
+ ],
+ jobs:[
+  {name:"Official national education portal",type:"Policy and national programme information; not a guaranteed live vacancy board.",url:"https://www.argentina.gob.ar/capital-humano/educacion"},
+  {name:"Buenos Aires Province — General Directorate of Culture and Education",type:"Provincial authority; check official recruitment, registration lists and current notices.",url:"https://abc.gob.ar/"},
+  {name:"City of Buenos Aires — Education",type:"CABA education authority; check official recruitment and qualification rules.",url:"https://buenosaires.gob.ar/educacion"},
+  {name:"Tes international teaching vacancies — Argentina search",type:"Third-party live search; verify employer, deadline, contract, visa eligibility and application route.",url:"https://www.tes.com/jobs/search/international?keywords=Argentina"},
+  {name:"International Schools Services (ISS) current openings",type:"Third-party international-school recruitment; filter by location and confirm each vacancy directly.",url:"https://www.iss.edu/for-individuals/find-a-job/current-openings/"}
+ ],
+ teachers:[
+  {name:"Instituto Nacional de Formación Docente (INFoD)",type:"National teacher-training policy and institution information; check provincial rules for appointment/licensing.",url:"https://www.argentina.gob.ar/capital-humano/educacion"},
+  {name:"National Education Law 26.206 — teacher formation (Title IV)",type:"Official law covering teacher rights, training and national/jurisdictional responsibilities; local registration requirements still apply.",url:"https://www.argentina.gob.ar/normativa/nacional/123542/actualizacion"},
+  {name:"Buenos Aires Province education authority",type:"Official provincial entry point for teacher registration and recruitment in Buenos Aires Province.",url:"https://abc.gob.ar/"},
+  {name:"City of Buenos Aires education authority",type:"Official CABA entry point for teacher employment and local requirements.",url:"https://buenosaires.gob.ar/educacion"}
+ ],
+ further:[
+  {name:"Secretariat of Education — national portal",url:"https://www.argentina.gob.ar/capital-humano/educacion"},
+  {name:"National Institute of Technological Education (INET)",url:"https://www.inet.edu.ar/"},
+  {name:"National Commission for University Evaluation and Accreditation (CONEAU)",url:"https://www.coneau.gob.ar/"}
+ ],
+ sources:[
+  {label:"Official 2026 School Calendar — all provinces and CABA",url:"https://www.argentina.gob.ar/capital-humano/educacion/calendario-escolar-2026"},
+  {label:"Official national school calendar announcement (6 January 2026)",url:"https://www.argentina.gob.ar/noticias/se-definio-el-calendario-escolar-para-el-ciclo-lectivo-2026-en-todo-el-pais"},
+  {label:"National Education Law 26.206 — updated official text",url:"https://www.argentina.gob.ar/normativa/nacional/123542/actualizacion"},
+  {label:"National Education Data System — official school finder",url:"https://data.educacion.gob.ar/"},
+  {label:"National Priority Learning Nuclei (NAP)",url:"https://www.argentina.gob.ar/nivelesymodalidades/direccion-nacional-de-educacion-primaria-0/nucleos-de-aprendizajes-prioritarios"},
+  {label:"Aprender national learning assessment",url:"https://www.argentina.gob.ar/educacion/evaluacion-informacion-educativa/aprender"},
+  {label:"National teacher education and education portal",url:"https://www.argentina.gob.ar/capital-humano/educacion"},
+  {label:"Buenos Aires Province education authority",url:"https://abc.gob.ar/"},
+  {label:"City of Buenos Aires education authority",url:"https://buenosaires.gob.ar/educacion"}
+ ]
+};
+
 if(typeof window!=="undefined"){window.CBE_GLOBAL_COUNTRIES=countryRegistry;window.CBE_GLOBAL_COUNTRY_DATA=countryData;}
 if(typeof module!=="undefined"&&module.exports){module.exports={countries:countryRegistry,countryData};}
 })();
