@@ -2414,6 +2414,77 @@ if(countryData["canada"]){
  countryData["canada"].schoolDirectory="Ontario official school finder: https://www.ontario.ca/page/find-elementary-or-secondary-school ; Ontario school list: https://www.ontario.ca/page/list-elementary-and-secondary-schools ; Ottawa-Carleton school directory: https://www.ocdsb.ca/our-schools/school-directory";
 }
 
+
+/* Wider global sample: named schools with public websites and official directory portals for checking records. */
+if(countryData["united-kingdom"]){
+ countryData["united-kingdom"].schools=(countryData["united-kingdom"].schools||[]).concat([
+  {name:"Harris Westminster Sixth Form",type:"State sixth-form school",city:"London, England",url:"https://www.harriswestminstersixthform.org.uk/",source:"https://get-information-schools.service.gov.uk/"},
+  {name:"The Henrietta Barnett School",type:"State grammar school",city:"Hampstead Garden Suburb, London, England",url:"https://www.hbschool.org.uk/",source:"https://get-information-schools.service.gov.uk/"},
+  {name:"Brampton Manor Academy",type:"Academy secondary school",city:"East Ham, London, England",url:"https://www.bramptonmanor.org/",source:"https://get-information-schools.service.gov.uk/"},
+  {name:"Manchester Grammar School",type:"Independent day school",city:"Manchester, England",url:"https://www.mgs.org/",source:"https://www.isc.co.uk/schools/"},
+  {name:"Cardiff High School",type:"Maintained secondary school",city:"Cardiff, Wales",url:"https://www.cardiffhigh.cardiff.sch.uk/",source:"https://mylocalschool.gov.wales/"},
+  {name:"Belfast Royal Academy",type:"Voluntary grammar school",city:"Belfast, Northern Ireland",url:"https://www.belfastroyalacademy.com/",source:"https://www.education-ni.gov.uk/"},
+  {name:"George Heriot's School",type:"Independent school",city:"Edinburgh, Scotland",url:"https://www.george-heriots.com/",source:"https://education.gov.scot/education-scotland/scottish-school-estate/school-contact-details/"}
+ ]);
+ countryData["united-kingdom"].schoolDirectory="England school register: https://get-information-schools.service.gov.uk/ ; Wales: https://mylocalschool.gov.wales/ ; Scotland: https://education.gov.scot/ ; Northern Ireland: https://www.education-ni.gov.uk/";
+}
+if(countryData["united-states"]){
+ countryData["united-states"].schools=(countryData["united-states"].schools||[]).concat([
+  {name:"Stuyvesant High School",type:"Public specialized high school",city:"New York, New York",url:"https://stuy.enschool.org/",source:"https://nces.ed.gov/ccd/schoolsearch/"},
+  {name:"Bronx High School of Science",type:"Public specialized high school",city:"Bronx, New York",url:"https://www.bxscience.edu/",source:"https://nces.ed.gov/ccd/schoolsearch/"},
+  {name:"Thomas Jefferson High School for Science and Technology",type:"Public magnet high school",city:"Alexandria, Virginia",url:"https://tjhsst.fcps.edu/",source:"https://nces.ed.gov/ccd/schoolsearch/"},
+  {name:"Boston Latin School",type:"Public exam school",city:"Boston, Massachusetts",url:"https://www.bls.org/",source:"https://profiles.doe.mass.edu/"},
+  {name:"Palo Alto High School",type:"Public high school",city:"Palo Alto, California",url:"https://www.paly.net/",source:"https://nces.ed.gov/ccd/schoolsearch/"},
+  {name:"Walter Payton College Preparatory High School",type:"Public college preparatory high school",city:"Chicago, Illinois",url:"https://www.wpcp.org/",source:"https://www.isbe.net/Pages/Illinois-State-Report-Card.aspx"},
+  {name:"Lakeside School",type:"Independent school",city:"Seattle, Washington",url:"https://www.lakesideschool.org/",source:"https://nces.ed.gov/ccd/schoolsearch/"}
+ ]);
+ countryData["united-states"].schoolDirectory="NCES public school search: https://nces.ed.gov/ccd/schoolsearch/ ; Massachusetts profiles: https://profiles.doe.mass.edu/ ; Illinois report cards: https://www.isbe.net/Pages/Illinois-State-Report-Card.aspx";
+}
+if(countryData["south-africa"]){
+ countryData["south-africa"].schools=(countryData["south-africa"].schools||[]).concat([
+  {name:"South African College Schools (SACS)",type:"Public boys' high school",city:"Newlands, Cape Town, Western Cape",url:"https://www.sacs.co.za/",source:"https://www.education.gov.za/Programmes/EMIS/EMISDownloads.aspx"},
+  {name:"Westerford High School",type:"Public co-educational high school",city:"Rondebosch, Cape Town, Western Cape",url:"https://www.westerford.co.za/",source:"https://www.education.gov.za/Programmes/EMIS/EMISDownloads.aspx"},
+  {name:"King Edward VII School",type:"Public boys' high school",city:"Houghton, Johannesburg, Gauteng",url:"https://www.kes.co.za/",source:"https://www.education.gov.za/Programmes/EMIS/EMISDownloads.aspx"},
+  {name:"Afrikaanse Hoër Meisieskool Pretoria",type:"Public girls' high school",city:"Pretoria, Gauteng",url:"https://www.ahmp.co.za/",source:"https://www.education.gov.za/Programmes/EMIS/EMISDownloads.aspx"},
+  {name:"Maritzburg College",type:"Public boys' high school",city:"Pietermaritzburg, KwaZulu-Natal",url:"https://www.maritzburgcollege.co.za/",source:"https://www.education.gov.za/Programmes/EMIS/EMISDownloads.aspx"},
+  {name:"Rondebosch Boys' High School",type:"Public boys' high school",city:"Rondebosch, Cape Town, Western Cape",url:"https://www.rondebosch.com/",source:"https://www.education.gov.za/Programmes/EMIS/EMISDownloads.aspx"}
+ ]);
+ countryData["south-africa"].schoolDirectory="Department of Basic Education EMIS master lists: https://www.education.gov.za/Programmes/EMIS/EMISDownloads.aspx";
+}
+if(countryData["kenya"]){
+ countryData["kenya"].schools=(countryData["kenya"].schools||[]).concat([
+  {name:"Alliance High School",type:"Public national boys' secondary school",city:"Kikuyu, Kiambu County",url:"https://alliancehighschool.ac.ke/",source:"https://www.education.go.ke/"},
+  {name:"Alliance Girls High School",type:"Public national girls' secondary school",city:"Kikuyu, Kiambu County",url:"https://alliancegirlshigh.sc.ke/",source:"https://www.education.go.ke/"},
+  {name:"Kenya High School",type:"Public national girls' secondary school",city:"Nairobi County",url:"https://kenyahigh.ac.ke/",source:"https://www.education.go.ke/"},
+  {name:"Mang'u High School",type:"Public national boys' secondary school",city:"Mang'u, Kiambu County",url:"https://manguhigh.com/",source:"https://www.education.go.ke/"},
+  {name:"Moi Girls' High School Eldoret",type:"Public national girls' secondary school",city:"Eldoret, Uasin Gishu County",url:"https://moigirlseldoret.sc.ke/",source:"https://www.education.go.ke/"},
+  {name:"Starehe Boys' Centre and School",type:"Public boarding secondary school",city:"Nairobi County",url:"https://stareheboyscentre.ac.ke/",source:"https://www.education.go.ke/"},
+  {name:"Brookhouse Schools",type:"Private international school",city:"Nairobi and Runda, Kenya",url:"https://www.brookhouse.ac.ke/",source:"https://www.brookhouse.ac.ke/"}
+ ]);
+ countryData["kenya"].schoolDirectory="Ministry of Education Kenya: https://www.education.go.ke/ ; Open Schools Kenya community school data: https://openschoolskenya.org/";
+}
+if(countryData["ghana"]){
+ countryData["ghana"].schools=(countryData["ghana"].schools||[]).concat([
+  {name:"Achimota School",type:"Public senior high school",city:"Achimota, Accra",url:"https://achimota.edu.gh/",source:"https://ges.gov.gh/"},
+  {name:"Presbyterian Boys' Senior High School (PRESEC)",type:"Public senior high school",city:"Legon, Accra",url:"https://preseclegon.edu.gh/",source:"https://ges.gov.gh/"},
+  {name:"Wesley Girls' High School",type:"Public senior high school",city:"Cape Coast, Central Region",url:"https://wesleygirls.edu.gh/",source:"https://ges.gov.gh/"},
+  {name:"Prempeh College",type:"Public senior high school",city:"Kumasi, Ashanti Region",url:"https://prempehcollege.edu.gh/",source:"https://ges.gov.gh/"},
+  {name:"Ghana International School",type:"Private international school",city:"Cantonments, Accra",url:"https://www gis.edu.gh/".replace(" ",""),source:"https://www.gis.edu.gh/"}
+ ]);
+ countryData["ghana"].schoolDirectory="Ghana Education Service: https://ges.gov.gh/ ; Ministry of Education: https://moe.gov.gh/";
+}
+if(countryData["nigeria"]){
+ countryData["nigeria"].schools=(countryData["nigeria"].schools||[]).concat([
+  {name:"King's College Lagos",type:"Federal government secondary school",city:"Lagos Island, Lagos State",url:"https://kclagos.com.ng/",source:"https://education.gov.ng/"},
+  {name:"Queen's College Lagos",type:"Federal government girls' secondary school",city:"Yaba, Lagos State",url:"https://queenscollegelagos.com/",source:"https://education.gov.ng/"},
+  {name:"Loyola Jesuit College",type:"Private secondary school",city:"Gidan Mangoro, Abuja FCT",url:"https://www.loyolajesuit.org/",source:"https://education.gov.ng/"},
+  {name:"Federal Government College, Enugu",type:"Federal government secondary school",city:"Enugu, Enugu State",url:"https://fgcenugu.sch.ng/",source:"https://education.gov.ng/"},
+  {name:"Chrisland Schools",type:"Private school group",city:"Lagos State",url:"https://chrislandschools.com/",source:"https://chrislandschools.com/"},
+  {name:"Corona Schools",type:"Private school group",city:"Lagos State",url:"https://coronaschools.org/",source:"https://coronaschools.org/"}
+ ]);
+ countryData["nigeria"].schoolDirectory="Federal Ministry of Education Nigeria: https://education.gov.ng/ ; Universal Basic Education Commission: https://ubec.gov.ng/";
+}
+
 if(typeof window!=="undefined"){window.CBE_GLOBAL_COUNTRIES=countryRegistry;window.CBE_GLOBAL_COUNTRY_DATA=countryData;}
 if(typeof module!=="undefined"&&module.exports){module.exports={countries:countryRegistry,countryData};}
 })();
