@@ -1287,6 +1287,230 @@ countryData["argentina"]={
  ]
 };
 
+
+/* Country profiles: Brazil, Germany, Australia, Spain and Switzerland.
+ * Primary-source entry points are provided; school calendars, credentials and vacancies
+ * vary by jurisdiction and must be confirmed with the responsible authority/employer.
+ */
+countryData["brazil"]={
+ researchStatus:"Country profile expanded with official federal education and assessment sources. Brazil is decentralised: states, Federal District and municipalities administer important school functions. Confirm state/municipal school records, current calendars and live vacancies individually.",
+ officialLanguages:"Portuguese is the official language nationwide. Indigenous and immigrant languages are also used in communities and some educational programmes.",
+ authority:"Ministry of Education (Ministério da Educação, MEC); National Institute for Educational Studies and Research Anísio Teixeira (INEP); state and municipal education departments.",
+ curriculum:"The Base Nacional Comum Curricular (BNCC) sets national learning expectations; states, municipalities and schools implement curricula and local components. Technical, Indigenous, rural and private/international provision may have additional frameworks.",
+ system:"Basic education comprises early childhood education, 9-year fundamental education and 3-year upper-secondary education (ensino médio), followed by technical/vocational and higher education pathways. Check current regulations and local implementation.",
+ termCalendar:"School-year dates are set by education systems and schools, within national legal requirements. No single exact calendar should be applied to every state or municipality; verify the current calendar with the relevant school authority.",
+ calendar:"Check the current school calendar published by the state or municipal education department and the individual school. National legislation establishes minimum school-day/hour requirements, but dates vary locally.",
+ qualificationRequirements:"Public teaching appointments and qualifications depend on level, subject, public selection process and applicable state/municipal rules. A recognised teacher-education qualification is generally required for basic education; foreign qualifications may require formal recognition and Portuguese proficiency. Verify the exact post notice and competent authority.",
+ exams:[
+  {name:"SAEB",body:"INEP's national basic-education assessment system; cycle, grades and assessment components depend on the current edition.",level:"Basic education",url:"https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/saeb"},
+  {name:"ENEM",body:"National examination used in many higher-education selection routes; check the current official notice and dates.",level:"Upper secondary / higher-education entry",url:"https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enem"}
+ ],
+ schools:[
+  {name:"INEP — school census and education statistics",type:"Official school-system data and statistical publications; use current datasets for institution-level research.",url:"https://www.gov.br/inep/pt-br/areas-de-atuacao/pesquisas-estatisticas-e-indicadores/censo-escolar"},
+  {name:"Ministry of Education (MEC)",type:"Official federal education authority; state and municipal directories may be needed for individual schools.",url:"https://www.gov.br/mec/pt-br"}
+ ],
+ papers:[
+  {name:"BNCC — national common curricular base",type:"Official curriculum framework and learning expectations, not a past-paper archive.",url:"http://basenacionalcomum.mec.gov.br/"},
+  {name:"INEP assessment and examination materials",type:"Official assessment information and materials where published; availability varies by programme and edition.",url:"https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais"}
+ ],
+ jobs:[
+  {name:"Federal Government — education",type:"Official federal policy and notices; not a complete national school-vacancy board.",url:"https://www.gov.br/mec/pt-br"},
+  {name:"INEP",type:"Official institution and public recruitment notices when available; check current status and eligibility.",url:"https://www.gov.br/inep/pt-br"},
+  {name:"CBE Nexus international teaching jobs",type:"Aggregated listings; verify employer, deadline, visa and qualifications directly.",url:"/international-teaching-jobs.html"}
+ ],
+ teachers:[
+  {name:"Ministry of Education (MEC)",type:"National education policy and teacher-training information; local recruitment rules still apply.",url:"https://www.gov.br/mec/pt-br"},
+  {name:"INEP",type:"Official assessment and education-data authority.",url:"https://www.gov.br/inep/pt-br"}
+ ],
+ further:[
+  {name:"CAPES — higher education and teacher development",url:"https://www.gov.br/capes/pt-br"},
+  {name:"National Council of Education (CNE)",url:"https://www.gov.br/mec/pt-br/cne"}
+ ],
+ sources:[
+  {label:"Brazil Ministry of Education (MEC)",url:"https://www.gov.br/mec/pt-br"},
+  {label:"INEP — School Census",url:"https://www.gov.br/inep/pt-br/areas-de-atuacao/pesquisas-estatisticas-e-indicadores/censo-escolar"},
+  {label:"INEP — SAEB",url:"https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/saeb"},
+  {label:"INEP — ENEM",url:"https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enem"},
+  {label:"BNCC official portal",url:"http://basenacionalcomum.mec.gov.br/"},
+  {label:"CAPES",url:"https://www.gov.br/capes/pt-br"}
+ ]
+};
+countryData["germany"]={
+ researchStatus:"Country profile expanded using official federal and education-sector sources. Education is primarily the responsibility of the 16 Länder; school types, curricula, calendars, teacher recognition and recruitment differ by state. Individual schools and vacancies are not implied verified.",
+ officialLanguages:"German is the principal language of schooling and public administration. Minority and regional languages are protected or used in particular regions; language-of-instruction options depend on the Land and school.",
+ authority:"Federal Ministry of Education, Family Affairs, Senior Citizens, Women and Youth (BMBFSFJ); the Standing Conference of the Ministers of Education and Cultural Affairs (KMK); the 16 Länder ministries and school authorities administer school education.",
+ curriculum:"There is no single detailed federal school curriculum. Länder set curricula and standards; KMK agreements support comparability. Schools may offer state curricula, vocational pathways, bilingual provision or authorised international programmes.",
+ system:"Structure varies by Land. Children generally enter primary school around age six; secondary pathways may include Gymnasium, Realschule, Hauptschule and comprehensive schools, with different combinations in different states. Vocational dual training and higher education are major pathways.",
+ termCalendar:"School holidays and term dates are set by the Länder, with coordinated summer-holiday arrangements. Always select the relevant state and school year in the official KMK calendar; do not apply one national date to all schools.",
+ calendar:"Use the KMK school-holiday calendar and the relevant Land education ministry for exact term dates, public holidays and local variations.",
+ qualificationRequirements:"Public-school teaching is a regulated profession and requirements are Land-specific. Foreign-trained teachers usually apply to the competent state authority for recognition/equivalence; German-language proficiency, subject equivalence, pedagogical training and compensatory measures may be required. Recognition does not itself guarantee employment.",
+ exams:[
+  {name:"Abitur",body:"Upper-secondary qualification and higher-education entrance route; rules and examination arrangements are set by the Länder with coordination agreements.",level:"Upper secondary",url:"https://www.kmk.org/"},
+  {name:"VET examinations",body:"Vocational qualifications and examinations involve competent bodies such as chambers and vocational institutions; arrangements depend on programme.",level:"Vocational education",url:"https://www.bibb.de/en/"}
+ ],
+ schools:[
+  {name:"KMK — education system and school information",type:"Official standing conference of Länder education ministers; follow links to the relevant Land authority.",url:"https://www.kmk.org/"},
+  {name:"Make it in Germany — school system and school search by federal state",type:"Federal government information with links to school-search services for the 16 Länder.",url:"https://www.make-it-in-germany.com/en/arriving-living/family-life/school"}
+ ],
+ papers:[
+  {name:"KMK educational standards and publications",type:"Official standards and education publications; school exams and past papers are generally managed at Land or awarding-body level.",url:"https://www.kmk.org/"},
+  {name:"Federal Institute for Vocational Education and Training (BIBB)",type:"Official vocational education research, training and examination information.",url:"https://www.bibb.de/en/"}
+ ],
+ jobs:[
+  {name:"Federal employment agency (Bundesagentur für Arbeit)",type:"Official employment search; filter teaching jobs and check language/recognition requirements.",url:"https://www.arbeitsagentur.de/"},
+  {name:"KMK — education authorities",type:"Use the relevant Land ministry for public-school recruitment and recognition information.",url:"https://www.kmk.org/"},
+  {name:"CBE Nexus international teaching jobs",type:"Aggregated listings; verify each employer, qualification route, German-language requirement and work permission.",url:"/international-teaching-jobs.html"}
+ ],
+ teachers:[
+  {name:"KMK — recognition of foreign teaching qualifications",type:"Start point for the competent Land authority; final decisions are state-specific.",url:"https://www.kmk.org/"},
+  {name:"Federal portal — recognition of foreign teaching qualifications",type:"Official guidance; choose the relevant Land and profession for the competent authority.",url:"https://www.anerkennung-in-deutschland.de/html/en/index.php"}
+ ],
+ further:[
+  {name:"German Academic Exchange Service (DAAD)",url:"https://www.daad.de/en/"},
+  {name:"Federal Institute for Vocational Education and Training (BIBB)",url:"https://www.bibb.de/en/"},
+  {name:"KMK",url:"https://www.kmk.org/"}
+ ],
+ sources:[
+  {label:"KMK — Standing Conference of the Ministers of Education and Cultural Affairs",url:"https://www.kmk.org/"},
+  {label:"Make it in Germany — school system",url:"https://www.make-it-in-germany.com/en/arriving-living/family-life/school"},
+  {label:"Recognition in Germany — official portal",url:"https://www.anerkennung-in-deutschland.de/html/en/index.php"},
+  {label:"Federal Institute for Vocational Education and Training",url:"https://www.bibb.de/en/"},
+  {label:"Federal Employment Agency",url:"https://www.arbeitsagentur.de/"}
+ ]
+};
+countryData["australia"]={
+ researchStatus:"Country profile expanded with official Australian Curriculum, ACARA, education department and teacher-registration links. Education administration and teacher registration are shared across Commonwealth, state and territory systems. School listings are linked to ACARA's national schools list; current calendars and vacancies remain jurisdiction/employer-specific.",
+ officialLanguages:"English is the main language of instruction and public life; Australia has no single federally declared official language in the same way some countries do. Aboriginal and Torres Strait Islander languages and community languages are also spoken.",
+ authority:"Australian Government Department of Education; Australian Curriculum, Assessment and Reporting Authority (ACARA); state and territory education departments and teacher-registration authorities.",
+ curriculum:"The Australian Curriculum is developed and maintained by ACARA. States and territories implement curriculum and assessment, and schools may have jurisdiction-specific requirements or authorised IB/international programmes.",
+ system:"School education generally includes Foundation/Kindergarten or Preparatory year, primary and secondary schooling, commonly through Year 12. Starting ages, school structure, senior certificates and vocational pathways vary by state or territory.",
+ termCalendar:"School terms and holiday dates vary by state and territory. Check the relevant education department's current-year calendar; no single set of dates applies nationwide.",
+ calendar:"Use the relevant state/territory education department for official term dates, pupil-free days and public holidays. Private schools may use different calendars.",
+ qualificationRequirements:"Teachers generally need an accredited teaching qualification and registration with the relevant state or territory authority. Overseas-qualified teachers may need assessment of qualifications, English-language evidence, identity/background checks and local registration; requirements differ by jurisdiction. Work rights and employer selection are separate matters.",
+ exams:[
+  {name:"NAPLAN",body:"National literacy and numeracy assessment for Years 3, 5, 7 and 9; consult ACARA for current assessment information and reporting.",level:"Years 3, 5, 7 and 9",url:"https://www.nap.edu.au/"},
+  {name:"Senior secondary certificates",body:"State/territory qualifications such as HSC, VCE, QCE and WACE; exam and assessment arrangements vary by jurisdiction.",level:"Senior secondary",url:"https://www.education.gov.au/"}
+ ],
+ schools:[
+  {name:"Australian Schools List (ACARA)",type:"Official national school list assembled from all 13 state and territory school-registration authorities; search by name, suburb, sector and school type.",url:"https://asl.acara.edu.au/"},
+  {name:"My School (ACARA)",type:"Official school information and comparison portal; confirm current details with the school and jurisdiction.",url:"https://www.myschool.edu.au/"},
+  {name:"Australian Government Department of Education",type:"National education policy and state/territory links.",url:"https://www.education.gov.au/"}
+ ],
+ papers:[
+  {name:"Australian Curriculum",type:"Official curriculum content and learning expectations; not a national past-paper archive.",url:"https://v9.australiancurriculum.edu.au/"},
+  {name:"NAPLAN",type:"Official assessment information and public sample questions where available.",url:"https://www.nap.edu.au/"},
+  {name:"State/territory assessment authorities",type:"Senior-secondary specimen and past papers are jurisdiction-specific; check the relevant authority.",url:"https://www.education.gov.au/"}
+ ],
+ jobs:[
+  {name:"Australian Government Department of Education",type:"Policy and official links; not a complete national school-vacancy board.",url:"https://www.education.gov.au/"},
+  {name:"State and territory education departments",type:"Official public-school recruitment portals; choose the intended state/territory.",url:"https://www.education.gov.au/"},
+  {name:"CBE Nexus international teaching jobs",type:"Aggregated listings; verify school, state registration, visa and work rights with the employer.",url:"/international-teaching-jobs.html"}
+ ],
+ teachers:[
+  {name:"Australian Institute for Teaching and School Leadership (AITSL)",type:"National teaching standards and overseas-qualification guidance; registration is performed by state/territory authorities.",url:"https://www.aitsl.edu.au/"},
+  {name:"Teacher registration authorities",type:"Registration and suitability rules differ by state and territory; start with the intended jurisdiction's official department.",url:"https://www.education.gov.au/"}
+ ],
+ further:[
+  {name:"Australian Qualifications Framework",url:"https://www.aqf.edu.au/"},
+  {name:"Tertiary Admission Centres",url:"https://www.education.gov.au/"},
+  {name:"Australian Institute for Teaching and School Leadership",url:"https://www.aitsl.edu.au/"}
+ ],
+ sources:[
+  {label:"Australian Schools List (ACARA)",url:"https://asl.acara.edu.au/"},
+  {label:"My School (ACARA)",url:"https://www.myschool.edu.au/"},
+  {label:"Australian Curriculum",url:"https://v9.australiancurriculum.edu.au/"},
+  {label:"NAPLAN",url:"https://www.nap.edu.au/"},
+  {label:"Australian Government Department of Education",url:"https://www.education.gov.au/"},
+  {label:"AITSL",url:"https://www.aitsl.edu.au/"}
+ ]
+};
+countryData["spain"]={
+ researchStatus:"Country profile expanded with official Spanish education ministry and regional-education links. Education is administered through the national ministry and autonomous communities; school directories, curriculum implementation, calendars and teacher recruitment can vary by region. Confirm local information directly before marking a school or vacancy verified.",
+ officialLanguages:"Spanish (Castilian) is the official language of the State. Catalan/Valencian, Galician, Basque and Aranese have official status in their respective autonomous communities under applicable regional statutes; language-of-instruction rules vary by region.",
+ authority:"Ministry of Education, Vocational Training and Sports (Ministerio de Educación, Formación Profesional y Deportes); autonomous-community education departments administer many school functions.",
+ curriculum:"National minimum curriculum requirements are established through national education legislation and royal decrees, with autonomous communities developing their own curricula and schools implementing them. Regional language and local components may apply; authorised international programmes may also be offered.",
+ system:"The system includes Educación Infantil, compulsory primary education, compulsory secondary education (ESO), Bachillerato, vocational education and higher education. Compulsory education generally covers ages 6–16; exact pathways and admissions should be checked with the relevant regional authority.",
+ termCalendar:"Academic-year start/end dates, holidays and term breaks are set by autonomous communities and may vary by province and school. Check the official calendar for the relevant region and school year.",
+ calendar:"Use the autonomous community's education department for current academic-year dates, regional holidays and school-specific calendars.",
+ qualificationRequirements:"Public-school teacher routes depend on stage and role. Primary teaching generally requires the relevant teaching degree; secondary teaching commonly requires a subject degree and teacher-training master's degree, with public posts usually filled through competitive selection. Regional language proficiency and recognition of foreign qualifications may be required. Confirm the exact route with the relevant autonomous community and employer.",
+ exams:[
+  {name:"Evaluación de diagnóstico",body:"Diagnostic assessments are implemented under national and regional rules; subjects, grades and schedules must be checked in the current regional notice.",level:"Primary and lower secondary, as applicable",url:"https://www.educacionfpydeportes.gob.es/"},
+  {name:"EBAU / university entrance assessment",body:"University-access assessment arrangements are coordinated regionally and with universities; dates and subject rules vary by autonomous community.",level:"University entry",url:"https://www.educacionfpydeportes.gob.es/"}
+ ],
+ schools:[
+  {name:"Ministry of Education, Vocational Training and Sports",type:"Official national education portal and entry point to regional authorities.",url:"https://www.educacionfpydeportes.gob.es/"},
+  {name:"Education authorities by autonomous community",type:"Use the official regional department for school searches, admissions, calendars and local regulations.",url:"https://www.educacionfpydeportes.gob.es/"},
+  {name:"Official register / school information",type:"School-level information and authorised-centre status should be confirmed with the relevant autonomous community.",url:"https://www.educacionfpydeportes.gob.es/"}
+ ],
+ papers:[
+  {name:"Ministry curriculum and assessment resources",type:"Official curriculum and assessment policy; exam papers may be published by regional authorities or universities.",url:"https://www.educacionfpydeportes.gob.es/"},
+  {name:"Foreign qualification recognition",type:"Official procedures for recognition/validation of foreign non-university qualifications; rules depend on qualification and purpose.",url:"https://www.educacionfpydeportes.gob.es/en/servicios-al-ciudadano/catalogo/general/05/051270/ficha/051270.html"}
+ ],
+ jobs:[
+  {name:"Public teacher recruitment — autonomous communities",type:"Official regional calls and competitive examinations (oposiciones); each call controls qualifications, language requirements and deadlines.",url:"https://www.educacionfpydeportes.gob.es/"},
+  {name:"Ministry of Education, Vocational Training and Sports",type:"Official national entry point for education-sector programmes and announcements; not a single live national vacancy list.",url:"https://www.educacionfpydeportes.gob.es/"},
+  {name:"CBE Nexus international teaching jobs",type:"Aggregated listings; verify employer, regional language rules, recognition and work authorisation.",url:"/international-teaching-jobs.html"}
+ ],
+ teachers:[
+  {name:"Ministry — recognition and validation of foreign qualifications",type:"Official information on recognising or validating foreign non-university studies; professional teacher access may involve additional regional procedures.",url:"https://www.educacionfpydeportes.gob.es/en/servicios-al-ciudadano/catalogo/general/05/051270/ficha/051270.html"},
+  {name:"Autonomous-community education departments",type:"Teacher recruitment, qualification and regional language requirements are jurisdiction-specific.",url:"https://www.educacionfpydeportes.gob.es/"}
+ ],
+ further:[
+  {name:"Spanish university access and education information",url:"https://www.educacionfpydeportes.gob.es/"},
+  {name:"Official foreign qualification recognition guidance",url:"https://www.educacionfpydeportes.gob.es/en/servicios-al-ciudadano/catalogo/general/05/051270/ficha/051270.html"}
+ ],
+ sources:[
+  {label:"Ministry of Education, Vocational Training and Sports",url:"https://www.educacionfpydeportes.gob.es/"},
+  {label:"Foreign qualification recognition and validation",url:"https://www.educacionfpydeportes.gob.es/en/servicios-al-ciudadano/catalogo/general/05/051270/ficha/051270.html"},
+  {label:"Education authorities and regional systems — national ministry entry point",url:"https://www.educacionfpydeportes.gob.es/"},
+  {label:"UNESCO education system profiles",url:"https://education-profiles.org/"}
+ ]
+};
+countryData["switzerland"]={
+ researchStatus:"Country profile expanded with official Swiss federal and intercantonal sources. Education is primarily cantonal, so school structure, curriculum, language, calendars, teacher recognition and recruitment differ by canton. The national links are starting points; verify local school records and vacancies directly.",
+ officialLanguages:"German, French, Italian and Romansh are Switzerland's national languages; German, French and Italian are official languages of the Confederation, and Romansh is official for communication with Romansh-speaking people. Language of instruction depends on canton and municipality.",
+ authority:"Swiss Conference of Cantonal Ministers of Education (EDK/CDIP); cantonal education departments are responsible for most school administration. The federal government has defined roles in vocational and higher education.",
+ curriculum:"Curricula are primarily cantonal or regional. German-speaking cantons use Lehrplan 21 in many areas; French-speaking cantons cooperate through the Plan d'études romand (PER); Ticino has its own curriculum framework. Check the canton and school language region.",
+ system:"Compulsory education generally lasts 11 years, commonly including kindergarten, primary and lower-secondary levels, with details set by cantons. Upper-secondary pathways include general education (e.g. gymnasium/matura) and vocational education/training; arrangements vary regionally.",
+ termCalendar:"School calendars and holiday dates are cantonal and often municipal. Consult the official canton or commune calendar; there is no single nationwide set of school term dates.",
+ calendar:"Use the canton/commune's current school calendar, including regional holidays and school-specific changes.",
+ qualificationRequirements:"Teacher education and eligibility are regulated through recognised qualifications and cantonal rules. Requirements depend on teaching level, subject, language region and canton. Foreign qualifications may need recognition by EDK or the competent authority, and proficiency in the local language may be required. Recognition does not guarantee a job.",
+ exams:[
+  {name:"Matura / maturité gymnasiale",body:"Upper-secondary general education qualification; cantonal and national arrangements apply, with reforms and implementation details to verify for the relevant cohort.",level:"Upper secondary",url:"https://www.edk.ch/en"},
+  {name:"Federal VET qualifications",body:"Vocational education and training qualifications are overseen with federal and cantonal responsibilities; examination arrangements depend on occupation and programme.",level:"Vocational education",url:"https://www.sbfi.admin.ch/sbfi/en/home.html"}
+ ],
+ schools:[
+  {name:"EDK/CDIP — Swiss education system",type:"Official intercantonal education authority and entry point to cantonal education departments.",url:"https://www.edk.ch/en"},
+  {name:"Swiss Federal Statistical Office — education",type:"Official education statistics; for an individual school, consult the canton or commune's own directory.",url:"https://www.bfs.admin.ch/bfs/en/home/statistics/education-science.html"},
+  {name:"Cantonal education departments",type:"Official local school lists, admissions, curricula and calendars; choose the canton.",url:"https://www.edk.ch/en"}
+ ],
+ papers:[
+  {name:"EDK/CDIP publications",type:"Official framework and education-system information; school examinations and sample papers are usually canton/programme-specific.",url:"https://www.edk.ch/en"},
+  {name:"State Secretariat for Education, Research and Innovation (SERI)",type:"Official vocational and higher education information and publications.",url:"https://www.sbfi.admin.ch/sbfi/en/home.html"}
+ ],
+ jobs:[
+  {name:"Cantonal education departments",type:"Official public-school recruitment and employment rules; check the chosen canton and language region.",url:"https://www.edk.ch/en"},
+  {name:"Swiss public employment service (Job-Room)",type:"Official job search; verify teaching qualification recognition and work-permit conditions.",url:"https://www.job-room.ch/"},
+  {name:"CBE Nexus international teaching jobs",type:"Aggregated listings; verify school, language, qualification recognition and work authorisation directly.",url:"/international-teaching-jobs.html"}
+ ],
+ teachers:[
+  {name:"EDK/CDIP — recognition of foreign teaching diplomas",type:"Official intercantonal recognition information; exact eligibility depends on qualification and teaching level.",url:"https://www.edk.ch/en"},
+  {name:"SERI",type:"Federal information on vocational and higher education qualifications; school teaching rules may be cantonal.",url:"https://www.sbfi.admin.ch/sbfi/en/home.html"}
+ ],
+ further:[
+  {name:"Swiss Federal Statistical Office — education",url:"https://www.bfs.admin.ch/bfs/en/home/statistics/education-science.html"},
+  {name:"State Secretariat for Education, Research and Innovation",url:"https://www.sbfi.admin.ch/sbfi/en/home.html"},
+  {name:"EDK/CDIP",url:"https://www.edk.ch/en"}
+ ],
+ sources:[
+  {label:"EDK/CDIP — Swiss education system",url:"https://www.edk.ch/en"},
+  {label:"Swiss Federal Statistical Office — education and science",url:"https://www.bfs.admin.ch/bfs/en/home/statistics/education-science.html"},
+  {label:"State Secretariat for Education, Research and Innovation",url:"https://www.sbfi.admin.ch/sbfi/en/home.html"},
+  {label:"Swiss Job-Room",url:"https://www.job-room.ch/"},
+  {label:"UNESCO education system profiles",url:"https://education-profiles.org/"}
+ ]
+};
+
 if(typeof window!=="undefined"){window.CBE_GLOBAL_COUNTRIES=countryRegistry;window.CBE_GLOBAL_COUNTRY_DATA=countryData;}
 if(typeof module!=="undefined"&&module.exports){module.exports={countries:countryRegistry,countryData};}
 })();
