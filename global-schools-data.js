@@ -697,6 +697,207 @@ Object.keys(africaResearchProfilesBatch3).forEach(function(slug){
  Object.keys(africaResearchProfilesBatch3[slug]).forEach(function(field){target[field]=africaResearchProfilesBatch3[slug][field];});
 });
 
+
+/* Africa research batch 4: ministry and government discovery sources; calendars/vacancies are not inferred. */
+const africaResearchProfilesBatch4 = {
+ "central-african-republic": {
+  researchStatus:"Government and international education-source directories identify a national education ministry, but current direct ministry URLs and dated notices need validation. This profile deliberately avoids asserting live dates or vacancy status.",
+  authority:"National ministry responsible for national education; separate portfolios may oversee higher education and research. Confirm the current official titles and division of duties.",
+  officialLanguages:"Sango and French are official languages. Verify language-of-instruction arrangements by school level and programme.",
+  curriculum:"Use the latest approved curriculum and ministry circulars once the responsible authority's current official portal is validated.",
+  system:"Education pathways include preschool, primary, secondary, technical/vocational and higher education. Confirm current cycles, grade progression and qualifications from official publications.",
+  termCalendar:"Current school dates not entered; check the latest ministry circular and school notices.",
+  calendar:"No dates are assumed; confirm the current school-year calendar and any amendments with the responsible ministry.",
+  exams:[{name:"National education authority",body:"Confirm the current national examination body, candidate notices and timetable through official government publications.",level:"School examinations",url:"https://www.sangonet.org/"}],
+  schools:[{name:"Government of the Central African Republic",type:"Government discovery source; verify current ministry and school-directory links before using them as official",url:"https://www.sangonet.org/"}],
+  papers:[{name:"National education authority",type:"Locate approved curricula and examination resources through current official ministry publications",url:"https://www.sangonet.org/"}],
+  jobs:[{name:"National education authority",type:"Check current government recruitment notices; no live vacancies are asserted",url:"https://www.sangonet.org/"}],
+  teachers:[{name:"National education authority",type:"Confirm teacher qualifications and recruitment rules through current official notices",url:"https://www.sangonet.org/"}],
+  further:[{name:"Government education-source directory",url:"https://guides.library.yale.edu/c.php?g=1532971&p=11487447"}],
+  sources:[{label:"Yale University Library African Studies: official government website guide",url:"https://guides.library.yale.edu/c.php?g=1532971&p=11487447"}]
+ },
+ "chad": {
+  researchStatus:"A national ministry responsible for education is identified in international education-source directories. Validate the current official portal, ministry structure and dated school-year/examination notices before treating these fields as complete.",
+  authority:"National ministry responsible for national education; higher education and vocational training responsibilities should be confirmed against current government structure.",
+  officialLanguages:"French and Arabic are official languages. Local languages are also used; confirm the current language-of-instruction policy by level.",
+  curriculum:"Use current ministry-approved curricula, programmes and examination notices; verify each document's year and applicable cycle.",
+  system:"The system includes preschool, primary, secondary, technical/vocational and higher education. Confirm current grade progression and qualification equivalencies from official documents.",
+  termCalendar:"Current dates not entered; consult the latest official ministry calendar or circular.",
+  calendar:"Check the latest school-year notice and any amendments; historical dates are not carried forward.",
+  exams:[{name:"National education authority",body:"Use current official candidate notices and examination timetables; no dates are asserted here.",level:"School examinations",url:"https://www.education.gouv.td/"}],
+  schools:[{name:"National education authority",type:"Verify the current school directory and education statistics through the responsible ministry",url:"https://www.education.gouv.td/"}],
+  papers:[{name:"National education authority",type:"Confirm approved curriculum editions and official examination resources",url:"https://www.education.gouv.td/"}],
+  jobs:[{name:"National education authority",type:"Check current ministry and public-service recruitment announcements",url:"https://www.education.gouv.td/"}],
+  teachers:[{name:"National education authority",type:"Verify teacher qualifications and recruitment requirements from current official notices",url:"https://www.education.gouv.td/"}],
+  further:[{name:"Government of Chad",url:"https://www.gouvernement.td/"}],
+  sources:[{label:"Yale University Library African Studies official-government guide",url:"https://guides.library.yale.edu/c.php?g=1532971&p=11487447"},{label:"Government of Chad portal (validate current education links)",url:"https://www.gouvernement.td/"}]
+ },
+ "gabon": {
+  researchStatus:"The national education ministry is identified in official-government source directories. Confirm the current ministry portal and dated curriculum, examination, school calendar and recruitment notices.",
+  authority:"Ministry responsible for national education; separate portfolios may oversee technical education and higher education. Confirm current official titles.",
+  officialLanguages:"French is the official language; national languages are also spoken. Confirm language-of-instruction arrangements for each education cycle.",
+  curriculum:"Consult current ministry-approved programmes and circulars; record the edition and applicable school level.",
+  system:"The system includes preschool, primary, secondary, technical/vocational and higher education. Verify current grade structure and qualification requirements through official publications.",
+  termCalendar:"Current term dates not entered; consult the latest official ministry circular.",
+  calendar:"Verify the current school-year calendar and any amendments directly from the ministry.",
+  exams:[{name:"National education authority",body:"Confirm current examination arrangements and timetables through official ministry notices.",level:"School examinations",url:"https://www.education.gouv.ga/"}],
+  schools:[{name:"National education authority",type:"Official starting point for school information; verify current school register and coverage",url:"https://www.education.gouv.ga/"}],
+  papers:[{name:"National education authority",type:"Use current approved curricula and examination information; verify versions",url:"https://www.education.gouv.ga/"}],
+  jobs:[{name:"National education authority",type:"Check current ministry and public-service recruitment notices",url:"https://www.education.gouv.ga/"}],
+  teachers:[{name:"National education authority",type:"Confirm teacher recruitment and qualification requirements through current notices",url:"https://www.education.gouv.ga/"}],
+  further:[{name:"Government of Gabon",url:"https://www.gouvernement.ga/"}],
+  sources:[{label:"Yale University Library African Studies official-government guide",url:"https://guides.library.yale.edu/c.php?g=1532971&p=11487447"},{label:"Government of Gabon portal (validate current ministry links)",url:"https://www.gouvernement.ga/"}]
+ },
+ "republic-of-the-congo": {
+  researchStatus:"Government and international education directories identify national education portfolios. Validate the current ministry domain and the status/date of each curriculum, examination or recruitment publication.",
+  authority:"Ministry responsible for primary and secondary education; higher education is administered through a separate national portfolio. Confirm current official titles and responsibilities.",
+  officialLanguages:"French is the official language; Lingala and Kituba are national languages. Confirm language-of-instruction policy by cycle.",
+  curriculum:"Use current approved ministry curricula and official circulars; do not treat older syllabuses as current without checking their edition.",
+  system:"The system includes preschool, primary, secondary, technical/vocational and higher education. Confirm grade progression and qualification names from official publications.",
+  termCalendar:"Current school dates not entered; use the latest official ministry circular.",
+  calendar:"Check the latest school-year calendar and subsequent amendments with the responsible ministry.",
+  exams:[{name:"National education authority",body:"Verify current examination arrangements and timetables in official notices.",level:"School examinations",url:"https://www.enseignement-general.gouv.cg/"}],
+  schools:[{name:"National education authority",type:"Check current school registers and education statistics with the responsible ministry",url:"https://www.enseignement-general.gouv.cg/"}],
+  papers:[{name:"National education authority",type:"Official curriculum and examination starting point; verify the current edition",url:"https://www.enseignement-general.gouv.cg/"}],
+  jobs:[{name:"National education authority",type:"Check current ministry and public-service recruitment notices",url:"https://www.enseignement-general.gouv.cg/"}],
+  teachers:[{name:"National education authority",type:"Verify teacher qualification and recruitment rules through current official notices",url:"https://www.enseignement-general.gouv.cg/"}],
+  further:[{name:"Government of the Republic of the Congo",url:"https://www.gouvernement.cg/"}],
+  sources:[{label:"Yale University Library African Studies official-government guide",url:"https://guides.library.yale.edu/c.php?g=1532971&p=11487447"},{label:"Government of the Republic of the Congo portal (validate current ministry links)",url:"https://www.gouvernement.cg/"}]
+ },
+ "equatorial-guinea": {
+  researchStatus:"The national education portfolio is identified in international education-source directories. Confirm the current official ministry portal and dated curriculum, examination, calendar and teacher-recruitment notices.",
+  authority:"Ministry responsible for education, university education, vocational education and sports; verify current official title and responsibilities.",
+  officialLanguages:"Spanish, French and Portuguese have official status under the country's language framework. Verify actual language-of-instruction arrangements by school and programme.",
+  curriculum:"Consult current ministry-approved programmes and examination notices; check the edition, language and applicable cycle.",
+  system:"The system includes preschool, primary, secondary, vocational and higher education. Confirm current grade structure and qualification equivalencies from official publications.",
+  termCalendar:"Current school dates not entered; consult the latest official ministry circular.",
+  calendar:"Verify the current school-year dates and amendments with the responsible ministry.",
+  exams:[{name:"National education authority",body:"Confirm current examination bodies and timetables through official government notices.",level:"School examinations",url:"https://www.guineaecuatorialpress.com/"}],
+  schools:[{name:"Government of Equatorial Guinea",type:"Government information source; verify current education ministry and school-register links",url:"https://www.guineaecuatorialpress.com/"}],
+  papers:[{name:"National education authority",type:"Find approved curriculum and examination materials through the current ministry",url:"https://www.guineaecuatorialpress.com/"}],
+  jobs:[{name:"Government of Equatorial Guinea",type:"Check official recruitment notices and verify application channels and deadlines",url:"https://www.guineaecuatorialpress.com/"}],
+  teachers:[{name:"National education authority",type:"Verify teacher qualifications and recruitment rules through current official notices",url:"https://www.guineaecuatorialpress.com/"}],
+  further:[{name:"Government of Equatorial Guinea",url:"https://www.guineaecuatorialpress.com/"}],
+  sources:[{label:"Yale University Library African Studies official-government guide",url:"https://guides.library.yale.edu/c.php?g=1532971&p=11487447"}]
+ },
+ "sao-tome-and-principe": {
+  researchStatus:"The Ministry of Education portal has not yet been independently validated for every field. Verify the current official site, approved curriculum, school-year calendar and examination/recruitment notices.",
+  authority:"Ministry responsible for education; verify current official name and division of responsibilities for higher education and vocational training.",
+  officialLanguages:"Portuguese is the official language; Forro, Angolar, Principense and Cape Verdean Creole are also spoken. Confirm instructional-language arrangements by level.",
+  curriculum:"Use the latest ministry-approved curriculum and programme publications; verify their date and applicability.",
+  system:"The system includes preschool, basic/primary, secondary, technical/vocational and higher education. Confirm current grade and qualification rules from official sources.",
+  termCalendar:"Current dates not entered; consult the latest official school-year circular.",
+  calendar:"Do not infer dates from older notices; verify the current calendar and any amendments.",
+  exams:[{name:"National education authority",body:"Check current official examination and candidate notices with the responsible ministry.",level:"School examinations",url:"https://www.gov.st/"}],
+  schools:[{name:"Government of São Tomé and Príncipe",type:"Government discovery portal; validate current ministry school-list links",url:"https://www.gov.st/"}],
+  papers:[{name:"National education authority",type:"Locate approved curriculum and examination materials through current ministry publications",url:"https://www.gov.st/"}],
+  jobs:[{name:"Government of São Tomé and Príncipe",type:"Check current official public-service and education recruitment notices",url:"https://www.gov.st/"}],
+  teachers:[{name:"National education authority",type:"Confirm teacher qualifications and recruitment rules through current official notices",url:"https://www.gov.st/"}],
+  further:[{name:"Government of São Tomé and Príncipe",url:"https://www.gov.st/"}],
+  sources:[{label:"Yale University Library African Studies official-government guide",url:"https://guides.library.yale.edu/c.php?g=1532971&p=11487447"}]
+ },
+ "cabo-verde": {
+  researchStatus:"The official Ministry of Education portal was located and displays education services, learning materials, public announcements and recruitment/competition notices. Verify the date and status of each individual item before treating it as active.",
+  authority:"Ministry of Education, Professional Training, Higher Education, Science and Innovation (confirm the current official title as published on the ministry portal).",
+  officialLanguages:"Portuguese is the official language; Cape Verdean Creole is widely spoken. Confirm language-of-instruction policy by level and programme.",
+  curriculum:"The ministry portal provides official education guidance and school learning materials, including subject resources. Check the current grade, edition and publication date.",
+  system:"The system includes preschool, basic education, secondary, technical/professional training and higher education. Confirm current grade and qualification rules from ministry documents.",
+  termCalendar:"Current school dates not entered; consult the latest official ministry announcement.",
+  calendar:"Use the latest school-year calendar published by the ministry and check for later updates.",
+  exams:[{name:"Ministry of Education",body:"Official education guidance and learning resources; confirm current examination notices and timetables.",level:"School education",url:"https://minedu.gov.cv/"}],
+  schools:[{name:"Ministry of Education",type:"National authority; verify school directory and current education statistics on the ministry portal",url:"https://minedu.gov.cv/"}],
+  papers:[{name:"Ministry of Education",type:"Official learning materials and guidance; verify grade, subject and current edition",url:"https://minedu.gov.cv/"}],
+  jobs:[{name:"Ministry of Education",type:"Portal includes competition and announcement notices; verify each active notice and deadline",url:"https://minedu.gov.cv/"}],
+  teachers:[{name:"Ministry of Education",type:"Check official recruitment competitions and qualification requirements in the relevant notice",url:"https://minedu.gov.cv/"}],
+  further:[{name:"Ministry of Education",url:"https://minedu.gov.cv/"}],
+  sources:[{label:"Ministry of Education, Cabo Verde",url:"https://minedu.gov.cv/"}]
+ },
+ "comoros": {
+  researchStatus:"National education authorities are identified in international education directories. Validate the current official ministry website, ministry titles and dated calendar/examination documents before marking details complete.",
+  authority:"National ministry responsible for education; verify current official title and division of duties for higher education and vocational training.",
+  officialLanguages:"Comorian (Shikomori), Arabic and French are official languages. Confirm language-of-instruction arrangements by level.",
+  curriculum:"Use current approved curriculum and examination publications from the responsible ministry; verify the issue date and applicable cycle.",
+  system:"The system includes preschool, primary, secondary, technical/vocational and higher education. Confirm current grade structure and qualification requirements from official sources.",
+  termCalendar:"Current school dates not entered; check the latest official ministry circular.",
+  calendar:"Verify the current school-year calendar and any amendments through the responsible ministry.",
+  exams:[{name:"National education authority",body:"Check current examination notices and timetables through official ministry publications.",level:"School examinations",url:"https://beit-salam.km/"}],
+  schools:[{name:"Government of Comoros",type:"Government discovery portal; validate current education ministry and school directory links",url:"https://beit-salam.km/"}],
+  papers:[{name:"National education authority",type:"Locate approved curriculum and examination resources through the current ministry",url:"https://beit-salam.km/"}],
+  jobs:[{name:"Government of Comoros",type:"Check current government and ministry recruitment notices",url:"https://beit-salam.km/"}],
+  teachers:[{name:"National education authority",type:"Confirm teacher qualifications and recruitment rules from current official notices",url:"https://beit-salam.km/"}],
+  further:[{name:"Government of Comoros",url:"https://beit-salam.km/"}],
+  sources:[{label:"Yale University Library African Studies official-government guide",url:"https://guides.library.yale.edu/c.php?g=1532971&p=11487447"}]
+ },
+ "guinea": {
+  researchStatus:"The national education ministry is identified in international education-source directories. Confirm current ministry portals and approved, dated curriculum and examination notices before marking fields verified.",
+  authority:"Ministry responsible for pre-university education and literacy; higher education is overseen by a separate national portfolio. Verify current ministry titles.",
+  officialLanguages:"French is the official language; several national languages are widely used. Confirm language-of-instruction policy by level and programme.",
+  curriculum:"Consult current ministry-approved programmes, syllabuses and assessment notices; check their publication date and applicability.",
+  system:"The system includes preschool, primary, secondary, technical/vocational and higher education. Confirm current cycles and qualification names from official documents.",
+  termCalendar:"Current dates not entered; use the latest ministry school-year circular.",
+  calendar:"Check the latest dated official calendar and subsequent amendments.",
+  exams:[{name:"National education authority",body:"Verify current examination bodies, candidate requirements and timetables from official notices.",level:"School examinations",url:"https://www.education.gov.gn/"}],
+  schools:[{name:"National education authority",type:"Official starting point; confirm current school register and education statistics",url:"https://www.education.gov.gn/"}],
+  papers:[{name:"National education authority",type:"Check current approved curriculum and examination materials",url:"https://www.education.gov.gn/"}],
+  jobs:[{name:"National education authority",type:"Check current ministry and public-service recruitment notices",url:"https://www.education.gov.gn/"}],
+  teachers:[{name:"National education authority",type:"Confirm teacher qualification and recruitment requirements through current official notices",url:"https://www.education.gov.gn/"}],
+  further:[{name:"Government of Guinea",url:"https://www.gouvernement.gov.gn/"}],
+  sources:[{label:"Yale University Library African Studies official-government guide",url:"https://guides.library.yale.edu/c.php?g=1532971&p=11487447"}]
+ },
+ "guinea-bissau": {
+  researchStatus:"The national education portfolio is identified in international education-source directories. Confirm the current ministry website and approved curricula, examination calendars and recruitment notices before treating fields as verified.",
+  authority:"Ministry responsible for national education, higher education and scientific research; verify the current official title and administrative structure.",
+  officialLanguages:"Portuguese is the official language; Guinea-Bissau Creole and national languages are widely spoken. Confirm language-of-instruction policy by level.",
+  curriculum:"Use current approved ministry programmes and circulars; verify the edition and school cycle before publishing.",
+  system:"The system includes preschool, basic/primary, secondary, technical/vocational and higher education. Confirm current grade progression and qualifications from official publications.",
+  termCalendar:"Current dates not entered; consult the latest official ministry calendar.",
+  calendar:"Verify the current school-year circular and any amendments through the responsible ministry.",
+  exams:[{name:"National education authority",body:"Confirm current national examination arrangements and timetables from official ministry notices.",level:"School examinations",url:"https://www.gov.gw/"}],
+  schools:[{name:"Government of Guinea-Bissau",type:"Government discovery portal; validate current ministry and school-register links",url:"https://www.gov.gw/"}],
+  papers:[{name:"National education authority",type:"Locate approved curriculum and examination resources through current ministry publications",url:"https://www.gov.gw/"}],
+  jobs:[{name:"Government of Guinea-Bissau",type:"Check current public-service and education recruitment notices",url:"https://www.gov.gw/"}],
+  teachers:[{name:"National education authority",type:"Verify teacher qualification and recruitment requirements through current official notices",url:"https://www.gov.gw/"}],
+  further:[{name:"Government of Guinea-Bissau",url:"https://www.gov.gw/"}],
+  sources:[{label:"Yale University Library African Studies official-government guide",url:"https://guides.library.yale.edu/c.php?g=1532971&p=11487447"}]
+ },
+ "djibouti": {
+  researchStatus:"The Ministry of National Education and Vocational Training is identified in international education directories. Confirm current official portal, approved curricula, examination arrangements and school-year calendar.",
+  authority:"Ministry of National Education and Vocational Training (MENFOP); confirm current official name and responsibilities.",
+  officialLanguages:"Arabic and French are official languages; Somali and Afar are widely spoken. Confirm the language-of-instruction arrangements by level.",
+  curriculum:"Consult current ministry-approved curriculum and programme documents; verify their publication date and applicable grade.",
+  system:"The system includes preschool, primary, middle/secondary, vocational and higher education. Confirm current cycles and qualifications from official publications.",
+  termCalendar:"Current dates not entered; use the latest ministry circular.",
+  calendar:"Verify current school-year dates and any amendments with MENFOP.",
+  exams:[{name:"Ministry of National Education and Vocational Training",body:"Official starting point for school examination and assessment information; check current notices.",level:"School examinations",url:"https://www.education.gov.dj/"}],
+  schools:[{name:"Ministry of National Education and Vocational Training",type:"National authority; verify current school directory and education statistics",url:"https://www.education.gov.dj/"}],
+  papers:[{name:"Ministry of National Education and Vocational Training",type:"Locate approved curriculum and assessment resources; verify current editions",url:"https://www.education.gov.dj/"}],
+  jobs:[{name:"Ministry of National Education and Vocational Training",type:"Check current ministry and public-service recruitment notices",url:"https://www.education.gov.dj/"}],
+  teachers:[{name:"Ministry of National Education and Vocational Training",type:"Verify teacher qualification, training and recruitment requirements through current official notices",url:"https://www.education.gov.dj/"}],
+  further:[{name:"Government of Djibouti",url:"https://www.presidence.dj/"}],
+  sources:[{label:"Yale University Library African Studies official-government guide",url:"https://guides.library.yale.edu/c.php?g=1532971&p=11487447"}]
+ },
+ "eritrea": {
+  researchStatus:"The Ministry of Education is identified in international education-source directories. Current official web access, curriculum versions, examination notices and calendar publications still require direct validation.",
+  authority:"Ministry of Education, State of Eritrea.",
+  officialLanguages:"Tigrinya, Arabic and English are used in national contexts; language-of-instruction policy varies by region and educational level and should be confirmed from current ministry policy.",
+  curriculum:"Use current ministry-approved curriculum, textbook and examination publications; verify the edition and applicable grade.",
+  system:"The system includes basic education, secondary education, technical/vocational and higher education. Confirm current grade structure and qualification requirements from official sources.",
+  termCalendar:"Current dates not entered; consult the latest official ministry notice.",
+  calendar:"Verify the current academic calendar through the ministry and school notices.",
+  exams:[{name:"Ministry of Education",body:"Check current official assessment and examination announcements; no dates are assumed here.",level:"School examinations",url:"https://moe.gov.er/"}],
+  schools:[{name:"Ministry of Education",type:"Official starting point; validate current school directories and education statistics",url:"https://moe.gov.er/"}],
+  papers:[{name:"Ministry of Education",type:"Locate approved curricula, textbooks and assessment resources; verify versions",url:"https://moe.gov.er/"}],
+  jobs:[{name:"Ministry of Education",type:"Check current official recruitment and education-sector notices",url:"https://moe.gov.er/"}],
+  teachers:[{name:"Ministry of Education",type:"Verify teacher training, qualifications and recruitment requirements through official notices",url:"https://moe.gov.er/"}],
+  further:[{name:"Ministry of Education",url:"https://moe.gov.er/"}],
+  sources:[{label:"UNESCO IICBA country briefs",url:"https://www.iicba.unesco.org/en/country-briefs"},{label:"Yale University Library African Studies official-government guide",url:"https://guides.library.yale.edu/c.php?g=1532971&p=11487447"}]
+ }
+};
+Object.keys(africaResearchProfilesBatch4).forEach(function(slug){
+ const target=countryData[slug]||(countryData[slug]={});
+ Object.keys(africaResearchProfilesBatch4[slug]).forEach(function(field){target[field]=africaResearchProfilesBatch4[slug][field];});
+});
+
 /* Ensure every registered country has a visible, honest research record.
  * These are discovery links and verification prompts, not claims that the fields have been researched.
  * Country facts are only promoted to verified when checked against a national authority or other primary source.
