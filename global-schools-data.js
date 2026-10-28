@@ -1511,6 +1511,24 @@ countryData["switzerland"]={
  ]
 };
 
+countryData["united-arab-emirates"]={
+researchStatus:"UAE profile researched using official government sources. Verify current school-specific calendars, inspection ratings and vacancies with the relevant regulator or school.",
+officialLanguages:"Arabic is the official language; language of instruction depends on school and curriculum.",
+authority:"Federal Ministry of Education; emirate regulators include ADEK (Abu Dhabi), KHDA (Dubai), SPEA (Sharjah) and Ras Al Khaimah Department of Knowledge.",
+curriculum:"Government schools follow the UAE national curriculum. Private schools may offer approved British, American, IB, Indian, French, German and other curricula. Check the regulator and school for exact subjects and grade offerings.",
+system:"Schooling spans kindergarten through Grade 12; curriculum, assessment and admissions vary by school and emirate.",
+termCalendar:"Dates vary by academic year, curriculum, emirate and school. Confirm the current Ministry calendar and school notice.",
+calendar:"Check the current Ministry of Education calendar and the relevant emirate authority.",
+qualificationRequirements:"Teacher eligibility commonly includes a relevant bachelor's degree or higher, document verification/attestation where required and applicable professional licensing. Confirm current requirements with the regulator and employer.",
+exams:[{name:"Student Assessment Policy Guide 2026–2027",body:"Official assessment policy; check current grade and school applicability.",level:"School assessment",url:"https://www.moe.gov.ae/en/guides/Pages/Student-Assessment-Policy-Guide-2026-2027.aspx"}],
+schools:[{name:"UAE official school finder",type:"Government directory entry point",url:"https://u.ae/en/information-and-services/education/school-education-k-12/find-schools-in-the-uae"},{name:"KHDA Dubai",type:"Official Dubai school regulator",url:"https://www.khda.gov.ae/"},{name:"ADEK Abu Dhabi",type:"Official Abu Dhabi education authority",url:"https://www.adek.gov.ae/"},{name:"SPEA Sharjah",type:"Official Sharjah education authority",url:"https://spea.shj.ae/"}],
+papers:[{name:"MoE assessment guide",type:"Official assessment guidance; not a complete past-paper archive.",url:"https://www.moe.gov.ae/en/guides/Pages/Student-Assessment-Policy-Guide-2026-2027.aspx"}],
+jobs:[{name:"UAE Ministry of Education",type:"Official recruitment notices; live vacancies not implied.",url:"https://www.moe.gov.ae/"},{name:"CBE Nexus international teaching jobs",type:"Verify each listing with the original employer.",url:"/international-teaching-jobs.html"}],
+teachers:[{name:"Education Professional Licensing System",type:"Official licensing portal",url:"https://tls.moe.gov.ae/"},{name:"UAE Government teacher qualifications",type:"Official eligibility guidance",url:"https://u.ae/en/information-and-services/education/school-education-k-12/qualifications-to-be-a-teacher"}],
+further:[{name:"UAE Government education portal",url:"https://u.ae/en/information-and-services/education"}],
+sources:[{label:"UAE Government education portal",url:"https://u.ae/en/information-and-services/education"},{label:"Official school finder",url:"https://u.ae/en/information-and-services/education/school-education-k-12/find-schools-in-the-uae"},{label:"Teacher qualifications",url:"https://u.ae/en/information-and-services/education/school-education-k-12/qualifications-to-be-a-teacher"},{label:"Teacher licensing",url:"https://tls.moe.gov.ae/"},{label:"Assessment Policy Guide 2026–2027",url:"https://www.moe.gov.ae/en/guides/Pages/Student-Assessment-Policy-Guide-2026-2027.aspx"}]
+};
+
 if(typeof window!=="undefined"){window.CBE_GLOBAL_COUNTRIES=countryRegistry;window.CBE_GLOBAL_COUNTRY_DATA=countryData;}
 if(typeof module!=="undefined"&&module.exports){module.exports={countries:countryRegistry,countryData};}
 })();
