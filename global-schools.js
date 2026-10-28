@@ -36,8 +36,9 @@ function renderCountries(filter){
  matches.forEach(c=>{
   const card=node("div","gs-country");
   card.setAttribute("role","link");card.setAttribute("tabindex","0");card.setAttribute("aria-label","Open the "+c.name+" country dashboard");card.title="Open "+c.name+" country dashboard";
-  card.addEventListener("click",event=>{if(event.target.closest("a,button,input,select,textarea"))return;location.href=c.url;});
-  card.addEventListener("keydown",event=>{if(event.target===card&&(event.key==="Enter"||event.key===" ")){event.preventDefault();location.href=c.url;}});
+  card.dataset.countryUrl=c.url;
+  card.addEventListener("click",event=>{const interactive=event.target.closest("a,button,input,select,textarea");if(interactive){if(interactive.classList.contains("gs-country-name"))return;return;}if(c.url)window.location.assign(c.url);});
+  card.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){if(event.target===card||event.target.closest(".gs-country-body")){event.preventDefault();if(c.url)window.location.assign(c.url);}}});
   const flag=node("span","gs-flag");flag.textContent=c.flag;flag.setAttribute("aria-hidden","true");
   const body=node("span","gs-country-body");
   const nameLink=node("a","gs-country-name");nameLink.href=c.url;nameLink.style.color="inherit";nameLink.style.textDecoration="none";nameLink.setAttribute("aria-label","Open "+c.name+" country dashboard");
