@@ -5,9 +5,19 @@ const $=id=>document.getElementById(id);
 function text(el,value){if(el)el.textContent=value==null?"":String(value);}
 function node(tag,cls){const e=document.createElement(tag);if(cls)e.className=cls;return e;}
 function safeUrl(value){try{const u=new URL(value,location.origin);return ["http:","https:"].includes(u.protocol)?u.href:"#";}catch{return "#";}}
-function linkList(id,items,emptyId,emptyText){
+function linkList(id,items,emptyId,emptyText,flagSymbol){
  const host=$(id); if(!host)return; host.replaceChildren();
- (items||[]).forEach(item=>{if(!item||!item.name&&!item.label)return;const a=node("a");a.href=safeUrl(item.url);a.textContent=(item.name||item.label)+(item.body?" — "+item.body:"")+(item.level?" · "+item.level:"")+(item.type?" — "+item.type:"");if(/^https?:/.test(item.url||"")){a.target="_blank";a.rel="noopener noreferrer";}host.appendChild(a);});
+ (items||[]).forEach(item=>{
+  if(!item||!item.name&&!item.label)return;
+  const a=node("a");a.href=safeUrl(item.url);
+  a.textContent=(item.name||item.label)+(item.body?" — "+item.body:"")+(item.level?" · "+item.level:"")+(item.type?" — "+item.type:"");
+  if(/^https?:/.test(item.url||"")){a.target="_blank";a.rel="noopener noreferrer";}
+  if(flagSymbol){
+   const row=node("div","gs-school-link-row");
+   const flag=node("span","gs-school-flag");flag.textContent=flagSymbol;flag.setAttribute("aria-hidden","true");flag.title="Country flag";
+   row.append(flag,a);host.appendChild(row);
+  }else host.appendChild(a);
+ });
  if(emptyId){const e=$(emptyId);if(e){e.classList.toggle("gs-hidden",!!(items||[]).length);text(e,emptyText||"No verified records have been added for this section yet.");}}
 }
 function renderCountries(filter){
@@ -132,7 +142,11 @@ function renderCountry(){
  text($("countryQualifications"),d.qualificationRequirements||"Not yet verified for this country. Confirm the minimum academic qualification, teacher-training award, registration/licence, subject grades, language rules and work authorisation with the relevant regulator and employer.");
  text($("countrySystem"),d.system||"Not yet verified. School stages, grade equivalents and curriculum information need country-specific official sources.");
  text($("countryCalendar"),d.calendar||"Not yet verified. Check the relevant ministry, state, province, district or individual school calendar.");
- linkList("schoolLinks",d.schools,"schoolEmpty","No verified school directory records have been added for this country yet.");
+ // Keep each school's country flag visible in the school-directory list on every country page.
+ const schoolFlagStyle=node("style");
+ schoolFlagStyle.textContent=".gs-school-link-row{display:flex;align-items:flex-start;gap:10px;padding:9px 10px;margin:0 0 7px;border:1px solid #e7edf2;border-radius:9px;background:#fff}.gs-school-link-row .gs-school-flag{font-size:23px;line-height:1.25;flex:0 0 auto}.gs-school-link-row a{display:block;min-width:0;overflow-wrap:anywhere}.gs-school-link-row a:hover{text-decoration:underline}";
+ document.head.appendChild(schoolFlagStyle);
+ linkList("schoolLinks",d.schools,"schoolEmpty","No verified school directory records have been added for this country yet.",c.flag);
  linkList("examLinks",d.exams,"examEmpty","No verified national examination records or current examination dates have been added for this country yet.");
  linkList("paperLinks",d.papers,null);linkList("jobLinks",d.jobs,null);
  // Add country-specific live search links for every registered country. These are discovery links,
