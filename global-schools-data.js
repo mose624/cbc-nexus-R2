@@ -89,6 +89,41 @@ const countryData = {
   sources:[{label:"Ministry of Education, Science, Technology and Innovation (MESTI)",url:"https://masht.rks-gov.net/"},{label:"Kosovo Agency of Statistics",url:"https://ask.rks-gov.net/"},{label:"Accreditation Agency of Kosovo",url:"https://akreditimi.rks-gov.net/"}]
  },
 };
+
+/* Ensure every registered country has a visible, honest research record.
+ * These are discovery links and verification prompts, not claims that the fields have been researched.
+ * Country facts are only promoted to verified when checked against a national authority or other primary source.
+ */
+countryRegistry.forEach(function(country){
+ const key=country.slug;
+ const query=encodeURIComponent(country.name+" official ministry of education national school directory");
+ const officialSearch="https://www.google.com/search?q="+query;
+ const researchSources=[
+  {label:"UNESCO UIS SDG 4 country profiles (national education-system diagrams and indicators)",url:"https://www.uis.unesco.org/en/data/sdg4-country-profiles"},
+  {label:"UNESCO national education-system profiles (research reference; check profile dates)",url:"https://education-profiles.org/"},
+  {label:"Search for "+country.name+" official government education authority (discovery link; verify the domain)",url:officialSearch}
+ ];
+ const starter={
+  researchStatus:"Needs country-specific primary-source verification. Links below are research starting points, not proof that a field is verified.",
+  authority:"Not yet verified for this country. Identify the responsible national education ministry/regulator and any relevant state, province or municipal authority from official government sources.",
+  curriculum:"Not yet verified. Confirm the current national curriculum framework, curriculum authority, grade coverage and any recognised international/private-school pathways from official sources.",
+  termCalendar:"Not yet verified. Add the current academic-year calendar only after checking the latest ministry or subnational authority circular and its publication date.",
+  qualificationRequirements:"Not yet verified. Confirm teacher qualifications, training, registration/licensing, foreign credential recognition, language requirements and work authorisation with the official regulator and employer.",
+  system:"Not yet verified. Confirm school stages, compulsory-education ages, grade structure and qualification pathways from the national authority and UNESCO UIS country mapping.",
+  calendar:"Not yet verified. Add current term dates only from a dated official calendar; note subnational differences where applicable.",
+  schools:[{name:"Official school directory — locate and verify the national or subnational education authority's own directory",type:"Research link; this is not a verified school record",url:officialSearch}],
+  exams:[{name:"Official national examinations and assessment authority — research required",body:"Identify the responsible examination body and link its official syllabus, assessment guidance and current timetable. No exam date is asserted here.",level:"Research required",url:officialSearch}],
+  papers:[{name:"Official curriculum and assessment materials — research required",type:"Locate official syllabus, specimen papers and past-paper archives; availability varies by country",url:officialSearch}],
+  jobs:[{name:"Official public education recruitment — research required",type:"Discovery link only; confirm that each vacancy is live, official and open to the applicant",url:officialSearch}],
+  teachers:[{name:"Official teacher registration/licensing authority — research required",type:"Confirm registration, qualification recognition and current rules with the regulator",url:officialSearch}],
+  further:[{name:"Official higher-education regulator and accreditation register — research required",url:officialSearch}],
+  sources:researchSources
+ };
+ const existing=countryData[key]||(countryData[key]={});
+ Object.keys(starter).forEach(function(field){if(existing[field]===undefined||existing[field]===null||existing[field]===""){existing[field]=starter[field];}});
+ if(!existing.sources)existing.sources=researchSources;
+});
+
 if(typeof window!=="undefined"){window.CBE_GLOBAL_COUNTRIES=countryRegistry;window.CBE_GLOBAL_COUNTRY_DATA=countryData;}
 if(typeof module!=="undefined"&&module.exports){module.exports={countries:countryRegistry,countryData};}
 })();
