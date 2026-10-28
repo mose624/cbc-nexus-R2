@@ -2051,6 +2051,71 @@ further:[{name:"Equatorial Guinea official government press portal",url:"https:/
 sources:[{"label":"Government report on draft 2026–2027 school calendar","url":"https://www.guineaecuatorialpress.com/index.php/noticias/ocho_puntos_marcan_la_agenda_del_consejo_directivo_del_sector_educativo_y_deportivo"}],
 };
 
+
+/* Official-source verification batch: Austria, New Zealand, India; refreshed Japan and UAE links.
+ * Only calendars published by the relevant authority are stated as dates. School-level and vacancy
+ * information is linked to official directories/boards; no vacancy is claimed open unless verified.
+ */
+Object.assign(countryData, {
+ "austria": {
+  officialLanguages:"German is Austria's official state language; recognised minority languages and regional language rights apply in specified contexts.",
+  authority:"Federal Ministry of Education (Bundesministerium für Bildung); education directorates (Bildungsdirektionen) in the provinces.",
+  curriculum:"Austria's national curricula and school regulations are published by the Federal Ministry of Education. Programme and school-type details should be checked against the ministry and relevant provincial education directorate.",
+  system:"Compulsory schooling and subsequent general or vocational pathways; school type and local implementation affect progression.",
+  termCalendar:"Official 2026–2027 school-holiday dates are published by the Federal Ministry. Autumn break: 27–31 October 2026; Christmas break: 24 December 2026–6 January 2027; semester breaks vary by province in February 2027; Easter break: 20–29 March 2027; summer holidays vary by province, starting 3 or 10 July 2027. Individual schools may differ.",
+  calendar:"Use the Federal Ministry's 2026–2027 holiday schedule and the relevant provincial education directorate for school-specific dates.",
+  qualificationRequirements:"Teacher education, qualification recognition and appointment requirements depend on school type and role. Foreign-qualified teachers should confirm recognition and language requirements with the competent Austrian authority before applying.",
+  schools:[{name:"Bildungskompass — Austrian school information",type:"Official public school information platform; coverage is being expanded",url:"https://www.oesterreich.gv.at/en/themen/bildung_und_ausbildung/schulen"},{name:"Federal Ministry of Education",type:"Official national education authority",url:"https://www.bmb.gv.at/"}],
+  jobs:[{name:"Federal Ministry of Education",type:"Official education authority; not a single live nationwide school-vacancy list",url:"https://www.bmb.gv.at/"},{name:"Provincial education directorates",type:"Check the relevant province's official recruitment notices; no individual vacancy asserted here",url:"https://www.bmb.gv.at/"}],
+  teachers:[{name:"Federal Ministry of Education",url:"https://www.bmb.gv.at/"},{name:"Official school and education information",url:"https://www.oesterreich.gv.at/en/themen/bildung_und_ausbildung/schulen"}],
+  sources:[{label:"Federal Ministry: 2026–2027 school holidays",url:"https://www.bmb.gv.at/Themen/schule/schulpraxis/termine/ferientermine_26_27.html"},{label:"Austrian government: schooling and Bildungskompass",url:"https://www.oesterreich.gv.at/en/themen/bildung_und_ausbildung/schulen"},{label:"Federal Ministry of Education",url:"https://www.bmb.gv.at/"}],
+  researchStatus:"Official national holiday schedule and government school-information entry point checked. Provincial school lists and current individual vacancies still require school- or province-level verification."
+ },
+ "new-zealand": {
+  officialLanguages:"English, Māori and New Zealand Sign Language have official-language status under New Zealand law; language of instruction varies by school and kura.",
+  authority:"Ministry of Education (Te Tāhuhu o te Mātauranga); Teaching Council of Aotearoa New Zealand regulates teacher registration and certification.",
+  curriculum:"The New Zealand Curriculum applies to English-medium state and state-integrated schooling, with Te Marautanga o Aotearoa for Māori-medium settings. Schools may have local curriculum design.",
+  system:"Primary, intermediate and secondary schooling; year-level structures and qualifications depend on school type and learner pathway.",
+  termCalendar:"Official Ministry dates for 2027: Term 1 begins between 28 January and 3 February and ends 9 April; Term 2 is 27 April–2 July; Term 3 is 19 July–24 September; Term 4 is 11 October and ends no later than 17 December. Individual schools choose some start/end dates; private schools may differ.",
+  calendar:"Use the Ministry of Education's official term-date page and verify the selected school's own calendar.",
+  qualificationRequirements:"School teachers generally need appropriate registration/certification through the Teaching Council and must meet role-specific qualification and immigration requirements. Confirm current requirements with the Council and the employer.",
+  schools:[{name:"New Zealand Schools Directory — Education Counts",type:"Official school directory with contact and institutional information; updated nightly",url:"https://www.educationcounts.govt.nz/directories/list-of-nz-schools"},{name:"Ministry of Education",type:"Official national education authority",url:"https://www.education.govt.nz/"}],
+  jobs:[{name:"Education Gazette",type:"Officially recommended channel where schools advertise vacancies; verify each advertisement's closing date",url:"https://gazette.education.govt.nz/ jobs/"},{name:"Ministry of Education careers",type:"Live vacancies at the Ministry itself, not all school vacancies",url:"https://ministrycareers.education.govt.nz/viewalljobs/"}],
+  teachers:[{name:"Teaching Council of Aotearoa New Zealand",url:"https://teachingcouncil.nz/"},{name:"Ministry guidance on teaching careers and certification",url:"https://www.education.govt.nz/our-work/about-us/careers-education/careers-teaching-and-school-administration"}],
+  sources:[{label:"Ministry of Education: school terms and holidays 2026–2028",url:"https://www.education.govt.nz/school-terms-and-holidays-dates"},{label:"Education Counts: New Zealand Schools Directory",url:"https://www.educationcounts.govt.nz/directories/list-of-nz-schools"},{label:"Ministry guidance: teaching careers and certification",url:"https://www.education.govt.nz/our-work/about-us/careers-education/careers-teaching-and-school-administration"},{label:"Ministry of Education careers",url:"https://ministrycareers.education.govt.nz/"}],
+  researchStatus:"Official 2027 term windows, the nightly-updated national school directory and teacher registration/vacancy routes checked. Individual school dates and active vacancies must be verified on the linked school/employer page."
+ },
+ "india": {
+  officialLanguages:"India has Hindi in Devanagari script as the Union's official language and English for official purposes under applicable law. The Constitution recognises 22 scheduled languages; states determine many school-language policies. Do not label one language as the sole official language of all India.",
+  authority:"Ministry of Education, Government of India; Department of School Education and Literacy; National Council of Educational Research and Training (NCERT); state and union-territory education departments.",
+  curriculum:"NCERT develops national curriculum frameworks and learning materials, while state boards and other recognised boards may use their own syllabi and academic calendars.",
+  system:"Schooling includes foundational, preparatory, middle and secondary stages under the National Education Policy framework; implementation and board examinations vary by state, union territory and board.",
+  termCalendar:"No single all-India school calendar is asserted. Academic dates and holidays vary by state/union territory, school board and institution. Use the relevant state education department or board for the current academic year.",
+  calendar:"Check the relevant state/union-territory education department and school board; do not apply one state's calendar nationally.",
+  qualificationRequirements:"Teacher eligibility and recruitment depend on the employing authority, grade, subject and school system. Check the relevant state recruitment notice and applicable teacher eligibility tests and recognition rules.",
+  schools:[{name:"UDISE+ — Department of School Education and Literacy",type:"Official national school education data system",url:"https://udiseplus.gov.in/"},{name:"Ministry of Education",type:"Official national education authority",url:"https://www.education.gov.in/"},{name:"NCERT",type:"National curriculum and textbook body",url:"https://ncert.nic.in/"}],
+  jobs:[{name:"Ministry of Education",type:"Official national policy portal; not a complete live national teacher-vacancy board",url:"https://www.education.gov.in/"},{name:"Kendriya Vidyalaya Sangathan recruitment",type:"Check official recruitment notices and closing dates",url:"https://kvsangathan.nic.in/"},{name:"Navodaya Vidyalaya Samiti",type:"Check official recruitment notices and closing dates",url:"https://navodaya.gov.in/"}],
+  teachers:[{name:"National Council for Teacher Education (NCTE)",url:"https://ncte.gov.in/"},{name:"Central Teacher Eligibility Test (CTET)",url:"https://ctet.nic.in/"}],
+  sources:[{label:"Ministry of Education, Government of India",url:"https://www.education.gov.in/"},{label:"NCERT",url:"https://ncert.nic.in/"},{label:"UDISE+ official school education data",url:"https://udiseplus.gov.in/"},{label:"NCTE",url:"https://ncte.gov.in/"},{label:"CTET",url:"https://ctet.nic.in/"}],
+  researchStatus:"Official national authority, curriculum body and school-data portal identified. No single nationwide 2026–2027 calendar or complete live vacancy list is claimed; state/board-level verification is required."
+ },
+ "japan": {
+  termCalendar:"Japan's school year generally runs from 1 April through 31 March. Exact term and holiday dates vary by municipality, school and school type; confirm with the local board of education or institution.",
+  schools:[{name:"MEXT — Ministry of Education, Culture, Sports, Science and Technology",type:"Official national education authority and school-system information",url:"https://www.mext.go.jp/en/policy/education/overview/"},{name:"Local boards of education",type:"School-level listings and calendars should be checked with the relevant municipality",url:"https://www.mext.go.jp/en/"}],
+  jobs:[{name:"MEXT",type:"Official national authority; not a live nationwide teacher-vacancy board",url:"https://www.mext.go.jp/en/"},{name:"Local boards of education and individual school career pages",type:"Verify each vacancy and licence/language requirements with the employer",url:"https://www.mext.go.jp/en/policy/education/overview/"}],
+  sources:[{label:"MEXT school system overview",url:"https://www.mext.go.jp/en/policy/education/overview/"},{label:"MEXT: academic year runs April–March",url:"https://www.mext.go.jp/en/content/20200716-mxt_kokusai-000005414_03.pdf"}],
+  researchStatus:"Official national education authority and school-year structure checked. No single national calendar or live nationwide school-vacancy board asserted."
+ },
+ "united-arab-emirates": {
+  termCalendar:"The UAE Ministry of Education's published 2026–2027 calendar for public and private schools covered by its calendar begins 31 August 2026 and ends 2 July 2027. Mid-term break: 12–18 October 2026; winter break: 14 December 2026–3 January 2027; spring break: 5–11 April 2027. Check regulator and school-specific exceptions, particularly in emirates and curricula with separate arrangements.",
+  calendar:"Use the Ministry of Education's official 2026–2028 academic calendar, then confirm with the school and relevant emirate regulator.",
+  schools:[{name:"UAE Ministry of Education",type:"Official national education authority",url:"https://www.moe.gov.ae/"},{name:"Ministry academic calendar 2026–2028",type:"Official calendar announcement for covered public and private schools",url:"https://www.moe.gov.ae/en/guides/Pages/academic-calendar-2026-2028.aspx"}],
+  jobs:[{name:"UAE Ministry of Education",type:"Official government authority; individual vacancies must be checked on current recruitment notices",url:"https://www.moe.gov.ae/"},{name:"Individual school career pages",type:"Private-school hiring is employer-specific; confirm the vacancy and required regulator approvals",url:"https://www.moe.gov.ae/en/"}],
+  sources:[{label:"UAE Ministry of Education: 2026–2028 academic calendar",url:"https://www.moe.gov.ae/en/guides/Pages/academic-calendar-2026-2028.aspx"},{label:"UAE Ministry of Education calendar announcement",url:"https://www.moe.gov.ae/en/mediacenter/news/Pages/MOE-announces-the-academic-calendar-for-the-next-3-years.aspx"}],
+  researchStatus:"Official national academic-calendar announcement checked. Specific school registers, emirate-level regulatory directories and live employer vacancies still require institution-level verification."
+ }
+});
+
 if(typeof window!=="undefined"){window.CBE_GLOBAL_COUNTRIES=countryRegistry;window.CBE_GLOBAL_COUNTRY_DATA=countryData;}
 if(typeof module!=="undefined"&&module.exports){module.exports={countries:countryRegistry,countryData};}
 })();
