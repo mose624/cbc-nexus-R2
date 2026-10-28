@@ -1807,6 +1807,7 @@ jobs:[{name:"MENAET / government announcements",type:"Check current official rec
 teachers:[{name:"DPFC",type:"Pedagogical guidance and continuing professional development",url:"https://dpfc-ci.net/"}],
 further:[{name:"Government education portal",url:"https://www.gouv.ci/"},{name:"DPFC — Côte d’Ivoire à l’École",url:"https://dpfc-ci.net/"}],
 sources:[{label:"Official Government of Côte d’Ivoire: 2026–2027 calendar",url:"https://www.gouv.ci/index.php/actualite/annee-scolaire-2026-2027-le-decoupage-officiel-et-le-calendrier-des-conges-et-vacances-presentes-9137"},{label:"Official DPFC portal and programmes",url:"https://dpfc-ci.net/"}]
+officialVerification:{"calendarStatus":"Official government calendar verified for 2026–2027: classes 14 September 2026–30 July 2027; terms 14 Sep–4 Dec, 7 Dec–12 Mar, and 15 Mar–11 Jun. Official government source.","schoolDirectoryStatus":"A national directory of individual schools was not confirmed in this review; do not present the general government portal as a searchable directory.","vacancyStatus":"Official ministry and government announcements found; no live, individually verified teacher vacancy confirmed in this review.","officialLinks":[{"label":"2026–2027 official school calendar","url":"https://www.gouv.ci/index.php/actualite/annee-scolaire-2026-2027-le-decoupage-officiel-et-le-calendrier-des-conges-et-vacances-presentes-9137"},{"label":"DPFC official curriculum and 2026–2027 circulars","url":"https://dpfc-ci.net/textes-officiels-2-3/"}]},
 };
 countryData["mali"]={
 researchStatus:"Curated using the national examinations platform; confirm curriculum, school listings and recruitment details with the ministry.",
@@ -1824,6 +1825,7 @@ jobs:[{name:"Ministry of National Education",type:"Check official announcements;
 teachers:[{name:"Ministry of National Education",type:"Confirm teacher recruitment, training and qualification requirements with the ministry",url:"https://cnece-men-examens.ml/"}],
 further:[{name:"CNECE national examinations portal",url:"https://cnece-men-examens.ml/"},{name:"CNECE results",url:"https://cnece-men-examens.ml/resultats-en-pdf/"}],
 sources:[{label:"CNECE national examinations portal",url:"https://cnece-men-examens.ml/"}]
+officialVerification:{"calendarStatus":"No current 2026–2027 official calendar located in this review. Check current ministry circulars before publishing dates.","schoolDirectoryStatus":"No current official public searchable school directory confirmed; CNECE is an examinations source, not a school directory.","vacancyStatus":"No current official teacher vacancy individually verified; direct ministry/public-service notices required.","officialLinks":[{"label":"CNECE examinations portal","url":"https://cnece-men-examens.ml/"}]},
 };
 countryData["burkina-faso"]={
 researchStatus:"Curriculum and examination links sourced from national education platforms; verify school and vacancy records individually.",
@@ -1841,6 +1843,7 @@ jobs:[{name:"Official education ministry notices",type:"Check government announc
 teachers:[{name:"Faso e-education teacher resources",type:"Curricula and teaching support materials",url:"https://fasoeducation.bf/espace-enseignants/reforme-curriculaire.html"}],
 further:[{name:"Faso e-education",url:"https://fasoeducation.bf/"},{name:"Official CEP results platform",url:"https://www.educollect.education.gov.bf/"}],
 sources:[{label:"Faso e-education curriculum reform",url:"https://fasoeducation.bf/espace-enseignants/reforme-curriculaire.html"},{label:"Official MEBAPLN results platform",url:"https://www.educollect.education.gov.bf/"}]
+officialVerification:{"calendarStatus":"A current 2026–2027 calendar was not verified. Search results exposed older calendars only; do not reuse 2024–2025 dates as current.","schoolDirectoryStatus":"No current public official searchable directory verified in this review.","vacancyStatus":"No live teacher vacancy verified; use current ministry and public-service recruitment notices.","officialLinks":[{"label":"Official education ministry domain","url":"https://www.education.gov.bf/"}]},
 };
 countryData["benin"]={
 researchStatus:"Government ministry portals and the published 2026–2027 school calendar are linked; individual schools and live vacancies are not verified.",
@@ -1858,6 +1861,7 @@ jobs:[{name:"MEMP teacher career services",type:"Career information and official
 teachers:[{name:"MEMP professional services",type:"Teacher career, continuing training and assignment information",url:"https://memp.gouv.bj/"}],
 further:[{name:"Ministry of Maternal and Primary Education",url:"https://memp.gouv.bj/"},{name:"Benin government portal",url:"https://www.gouv.bj/"}],
 sources:[{label:"MEMP official ministry portal",url:"https://memp.gouv.bj/"},{label:"2026–2027 calendar report",url:"https://latribunedelacapitale.bj/article/actualites/benin-le-gouvernement-publie-le-calendrier-officiel-de-lannee-scolaire-20262027"}]
+officialVerification:{"calendarStatus":"Official ministry statement confirms schools reopened on 14 September 2026 for the 2026–2027 school year. Full term/holiday dates not confirmed from this source.","schoolDirectoryStatus":"Government publishes school monitoring and education-sector information; a complete public searchable national directory was not confirmed.","vacancyStatus":"Official government reporting discusses teacher staffing and recruitment needs; no individual currently open teaching vacancy confirmed.","officialLinks":[{"label":"Official 2026–2027 school-year opening statement","url":"https://memp.gouv.bj/actualite/message-du-ministre-des-enseignements-maternel-et-primaire-a-la-veille-de-la-rentree-scolaire-2026-2027"},{"label":"Government education sector and announcements","url":"https://www.gouv.bj/secteur/education/"}]},
 };
 countryData["togo"]={
 researchStatus:"Curated from the official education ministry and education statistics portal; individual school listings and current vacancies need direct verification.",
@@ -1875,6 +1879,7 @@ jobs:[{name:"Ministry of National Education",type:"Check official announcements;
 teachers:[{name:"Ministry of National Education",type:"Official teacher training and recruitment announcements",url:"https://education.gouv.tg/"}],
 further:[{name:"Ministry of National Education",url:"https://education.gouv.tg/"},{name:"Education planning and statistics portal",url:"https://planifeducation.gouv.tg/"}],
 sources:[{label:"Ministry of National Education",url:"https://education.gouv.tg/"},{label:"Official education planning and statistics portal",url:"https://planifeducation.gouv.tg/"}]
+officialVerification:{"calendarStatus":"Official Ministry calendar verified for 2026–2027: school opens 14 September 2026; term 1 ends 23 December 2026; term 2 starts 4 January 2027; third term 19 April–16 July 2027.","schoolDirectoryStatus":"The Ministry reported 5,707 private secular and faith-based schools authorised to reopen in 2026–2027; this is not itself a complete searchable school directory.","vacancyStatus":"Official Ministry reported a 2026 teacher recruitment/training process, including 3,136 new teachers and a specific recruitment pathway for mathematics and physical sciences. Verify whether any application window remains open.","officialLinks":[{"label":"Official 2026–2027 school calendar","url":"https://education.gouv.tg/education-nationale-le-calendrier-de-lannee-scolaire-2026-2027-officiellement-arrete/"},{"label":"Official ministry vacancy/recruitment news","url":"https://education.gouv.tg/actualites/2/"},{"label":"Teacher recruitment and training announcement","url":"https://education.gouv.tg/sciences-au-secondaire-le-togo-pose-la-qualite-comme-condition-dentree-dans-la-fonction-enseignante/"}]},
 };
 
 
@@ -1894,6 +1899,7 @@ jobs:[{name:"Ministry of National Education",type:"Check official recruitment an
 teachers:[{name:"Ministry of National Education",type:"Confirm teacher recruitment and training requirements with the ministry",url:"https://www.gouv.ne/"}],
 further:[{name:"Government of Niger",url:"https://www.gouv.ne/"}],
 sources:[{label:"Nigerien News Agency: 2026–2027 school-year opening",url:"https://anp.ne/rentree-scolaire-2026-2027-au-niger-pres-de-4-millions-deleves-et-94-800-enseignants-reprennent-le-chemin-de-lecole-le-1er-octobre/"}]
+officialVerification:{"calendarStatus":"Official ministry statement confirms the 2026–2027 school year began 1 October 2026. Full term and holiday dates not verified in this review.","schoolDirectoryStatus":"No public searchable official school directory confirmed; ministry information should not be labelled as a directory.","vacancyStatus":"The Ministry reported a recruitment process involving 10,517 contract teachers, but that does not establish that applications are currently open.","officialLinks":[{"label":"Official ministry back-to-school statement, 2026–2027","url":"https://info.education.gouv.ne/2026/09/30/message-de-madame-la-ministre-de-leducation-nationale-de-lalphabetisation-et-de-la-promotion-des-langues-a-loccasion-de-la-rentree-scolaire-2026-2027/"}]},
 };
 countryData["guinea"]={
 researchStatus:"Curriculum information reflects the official 2026 reform announcement; verify ministry circulars, school records and current vacancies.",
@@ -1911,6 +1917,7 @@ jobs:[{name:"National education ministry announcements",type:"Check official rec
 teachers:[{name:"INRAP and ministry curriculum guidance",type:"Check current teacher orientation and training information",url:"https://www.ibe.unesco.org/en/articles/guinea-curriculum-reform"}],
 further:[{name:"UNESCO International Bureau of Education — Guinea curriculum reform",url:"https://www.ibe.unesco.org/en/articles/guinea-curriculum-reform"}],
 sources:[{label:"UNESCO-IBE: Guinea's new official primary curricula, September 2026",url:"https://www.ibe.unesco.org/en/articles/guinea-curriculum-reform"}]
+officialVerification:{"calendarStatus":"Current 2026–2027 school calendar not verified from a primary ministry source in this review.","schoolDirectoryStatus":"No current official public searchable school directory confirmed.","vacancyStatus":"No live official teacher vacancy confirmed. Curriculum reform announcement is not a recruitment notice.","officialLinks":[{"label":"UNESCO-IBE summary of Guinea's 2026 curriculum reform","url":"https://www.ibe.unesco.org/en/articles/guinea-curriculum-reform"}]},
 };
 countryData["mauritania"]={
 researchStatus:"Profile links to the Ministry's education portal and current school-year information; confirm exact dates and individual listings directly.",
@@ -1928,6 +1935,7 @@ jobs:[{name:"Ministry of Education and System Reform",type:"Check official recru
 teachers:[{name:"Ministry of Education and System Reform",type:"Confirm teacher recruitment and qualification requirements with the ministry",url:"https://decv2.education.gov.mr/"}],
 further:[{name:"Mauritania Ministry education and examinations portal",url:"https://decv2.education.gov.mr/"}],
 sources:[{label:"Ministry of Education and System Reform portal",url:"https://decv2.education.gov.mr/"},{label:"2026–2027 opening date report quoting ministry notice",url:"https://elhadeth.mr/node/33691"}]
+officialVerification:{"calendarStatus":"Current 2026–2027 school calendar and exact term dates not verified from an accessible official ministry publication in this review.","schoolDirectoryStatus":"No public searchable national school directory confirmed.","vacancyStatus":"No live official teaching vacancy individually verified.","officialLinks":[{"label":"Ministry education and examinations portal","url":"https://decv2.education.gov.mr/"}]},
 };
 countryData["liberia"]={
 researchStatus:"Official Ministry of Education portal provides national curriculum, sector plan and recruitment notices; individual school and vacancy entries need direct verification.",
@@ -1945,6 +1953,7 @@ jobs:[{name:"Ministry of Education — bids and vacancies",type:"Official announ
 teachers:[{name:"Ministry of Education teacher workforce information",type:"Teacher workforce strategy and recruitment guidance",url:"https://www.moe.gov.lr/wp-content/uploads/2019/09/Teaching-Workforce-Management-Strategy-2023-2035.pdf"}],
 further:[{name:"Ministry of Education",url:"https://moe.gov.lr/"},{name:"Ministry portal with curriculum and vacancies",url:"https://moe-liberia.org/"}],
 sources:[{label:"Liberia Ministry of Education: curriculum and sector plan",url:"https://moe.gov.lr/"},{label:"Ministry portal: National Curriculum and vacancies",url:"https://moe-liberia.org/"}]
+officialVerification:{"calendarStatus":"Caution: on 16 September 2026, the Ministry reported that the revised K–2/foundational-learning calendar was validated for review but still moving toward finalisation and publication. Do not describe it as a final approved nationwide calendar.","schoolDirectoryStatus":"No current public searchable national school directory confirmed in this review.","vacancyStatus":"The Ministry portal should be checked for live vacancies; no individual opening verified here.","officialLinks":[{"label":"Ministry update on revised foundational-learning calendar (16 Sep 2026)","url":"https://moe.gov.lr/excel-project-hosts-stakeholder-validation-of-revised-academic-calendar-for-foundational-learning/"},{"label":"Ministry of Education","url":"https://moe.gov.lr/"}]},
 };
 countryData["sierra-leone"]={
 researchStatus:"Profile based on the Ministry and WAEC official sources; school-level directory details and active job vacancies should be verified individually.",
@@ -1962,6 +1971,7 @@ jobs:[{name:"MBSSE and Teaching Service Commission announcements",type:"Check cu
 teachers:[{name:"MBSSE curriculum resources",type:"Curriculum and teaching support resources",url:"https://mbsse.gov.sl/senior-secondary-education-curriculum/"}],
 further:[{name:"MBSSE",url:"https://mbsse.gov.sl/"},{name:"WAEC Sierra Leone examinations",url:"https://www.waecsierraleone.org/examinations"},{name:"MBSSE learning platform",url:"https://lmis.mbsse.datahub.gov.sl/"}],
 sources:[{label:"Ministry of Basic and Senior Secondary Education",url:"https://mbsse.gov.sl/"},{label:"WAEC Sierra Leone national examinations",url:"https://www.waecsierraleone.org/examinations"},{label:"Basic and Senior Secondary Education Act 2023",url:"https://sierralii.gov.sl/akn/sl/act/2023/23/eng%402023-06-19"}]
+officialVerification:{"calendarStatus":"The Ministry homepage displays the 2025–2026 calendar, not a verified 2026–2027 calendar. Do not carry 2025–2026 dates forward.","schoolDirectoryStatus":"Official 2025 Annual School Census reports 13,444 schools across 16 districts. This is a verified national census, but not necessarily a live searchable directory of every school.","vacancyStatus":"The Ministry has a dedicated vacancies page. Candidates should check it directly; never pay recruitment fees, as the Ministry warns about recruitment scams.","officialLinks":[{"label":"2025 Annual School Census Report","url":"https://mbsse.gov.sl/wp-content/uploads/2026/04/2025_Annual_School_Census_Report.pdf"},{"label":"Official Ministry vacancies page","url":"https://mbsse.gov.sl/jobs-3/"},{"label":"Official school dates and Ministry portal","url":"https://mbsse.gov.sl/"}]},
 };
 
 
@@ -1981,6 +1991,7 @@ jobs:[{name:"MoBSE official announcements",type:"Check current recruitment notic
 teachers:[{name:"MoBSE",type:"Confirm teacher qualification, professional development and recruitment requirements",url:"https://www.mobsse.gov.gm/"}],
 further:[{name:"Ministry of Basic and Secondary Education",url:"https://www.mobsse.gov.gm/"},{name:"WAEC",url:"https://www.waecheadquarters.org/"}],
 sources:[{label:"Ministry of Basic and Secondary Education",url:"https://www.mobsse.gov.gm/"},{label:"West African Examinations Council",url:"https://www.waecheadquarters.org/"}]
+officialVerification:{"calendarStatus":"Current 2026–2027 national school calendar not verified in this review.","schoolDirectoryStatus":"No current public searchable official national school directory confirmed.","vacancyStatus":"No live teacher vacancy verified; check Ministry announcements and relevant public-service notices.","officialLinks":[{"label":"Ministry of Basic and Secondary Education","url":"https://www.mobsse.gov.gm/"}]},
 };
 countryData["guinea-bissau"]={
 researchStatus:"Starter profile; official ministry pages and current examination or recruitment notices should be checked before relying on dates or individual listings.",
@@ -1998,6 +2009,7 @@ jobs:[{name:"Government education announcements",type:"Check current public recr
 teachers:[{name:"National education authorities",type:"Confirm teacher qualification and recruitment requirements through official government notices",url:"https://www.gov.gw/"}],
 further:[{name:"Government of Guinea-Bissau",url:"https://www.gov.gw/"}],
 sources:[{label:"Government of Guinea-Bissau portal",url:"https://www.gov.gw/"}]
+officialVerification:{"calendarStatus":"Current 2026–2027 school calendar not verified from a current official education notice in this review.","schoolDirectoryStatus":"No current public searchable official school directory confirmed.","vacancyStatus":"No live official teacher vacancy individually verified.","officialLinks":[{"label":"Government of Guinea-Bissau","url":"https://www.gov.gw/"}]},
 };
 countryData["cabo-verde"]={
 researchStatus:"Official Ministry of Education guidance for 2026–2027 is available; check the current school-specific calendar and any later ministry amendments.",
@@ -2015,6 +2027,7 @@ jobs:[{name:"Ministry of Education",type:"Check official recruitment notices; va
 teachers:[{name:"Ministry of Education",type:"Official guidance for school organisation and teaching practice",url:"https://minedu.gov.cv/recursos_educativosorientacoes"}],
 further:[{name:"Ministry of Education",url:"https://minedu.gov.cv/"},{name:"Official 2026–2027 school-year guidance",url:"https://minedu.gov.cv/recursos_educativosorientacoes/16"},{name:"Official Gazette: Order 81/2026",url:"https://boe.incv.cv/Bulletins/View?id=112578"}],
 sources:[{label:"Ministry of Education — 2026–2027 school-year guidance",url:"https://minedu.gov.cv/recursos_educativosorientacoes/16"},{label:"Official Gazette, Order 81/2026",url:"https://boe.incv.cv/Bulletins/View?id=112578"},{label:"Radio Educativa report on 2026–2027 opening",url:"https://radioeducativa.gov.cv/noticias/302"}]
+officialVerification:{"calendarStatus":"Official Ministry's approved 2026–2027 school-year guidance verified (Despacho n.º 81/2026, dated 22 July 2026). Enrolment periods differ by subsystem and school; exact opening/closing dates must be taken from the relevant school calendar.","schoolDirectoryStatus":"Ministry homepage displays school-related information and school materials, but a full public searchable national directory was not confirmed.","vacancyStatus":"Official Ministry has a Concursos & Anúncios page; current listings include education and scholarship competitions, not necessarily teacher vacancies. Check each notice.","officialLinks":[{"label":"Approved 2026–2027 school-year guidance","url":"https://minedu.gov.cv/recursos_educativosorientacoes/16"},{"label":"Official contests and announcements","url":"https://minedu.gov.cv/concursos"},{"label":"Ministry homepage and school materials","url":"https://minedu.gov.cv/"}]},
 };
 countryData["sao-tome-and-principe"]={
 researchStatus:"Starter profile; confirm current policies, school calendar and exam details with the national government and education ministry.",
@@ -2032,6 +2045,7 @@ jobs:[{name:"Government recruitment announcements",type:"Check current official 
 teachers:[{name:"National education authority",type:"Confirm teacher-training and professional requirements through current government notices",url:"https://www.gov.st/"}],
 further:[{name:"Government of São Tomé and Príncipe",url:"https://www.gov.st/"}],
 sources:[{label:"Government of São Tomé and Príncipe portal",url:"https://www.gov.st/"}]
+officialVerification:{"calendarStatus":"Official citizen portal published 2026–2027 basic-school enrolment dates: 20 July–7 August 2026 and a second phase 1–4 September 2026. These are enrolment periods, not the full academic calendar.","schoolDirectoryStatus":"The government notice says children should enrol at the school nearest their residence; no full searchable national school directory confirmed.","vacancyStatus":"No live official teacher vacancy verified in this review.","officialLinks":[{"label":"Official 2026–2027 basic-school enrolment notice","url":"https://autenticacao.gov.st/news/Aviso-de-Matriculas-Ano-Letivo-2026-2027"},{"label":"Education Ministry Digital Repository","url":"https://repositoriodigital.me.gov.st/public/paginas/quem-somos"},{"label":"Government updates","url":"https://gov.st/updates"}]},
 };
 countryData["equatorial-guinea"]={
 researchStatus:"Starter profile; verify current ministry names, curriculum publications, examination schedules and recruitment notices directly with the government.",
@@ -2049,6 +2063,7 @@ jobs:[{name:"Government recruitment announcements",type:"Check official announce
 teachers:[{name:"Education authority announcements",type:"Confirm teacher qualification and recruitment requirements through government notices",url:"https://www.guineaecuatorialpress.com/"}],
 further:[{name:"Equatorial Guinea official government press portal",url:"https://www.guineaecuatorialpress.com/"}],
 sources:[{label:"Official government press and announcements portal",url:"https://www.guineaecuatorialpress.com/"}]
+officialVerification:{"calendarStatus":"A government report in June 2026 said the draft ministerial order for the 2026–2027 school calendar was discussed. A final approved calendar was not verified in this review.","schoolDirectoryStatus":"No current public searchable official national school directory confirmed.","vacancyStatus":"No live official teacher vacancy individually verified.","officialLinks":[{"label":"Government report on draft 2026–2027 school calendar","url":"https://www.guineaecuatorialpress.com/index.php/noticias/ocho_puntos_marcan_la_agenda_del_consejo_directivo_del_sector_educativo_y_deportivo"}]},
 };
 
 if(typeof window!=="undefined"){window.CBE_GLOBAL_COUNTRIES=countryRegistry;window.CBE_GLOBAL_COUNTRY_DATA=countryData;}
