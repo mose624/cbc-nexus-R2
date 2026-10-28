@@ -2469,7 +2469,7 @@ if(countryData["ghana"]){
   {name:"Presbyterian Boys' Senior High School (PRESEC)",type:"Public senior high school",city:"Legon, Accra",url:"https://preseclegon.edu.gh/",source:"https://ges.gov.gh/"},
   {name:"Wesley Girls' High School",type:"Public senior high school",city:"Cape Coast, Central Region",url:"https://wesleygirls.edu.gh/",source:"https://ges.gov.gh/"},
   {name:"Prempeh College",type:"Public senior high school",city:"Kumasi, Ashanti Region",url:"https://prempehcollege.edu.gh/",source:"https://ges.gov.gh/"},
-  {name:"Ghana International School",type:"Private international school",city:"Cantonments, Accra",url:"https://www gis.edu.gh/".replace(" ",""),source:"https://www.gis.edu.gh/"}
+  {name:"Ghana International School",type:"Private international school",city:"Cantonments, Accra",url:"https://www.gis.edu.gh/",source:"https://www.gis.edu.gh/"}
  ]);
  countryData["ghana"].schoolDirectory="Ghana Education Service: https://ges.gov.gh/ ; Ministry of Education: https://moe.gov.gh/";
 }
@@ -2484,6 +2484,77 @@ if(countryData["nigeria"]){
  ]);
  countryData["nigeria"].schoolDirectory="Federal Ministry of Education Nigeria: https://education.gov.ng/ ; Universal Basic Education Commission: https://ubec.gov.ng/";
 }
+
+
+/* Expanded school directory batch: official school sites where available; national directories recorded as sources. */
+countryData["uganda"]=Object.assign(countryData["uganda"]||{},{
+ schools:(countryData["uganda"]?.schools||[]).concat([
+  {name:"King's College Budo",type:"Secondary school",city:"Wakiso District",url:"https://kcb.ac.ug/",source:"https://www.education.go.ug/schools-institutions/"},
+  {name:"Gayaza High School",type:"Girls' secondary school",city:"Gayaza, Wakiso District",url:"https://gayazahs.sc.ug/",source:"https://www.education.go.ug/schools-institutions/"},
+  {name:"Namilyango College",type:"Boys' secondary school",city:"Mukono District",url:"https://namilyangocollege.com/",source:"https://www.education.go.ug/schools-institutions/"},
+  {name:"St Mary's College Kisubi",type:"Boys' secondary school",city:"Kisubi, Wakiso District",url:"https://smack.sc.ug/",source:"https://www.education.go.ug/schools-institutions/"},
+  {name:"Uganda Martyrs Secondary School Namugongo",type:"Secondary school",city:"Namugongo, Wakiso District",url:"https://umss.ac.ug/",source:"https://www.education.go.ug/schools-institutions/"},
+  {name:"Mengo Senior School",type:"Secondary school",city:"Kampala",url:"https://mengoss.sc.ug/",source:"https://www.education.go.ug/schools-institutions/"},
+  {name:"Makerere College School",type:"Secondary school",city:"Kampala",url:"https://makererecollege.sc.ug/",source:"https://www.education.go.ug/schools-institutions/"}
+ ]),
+ schoolDirectory:"Ministry of Education and Sports master lists: https://www.education.go.ug/schools-institutions/"
+});
+countryData["tanzania"]=Object.assign(countryData["tanzania"]||{},{
+ schools:(countryData["tanzania"]?.schools||[]).concat([
+  {name:"Azania Secondary School",type:"Government secondary school",city:"Dar es Salaam",url:"https://www.tanzania.go.tz/index.php/directories/education",source:"https://www.tanzania.go.tz/index.php/directories/education"},
+  {name:"Jangwani Secondary School",type:"Government girls' secondary school",city:"Dar es Salaam",url:"https://www.tanzania.go.tz/index.php/directories/education",source:"https://www.tanzania.go.tz/index.php/directories/education"},
+  {name:"Tambaza Secondary School",type:"Government secondary school",city:"Dar es Salaam",url:"https://www.tanzania.go.tz/index.php/directories/education",source:"https://www.tanzania.go.tz/index.php/directories/education"},
+  {name:"Mzumbe Secondary School",type:"Secondary school",city:"Mzumbe, Morogoro",url:"https://www.tanzania.go.tz/index.php/directories/education",source:"https://www.tanzania.go.tz/index.php/directories/education"},
+  {name:"Ilboru Secondary School",type:"Government secondary school",city:"Arusha",url:"https://www.tanzania.go.tz/index.php/directories/education",source:"https://www.tanzania.go.tz/index.php/directories/education"},
+  {name:"Kibaha Secondary School",type:"Government secondary school",city:"Kibaha, Pwani",url:"https://www.tanzania.go.tz/index.php/directories/education",source:"https://www.tanzania.go.tz/index.php/directories/education"},
+  {name:"Tanzania School of St Jude",type:"Charitable school",city:"Arusha",url:"https://www.schoolofstjude.org/",source:"https://www.schoolofstjude.org/"}
+ ]),
+ schoolDirectory:"Government of Tanzania education institutions directory: https://www.tanzania.go.tz/index.php/directories/education"
+});
+countryData["rwanda"]=Object.assign(countryData["rwanda"]||{},{
+ schools:(countryData["rwanda"]?.schools||[]).concat([
+  {name:"Green Hills Academy",type:"Private international school",city:"Kigali",url:"https://www.greenhillsacademy.rw/",source:"https://www.mineduc.gov.rw/"},
+  {name:"Lycée de Kigali",type:"Secondary school",city:"Kigali",url:"https://www.mineduc.gov.rw/",source:"https://www.mineduc.gov.rw/"},
+  {name:"FAWE Girls' School",type:"Girls' secondary school",city:"Kigali",url:"https://www.fawe.org/",source:"https://www.mineduc.gov.rw/"},
+  {name:"Riviera High School",type:"Private secondary school",city:"Kigali",url:"https://rivierahighschool.ac.rw/",source:"https://www.mineduc.gov.rw/"},
+  {name:"École Belge de Kigali",type:"International school",city:"Kigali",url:"https://www.ebk-rwanda.org/",source:"https://www.mineduc.gov.rw/"},
+  {name:"Kigali International Community School",type:"International school",city:"Kigali",url:"https://www.kicsrw.org/",source:"https://www.mineduc.gov.rw/"}
+ ]),
+ schoolDirectory:"Rwanda Ministry of Education: https://www.mineduc.gov.rw/"
+});
+countryData["germany"]=Object.assign(countryData["germany"]||{},{
+ schools:(countryData["germany"]?.schools||[]).concat([
+  {name:"Berlin International School",type:"International school",city:"Berlin",url:"https://www.berlin-international-school.de/",source:"https://www.kmk.org/"},
+  {name:"Munich International School",type:"International school",city:"Starnberg, Bavaria",url:"https://www.mis-munich.de/",source:"https://www.kmk.org/"},
+  {name:"Frankfurt International School",type:"International school",city:"Oberursel, Hesse",url:"https://www.fis.edu/",source:"https://www.kmk.org/"},
+  {name:"Bavarian International School",type:"International school",city:"Haimhausen, Bavaria",url:"https://www.bis-school.com/",source:"https://www.kmk.org/"},
+  {name:"St George's, The British International School Munich",type:"International school",city:"Munich, Bavaria",url:"https://www.stgeorgesschool.com/",source:"https://www.kmk.org/"},
+  {name:"International School of Düsseldorf",type:"International school",city:"Düsseldorf, North Rhine-Westphalia",url:"https://www.isdedu.de/",source:"https://www.kmk.org/"}
+ ]),
+ schoolDirectory:"Standing Conference of the Ministers of Education and Cultural Affairs (KMK): https://www.kmk.org/"
+});
+countryData["france"]=Object.assign(countryData["france"]||{},{
+ schools:(countryData["france"]?.schools||[]).concat([
+  {name:"Lycée Louis-le-Grand",type:"Public lycée",city:"Paris",url:"https://www.louislegrand.fr/",source:"https://www.education.gouv.fr/"},
+  {name:"Lycée Henri-IV",type:"Public lycée",city:"Paris",url:"https://www.louis-henri4.com/",source:"https://www.education.gouv.fr/"},
+  {name:"Lycée International de Saint-Germain-en-Laye",type:"Public international lycée",city:"Saint-Germain-en-Laye",url:"https://www.lycee-international.ac-versailles.fr/",source:"https://www.education.gouv.fr/"},
+  {name:"International School of Paris",type:"International school",city:"Paris",url:"https://www.isparis.edu/",source:"https://www.education.gouv.fr/"},
+  {name:"École Jeannine Manuel",type:"Private bilingual school",city:"Paris",url:"https://www.ecolejeanninemanuel.org/",source:"https://www.education.gouv.fr/"},
+  {name:"Lycée Français Charles de Gaulle",type:"French international school",city:"London",url:"https://www.lyceefrancais.org.uk/",source:"https://www.education.gouv.fr/"}
+ ]),
+ schoolDirectory:"French Ministry of National Education: https://www.education.gouv.fr/"
+});
+countryData["ireland"]=Object.assign(countryData["ireland"]||{},{
+ schools:(countryData["ireland"]?.schools||[]).concat([
+  {name:"St Andrew's College",type:"Private secondary school",city:"Booterstown, Dublin",url:"https://www.st-andrews.ie/",source:"https://www.gov.ie/en/organisation/department-of-education/"},
+  {name:"Blackrock College",type:"Secondary school",city:"Blackrock, Dublin",url:"https://www.blackrockcollege.com/",source:"https://www.gov.ie/en/organisation/department-of-education/"},
+  {name:"Gonzaga College",type:"Secondary school",city:"Ranelagh, Dublin",url:"https://www.gonzaga.ie/",source:"https://www.gov.ie/en/organisation/department-of-education/"},
+  {name:"Alexandra College",type:"Girls' school",city:"Milltown, Dublin",url:"https://www.alexandracollege.eu/",source:"https://www.gov.ie/en/organisation/department-of-education/"},
+  {name:"The King's Hospital",type:"Co-educational boarding school",city:"Palmerstown, Dublin",url:"https://www.kingshospital.ie/",source:"https://www.gov.ie/en/organisation/department-of-education/"},
+  {name:"Coláiste Íosagáin",type:"Irish-language secondary school",city:"Stillorgan, Dublin",url:"https://www.iosagain.ie/",source:"https://www.gov.ie/en/organisation/department-of-education/"}
+ ]),
+ schoolDirectory:"Ireland Department of Education: https://www.gov.ie/en/organisation/department-of-education/"
+});
 
 if(typeof window!=="undefined"){window.CBE_GLOBAL_COUNTRIES=countryRegistry;window.CBE_GLOBAL_COUNTRY_DATA=countryData;}
 if(typeof module!=="undefined"&&module.exports){module.exports={countries:countryRegistry,countryData};}
