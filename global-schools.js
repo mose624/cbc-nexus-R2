@@ -136,22 +136,27 @@ function renderCountry(){
  actions.append(learnerLink,teacherLink,browseLink);marketplace.append(marketTitle,marketIntro,stats,actions,boardNote);
  const countryLayout=document.querySelector(".gs-country-layout");
  // Country portal quick navigation: shared layout, with country context retained in resource links.
- const portalNav=node("nav","gs-country-portal-nav");
- portalNav.setAttribute("aria-label","Country learning and career resources");
+ const portalNav=document.getElementById("countryPortalNav")||node("nav","gs-country-portal-nav");
+ portalNav.classList.add("gs-country-portal-nav");portalNav.setAttribute("aria-label","Country education and career dashboard");portalNav.replaceChildren();
  const countryQuery=encodeURIComponent(c.name);
  const portalItems=[
   {label:"📘 Notes & Learning Resources",url:"/resources.html?country="+countryQuery+"&type=notes"},
   {label:"📝 Past National Exam Papers",url:"/resources.html?country="+countryQuery+"&type=past-papers"},
   {label:"🎯 Interactive Questions",url:"/interactive-questions.html?country="+countryQuery},
   {label:"💼 Teaching Vacancies",url:"#vacancies"},
-  {label:"🌍 Global Online Teaching",url:"/online-teaching.html?country="+countryQuery}
+  {label:"🌍 Global Online Teaching",url:"/online-teaching.html?country="+countryQuery},
+  {label:"📜 Teaching Requirements & Certification",url:"#qualification-requirements"},
+  {label:"✈️ International Teaching Vacancies & Eligible Countries",url:"#vacancies"},
+  {label:"🤝 Sponsors & Official Sources",url:"#sources"},
+  {label:"🎓 Scholarships by Country",url:"#further"},
+  {label:"🏫 All Schools",url:"#schools"}
  ];
  portalItems.forEach(item=>{const a=node("a");a.href=item.url;a.textContent=item.label;portalNav.appendChild(a);});
  const portalStyle=node("style");
  portalStyle.textContent=".gs-country-portal-nav{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;width:100%;flex:0 0 100%;grid-column:1/-1;margin:16px 0 0;position:relative;z-index:5;visibility:visible;opacity:1}.gs-country-head-with-nav{display:grid!important;grid-template-columns:auto minmax(0,1fr);align-items:center}.gs-country-head-with-nav>.gs-country-portal-nav{grid-column:1/-1}.gs-country-portal-nav a{display:flex;align-items:center;justify-content:center;min-height:48px;padding:9px 10px;text-align:center;border:1px solid rgba(255,255,255,.72);border-radius:10px;background:rgba(255,255,255,.94);color:#075080!important;font-weight:850;font-size:12px;text-decoration:none;box-shadow:0 3px 10px #173b5910;transition:transform .18s,background .18s}.gs-country-portal-nav a:hover{background:#e0f2fe;transform:translateY(-2px)}.gs-country-head{background:linear-gradient(90deg,rgba(4,28,48,.76),rgba(7,89,133,.38)),var(--gs-learner-bg)!important;background-size:cover!important;background-position:center!important;color:#fff!important;min-height:180px}.gs-country-head h1,.gs-country-head .gs-muted{color:#fff!important;text-shadow:0 1px 3px rgba(0,0,0,.38)}@media(max-width:900px){.gs-country-portal-nav{grid-template-columns:repeat(2,minmax(0,1fr))}.gs-country-portal-nav a:last-child{grid-column:1/-1}}@media(max-width:460px){.gs-country-portal-nav{grid-template-columns:1fr}.gs-country-portal-nav a:last-child{grid-column:auto}.gs-country-head{gap:10px}.gs-country-portal-nav{margin-top:12px}}";
  document.head.appendChild(portalStyle);
  const countryHeader=document.querySelector(".gs-country-head");
- if(countryHeader){countryHeader.appendChild(portalNav);countryHeader.classList.add("gs-country-head-with-nav");}
+ if(countryHeader){if(portalNav.parentElement!==countryHeader)countryHeader.appendChild(portalNav);countryHeader.classList.add("gs-country-head-with-nav");}
  else {const countryPanel=document.querySelector("#gsCountry > .gs-panel");if(countryPanel){const header=countryPanel.querySelector(".gs-country-head");if(header)header.insertAdjacentElement("afterend",portalNav);else countryPanel.prepend(portalNav);}else if(countryLayout){countryLayout.parentNode.insertBefore(portalNav,countryLayout);}}
  portalNav.style.display="grid";portalNav.style.visibility="visible";portalNav.style.opacity="1";
  if(countryLayout){const main=countryLayout.querySelector(".gs-main-content");if(main)main.prepend(marketplace);else countryLayout.prepend(marketplace);}
