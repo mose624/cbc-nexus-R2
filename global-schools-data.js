@@ -293,6 +293,209 @@ Object.keys(africaResearchProfiles).forEach(function(slug){
  Object.keys(africaResearchProfiles[slug]).forEach(function(field){target[field]=africaResearchProfiles[slug][field];});
 });
  
+
+/* Africa research batch 2. Official-source starting points for another set of countries.
+ * Do not infer live vacancies, school lists or current term dates from a ministry homepage alone.
+ */
+const africaResearchProfilesBatch2 = {
+ "senegal": {
+  researchStatus:"National ministry source checked for curriculum responsibilities and national examinations. Current academic calendar should be taken from the latest signed ministerial circular; regional ministry pages may be useful but must be checked for authenticity and currentness.",
+  authority:"Ministry of National Education (Ministère de l'Éducation nationale); national directorates and regional education academies; Office du Baccalauréat for the baccalaureate.",
+  officialLanguages:"French is the official language; national languages including Wolof, Pulaar, Serer, Jola, Mandinka and Soninke are widely used. Language-of-instruction arrangements vary by level and programme.",
+  curriculum:"The Ministry defines national curricula and programmes, with technical curriculum work involving the relevant national institutes and directorates. Check the latest official programme and circular for each cycle.",
+  system:"Education includes preschool, elementary, middle and secondary education, alongside technical/vocational and higher education. Confirm current age, grade and qualification rules in ministry publications.",
+  termCalendar:"Do not use dates from an undated or regional sample page as nationwide dates. Confirm the latest signed national school-calendar circular at the Ministry of National Education.",
+  calendar:"Current school calendar requires confirmation from the latest official ministerial circular; the Ministry's site publishes back-to-school announcements and official texts.",
+  exams:[{name:"CFEE and BFEM",body:"National examinations administered through the education ministry's responsible directorates; check current official notices for dates and candidate requirements.",level:"Elementary and middle-school completion",url:"https://www.education.sn/"},{name:"Baccalauréat",body:"Check current session and candidate guidance through the Office du Baccalauréat and the Ministry.",level:"Secondary completion",url:"https://officedubac.sn/"}],
+  schools:[{name:"Ministry of National Education",type:"National authority; school-level administration includes regional academies and local education inspectorates",url:"https://www.education.sn/"}],
+  papers:[{name:"Ministry of National Education",type:"Official curriculum, circulars and examination information; confirm the applicable current document",url:"https://www.education.sn/"}],
+  jobs:[{name:"Ministry of National Education",type:"Official recruitment and competitive-exam notices; verify each campaign and deadline directly",url:"https://www.education.sn/"}],
+  teachers:[{name:"Ministry of National Education",type:"Teacher recruitment, training and career notices; check current eligibility and application conditions",url:"https://www.education.sn/"}],
+  further:[{name:"Ministry responsible for higher education / Office du Baccalauréat",type:"Use current government portals to verify tertiary admissions and recognition",url:"https://officedubac.sn/"}],
+  sources:[{label:"Ministry of National Education",url:"https://www.education.sn/"},{label:"Office du Baccalauréat",url:"https://officedubac.sn/"}]
+ },
+ "algeria": {
+  researchStatus:"Official Ministry of National Education portal identified, including teacher recruitment notices. Current academic calendar and examination dates must be confirmed from the latest official circular.",
+  authority:"Ministry of National Education; National Office of Examinations and Competitions (ONEC) supports national examinations and recruitment competitions.",
+  officialLanguages:"Arabic and Tamazight are Algeria's official languages. French is used in some educational and professional contexts but is not a national official language.",
+  curriculum:"Use the Ministry of National Education's current curricula, subject programmes and official circulars; verify grade, stream and school-year version.",
+  system:"The school system includes primary, middle and secondary education, followed by vocational training and higher education. Consult current ministry rules for progression and examination requirements.",
+  termCalendar:"Current term dates not entered; confirm through the latest Ministry school-year circular and any subsequent official update.",
+  calendar:"Use the current Ministry of National Education calendar and official amendments; do not reuse dates from previous academic years.",
+  exams:[{name:"Baccalauréat and BEM",body:"Use the Ministry and ONEC official notices for examination arrangements, candidate registration and timetables.",level:"Middle-school and secondary completion examinations",url:"https://www.education.gov.dz/"}],
+  schools:[{name:"Ministry of National Education",type:"National education authority; confirm current school-directory/administrative services on the official portal",url:"https://www.education.gov.dz/"}],
+  papers:[{name:"Ministry of National Education",type:"Official curriculum and programme documents; verify current subject and grade versions",url:"https://www.education.gov.dz/"}],
+  jobs:[{name:"Ministry of National Education",type:"Official recruitment and competition notices; verify eligibility and closing dates from each notice",url:"https://www.education.gov.dz/"}],
+  teachers:[{name:"Ministry of National Education",type:"Teacher recruitment eligibility depends on the post and subject; follow current official competition notices",url:"https://www.education.gov.dz/"}],
+  further:[{name:"Ministry of Higher Education and Scientific Research",url:"https://www.mesrs.dz/"}],
+  sources:[{label:"Ministry of National Education",url:"https://www.education.gov.dz/"},{label:"Ministry of Higher Education and Scientific Research",url:"https://www.mesrs.dz/"}]
+ },
+ "malawi": {
+  researchStatus:"Official education ministry and national examinations council sources identified. Verify current calendar, school directory, curriculum version and teacher registration details from current notices.",
+  authority:"Ministry of Education; Malawi National Examinations Board (MANEB); Malawi National Council for Higher Education (NCHE).",
+  officialLanguages:"English is the official language; Chichewa is the national language. Other languages are spoken locally; school language-of-instruction rules may vary by level.",
+  curriculum:"Check the current curriculum and syllabuses published by the Ministry of Education and the responsible curriculum-development bodies.",
+  system:"Schooling includes primary and secondary education, with technical/vocational and higher education pathways. Confirm current grade structure, selection and qualification rules through official notices.",
+  termCalendar:"Current school term dates not entered. Check the latest Ministry of Education calendar and any circular that revises dates.",
+  calendar:"Use the current official school calendar; confirm any changes directly with the Ministry and the school.",
+  exams:[{name:"Malawi National Examinations Board (MANEB)",body:"Official examination body; use its current notices for national examination levels, registration and timetables.",level:"National primary and secondary examinations",url:"https://www.maneb.edu.mw/"}],
+  schools:[{name:"Ministry of Education",type:"National education authority; confirm current official school-directory services",url:"https://education.gov.mw/"}],
+  papers:[{name:"Malawi National Examinations Board",type:"Official assessment and examination information",url:"https://www.maneb.edu.mw/"}],
+  jobs:[{name:"Ministry of Education",type:"Official recruitment notices; confirm current vacancies and application channels",url:"https://education.gov.mw/"}],
+  teachers:[{name:"Ministry of Education",type:"Confirm current teacher qualification, registration and recruitment rules with the responsible government authority",url:"https://education.gov.mw/"}],
+  further:[{name:"National Council for Higher Education (NCHE)",url:"https://www.nche.ac.mw/"}],
+  sources:[{label:"Ministry of Education",url:"https://education.gov.mw/"},{label:"Malawi National Examinations Board",url:"https://www.maneb.edu.mw/"},{label:"National Council for Higher Education",url:"https://www.nche.ac.mw/"}]
+ },
+ "lesotho": {
+  researchStatus:"Official government education portal and examination council source identified. Confirm current term dates, school register and teacher registration/qualification requirements before treating these fields as complete.",
+  authority:"Ministry of Education and Training; Examinations Council of Lesotho (ECoL); Council on Higher Education (CHE).",
+  officialLanguages:"Sesotho and English are Lesotho's official languages. Language of instruction varies by grade and school.",
+  curriculum:"Check current curriculum frameworks, syllabuses and teaching resources through the Ministry of Education and Training and ECoL.",
+  system:"The system includes early childhood, primary, secondary, technical/vocational and higher education pathways. Verify current grade progression and qualification requirements from ministry documents.",
+  termCalendar:"Current school term dates not entered; verify the latest official ministry calendar and school-level notices.",
+  calendar:"Use the current Ministry of Education and Training school calendar; confirm whether any later circular changes the dates.",
+  exams:[{name:"Examinations Council of Lesotho (ECoL)",body:"Official national examinations and assessment body. Check current candidate notices, subject syllabuses and examination timetables.",level:"National school examinations",url:"https://www.ecol.org.ls/"}],
+  schools:[{name:"Ministry of Education and Training",type:"National education authority; confirm current school-directory and education statistics services",url:"https://www.education.gov.ls/"}],
+  papers:[{name:"Examinations Council of Lesotho",type:"Official assessment and examination information",url:"https://www.ecol.org.ls/"}],
+  jobs:[{name:"Government of Lesotho",type:"Official public-service recruitment starting point; verify education vacancies and deadlines",url:"https://www.gov.ls/"}],
+  teachers:[{name:"Ministry of Education and Training",type:"Confirm current teacher qualification and recruitment rules with the ministry and employer",url:"https://www.education.gov.ls/"}],
+  further:[{name:"Council on Higher Education (CHE)",url:"https://www.che.ac.ls/"}],
+  sources:[{label:"Ministry of Education and Training",url:"https://www.education.gov.ls/"},{label:"Examinations Council of Lesotho",url:"https://www.ecol.org.ls/"},{label:"Council on Higher Education",url:"https://www.che.ac.ls/"}]
+ },
+ "eswatini": {
+  researchStatus:"Official education ministry and examinations council sources identified. Current academic calendar, school register and teacher registration requirements remain to be verified against current official notices.",
+  authority:"Ministry of Education and Training; Examinations Council of Eswatini (ECESWA); Eswatini Higher Education Council (ESHEC).",
+  officialLanguages:"siSwati and English are official languages. The language of instruction varies by grade and institution.",
+  curriculum:"Check the current curriculum and syllabuses through the Ministry of Education and Training and ECESWA, including the applicable examination pathway.",
+  system:"Schooling includes primary and secondary education, alongside technical/vocational and higher education. Verify current grade and qualification details with official sources.",
+  termCalendar:"Current term dates not entered. Check the latest Ministry calendar and official circulars before publishing dates.",
+  calendar:"Use the current Ministry of Education and Training school calendar; confirm any updates directly with the ministry or school.",
+  exams:[{name:"Examinations Council of Eswatini (ECESWA)",body:"Official examinations authority; consult current syllabus, registration and examination timetable notices.",level:"National and externally benchmarked school examinations",url:"https://www.eceswa.org.sz/"}],
+  schools:[{name:"Ministry of Education and Training",type:"National education authority; verify current school-list or EMIS services",url:"https://www.gov.sz/"}],
+  papers:[{name:"Examinations Council of Eswatini",type:"Official examination and syllabus information",url:"https://www.eceswa.org.sz/"}],
+  jobs:[{name:"Government of Eswatini",type:"Official public-service recruitment starting point; verify current teaching vacancies",url:"https://www.gov.sz/"}],
+  teachers:[{name:"Ministry of Education and Training",type:"Confirm current teacher training, qualifications and recruitment requirements with official authorities",url:"https://www.gov.sz/"}],
+  further:[{name:"Eswatini Higher Education Council",url:"https://www.eshec.org.sz/"}],
+  sources:[{label:"Government of Eswatini",url:"https://www.gov.sz/"},{label:"Examinations Council of Eswatini",url:"https://www.eceswa.org.sz/"},{label:"Eswatini Higher Education Council",url:"https://www.eshec.org.sz/"}]
+ },
+ "madagascar": {
+  researchStatus:"Official ministry and national education authority sources require further direct validation. The links below are starting points; confirm the current ministry domain and current national circulars before upgrading verification status.",
+  authority:"Ministry responsible for National Education; national and regional education directorates administer school services.",
+  officialLanguages:"Malagasy and French are official languages. Language of instruction varies by school and level.",
+  curriculum:"Confirm the current national curriculum, syllabuses and assessment framework through the official Ministry of National Education portal and current circulars.",
+  system:"Schooling includes primary and secondary cycles, with technical/vocational and higher education pathways. Confirm current cycle names, grade structure and qualification equivalencies with the Ministry.",
+  termCalendar:"Current term dates not entered. Confirm the current national calendar and any regional or school-specific updates from official sources.",
+  calendar:"Verify current dates with the official Ministry of National Education and the relevant regional education authority.",
+  exams:[{name:"National school examinations",body:"Identify and verify the current national examination authority and official examination notices through the Ministry; no timetable is asserted here.",level:"Verify current examination arrangements",url:"https://www.education.gov.mg/"}],
+  schools:[{name:"Ministry of National Education",type:"Official starting point; confirm current school-directory services and portal availability",url:"https://www.education.gov.mg/"}],
+  papers:[{name:"Ministry of National Education",type:"Locate the current official curriculum, syllabuses and assessment documents; verify each document's date",url:"https://www.education.gov.mg/"}],
+  jobs:[{name:"Ministry of National Education",type:"Official recruitment starting point; verify each live vacancy and its eligibility rules",url:"https://www.education.gov.mg/"}],
+  teachers:[{name:"Ministry of National Education",type:"Confirm current teacher qualifications, recruitment and career rules with the responsible authority",url:"https://www.education.gov.mg/"}],
+  further:[{name:"Ministry responsible for higher education",type:"Verify the current higher-education regulator and accreditation register through government sources",url:"https://www.education.gov.mg/"}],
+  sources:[{label:"Ministry of National Education (portal requires current validation)",url:"https://www.education.gov.mg/"},{label:"UNESCO UIS country profiles",url:"https://www.uis.unesco.org/en/data/sdg4-country-profiles"}]
+ },
+ "mauritius": {
+  researchStatus:"Official education ministry, examinations syndicate and higher-education regulator sources identified. Current term dates and school-level directory details should be checked in the latest official notices.",
+  authority:"Ministry of Education and Human Resource; Mauritius Examinations Syndicate (MES); Higher Education Commission (HEC).",
+  officialLanguages:"English is the official language of the National Assembly; Mauritius has a multilingual society and French and Mauritian Creole are widely used. Do not simplify this to a single official spoken language across all school contexts.",
+  curriculum:"Use the current Ministry curriculum and assessment policy and the Mauritius Institute of Education resources; verify the relevant grade, subject and examination pathway.",
+  system:"Schooling includes pre-primary, primary, secondary, technical/vocational and tertiary pathways. Confirm current grade and qualification rules through the Ministry and MES.",
+  termCalendar:"Current term dates not entered. Check the latest Ministry school calendar and any subsequent official update.",
+  calendar:"Use the current Ministry of Education calendar and verify any revisions before publishing term dates.",
+  exams:[{name:"Mauritius Examinations Syndicate (MES)",body:"Official examination authority; current examination timetables, syllabuses and candidate information are published through MES.",level:"Primary and secondary examinations",url:"https://mes.govmu.org/"}],
+  schools:[{name:"Ministry of Education",type:"National education authority; confirm current school-directory services and official institution records",url:"https://education.govmu.org/"}],
+  papers:[{name:"Mauritius Examinations Syndicate",type:"Official syllabus, examination and assessment information",url:"https://mes.govmu.org/"},{name:"Mauritius Institute of Education",type:"Teacher education and curriculum resources",url:"https://mie.ac.mu/"}],
+  jobs:[{name:"Public Service Commission Mauritius",type:"Official public-service recruitment; verify live vacancy notices and eligibility",url:"https://psc.govmu.org/"}],
+  teachers:[{name:"Ministry of Education and Human Resource",type:"Confirm current teacher qualifications and recruitment requirements in official notices",url:"https://education.govmu.org/"}],
+  further:[{name:"Higher Education Commission",url:"https://www.hec.mu/"}],
+  sources:[{label:"Ministry of Education",url:"https://education.govmu.org/"},{label:"Mauritius Examinations Syndicate",url:"https://mes.govmu.org/"},{label:"Mauritius Institute of Education",url:"https://mie.ac.mu/"},{label:"Higher Education Commission",url:"https://www.hec.mu/"}]
+ },
+ "mozambique": {
+  researchStatus:"Official ministry and national examination/curriculum sources need current validation. Check the latest government structure and current circulars before treating dates or school directory information as verified.",
+  authority:"Ministry responsible for Education and Human Development; national curriculum and examination services operate under the education administration.",
+  officialLanguages:"Portuguese is the official language. Numerous Mozambican languages are used in communities and bilingual education programmes; language-of-instruction policy varies by level and school.",
+  curriculum:"Confirm the current national curriculum and syllabus through the Ministry responsible for education and its official curriculum publications.",
+  system:"Education includes primary, secondary, technical/professional and higher education pathways. Confirm current grade structure, assessment transitions and qualification requirements from official publications.",
+  termCalendar:"Current term dates not entered; verify the latest ministry calendar and any subsequent official changes.",
+  calendar:"Use only a current dated calendar issued by the responsible Ministry or local education authority.",
+  exams:[{name:"National examinations and assessment",body:"Confirm the current national examination directorate and timetable through the official Ministry portal; no examination dates are asserted here.",level:"Verify current examination arrangements",url:"https://www.mined.gov.mz/"}],
+  schools:[{name:"Ministry responsible for Education",type:"National authority; verify current school directory and administrative services through official government sources",url:"https://www.mined.gov.mz/"}],
+  papers:[{name:"Ministry responsible for Education",type:"Official curriculum and syllabus starting point; confirm the current document and grade",url:"https://www.mined.gov.mz/"}],
+  jobs:[{name:"Ministry responsible for Education",type:"Official recruitment notices; confirm current vacancy and application details",url:"https://www.mined.gov.mz/"}],
+  teachers:[{name:"Ministry responsible for Education",type:"Confirm current teacher training, qualifications and employment rules with the responsible authority",url:"https://www.mined.gov.mz/"}],
+  further:[{name:"Ministry responsible for higher education",type:"Verify current accreditation and qualification-recognition authority via government sources",url:"https://www.mined.gov.mz/"}],
+  sources:[{label:"Ministry responsible for Education (verify current portal)",url:"https://www.mined.gov.mz/"},{label:"UNESCO UIS country profiles",url:"https://www.uis.unesco.org/en/data/sdg4-country-profiles"}]
+ },
+ "angola": {
+  researchStatus:"Official government education portal identified as a starting point. Verify current ministry structure, curriculum, examination authority, school calendar and teacher requirements from current official notices.",
+  authority:"Ministry of Education of Angola; confirm the current division of responsibilities for curriculum, examinations and school administration in official ministry documents.",
+  officialLanguages:"Portuguese is Angola's official language. National languages are used by communities and may feature in local education contexts.",
+  curriculum:"Check current national curriculum plans, syllabuses and learning materials published by the Ministry of Education.",
+  system:"Education includes primary and secondary schooling, technical/professional training and higher education. Verify the current grade and qualification structure in ministry publications.",
+  termCalendar:"Current school term dates not entered; check the latest official school calendar and any subsequent ministry circular.",
+  calendar:"Use the latest Ministry of Education school calendar; do not carry dates over from a previous year.",
+  exams:[{name:"National school examinations",body:"Verify the current examination directorate, exam levels and official timetable through the Ministry of Education.",level:"Verify current examination arrangements",url:"https://med.gov.ao/"}],
+  schools:[{name:"Ministry of Education",type:"National education authority; confirm current school-directory services",url:"https://med.gov.ao/"}],
+  papers:[{name:"Ministry of Education",type:"Official curriculum and education policy starting point; verify current documents",url:"https://med.gov.ao/"}],
+  jobs:[{name:"Ministry of Education",type:"Official recruitment notices; verify live status and eligibility",url:"https://med.gov.ao/"}],
+  teachers:[{name:"Ministry of Education",type:"Confirm current teacher qualification, training and recruitment requirements with official notices",url:"https://med.gov.ao/"}],
+  further:[{name:"Ministry responsible for higher education",type:"Verify current higher-education accreditation authority and register via official government sources",url:"https://med.gov.ao/"}],
+  sources:[{label:"Ministry of Education",url:"https://med.gov.ao/"},{label:"UNESCO UIS country profiles",url:"https://www.uis.unesco.org/en/data/sdg4-country-profiles"}]
+ },
+ "benin": {
+  researchStatus:"Government education portals identified as research starting points. Validate the current division between ministry portfolios, examination bodies, school calendars and teacher recruitment rules against current official notices.",
+  authority:"Benin's education administration is divided among ministries responsible for preschool/primary, secondary/technical education and higher education; confirm the current portfolio names on the official government portal.",
+  officialLanguages:"French is the official language. Fon, Yoruba, Bariba and many other national languages are widely spoken; school language policy varies.",
+  curriculum:"Use the current official curriculum and syllabuses from the responsible ministry and national education authorities; verify each grade and subject document.",
+  system:"Education includes preschool, primary, secondary, technical/vocational and higher education pathways. Confirm current grade structure and qualification rules through official sources.",
+  termCalendar:"Current term dates not entered. Check the latest official school-year circular from the ministry responsible for the relevant level.",
+  calendar:"Verify dates from a current official ministry calendar and any later amendments.",
+  exams:[{name:"National examinations",body:"Identify the responsible current examination directorate and use official notices for CEP, BEPC, baccalaureate and other relevant examinations.",level:"National school examinations; verify current arrangements",url:"https://www.gouv.bj/"}],
+  schools:[{name:"Government of Benin",type:"Official starting point for identifying current education ministries and school services",url:"https://www.gouv.bj/"}],
+  papers:[{name:"Responsible education ministry",type:"Locate current curriculum, syllabus and official assessment documents through government sources",url:"https://www.gouv.bj/"}],
+  jobs:[{name:"Government of Benin",type:"Official public-service recruitment starting point; confirm current teaching competitions and deadlines",url:"https://www.gouv.bj/"}],
+  teachers:[{name:"Responsible education ministry",type:"Confirm current teacher recruitment and qualification rules in the relevant official competition notice",url:"https://www.gouv.bj/"}],
+  further:[{name:"Ministry responsible for higher education",type:"Verify the current accreditation and recognition authority via the government portal",url:"https://www.gouv.bj/"}],
+  sources:[{label:"Government of Benin",url:"https://www.gouv.bj/"},{label:"UNESCO UIS country profiles",url:"https://www.uis.unesco.org/en/data/sdg4-country-profiles"}]
+ },
+ "cameroon": {
+  researchStatus:"National education administration is split across multiple ministries and language/education subsystems. Official government sources identified as starting points; current school calendar, school register and teacher requirements need level-specific verification.",
+  authority:"Ministry of Basic Education (MINEDUB); Ministry of Secondary Education (MINESEC); Ministry of Employment and Vocational Training and Ministry of Higher Education for their respective remits.",
+  officialLanguages:"English and French are official languages. The education system includes English-speaking and French-speaking subsystems; language and curriculum must be identified by school and region.",
+  curriculum:"Use the current curriculum and syllabuses issued by the responsible ministry for the relevant subsystem, level and subject. Do not assume a single uniform curriculum across all school contexts.",
+  system:"Education includes basic, secondary, technical/vocational and higher education pathways. Structure and terminology differ between English-speaking and French-speaking subsystems; verify locally.",
+  termCalendar:"Current term dates not entered. Confirm the latest official calendar from the ministry responsible for the relevant level and subsystem.",
+  calendar:"Use a current official calendar and identify whether it applies to MINEDUB, MINESEC, a regional subsystem or a particular school.",
+  exams:[{name:"National examinations and assessment",body:"Confirm the responsible examination body for the relevant subsystem and certificate; use current official timetables rather than assuming a single examination authority.",level:"Subsystem-specific examinations",url:"https://www.minesec.gov.cm/"}],
+  schools:[{name:"Ministry of Basic Education (MINEDUB)",type:"Official authority for basic education",url:"https://www.minedub.cm/"},{name:"Ministry of Secondary Education (MINESEC)",type:"Official secondary education authority",url:"https://www.minesec.gov.cm/"}],
+  papers:[{name:"MINEDUB",type:"Official basic-education policy and curriculum starting point",url:"https://www.minedub.cm/"},{name:"MINESEC",type:"Official secondary education and examination information",url:"https://www.minesec.gov.cm/"}],
+  jobs:[{name:"Official education ministries",type:"Recruitment may be ministry-, regional- or public-service-specific; verify current notices and eligibility",url:"https://www.minesec.gov.cm/"}],
+  teachers:[{name:"Responsible education ministry and public service",type:"Confirm qualifications, appointment and recognition rules for the relevant subsystem and school type",url:"https://www.minedub.cm/"}],
+  further:[{name:"Ministry of Higher Education",url:"https://www.minesup.gov.cm/"}],
+  sources:[{label:"MINEDUB",url:"https://www.minedub.cm/"},{label:"MINESEC",url:"https://www.minesec.gov.cm/"},{label:"Ministry of Higher Education",url:"https://www.minesup.gov.cm/"}]
+ },
+ "cote-d-ivoire": {
+  researchStatus:"Official Ministry of National Education portal identified. Verify the current academic calendar, curriculum documents, examination arrangements and school register using dated official publications.",
+  authority:"Ministry of National Education and Literacy; other ministries oversee technical/vocational education and higher education within their respective remits.",
+  officialLanguages:"French is the official language. Côte d’Ivoire has many national languages used in communities and local education contexts.",
+  curriculum:"Check current official curriculum programmes and syllabuses through the Ministry of National Education and Literacy; verify the grade and subject version.",
+  system:"Education includes preschool, primary, lower and upper secondary, technical/vocational and higher education pathways. Confirm current grade and qualification rules with official publications.",
+  termCalendar:"Current school term dates not entered. Check the latest official ministerial rentrée/calendar circular and any later updates.",
+  calendar:"Use the current Ministry of National Education school calendar and confirm any revisions before publishing dates.",
+  exams:[{name:"CEPE, BEPC and Baccalauréat",body:"Check current official examination announcements, candidate guidance and timetables through the Ministry and the responsible examination directorates.",level:"Primary and secondary examinations",url:"https://www.education.gouv.ci/"}],
+  schools:[{name:"Ministry of National Education and Literacy",type:"National education authority; confirm current school-directory or EMIS access",url:"https://www.education.gouv.ci/"}],
+  papers:[{name:"Ministry of National Education and Literacy",type:"Official curriculum and assessment documents; confirm current version and grade",url:"https://www.education.gouv.ci/"}],
+  jobs:[{name:"Ministry of National Education and Literacy",type:"Official recruitment and competitive-exam notices; verify current eligibility and deadlines",url:"https://www.education.gouv.ci/"}],
+  teachers:[{name:"Ministry of National Education and Literacy",type:"Confirm teacher recruitment, training and qualification requirements from current official notices",url:"https://www.education.gouv.ci/"}],
+  further:[{name:"Ministry responsible for Higher Education and Scientific Research",type:"Verify current accreditation and higher-education recognition services through government sources",url:"https://enseignement.gouv.ci/"}],
+  sources:[{label:"Ministry of National Education and Literacy",url:"https://www.education.gouv.ci/"},{label:"Ministry responsible for Higher Education",url:"https://enseignement.gouv.ci/"}]
+ }
+};
+Object.keys(africaResearchProfilesBatch2).forEach(function(slug){
+ const target=countryData[slug]||(countryData[slug]={});
+ Object.keys(africaResearchProfilesBatch2[slug]).forEach(function(field){target[field]=africaResearchProfilesBatch2[slug][field];});
+});
+ 
 /* Ensure every registered country has a visible, honest research record.
  * These are discovery links and verification prompts, not claims that the fields have been researched.
  * Country facts are only promoted to verified when checked against a national authority or other primary source.
