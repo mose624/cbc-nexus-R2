@@ -2385,6 +2385,35 @@ if(countryData["japan"]){
  countryData["japan"].schoolDirectory="Tokyo Metropolitan Government international school search portal: https://www.intlschools.metro.tokyo.lg.jp/en/schools-search/ ; Japan e-Gov school data portal: https://data.e-gov.go.jp/";
 }
 
+
+/* Additional school entries; official government directories remain the source for full/current records. */
+if(countryData["australia"]){
+ countryData["australia"].schools=(countryData["australia"].schools||[]).concat([
+  {name:"Sydney Boys High School",type:"Government selective secondary school",city:"Moore Park, Sydney, NSW",url:"https://sydneyhigh.school/",source:"https://schoolfinder.education.nsw.gov.au/"},
+  {name:"Sydney Girls High School",type:"Government selective secondary school",city:"Surry Hills, Sydney, NSW",url:"https://sghs.nsw.edu.au/",source:"https://schoolfinder.education.nsw.gov.au/"},
+  {name:"James Ruse Agricultural High School",type:"Government selective secondary school",city:"Carlingford, NSW",url:"https://jamesruse-h.schools.nsw.gov.au/",source:"https://schoolfinder.education.nsw.gov.au/"},
+  {name:"Fort Street High School",type:"Government selective secondary school",city:"Petersham, Sydney, NSW",url:"https://forthigh.nsw.edu.au/",source:"https://schoolfinder.education.nsw.gov.au/"},
+  {name:"Melbourne High School",type:"Government selective secondary school",city:"South Yarra, Victoria",url:"https://mhs.vic.edu.au/",source:"https://www.findmyschool.vic.gov.au/"},
+  {name:"Mac.Robertson Girls' High School",type:"Government selective secondary school",city:"Melbourne, Victoria",url:"https://macrob.vic.edu.au/",source:"https://www.findmyschool.vic.gov.au/"},
+  {name:"Brisbane State High School",type:"Government secondary school",city:"South Brisbane, Queensland",url:"https://brisbaneshs.eq.edu.au/",source:"https://schoolsdirectory.eq.edu.au/"},
+  {name:"Queensland Academy for Science Mathematics and Technology",type:"Government selective senior school",city:"Toowong, Brisbane, Queensland",url:"https://qasmt.eq.edu.au/",source:"https://schoolsdirectory.eq.edu.au/"}
+ ]);
+ countryData["australia"].schoolDirectory="Australian Curriculum, Assessment and Reporting Authority national school list: https://asldev.azurewebsites.net/ ; NSW Finder: https://schoolfinder.education.nsw.gov.au/ ; Queensland directory: https://schoolsdirectory.eq.edu.au/ ; Victoria Find My School: https://www.findmyschool.vic.gov.au/";
+}
+if(countryData["canada"]){
+ countryData["canada"].schools=(countryData["canada"].schools||[]).concat([
+  {name:"Earl Haig Secondary School",type:"Public secondary school",city:"Toronto, Ontario",url:"https://earlhaig.ca/",source:"https://www.ontario.ca/page/find-elementary-or-secondary-school"},
+  {name:"North Toronto Collegiate Institute",type:"Public secondary school",city:"Toronto, Ontario",url:"https://ntci.on.ca/",source:"https://www.ontario.ca/page/find-elementary-or-secondary-school"},
+  {name:"University of Toronto Schools",type:"Independent university-affiliated school",city:"Toronto, Ontario",url:"https://www.utschools.ca/",source:"https://www.ontario.ca/page/list-elementary-and-secondary-schools"},
+  {name:"Colonel By Secondary School",type:"Public secondary school",city:"Ottawa, Ontario",url:"https://colonelby.com/",source:"https://www.ocdsb.ca/our-schools/school-directory"},
+  {name:"Lisgar Collegiate Institute",type:"Public secondary school",city:"Ottawa, Ontario",url:"https://lisgarci.com/",source:"https://www.ocdsb.ca/our-schools/school-directory"},
+  {name:"Sir Winston Churchill High School",type:"Public secondary school",city:"Calgary, Alberta",url:"https://school.cbe.ab.ca/school/sirwinstonchurchill",source:"https://www.alberta.ca/find-a-school"},
+  {name:"Lord Byng Secondary School",type:"Public secondary school",city:"Vancouver, British Columbia",url:"https://www.vsb.bc.ca/lordbyng",source:"https://www.bced.gov.bc.ca/apps/imcl/imclWeb/Home.do"},
+  {name:"St George's School",type:"Independent boys' school",city:"Vancouver, British Columbia",url:"https://www.stgeorges.bc.ca/",source:"https://www.bced.gov.bc.ca/apps/imcl/imclWeb/Home.do"}
+ ]);
+ countryData["canada"].schoolDirectory="Ontario official school finder: https://www.ontario.ca/page/find-elementary-or-secondary-school ; Ontario school list: https://www.ontario.ca/page/list-elementary-and-secondary-schools ; Ottawa-Carleton school directory: https://www.ocdsb.ca/our-schools/school-directory";
+}
+
 if(typeof window!=="undefined"){window.CBE_GLOBAL_COUNTRIES=countryRegistry;window.CBE_GLOBAL_COUNTRY_DATA=countryData;}
 if(typeof module!=="undefined"&&module.exports){module.exports={countries:countryRegistry,countryData};}
 })();
