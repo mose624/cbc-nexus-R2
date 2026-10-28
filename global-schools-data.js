@@ -1790,6 +1790,93 @@ further:[{name:"MINEDU-NC education system",url:"https://edu-nc.gouv.cd/educatio
 sources:[{label:"Official DRC education system",url:"https://edu-nc.gouv.cd/education-system"},{label:"Official DRC certifying examinations",url:"https://edu-nc.gouv.cd/certifying-exams"},{label:"MINEDU-NC French-language portal",url:"https://edu-nc.gouv.cd/systeme-educatif"}]
 };
 
+
+countryData["cote-divoire"]={
+researchStatus:"Curated from official government education portals; individual school listings and current vacancies require confirmation.",
+officialLanguages:"French is the official language; national languages are also used in education and community contexts.",
+authority:"Ministère de l’Éducation nationale, de l’Alphabétisation et de l’Enseignement technique (MENAET); Direction de la Pédagogie et de la Formation Continue (DPFC).",
+curriculum:"Use official educational programmes, execution guides and circulars published by the DPFC; verify the current grade and subject programme.",
+system:"Preschool, primary, lower and upper secondary education, technical and vocational pathways, and teacher-training centres (CAFOP).",
+termCalendar:"The official 2026–2027 general-education year runs from 14 September 2026 to 30 July 2027; consult current ministry notices for holidays and examination dates.",
+calendar:"2026–2027 dates are sourced from the government portal; confirm changes directly with MENAET.",
+qualificationRequirements:"Teacher eligibility and recruitment requirements vary by level and public/private employer. Check current MENAET and CAFOP recruitment notices and required diplomas.",
+exams:[{name:"CEPE",body:"Primary school completion examination; check official notices.",level:"Primary",url:"https://dpfc-ci.net/"},{name:"BEPC",body:"Lower-secondary certificate examination; confirm dates and requirements with the ministry.",level:"Lower secondary",url:"https://www.gouv.ci/"},{name:"Baccalauréat",body:"Upper-secondary leaving examination.",level:"Upper secondary",url:"https://www.gouv.ci/"}],
+schools:[{name:"Official education ministry portal",type:"Government education information; not a complete school directory",url:"https://www.gouv.ci/"}],
+papers:[{name:"DPFC official programmes and teaching resources",type:"Curricula, guides and official circulars",url:"https://dpfc-ci.net/"}],
+jobs:[{name:"MENAET / government announcements",type:"Check current official recruitment notices; vacancies not individually verified",url:"https://www.gouv.ci/"}],
+teachers:[{name:"DPFC",type:"Pedagogical guidance and continuing professional development",url:"https://dpfc-ci.net/"}],
+further:[{name:"Government education portal",url:"https://www.gouv.ci/"},{name:"DPFC — Côte d’Ivoire à l’École",url:"https://dpfc-ci.net/"}],
+sources:[{label:"Official Government of Côte d’Ivoire: 2026–2027 calendar",url:"https://www.gouv.ci/index.php/actualite/annee-scolaire-2026-2027-le-decoupage-officiel-et-le-calendrier-des-conges-et-vacances-presentes-9137"},{label:"Official DPFC portal and programmes",url:"https://dpfc-ci.net/"}]
+};
+countryData["mali"]={
+researchStatus:"Curated using the national examinations platform; confirm curriculum, school listings and recruitment details with the ministry.",
+officialLanguages:"French is used widely in administration and schooling; Mali’s official-language framework has changed, so check current government guidance for the language of instruction and official status.",
+authority:"Ministère de l’Éducation nationale; national examinations information is available through CNECE.",
+curriculum:"Use ministry-issued programmes and current curriculum documents; verify the relevant level and language of instruction.",
+system:"Basic education, secondary general and technical/vocational pathways, followed by higher education and professional qualifications.",
+termCalendar:"School and examination dates vary by annual official circular; consult the ministry and national examination portal for the current calendar.",
+calendar:"No fixed dates are asserted here; check current official announcements.",
+qualificationRequirements:"Public teacher recruitment and qualification requirements depend on cadre and level. Verify required diplomas, competitive examinations and current notices with the ministry.",
+exams:[{name:"DEF",body:"Diplôme d’Études Fondamentales.",level:"Basic education",url:"https://cnece-men-examens.ml/"},{name:"Baccalauréat",body:"National upper-secondary examination.",level:"Upper secondary",url:"https://cnece-men-examens.ml/"},{name:"BT / CAP",body:"Technical and vocational qualification examinations.",level:"Technical and vocational",url:"https://cnece-men-examens.ml/"}],
+schools:[{name:"CNECE national examinations portal",type:"Official examinations information; not a school directory",url:"https://cnece-men-examens.ml/"}],
+papers:[{name:"CNECE examinations and results",type:"Official exam information and results; availability varies",url:"https://cnece-men-examens.ml/resultats-en-pdf/"}],
+jobs:[{name:"Ministry of National Education",type:"Check official announcements; current vacancies not individually verified",url:"https://cnece-men-examens.ml/"}],
+teachers:[{name:"Ministry of National Education",type:"Confirm teacher recruitment, training and qualification requirements with the ministry",url:"https://cnece-men-examens.ml/"}],
+further:[{name:"CNECE national examinations portal",url:"https://cnece-men-examens.ml/"},{name:"CNECE results",url:"https://cnece-men-examens.ml/resultats-en-pdf/"}],
+sources:[{label:"CNECE national examinations portal",url:"https://cnece-men-examens.ml/"}]
+};
+countryData["burkina-faso"]={
+researchStatus:"Curriculum and examination links sourced from national education platforms; verify school and vacancy records individually.",
+officialLanguages:"Burkina Faso has multiple national languages and French is used in education and administration; check current official language-of-instruction policy for each programme.",
+authority:"Ministère de l’Enseignement de Base, de l’Alphabétisation et de la Promotion des Langues nationales (MEBAPLN) and the ministry responsible for secondary and technical education.",
+curriculum:"Faso e-education publishes curriculum reform documents, teaching guides and curricula for preschool, primary, post-primary and bilingual pathways.",
+system:"Preschool, primary, post-primary, secondary general, technical/vocational and non-formal education, including bilingual and Franco-Arabic options.",
+termCalendar:"Use current ministry circulars for school opening, holidays and national examination timetables.",
+calendar:"Calendar dates are not fixed in this profile; confirm the current year through the official education portals.",
+qualificationRequirements:"Requirements vary by teaching cadre and level; consult ministry recruitment notices and the applicable teacher-training pathway before applying.",
+exams:[{name:"CEP",body:"Primary education certificate examination; official results are published through the ministry platform.",level:"Primary",url:"https://www.educollect.education.gov.bf/"},{name:"BEPC",body:"Lower-secondary certificate examination; confirm current arrangements with the responsible ministry.",level:"Lower secondary",url:"https://fasoeducation.bf/"},{name:"Baccalauréat",body:"Upper-secondary leaving examination; consult current official notices.",level:"Upper secondary",url:"https://fasoeducation.bf/"}],
+schools:[{name:"MEBAPLN exam results platform",type:"Official examination results; not a full school directory",url:"https://www.educollect.education.gov.bf/"}],
+papers:[{name:"Faso e-education curriculum reform",type:"Official curricula and accompanying documents",url:"https://fasoeducation.bf/espace-enseignants/reforme-curriculaire.html"}],
+jobs:[{name:"Official education ministry notices",type:"Check government announcements; current vacancies not individually verified",url:"https://fasoeducation.bf/"}],
+teachers:[{name:"Faso e-education teacher resources",type:"Curricula and teaching support materials",url:"https://fasoeducation.bf/espace-enseignants/reforme-curriculaire.html"}],
+further:[{name:"Faso e-education",url:"https://fasoeducation.bf/"},{name:"Official CEP results platform",url:"https://www.educollect.education.gov.bf/"}],
+sources:[{label:"Faso e-education curriculum reform",url:"https://fasoeducation.bf/espace-enseignants/reforme-curriculaire.html"},{label:"Official MEBAPLN results platform",url:"https://www.educollect.education.gov.bf/"}]
+};
+countryData["benin"]={
+researchStatus:"Government ministry portals and the published 2026–2027 school calendar are linked; individual schools and live vacancies are not verified.",
+officialLanguages:"French is the official language of administration and schooling; national languages are also spoken.",
+authority:"Ministère des Enseignements Maternel et Primaire (MEMP); secondary and technical education are handled by the relevant national ministry.",
+curriculum:"Use ministry-issued programmes, teaching guidance and official circulars for the applicable school level.",
+system:"Maternal/preschool, primary, secondary general, technical and vocational education, with national examinations at key transition points.",
+termCalendar:"The 2026–2027 calendar sets pre-opening activities for 7–11 September 2026 and classes beginning 14 September 2026; check official notices for the complete calendar and amendments.",
+calendar:"Consult the current inter-ministerial calendar for term breaks, exam windows and end-of-year dates.",
+qualificationRequirements:"Teacher qualifications and appointment procedures vary by level and employer. Use official ministry career and assignment services and recruitment notices.",
+exams:[{name:"CEP",body:"Certificat d’Études Primaires; official services include results and candidate information.",level:"Primary",url:"https://memp.gouv.bj/"},{name:"BEPC",body:"Lower-secondary certificate examination; confirm details with the responsible ministry.",level:"Lower secondary",url:"https://memp.gouv.bj/"},{name:"Baccalauréat",body:"Upper-secondary leaving examination; consult official announcements.",level:"Upper secondary",url:"https://www.gouv.bj/"}],
+schools:[{name:"MEMP official portal",type:"Government education services and notices; not a complete school directory",url:"https://memp.gouv.bj/"}],
+papers:[{name:"MEMP education portal",type:"Official educational notices and services; check for current learning resources",url:"https://memp.gouv.bj/"}],
+jobs:[{name:"MEMP teacher career services",type:"Career information and official notices; vacancies not individually verified",url:"https://memp.gouv.bj/"}],
+teachers:[{name:"MEMP professional services",type:"Teacher career, continuing training and assignment information",url:"https://memp.gouv.bj/"}],
+further:[{name:"Ministry of Maternal and Primary Education",url:"https://memp.gouv.bj/"},{name:"Benin government portal",url:"https://www.gouv.bj/"}],
+sources:[{label:"MEMP official ministry portal",url:"https://memp.gouv.bj/"},{label:"2026–2027 calendar report",url:"https://latribunedelacapitale.bj/article/actualites/benin-le-gouvernement-publie-le-calendrier-officiel-de-lannee-scolaire-20262027"}]
+};
+countryData["togo"]={
+researchStatus:"Curated from the official education ministry and education statistics portal; individual school listings and current vacancies need direct verification.",
+officialLanguages:"French is the official language; national languages are used in communities and some educational contexts.",
+authority:"Ministère de l’Éducation nationale; Direction de la Planification, des Statistiques et du Suivi-Évaluation publishes sector statistics.",
+curriculum:"Consult the education ministry for current programmes, curriculum requirements and subject-specific guidance.",
+system:"Preschool, primary, lower and upper secondary, technical and vocational education, with national examinations including CEPD, BEPC and BAC.",
+termCalendar:"Use the ministry’s annual school calendar and examination announcements; dates may change by official circular.",
+calendar:"The official ministry portal reports current education news and examination outcomes; verify the full calendar there.",
+qualificationRequirements:"Teacher training and recruitment rules depend on school level and public/private employer. Confirm required credentials and active recruitment through official ministry notices.",
+exams:[{name:"CEPD",body:"Primary school completion examination.",level:"Primary",url:"https://education.gouv.tg/"},{name:"BEPC",body:"Lower-secondary certificate examination.",level:"Lower secondary",url:"https://education.gouv.tg/"},{name:"BAC I / BAC II",body:"Upper-secondary national examinations.",level:"Upper secondary",url:"https://education.gouv.tg/"}],
+schools:[{name:"Education ministry portal",type:"Official news and education information; not a full school directory",url:"https://education.gouv.tg/"},{name:"Education statistics portal",type:"Official school-sector statistics and annual reports",url:"https://planifeducation.gouv.tg/"}],
+papers:[{name:"Education statistics and reports",type:"Official annual statistics and sector reports; not an exam-paper archive",url:"https://planifeducation.gouv.tg/"}],
+jobs:[{name:"Ministry of National Education",type:"Check official announcements; live vacancies not individually verified",url:"https://education.gouv.tg/"}],
+teachers:[{name:"Ministry of National Education",type:"Official teacher training and recruitment announcements",url:"https://education.gouv.tg/"}],
+further:[{name:"Ministry of National Education",url:"https://education.gouv.tg/"},{name:"Education planning and statistics portal",url:"https://planifeducation.gouv.tg/"}],
+sources:[{label:"Ministry of National Education",url:"https://education.gouv.tg/"},{label:"Official education planning and statistics portal",url:"https://planifeducation.gouv.tg/"}]
+};
+
 if(typeof window!=="undefined"){window.CBE_GLOBAL_COUNTRIES=countryRegistry;window.CBE_GLOBAL_COUNTRY_DATA=countryData;}
 if(typeof module!=="undefined"&&module.exports){module.exports={countries:countryRegistry,countryData};}
 })();
