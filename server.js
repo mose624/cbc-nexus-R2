@@ -2301,14 +2301,14 @@ function optimizeHtmlForAds(html){
 function injectAdSenseTags(html,pathname){
   const cfg=getAdSenseConfig();
   let out=String(html||"");
-  // Publisher verification belongs in every HTML page header, even before ads are enabled.
-  if(!/<meta\\b(?=[^>]*\\bname\\s*=\\s*["']google-adsense-account["'])[^>]*>/i.test(out)){
-    const publisherId=String(cfg.publisherId||"pub-5389130412342963").replace(/^ca-/,"").trim();
-    if(publisherId) out=out.replace(/<head([^>]*)>/i,'<head$1><meta name="google-adsense-account" content="ca-'+publisherId+'">');
+  const publisherId=String(cfg.publisherId||"pub-5389130412342963").replace(/^ca-/,"").trim();
+  // AdSense account verification is included on all HTML pages, including before ad serving is enabled.
+  if(publisherId && !/<meta\b(?=[^>]*\bname\s*=\s*["']google-adsense-account["'])[^>]*>/i.test(out)){
+    out=out.replace(/<head([^>]*)>/i,'<head$1><meta name="google-adsense-account" content="ca-'+publisherId+'">');
   }
-  if(!cfg.enabled || isAdExcludedPath(pathname)) return out;
-  if(/pagead2\\.googlesyndication\\.com\\/pagead\\/js\\/adsbygoogle\\.js/i.test(out)) return out;
-  const head='<link rel="preconnect" href="https://pagead2.googlesyndication.com"><link rel="preconnect" href="https://googleads.g.doubleclick.net"><script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-'+cfg.publisherId+'"></script>';
+  if(isAdExcludedPath(pathname)) return out;
+  if(/pagead\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js/i.test(out)) return out;
+  const head='<link rel="preconnect" href="https://pagead2.googlesyndication.com"><link rel="preconnect" href="https://googleads.g.doubleclick.net"><script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-'+publisherId+'"></script>';
   out=out.replace(/<head([^>]*)>/i,'<head$1>'+head);
   return optimizeHtmlForAds(out);
 }
