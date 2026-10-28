@@ -211,6 +211,47 @@ function renderCountry(){
   const sourceNote=node("p","gs-muted");
   sourceNote.textContent="CBE Nexus school-record target: 1,000 per country where reliable records are available. External source links are not imported school records. Confirm each school's identity, current status, website and contact details with the relevant education authority. Countries with fewer than 1,000 schools should show the verified total available rather than fabricated entries.";
   schoolHost.appendChild(sourceNote);
+  // If a vetted country dataset has been imported into data/global-schools/<slug>.json,
+  // render actual records with local search and paging. No external dataset is silently scraped.
+  fetch("/data/global-schools/"+encodeURIComponent(c.slug)+".json",{headers:{"Accept":"application/json"}})
+   .then(response=>{if(!response.ok)throw new Error("No local school dataset published for "+c.slug);return response.json();})
+   .then(dataset=>{
+    if(!dataset||!Array.isArray(dataset.schools)||!dataset.schools.length)return;
+    const panel=node("section","gs-imported-schools");
+    panel.style.cssText="margin-top:18px;padding:14px;border:1px solid #dbe5ef;border-radius:12px;background:#fff";
+    const title=node("h3");title.textContent="CBE Nexus school records · "+dataset.schools.length.toLocaleString()+" listed";
+    const provenance=node("p","gs-muted");provenance.textContent="Source: "+(dataset.source||"Not specified")+" · Licence: "+(dataset.license||"Not specified")+" · Last verified: "+(dataset.last_verified||"Not recorded");
+    const sourceLink=node("a");sourceLink.href=safeUrl(dataset.source_url);sourceLink.textContent="View original dataset and source terms";sourceLink.target="_blank";sourceLink.rel="noopener noreferrer";
+    const search=node("input");search.type="search";search.placeholder="Search school name, district, region or town";search.setAttribute("aria-label","Search imported school records");search.style.cssText="display:block;width:100%;max-width:650px;padding:11px;border:1px solid #cbd5e1;border-radius:8px;margin:12px 0;font:inherit";
+    const count=node("p","gs-muted"),results=node("div","gs-links"),pager=node("div");pager.style.cssText="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px";
+    const prev=node("button");prev.type="button";prev.textContent="Previous";prev.className="gs-btn secondary";
+    const next=node("button");next.type="button";next.textContent="Next";next.className="gs-btn secondary";
+    const pageLabel=node("span","gs-muted");let page=0,filtered=[];
+    const render=()=>{
+     const q=search.value.trim().toLowerCase();
+     filtered=dataset.schools.filter(s=>[s.name,s.region,s.district,s.city,s.address,s.type,s.grades].some(v=>String(v||"").toLowerCase().includes(q)));
+     const pages=Math.max(1,Math.ceil(filtered.length/50));page=Math.min(page,pages-1);
+     text(count,filtered.length.toLocaleString()+" matching school records · "+dataset.total_records.toLocaleString()+" records in this dataset");
+     results.replaceChildren();
+     filtered.slice(page*50,(page+1)*50).forEach(s=>{
+      const card=node("div");card.style.cssText="padding:10px 0;border-bottom:1px solid #e2e8f0";
+      const name=node("strong");name.textContent=s.name||"Unnamed school";card.appendChild(name);
+      const meta=node("p","gs-muted");meta.style.margin="4px 0";meta.textContent=[s.city,s.district,s.region,s.type,s.grades?"Grades "+s.grades:""].filter(Boolean).join(" · ");if(meta.textContent)card.appendChild(meta);
+      if(s.address){const address=node("p","gs-muted");address.textContent=s.address;address.style.margin="4px 0";card.appendChild(address);}
+      const actions=node("p");actions.style.margin="4px 0";
+      if(s.website){const website=node("a");website.href=safeUrl(s.website);website.textContent="School website";website.target="_blank";website.rel="noopener noreferrer";actions.appendChild(website);}
+      if(s.phone){const phone=node("span","gs-muted");phone.textContent=(s.website?" · ":"")+"Phone: "+s.phone;actions.appendChild(phone);}
+      if(actions.childNodes.length)card.appendChild(actions);
+      results.appendChild(card);
+     });
+     if(!filtered.length){const empty=node("p","gs-empty");empty.textContent="No schools match that search.";results.appendChild(empty);}
+     text(pageLabel,"Page "+(page+1)+" of "+pages);prev.disabled=page===0;next.disabled=page>=pages-1;
+    };
+    search.addEventListener("input",()=>{page=0;render();});
+    prev.addEventListener("click",()=>{page=Math.max(0,page-1);render();});
+    next.addEventListener("click",()=>{page++;render();});
+    pager.append(prev,pageLabel,next);panel.append(title,provenance,sourceLink,search,count,results,pager);schoolHost.appendChild(panel);render();
+   }).catch(()=>{});
  }
  linkList("examLinks",d.exams,"examEmpty","No verified national examination records or current examination dates have been added for this country yet.");
  linkList("paperLinks",d.papers,null);linkList("jobLinks",d.jobs,null);
