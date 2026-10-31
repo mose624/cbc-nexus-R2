@@ -3,7 +3,15 @@
   "include": [
     "/api",
     "/api/*",
-    "/global-schools/*"
+    "/global-schools/*",
+    "/kjsea-past-papers-kenya",
+    "/cbe-curriculum-resources-kenya",
+    "/free-cbc-teaching-resources-kenya",
+    "/igcse-resources-kenya",
+    "/grade-8-integrated-science-notes",
+    "/online-cbc-revision-kenya",
+    "/interactive-questions-all-grades",
+    "/grade-8/*"
   ],
   "exclude": []
 }
