@@ -46,6 +46,13 @@ function page(req,title,description,canonical,h1,intro,links,extraHtml=""){
 function gradePage(req,g,sub){
  const subjects=SUBJECTS[g]||[];
  const links=subjects.map(s=>({url:"/grade-"+g+"/"+slug(s),label:"Grade "+g+" "+s+" Resources"}));
+ links.push({url:"/international-curriculum.html",label:"Explore international curricula"});
+ links.push({url:"/igcse.html",label:"IGCSE subject resources"});
+ links.push({url:"/cambridge-international.html",label:"Cambridge International resources"});
+ links.push({url:"/ib.html",label:"International Baccalaureate (IB) resources"});
+ links.push({url:"/pearson-edexcel.html",label:"Pearson Edexcel resources"});
+ links.push({url:"/a-levels.html",label:"A-Level resources"});
+ links.push({url:"/o-levels.html",label:"O-Level resources"});
  const stage=Number(g)<=6?"Upper Primary":Number(g)<=9?"Junior School":"Senior School";
  const stageDetail=Number(g)<=6
   ?"Grades 4–6 are part of Upper Primary in Kenya’s Competency-Based Curriculum. Learners build foundational literacy, numeracy, scientific understanding, creativity, values and practical competencies across learning areas."
@@ -291,6 +298,18 @@ async function sitemap(req){
    urls.push("/"+entry.name);
   }
  }catch(e){console.warn("SEO sitemap static-page discovery failed:",e.message||e);}
+ // Include the individual international-curriculum subject libraries in the sitemap.
+ // These are real static subject pages, separate from the CBC/CBE grade directory.
+ try{
+  const subjectDir=path.join(__dirname,"international-subjects");
+  const subjectEntries=await fs.readdir(subjectDir,{withFileTypes:true});
+  for(const entry of subjectEntries){
+   if(!entry.isFile() || !/^[a-z0-9][a-z0-9-]*\.html$/i.test(entry.name)) continue;
+   const subjectHtml=await fs.readFile(path.join(subjectDir,entry.name),"utf8").catch(()=> "");
+   if(!subjectHtml || /<meta\b[^>]*name=["']robots["'][^>]*content=["'][^"']*noindex/i.test(subjectHtml)) continue;
+   urls.push("/international-subjects/"+entry.name);
+  }
+ }catch(e){console.warn("SEO international subject sitemap lookup failed:",e.message||e);}
  const unique=[...new Set(urls)].filter(u=>typeof u==="string"&&u.startsWith("/"));
  const body=unique.map(u=>"<url><loc>"+xml(b+u)+"</loc></url>").join("");
  const output = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+body+"\n</urlset>";
