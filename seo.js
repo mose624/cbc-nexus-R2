@@ -2,7 +2,11 @@ const { supabase, supabaseConfigured } = require("./supabase");
 const fs = require("fs/promises");
 const path = require("path");
 const globalSchools = require("./global-schools-data.js");
-const GRADES=["7","8","9","10","11","12"];
+const GRADES=Array.from({length:12},(_,i)=>String(i+1));
+const PRIMARY_SUBJECTS=["English","Kiswahili","Mathematics","Environmental Activities","Science and Technology","Social Studies","Agriculture","Home Science","Creative Arts","Physical Education","Christian Religious Education","Islamic Religious Education"];
+const JUNIOR_SUBJECTS=["Mathematics","English","Kiswahili","Integrated Science","Social Studies","Agriculture","Creative Arts","Pre-Technical Studies"];
+for(const g of ["1","2","3","4","5","6"]) SUBJECTS[g]=PRIMARY_SUBJECTS;
+for(const g of ["7","8","9"]) SUBJECTS[g]=JUNIOR_SUBJECTS;
 const SUBJECTS={
 "7":["Mathematics","Integrated Science","English","Kiswahili","Social Studies","Agriculture","Creative Arts","Pre-Technical Studies"],
 "8":["Mathematics","Integrated Science","English","Kiswahili","Social Studies","Agriculture","Creative Arts","Pre-Technical Studies"],
@@ -29,7 +33,7 @@ function slug(v){return String(v||"").toLowerCase().trim().replace(/&/g,"and").r
 function base(req){const e=String(process.env.PUBLIC_SITE_URL||"").trim().replace(/\/$/,"");if(e)return e;return "https://cbenexus.co.ke";}
 function page(req,title,description,canonical,h1,intro,links){
  const b=base(req);
- const json=JSON.stringify({"@context":"https://schema.org","@type":"WebPage","name":title,"description":description,"url":b+canonical,"isPartOf":{"@type":"WebSite","name":"CBE Nexus","url":b},"about":{"@type":"EducationalOrganization","name":"CBE Nexus","areaServed":"Kenya"}});
+ const json=JSON.stringify({"@context":"https://schema.org","@type":"WebPage","name":title,"description":description,"url":b+canonical,"isPartOf":{"@type":"WebSite","name":"CBE Nexus","url":b},"about":{"@type":"EducationalOrganization","name":"CBE Nexus","areaServed":["Kenya","International"]}});
  const ls=links.map(x=>'<li><a href="'+esc(x.url)+'">'+esc(x.label)+'</a></li>').join("");
  return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(title)+'</title><meta name="description" content="'+esc(description)+'"><meta name="robots" content="index,follow"><link rel="canonical" href="'+esc(b+canonical)+'"><meta property="og:type" content="website"><meta property="og:title" content="'+esc(title)+'"><meta property="og:description" content="'+esc(description)+'"><meta property="og:url" content="'+esc(b+canonical)+'"><script type="application/ld+json">'+json+'</script><style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;max-width:1000px;margin:auto;padding:24px;line-height:1.6;color:#172033}header{padding:18px 0;border-bottom:1px solid #ddd}a{color:#075985}.hero{padding:40px 0}.cta{display:inline-block;background:#075985;color:white;padding:12px 18px;border-radius:8px;text-decoration:none;margin:6px 6px 6px 0}</style></head><body><header><strong>CBE Nexus</strong> — Connecting learners to excellence | Kenya</header><main><section class="hero"><p>Kenyan CBC/CBE learning resources</p><h1>'+esc(h1)+'</h1><p>'+esc(intro)+'</p><a class="cta" href="/#resources">Browse Resource Library</a><a class="cta" href="/free-resources.html">Explore Free Resources</a></section><section><h2>Explore CBE Nexus</h2><ul>'+ls+'</ul></section><section><h2>For Kenyan learners and teachers</h2><p>CBE Nexus provides notes, exams, revision questions, marking schemes and teacher resources for CBC/CBE learning in Kenya.</p></section></main></body></html>';
 }
@@ -87,6 +91,37 @@ async function resourcePage(req,id){
   return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(pageTitle)+'</title><meta name="description" content="'+esc(description)+'"><meta name="robots" content="index,follow"><link rel="canonical" href="'+esc(b+canonical)+'"><meta property="og:type" content="article"><meta property="og:title" content="'+esc(pageTitle)+'"><meta property="og:description" content="'+esc(description)+'"><meta property="og:url" content="'+esc(b+canonical)+'"><script type="application/ld+json">'+json+'</script><style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;max-width:1000px;margin:auto;padding:24px;line-height:1.6;color:#172033}a{color:#075985}.crumbs{font-size:.95rem;color:#52606d}.hero{padding:30px 0}.card{border:1px solid #ddd;border-radius:12px;padding:20px;margin:18px 0}.cta{display:inline-block;background:#075985;color:white;padding:12px 18px;border-radius:8px;text-decoration:none;margin:6px 6px 6px 0}</style></head><body><header><strong>CBE Nexus</strong> — Connecting learners to excellence | Kenya</header><main><p class="crumbs"><a href="/">CBE Nexus</a> / <a href="'+esc(gradeUrl)+'">Grade '+esc(grade)+'</a> / <a href="'+esc(subjectUrl)+'">'+esc(subject)+'</a> / Resource</p><section class="hero"><p>Kenyan CBC/CBE learning resource</p><h1>'+esc(title)+'</h1><p>'+esc(description)+'</p><div class="card"><strong>Grade:</strong> '+esc(grade)+'<br><strong>Subject:</strong> '+esc(subject)+'<br><strong>Resource type:</strong> '+esc(type)+'</div><a class="cta" href="'+esc(subjectUrl)+'">More Grade '+esc(grade)+' '+esc(subject)+' Resources</a><a class="cta" href="/free-resources.html">Explore Free Resources</a></section><section><h2>About this resource</h2><p>'+esc(String(r.description||"Explore this CBC/CBE resource on CBE Nexus for learning, revision and teaching support in Kenya."))+'</p></section><section><h2>Related '+esc(subject)+' resources</h2><ul>'+relatedHtml+'</ul></section></main></body></html>';
  }catch(e){console.warn("SEO resource page lookup failed:",e.message||e);return null;}
 }
+
+function countryOpportunityPage(req,countrySlug,kind){
+ const country=(globalSchools.countries||[]).find(c=>c.slug===countrySlug);
+ if(!country)return null;
+ const name=country.name, jobs=kind==="jobs";
+ const canonical=(jobs?"/global-teaching-jobs/":"/online-teaching/")+countrySlug;
+ const title=jobs
+  ? "Teaching Jobs in "+name+" | International & Local Teacher Vacancies | CBE Nexus"
+  : "Online Teaching Jobs in "+name+" | Remote Teaching & Tutoring | CBE Nexus";
+ const description=jobs
+  ? "Explore teaching job search resources for "+name+", including international school recruitment, local vacancies and application guidance. Verify every vacancy, licence, visa and eligibility requirement with the employer and relevant authority."
+  : "Explore online teaching and remote tutoring opportunities for teachers in "+name+". Compare online tutoring platforms, check country availability and verify payment, tax and eligibility requirements before applying.";
+ const links=jobs?[
+  {url:"https://www.tes.com/jobs/search?keywords="+encodeURIComponent("teacher "+name),label:"Search teacher vacancies mentioning "+name+" on TES"},
+  {url:"https://www.schrole.com/jobs/",label:"Search international school jobs on Schrole"},
+  {url:"https://www.iss.edu/services/teacher-recruitment",label:"International Schools Services recruitment"},
+  {url:"https://www.teachaway.com/teaching-jobs-abroad",label:"Teach Away international teaching jobs"},
+  {url:"/global-schools/"+countrySlug,label:name+" education and school directory"}
+ ]:[
+  {url:"https://preply.com/en/teach",label:"Apply to teach online with Preply"},
+  {url:"https://www.italki.com/en/teach",label:"Explore language teaching on italki"},
+  {url:"https://www.classgap.com/en/become-an-online-tutor",label:"Become an online tutor with Classgap"},
+  {url:"https://www.cambly.com/tutors",label:"Explore Cambly tutor opportunities"},
+  {url:"/global-schools/"+countrySlug,label:name+" education and school directory"}
+ ];
+ const intro=jobs
+  ? "This country guide helps teachers research local and international school recruitment connected with "+name+". Use the employer and recruitment links below to find current openings, then confirm the job location, closing date, teaching licence, qualifications, work permit and visa rules directly with the hiring organisation."
+  : "This guide collects online tutoring and remote teaching platforms that teachers in "+name+" can investigate. Platform access, subject demand, language requirements, identity checks, payout methods and country eligibility can change; confirm the latest terms directly before applying.";
+ return page(req,title,description,canonical,jobs?"Teaching Jobs in "+name:"Online Teaching Opportunities in "+name,intro,links);
+}
+
 async function match(req){
  const p=new URL(req.url,"http://localhost").pathname.replace(/\/$/,"")||"/";
  if(p==="/daily-quiz"){
@@ -199,7 +234,7 @@ async function sitemap(req){
   "/free-cbc-online-quizzes","/mashujaa-day-kenyan-heroes-quiz","/free-ai-training",
   "/free-cv-writing","/free-international-jobs","/all-schools-in-kenya","/global-schools"
  ];
- try{(globalSchools.countries||[]).forEach(c=>urls.push(c.url));}catch(e){console.warn("Global schools sitemap lookup failed:",e.message||e);}
+ try{(globalSchools.countries||[]).forEach(c=>{urls.push(c.url);urls.push("/global-teaching-jobs/"+c.slug);urls.push("/online-teaching/"+c.slug);});}catch(e){console.warn("Global schools sitemap lookup failed:",e.message||e);}
  try{
   if(Array.isArray(KENYA_COUNTIES)) KENYA_COUNTIES.forEach(c=>urls.push("/kenya-education-county/"+slug(c)));
  }catch(e){console.warn("SEO sitemap county lookup failed:",e.message||e);}
