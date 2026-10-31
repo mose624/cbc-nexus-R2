@@ -124,6 +124,10 @@ function countryOpportunityPage(req,countrySlug,kind){
 
 async function match(req){
  const p=new URL(req.url,"http://localhost").pathname.replace(/\/$/,"")||"/";
+ const countryJobs=p.match(/^\/global-teaching-jobs\/([a-z0-9-]+)$/);
+ if(countryJobs)return countryOpportunityPage(req,countryJobs[1],"jobs");
+ const countryOnline=p.match(/^\/online-teaching\/([a-z0-9-]+)$/);
+ if(countryOnline)return countryOpportunityPage(req,countryOnline[1],"online");
  if(p==="/daily-quiz"){
   const b=base(req), title="Free Daily CBC & CBE Quiz | CBE Nexus", description="Try the free daily CBC/CBE practice question on CBE Nexus. Get instant feedback, review the explanation and share the challenge with classmates.";
   const json=JSON.stringify({"@context":"https://schema.org","@type":"WebPage","name":title,"description":description,"url":b+"/daily-quiz","isPartOf":{"@type":"WebSite","name":"CBE Nexus","url":b}});
@@ -180,7 +184,7 @@ async function match(req){
  if(countyMatch){return countyPage(req,countyMatch[1]);}
  if(p==="/blog-article.html"){const q=new URL(req.url,"http://localhost").searchParams.get("slug");if(q)return await blogArticlePage(req,q);}
  if(p!=="/cbc-exam-generator" && LANDINGS[p]){const x=LANDINGS[p];const links=GRADES.map(g=>({url:"/grade-"+g,label:"Grade "+g+" CBC Resources"}));return page(req,x[0],x[1],p,x[0],x[1],links);}
- const m=p.match(/^\/grade-(7|8|9|10|11|12)(?:\/([^/]+))?$/);return m?gradePage(req,m[1],m[2]):null;
+ const m=p.match(/^\/grade-(1|2|3|4|5|6|7|8|9|10|11|12)(?:\/([^/]+))?$/);return m?gradePage(req,m[1],m[2]):null;
 }
 async function blogArticlePage(req,slugValue){
  const slugValueClean=String(slugValue||"").trim();
