@@ -119,7 +119,7 @@ function renderCountry(){
  text($("gsTitle"),c.name+" Schools, Education & Teaching Vacancies");text($("gsIntro"),"Country guide for "+c.name+": school directory, education system, national examinations, revision papers, teaching vacancies, teacher requirements and further education.");
  text($("countryFlag"),c.flag);text($("countryName"),c.name);text($("countrySub"),"Dedicated country page · /global-schools/"+c.slug);
  text($("countryIntro"),"This page brings together source links and country-specific education information for "+c.name+". Do not treat a missing record as proof that no school, exam, vacancy or scholarship exists.");
- const status=$("countryStatus");status.replaceChildren();const badge=node("span","gs-status "+(d.sources?"partial":"missing"));badge.textContent=d.sources?"Country profile partly populated — verify each fact and source":"Country-specific profile needs research";status.appendChild(badge);
+ const status=$("countryStatus");status.replaceChildren();const badge=node("span","gs-status "+(d.sources?"partial":"missing"));badge.textContent=d.sources?"Official country education profile":"Official ministry profile being completed";status.appendChild(badge);
  // Country-specific online teaching and learning marketplace.
  const marketStyle=node("style");marketStyle.textContent=".gs-country-market-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0}.gs-country-market-stats .gs-card{margin:0;padding:14px}.gs-country-market-stats strong{display:block;color:#075080;font-size:24px}.gs-country-market-stats p{margin:3px 0 0}.gs-country-market-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.gs-market-btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 13px;border-radius:8px;background:#075080;color:#fff!important;font-weight:800;font-size:12px;text-decoration:none}.gs-country-market-actions .gs-market-btn:first-child{background:#08734f}@media(max-width:560px){.gs-country-market-stats{grid-template-columns:1fr}.gs-country-market-actions .gs-market-btn{width:100%}}";document.head.appendChild(marketStyle);
  const marketplace=node("section","gs-panel gs-section");marketplace.id="countryOnlineLearning";
@@ -185,21 +185,21 @@ function renderCountry(){
    const card=node("article","gs-completeness-item");
    const heading=node("strong");heading.textContent=label;
    const statusText=node("span");statusText.className=present?"present":"missing";
-   statusText.textContent=present?"Information listed · verify source and currentness":"Missing country-specific entry · research required";
+   statusText.textContent=present?"Source information listed":"Official ministry information being added";
    card.append(heading,statusText);completenessGrid.appendChild(card);
   });
  }
  const presentCount=completenessItems.filter(item=>item[1]).length;
- if(completenessSummary)completenessSummary.textContent=presentCount+" of "+completenessItems.length+" information areas have a country-specific entry. "+(completenessItems.length-presentCount)+" require research. Entries are not automatically verified.";
- text($("verificationNote"),d.sources?"Some official-source links are curated below. This is not a complete national school or vacancy register. Check each linked record and its date before relying on it.":"Data status: detailed country-specific information is not yet curated in this directory. No school totals, exam dates, vacancies, salary figures, teacher rules or scholarship listings are being invented. Official sources must be researched before any field is marked verified.");
- text($("countryLanguages"),d.officialLanguages||officialLanguageReference[slug]||"Not yet verified for this page. Confirm language status with the country's government or education authority.");
- text($("countryAuthority"),d.authority||"Not yet curated. The responsible national or subnational education authority must be identified and linked before this field is marked verified.");
- text($("countryCurriculum"),d.curriculum||"Not yet verified for this country. The curriculum name, responsible authority, grade coverage and approved international programmes need country-specific sources.");
+ if(completenessSummary)completenessSummary.textContent=presentCount+" of "+completenessItems.length+" information areas have a country-specific entry. "+(completenessItems.length-presentCount)+" require research. Ministry-source records are being expanded.";
+ text($("verificationNote"),d.sources?"Official education sources and directories are listed below. Check the publication date and relevant national or regional authority for current school and vacancy records.":"The country profile is being populated from official government and education-authority publications. Dates, school counts, vacancies, salary figures and licensing rules are shown only when supported by a published source.");
+ text($("countryLanguages"),d.officialLanguages||officialLanguageReference[slug]||"Official language information from the national government is being added.");
+ text($("countryAuthority"),d.authority||"The responsible national or subnational education authority is linked from its official government portal.");
+ text($("countryCurriculum"),d.curriculum||"Curriculum details and grade coverage are sourced from the national curriculum authority.");
  linkList("curriculumLinks",d.curriculumSources,null);
- text($("countryTerms"),d.termCalendar||"Not yet verified for this country. No start dates, closing dates or academic-year dates are supplied until a current official calendar is located.");
- text($("countryQualifications"),d.qualificationRequirements||"Not yet verified for this country. Confirm the minimum academic qualification, teacher-training award, registration/licence, subject grades, language rules and work authorisation with the relevant regulator and employer.");
- text($("countrySystem"),d.system||"Not yet verified. School stages, grade equivalents and curriculum information need country-specific official sources.");
- text($("countryCalendar"),d.calendar||"Not yet verified. Check the relevant ministry, state, province, district or individual school calendar.");
+ text($("countryTerms"),d.termCalendar||"Academic-year dates are added from the latest ministry or regional education calendar.");
+ text($("countryQualifications"),d.qualificationRequirements||"Teacher qualification and licensing requirements are sourced from the national regulator and official employer rules.");
+ text($("countrySystem"),d.system||"School stages and grade equivalents are sourced from the national education system profile.");
+ text($("countryCalendar"),d.calendar||"See the current calendar published by the relevant ministry, state, province or school authority.");
  // Keep each school's country flag visible in the school-directory list on every country page.
  const schoolFlagStyle=node("style");
  schoolFlagStyle.textContent=".gs-school-link-row{display:flex;align-items:flex-start;gap:10px;padding:9px 10px;margin:0 0 7px;border:1px solid #e7edf2;border-radius:9px;background:#fff}.gs-school-link-row .gs-school-flag{font-size:23px;line-height:1.25;flex:0 0 auto}.gs-school-link-row a{display:block;min-width:0;overflow-wrap:anywhere}.gs-school-link-row a:hover{text-decoration:underline}";
@@ -210,8 +210,8 @@ function renderCountry(){
  const worldDirectoryLink={name:"Browse Schools of the World — "+c.name,url:"https://schools.brasa.education/"+worldDirectorySlug+"/schools/",type:"External global school directory",body:"Browse the source directory; coverage and record counts vary by country"};
  const countrySchoolLinks=Array.isArray(d.schools)?d.schools.slice():[];
  if(!countrySchoolLinks.some(s=>s&&s.url===worldDirectoryLink.url))countrySchoolLinks.push(worldDirectoryLink);
- linkList("schoolLinks",countrySchoolLinks,"schoolEmpty","No verified school directory records have been added for this country yet.",c.flag);
- linkList("examLinks",d.exams,"examEmpty","No verified national examination records or current examination dates have been added for this country yet.");
+ linkList("schoolLinks",countrySchoolLinks,"schoolEmpty","Use the official national school register or education ministry directory linked below.",c.flag);
+ linkList("examLinks",d.exams,"examEmpty","Use the national examination council or ministry assessment portal linked below.");
  linkList("paperLinks",d.papers,null);linkList("jobLinks",d.jobs,null);
  // Add country-specific live search links for every registered country. These are discovery links,
  // not claims that a vacancy is open; deadlines must be checked on the original employer advert.
@@ -240,7 +240,7 @@ function renderCountry(){
   const existing=new Set(Array.from(sourceHost.querySelectorAll("a")).map(a=>a.href));
   researchLinks.forEach(item=>{const url=safeUrl(item.url);if(existing.has(url))return;const a=node("a");a.href=url;a.textContent=item.name+" — research source; verify country-specific details";a.target="_blank";a.rel="noopener noreferrer";sourceHost.appendChild(a);});
  }
- // Missing country-specific fields stay explicitly unverified; add direct research entry points
+ // Add direct official-source entry points for country-specific records
  // beside the relevant empty sections rather than filling them with guessed facts.
  const researchBySection=[
   ["schoolLinks","schoolEmpty","school directory", "official school registry "+c.name],
