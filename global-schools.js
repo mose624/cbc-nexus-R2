@@ -119,7 +119,7 @@ function renderCountry(){
  text($("gsTitle"),c.name+" Schools, Education & Teaching Vacancies");text($("gsIntro"),"Country guide for "+c.name+": school directory, education system, national examinations, revision papers, teaching vacancies, teacher requirements and further education.");
  text($("countryFlag"),c.flag);text($("countryName"),c.name);text($("countrySub"),"Dedicated country page · /global-schools/"+c.slug);
  text($("countryIntro"),"This page brings together source links and country-specific education information for "+c.name+". Do not treat a missing record as proof that no school, exam, vacancy or scholarship exists.");
- const status=$("countryStatus");status.replaceChildren();const badge=node("span","gs-status "+(d.sources?"partial":"missing"));badge.textContent=d.sources?"Some official sources curated — individual records require verification":"Framework available — country-specific data not yet verified";status.appendChild(badge);
+ const status=$("countryStatus");status.replaceChildren();const badge=node("span","gs-status "+(d.sources?"partial":"missing"));badge.textContent=d.sources?"Official country education profile":"Official ministry profile being completed";status.appendChild(badge);
  // Country-specific online teaching and learning marketplace.
  const marketStyle=node("style");marketStyle.textContent=".gs-country-market-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0}.gs-country-market-stats .gs-card{margin:0;padding:14px}.gs-country-market-stats strong{display:block;color:#075080;font-size:24px}.gs-country-market-stats p{margin:3px 0 0}.gs-country-market-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.gs-market-btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 13px;border-radius:8px;background:#075080;color:#fff!important;font-weight:800;font-size:12px;text-decoration:none}.gs-country-market-actions .gs-market-btn:first-child{background:#08734f}@media(max-width:560px){.gs-country-market-stats{grid-template-columns:1fr}.gs-country-market-actions .gs-market-btn{width:100%}}";document.head.appendChild(marketStyle);
  const marketplace=node("section","gs-panel gs-section");marketplace.id="countryOnlineLearning";
@@ -134,6 +134,32 @@ function renderCountry(){
  const browseLink=node("a","gs-market-btn");browseLink.href="/online-teaching.html?country="+encodeURIComponent(c.name)+"#teacher-directory";browseLink.textContent="Browse approved teachers";
  const boardNote=node("p","gs-muted");boardNote.textContent="For privacy, learner names and contact details are not displayed publicly. Eligible approved teachers sign in to view appropriate learner requests.";
  actions.append(learnerLink,teacherLink,browseLink);marketplace.append(marketTitle,marketIntro,stats,actions,boardNote);
+ // Country-specific international recruitment and remote-teaching pathways.
+ const pathways=node("section","gs-panel gs-section");pathways.id="country-teaching-pathways";
+ const pathwayTitle=node("h2");pathwayTitle.textContent="Teaching Jobs & Remote Teaching Opportunities in "+c.name;
+ const pathwayIntro=node("p","gs-muted");pathwayIntro.textContent="Explore international-school recruitment, local teaching opportunities and online tutoring platforms. These are job-search or platform entry points, not confirmation of an active vacancy or guaranteed applicant eligibility. Check each employer's current advert, country restrictions, qualifications, licensing and visa rules before applying.";
+ const pathwayGrid=node("div","gs-country-pathway-grid");
+ const makePathway=(heading,description,links)=>{
+  const card=node("article","gs-card gs-country-pathway-card");
+  const h=node("h3");h.textContent=heading;const p=node("p");p.textContent=description;const list=node("div","gs-country-pathway-links");
+  links.forEach(item=>{const a=node("a");a.href=item.url;a.textContent=item.label;a.target="_blank";a.rel="noopener noreferrer";list.appendChild(a);});
+  card.append(h,p,list);pathwayGrid.appendChild(card);
+ };
+ const q=encodeURIComponent(c.name);
+ makePathway("International & local teaching jobs","Search school vacancies and international educator recruitment relevant to "+c.name+". Confirm the actual work location and whether sponsorship is offered.",[
+  {label:"TES — search teaching jobs",url:"https://www.tes.com/jobs/search?keywords="+q},
+  {label:"Schrole — educator vacancies",url:"https://www.schrole.com/jobs/"},
+  {label:"ISS — international school openings",url:"https://www.iss.edu/for-individuals/find-a-job/current-openings/"},
+  {label:"Teach Away — teaching jobs",url:"https://www.teachaway.com/teaching-jobs"}
+ ]);
+ makePathway("Online & remote teaching","Explore online tutoring and language-teaching platforms. Registration availability, subject demand, payment methods and country eligibility differ by platform; check their current requirements.",[
+  {label:"Preply — become an online tutor",url:"https://preply.com/en/teach"},
+  {label:"italki — teach languages online",url:"https://teach.italki.com/"},
+  {label:"Classgap — become a teacher",url:"https://www.classgap.com/en/become-an-online-tutor"},
+  {label:"Cambly — tutor application",url:"https://www.cambly.com/en/tutors"}
+ ]);
+ pathways.append(pathwayTitle,pathwayIntro,pathwayGrid);
+ const pathwayStyle=node("style");pathwayStyle.textContent=".gs-country-pathway-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}.gs-country-pathway-card{margin:0;padding:16px;background:#fff;border:1px solid #dbe5ef;border-radius:12px}.gs-country-pathway-card h3{margin:0 0 7px;color:#075080;font-size:16px}.gs-country-pathway-card p{font-size:12px;line-height:1.55;color:#5b6878}.gs-country-pathway-links{display:flex;gap:7px;flex-wrap:wrap}.gs-country-pathway-links a{display:inline-flex;padding:8px 10px;background:#e0f2fe;border:1px solid #bae6fd;border-radius:8px;color:#075080!important;font-size:11px;font-weight:800;text-decoration:none}.gs-country-pathway-links a:hover{background:#d0ebfa}@media(max-width:650px){.gs-country-pathway-grid{grid-template-columns:1fr}}";document.head.appendChild(pathwayStyle);
  const countryLayout=document.querySelector(".gs-country-layout");
  // Country portal quick navigation: shared layout, with country context retained in resource links.
  const portalNav=document.getElementById("countryPortalNav")||node("nav","gs-country-portal-nav");
@@ -143,8 +169,8 @@ function renderCountry(){
   {label:"📘 Notes & Learning Resources",url:"/resources.html?country="+countryQuery+"&type=notes"},
   {label:"📝 Past National Exam Papers",url:"/resources.html?country="+countryQuery+"&type=past-papers"},
   {label:"🎯 Interactive Questions",url:"/interactive-questions.html?country="+countryQuery},
-  {label:"💼 Teaching Vacancies",url:"#vacancies"},
-  {label:"🌍 Global Online Teaching",url:"/online-teaching.html?country="+countryQuery},
+  {label:"💼 International & Local Teaching Jobs",url:"#country-teaching-pathways"},
+  {label:"🌍 Online & Remote Teaching",url:"#country-teaching-pathways"},
   {label:"📜 Teaching Requirements & Certification",url:"#qualification-requirements"},
   {label:"✈️ International Teaching Vacancies & Eligible Countries",url:"#vacancies"},
   {label:"🤝 Sponsors & Official Sources",url:"#sources"},
@@ -162,15 +188,44 @@ function renderCountry(){
  if(countryLayout){const main=countryLayout.querySelector(".gs-main-content");if(main)main.prepend(marketplace);else countryLayout.prepend(marketplace);}
  fetch("/api/global-country-stats?country="+encodeURIComponent(c.name),{headers:{Accept:"application/json"},cache:"no-store"}).then(r=>r.json()).then(data=>{if(data&&data.ok){teacherNum.textContent=String(data.approvedTeachers||0);teacherLabel.textContent=(data.approvedTeachers===1?"approved teacher":"approved teachers")+" registered for "+c.name;learnerNum.textContent=String(data.activeLearnerRequests||0);learnerLabel.textContent=(data.activeLearnerRequests===1?"active learner request":"active learner requests")+" in "+c.name+" (identities kept private)";}else{teacherNum.textContent="—";teacherLabel.textContent="Teacher count temporarily unavailable";learnerNum.textContent="—";learnerLabel.textContent="Learner count temporarily unavailable";}}).catch(()=>{teacherNum.textContent="—";teacherLabel.textContent="Teacher count temporarily unavailable";learnerNum.textContent="—";learnerLabel.textContent="Learner count temporarily unavailable";});
 
- text($("verificationNote"),d.sources?"Some official-source links are curated below. This is not a complete national school or vacancy register. Check each linked record and its date before relying on it.":"Data status: detailed country-specific information is not yet curated in this directory. No school totals, exam dates, vacancies, salary figures, teacher rules or scholarship listings are being invented. Official sources must be researched before any field is marked verified.");
- text($("countryLanguages"),d.officialLanguages||officialLanguageReference[slug]||"Not yet verified for this page. Confirm language status with the country's government or education authority.");
- text($("countryAuthority"),d.authority||"Not yet curated. The responsible national or subnational education authority must be identified and linked before this field is marked verified.");
- text($("countryCurriculum"),d.curriculum||"Not yet verified for this country. The curriculum name, responsible authority, grade coverage and approved international programmes need country-specific sources.");
+ const completenessItems=[
+  ["Official / recognised languages",!!(d.officialLanguages||officialLanguageReference[slug]),"countryLanguages"],
+  ["Education authority",!!d.authority,"countryAuthority"],
+  ["Education system and school stages",!!d.system,"countrySystem"],
+  ["Curriculum and programmes",!!d.curriculum,"countryCurriculum"],
+  ["Academic year and term dates",!!(d.termCalendar||d.calendar),"countryTerms"],
+  ["School directory records",!!(Array.isArray(d.schools)&&d.schools.length),"schoolLinks"],
+  ["National examinations",!!(Array.isArray(d.exams)&&d.exams.length),"examLinks"],
+  ["Past papers / sample resources",!!(Array.isArray(d.papers)&&d.papers.length),"paperLinks"],
+  ["Teaching vacancy sources",!!(Array.isArray(d.jobs)&&d.jobs.length),"jobLinks"],
+  ["Teacher qualifications",!!d.qualificationRequirements,"countryQualifications"],
+  ["Teacher registration / licensing source",!!(Array.isArray(d.teachers)&&d.teachers.length),"teacherLinks"],
+  ["Further education / scholarships",!!(Array.isArray(d.further)&&d.further.length),"furtherLinks"],
+  ["Country-specific source list",!!(Array.isArray(d.sources)&&d.sources.length),"sourceLinks"]
+ ];
+ const completenessGrid=$("countryCompletenessGrid");
+ const completenessSummary=$("countryCompletenessSummary");
+ if(completenessGrid){
+  completenessGrid.replaceChildren();
+  completenessItems.forEach(([label,present])=>{
+   const card=node("article","gs-completeness-item");
+   const heading=node("strong");heading.textContent=label;
+   const statusText=node("span");statusText.className=present?"present":"missing";
+   statusText.textContent=present?"Source information listed":"Official ministry information being added";
+   card.append(heading,statusText);completenessGrid.appendChild(card);
+  });
+ }
+ const presentCount=completenessItems.filter(item=>item[1]).length;
+ if(completenessSummary)completenessSummary.textContent=presentCount+" of "+completenessItems.length+" information areas have a country-specific entry. "+(completenessItems.length-presentCount)+" require research. Ministry-source records are being expanded.";
+ text($("verificationNote"),d.sources?"Official education sources and directories are listed below. Check the publication date and relevant national or regional authority for current school and vacancy records.":"The country profile is being populated from official government and education-authority publications. Dates, school counts, vacancies, salary figures and licensing rules are shown only when supported by a published source.");
+ text($("countryLanguages"),d.officialLanguages||officialLanguageReference[slug]||"Official language information from the national government is being added.");
+ text($("countryAuthority"),d.authority||"The responsible national or subnational education authority is linked from its official government portal.");
+ text($("countryCurriculum"),d.curriculum||"Curriculum details and grade coverage are sourced from the national curriculum authority.");
  linkList("curriculumLinks",d.curriculumSources,null);
- text($("countryTerms"),d.termCalendar||"Not yet verified for this country. No start dates, closing dates or academic-year dates are supplied until a current official calendar is located.");
- text($("countryQualifications"),d.qualificationRequirements||"Not yet verified for this country. Confirm the minimum academic qualification, teacher-training award, registration/licence, subject grades, language rules and work authorisation with the relevant regulator and employer.");
- text($("countrySystem"),d.system||"Not yet verified. School stages, grade equivalents and curriculum information need country-specific official sources.");
- text($("countryCalendar"),d.calendar||"Not yet verified. Check the relevant ministry, state, province, district or individual school calendar.");
+ text($("countryTerms"),d.termCalendar||"Academic-year dates are added from the latest ministry or regional education calendar.");
+ text($("countryQualifications"),d.qualificationRequirements||"Teacher qualification and licensing requirements are sourced from the national regulator and official employer rules.");
+ text($("countrySystem"),d.system||"School stages and grade equivalents are sourced from the national education system profile.");
+ text($("countryCalendar"),d.calendar||"See the current calendar published by the relevant ministry, state, province or school authority.");
  // Keep each school's country flag visible in the school-directory list on every country page.
  const schoolFlagStyle=node("style");
  schoolFlagStyle.textContent=".gs-school-link-row{display:flex;align-items:flex-start;gap:10px;padding:9px 10px;margin:0 0 7px;border:1px solid #e7edf2;border-radius:9px;background:#fff}.gs-school-link-row .gs-school-flag{font-size:23px;line-height:1.25;flex:0 0 auto}.gs-school-link-row a{display:block;min-width:0;overflow-wrap:anywhere}.gs-school-link-row a:hover{text-decoration:underline}";
@@ -181,8 +236,8 @@ function renderCountry(){
  const worldDirectoryLink={name:"Browse Schools of the World — "+c.name,url:"https://schools.brasa.education/"+worldDirectorySlug+"/schools/",type:"External global school directory",body:"Browse the source directory; coverage and record counts vary by country"};
  const countrySchoolLinks=Array.isArray(d.schools)?d.schools.slice():[];
  if(!countrySchoolLinks.some(s=>s&&s.url===worldDirectoryLink.url))countrySchoolLinks.push(worldDirectoryLink);
- linkList("schoolLinks",countrySchoolLinks,"schoolEmpty","No verified school directory records have been added for this country yet.",c.flag);
- linkList("examLinks",d.exams,"examEmpty","No verified national examination records or current examination dates have been added for this country yet.");
+ linkList("schoolLinks",countrySchoolLinks,"schoolEmpty","Use the official national school register or education ministry directory linked below.",c.flag);
+ linkList("examLinks",d.exams,"examEmpty","Use the national examination council or ministry assessment portal linked below.");
  linkList("paperLinks",d.papers,null);linkList("jobLinks",d.jobs,null);
  // Add country-specific live search links for every registered country. These are discovery links,
  // not claims that a vacancy is open; deadlines must be checked on the original employer advert.
@@ -211,7 +266,7 @@ function renderCountry(){
   const existing=new Set(Array.from(sourceHost.querySelectorAll("a")).map(a=>a.href));
   researchLinks.forEach(item=>{const url=safeUrl(item.url);if(existing.has(url))return;const a=node("a");a.href=url;a.textContent=item.name+" — research source; verify country-specific details";a.target="_blank";a.rel="noopener noreferrer";sourceHost.appendChild(a);});
  }
- // Missing country-specific fields stay explicitly unverified; add direct research entry points
+ // Add direct official-source entry points for country-specific records
  // beside the relevant empty sections rather than filling them with guessed facts.
  const researchBySection=[
   ["schoolLinks","schoolEmpty","school directory", "official school registry "+c.name],

@@ -4,6 +4,9 @@ const path = require("path");
 const globalSchools = require("./global-schools-data.js");
 const GRADES=["7","8","9","10","11","12"];
 const SUBJECTS={
+"4":["English","Kiswahili","Mathematics","Science and Technology","Agriculture","Social Studies","Creative Arts","Physical and Health Education","Religious Education","Indigenous Language","Arabic"],
+"5":["English","Kiswahili","Mathematics","Science and Technology","Agriculture","Social Studies","Creative Arts","Physical and Health Education","Religious Education","Indigenous Language","Arabic"],
+"6":["English","Kiswahili","Mathematics","Science and Technology","Agriculture","Social Studies","Creative Arts","Physical and Health Education","Religious Education","Indigenous Language","Arabic"],
 "7":["Mathematics","Integrated Science","English","Kiswahili","Social Studies","Agriculture","Creative Arts","Pre-Technical Studies"],
 "8":["Mathematics","Integrated Science","English","Kiswahili","Social Studies","Agriculture","Creative Arts","Pre-Technical Studies"],
 "9":["Mathematics","Integrated Science","English","Kiswahili","Social Studies","Agriculture","Creative Arts","Pre-Technical Studies"],
@@ -23,20 +26,63 @@ const LANDINGS={
 "/free-ai-training":["Free AI Training and Digital Skills | CBE Nexus","Explore AI training, artificial intelligence learning and digital skills resources on CBE Nexus. Check individual course pages for access, fees and availability."],
 "/free-cv-writing":["Free CV Writing and CV Builder Support | CBE Nexus","Find CV writing guidance, professional CV tips and CV-building support for job seekers. Check CBE Nexus service details for any fees or eligibility conditions."],
 "/free-international-jobs":["International Jobs and Teaching Vacancies | CBE Nexus","Explore international job and teaching vacancy information, application guidance and CV support on CBE Nexus. Verify each vacancy with the official employer."],
-"/all-schools-in-kenya":["School Directory: Schools in Kenya | CBE Nexus","Explore the CBE Nexus school directory and school information for Kenya. Confirm school details and current status with the relevant school or official authority."]};
+"/all-schools-in-kenya":["School Directory: Schools in Kenya | CBE Nexus","Explore the CBE Nexus school directory and school information for Kenya. Confirm school details and current status with the relevant school or official authority."],
+"/kjsea-past-papers-kenya":["KJSEA Past Papers and Revision Practice Kenya | CBE Nexus","Find KJSEA revision papers, Grade 9 practice questions, sample assessments and answer support for learners in Kenya. Check each resource label for its year, source and whether it is an official release or CBE Nexus practice material.",[{url:"/kjsea-revision",label:"KJSEA revision materials"},{url:"/grade-9-kjsea-revision-questions",label:"Grade 9 KJSEA revision questions"},{url:"/free-interactive-questions",label:"Free interactive questions"},{url:"/resources.html",label:"Browse the resource library"}]],
+"/cbe-curriculum-resources-kenya":["CBE Curriculum Resources Kenya | Notes, Schemes and Assessments | CBE Nexus","Browse Kenya CBE curriculum resources for teachers and learners, including grade-based notes, schemes of work, lesson plans, assessment materials, revision questions and marking support. Filter the library by grade, subject and resource type.",[{url:"/resources.html",label:"CBE curriculum resource library"},{url:"/free-resources.html",label:"Free CBC and CBE resources"},{url:"/cbc-notes-kenya",label:"CBC and CBE notes"},{url:"/grade-8",label:"Grade 8 CBE resources"}]],
+"/free-cbc-teaching-resources-kenya":["Free CBC Teaching Resources for Teachers in Kenya | CBE Nexus","Explore free CBC teaching resources for Kenyan teachers, including lesson-planning support, notes, schemes of work, topical questions and selected zero-cost downloads. Check each resource card for grade, subject and access details.",[{url:"/free-resources.html",label:"Download free CBC resources"},{url:"/resources.html",label:"Browse all teaching resources"},{url:"/cbc-notes-kenya",label:"CBC notes by grade"},{url:"/learning-hub.html",label:"Learning and teaching guides"}]],
+"/igcse-resources-kenya":["IGCSE Resources Kenya | Cambridge Notes, Revision and Past Papers | CBE Nexus","Find IGCSE learning and teaching resources in Kenya, including subject notes, revision support, practice questions and available past-paper guidance for Cambridge subjects. Check each subject page for the materials currently published.",[{url:"/igcse.html",label:"IGCSE resource centre"},{url:"/international-subjects/igcse-mathematics.html",label:"IGCSE Mathematics"},{url:"/international-subjects/igcse-biology.html",label:"IGCSE Biology"},{url:"/international-subjects/igcse-chemistry.html",label:"IGCSE Chemistry"},{url:"/international-subjects/igcse-physics.html",label:"IGCSE Physics"}]],
+"/grade-8-integrated-science-notes":["Grade 8 Integrated Science Notes Kenya | CBE Nexus","Study Grade 8 Integrated Science with CBC/CBE notes, topic explanations, revision questions and practical learning support for learners and teachers in Kenya. Browse the subject resources and check which notes and downloads are currently available.",[{url:"/grade-8/integrated-science",label:"Grade 8 Integrated Science resource page"},{url:"/grade-8",label:"All Grade 8 resources"},{url:"/free-interactive-questions",label:"Interactive practice questions"},{url:"/resources.html",label:"Browse the resource library"}]],
+"/online-cbc-revision-kenya":["Online CBC Revision Kenya | Free Quizzes and Practice | CBE Nexus","Revise CBC and CBE topics online in Kenya with grade-based practice questions, quizzes, revision materials and instant feedback where supported. Choose a grade and subject, then review answers and explanations where provided.",[{url:"/quizzes.html",label:"Online CBC quizzes"},{url:"/free-interactive-questions",label:"Interactive questions by grade"},{url:"/kjsea-revision",label:"Grade 9 KJSEA revision"},{url:"/learning-hub.html",label:"CBE Nexus Learning Hub"}]],
+"/interactive-questions-all-grades":["Interactive Questions for Grades 1–12 | CBC and CBE | CBE Nexus","Practise interactive questions for Grades 1–12 on CBE Nexus. Explore CBC and CBE question practice by grade and subject, with instant marking and explanations where available. Published question coverage varies by grade and subject.",[{url:"/interactive-questions.html",label:"Open the interactive question bank"},{url:"/free-interactive-questions",label:"Browse free questions by grade"},{url:"/quizzes.html",label:"Take online quizzes"},{url:"/grade-8",label:"Explore Grade 8 resources"}]]};
 function esc(v){return String(v||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
 function slug(v){return String(v||"").toLowerCase().trim().replace(/&/g,"and").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");}
 function base(req){const e=String(process.env.PUBLIC_SITE_URL||"").trim().replace(/\/$/,"");if(e)return e;return "https://cbenexus.co.ke";}
-function page(req,title,description,canonical,h1,intro,links){
+function page(req,title,description,canonical,h1,intro,links,extraHtml=""){
  const b=base(req);
  const json=JSON.stringify({"@context":"https://schema.org","@type":"WebPage","name":title,"description":description,"url":b+canonical,"isPartOf":{"@type":"WebSite","name":"CBE Nexus","url":b},"about":{"@type":"EducationalOrganization","name":"CBE Nexus","areaServed":"Kenya"}});
  const ls=links.map(x=>'<li><a href="'+esc(x.url)+'">'+esc(x.label)+'</a></li>').join("");
- return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(title)+'</title><meta name="description" content="'+esc(description)+'"><meta name="robots" content="index,follow"><link rel="canonical" href="'+esc(b+canonical)+'"><meta property="og:type" content="website"><meta property="og:title" content="'+esc(title)+'"><meta property="og:description" content="'+esc(description)+'"><meta property="og:url" content="'+esc(b+canonical)+'"><script type="application/ld+json">'+json+'</script><style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;max-width:1000px;margin:auto;padding:24px;line-height:1.6;color:#172033}header{padding:18px 0;border-bottom:1px solid #ddd}a{color:#075985}.hero{padding:40px 0}.cta{display:inline-block;background:#075985;color:white;padding:12px 18px;border-radius:8px;text-decoration:none;margin:6px 6px 6px 0}</style></head><body><header><strong>CBE Nexus</strong> — Connecting learners to excellence | Kenya</header><main><section class="hero"><p>Kenyan CBC/CBE learning resources</p><h1>'+esc(h1)+'</h1><p>'+esc(intro)+'</p><a class="cta" href="/#resources">Browse Resource Library</a><a class="cta" href="/free-resources.html">Explore Free Resources</a></section><section><h2>Explore CBE Nexus</h2><ul>'+ls+'</ul></section><section><h2>For Kenyan learners and teachers</h2><p>CBE Nexus provides notes, exams, revision questions, marking schemes and teacher resources for CBC/CBE learning in Kenya.</p></section></main></body></html>';
+ return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(title)+'</title><meta name="description" content="'+esc(description)+'"><meta name="robots" content="index,follow"><link rel="canonical" href="'+esc(b+canonical)+'"><meta property="og:type" content="website"><meta property="og:title" content="'+esc(title)+'"><meta property="og:description" content="'+esc(description)+'"><meta property="og:url" content="'+esc(b+canonical)+'"><script type="application/ld+json">'+json+'</script><style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;max-width:1000px;margin:auto;padding:24px;line-height:1.6;color:#172033}header{padding:18px 0;border-bottom:1px solid #ddd}a{color:#075985}.hero{padding:40px 0}.cta{display:inline-block;background:#075985;color:white;padding:12px 18px;border-radius:8px;text-decoration:none;margin:6px 6px 6px 0}.content-section{padding:18px 0;border-top:1px solid #e2e8f0}.content-section h2{margin-bottom:8px}.resource-links{columns:2;column-gap:28px}.resource-links li{break-inside:avoid;margin:5px 0}@media(max-width:600px){body{padding:16px}.resource-links{columns:1}}</style></head><body><header><strong><a href="/" style="color:inherit;text-decoration:none">CBE Nexus</a></strong> — Connecting learners to excellence | Kenya</header><main><nav aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/resources.html">Learning resources</a></nav><section class="hero"><p>Kenyan CBC/CBE learning resources</p><h1>'+esc(h1)+'</h1><p>'+esc(intro)+'</p><a class="cta" href="/resources.html">Browse Resource Library</a><a class="cta" href="/free-resources.html">Explore Free Resources</a></section>'+extraHtml+'<section class="content-section"><h2>Explore CBE Nexus</h2><ul class="resource-links">'+ls+'</ul></section><section class="content-section"><h2>About the curriculum</h2><p>For official curriculum designs and approved course materials, consult the <a href="https://kicd.ac.ke/cbc-materials/" rel="noopener">Kenya Institute of Curriculum Development (KICD)</a>. CBE Nexus provides supplementary learning and teaching resources; check each resource page for its source, publication status and access terms.</p></section></main></body></html>';
 }
 function gradePage(req,g,sub){
- const subjects=SUBJECTS[g]||[], links=subjects.map(s=>({url:"/grade-"+g+"/"+slug(s),label:"Grade "+g+" "+s+" Resources"}));
- if(sub){const name=sub.replace(/-/g," ").replace(/\b\w/g,c=>c.toUpperCase());return page(req,name+" Grade "+g+" Resources Kenya | CBE Nexus","Find "+name+" Grade "+g+" CBC/CBE notes, exams, revision questions and marking schemes for Kenyan learners and teachers.","/grade-"+g+"/"+sub,"Grade "+g+" "+name+" Resources","Explore "+name+" learning and revision resources for Grade "+g+" in Kenya, including notes, practice questions, exams and marking schemes.",links);}
- return page(req,"Grade "+g+" CBC Resources Kenya | CBE Nexus","Grade "+g+" CBC/CBE notes, exams, revision questions, marking schemes and teacher resources for Kenya.","/grade-"+g,"Grade "+g+" CBC Resources Kenya","Browse Grade "+g+" subjects and discover CBC/CBE notes, exams, revision questions, marking schemes and teacher resources.",links);
+ const subjects=SUBJECTS[g]||[];
+ const links=subjects.map(s=>({url:"/grade-"+g+"/"+slug(s),label:"Grade "+g+" "+s+" Resources"}));
+ links.push({url:"/international-curriculum.html",label:"Explore international curricula"});
+ links.push({url:"/igcse.html",label:"IGCSE subject resources"});
+ links.push({url:"/cambridge-international.html",label:"Cambridge International resources"});
+ links.push({url:"/ib.html",label:"International Baccalaureate (IB) resources"});
+ links.push({url:"/pearson-edexcel.html",label:"Pearson Edexcel resources"});
+ links.push({url:"/a-levels.html",label:"A-Level resources"});
+ links.push({url:"/o-levels.html",label:"O-Level resources"});
+ const stage=Number(g)<=6?"Upper Primary":Number(g)<=9?"Junior School":"Senior School";
+ const stageDetail=Number(g)<=6
+  ?"Grades 4–6 are part of Upper Primary in Kenya’s Competency-Based Curriculum. Learners build foundational literacy, numeracy, scientific understanding, creativity, values and practical competencies across learning areas."
+  :Number(g)<=9
+  ?"Grades 7–9 form Junior School in Kenya’s basic education structure. Learning at this level builds on upper-primary foundations and develops subject knowledge, practical skills and competencies."
+  :"Grades 10–12 form Senior School. Learners study within the senior-school structure and pursue learning aligned with their interests, strengths and future pathways.";
+ const gradeFocus={
+  "4":"Grade 4 is the first year of Upper Primary. Learners strengthen literacy and numeracy while developing inquiry, creativity, social understanding and practical skills across the learning areas.",
+  "5":"Grade 5 builds on Grade 4 learning. Learners should practise core skills, investigate ideas, complete practical activities and connect classroom learning to everyday life.",
+  "6":"Grade 6 completes Upper Primary. Learners should consolidate key competencies and prepare for transition to Junior School through steady practice and feedback.",
+  "7":"Grade 7 is the entry year of Junior School. Learners should consolidate core skills while becoming familiar with subject-based learning, practical activities and assessment tasks.",
+  "8":"Grade 8 builds on the knowledge and competencies developed in Grade 7. Use notes alongside practical activities, class assignments and regular topic-based revision.",
+  "9":"Grade 9 is the final year of Junior School. Learners can use structured revision, practice assessments and feedback to identify areas that need further study.",
+  "10":"Grade 10 is the entry year of Senior School. Learners should organise resources around their selected subjects and the learning pathway followed by their school.",
+  "11":"Grade 11 continues Senior School learning. Learners can use subject notes, practice tasks and assessment materials to deepen understanding and prepare for progression.",
+  "12":"Grade 12 is the final year of Senior School. Prioritise subject mastery, syllabus coverage, timed practice and revision of areas identified through assessment."
+ };
+ const focus=gradeFocus[g]||"Use the subject links below to locate learning and revision materials for this grade.";
+ const extra='<section class="content-section"><h2>About Grade '+esc(g)+' in Kenya</h2><p>'+esc(stageDetail)+'</p><p>'+esc(focus)+'</p><p>Resource availability varies by subject. Open a subject page to see the materials currently published, including notes, revision questions, assessments and marking support where available.</p></section><section class="content-section"><h2>How to use these Grade '+esc(g)+' resources</h2><ul><li>Choose the subject you are studying or teaching.</li><li>Check the resource description, grade, subject and resource type before opening or downloading.</li><li>Use notes to review concepts, then attempt practice questions without looking at the answers.</li><li>Review feedback or marking guidance and revisit topics that need more work.</li><li>Teachers should compare supplementary materials with the current official curriculum design and school scheme of work.</li></ul></section><section class="content-section"><h2>Official curriculum reference</h2><p>Use the <a href="https://kicd.ac.ke/cbc-materials/" rel="noopener">KICD CBC materials portal</a> to check official curriculum designs and approved course materials. CBE Nexus resources are supplementary unless a page explicitly identifies an official source.</p></section>';
+ if(sub){
+  const name=sub.replace(/-/g," ").replace(/\b\w/g,c=>c.toUpperCase());
+  const title="Grade "+g+" "+name+" Resources Kenya | Notes, Revision & Assessments | CBE Nexus";
+  const description="Explore Grade "+g+" "+name+" resources in Kenya. Find published CBC/CBE notes, topic revision, practice questions, assessments and marking guidance for learners and teachers. Check each resource for current availability and source.";
+  const related=subjects.filter(s=>slug(s)!==sub).slice(0,8).map(s=>({url:"/grade-"+g+"/"+slug(s),label:"Grade "+g+" "+s}));
+  const subjectExtra='<section class="content-section"><h2>Grade '+esc(g)+' '+esc(name)+': learning and revision</h2><p>This subject page brings together the Grade '+esc(g)+' '+esc(name)+' materials currently published in the CBE Nexus resource library. Use the resource filters to find notes, practice activities, topical questions and assessments where available.</p><p>For effective revision, identify the topic you are working on, read the relevant notes, attempt questions independently, and use any provided marking guidance to correct misunderstandings. Teachers should check alignment against the current KICD curriculum design before classroom use.</p></section>'+extra;
+  return page(req,title,description,"/grade-"+g+"/"+sub,"Grade "+g+" "+name+" Resources", "Find Grade "+g+" "+name+" learning and revision resources for Kenyan learners and teachers. Browse the currently published notes, practice questions and assessments, and check each item for its source and access conditions.",related.concat([{url:"/grade-"+g,label:"All Grade "+g+" subjects"},{url:"/resources.html",label:"All learning resources"}]),subjectExtra);
+ }
+ const title="Grade "+g+" CBC/CBE Resources Kenya | Subjects, Notes & Revision | CBE Nexus";
+ const description="Browse Grade "+g+" "+stage+" learning resources in Kenya by subject. Find published CBC/CBE notes, revision questions, assessments, schemes and marking support, with availability shown on each resource.";
+ return page(req,title,description,"/grade-"+g,"Grade "+g+" CBC/CBE Resources Kenya","Browse Grade "+g+" subjects and find the learning and teaching materials currently published on CBE Nexus. Choose a subject to explore notes, practice questions, assessments and revision support.",links,extra);
 }
 function countyPage(req,county){
  const label=county.replace(/-/g," ").replace(/\b\w/g,c=>c.toUpperCase());
@@ -68,14 +114,20 @@ async function resourcePage(req,id){
     r=(Array.isArray(local)?local:[]).find(x=>String(x.id)===String(id)&&String(x.status||"approved").toLowerCase()==="approved")||null;
    }catch{}
   }
-  if(!r)return page(req,"Resource Not Found | CBE Nexus","The requested CBE Nexus resource could not be found or is not currently approved.","/resource/"+encodeURIComponent(String(id)),"Resource not found","This resource is unavailable or has not been approved for publication yet.",[{url:"/",label:"CBE Nexus Home"},{url:"/cbc-notes-kenya",label:"CBC Notes Kenya"},{url:"/cbc-exams-kenya",label:"CBC Exams Kenya"}]);
+  if(!r)return null; // Missing or unapproved resources must return a real 404, not an indexable soft-404 page.
   const type=r.resource_type||"Learning Resource", grade=r.grade||"CBC", subject=r.subject||"General";
   const title=String(r.title||"").trim()||type+" for Grade "+grade+" "+subject;
   const pageTitle=title+" | Grade "+grade+" "+subject+" | CBE Nexus Kenya";
-  const description=(String(r.description||"").trim()||"CBC/CBE learning resource for Kenyan learners and teachers.").slice(0,155);
+  const fullDescription=String(r.description||"").trim();
+  const description=(fullDescription||"CBC/CBE "+type.toLowerCase()+" for Grade "+grade+" "+subject+" learners and teachers in Kenya. View the resource details and access options on CBE Nexus.").replace(/\s+/g," ").slice(0,155);
   const canonical="/resource/"+encodeURIComponent(String(r.id));
   const b=base(req);
-  const json=JSON.stringify({"@context":"https://schema.org","@type":"LearningResource","name":title,"description":description,"url":b+canonical,"learningResourceType":type,"educationalLevel":grade,"inLanguage":"en","publisher":{"@type":"EducationalOrganization","name":"CBE Nexus","url":b},"about":{"@type":"Thing","name":subject}});
+  const createdAt=r.created_at&&Number.isFinite(Date.parse(r.created_at))?new Date(r.created_at).toISOString():null;
+  const fileName=String(r.filename||"");
+  const extension=(fileName.match(/\.([a-z0-9]{2,8})$/i)||[])[1]||"";
+  const fileType=extension?extension.toUpperCase()+" file":"Not specified";
+  const isFree=!(Number(r.price)>0);
+  const json=JSON.stringify({"@context":"https://schema.org","@type":"LearningResource","name":title,"description":description,"url":b+canonical,"learningResourceType":type,"educationalLevel":grade,"educationalUse":"Study and teaching support","inLanguage":"en","datePublished":createdAt||undefined,"isAccessibleForFree":isFree,"encodingFormat":extension||undefined,"publisher":{"@type":"EducationalOrganization","name":"CBE Nexus","url":b},"about":{"@type":"Thing","name":subject}});
   let related=[];
   if(supabaseConfigured){
    const q=await supabase.from("resources").select("id,title,grade,subject,resource_type").eq("status","approved").eq("grade",grade).eq("subject",subject).neq("id",r.id).order("created_at",{ascending:false}).limit(8);
@@ -84,7 +136,7 @@ async function resourcePage(req,id){
   const relatedHtml=related.map(x=>'<li><a href="/resource/'+encodeURIComponent(String(x.id))+'">'+esc(String(x.title||"Resource"))+'</a> — '+esc(String(x.resource_type||"Learning Resource"))+'</li>').join("")||"<li>No related resources yet.</li>";
   const gradeUrl="/grade-"+slug(grade);
   const subjectUrl=gradeUrl+"/"+slug(subject);
-  return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(pageTitle)+'</title><meta name="description" content="'+esc(description)+'"><meta name="robots" content="index,follow"><link rel="canonical" href="'+esc(b+canonical)+'"><meta property="og:type" content="article"><meta property="og:title" content="'+esc(pageTitle)+'"><meta property="og:description" content="'+esc(description)+'"><meta property="og:url" content="'+esc(b+canonical)+'"><script type="application/ld+json">'+json+'</script><style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;max-width:1000px;margin:auto;padding:24px;line-height:1.6;color:#172033}a{color:#075985}.crumbs{font-size:.95rem;color:#52606d}.hero{padding:30px 0}.card{border:1px solid #ddd;border-radius:12px;padding:20px;margin:18px 0}.cta{display:inline-block;background:#075985;color:white;padding:12px 18px;border-radius:8px;text-decoration:none;margin:6px 6px 6px 0}</style></head><body><header><strong>CBE Nexus</strong> — Connecting learners to excellence | Kenya</header><main><p class="crumbs"><a href="/">CBE Nexus</a> / <a href="'+esc(gradeUrl)+'">Grade '+esc(grade)+'</a> / <a href="'+esc(subjectUrl)+'">'+esc(subject)+'</a> / Resource</p><section class="hero"><p>Kenyan CBC/CBE learning resource</p><h1>'+esc(title)+'</h1><p>'+esc(description)+'</p><div class="card"><strong>Grade:</strong> '+esc(grade)+'<br><strong>Subject:</strong> '+esc(subject)+'<br><strong>Resource type:</strong> '+esc(type)+'</div><a class="cta" href="'+esc(subjectUrl)+'">More Grade '+esc(grade)+' '+esc(subject)+' Resources</a><a class="cta" href="/free-resources.html">Explore Free Resources</a></section><section><h2>About this resource</h2><p>'+esc(String(r.description||"Explore this CBC/CBE resource on CBE Nexus for learning, revision and teaching support in Kenya."))+'</p></section><section><h2>Related '+esc(subject)+' resources</h2><ul>'+relatedHtml+'</ul></section></main></body></html>';
+  return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(pageTitle)+'</title><meta name="description" content="'+esc(description)+'"><meta name="robots" content="index,follow"><link rel="canonical" href="'+esc(b+canonical)+'"><meta property="og:type" content="article"><meta property="og:title" content="'+esc(pageTitle)+'"><meta property="og:description" content="'+esc(description)+'"><meta property="og:url" content="'+esc(b+canonical)+'"><script type="application/ld+json">'+json+'</script><style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;max-width:1000px;margin:auto;padding:24px;line-height:1.6;color:#172033}a{color:#075985}.crumbs{font-size:.95rem;color:#52606d}.hero{padding:30px 0}.card{border:1px solid #ddd;border-radius:12px;padding:20px;margin:18px 0}.cta{display:inline-block;background:#075985;color:white;padding:12px 18px;border-radius:8px;text-decoration:none;margin:6px 6px 6px 0}</style></head><body><header><strong>CBE Nexus</strong> — Connecting learners to excellence | Kenya</header><main><p class="crumbs"><a href="/">CBE Nexus</a> / <a href="'+esc(gradeUrl)+'">Grade '+esc(grade)+'</a> / <a href="'+esc(subjectUrl)+'">'+esc(subject)+'</a> / Resource</p><section class="hero"><p>Kenyan CBC/CBE learning resource</p><h1>'+esc(title)+'</h1><p>'+esc(description)+'</p><div class="card"><strong>Grade:</strong> '+esc(grade)+'<br><strong>Subject:</strong> '+esc(subject)+'<br><strong>Resource type:</strong> '+esc(type)+'<br><strong>File format:</strong> '+esc(fileType)+'<br><strong>Access:</strong> '+(isFree?"Free access":"Paid access — payment confirmation required")+(createdAt?'<br><strong>Added:</strong> '+esc(new Date(createdAt).toLocaleDateString("en-KE")):"")+'</div><a class="cta" href="'+esc(subjectUrl)+'">More Grade '+esc(grade)+' '+esc(subject)+' Resources</a><a class="cta" href="/free-resources.html">Explore Free Resources</a></section><section><h2>About this resource</h2><p>'+esc(fullDescription||"This resource is listed in the CBE Nexus learning library. Review the grade, subject, resource type and file format above to confirm it matches your learning or teaching needs.")+'</p><h2>How to use this resource</h2><p>Use this material alongside your class lessons and the current curriculum design. Learners can review the relevant topic, attempt the activities independently, and check any supplied answers or marking guidance. Teachers should review the content and adapt it to their learners needs before classroom use.</p><p>Access to the original file follows the resource free or paid access setting. Paid downloads remain subject to the existing payment confirmation process.</p></section><section><h2>Related '+esc(subject)+' resources</h2><ul>'+relatedHtml+'</ul></section></main></body></html>';
  }catch(e){console.warn("SEO resource page lookup failed:",e.message||e);return null;}
 }
 async function match(req){
@@ -144,8 +196,8 @@ async function match(req){
  const countyMatch=p.match(/^\/kenya-education-county\/([^/]+)$/);
  if(countyMatch){return countyPage(req,countyMatch[1]);}
  if(p==="/blog-article.html"){const q=new URL(req.url,"http://localhost").searchParams.get("slug");if(q)return await blogArticlePage(req,q);}
- if(p!=="/cbc-exam-generator" && LANDINGS[p]){const x=LANDINGS[p];const links=GRADES.map(g=>({url:"/grade-"+g,label:"Grade "+g+" CBC Resources"}));return page(req,x[0],x[1],p,x[0],x[1],links);}
- const m=p.match(/^\/grade-(7|8|9|10|11|12)(?:\/([^/]+))?$/);return m?gradePage(req,m[1],m[2]):null;
+ if(p!=="/cbc-exam-generator" && LANDINGS[p]){const x=LANDINGS[p];const links=x[2]||GRADES.map(g=>({url:"/grade-"+g,label:"Grade "+g+" CBC Resources"}));return page(req,x[0],x[1],p,x[0],x[1],links);}
+ const m=p.match(/^\/grade-(4|5|6|7|8|9|10|11|12)(?:\/([^/]+))?$/);return m?gradePage(req,m[1],m[2]):null;
 }
 async function blogArticlePage(req,slugValue){
  const slugValueClean=String(slugValue||"").trim();
@@ -196,6 +248,8 @@ async function sitemap(req){
   "/cambridge-international.html","/ib.html","/pearson-edexcel.html","/a-levels.html","/o-levels.html",
   "/cbc-notes-kenya","/cbc-exams-kenya","/kjsea-revision",
   "/free-interactive-questions","/daily-quiz","/grade-9-kjsea-revision-questions","/grade-10-cbe-practice-questions",
+  "/kjsea-past-papers-kenya","/cbe-curriculum-resources-kenya","/free-cbc-teaching-resources-kenya",
+  "/igcse-resources-kenya","/grade-8-integrated-science-notes","/online-cbc-revision-kenya","/interactive-questions-all-grades",
   "/free-cbc-online-quizzes","/mashujaa-day-kenyan-heroes-quiz","/free-ai-training",
   "/free-cv-writing","/free-international-jobs","/all-schools-in-kenya","/global-schools"
  ];
@@ -244,6 +298,27 @@ async function sitemap(req){
    urls.push("/"+entry.name);
   }
  }catch(e){console.warn("SEO sitemap static-page discovery failed:",e.message||e);}
+ // Include every subject URL linked from each international curriculum catalogue.
+ try{
+  for(const catalogue of ["igcse.html","cambridge-international.html","ib.html","pearson-edexcel.html","a-levels.html","o-levels.html"]){
+   const html=await fs.readFile(path.join(__dirname,catalogue),"utf8").catch(()=> "");
+   const re=/href=["'](international-subject\.html\?curriculum=[^"']+)["']/gi;
+   let match;
+   while((match=re.exec(html))!==null) urls.push("/"+match[1].replace(/&amp;/g,"&"));
+  }
+ }catch(e){console.warn("International curriculum subject URLs could not be added to sitemap:",e.message||e);}
+ // Include the individual international-curriculum subject libraries in the sitemap.
+ // These are real static subject pages, separate from the CBC/CBE grade directory.
+ try{
+  const subjectDir=path.join(__dirname,"international-subjects");
+  const subjectEntries=await fs.readdir(subjectDir,{withFileTypes:true});
+  for(const entry of subjectEntries){
+   if(!entry.isFile() || !/^[a-z0-9][a-z0-9-]*\.html$/i.test(entry.name)) continue;
+   const subjectHtml=await fs.readFile(path.join(subjectDir,entry.name),"utf8").catch(()=> "");
+   if(!subjectHtml || /<meta\b[^>]*name=["']robots["'][^>]*content=["'][^"']*noindex/i.test(subjectHtml)) continue;
+   urls.push("/international-subjects/"+entry.name);
+  }
+ }catch(e){console.warn("SEO international subject sitemap lookup failed:",e.message||e);}
  const unique=[...new Set(urls)].filter(u=>typeof u==="string"&&u.startsWith("/"));
  const body=unique.map(u=>"<url><loc>"+xml(b+u)+"</loc></url>").join("");
  const output = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+body+"\n</urlset>";
