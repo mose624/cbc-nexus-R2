@@ -1,5 +1,5 @@
 // Cloudflare Pages static frontend build.
-// Copies public website files into dist/ while excluding Node/backend and private data.
+// Publishes public website files only; Node backend and private/runtime data stay out.
 const fs = require("node:fs");
 const path = require("node:path");
 
@@ -38,8 +38,13 @@ function copyTree(source, destination, relative = "") {
 
     if (!entry.isFile()) continue;
     if (excludedFiles.has(entry.name) || entry.name.startsWith(".env")) continue;
-    if (/^(admin[-_.]|admin\.)/i.test(entry.name) || entry.name === "upload.html") continue;
-    const extension = path.extname(entry.name).toLowerCase();\n    if (!allowed.has(extension)) continue;\n    if (extension === ".json" && !/^(data|learning)\\//.test(rel)) continue;
+    if (/(^|[-_.])admin([-.]|$)/i.test(entry.name)) continue;
+    if (entry.name === "upload.html" || /-server-/i.test(entry.name)) continue;
+
+    const extension = path.extname(entry.name).toLowerCase();
+    if (!allowed.has(extension)) continue;
+    // Only known public JSON data is included; backend-data is excluded above.
+    if (extension === ".json" && !/^(data|learning)\//.test(rel)) continue;
 
     fs.mkdirSync(path.dirname(dest), { recursive: true });
     fs.copyFileSync(src, dest);
@@ -49,11 +54,7 @@ function copyTree(source, destination, relative = "") {
 
 copyTree(root, out);
 
-// Cloudflare Pages serves the root index and public SEO files from dist.
-if (!fs.existsSync(path.join(out, "index.html"))) {
-  throw new Error("Build failed: root index.html was not copied.");
-}
-for (const required of ["blog.html", "blog.js", "sitemap.xml", "robots.txt"]) {
+for (const required of ["index.html", "blog.html", "blog.js", "sitemap.xml", "robots.txt"]) {
   if (!fs.existsSync(path.join(out, required))) {
     throw new Error("Build failed: required public file missing: " + required);
   }
