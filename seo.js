@@ -75,7 +75,7 @@ async function resourcePage(req,id){
     r=(Array.isArray(local)?local:[]).find(x=>String(x.id)===String(id)&&String(x.status||"approved").toLowerCase()==="approved")||null;
    }catch{}
   }
-  if(!r)return page(req,"Resource Not Found | CBE Nexus","The requested CBE Nexus resource could not be found or is not currently approved.","/resource/"+encodeURIComponent(String(id)),"Resource not found","This resource is unavailable or has not been approved for publication yet.",[{url:"/",label:"CBE Nexus Home"},{url:"/cbc-notes-kenya",label:"CBC Notes Kenya"},{url:"/cbc-exams-kenya",label:"CBC Exams Kenya"}]);
+  if(!r)return null; // Missing or unapproved resources must return a real 404, not an indexable soft-404 page.
   const type=r.resource_type||"Learning Resource", grade=r.grade||"CBC", subject=r.subject||"General";
   const title=String(r.title||"").trim()||type+" for Grade "+grade+" "+subject;
   const pageTitle=title+" | Grade "+grade+" "+subject+" | CBE Nexus Kenya";
