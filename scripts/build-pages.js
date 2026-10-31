@@ -12,7 +12,14 @@ const allowed = new Set([
 ]);
 const excludedDirs = new Set([
   ".git", ".github", "node_modules", "dist", "backend-data",
-  "scripts", "supabase", "supabase-functions", "migrations", "assessments"
+  "scripts", "supabase", "supabase-functions", "migrations", "assessments", "functions"
+]);
+const publicAdminScripts = new Set([
+  "admin-module-fix.js",
+  "admin-blog.js",
+  "ai-course-admin.js",
+  "scholarships-admin.js",
+  "school-directory-admin.js"
 ]);
 const excludedFiles = new Set([
   "server.js", "package.json", "package-lock.json", "yarn.lock",
@@ -38,7 +45,7 @@ function copyTree(source, destination, relative = "") {
 
     if (!entry.isFile()) continue;
     if (excludedFiles.has(entry.name) || entry.name.startsWith(".env")) continue;
-    if (/(^|[-_.])admin([-.]|$)/i.test(entry.name)) continue;
+    if (/(^|[-_.])admin([-.]|$)/i.test(entry.name) && !publicAdminScripts.has(entry.name)) continue;
     if (entry.name === "upload.html" || /-server-/i.test(entry.name)) continue;
 
     const extension = path.extname(entry.name).toLowerCase();
