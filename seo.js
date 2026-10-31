@@ -298,6 +298,15 @@ async function sitemap(req){
    urls.push("/"+entry.name);
   }
  }catch(e){console.warn("SEO sitemap static-page discovery failed:",e.message||e);}
+ // Include every subject URL linked from each international curriculum catalogue.
+ try{
+  for(const catalogue of ["igcse.html","cambridge-international.html","ib.html","pearson-edexcel.html","a-levels.html","o-levels.html"]){
+   const html=await fs.readFile(path.join(__dirname,catalogue),"utf8").catch(()=> "");
+   const re=/href=["'](international-subject\.html\?curriculum=[^"']+)["']/gi;
+   let match;
+   while((match=re.exec(html))!==null) urls.push("/"+match[1].replace(/&amp;/g,"&"));
+  }
+ }catch(e){console.warn("International curriculum subject URLs could not be added to sitemap:",e.message||e);}
  // Include the individual international-curriculum subject libraries in the sitemap.
  // These are real static subject pages, separate from the CBC/CBE grade directory.
  try{
