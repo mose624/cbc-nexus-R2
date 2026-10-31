@@ -134,6 +134,32 @@ function renderCountry(){
  const browseLink=node("a","gs-market-btn");browseLink.href="/online-teaching.html?country="+encodeURIComponent(c.name)+"#teacher-directory";browseLink.textContent="Browse approved teachers";
  const boardNote=node("p","gs-muted");boardNote.textContent="For privacy, learner names and contact details are not displayed publicly. Eligible approved teachers sign in to view appropriate learner requests.";
  actions.append(learnerLink,teacherLink,browseLink);marketplace.append(marketTitle,marketIntro,stats,actions,boardNote);
+ // Country-specific international recruitment and remote-teaching pathways.
+ const pathways=node("section","gs-panel gs-section");pathways.id="country-teaching-pathways";
+ const pathwayTitle=node("h2");pathwayTitle.textContent="Teaching Jobs & Remote Teaching Opportunities in "+c.name;
+ const pathwayIntro=node("p","gs-muted");pathwayIntro.textContent="Explore international-school recruitment, local teaching opportunities and online tutoring platforms. These are job-search or platform entry points, not confirmation of an active vacancy or guaranteed applicant eligibility. Check each employer's current advert, country restrictions, qualifications, licensing and visa rules before applying.";
+ const pathwayGrid=node("div","gs-country-pathway-grid");
+ const makePathway=(heading,description,links)=>{
+  const card=node("article","gs-card gs-country-pathway-card");
+  const h=node("h3");h.textContent=heading;const p=node("p");p.textContent=description;const list=node("div","gs-country-pathway-links");
+  links.forEach(item=>{const a=node("a");a.href=item.url;a.textContent=item.label;a.target="_blank";a.rel="noopener noreferrer";list.appendChild(a);});
+  card.append(h,p,list);pathwayGrid.appendChild(card);
+ };
+ const q=encodeURIComponent(c.name);
+ makePathway("International & local teaching jobs","Search school vacancies and international educator recruitment relevant to "+c.name+". Confirm the actual work location and whether sponsorship is offered.",[
+  {label:"TES — search teaching jobs",url:"https://www.tes.com/jobs/search?keywords="+q},
+  {label:"Schrole — educator vacancies",url:"https://www.schrole.com/jobs/"},
+  {label:"ISS — international school openings",url:"https://www.iss.edu/for-individuals/find-a-job/current-openings/"},
+  {label:"Teach Away — teaching jobs",url:"https://www.teachaway.com/teaching-jobs"}
+ ]);
+ makePathway("Online & remote teaching","Explore online tutoring and language-teaching platforms. Registration availability, subject demand, payment methods and country eligibility differ by platform; check their current requirements.",[
+  {label:"Preply — become an online tutor",url:"https://preply.com/en/teach"},
+  {label:"italki — teach languages online",url:"https://teach.italki.com/"},
+  {label:"Classgap — become a teacher",url:"https://www.classgap.com/en/become-an-online-tutor"},
+  {label:"Cambly — tutor application",url:"https://www.cambly.com/en/tutors"}
+ ]);
+ pathways.append(pathwayTitle,pathwayIntro,pathwayGrid);
+ const pathwayStyle=node("style");pathwayStyle.textContent=".gs-country-pathway-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}.gs-country-pathway-card{margin:0;padding:16px;background:#fff;border:1px solid #dbe5ef;border-radius:12px}.gs-country-pathway-card h3{margin:0 0 7px;color:#075080;font-size:16px}.gs-country-pathway-card p{font-size:12px;line-height:1.55;color:#5b6878}.gs-country-pathway-links{display:flex;gap:7px;flex-wrap:wrap}.gs-country-pathway-links a{display:inline-flex;padding:8px 10px;background:#e0f2fe;border:1px solid #bae6fd;border-radius:8px;color:#075080!important;font-size:11px;font-weight:800;text-decoration:none}.gs-country-pathway-links a:hover{background:#d0ebfa}@media(max-width:650px){.gs-country-pathway-grid{grid-template-columns:1fr}}";document.head.appendChild(pathwayStyle);
  const countryLayout=document.querySelector(".gs-country-layout");
  // Country portal quick navigation: shared layout, with country context retained in resource links.
  const portalNav=document.getElementById("countryPortalNav")||node("nav","gs-country-portal-nav");
@@ -143,8 +169,8 @@ function renderCountry(){
   {label:"📘 Notes & Learning Resources",url:"/resources.html?country="+countryQuery+"&type=notes"},
   {label:"📝 Past National Exam Papers",url:"/resources.html?country="+countryQuery+"&type=past-papers"},
   {label:"🎯 Interactive Questions",url:"/interactive-questions.html?country="+countryQuery},
-  {label:"💼 Teaching Vacancies",url:"#vacancies"},
-  {label:"🌍 Global Online Teaching",url:"/online-teaching.html?country="+countryQuery},
+  {label:"💼 International & Local Teaching Jobs",url:"#country-teaching-pathways"},
+  {label:"🌍 Online & Remote Teaching",url:"#country-teaching-pathways"},
   {label:"📜 Teaching Requirements & Certification",url:"#qualification-requirements"},
   {label:"✈️ International Teaching Vacancies & Eligible Countries",url:"#vacancies"},
   {label:"🤝 Sponsors & Official Sources",url:"#sources"},
