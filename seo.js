@@ -4,6 +4,9 @@ const path = require("path");
 const globalSchools = require("./global-schools-data.js");
 const GRADES=["7","8","9","10","11","12"];
 const SUBJECTS={
+"4":["English","Kiswahili","Mathematics","Science and Technology","Agriculture","Social Studies","Creative Arts","Physical and Health Education","Religious Education","Indigenous Language","Arabic"],
+"5":["English","Kiswahili","Mathematics","Science and Technology","Agriculture","Social Studies","Creative Arts","Physical and Health Education","Religious Education","Indigenous Language","Arabic"],
+"6":["English","Kiswahili","Mathematics","Science and Technology","Agriculture","Social Studies","Creative Arts","Physical and Health Education","Religious Education","Indigenous Language","Arabic"],
 "7":["Mathematics","Integrated Science","English","Kiswahili","Social Studies","Agriculture","Creative Arts","Pre-Technical Studies"],
 "8":["Mathematics","Integrated Science","English","Kiswahili","Social Studies","Agriculture","Creative Arts","Pre-Technical Studies"],
 "9":["Mathematics","Integrated Science","English","Kiswahili","Social Studies","Agriculture","Creative Arts","Pre-Technical Studies"],
@@ -43,11 +46,16 @@ function page(req,title,description,canonical,h1,intro,links,extraHtml=""){
 function gradePage(req,g,sub){
  const subjects=SUBJECTS[g]||[];
  const links=subjects.map(s=>({url:"/grade-"+g+"/"+slug(s),label:"Grade "+g+" "+s+" Resources"}));
- const stage=Number(g)<=9?"Junior School":"Senior School";
- const stageDetail=Number(g)<=9
+ const stage=Number(g)<=6?"Upper Primary":Number(g)<=9?"Junior School":"Senior School";
+ const stageDetail=Number(g)<=6
+  ?"Grades 4–6 are part of Upper Primary in Kenya’s Competency-Based Curriculum. Learners build foundational literacy, numeracy, scientific understanding, creativity, values and practical competencies across learning areas."
+  :Number(g)<=9
   ?"Grades 7–9 form Junior School in Kenya’s basic education structure. Learning at this level builds on upper-primary foundations and develops subject knowledge, practical skills and competencies."
   :"Grades 10–12 form Senior School. Learners study within the senior-school structure and pursue learning aligned with their interests, strengths and future pathways.";
  const gradeFocus={
+  "4":"Grade 4 is the first year of Upper Primary. Learners strengthen literacy and numeracy while developing inquiry, creativity, social understanding and practical skills across the learning areas.",
+  "5":"Grade 5 builds on Grade 4 learning. Learners should practise core skills, investigate ideas, complete practical activities and connect classroom learning to everyday life.",
+  "6":"Grade 6 completes Upper Primary. Learners should consolidate key competencies and prepare for transition to Junior School through steady practice and feedback.",
   "7":"Grade 7 is the entry year of Junior School. Learners should consolidate core skills while becoming familiar with subject-based learning, practical activities and assessment tasks.",
   "8":"Grade 8 builds on the knowledge and competencies developed in Grade 7. Use notes alongside practical activities, class assignments and regular topic-based revision.",
   "9":"Grade 9 is the final year of Junior School. Learners can use structured revision, practice assessments and feedback to identify areas that need further study.",
@@ -182,7 +190,7 @@ async function match(req){
  if(countyMatch){return countyPage(req,countyMatch[1]);}
  if(p==="/blog-article.html"){const q=new URL(req.url,"http://localhost").searchParams.get("slug");if(q)return await blogArticlePage(req,q);}
  if(p!=="/cbc-exam-generator" && LANDINGS[p]){const x=LANDINGS[p];const links=x[2]||GRADES.map(g=>({url:"/grade-"+g,label:"Grade "+g+" CBC Resources"}));return page(req,x[0],x[1],p,x[0],x[1],links);}
- const m=p.match(/^\/grade-(7|8|9|10|11|12)(?:\/([^/]+))?$/);return m?gradePage(req,m[1],m[2]):null;
+ const m=p.match(/^\/grade-(4|5|6|7|8|9|10|11|12)(?:\/([^/]+))?$/);return m?gradePage(req,m[1],m[2]):null;
 }
 async function blogArticlePage(req,slugValue){
  const slugValueClean=String(slugValue||"").trim();
