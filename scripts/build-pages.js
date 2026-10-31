@@ -8,7 +8,7 @@ const out = path.join(root, "dist");
 const allowed = new Set([
   ".html", ".css", ".js", ".mjs", ".svg", ".png", ".jpg", ".jpeg",
   ".webp", ".gif", ".ico", ".avif", ".woff", ".woff2", ".ttf", ".eot",
-  ".pdf", ".txt", ".xml", ".webmanifest", ".mp4", ".webm"
+  ".pdf", ".txt", ".xml", ".webmanifest", ".mp4", ".webm", ".json"
 ]);
 const excludedDirs = new Set([
   ".git", ".github", "node_modules", "dist", "backend-data",
@@ -39,7 +39,7 @@ function copyTree(source, destination, relative = "") {
     if (!entry.isFile()) continue;
     if (excludedFiles.has(entry.name) || entry.name.startsWith(".env")) continue;
     if (/^(admin[-_.]|admin\.)/i.test(entry.name) || entry.name === "upload.html") continue;
-    if (!allowed.has(path.extname(entry.name).toLowerCase())) continue;
+    const extension = path.extname(entry.name).toLowerCase();\n    if (!allowed.has(extension)) continue;\n    if (extension === ".json" && !/^(data|learning)\\//.test(rel)) continue;
 
     fs.mkdirSync(path.dirname(dest), { recursive: true });
     fs.copyFileSync(src, dest);
