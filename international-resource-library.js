@@ -27,6 +27,8 @@
   const levelFilter = addMetadataFilter("internationalLibraryLevel", "Levels");
   const qualificationFilter = addMetadataFilter("internationalLibraryQualification", "Qualifications");
   const sessionFilter = addMetadataFilter("internationalLibrarySession", "Exam Sessions");
+  const yearFilter = addMetadataFilter("internationalLibraryYear", "Exam Years");
+  if (yearFilter && !yearFilter.dataset.yearOptionsReady) { yearFilter.innerHTML = '<option value="">All Exam Years (2010–2026)</option>' + Array.from({length:17},(_,i)=>2026-i).map(y=>'<option value="'+y+'">'+y+'</option>').join(""); yearFilter.dataset.yearOptionsReady="1"; }
   const metadataValue = (r, keys) => {
     for (const key of keys) {
       const value = r && r[key];
@@ -53,6 +55,8 @@
     const level = String(levelFilter?.value || "").trim().toLowerCase();
     const qualification = String(qualificationFilter?.value || "").trim().toLowerCase();
     const session = String(sessionFilter?.value || "").trim().toLowerCase();
+    const year = String(yearFilter?.value || "").trim();
+    const rowYear = metadataValue(r, ["examYear","year","exam_year","paperYear","publicationYear"]);
     const rowTopic = metadataValue(r, ["topic","topics","unit","chapter"]).toLowerCase();
     const rowLevel = metadataValue(r, ["level","stage","yearGroup","gradeLevel"]).toLowerCase();
     const rowQualification = metadataValue(r, ["qualification","qualificationLevel","examBoard","syllabus","specification"]).toLowerCase();
@@ -64,6 +68,7 @@
       && (!level || rowLevel === level)
       && (!qualification || rowQualification === qualification)
       && (!session || rowSession === session)
+      && (!year || rowYear === year)
       && (!q || hay.includes(q));
   }
 
@@ -145,7 +150,7 @@
     }
   }
 
-  [subject,type,topicFilter,levelFilter,qualificationFilter,sessionFilter,search].forEach(el => el?.addEventListener(el === search ? "input" : "change", render));
+  [subject,type,topicFilter,levelFilter,qualificationFilter,sessionFilter,yearFilter,search].forEach(el => el?.addEventListener(el === search ? "input" : "change", render));
   document.querySelectorAll("[data-filter-type]").forEach(card => card.addEventListener("click", () => {
     const selectedType = String(card.dataset.filterType || "").trim();
     if (type) type.value = [...type.options].some(o => o.value.toLowerCase() === selectedType.toLowerCase()) ? selectedType : "";
@@ -170,6 +175,6 @@
     render();
     document.getElementById("internationalResources")?.scrollIntoView({behavior:"smooth",block:"start"});
   }));
-  reset?.addEventListener("click", () => { if(subject) subject.value=""; if(topicFilter) topicFilter.value=""; if(levelFilter) levelFilter.value=""; if(qualificationFilter) qualificationFilter.value=""; if(sessionFilter) sessionFilter.value=""; if (window.history?.replaceState) window.history.replaceState({}, "", window.location.pathname + "#internationalResources"); if(type) type.value=""; if(search) search.value=""; render(); });
+  reset?.addEventListener("click", () => { if(subject) subject.value=""; if(topicFilter) topicFilter.value=""; if(levelFilter) levelFilter.value=""; if(qualificationFilter) qualificationFilter.value=""; if(sessionFilter) sessionFilter.value=""; if(yearFilter) yearFilter.value=""; if (window.history?.replaceState) window.history.replaceState({}, "", window.location.pathname + "#internationalResources"); if(type) type.value=""; if(search) search.value=""; render(); });
   load();
 })();
