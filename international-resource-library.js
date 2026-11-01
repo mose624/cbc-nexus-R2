@@ -9,7 +9,7 @@
   const search = document.querySelector("#internationalLibrarySearch");
   const reset = document.querySelector("#internationalLibraryReset");
   const controls = document.querySelector(".international-library-controls");
-  if (!grid || !curriculum) return;
+  if (!grid || !curriculum) return;\n  const readerStyles = document.createElement("style");\n  readerStyles.textContent = ".cbe-online-reader{position:fixed;inset:0;z-index:9999;background:rgba(5,18,43,.78);padding:2vh 2vw}.cbe-online-reader[hidden]{display:none}.cbe-online-reader-panel{height:96vh;max-width:1100px;margin:auto;background:#fff;border-radius:12px;overflow:hidden;display:flex;flex-direction:column}.cbe-online-reader header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 18px;background:#071a3d;color:#fff}.cbe-reader-title{display:block;font-size:17px}.cbe-reader-meta{display:block;font-size:12px;color:#dce8fa;margin-top:4px}.cbe-reader-close{background:#f2c14e;border:0;border-radius:6px;padding:10px 14px;font-weight:800;cursor:pointer}.cbe-online-reader iframe{width:100%;height:100%;border:0;background:#fff}@media(max-width:640px){.cbe-online-reader{padding:0}.cbe-online-reader-panel{height:100vh;border-radius:0}.cbe-online-reader header{padding:12px}}";\n  document.head.appendChild(readerStyles);
 
   function addMetadataFilter(id, label) {
     if (!controls) return null;
@@ -78,23 +78,38 @@
         + '<h3>'+esc(r.title || "Untitled resource")+'</h3><p>'+esc(r.description || "International curriculum learning resource.")+'</p>'
         + '<div class="international-library-meta"><span>'+esc(curriculum)+'</span><span>'+esc(r.fileName || "Digital resource")+'</span></div>'
         + '<div class="international-library-actions">'
-        + (r.previewKey ? '<button type="button" class="international-library-action primary" data-preview="'+esc(r.id)+'">Read Online</button>' : '<span class="international-library-action secondary" aria-label="Online reading unavailable">Online reading not yet available</span>')
+        + (r.onlineContent ? '<button type="button" class="international-library-action primary" data-read-online="'+esc(r.id)+'">Read on Website</button>' : '<span class="international-library-action secondary" aria-label="Website reading unavailable">Website reading not yet available — content conversion required</span>')
         + '</div></article>';
     }).join("") : '<div class="international-library-empty"><strong>No resources found.</strong><span>Try another subject, type or search term. New approved resources will appear here automatically.</span></div>';
 
-    grid.querySelectorAll("[data-preview]").forEach(b => b.addEventListener("click", () => preview(b.dataset.preview)));
+    grid.querySelectorAll("[data-read-online]").forEach(b => b.addEventListener("click", () => readOnline(b.dataset.readOnline)));
   }
 
-  async function preview(id) {
-    const r = resources.find(x => String(x.id) === String(id));
-    if (!r?.previewKey) return;
-    try {
-      const response = await fetch("/api/r2/preview?key="+encodeURIComponent(r.previewKey), {credentials:"same-origin",cache:"no-store"});
-      const data = await response.json().catch(() => ({}));
-      if (!response.ok || !data.ok) throw new Error(data.error || "Preview unavailable.");
-      window.open(data.previewUrl, "_blank", "noopener");
-    } catch (e) { window.alert(e.message || "Preview unavailable."); }
+  function readOnline(id) {
+    const resource = resources.find(x => String(x.id) === String(id));
+    if (!resource?.onlineContent) return;
+    let reader = document.getElementById("cbeInternationalOnlineReader");
+    if (!reader) {
+      reader = document.createElement("section");
+      reader.id = "cbeInternationalOnlineReader";
+      reader.className = "cbe-online-reader";
+      reader.setAttribute("role", "dialog");
+      reader.setAttribute("aria-modal", "true");
+      reader.setAttribute("aria-label", "Online resource reader");
+      reader.innerHTML = '<div class="cbe-online-reader-panel"><header><div><strong class="cbe-reader-title"></strong><span class="cbe-reader-meta"></span></div><button type="button" class="cbe-reader-close" aria-label="Close reader">Close ✕</button></header><iframe title="Resource reading area" sandbox="" referrerpolicy="no-referrer"></iframe></div>';
+      document.body.appendChild(reader);
+      reader.querySelector(".cbe-reader-close").addEventListener("click", () => { reader.hidden = true; });
+    }
+    reader.querySelector(".cbe-reader-title").textContent = resource.title || "Online resource";
+    reader.querySelector(".cbe-reader-meta").textContent = [resource.subject, resource.type, curriculum].filter(Boolean).join(" · ");
+    const frame = reader.querySelector("iframe");
+    const content = String(resource.onlineContent);
+    const documentHtml = /<html[\s>]/i.test(content) ? content : '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{font:17px/1.75 Arial,sans-serif;color:#17233b;max-width:900px;margin:32px auto;padding:0 22px}img,table{max-width:100%}h1,h2,h3{color:#071a3d}table{border-collapse:collapse}td,th{border:1px solid #cbd5e1;padding:8px}</style></head><body>'+content+'</body></html>';
+    frame.srcdoc = documentHtml;
+    reader.hidden = false;
+    reader.scrollIntoView({behavior:"smooth",block:"start"});
   }
+
 
   function fillSelect(el, label, values) {
     if (!el) return;
