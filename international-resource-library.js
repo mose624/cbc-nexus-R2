@@ -78,13 +78,11 @@
         + '<h3>'+esc(r.title || "Untitled resource")+'</h3><p>'+esc(r.description || "International curriculum learning resource.")+'</p>'
         + '<div class="international-library-meta"><span>'+esc(curriculum)+'</span><span>'+esc(r.fileName || "Digital resource")+'</span></div>'
         + '<div class="international-library-actions">'
-        + (r.previewKey ? '<button type="button" class="international-library-action secondary" data-preview="'+esc(r.id)+'">Preview</button>' : "")
-        + (free ? '<button type="button" class="international-library-action primary" data-open="'+esc(r.id)+'">Open Resource</button>' : '<button type="button" class="international-library-action primary" data-buy="'+esc(r.id)+'">Purchase • '+money(price)+'</button>')
+        + (r.previewKey ? '<button type="button" class="international-library-action primary" data-preview="'+esc(r.id)+'">Read Online</button>' : '<span class="international-library-action secondary" aria-label="Online reading unavailable">Online reading not yet available</span>')
         + '</div></article>';
     }).join("") : '<div class="international-library-empty"><strong>No resources found.</strong><span>Try another subject, type or search term. New approved resources will appear here automatically.</span></div>';
 
     grid.querySelectorAll("[data-preview]").forEach(b => b.addEventListener("click", () => preview(b.dataset.preview)));
-    grid.querySelectorAll("[data-buy],[data-open]").forEach(b => b.addEventListener("click", () => purchase(b.dataset.buy || b.dataset.open)));
   }
 
   async function preview(id) {
@@ -96,13 +94,6 @@
       if (!response.ok || !data.ok) throw new Error(data.error || "Preview unavailable.");
       window.open(data.previewUrl, "_blank", "noopener");
     } catch (e) { window.alert(e.message || "Preview unavailable."); }
-  }
-
-  function purchase(id) {
-    const r = resources.find(x => String(x.id) === String(id));
-    if (!r) return;
-    sessionStorage.setItem("cbeInternationalSelectedResource", JSON.stringify({id:r.id,title:r.title,curriculum}));
-    window.location.href = "index.html?resource="+encodeURIComponent(r.title)+"&amount="+encodeURIComponent(Math.max(0, Math.round(Number(r.price || 0))))+"#payments";
   }
 
   function fillSelect(el, label, values) {
