@@ -138,6 +138,195 @@ const directory={
 "Creative and practical":["Art & Design","Design & Technology","Drama","Music","Physical Education","Food & Nutrition","Fashion & Textiles"],
 "Religious studies":["Islamic Studies","Islamiyat","Biblical Studies","Religious Studies","Literature in English","World Literature","Latin","Sanskrit"]
 };
+
+const extraPacks={
+"Additional Mathematics":{group:"Mathematics",code:"4037 / 0606 (confirm board)",topics:[
+["Functions and graphs","Domain, range, composite and inverse functions, transformations and graph interpretation.","A function maps each permitted input to exactly one output. Determine domain restrictions before finding an inverse. Composite functions are evaluated in the stated order; graph transformations change position, scale or orientation."],
+["Quadratic functions and equations","Completing the square, discriminant, roots, inequalities and intersections.","For ax²+bx+c=0, the discriminant b²−4ac determines the nature of real roots. Completing the square reveals the turning point and supports solving inequalities and sketching graphs."],
+["Polynomials and algebraic methods","Factor and remainder theorems, polynomial division and partial fractions.","Use the factor theorem: f(a)=0 implies (x−a) is a factor. Polynomial division reduces degree. Partial fractions decompose rational expressions into simpler terms, subject to denominator factors."],
+["Coordinate geometry","Straight lines, circles, tangents, chords and intersections.","Use gradient, distance and midpoint formulae. A circle has equation (x−a)²+(y−b)²=r². A tangent is perpendicular to the radius at the point of contact."],
+["Trigonometry","Identities, equations, compound angles, double angles and trigonometric graphs.","Use identities to simplify expressions and solve equations over a stated interval. Check all solutions and account for periodicity."],
+["Differentiation","First principles where required, gradients, stationary points, rates and optimisation.","The derivative gives gradient. Stationary points satisfy dy/dx=0; use sign changes or the second derivative to classify maxima and minima."],
+["Integration","Indefinite and definite integrals, area and kinematics applications.","Integration reverses differentiation and requires a constant for indefinite integrals. Definite integrals evaluate signed area; interpret limits and units."],
+["Sequences, series and binomial expansion","Arithmetic and geometric progressions, sums and binomial theorem.","Identify the common difference or ratio. Use the correct finite-sum formula and state convergence conditions for infinite geometric series."],
+["Vectors","Vector operations, position vectors, lines and geometric proof.","Represent direction and magnitude using components. For collinear vectors, one is a scalar multiple of the other; show the relationship algebraically."],
+["Examination problem solving","Multi-step modelling, proof, exact values and calculator strategy.","Define variables, show algebraic reasoning, retain exact values until the final step and check answers against domain and context."]
+]},
+"Statistics":{group:"Mathematics",code:"4040 / 0479 (check board)",topics:[
+["Data collection and sampling","Population, census, sampling frames, random and stratified sampling, bias.","A representative sample reflects the population. Explain sampling method, possible bias and limitations before drawing conclusions."],
+["Data presentation","Frequency tables, grouped data, histograms, cumulative frequency and box plots.","Use class boundaries and frequency density for unequal class widths. Label axes and units; interpret quartiles, median and spread."],
+["Measures of location and spread","Mean, median, mode, quartiles, range, interquartile range and standard deviation.","Choose measures appropriate to skew and outliers. Explain what a measure indicates and compare distributions using centre and spread."],
+["Probability","Sample spaces, conditional probability, independent and mutually exclusive events.","Distinguish independence from mutual exclusivity. Use tree diagrams and set notation; check probabilities lie between zero and one."],
+["Discrete random variables","Probability distributions, expectation and variance.","The probabilities across all possible values sum to one. Calculate expected value using Σxp(x) and interpret it as a long-run average."],
+["Correlation and regression","Scatter diagrams, correlation, line of best fit and interpretation.","Correlation does not prove causation. Identify direction and strength; avoid extrapolation beyond the observed data range."],
+["Time series and index numbers","Trend, seasonal variation, moving averages and weighted indices.","Separate trend from seasonal effects. State base period and weights clearly; interpret index changes relative to the base."],
+["Statistical inference and examination interpretation","Claims, limitations, sampling variation and evidence-based conclusions.","Use context, sample size and method to qualify conclusions. Do not claim certainty from a sample statistic."]
+]},
+"Environmental Management":{group:"Humanities",code:"5014 (confirm examination year)",topics:[
+["Lithosphere and natural resources","Earth structure, rocks, soils, minerals, resource extraction and sustainable use.","Explain how geological processes create resources and how extraction affects landscapes, habitats and communities. Compare renewable and non-renewable resource management."],
+["Atmosphere, weather and climate","Atmospheric structure, climate controls, climate change and air pollution.","Distinguish weather from climate. Explain greenhouse effect and human drivers of enhanced warming; assess mitigation and adaptation options."],
+["Hydrosphere and water resources","Water cycle, freshwater availability, demand, pollution, treatment and management.","Water availability depends on climate, geology, infrastructure and demand. Explain point and diffuse pollution and compare conservation, treatment and supply strategies."],
+["Ecosystems and biodiversity","Habitats, food webs, nutrient cycles, succession, threats and conservation.","Energy flows through trophic levels while nutrients are recycled. Evaluate habitat protection, restoration and sustainable harvesting."],
+["Population, settlement and urban environments","Population growth, migration, urbanisation, housing, waste and services.","Rapid urban growth can strain infrastructure but also create economic opportunities. Evaluate planning, transport, sanitation and waste-management solutions."],
+["Agriculture, fisheries and food security","Farming systems, soil degradation, irrigation, fisheries and food supply.","Compare intensive and extensive systems, productivity and environmental cost. Explain overfishing and sustainable fisheries management."],
+["Energy and industry","Energy sources, electricity generation, industrial impacts and efficiency.","Compare energy sources by reliability, cost, emissions, land use and lifecycle impacts. Explain energy conservation and cleaner production."],
+["Environmental impact and sustainable development","Environmental assessment, risk, policy, community participation and case studies.","Evaluate a proposal by environmental, social and economic effects, considering stakeholders, timescale, uncertainty and monitoring."]
+]},
+"Global Perspectives":{group:"Humanities",code:"2069 / 0457 (check board)",topics:[
+["Research questions and global issues","Global-local connections, issue framing, research aims and scope.","A strong question is focused, researchable and open to more than one perspective. Explain why the issue matters locally and globally."],
+["Research methods and evidence","Primary and secondary research, surveys, interviews, sampling and source evaluation.","Select methods that fit the question. Assess reliability, bias, currency, representativeness and ethical treatment of participants."],
+["Perspectives and viewpoints","Stakeholders, values, assumptions, cultural context and disagreement.","Represent perspectives fairly and explain why stakeholders may disagree. Distinguish evidence from opinion and identify underlying assumptions."],
+["Analysis and evaluation","Cause, consequence, comparison, impact, solution and trade-offs.","Compare solutions using feasibility, cost, fairness, sustainability and likely unintended consequences. Support claims with evidence."],
+["Communication and argument","Report structure, presentation, referencing and persuasive reasoning.","Use a clear line of argument, acknowledge counterarguments and reference sources consistently. Avoid unsupported generalisations."],
+["Collaborative action and reflection","Planning action, roles, impact, reflection and improvement.","Set measurable objectives, identify stakeholders, evaluate outcomes against evidence and explain what should change next."]
+]},
+"Commerce":{group:"Business",code:"7100 (Cambridge O Level)",topics:[
+["Trade and commercial activity","Home and foreign trade, wholesale, retail, channels of distribution.","Explain how intermediaries link producers and consumers. Compare channels by cost, speed, service and product characteristics."],
+["Production and specialisation","Factors of production, division of labour, productivity and business size.","Specialisation can raise output but may cause monotony and dependency. Evaluate productivity gains against flexibility and worker welfare."],
+["Business organisations and services","Ownership, financial institutions, insurance, transport, warehousing and communication.","Explain the role of commercial services in facilitating trade and managing risk. Select suitable services for a business context."],
+["Buying and selling","Documents, quotations, orders, invoices, delivery notes, receipts and payment.","Identify the purpose and sequence of commercial documents. Distinguish cash and credit transactions and calculate trade discounts where required."],
+["Marketing and consumer protection","Market research, promotion, branding, consumer rights and complaints.","Assess marketing methods for target customers and budget. Explain truthful advertising, product safety and consumer redress."],
+["International trade and finance","Imports, exports, exchange rates, customs, balance of trade and trade barriers.","Explain how exchange-rate movements affect importers and exporters. Distinguish visible trade from services and evaluate trade restrictions."]
+]},
+"Travel & Tourism":{group:"Business",code:"0471 (confirm board)",topics:[
+["The travel and tourism industry","Components, sectors, organisations, visitor types and industry structure.","Map how transport, accommodation, attractions and intermediaries combine to create a visitor experience."],
+["Tourist destinations and attractions","Natural and built attractions, destination features and appeal.","Explain destination appeal using accessibility, facilities, climate, culture, safety and target-market needs."],
+["Customer service and the visitor experience","Customer expectations, service quality, complaints and accessibility.","Evaluate service using reliability, responsiveness, assurance, empathy and tangible features. Propose practical service improvements."],
+["Marketing and promotion","Market research, segmentation, product, price, place, promotion and digital marketing.","Choose a promotional mix suited to the audience, destination image and budget; measure effectiveness."],
+["Tourism impacts and sustainability","Economic, social, cultural and environmental effects; responsible tourism.","Balance employment and income with congestion, cultural pressure, emissions and ecosystem damage. Assess sustainable management."],
+["Tour operations and planning","Itineraries, transport, accommodation, safety, risk and travel documentation.","Design a feasible itinerary that considers time, cost, customer needs, seasonality and contingency arrangements."]
+]},
+"Psychology":{group:"Humanities",code:"0266 (new Cambridge O Level; check syllabus)",topics:[
+["Psychological research methods","Experiments, observations, questionnaires, case studies, sampling and ethics.","Identify aim, hypothesis, variables, sample and procedure. Evaluate validity, reliability, bias, ethics and generalisability."],
+["Biological and cognitive processes","Brain, nervous system, perception, memory and attention.","Explain how biological systems and cognitive processes influence behaviour. Distinguish evidence-based explanations from unsupported claims."],
+["Learning and behaviour","Classical conditioning, operant conditioning, observational learning and reinforcement.","Compare learning explanations and apply them to a practical behaviour. Identify strengths and limitations of each explanation."],
+["Social influence and relationships","Conformity, obedience, group behaviour, attribution and interpersonal relationships.","Explain how social context influences behaviour and evaluate research using methods and cultural context."],
+["Development and individual differences","Child development, personality, intelligence and psychological variation.","Avoid treating group averages as predictions for individuals. Evaluate biological, cognitive and social contributions."],
+["Applying psychology","Health, education, workplace and everyday applications; ethical implications.","Apply psychological concepts to a scenario and assess benefits, risks and ethical considerations."]
+]},
+"Sociology":{group:"Humanities",code:"2251 / 0495 equivalents vary",topics:[
+["Sociological concepts and perspectives","Culture, norms, values, socialisation, identity and major perspectives.","Use concepts precisely and compare functionalist, conflict, interactionist and other perspectives where included in the syllabus."],
+["Research methods","Questionnaires, interviews, observation, experiments, documents and sampling.","Evaluate representativeness, validity, reliability, ethics and practical constraints. Explain why a method suits a particular research question."],
+["Family and households","Family diversity, roles, relationships, marriage, divorce and social change.","Compare family forms and explain how class, gender, culture and policy may shape family life."],
+["Education","School processes, achievement, inequality, hidden curriculum and policy.","Evaluate explanations for educational differences using evidence and competing interpretations."],
+["Social stratification and inequality","Class, status, power, gender, ethnicity, age and social mobility.","Distinguish equality of opportunity from equality of outcome. Explain structural and individual explanations for inequality."],
+["Crime and deviance","Definitions, social control, crime patterns, explanations and responses.","Assess how crime is measured and why official statistics may be limited. Compare explanations and policy responses."],
+["Media and social change","Media ownership, representation, audience, globalisation and social movements.","Analyse representation and power; evaluate media influence alongside audience agency and wider social factors."]
+]},
+"Literature in English":{group:"Languages",code:"2010 / 0475 (text and board dependent)",topics:[
+["Close reading and literary methods","Characterisation, setting, structure, voice, imagery, symbolism and tone.","Support interpretations with precise textual evidence. Explain how a writer's choices shape meaning and reader response."],
+["Poetry analysis","Speaker, form, rhythm, sound, imagery, contrast and theme.","Analyse effects rather than merely naming devices. Connect language and structure to the poem's central ideas."],
+["Prose fiction","Narrative perspective, plot, character development, setting and themes.","Trace how characters and conflicts develop. Use short, relevant references and explain their significance."],
+["Drama and stagecraft","Dialogue, stage directions, dramatic irony, conflict and performance choices.","Consider how a scene works for an audience, including speech, action, staging and dramatic structure."],
+["Comparative interpretation","Similarities, differences, context and alternative readings.","Organise comparison around ideas and methods rather than writing two unrelated mini-essays."],
+["Essay planning and examination response","Thesis, paragraph development, evidence integration and conclusion.","Answer the exact wording, develop a coherent argument and integrate quotations accurately. Match texts to the prescribed syllabus list."]
+]},
+"Art & Design":{group:"Creative and practical",code:"6090 / 0400 variants",topics:[
+["Visual research and observation","Primary and secondary sources, observation, recording and contextual research.","Collect relevant visual references and record direct observation. Annotate decisions and show how research informs personal development."],
+["Elements and principles of design","Line, shape, form, tone, colour, texture, space, balance, contrast and composition.","Use visual elements intentionally. Explain how composition guides attention and communicates meaning."],
+["Media, materials and techniques","Drawing, painting, printmaking, sculpture, textiles, photography and digital media.","Select media to suit intention and demonstrate control through experiments, tests and refinement."],
+["Development and experimentation","Idea generation, thumbnails, alternatives, refinement and problem solving.","Show a visible journey from research to final outcome. Evaluate experiments and explain why choices were made."],
+["Personal response and final outcome","Originality, technical skill, communication and presentation.","Ensure the final work resolves the brief and reflects the development process. Present work clearly and document sources where required."]
+]},
+"Food & Nutrition":{group:"Creative and practical",code:"6065 (Cambridge O Level)",topics:[
+["Food nutrients and functions","Carbohydrates, proteins, fats, vitamins, minerals, water and fibre.","Explain nutrient functions, sources and deficiency or excess effects. Link dietary needs to age, activity and health."],
+["Meal planning and dietary needs","Balanced diets, life stages, culture, cost and special dietary requirements.","Plan meals that meet nutritional needs, budget, availability and cultural preferences. Justify choices using nutrient knowledge."],
+["Food commodities and selection","Food groups, quality, seasonality, storage and purchasing.","Choose ingredients based on quality, cost, intended use and safe storage. Interpret labels and dates accurately."],
+["Food preparation and cooking","Methods of heat transfer, cooking methods, recipe adaptation and sensory qualities.","Explain how cooking changes texture, flavour, appearance and nutrient content. Select methods appropriate to the food."],
+["Food hygiene and safety","Contamination, food poisoning, personal hygiene, storage and temperature control.","Prevent cross-contamination, maintain safe temperatures and apply clean preparation routines."],
+["Practical planning and evaluation","Time plans, equipment, sequencing, costing, presentation and evaluation.","Prepare a realistic sequence, identify equipment and justify methods. Evaluate the finished product against the task and suggest improvements."]
+]},
+"Fashion & Textiles":{group:"Creative and practical",code:"6130 (Cambridge O Level)",topics:[
+["Fibres and fabrics","Natural and manufactured fibres, yarns, fabric construction and properties.","Relate fibre and fabric properties to end use, care, comfort, durability and environmental impact."],
+["Design principles and fashion","Colour, line, shape, proportion, function, trend and target user.","Develop designs for a specified user and purpose. Explain how visual choices and practical requirements shape the design."],
+["Textile processes and techniques","Dyeing, printing, embellishment, seams, fastenings and construction.","Select techniques and finishes suited to fabric properties and product function. Demonstrate safe, accurate workmanship."],
+["Pattern development and garment construction","Measurements, pattern pieces, layout, cutting, fitting and assembly.","Use accurate measurements and grain alignment. Plan construction sequence and minimise fabric waste."],
+["Textile care and sustainability","Labelling, laundering, repair, recycling, ethical sourcing and waste.","Compare care requirements and evaluate environmental and social impacts across a product lifecycle."],
+["Design project and evaluation","Brief, research, specification, prototypes, final product and review.","Use a specification to judge the outcome. Document testing, modifications and final evaluation."]
+]},
+"Design & Technology":{group:"Creative and practical",code:"0445 (Cambridge O Level)",topics:[
+["Design process and communication","Brief, research, specification, ideation, sketching, modelling and evaluation.","Translate a need into measurable design criteria. Generate alternatives, annotate decisions and test ideas against the specification."],
+["Materials and properties","Timber, metals, polymers, textiles, composites and smart materials.","Choose materials by strength, durability, workability, cost, availability and environmental impact."],
+["Tools, equipment and workshop safety","Hand tools, machines, measurement, marking out and safe working.","Select appropriate tools and explain safe operating procedures, PPE and risk controls."],
+["Manufacturing processes","Cutting, forming, joining, finishing, batch and mass production.","Compare processes by accuracy, repeatability, cost, scale and waste. Select suitable joining and finishing methods."],
+["Mechanisms, structures and systems","Levers, gears, linkages, structures, forces and simple control systems.","Explain how components transmit motion or forces. Use labelled diagrams and apply mechanical principles to a design."],
+["Prototyping, testing and evaluation","Models, testing criteria, user feedback, modification and sustainability.","Test against the specification, record evidence and justify modifications. Evaluate the product across its lifecycle."]
+]},
+"Drama":{group:"Creative and practical",code:"0411 (Cambridge O Level)",topics:[
+["Performance skills","Voice, movement, gesture, facial expression, space and focus.","Use vocal and physical choices deliberately to communicate character, intention and relationships."],
+["Theatre forms and conventions","Genre, style, staging, audience relationship and dramatic conventions.","Identify conventions and explain how they shape audience experience and meaning."],
+["Script interpretation and character","Given circumstances, objectives, tactics, subtext and character development.","Use textual clues to build a coherent interpretation. Justify performance choices with reference to the script."],
+["Devising and structure","Stimulus, improvisation, collaboration, dramatic structure and refinement.","Develop material from a stimulus, select effective moments and shape a clear dramatic journey."],
+["Technical theatre","Lighting, sound, costume, set, props and stage management.","Explain how technical elements support mood, action, setting and clarity while meeting practical constraints."],
+["Evaluation and reflection","Rehearsal process, performance analysis, audience response and improvement.","Evaluate specific choices using evidence and identify practical next steps."]
+]},
+"Music":{group:"Creative and practical",code:"0410 (Cambridge O Level)",topics:[
+["Elements of music","Pitch, rhythm, metre, tempo, dynamics, texture, timbre and structure.","Use accurate musical vocabulary to describe what is heard and how elements combine."],
+["Listening and analysis","Instrument recognition, style, form, melodic and harmonic features.","Support observations with precise listening evidence, including changes, patterns and contrasts."],
+["Notation and musicianship","Staff notation, clefs, key signatures, time signatures, intervals and rhythm.","Read and write notation accurately. Check pitch, duration, rests and accidentals."],
+["Composition","Motif development, melody, harmony, structure, texture and expressive intention.","Develop musical ideas coherently and use techniques appropriate to the intended style and forces."],
+["Performance","Preparation, technique, interpretation, ensemble and communication.","Demonstrate accuracy, control, expression and secure preparation. Reflect on strengths and areas for improvement."],
+["Musical traditions and context","Genres, composers, cultural context and stylistic characteristics.","Relate musical features to context without relying on unsupported generalisations."]
+]},
+"Physical Education":{group:"Creative and practical",code:"0413 (Cambridge O Level)",topics:[
+["Anatomy and physiology","Skeletal and muscular systems, joints, movement and body systems.","Relate structure to function and explain how muscles, bones and joints produce movement."],
+["Fitness and training","Health-related and skill-related fitness, principles, methods and planning.","Match training method to fitness component and sporting demand. Explain overload, progression, specificity, reversibility and recovery."],
+["Skill acquisition and psychology","Learning stages, feedback, motivation, arousal and goal setting.","Explain how practice and feedback improve performance and how psychological factors influence participation."],
+["Health, safety and nutrition","Lifestyle, diet, hydration, injury prevention and first aid principles.","Relate nutrition and hydration to activity. Identify risks and appropriate preventive measures."],
+["Analysis of performance","Movement analysis, tactics, evaluation and improvement plans.","Use observations to identify strengths and weaknesses and propose specific, measurable improvements."],
+["Practical activity and examination preparation","Rules, techniques, tactics, officiating and performance evidence.","Demonstrate safe, effective performance and explain decisions using subject vocabulary."]
+]},
+"Islamic Studies":{group:"Religious studies",code:"2068 (Cambridge O Level)",topics:[
+["Foundations of Islam","Belief in Allah, angels, revealed books, prophets, the Last Day and divine decree.","Explain core beliefs accurately and show how they shape Muslim worship, conduct and worldview."],
+["The Qur'an and Hadith","Revelation, compilation, authority, interpretation and application.","Distinguish Qur'anic teaching from Hadith and explain how sources guide belief and practice."],
+["The Prophet Muhammad","Life, mission, character, leadership and lessons for Muslims.","Use accurate historical sequence and explain significance for the early Muslim community and later practice."],
+["Worship and the Five Pillars","Shahadah, prayer, zakat, fasting and pilgrimage.","Explain purpose, practice and spiritual or social significance of each pillar."],
+["Islamic ethics and society","Family, community, justice, charity, responsibilities and contemporary issues.","Apply principles to scenarios and support conclusions with relevant teachings."]
+]},
+"Islamiyat":{group:"Religious studies",code:"2058 (Cambridge O Level)",topics:[
+["The Qur'an","Revelation, compilation, themes and selected passages.","Explain the meaning and significance of prescribed passages using accurate context and teachings."],
+["Hadith and Sunnah","Compilation, authority, classification at syllabus level and moral guidance.","Explain how Hadith complements the Qur'an and informs Muslim belief and conduct."],
+["The life and importance of Prophet Muhammad","Early life, prophethood, persecution, migration, community and leadership.","Organise events chronologically and explain their significance for the development of Islam."],
+["The Rightly Guided Caliphs","Leadership, major events, administration and achievements.","Compare contributions and explain challenges faced by the early Muslim community."],
+["Beliefs, worship and practices","Articles of faith, pillars, prayer, fasting, zakat and Hajj.","Explain both the performance and meaning of practices, including their individual and communal importance."],
+["Muslim life and contemporary application","Ethics, family, community, social responsibilities and Islamic law at syllabus level.","Apply relevant teachings to practical situations and construct balanced, evidence-based responses."]
+]},
+"Pakistan Studies":{group:"Humanities",code:"2059 (Cambridge O Level)",topics:[
+["Cultural, physical and human geography","Location, climate, landforms, population, resources and settlement.","Use maps and data to explain how physical and human factors influence livelihoods and development."],
+["Natural resources and economic development","Agriculture, water, minerals, energy, industry, trade and transport.","Evaluate resource use and development challenges using evidence and sustainability considerations."],
+["Movement towards independence","Political developments, reform movements, key leaders and events to 1947.","Explain causes, turning points and significance rather than listing events only."],
+["Formation and development of Pakistan","Early challenges, constitutional developments, political and social change.","Analyse causes and consequences, compare leadership periods and support judgements with accurate evidence."],
+["Pakistan's international relations","Regional and global relationships, security, trade and diplomacy.","Evaluate relationships in terms of political, economic and strategic interests."]
+]},
+"Bangladesh Studies":{group:"Humanities",code:"7094 (Cambridge O Level)",topics:[
+["Physical geography and environment","Location, rivers, delta, climate, hazards and natural resources.","Explain how deltaic geography, monsoon climate and hazards shape settlement, agriculture and livelihoods."],
+["Population and society","Population distribution, urbanisation, migration, education and health.","Interpret demographic data and explain pressures and opportunities associated with population change."],
+["Economic development","Agriculture, industry, garments, services, trade and infrastructure.","Evaluate economic change using employment, exports, productivity, inequality and environmental impacts."],
+["Historical development and independence","Colonial rule, partition, language movement, political developments and 1971.","Explain causes, key events and consequences using accurate chronology and evidence."],
+["Government, citizenship and international relations","Political institutions, rights, development priorities and regional relations.","Explain institutions and assess policy challenges and international connections."]
+]},
+"Biblical Studies":{group:"Religious studies",code:"2035 (Cambridge O Level)",topics:[
+["Biblical texts and context","Historical setting, literary forms, authorship questions and interpretation.","Read passages in context and distinguish narrative, law, poetry, prophecy and teaching."],
+["Key themes and teachings","Creation, covenant, faith, justice, worship, forgiveness and discipleship.","Explain themes using relevant passages and show how teachings relate to belief and conduct."],
+["People and events in the Bible","Major figures, narratives, leadership and turning points in prescribed texts.","Use accurate sequence and explain significance rather than simply retelling the story."],
+["Ethics and application","Moral choices, community, relationships and contemporary issues.","Apply biblical principles to scenarios, acknowledge differing interpretations and justify conclusions."]
+]},
+"Religious Studies":{group:"Religious studies",code:"0490 (Cambridge O Level)",topics:[
+["Beliefs and sources of authority","Core beliefs, sacred texts, founders, traditions and interpretation.","Explain beliefs accurately and distinguish shared principles from differences within traditions."],
+["Worship and religious practice","Rituals, festivals, prayer, pilgrimage and life-cycle ceremonies.","Describe practice and explain personal, communal and theological significance."],
+["Ethics and moral decision-making","Family, life, justice, environment, wealth and social responsibility.","Apply religious teachings to an issue, compare viewpoints and justify a conclusion."],
+["Religion and society","Community, identity, education, interfaith relations and change.","Explain how religion influences society and how social context may shape religious practice."]
+]},
+"Global Perspectives":{group:"Humanities",code:"2069 / 0457",topics:[
+["Research questions and global issues","Global-local connections, issue framing, research aims and scope.","Frame a focused question, explain global significance and connect international patterns to local experience."],
+["Research methods and evidence","Primary and secondary research, sampling, surveys and source evaluation.","Assess reliability, bias, representativeness, currency and research ethics."],
+["Perspectives and viewpoints","Stakeholders, values, assumptions, cultural context and disagreement.","Represent viewpoints fairly and distinguish evidence, opinion and assumption."],
+["Analysis and evaluation","Causes, consequences, comparison, solutions and trade-offs.","Compare responses by feasibility, cost, fairness, sustainability and unintended consequences."],
+["Communication and collaborative action","Argument, presentation, referencing, planning and reflection.","Communicate a supported argument, plan measurable action and evaluate impact."]
+]}
+};
+Object.entries(extraPacks).forEach(([name,p])=>{if(!packs[name])packs[name]=p;});
+
 const all=[];Object.entries(directory).forEach(([g,arr])=>arr.forEach(s=>{if(!all.some(x=>x.name===s))all.push({name:s,group:g})}));
 let selected="";const el=id=>document.getElementById(id);
 function build(){const groups=[...new Set(all.map(x=>x.group))];el("group").innerHTML='<option value="">All subject groups</option>'+groups.map(g=>'<option>'+g+'</option>').join("");drawSubjects();}
