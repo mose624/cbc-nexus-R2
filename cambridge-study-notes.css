@@ -38,3 +38,16 @@
 .cn-notes .notice{background:#fff8e8;border:1px solid #f2dfaa;border-radius:10px;padding:13px 15px;font-size:13px;line-height:1.6;margin:14px 0}
 .cn-notes footer{background:var(--cn-navy);color:#dce8fa;text-align:center;padding:25px;margin-top:35px}
 @media(max-width:800px){.cn-notes .layout{grid-template-columns:1fr}.cn-notes .filters{position:static}.cn-notes .catalogue{margin-left:12px;margin-right:12px}}
+
+/* Guided deep-learning layer */
+.cn-notes .deep-guide{margin:20px 0;padding:18px;border:1px solid #cbd8ea;border-radius:13px;background:#f8fbff}
+.cn-notes .deep-guide>h3{margin:0 0 8px;color:var(--cn-navy)}
+.cn-notes .deep-guide h4{margin:10px 0;color:var(--cn-blue);font-size:15px}
+.cn-notes .deep-guide p,.cn-notes .deep-guide li{font-size:14px;line-height:1.7}
+.cn-notes .deep-columns{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cn-notes .deep-columns>div,.cn-notes .deep-task{background:#fff;border:1px solid var(--cn-line);border-radius:10px;padding:12px;margin-top:12px}
+.cn-notes .deep-guide ol{padding-left:22px}
+.cn-notes .deep-guide li{margin:7px 0}
+.cn-notes .deep-guide li span{display:block;color:var(--cn-muted);font-size:13px}
+.cn-notes .deep-task ul{padding-left:22px}
+@media(max-width:650px){.cn-notes .deep-columns{grid-template-columns:1fr}}
