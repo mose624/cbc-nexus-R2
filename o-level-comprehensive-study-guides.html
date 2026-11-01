@@ -327,6 +327,96 @@ const extraPacks={
 };
 Object.entries(extraPacks).forEach(([name,p])=>{if(!packs[name])packs[name]=p;});
 
+const groupChapterMaps={
+"Languages":[
+["Reading and comprehension","Read for explicit meaning, inference, tone and purpose. Select precise evidence and explain how it supports an answer."],
+["Writing for purpose and audience","Plan content, register, paragraph order and tone. Use accurate grammar and vocabulary appropriate to the task."],
+["Summary and information selection","Select distinct relevant points, paraphrase faithfully, organise logically and observe the stated word limit."],
+["Grammar and sentence control","Practise tense, agreement, clauses, punctuation, spelling and sentence variety in context."],
+["Literature and interpretation","Analyse character, setting, theme, voice, imagery and structure using relevant textual evidence where prescribed."],
+["Speaking, listening and interaction","Communicate clearly, respond to prompts, develop ideas and listen actively where the syllabus assesses these skills."],
+["Translation and vocabulary development","Build topic vocabulary, use context to infer meaning and preserve accuracy and register when translating where required."],
+["Examination technique","Identify task requirements, allocate time, check accuracy and answer every part of the question." ]
+],
+"Mathematics":[
+["Number and numerical reasoning","Work with integers, fractions, decimals, percentages, ratio, proportion, indices, standard form, approximation and bounds."],
+["Algebra and equations","Simplify expressions, expand and factorise, solve equations and inequalities, rearrange formulae and model situations."],
+["Sequences, functions and graphs","Recognise patterns, use nth terms where required, plot and interpret graphs and solve problems from intersections."],
+["Geometry and mensuration","Apply angle properties, polygons, similarity, congruence, constructions, perimeter, area, surface area and volume."],
+["Coordinate geometry and vectors","Use coordinates, gradients, equations of lines and vector methods appropriate to the syllabus."],
+["Trigonometry and transformations","Apply Pythagoras, trigonometric ratios, bearings and geometric transformations with diagrams and units."],
+["Statistics and probability","Collect and represent data, calculate averages and spread, interpret charts and solve probability problems."],
+["Problem solving and examination practice","Translate unfamiliar contexts into mathematical steps, show working, check reasonableness and state units." ]
+],
+"Sciences":[
+["Scientific method and practical skills","Identify variables, formulate hypotheses, select apparatus, measure safely, repeat readings and evaluate reliability."],
+["Structure, classification and properties","Study the composition, organisation and classification of the relevant living or non-living systems in the subject."],
+["Processes, interactions and systems","Explain the key processes and how components interact, using correct terminology and labelled diagrams."],
+["Energy, matter and change","Describe transfers, transformations, conservation and changes using the subject's relevant models and laws."],
+["Cycles, equilibrium and regulation","Explain cyclic processes, balance, feedback and conditions that affect system behaviour where relevant."],
+["Applications, technology and environment","Apply scientific principles to everyday, industrial, medical and environmental contexts."],
+["Practical investigation and data analysis","Construct tables and graphs, identify patterns and anomalies, interpret results and suggest improvements."],
+["Structured examination questions","Practise definitions, explanations, calculations, predictions, comparisons and evidence-based evaluations." ]
+],
+"Humanities":[
+["Key concepts, context and terminology","Define core subject concepts accurately and place issues in their geographical, historical, social or environmental context."],
+["Patterns, processes and change","Explain how patterns develop, the processes driving them and how they change over time or across places."],
+["People, places and institutions","Examine the roles, relationships and experiences of individuals, communities, institutions and governments."],
+["Causes, consequences and significance","Separate underlying causes from triggers, trace short- and long-term effects and judge significance using evidence."],
+["Sources, evidence and interpretation","Interpret maps, graphs, documents, statistics and viewpoints; assess provenance, reliability and limitations."],
+["Issues, responses and case studies","Compare strategies and use relevant examples to assess effectiveness, fairness and sustainability."],
+["Fieldwork, research and enquiry","Frame questions, select methods, gather evidence, analyse findings and evaluate limitations where applicable."],
+["Extended responses and evaluation","Construct a coherent argument, support it with evidence, address alternatives and reach a justified conclusion." ]
+],
+"Business":[
+["Business and economic foundations","Explain needs, scarcity, enterprise, markets, stakeholders and the context in which organisations operate."],
+["Organisation, ownership and objectives","Compare organisational forms, roles, objectives, responsibilities and sources of finance."],
+["Operations and production","Analyse production methods, productivity, quality, location, inventory and the use of resources."],
+["Marketing and customers","Apply market research, segmentation, product, price, promotion, distribution and customer service concepts."],
+["People and management","Explain recruitment, training, motivation, leadership, communication and workforce performance."],
+["Finance, records and performance","Calculate and interpret relevant costs, revenue, profit, cash flow, budgets, accounts or financial ratios."],
+["External influences and international trade","Assess legal, technological, social, environmental and economic factors affecting organisations."],
+["Business decisions and evaluation","Use case evidence, calculations and stakeholder impacts to justify practical recommendations." ]
+],
+"Computing":[
+["Computer systems and hardware","Explain processor, memory, storage, input, output and system components in context."],
+["Data representation and information","Represent, process, validate and interpret data using the formats and methods required by the syllabus."],
+["Networks and communication","Explain network structures, protocols, transmission, internet services and security considerations."],
+["Algorithms and computational thinking","Decompose problems, design algorithms, trace logic and test normal, boundary and invalid cases."],
+["Programming and software development","Use variables, data types, selection, iteration, arrays, procedures and testing methods as prescribed."],
+["Databases and information management","Design tables, fields, keys, validation rules, queries and reports where required."],
+["Cybersecurity, ethics and impacts","Evaluate threats, safeguards, privacy, intellectual property, accessibility and social impacts."],
+["Practical tasks and examination responses","Follow task instructions, document reasoning, test outputs and explain decisions precisely." ]
+],
+"Creative and practical":[
+["Design brief, research and specification","Identify user needs, investigate context and develop measurable design criteria."],
+["Materials, media and properties","Compare materials, tools and media by suitability, performance, cost, safety and sustainability."],
+["Techniques, processes and skills","Practise subject-specific making, performance, production or practical techniques accurately and safely."],
+["Planning, development and experimentation","Generate alternatives, test ideas, record development and refine the selected approach."],
+["Production, presentation and communication","Complete and present work to an appropriate standard for the intended audience or user."],
+["Evaluation, improvement and sustainability","Evaluate outcomes against criteria, explain limitations and recommend realistic improvements."],
+["Subject knowledge and contextual study","Study relevant styles, traditions, principles, processes and professional practice for the subject."],
+["Assessment preparation and reflection","Understand assessment criteria, organise evidence and reflect on strengths and next steps." ]
+],
+"Religious studies":[
+["Foundations, beliefs and key concepts","Explain central beliefs, concepts, sources of authority and terminology accurately."],
+["Sacred texts, teachings and interpretation","Interpret prescribed texts in context and explain their significance for belief and practice."],
+["Historical development and key figures","Describe important people, events and developments in accurate sequence and explain their significance."],
+["Worship, rituals and religious practice","Explain the purpose, forms and personal or communal significance of prescribed practices."],
+["Ethics, values and moral decision-making","Apply teachings to moral issues, compare viewpoints and justify conclusions."],
+["Religion, society and contemporary issues","Assess the influence of religion on individuals, communities, identity and social questions."],
+["Comparison, evidence and interpretation","Compare perspectives fairly and support explanations with relevant teachings and examples."],
+["Structured examination responses","Practise accurate description, explanation, comparison and evaluation using relevant evidence." ]
+]};
+function addMappedSubjectPacks(){
+const allSubjects=Object.entries(directory).flatMap(([group,names])=>names.map(name=>({group,name})));
+allSubjects.forEach(({group,name})=>{
+if(packs[name])return;
+const map=groupChapterMaps[group]||groupChapterMaps["Humanities"];
+packs[name]={group,code:"Confirm the awarding body, syllabus code and examination year",topics:map.map(([title,notes],i)=>[title,notes+" Study the prescribed subject content and examples for the correct syllabus. Use the official subject guide to confirm subtopics, depth, options and assessment requirements.",notes+" For examination preparation, define key terms, explain the relevant process or idea in a logical sequence, apply it to a named example or scenario, and evaluate evidence or limitations where the question requires it."])};
+});
+}
+addMappedSubjectPacks();
 const all=[];Object.entries(directory).forEach(([g,arr])=>arr.forEach(s=>{if(!all.some(x=>x.name===s))all.push({name:s,group:g})}));
 let selected="";const el=id=>document.getElementById(id);
 function build(){const groups=[...new Set(all.map(x=>x.group))];el("group").innerHTML='<option value="">All subject groups</option>'+groups.map(g=>'<option>'+g+'</option>').join("");drawSubjects();}
