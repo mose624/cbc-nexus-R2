@@ -158,6 +158,18 @@
     render();
     document.getElementById("internationalResources")?.scrollIntoView({behavior:"smooth",block:"start"});
   }));
+  document.querySelectorAll("[data-filter-subject]").forEach(link => link.addEventListener("click", () => {
+    const selectedSubject = String(link.dataset.filterSubject || "").trim();
+    if (subject) subject.value = [...subject.options].some(o => o.value.toLowerCase() === selectedSubject.toLowerCase()) ? selectedSubject : "";
+    if (window.history?.replaceState) {
+      const params = new URLSearchParams(window.location.search);
+      if (subject?.value) params.set("subject", subject.value); else params.delete("subject");
+      const query = params.toString();
+      window.history.replaceState({}, "", window.location.pathname + (query ? "?" + query : "") + "#internationalResources");
+    }
+    render();
+    document.getElementById("internationalResources")?.scrollIntoView({behavior:"smooth",block:"start"});
+  }));
   reset?.addEventListener("click", () => { if(subject) subject.value=""; if(topicFilter) topicFilter.value=""; if(levelFilter) levelFilter.value=""; if(qualificationFilter) qualificationFilter.value=""; if(sessionFilter) sessionFilter.value=""; if (window.history?.replaceState) window.history.replaceState({}, "", window.location.pathname + "#internationalResources"); if(type) type.value=""; if(search) search.value=""; render(); });
   load();
 })();
