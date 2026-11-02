@@ -157,7 +157,7 @@ footer a{color:#fff}
   "igcse.html":name=>"cambridge-study-notes.html?stage=igcse&subject="+encodeURIComponent(name),
   "cambridge-international.html":name=>"cambridge-study-notes.html?subject="+encodeURIComponent(name),
   "ib.html":name=>"ib-comprehensive-study-guides.html?subject="+encodeURIComponent(name),
-  "o-levels.html":name=>"o-levels.html?subject="+encodeURIComponent(name)+"#subjects",
+  "o-levels.html":name=>"resource-category.html?curriculum=O%20Levels&type=Notes&subject="+encodeURIComponent(name),
   "a-levels.html":name=>"cambridge-study-notes.html?stage=alevel&subject="+encodeURIComponent(name),
   "pearson-edexcel.html":name=>"pearson-study-notes.html?subject="+encodeURIComponent(name)
  };
@@ -177,7 +177,7 @@ footer a{color:#fff}
    item.hidden=!match;if(match)shown++;
    const subjectName=item.textContent.replace(/›/g,"").trim();
    const route=routes[curriculumChoice.value]||routes["igcse.html"];
-   item.href=route(subjectName);
+   item.href=subjectName.startsWith("Mathematics · Calculation")?"international-mathematics-practice.html":route(subjectName);
    item.setAttribute("aria-label","Open online "+subjectName+" notes");
    item.title="Open online "+subjectName+" notes";
   });
