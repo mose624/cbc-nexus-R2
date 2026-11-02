@@ -58,6 +58,27 @@ function countyPage(req,county){
  "/kenya-education-county/"+slug(label),label+" County Education Guide",
  "Explore education opportunities in "+label+" County, Kenya. Find higher-education institutions, TVET and technical training options, teacher training, KMTC and related opportunities. Confirm current programmes and admissions with the official institution or regulator.",links);
 }
+async function interactiveQuestionGradePage(req,raw,grade,label,desc,links){
+ let rows=[];
+ if(supabaseConfigured){
+  try{
+   const {data,error}=await supabase.from("interactive_questions").select("id,grade,subject,strand,question,options,correct_index,explanation,image_url,image_alt").eq("published",true).eq("grade",grade).order("created_at",{ascending:false}).limit(8);
+   if(error) throw error;
+   rows=Array.isArray(data)?data:[];
+  }catch(e){console.warn("Interactive question SEO sample load failed:",e.message||e);}
+ }
+ const cards=rows.map((q,i)=>{
+  const opts=Array.isArray(q.options)?q.options:[];
+  const choices=opts.map((v,j)=>'<li>'+String.fromCharCode(65+j)+'. '+esc(v)+'</li>').join("");
+  const answer=Number(q.correct_index);
+  const answerText=Number.isInteger(answer)&&opts[answer]!==undefined?String.fromCharCode(65+answer)+'. '+String(opts[answer]):"";
+  return '<article class="iq-question"><p class="iq-meta">'+esc(q.subject||"Practice")+(q.strand?' · '+esc(q.strand):"")+'</p><h3>Practice question '+(i+1)+'</h3><p>'+esc(q.question)+'</p>'+(choices?'<ol class="iq-options" type="A">'+opts.map(v=>'<li>'+esc(v)+'</li>').join("")+'</ol>':"")+'<details><summary>Show answer and explanation</summary><p><strong>Answer:</strong> '+esc(answerText)+'</p><p>'+esc(q.explanation||"Review the topic notes and check your reasoning.")+'</p></details></article>';
+ }).join("");
+ const fallback=rows.length?"":'<p>Questions for this grade are being added to the online practice bank. Open the learner portal to see the latest published question sets.</p>';
+ const section='<section class="iq-bank"><h2>'+esc(grade)+' sample practice questions</h2><p>These original CBE Nexus practice questions are selected from the published learner question bank. Attempt each question, then reveal the answer and explanation to check your understanding. The live quiz centre may contain additional questions.</p>'+cards+fallback+'<p><a href="/interactive-questions.html">Open all interactive questions</a> · <a href="/quizzes.html">Start a marked quiz</a></p></section>';
+ const html=page(req,label+" | CBE Nexus Kenya",desc,"/free-interactive-questions/"+slug(grade),label,"Practise and review "+grade+" questions online with CBE Nexus. Choose a subject and use the sample questions below before continuing to the learner portal.",links);
+ return html.replace("</head>","<style>.iq-bank{margin:24px 0}.iq-question{border:1px solid #dbe3ec;border-radius:12px;padding:18px;margin:14px 0}.iq-question h3{margin:6px 0}.iq-meta{font-size:.9rem;color:#52606d;font-weight:700}.iq-options{line-height:1.8}.iq-question details{background:#f1f5f9;padding:10px 14px;border-radius:8px}.iq-question summary{cursor:pointer;font-weight:700}</style></head>").replace("</main>",section+"</main>");
+}
 async function resourcePage(req,id){
  try{
   let r=null;
@@ -176,7 +197,7 @@ async function match(req){
   const label="Free Interactive Questions for "+grade;
   const desc="Practise free online interactive questions for "+grade+" learners on CBE Nexus. Explore curriculum-linked CBC/CBE questions, subject practice, quizzes and instant feedback. Availability depends on the questions currently published in the learner portal.";
   const links=[{url:"/interactive-questions.html",label:"Open the Interactive Questions portal"},{url:"/quizzes.html",label:"Try automated marked quizzes"},{url:"/free-interactive-questions",label:"Browse interactive questions for all grades"},{url:"/resources.html",label:"Browse learning resources"}];
-  return page(req,label+" | CBE Nexus Kenya",desc,"/free-interactive-questions/"+slug(grade),label,"Practise and review "+grade+" questions online with CBE Nexus. Choose the learner portal to see questions currently published for your grade.",links);
+  return await interactiveQuestionGradePage(req,raw,grade,label,desc,links);
  }
  const rm=p.match(/^\/resource\/([^/]+)$/);
  if(rm){return await resourcePage(req,decodeURIComponent(rm[1]));}
