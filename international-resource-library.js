@@ -26,6 +26,28 @@
       && (!t || String(r.type || "").trim().toLowerCase() === t) && (!q || hay.includes(q));
   }
 
+  function safeImageUrl(value) {
+    const raw = String(value || "").trim();
+    if (!raw) return "";
+    try {
+      const url = new URL(raw, window.location.origin);
+      if (url.protocol !== "https:" && url.origin !== window.location.origin) return "";
+      if (url.protocol !== "https:" && url.protocol !== "http:") return "";
+      return url.href;
+    } catch { return ""; }
+  }
+
+  function resourceCover(r) {
+    const supplied = safeImageUrl(r.imageUrl || r.image_url || r.thumbnailUrl || r.thumbnail_url || r.coverImage || r.cover_image);
+    if (supplied) return '<img class="international-library-cover-image" src="'+esc(supplied)+'" alt="'+esc((r.title || "Resource") + " cover image")+'" loading="lazy" decoding="async" onerror="this.hidden=true;this.nextElementSibling.hidden=false">';
+    const subjectName = String(r.subject || "Learning").trim();
+    const typeName = String(r.type || "Resource").trim();
+    const initials = subjectName.split(/\\s+/).slice(0,2).map(x => x.charAt(0)).join("").toUpperCase() || "LN";
+    const title = String(r.title || "Learning resource").slice(0,52);
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071a3d"/><stop offset="1" stop-color="#087fa7"/></linearGradient></defs><rect width="720" height="300" rx="24" fill="url(#g)"/><circle cx="610" cy="65" r="120" fill="#ffffff" opacity=".08"/><circle cx="665" cy="245" r="95" fill="#18b6d9" opacity=".18"/><path d="M70 75h110a24 24 0 0 1 24 24v122H94a24 24 0 0 0-24 24z" fill="#fff" opacity=".14"/><path d="M180 75h110a24 24 0 0 1 24 24v146H204a24 24 0 0 0-24-24z" fill="#fff" opacity=".22"/><text x="390" y="130" fill="#fff" font-family="Arial,sans-serif" font-size="76" font-weight="700" text-anchor="middle">'+initials+'</text><text x="390" y="184" fill="#d8f5ff" font-family="Arial,sans-serif" font-size="23" font-weight="700" text-anchor="middle">'+esc(curriculum.toUpperCase())+' • '+esc(typeName.toUpperCase().slice(0,24))+'</text><text x="390" y="226" fill="#fff" font-family="Arial,sans-serif" font-size="20" text-anchor="middle">'+esc(title)+'</text></svg>';
+    return '<div class="international-library-cover-fallback" role="img" aria-label="'+esc(subjectName + " " + typeName + " resource cover")+'"><img alt="" src="data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg)+'"><span class="international-library-cover-subject">'+esc(subjectName)+'</span></div>';
+  }
+
   function render() {
     const visible = resources.filter(matches);
     if (count) count.textContent = visible.length;
@@ -33,6 +55,7 @@
       const price = Number(r.price || 0);
       const free = price <= 0 || r.isFreeSample === true;
       return '<article class="international-library-card">'
+        + '<div class="international-library-cover">'+resourceCover(r)+'</div>'
         + '<div class="international-library-card-top"><span class="international-library-badge">'+esc(r.subject || "Subject")+'</span><span class="international-library-type">'+esc(r.type || "Resource")+'</span></div>'
         + '<h3>'+esc(r.title || "Untitled resource")+'</h3><p>'+esc(r.description || "International curriculum learning resource.")+'</p>'
         + '<div class="international-library-meta"><span>'+esc(curriculum)+'</span><span>'+esc(r.fileName || "Digital resource")+'</span></div>'
