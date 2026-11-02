@@ -70,18 +70,55 @@ body{background:#fff}.g10{max-width:none;padding:0}.hero{box-shadow:none}.hero .
 @media(max-width:1000px){.g10-nav{align-items:flex-start;flex-direction:column;gap:7px}.g10-nav-links{justify-content:flex-start}.g10-page .hero{min-height:650px}.g10-page .steps{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:650px){.g10-topbar{padding:8px 12px;font-size:.57rem}.g10-topbar span:first-child{gap:5px;flex-wrap:wrap}.g10-topbar a{padding:6px 9px}.g10-nav{padding:10px 13px}.g10-brand{min-width:0;gap:10px}.g10-brand-mark{width:48px;height:48px;flex-basis:48px;font-size:1.55rem}.g10-brand-copy strong{font-size:1rem}.g10-brand-copy em{font-size:.62rem}.g10-nav-links{gap:6px 14px}.g10-nav-links a{padding:8px 0;font-size:.68rem}.g10-page .hero{min-height:690px;padding:24px 12px 20px;background-position:54% center}.g10-hero-card{padding:20px 16px;border-radius:15px}.g10-page .hero h1{font-size:clamp(1.9rem,8vw,2.5rem)}.g10-page .hero .g10-hero-description{font-size:.94rem}.g10-hero-actions{display:grid;grid-template-columns:1fr;gap:8px;margin-top:18px}.g10-page .hero .g10-hero-actions .btn{width:100%;min-height:49px;font-size:.88rem}.g10-journey{margin-top:17px;padding:14px 12px}.g10-journey h2{font-size:1.08rem}.g10-page .steps{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.g10-page .step{min-height:90px;padding:10px;font-size:.82rem}.g10-page .step:before{width:30px;height:30px;font-size:.85rem}.g10-page .step small{font-size:.7rem}.g10-page .panel{width:calc(100% - 24px);padding:17px;margin-top:13px}}
 @media print{.g10-site-header{display:none!important}.g10-page .hero{min-height:0;background:#073b66!important}}
+
+/* Sky-blue CBE Nexus header refresh */
+.g10-site-header{
+ background:linear-gradient(112deg,#dff6ff 0%,#bcecff 48%,#eafaff 100%)!important;
+ color:#083b60!important;border-bottom:1px solid #8bd5f1!important;
+ box-shadow:0 7px 24px rgba(13,100,145,.14)!important
+}
+.g10-topbar{color:#075477!important;padding-top:10px;padding-bottom:10px}
+.g10-topbar b{color:#073b66!important;font-size:.78rem;letter-spacing:.11em}
+.g10-topbar a{color:#075477!important;border-color:#79c9e9!important;background:rgba(255,255,255,.55);font-weight:800}
+.g10-nav{padding-top:12px;padding-bottom:13px}
+.g10-brand{color:#073b66!important}
+.g10-brand-mark{
+ background:linear-gradient(145deg,#ffffff 0%,#b9edff 38%,#42b9e8 39%,#087bb5 72%,#07527e 73%)!important;
+ border:2px solid rgba(255,255,255,.9);box-shadow:0 5px 14px rgba(5,91,139,.2);
+ color:#fff!important
+}
+.g10-brand-copy strong{color:#073b66!important;font-size:1.22rem}
+.g10-brand-copy small{background:#087fb7!important;color:#fff!important;letter-spacing:.045em}
+.g10-brand-copy em{color:#285a75!important}
+.g10-nav-links{gap:clamp(10px,1.7vw,27px)}
+.g10-nav-links a{
+ color:#104968!important;padding:13px 14px 11px!important;
+ border:1px solid transparent!important;border-radius:24px;
+ font-size:.78rem;font-weight:850;transition:background .18s ease,border-color .18s ease
+}
+.g10-nav-links a:hover,.g10-nav-links a.active{
+ color:#06466d!important;background:#fff!important;
+ border-color:#78c9e8!important;box-shadow:0 4px 12px rgba(10,109,158,.1);
+}
+@media(max-width:650px){
+ .g10-site-header{background:linear-gradient(135deg,#dff6ff,#b7eaff)!important}
+ .g10-topbar{font-size:.57rem}
+ .g10-brand-copy strong{font-size:1rem}
+ .g10-nav-links a{padding:7px 10px!important;font-size:.67rem}
+}
+
 </style>
 <link rel="stylesheet" href="customer-care.css?v=20261010-subscribe1">
 </head>
 <body class="g10-page">
 <header class="g10-site-header">
-  <div class="g10-topbar"><span><b>CONNECTING LEARNERS TO EXCELLENCE</b><span>•</span> GRADE 10 SCHOOL FINDER</span><a href="index.html">← CBE Nexus</a></div>
+  <div class="g10-topbar"><span><b>CBE NEXUS</b><span>•</span> CONNECTING LEARNERS TO EXCELLENCE</span><a href="index.html">← CBE Nexus Home</a></div>
   <nav class="g10-nav" aria-label="Grade 10 Finder navigation">
     <a class="g10-brand" href="grade-10-school-finder.html"><span class="g10-brand-mark" aria-hidden="true">✦</span><span class="g10-brand-copy"><strong>CBE Nexus Grade 10 Finder</strong><small>GRADE 10 SCHOOL FINDER</small><em>Connecting learners, teachers and education professionals<br>with trusted learning and career information.</em></span></a>
     <div class="g10-nav-links">
       <a class="active" href="grade-10-school-finder.html">Grade 10 School Finder</a>
       <a href="schools-institutions.html">Schools &amp; Institutions</a>
-      <a href="index.html#resources">CBC Resources</a>
+      <a href="resources.html">CBC Resources</a>
       <a href="learning-hub.html">Education Hub</a>
       <a href="career-guidance.html">Career Guidance</a>
     </div>
