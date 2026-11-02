@@ -39,7 +39,7 @@
 
   function resourceCover(r) {
     const supplied = safeImageUrl(r.imageUrl || r.image_url || r.thumbnailUrl || r.thumbnail_url || r.coverImage || r.cover_image);
-    if (supplied) return '<img class="international-library-cover-image" src="'+esc(supplied)+'" alt="'+esc((r.title || "Resource") + " cover image")+'" loading="lazy" decoding="async" onerror="this.hidden=true;this.nextElementSibling.hidden=false">';
+    if (supplied) return '<div class="international-library-cover-fallback"><img class="international-library-cover-image" src="'+esc(supplied)+'" alt="'+esc((r.title || "Resource") + " cover image")+'" loading="lazy" decoding="async" onerror="this.hidden=true;this.parentElement.classList.add(\'image-failed\')"><span class="international-library-cover-subject">'+esc(subjectName)+'</span></div>';
     const subjectName = String(r.subject || "Learning").trim();
     const typeName = String(r.type || "Resource").trim();
     const initials = subjectName.split(/\\s+/).slice(0,2).map(x => x.charAt(0)).join("").toUpperCase() || "LN";
