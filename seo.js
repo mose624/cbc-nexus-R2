@@ -30,7 +30,7 @@ const LANDINGS={
 "/all-schools-in-kenya":["School Directory: Schools in Kenya | CBE Nexus","Explore the CBE Nexus school directory and school information for Kenya. Confirm school details and current status with the relevant school or official authority."]};
 function esc(v){return String(v||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
 function slug(v){return String(v||"").toLowerCase().trim().replace(/&/g,"and").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");}
-function base(req){const e=String(process.env.PUBLIC_SITE_URL||"").trim().replace(/\/$/,"");if(e)return e;return "https://cbenexus.co.ke";}
+function base(req){const e=String(process.env.PUBLIC_SITE_URL||"").trim().replace(/\/$/,"");if(e)return e;return "https://cbenexus.com";}
 function page(req,title,description,canonical,h1,intro,links){
  const b=base(req);
  const json=JSON.stringify({"@context":"https://schema.org","@type":"WebPage","name":title,"description":description,"url":b+canonical,"isPartOf":{"@type":"WebSite","name":"CBE Nexus","url":b},"about":{"@type":"EducationalOrganization","name":"CBE Nexus","areaServed":["Kenya","International"]}});
@@ -242,7 +242,7 @@ const SITEMAP_CACHE_TTL_MS = 15 * 60 * 1000;
 
 async function sitemap(req){
  if (sitemapCache.body && sitemapCache.expiresAt > Date.now()) return sitemapCache.body;
- const b="https://cbenexus.co.ke";
+ const b=base(req);
  const urls=[
   "/","/resources.html","/free-resources.html","/quizzes.html","/projects.html","/tuition.html",
   "/blog.html","/learning-hub.html","/answer-hub.html","/grade-10-school-finder.html","/contact.html",
