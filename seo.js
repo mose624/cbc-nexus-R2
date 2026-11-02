@@ -30,7 +30,7 @@ const LANDINGS={
 "/all-schools-in-kenya":["School Directory: Schools in Kenya | CBE Nexus","Explore the CBE Nexus school directory and school information for Kenya. Confirm school details and current status with the relevant school or official authority."]};
 function esc(v){return String(v||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
 function slug(v){return String(v||"").toLowerCase().trim().replace(/&/g,"and").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");}
-function base(req){const e=String(process.env.PUBLIC_SITE_URL||"").trim().replace(/\/$/,"");if(e)return e;return "https://cbenexus.com";}
+function base(req){return "https://cbenexus.co.ke";}
 function page(req,title,description,canonical,h1,intro,links){
  const b=base(req);
  const json=JSON.stringify({"@context":"https://schema.org","@type":"WebPage","name":title,"description":description,"url":b+canonical,"isPartOf":{"@type":"WebSite","name":"CBE Nexus","url":b},"about":{"@type":"EducationalOrganization","name":"CBE Nexus","areaServed":["Kenya","International"]}});
