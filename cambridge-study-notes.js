@@ -312,7 +312,13 @@ coordinate:'<path d="M40 150 H585 M310 175 V15" stroke="#64748b" stroke-width="2
 trig:'<path d="M150 150 L470 150 L470 45 Z" fill="#eaf2ff" stroke="#123b75" stroke-width="3"/><path d="M440 150 V120 H470" stroke="#d97706" stroke-width="2" fill="none"/><g fill="#071a3d" font-size="15"><text x="285" y="175">Adjacent</text><text x="480" y="100">Opposite</text><text x="285" y="80">Hypotenuse</text><text x="175" y="145">θ</text></g>',
 statistics:'<path d="M40 155 H590 M40 155 V20" stroke="#64748b" stroke-width="2"/>'+[25,55,85,115,95,70,45,30,15].map((v,i)=>'<rect x="'+(55+i*55)+'" y="'+(140-v)+'" width="34" height="'+v+'" fill="#8bb5e8" stroke="#123b75"/>').join("")+'<g fill="#071a3d" font-size="14"><text x="45" y="18">Frequency</text><text x="280" y="180">Class interval</text></g>',
 circle:'<circle cx="310" cy="95" r="65" fill="#edf3fb" stroke="#123b75" stroke-width="3"/><path d="M310 95 L375 95 M310 95 L265 48" stroke="#d97706" stroke-width="3"/><circle cx="310" cy="95" r="4" fill="#123b75"/><g fill="#071a3d" font-size="14"><text x="320" y="88">r</text><text x="20" y="25">Centre, radius and chord</text></g>',
-calculus:'<path d="M40 150 H585 M310 175 V15" stroke="#64748b" stroke-width="2"/><path d="M100 145 Q230 -15 500 125" stroke="#123b75" stroke-width="3" fill="none"/><path d="M190 90 L420 45" stroke="#d97706" stroke-width="3"/><circle cx="310" cy="67" r="5" fill="#d97706"/><g fill="#071a3d" font-size="14"><text x="420" y="30">Tangent gradient</text><text x="320" y="85">dy/dx</text><text x="25" y="20">Curve and derivative</text></g>'
+calculus:'<path d="M40 150 H585 M310 175 V15" stroke="#64748b" stroke-width="2"/><path d="M100 145 Q230 -15 500 125" stroke="#123b75" stroke-width="3" fill="none"/><path d="M190 90 L420 45" stroke="#d97706" stroke-width="3"/><circle cx="310" cy="67" r="5" fill="#d97706"/><g fill="#071a3d" font-size="14"><text x="420" y="30">Tangent gradient</text><text x="320" y="85">dy/dx</text><text x="25" y="20">Curve and derivative</text></g>',
+nephron:'<path d="M150 35 C80 35 80 110 150 110 C220 110 220 45 285 55 C350 65 320 145 260 145 C200 145 205 175 260 175 H470" stroke="#c45b37" stroke-width="5" fill="none"/><path d="M150 35 C110 10 70 55 95 85" stroke="#2879b9" stroke-width="4" fill="none"/><g fill="#071a3d" font-size="14"><text x="20" y="20">Glomerulus</text><text x="280" y="35">Loop of Henle</text><text x="470" y="165">Collecting duct</text><text x="20" y="165">Filtration</text></g>',
+mitosis:'<g fill="#edf3fb" stroke="#123b75" stroke-width="2"><circle cx="90" cy="90" r="48"/><circle cx="235" cy="90" r="48"/><circle cx="380" cy="90" r="48"/><circle cx="525" cy="90" r="48"/></g><g stroke="#d97706" stroke-width="4"><path d="M75 70 L105 110 M105 70 L75 110 M220 70 L250 110 M250 70 L220 110 M365 70 L395 110 M395 70 L365 110 M510 70 L540 110 M540 70 L510 110"/></g><g fill="#071a3d" font-size="13" text-anchor="middle"><text x="90" y="160">Prophase</text><text x="235" y="160">Metaphase</text><text x="380" y="160">Anaphase</text><text x="525" y="160">Telophase</text></g>',
+foodweb:'<g fill="#e5f5e9" stroke="#24834a" stroke-width="2"><rect x="35" y="65" width="115" height="45" rx="8"/><rect x="245" y="25" width="115" height="45" rx="8"/><rect x="245" y="115" width="115" height="45" rx="8"/><rect x="455" y="65" width="125" height="45" rx="8"/></g><g fill="#071a3d" font-size="14" text-anchor="middle"><text x="92" y="93">Grass</text><text x="302" y="53">Rabbit</text><text x="302" y="143">Mouse</text><text x="517" y="93">Fox / owl</text></g><g stroke="#123b75" stroke-width="2" fill="none"><path d="M150 82 L240 48 M150 90 L240 137 M360 48 L450 82 M360 137 L450 95"/></g>',
+phscale:'<rect x="30" y="65" width="560" height="38" rx="7" fill="#dbeafe"/>'+Array.from({length:14},(_,i)=>'<rect x="'+(30+i*40)+'" y="65" width="40" height="38" fill="'+(i<7?'#f4a6a6':i===7?'#b8d8b8':'#9fc5ed')+'" stroke="#fff"/>').join("")+'<g fill="#071a3d" font-size="13" text-anchor="middle"><text x="30" y="45">0</text><text x="310" y="45">7 neutral</text><text x="590" y="45">14</text><text x="90" y="135">Acidic</text><text x="310" y="135">Neutral</text><text x="520" y="135">Alkaline</text></g>',
+transformer:'<rect x="230" y="45" width="160" height="95" rx="8" fill="#dbeafe" stroke="#123b75" stroke-width="4"/><path d="M255 45 V140 M365 45 V140" stroke="#d97706" stroke-width="7" stroke-dasharray="5 5"/><path d="M310 45 V140" stroke="#123b75" stroke-width="9"/><path d="M80 92 H220 M400 92 H540" stroke="#123b75" stroke-width="3"/><g fill="#071a3d" font-size="14"><text x="70" y="70">AC input</text><text x="450" y="70">AC output</text><text x="235" y="165">Primary coil</text><text x="365" y="165">Secondary coil</text><text x="250" y="25">Iron core</text></g>',
+probability:'<g fill="#edf3fb" stroke="#123b75" stroke-width="2"><rect x="35" y="70" width="100" height="42" rx="7"/><rect x="260" y="20" width="110" height="42" rx="7"/><rect x="260" y="130" width="110" height="42" rx="7"/><rect x="490" y="20" width="110" height="42" rx="7"/><rect x="490" y="130" width="110" height="42" rx="7"/></g><g stroke="#123b75" stroke-width="2" fill="none"><path d="M135 90 L255 42 M135 90 L255 150 M370 42 L485 42 M370 150 L485 150"/></g><g fill="#071a3d" font-size="13" text-anchor="middle"><text x="85" y="96">Start</text><text x="315" y="46">A (½)</text><text x="315" y="156">not A (½)</text><text x="545" y="46">B</text><text x="545" y="156">not B</text></g>'
 
 };
 return start+(shapes[kind]||shapes.place)+end;
@@ -433,6 +439,9 @@ function selectDiagram(chapter){
   if(has("food web","ecosystem","trophic","energy flow"))return "food";
   if(has("plant cell","cell wall","chloroplast"))return "plantcell";
   if(has("cell structure","cell organisation","cell organization","specialised cell","specialized cell"))return "cell";
+  if(has("kidney","nephron","ultrafiltration","reabsorption"))return "nephron";
+  if(has("mitosis","cell division","cell cycle"))return "mitosis";
+  if(has("food web","ecosystem","trophic","energy flow"))return "foodweb";
   if(has("osmosis","diffusion","active transport"))return "flow";
   if(has("enzyme"))return "enzyme";
  }
@@ -444,6 +453,7 @@ function selectDiagram(chapter){
   if(has("bond","ionic","covalent","metallic"))return "bonding";
   if(has("equilibrium","le chatelier"))return "equilibrium";
   if(has("atomic structure","isotope","electron configuration"))return "atom";
+  if(has("ph scale","acidity","alkalinity","indicators"))return "phscale";
   if(has("rate of reaction","collision theory"))return "motion";
  }
  if(/physics/i.test(chapter.subject)){
@@ -454,6 +464,7 @@ function selectDiagram(chapter){
   if(has("projectile"))return "projectile";
   if(has("force","newton","moment"))return "force";
   if(has("electric field","field strength","capacitance"))return "field";
+  if(has("transformer","electromagnetic induction","alternating current"))return "transformer";
   if(has("motion","speed","velocity","acceleration"))return "motion";
  }
  if(/mathematics|math/i.test(chapter.subject)){
@@ -462,6 +473,7 @@ function selectDiagram(chapter){
   if(has("circle","chord","arc"))return "circle";
   if(has("differentiation","integration","calculus","stationary point"))return "calculus";
   if(has("coordinate","straight line","gradient","graph"))return "coordinate";
+  if(has("probability tree","conditional probability","independent events"))return "probability";
   if(has("quadratic","parabola"))return "parabola";
  }
  return chapter.diagram||"flow";
