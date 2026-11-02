@@ -2190,7 +2190,7 @@ function trustedReferenceLinksForPath(pathname){
   }
   const unique=links.filter((item,index,self)=>self.findIndex(x=>x[1]===item[1])===index);
   return '<section class="seo-trusted-references" aria-label="Official education references"><h3>Official Education References</h3><p>Use these official organisations for curriculum guidance, examinations and further learning information.</p><ul>'+unique.map(x=>'<li><a href="'+x[1]+'" target="_blank" rel="noopener noreferrer">'+x[0]+'</a></li>').join("")+'</ul></section>';
-
+}
 function injectTrustedReferenceSection(html,pathname){
   let out=String(html||"");
   if(/id=["']cbe-trusted-reference-section["']/i.test(out)) return out;
@@ -2200,7 +2200,6 @@ function injectTrustedReferenceSection(html,pathname){
   if(/<footer\b/i.test(out)) out=out.replace(/<footer\b/i,section+"<footer");
   else if(/<\/body>/i.test(out)) out=out.replace(/<\/body>/i,section+"</body>");
   return out;
-}
 }
 function injectSeoFooter(html,pathname){
   const footer=seoFooterForPath(pathname);
