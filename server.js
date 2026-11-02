@@ -2578,7 +2578,7 @@ async function serveStatic(req,res,url){
     const acceptsGzip=/\bgzip\b/i.test(String(req.headers["accept-encoding"]||""));
     const headers={
       "Content-Type":"text/html; charset=utf-8",
-      "Cache-Control":"public, max-age=300, must-revalidate",
+      "Cache-Control":url.pathname.toLowerCase()==="/ai-training.html"?"no-store":"public, max-age=300, must-revalidate",
       "Vary":"Accept-Encoding"
     };
     if(acceptsGzip && data.length>1024){
