@@ -27,6 +27,7 @@ a{color:inherit}
 .nav{background:#fff;padding:14px 5%;display:flex;justify-content:space-between;align-items:center;gap:16px;border-bottom:1px solid var(--line)}
 .brand{font-weight:900;font-size:22px;color:var(--navy);text-decoration:none;letter-spacing:-.4px}
 .nav a:last-child{color:var(--navy);font-weight:800;text-decoration:none}
+.brand span{display:block;font-size:9px;letter-spacing:2px;color:#168ca5;margin-top:1px}.global-nav{gap:20px}.global-nav-links{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}.global-nav-links a{padding:8px 11px;border-radius:8px;color:var(--navy);font-size:12px;font-weight:900;text-decoration:none}.global-nav-links a:hover{background:#e8f9fc;color:#087f9b}.global-nav-links .nav-home{background:var(--navy);color:#fff}.global-nav-links .nav-home:hover{background:var(--cyan);color:var(--navy)}
 .wrap{max-width:1200px;margin:auto}
 .hero{background:radial-gradient(ellipse at 80% 10%,rgba(24,182,217,.22),transparent 36%),linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:62px 5% 58px}
 .hero-inner{max-width:940px;margin:auto;text-align:center}
@@ -68,7 +69,7 @@ a{color:inherit}
 footer{background:var(--navy);color:#dce8fa;padding:24px 5%;font-size:13px}
 footer a{color:#fff}
 @media(max-width:900px){.curriculum-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.subject-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:600px){.hero{padding:43px 18px}.hero h1{letter-spacing:-.8px}.hero p{font-size:15px}.search-panel{display:grid;grid-template-columns:1fr;padding:7px}.search-panel button{width:100%}.quick-nav{padding-left:16px;padding-right:16px}.section{padding:30px 16px}.curriculum-grid{grid-template-columns:1fr}.card{min-height:0}.subject-panel{padding:16px}.subject-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.subject-item{padding:10px;font-size:13px}.help-strip{margin:0 16px 30px;padding:18px}}
+@media(max-width:600px){.global-nav{align-items:flex-start;flex-direction:column}.global-nav-links{justify-content:flex-start;width:100%;gap:4px}.global-nav-links a{padding:7px 8px}.hero{padding:43px 18px}.hero h1{letter-spacing:-.8px}.hero p{font-size:15px}.search-panel{display:grid;grid-template-columns:1fr;padding:7px}.search-panel button{width:100%}.quick-nav{padding-left:16px;padding-right:16px}.section{padding:30px 16px}.curriculum-grid{grid-template-columns:1fr}.card{min-height:0}.subject-panel{padding:16px}.subject-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.subject-item{padding:10px;font-size:13px}.help-strip{margin:0 16px 30px;padding:18px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.card{transition:none}}
 </style>
 <link rel="stylesheet" href="customer-care.css?v=20261004-2">
@@ -76,25 +77,22 @@ footer a{color:#fff}
 </head>
 <body>
 <div class="top">CBE Nexus <span aria-hidden="true">•</span> International Curriculum Resource Centre</div>
-<nav class="nav" aria-label="Main navigation"><a class="brand" href="index.html">CBE Nexus</a><a href="index.html">← Back to Home</a></nav>
-<div class="quick-nav" aria-label="International curriculum shortcuts">
-<a href="igcse.html">IGCSE</a><a href="cambridge-international.html">Cambridge International</a><a href="ib.html">IB</a><a href="o-levels.html">O Level</a><a href="a-levels.html">A Level</a><a href="pearson-edexcel.html">Pearson Edexcel</a>
-</div>
+<nav class="nav global-nav" aria-label="Global education navigation"><a class="brand" href="index.html">CBE Nexus <span>GLOBAL EDUCATION</span></a><div class="global-nav-links"><a href="global-schools.html">Global Schools</a><a href="international-teaching-jobs.html">International Teaching</a><a href="international-subject-catalogue.html">Subject Catalogue</a><a class="nav-home" href="index.html">← CBE Nexus Home</a></div></nav>
 <header class="hero">
 <div class="hero-inner">
-<span class="eyebrow">Global learning • One searchable hub</span>
-<h1>International Curriculum Resources, Revision Materials and Teaching Support</h1>
-<p>Find subject resources, revision materials, past papers and practical teaching support across leading international qualifications. Choose a curriculum portal or search the directory to get started.</p>
+<span class="eyebrow">A world of learning • One global education hub</span>
+<h1>Explore Education Without Borders</h1>
+<p>Discover international qualifications, school systems, subject pathways and teaching opportunities. Compare curricula, explore learning materials and connect your education journey with opportunities around the world.</p>
 <form class="search-panel" id="curriculumSearchForm" role="search">
 <input id="curriculumSearch" type="search" placeholder="Search a curriculum or subject (e.g. IGCSE Chemistry)" aria-label="Search international curricula and subjects" autocomplete="off">
 <button type="submit">Search directory</button>
 </form>
-<p class="hero-note">Browse six curriculum portals, then use each portal’s catalogue to narrow resources by subject and resource type.</p>
+<p class="hero-note">Explore global pathways from one place — Cambridge, IGCSE, IB, Pearson Edexcel, O Level and A Level.</p>
 </div>
 </header>
 <main>
 <section class="section wrap" aria-labelledby="portalsHeading">
-<div class="section-heading"><div><h2 id="portalsHeading">Explore curriculum portals</h2><p>Each portal has its own subject directory and resource catalogue.</p></div></div>
+<div class="section-heading"><div><h2 id="portalsHeading">International curriculum pathways</h2><p>Choose a recognised international pathway to explore its subjects, study support and learning resources.</p></div></div>
 <div style="margin:12px 0 18px;padding:14px 16px;background:#e8faf7;border-left:4px solid #21b6a8;border-radius:8px"><strong>New: Complete subject catalogue</strong><p style="margin:4px 0">Browse Pearson International GCSE and IAL subjects, plus IB Diploma and Middle Years subject groups, with chapter-note publication status.</p><a href="international-subject-catalogue.html" style="font-weight:800;color:#071a3d">Open International Subject Catalogue →</a></div>
 <div class="curriculum-grid" id="curriculumGrid">
 <article class="card" data-search="igcse international general certificate secondary education cambridge chemistry mathematics biology physics english past papers revision" style="--c:#18b6d9;--light:#e8f9fc"><span class="badge">IGCSE</span><h3>International General Certificate of Secondary Education</h3><p>Subject resources, study notes, exam practice, revision materials and teacher support.</p><a href="igcse.html">Explore IGCSE <span aria-hidden="true">→</span></a></article>
@@ -107,7 +105,7 @@ footer a{color:#fff}
 <p id="curriculumEmpty" class="empty-state">No curriculum portals match that search. Try a curriculum name or a common subject.</p>
 </section>
 <section class="section wrap" aria-labelledby="subjectsHeading">
-<div class="section-heading"><div><h2 id="subjectsHeading">Browse the subject directory</h2><p>Search common subjects, then choose the curriculum portal that matches your qualification.</p></div></div>
+<div class="section-heading"><div><h2 id="subjectsHeading">Find your subject worldwide</h2><p>Search by subject, curriculum and learning area to find the right academic pathway.</p></div></div>
 <div class="subject-panel">
 <div class="subject-tools"><input id="subjectSearch" type="search" aria-label="Search subjects" placeholder="Find a subject, e.g. Biology or Economics" autocomplete="off"><select id="subjectCurriculum" aria-label="Choose curriculum"><option value="igcse.html">IGCSE</option><option value="cambridge-international.html">Cambridge International</option><option value="ib.html">IB</option><option value="o-levels.html">O Level</option><option value="a-levels.html">A Level</option><option value="pearson-edexcel.html">Pearson Edexcel</option></select><select id="subjectArea" aria-label="Filter subjects by learning area"><option value="">All subject areas</option><option value="languages">Languages</option><option value="sciences">Sciences</option><option value="mathematics">Mathematics</option><option value="humanities">Humanities & social sciences</option><option value="business">Business & technology</option><option value="arts">Arts & other subjects</option></select></div>
 <div class="subject-grid" id="subjectGrid">
@@ -139,7 +137,7 @@ footer a{color:#fff}
 <p id="subjectEmpty" class="empty-state">No subjects match your search. Try another term or choose a different subject area.</p>
 </div>
 </section>
-<div class="help-strip"><div><strong>Looking for a particular resource?</strong><p>Open the relevant curriculum portal to search its available resource catalogue by subject and resource type.</p></div><a href="resources.html">Browse all resources →</a></div>
+<div class="help-strip"><div><strong>Your next step in global education</strong><p>Explore international schools, discover teaching opportunities or browse subject pathways across global curricula.</p></div><a href="global-schools.html">Explore global schools →</a></div>
 </main>
 <footer><div class="wrap">CBE Nexus — Connecting learners to excellence. <span aria-hidden="true">•</span> <a href="index.html">Home</a> <span aria-hidden="true">•</span> <a href="contact.html">Contact</a></div></footer>
 <script>
