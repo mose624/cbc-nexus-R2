@@ -2190,6 +2190,17 @@ function trustedReferenceLinksForPath(pathname){
   }
   const unique=links.filter((item,index,self)=>self.findIndex(x=>x[1]===item[1])===index);
   return '<section class="seo-trusted-references" aria-label="Official education references"><h3>Official Education References</h3><p>Use these official organisations for curriculum guidance, examinations and further learning information.</p><ul>'+unique.map(x=>'<li><a href="'+x[1]+'" target="_blank" rel="noopener noreferrer">'+x[0]+'</a></li>').join("")+'</ul></section>';
+
+function injectTrustedReferenceSection(html,pathname){
+  let out=String(html||"");
+  if(/id=["']cbe-trusted-reference-section["']/i.test(out)) return out;
+  const section=trustedReferenceLinksForPath(pathname).replace('<section class="seo-trusted-references"','<section id="cbe-trusted-reference-section" class="seo-trusted-references"');
+  const styles='<style id="cbe-trusted-reference-css">.seo-trusted-references{max-width:1180px;margin:18px auto;padding:12px 16px;border:1px solid #dce6ee;border-radius:10px;background:#f7fafc;font-size:12px;color:#334e5f}.seo-trusted-references h3{font-size:14px;margin:0 0 5px;color:#123447}.seo-trusted-references p{font-size:11px;margin:0 0 8px}.seo-trusted-references ul{display:flex;flex-wrap:wrap;gap:7px 18px;list-style:none;padding:0;margin:0}.seo-trusted-references a{color:#245b83;text-decoration:underline;text-underline-offset:2px}.seo-trusted-references a:hover{color:#a90f28}@media(max-width:600px){.seo-trusted-references{margin:12px 8px;padding:10px}.seo-trusted-references ul{display:grid;grid-template-columns:1fr 1fr;gap:8px}}</style>';
+  if(/<\/head>/i.test(out)) out=out.replace(/<\/head>/i,styles+"</head>");
+  if(/<footer\b/i.test(out)) out=out.replace(/<footer\b/i,section+"<footer");
+  else if(/<\/body>/i.test(out)) out=out.replace(/<\/body>/i,section+"</body>");
+  return out;
+}
 }
 function injectSeoFooter(html,pathname){
   const footer=seoFooterForPath(pathname);
@@ -2645,7 +2656,7 @@ async function serveStatic(req,res,url){
     html=html.replace(/<title>[\s\S]*?<\/title>/i,"<title>"+escapeSeoAttribute(title)+"</title>");
     html=html.replace(/<meta name="description" content="[^"]*">/i,'<meta name="description" content="'+escapeSeoAttribute(description)+'">');
     html=html.replace(/<link rel="canonical" href="[^"]*">/i,'<link rel="canonical" href="'+escapeSeoAttribute(canonical)+'">');
-    html=injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(injectPageMetadata(html,url.pathname,req)),url.pathname));
+    html=injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(injectPageMetadata(injectTrustedReferenceSection(html,url.pathname),url.pathname,req)),url.pathname));
     res.writeHead(200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"public, max-age=300, must-revalidate"});
     res.end(html);
     return;
@@ -2673,7 +2684,7 @@ async function serveStatic(req,res,url){
       if (!data.toString("utf8").includes("resource-centre-bridge.js")) data = Buffer.from(data.toString("utf8").replace("</body>", bridgeScript + "</body>"));
     }
     const ext=path.extname(target).toLowerCase();
-    if(ext===".html") data=Buffer.from(injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(injectPageMetadata(data.toString("utf8"),url.pathname,req)),url.pathname)));
+    if(ext===".html") data=Buffer.from(injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(injectPageMetadata(injectTrustedReferenceSection(data.toString("utf8"),url.pathname),url.pathname,req)),url.pathname)));
     const isHtml=ext===".html";
     const isEducationHubPage=["/blog.html","/learning-hub.html","/grade-10-school-finder.html"].includes(url.pathname);
     const isVersionedAsset=/[?&]v=|-[0-9]{8,}/.test(url.search||"") && [".css",".js"].includes(ext);
