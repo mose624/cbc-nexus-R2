@@ -2596,7 +2596,8 @@ async function serveStatic(req,res,url){
   }
   const seoPage=await seo.match(req);
   if(req.method==="GET" && seoPage){
-    res.writeHead(200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"public, max-age=600"});
+    const isAiAcademyPage=/ai-|chatgpt|gemini|generative-ai|prompt-engineering/i.test(String(url.pathname||""));
+    res.writeHead(200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":isAiAcademyPage?"no-store, no-cache, must-revalidate":"public, max-age=600","Pragma":isAiAcademyPage?"no-cache":undefined,"Expires":isAiAcademyPage?"0":undefined});
     res.end(injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(injectPageMetadata(injectSeoFooter(seoPage,url.pathname),url.pathname,req)),url.pathname)));
     return;
   }
