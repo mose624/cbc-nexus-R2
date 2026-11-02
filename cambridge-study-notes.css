@@ -21,7 +21,7 @@
 .cn-notes .outcomes,.cn-notes .worked,.cn-notes .exam-tip{padding:15px 17px;border-radius:10px;margin:16px 0;background:#f4f7fc;border-left:4px solid var(--cn-blue)}
 .cn-notes .worked{background:#fff8e8;border-color:var(--cn-gold)}
 .cn-notes .diagram{margin:18px 0;padding:12px;border:1px solid var(--cn-line);border-radius:12px;background:#fbfdff;overflow-x:auto}
-.cn-notes .diagram svg{display:block;max-width:100%;height:auto;margin:auto}
+.cn-notes .diagram svg{display:block;width:100%;max-width:100%;height:auto;min-height:150px;margin:auto;overflow:visible}\n.cn-notes .diagram strong{display:block;color:var(--cn-navy);font-size:16px;margin:2px 0 10px}\n.cn-notes .diagram p{font-size:13px;line-height:1.65;color:var(--cn-muted)}\n.cn-notes .diagram{overflow-x:auto}\n.cn-notes .diagram svg text{font-family:Arial,sans-serif;paint-order:stroke;stroke:#fff;stroke-width:.25px}\n@media(max-width:600px){.cn-notes .diagram svg{min-width:560px}}
 .cn-notes .test{border-top:1px solid var(--cn-line);margin-top:26px;padding-top:16px}
 .cn-notes .question{padding:12px 0;border-bottom:1px solid #e8edf4}
 .cn-notes .question label{margin:0 0 8px}
