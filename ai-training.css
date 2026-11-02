@@ -577,3 +577,37 @@ html,body{min-width:1200px!important;width:1200px!important;max-width:none!impor
  .ai-academy-page .academy-unified-header nav{display:flex;flex-wrap:wrap;gap:6px}
  .ai-academy-page .academy-unified-header nav a{padding:8px 10px;font-size:.7rem}
 }
+
+/* Stable CBE Nexus AI Academy red header: avoid late theme swaps */
+html body.ai-academy-page>.academy-topline,
+html body.ai-academy-page>header.ai-nav.academy-unified-header{
+  background:#b5122b!important;
+  background-image:linear-gradient(115deg,#a90f28,#d7193f,#ef4056)!important;
+  color:#fff!important;
+  border-color:#8f1025!important;
+  opacity:1!important;
+  visibility:visible!important;
+  transform:none!important;
+  animation:none!important;
+  transition:none!important;
+}
+html body.ai-academy-page>header.ai-nav.academy-unified-header{
+  position:relative!important;
+  top:auto!important;
+  z-index:20!important;
+  display:flex!important;
+}
+html body.ai-academy-page>header.ai-nav.academy-unified-header *,
+html body.ai-academy-page>.academy-topline *{
+  color:#fff!important;
+}
+html body.ai-academy-page>header.ai-nav.academy-unified-header nav a{
+  background:rgba(90,0,15,.2)!important;
+  border:1px solid rgba(255,255,255,.45)!important;
+  color:#fff!important;
+}
+html body.ai-academy-page>header.ai-nav.academy-unified-header nav a.active,
+html body.ai-academy-page>header.ai-nav.academy-unified-header nav a:hover{
+  background:#fff!important;
+  color:#a90f28!important;
+}
