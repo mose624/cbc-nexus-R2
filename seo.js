@@ -305,7 +305,25 @@ async function sitemap(req){
   }
  }catch(e){console.warn("SEO sitemap static-page discovery failed:",e.message||e);}
  const unique=[...new Set(urls)].filter(u=>typeof u==="string"&&u.startsWith("/"));
- const body=unique.map(u=>"<url><loc>"+xml(b+u)+"</loc></url>").join("");
+ const sitemapEntries=[];
+ for(const u of unique){
+  let lastmod="";
+  // Add a real last-modified date for physical public pages. Do not invent
+  // dates for virtual routes or dynamic database records.
+  if(!u.includes("?")){
+   try{
+    const pathname=decodeURIComponent(u.split("#")[0]);
+    const relative=pathname.replace(/^\/+/, "");
+    const candidate=path.resolve(__dirname,relative||"index.html");
+    if(candidate.startsWith(path.resolve(__dirname)+path.sep)){
+     const stat=await fs.stat(candidate);
+     if(stat.isFile()) lastmod=stat.mtime.toISOString().slice(0,10);
+    }
+   }catch{}
+  }
+  sitemapEntries.push("<url><loc>"+xml(b+u)+"</loc>"+(lastmod?"<lastmod>"+lastmod+"</lastmod>":"")+"</url>");
+ }
+ const body=sitemapEntries.join("");
  const output = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+body+"\n</urlset>";
  sitemapCache = { expiresAt: Date.now() + SITEMAP_CACHE_TTL_MS, body: output };
  return output;
