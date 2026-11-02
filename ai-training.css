@@ -540,3 +540,40 @@ html,body{min-width:1200px!important;width:1200px!important;max-width:none!impor
 .ai-academy-page .learning-path{max-width:1340px;margin:55px auto 0;padding:0 5%}
 @media(max-width:900px){.academy-dashboard-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.ai-academy-page .academy-course-count{grid-column:span 2}}
 @media(max-width:767px){.academy-topline{min-height:30px;padding:6px 12px;font-size:.58rem;letter-spacing:.015em}.ai-academy-page .ai-nav{min-height:0;padding:13px 14px;gap:12px}.ai-academy-page .ai-brand{align-items:flex-start;gap:10px}.ai-academy-page .academy-mark{flex-basis:44px;width:44px;height:44px;font-size:1.7rem}.academy-brand-copy strong{font-size:1.08rem}.academy-brand-copy small{font-size:.7rem}.academy-brand-copy em{font-size:.68rem}.ai-academy-page .ai-nav nav{display:flex;gap:6px}.ai-academy-page .ai-nav nav a{padding:8px 11px;font-size:.72rem}.ai-academy-page .academy-dashboard{padding:30px 16px 17px;background-position:55% center}.ai-academy-page .academy-dashboard h1{font-size:clamp(2rem,9vw,2.7rem)}.ai-academy-page .academy-dashboard .academy-hero-copy>p:not(.eyebrow){font-size:.91rem}.ai-academy-page .academy-dashboard .hero-actions{display:grid;grid-template-columns:1fr;max-width:360px;margin:17px auto 0}.ai-academy-page .academy-dashboard .ai-btn{width:100%}.academy-dashboard-stats{grid-template-columns:1fr 1fr;gap:8px;margin-top:18px;padding:7px}.ai-academy-page .academy-dashboard .hero-card,.academy-feature{min-height:110px;padding:12px}.ai-academy-page .academy-course-count{grid-column:span 2}.ai-academy-page .academy-dashboard .hero-number{font-size:2.3rem}.academy-feature strong{font-size:.85rem}.academy-feature span{font-size:.75rem}.ai-academy-page .course-section{padding:8px 15px 0}.ai-academy-page .section-heading{margin:18px 0}.ai-academy-page .learning-path{padding:0 15px}}
+
+
+/* Unified CBE Nexus AI Academy header */
+.ai-academy-page .academy-topline{
+  min-height:36px;padding:7px clamp(18px,5vw,76px);
+  background:#061a35;color:#75e5e8;border-bottom:1px solid rgba(93,219,237,.28);
+}
+.academy-topline>span:first-child{display:flex;align-items:center;gap:13px}
+.academy-topline>span:first-child strong{color:#fff;font-size:.75rem;letter-spacing:.12em}
+.academy-topline>span:first-child i{font-style:normal;color:#8ddde6;font-weight:600}
+.ai-academy-page .ai-nav.academy-unified-header{
+  min-height:0;padding:17px clamp(18px,5vw,76px) 14px;gap:15px;
+  background:linear-gradient(100deg,rgba(4,18,43,.97),rgba(5,35,70,.90)),url("https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1600&q=85") center 43%/cover no-repeat;
+}
+.academy-unified-header .academy-brand-wrap{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.academy-unified-header .academy-brand-copy{gap:5px}
+.academy-unified-header .academy-brand-copy strong{font-size:clamp(1.35rem,2.1vw,1.85rem);letter-spacing:-.025em}
+.academy-unified-header .academy-brand-copy em{font-size:.82rem;color:#dceaf8}
+.academy-header-badge{flex:0 0 auto;padding:9px 15px;border:1px solid rgba(89,224,226,.45);border-radius:30px;background:rgba(11,87,111,.32);color:#8ce8e4;font-size:.72rem;font-weight:850;letter-spacing:.045em}
+.academy-header-badge b{padding:0 5px;color:#fff}
+.ai-academy-page .academy-unified-header nav{gap:8px}
+.ai-academy-page .academy-unified-header nav a{padding:9px 17px;border:1px solid rgba(205,229,255,.38);border-radius:24px;background:rgba(4,20,48,.42);font-size:.82rem;font-weight:700}
+.ai-academy-page .academy-unified-header nav a.active{background:linear-gradient(100deg,rgba(54,190,205,.28),rgba(57,202,166,.2));border-color:#65e3dc}
+.ai-academy-page .academy-unified-header nav a:hover{background:rgba(55,199,208,.2);border-color:#65e3dc}
+@media(max-width:767px){
+ .ai-academy-page .academy-topline{padding:6px 12px;gap:8px;font-size:.57rem}
+ .academy-topline>span:first-child{gap:6px;flex-wrap:wrap}
+ .academy-topline>span:first-child strong{font-size:.61rem}
+ .academy-topline>span:first-child i{font-size:.57rem}
+ .ai-academy-page .ai-nav.academy-unified-header{padding:12px 14px;gap:11px}
+ .academy-unified-header .academy-brand-wrap{align-items:flex-start;gap:8px}
+ .academy-unified-header .academy-brand-copy strong{font-size:1.08rem}
+ .academy-unified-header .academy-brand-copy em{font-size:.68rem;max-width:300px}
+ .academy-header-badge{padding:7px 9px;font-size:.58rem;white-space:nowrap}
+ .ai-academy-page .academy-unified-header nav{display:flex;flex-wrap:wrap;gap:6px}
+ .ai-academy-page .academy-unified-header nav a{padding:8px 10px;font-size:.7rem}
+}
