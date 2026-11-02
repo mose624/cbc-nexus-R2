@@ -2495,7 +2495,7 @@ async function getHomepageHtml(req){
     .replace("CBE E-Learning Resources for Grades 1-12","CBE Nexus | CBC & CBE Learning Resources for Grades 1-12 in Kenya");
   const bridgeScript='<script src="/resource-centre-bridge.js?v=20260930-4" defer></script><script src="/admin-fallback.js?v=20260930-4" defer></script>';
   if(!data.includes("resource-centre-bridge.js")) data=data.replace("</body>",bridgeScript+"</body>");
-  data=injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(data),"/"));
+  data=injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(injectTrustedReferenceSection(data,"/")), "/"));
   homepageHtmlCache=Buffer.from(data);
   homepageHtmlGzipCache=null;
   homepageHtmlCacheTime=now;
