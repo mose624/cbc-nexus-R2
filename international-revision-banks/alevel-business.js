@@ -393,4 +393,12 @@ window.CBE_REVISION_BANKS["alevel-business"]=[
     "answer": "It may improve reputation and supply-chain responsibility, but can increase costs or limit supplier choice.",
     "marks": 2
   }
+  ,{
+    "id": 50,
+    "topic": "Strategy and decision-making",
+    "type": "Structured practice",
+    "question": "Explain how benchmarking can help a business improve performance.",
+    "answer": "It compares performance or processes with strong competitors or best practice, helping identify gaps and set improvement targets.",
+    "marks": 2
+  }
 ];
