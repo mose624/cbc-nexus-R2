@@ -2710,7 +2710,7 @@ const server=http.createServer(async(req,res)=>{const url=new URL(req.url,`http:
 const isNonCanonicalDomain=requestHost==="cbenexus.com"||requestHost==="www.cbenexus.com"||requestHost==="www.cbenexus.co.ke";
 const isOperationalPath=url.pathname==="/api"||url.pathname.startsWith("/api/")||url.pathname==="/ads.txt"||url.pathname==="/health";
 if(isNonCanonicalDomain&&(req.method==="GET"||req.method==="HEAD")&&!isOperationalPath){
-  res.writeHead(301,{"Location":"https://cbenexus.com"+url.pathname+url.search,"Cache-Control":"public, max-age=3600"});
+  res.writeHead(301,{"Location":"https://cbenexus.co.ke"+url.pathname+url.search,"Cache-Control":"public, max-age=3600"});
   res.end();
   return;
 }
