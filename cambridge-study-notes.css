@@ -21,7 +21,7 @@
 .cn-notes .outcomes,.cn-notes .worked,.cn-notes .exam-tip{padding:15px 17px;border-radius:10px;margin:16px 0;background:#f4f7fc;border-left:4px solid var(--cn-blue)}
 .cn-notes .worked{background:#fff8e8;border-color:var(--cn-gold)}
 .cn-notes .diagram{margin:18px 0;padding:12px;border:1px solid var(--cn-line);border-radius:12px;background:#fbfdff;overflow-x:auto}
-.cn-notes .diagram svg{display:block;width:100%;max-width:100%;height:auto;min-height:150px;margin:auto;overflow:visible}\n.cn-notes .diagram strong{display:block;color:var(--cn-navy);font-size:16px;margin:2px 0 10px}\n.cn-notes .diagram p{font-size:13px;line-height:1.65;color:var(--cn-muted)}\n.cn-notes .diagram{overflow-x:auto}\n.cn-notes .diagram svg text{font-family:Arial,sans-serif;paint-order:stroke;stroke:#fff;stroke-width:.25px}\n@media(max-width:600px){.cn-notes .diagram svg{min-width:560px}}
+.cn-notes .diagram svg{display:block;width:100%;max-width:100%;height:auto;min-height:150px;margin:auto;overflow:visible}.cn-notes .diagram strong{display:block;color:var(--cn-navy);font-size:16px;margin:2px 0 10px}.cn-notes .diagram p{font-size:13px;line-height:1.65;color:var(--cn-muted)}.cn-notes .diagram{overflow-x:auto}.cn-notes .diagram svg text{font-family:Arial,sans-serif;paint-order:stroke;stroke:#fff;stroke-width:.25px}@media(max-width:600px){.cn-notes .diagram svg{min-width:560px}}
 .cn-notes .test{border-top:1px solid var(--cn-line);margin-top:26px;padding-top:16px}
 .cn-notes .question{padding:12px 0;border-bottom:1px solid #e8edf4}
 .cn-notes .question label{margin:0 0 8px}
@@ -63,3 +63,14 @@
 .cn-notes .language-intro h2{margin-top:0}
 .cn-notes .language-intro p{line-height:1.75}
 .cn-notes .filters select#cnLanguage{border:2px solid #b9c9df;background:#fbfdff}
+
+
+/* Diagram visibility and label legibility standard — Cambridge reader */
+.cn-notes .diagram{overflow-x:auto;overflow-y:hidden;max-width:100%;background:#fff;padding:14px;scrollbar-width:thin}
+.cn-notes .diagram figcaption{font-weight:900;color:var(--cn-navy);font-size:16px;line-height:1.5;margin:0 0 12px}
+.cn-notes .diagram svg{display:block;width:100%;min-width:560px;height:auto;min-height:190px;max-height:none;overflow:visible}
+.cn-notes .diagram svg text{font-family:Arial,Helvetica,sans-serif;font-size:14px;fill:#071a3d;stroke:#fff;stroke-width:.7px;stroke-linejoin:round;paint-order:stroke}
+.cn-notes .diagram .diagram-note,.cn-notes .diagram p{font-size:13px;line-height:1.65;color:#334155}
+.cn-notes .diagram svg [stroke]{vector-effect:non-scaling-stroke}
+.cn-notes .diagram:focus-within{outline:3px solid #2563eb;outline-offset:2px}
+@media(max-width:600px){.cn-notes .diagram{padding:10px}.cn-notes .diagram svg{min-width:620px;min-height:190px}.cn-notes .diagram figcaption{font-size:14px}}
