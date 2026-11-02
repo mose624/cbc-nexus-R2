@@ -2651,9 +2651,10 @@ async function serveStatic(req,res,url){
     const ext=path.extname(target).toLowerCase();
     if(ext===".html") data=Buffer.from(injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(injectPageMetadata(data.toString("utf8"),url.pathname,req)),url.pathname)));
     const isHtml=ext===".html";
+    const isEducationHubPage=["/blog.html","/learning-hub.html"].includes(url.pathname);
     const isVersionedAsset=/[?&]v=|-[0-9]{8,}/.test(url.search||"") && [".css",".js"].includes(ext);
     const cacheControl=isHtml
-      ? "public, max-age=300, must-revalidate"
+      ? (isEducationHubPage ? "public, max-age=0, s-maxage=0, must-revalidate" : "public, max-age=300, must-revalidate")
       : isVersionedAsset
         ? "public, max-age=31536000, immutable"
         : [".svg",".png",".jpg",".jpeg",".webp",".ico",".woff",".woff2"].includes(ext)
