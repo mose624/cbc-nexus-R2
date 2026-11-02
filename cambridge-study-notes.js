@@ -445,7 +445,6 @@ function selectDiagram(chapter){
   if(has("inheritance","genetic variation","monohybrid","punnett"))return "inheritance";
   if(has("heart","circulatory","blood vessels"))return "heart";
   if(has("lung","gas exchange","breathing"))return "lungs";
-  if(has("food web","ecosystem","trophic","energy flow"))return "food";
   if(has("plant cell","cell wall","chloroplast"))return "plantcell";
   if(has("cell structure","cell organisation","cell organization","specialised cell","specialized cell"))return "cell";
   if(has("kidney","nephron","ultrafiltration","reabsorption"))return "nephron";
