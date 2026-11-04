@@ -52,7 +52,12 @@ body{margin:0;background:#fffaf0;color:#123b62}
 .gs-country{min-width:0}
 
 
-</style></head><body>
+</style><style id="cbe-image-motion">
+img.cbe-context-image{animation:cbeImageMotion 18s ease-in-out infinite alternate;transform-origin:center center;will-change:transform}
+@keyframes cbeImageMotion{0%{transform:scale(1) translateY(0)}100%{transform:scale(1.055) translateY(-3px)}}
+@media (prefers-reduced-motion:reduce){img.cbe-context-image{animation:none;will-change:auto}}
+</style>
+</head><body>
 <main class="gs-page">
 <div class="gs-top"><a href="/">← CBE Nexus Home</a><span><strong>CBE Nexus Global Schools</strong> · Country-by-country education information</span><a href="/international-teaching-jobs.html">International Teaching Jobs ↗</a></div>
 <section class="gs-hero" id="gsHero">
