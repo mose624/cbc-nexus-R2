@@ -2707,11 +2707,11 @@ async function serveStatic(req,res,url){
   }
 }
 const server=http.createServer(async(req,res)=>{const url=new URL(req.url,`http://${req.headers.host||"127.0.0.1"}`);setSecurityHeaders(res);const crawlerDiscoveryRequest=req.method==="GET"&&(url.pathname==="/robots.txt"||url.pathname==="/sitemap.xml");const limit=crawlerDiscoveryRequest?{allowed:true,remaining:120}:allowRequest(req,url);res.setHeader("X-RateLimit-Remaining",String(Math.max(0,limit.remaining)));if(!limit.allowed){res.setHeader("Retry-After","60");sendJson(res,429,{ok:false,error:"Too many requests. Please try again shortly."});return;}const requestHost=String(req.headers.host||"").toLowerCase().split(":")[0];
-const isSecondaryDomain=requestHost==="cbenexus.com"||requestHost==="www.cbenexus.com";
-const isWwwPrimaryDomain=requestHost==="www.cbenexus.co.ke";
+const isSecondaryDomain=requestHost==="cbenexus.co.ke"||requestHost==="www.cbenexus.co.ke";
+const isWwwPrimaryDomain=requestHost==="www.cbenexus.com";
 const isOperationalPath=url.pathname==="/api"||url.pathname.startsWith("/api/")||url.pathname==="/ads.txt"||url.pathname==="/health";
 if((isSecondaryDomain||isWwwPrimaryDomain)&&(req.method==="GET"||req.method==="HEAD")&&!isOperationalPath){
-  res.writeHead(301,{"Location":"https://cbenexus.co.ke"+url.pathname+url.search,"Cache-Control":"public, max-age=3600"});
+  res.writeHead(301,{"Location":"https://cbenexus.com"+url.pathname+url.search,"Cache-Control":"public, max-age=3600"});
   res.end();
   return;
 }
