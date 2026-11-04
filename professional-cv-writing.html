@@ -164,7 +164,12 @@ html body .cv-studio-header .cv-studio-nav .nav-actions a:hover{
 @media(max-width:760px){
  html body .site-header.cv-studio-header{background:linear-gradient(135deg,#a9142d,#e33b56)!important}
 }
-</style></head><body><header class="site-header cv-studio-header">
+</style><style id="cbe-image-motion">
+img.cbe-context-image{animation:cbeImageMotion 18s ease-in-out infinite alternate;transform-origin:center center;will-change:transform}
+@keyframes cbeImageMotion{0%{transform:scale(1) translateY(0)}100%{transform:scale(1.055) translateY(-3px)}}
+@media (prefers-reduced-motion:reduce){img.cbe-context-image{animation:none;will-change:auto}}
+</style>
+</head><body><header class="site-header cv-studio-header">
   <div class="cv-studio-topline"><span><strong>CBE NEXUS</strong><i>CONNECTING LEARNERS TO EXCELLENCE</i></span><span>INTERNATIONAL TEACHER CV STUDIO</span></div>
   <nav class="main-nav cv-studio-nav" aria-label="CV Studio navigation">
     <a class="brand" href="index.html#dashboard"><span class="brand-mark">CBE</span><span><strong>CBE Nexus CV Studio</strong><small>Professional CV Writing &amp; Global Career Support</small></span></a>
