@@ -553,7 +553,10 @@ box.querySelectorAll("[data-subject]").forEach(b=>b.addEventListener("click",()=
 }
 stage.addEventListener("change",()=>{populate();render();});subject.addEventListener("change",render);search.addEventListener("input",render);language?.addEventListener("change",()=>{applyLanguage();directoryRender();render();});
 populate();
-const requestedSubject=new URLSearchParams(window.location.search).get("subject");
+const params=new URLSearchParams(window.location.search);
+const requestedStage=params.get("stage");
+if(requestedStage){const stageAliases={igcse:"Cambridge IGCSE",alevel:"Cambridge AS & A Level","as-a-level":"Cambridge AS & A Level"};const stageTarget=stageAliases[requestedStage.toLowerCase()]||requestedStage;const stageMatch=[...stage.options].find(o=>o.textContent.toLowerCase()===stageTarget.toLowerCase()||o.value.toLowerCase()===stageTarget.toLowerCase());if(stageMatch){stage.value=stageMatch.value;populate();}}
+const requestedSubject=params.get("subject");
 if(requestedSubject){const match=[...subject.options].find(o=>o.value.toLowerCase()===requestedSubject.toLowerCase());if(match){subject.value=match.value;}else{const option=document.createElement("option");option.value=requestedSubject;option.textContent=requestedSubject;subject.appendChild(option);subject.value=requestedSubject;}}
 directoryRender();applyLanguage();render();
 })();
