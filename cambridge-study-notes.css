@@ -74,3 +74,13 @@
 .cn-notes .diagram svg [stroke]{vector-effect:non-scaling-stroke}
 .cn-notes .diagram:focus-within{outline:3px solid #2563eb;outline-offset:2px}
 @media(max-width:600px){.cn-notes .diagram{padding:10px}.cn-notes .diagram svg{min-width:620px;min-height:190px}.cn-notes .diagram figcaption{font-size:14px}}
+
+/* Click-to-open chapter navigation */
+.cn-notes .chapter-picker{margin:0 0 24px;padding:16px;border:1px solid var(--cn-line);border-radius:12px;background:#f8fbff}
+.cn-notes .chapter-picker h3{margin:0 0 4px;color:var(--cn-navy)}
+.cn-notes .chapter-picker-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:9px;margin-top:12px}
+.cn-notes .chapter-choice{display:block;width:100%;text-align:left;background:#fff!important;color:var(--cn-navy)!important;border:1px solid #cbd8ea!important;border-radius:9px;padding:12px!important;white-space:normal}
+.cn-notes .chapter-choice span{display:block;font-weight:800;line-height:1.4}
+.cn-notes .chapter-choice small{display:block;margin-top:5px;color:var(--cn-muted);font-weight:600}
+.cn-notes .chapter-choice.active{background:#e8f1ff!important;border:2px solid var(--cn-blue)!important}
+.cn-notes .chapter-choice:hover{border-color:var(--cn-blue)!important;box-shadow:0 4px 12px #071a3d12}
