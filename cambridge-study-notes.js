@@ -522,6 +522,7 @@ function selectDiagram(chapter){
  return chapter.diagram||"flow";
 }
 
+let activeChapterTitle = "";
 function render(){
 const profile=applyLanguage();
 if((language?.value||"en")!=="en"){
@@ -532,8 +533,12 @@ return;
 const st=stage.value, sub=subject.value, q=search.value.trim().toLowerCase();
 const found=chapters.filter(c=>(!st||c.stage===st)&&(!sub||c.subject===sub)&&(!q||(c.title+" "+c.unit+" "+c.subject+" "+c.sections.map(x=>x.join(" ")).join(" ")).toLowerCase().includes(q)));
 if(!found.length){reader.innerHTML='<h2>No published chapter matches these filters</h2><p class="status">This topic has not yet been added to the online chapter collection. Choose another subject or pathway. The directory is broader than the chapters currently published.</p>';return;}
-const c=found[0];
+const c=found.find(x=>x.title===activeChapterTitle)||found[0];
+activeChapterTitle=c.title;
+const chapterPicker='<section class="chapter-picker"><h3>Choose a chapter to read</h3><p class="status">Click any chapter below to open its full notes, diagrams, worked examples and practice questions.</p><div class="chapter-picker-list">'+found.map(x=>'<button type="button" class="chapter-choice '+(x.title===c.title?'active':'')+'" data-chapter-title="'+esc(x.title)+'"><span>'+esc(x.title)+'</span><small>'+esc(x.unit)+' · '+esc(x.stage)+'</small></button>').join('')+'</div></section>';
 reader.innerHTML='<div class="meta"><span class="tag">'+esc(c.stage)+'</span><span class="tag">'+esc(c.subject)+'</span><span class="tag">'+esc(c.unit)+'</span></div><h2>'+esc(c.title)+'</h2><p class="status">Original CBE Nexus study chapter • '+found.length+' matching chapter(s)</p><div class="outcomes"><strong>Learning objectives</strong><ul>'+c.outcomes.map(x=>'<li>'+esc(x)+'</li>').join("")+'</ul></div>'+deepLearning(c)+topicEnrichment(c)+c.sections.map((s,i)=>'<h3>'+((i+1)+". ")+esc(s[0])+'</h3><p>'+esc(s[1])+'</p>').join("")+'<figure class="diagram"><figcaption>Concept diagram — labelled teaching illustration</figcaption>'+diagram(selectDiagram(c))+'<p class="status">Schematic teaching illustration. Refer to the relevant syllabus for the required depth and terminology.</p></figure><div class="worked"><strong>Worked example / application</strong><p>'+esc(c.worked)+'</p></div>' + (c.stage==="Cambridge IGCSE"?igcseExpansion(c):"") + '<div class="exam-tip"><strong>Examination technique</strong><p>Show each step, state units where applicable, use precise subject vocabulary and check that your answer addresses the command word. For explain questions, link cause and effect; for compare questions, make paired comparisons; for evaluate questions, weigh evidence and reach a justified judgement. These are original learning notes, not Cambridge-endorsed publications.</p></div><section class="test"><h3>Chapter test — original practice questions</h3><p class="status">Select an answer, then reveal the explanation. These questions are newly written for CBE Nexus and are not copied from Cambridge examination papers.</p>'+c.test.map((t,i)=>'<div class="question"><label>'+(i+1)+'. '+esc(t[0])+'</label>'+t[1].map((o,j)=>'<label style="font-weight:500"><input style="width:auto;margin-right:7px" type="radio" name="cnq'+i+'" value="'+j+'">'+String.fromCharCode(65+j)+'. '+esc(o)+'</label>').join("")+'<button class="secondary" type="button" data-check="'+i+'">Check answer</button><div class="answer" id="cnAnswer'+i+'"></div></div>').join("")+'</section>';
+reader.insertAdjacentHTML("afterbegin",chapterPicker);
+reader.querySelectorAll("[data-chapter-title]").forEach(b=>b.addEventListener("click",()=>{activeChapterTitle=b.dataset.chapterTitle;render();reader.scrollIntoView({behavior:"smooth",block:"start"});}));
 reader.querySelectorAll("[data-check]").forEach(b=>b.addEventListener("click",()=>{const i=Number(b.dataset.check),q=c.test[i],selected=reader.querySelector('input[name="cnq'+i+'"]:checked'),box=$("cnAnswer"+i);box.classList.add("show");box.textContent=selected&&Number(selected.value)===q[2]?"Correct. "+q[3]:"Not quite. Correct answer: "+String.fromCharCode(65+q[2])+". "+q[3];}));
 }
 function populate(){
