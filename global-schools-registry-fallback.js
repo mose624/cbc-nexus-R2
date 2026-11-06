@@ -13,7 +13,7 @@ const entries=rows.split("\n").map(line=>{
 });
 entries.push({name:"Kosovo",code:"XK",slug:"kosovo",flag:"🇽🇰",url:"/global-schools/kosovo"});
 const current=window.CBE_GLOBAL_COUNTRIES;
-if(!Array.isArray(current)||current.length<190){
+if(!Array.isArray(current)||current.length<195){
  window.CBE_GLOBAL_COUNTRIES=entries;
 }else if(!current.some(c=>String(c.slug||"").toLowerCase()==="kosovo")){
  current.push(entries[entries.length-1]);
