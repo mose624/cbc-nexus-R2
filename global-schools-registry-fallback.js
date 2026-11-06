@@ -21,5 +21,23 @@ if(!Array.isArray(current)||current.length<195){
 if(!window.CBE_GLOBAL_COUNTRY_DATA||typeof window.CBE_GLOBAL_COUNTRY_DATA!=="object"){
  window.CBE_GLOBAL_COUNTRY_DATA={};
 }
+// Render a visible emergency directory immediately. The full renderer replaces these
+// simple links when it loads; if it fails, visitors still get every country link.
+const grid=document.getElementById("countryGrid");
+if(grid){
+ const fragment=document.createDocumentFragment();
+ entries.forEach(country=>{
+  const a=document.createElement("a");a.className="gs-country";a.href=country.url;
+  a.setAttribute("aria-label","Open "+country.name+" country dashboard");
+  const flag=document.createElement("span");flag.className="gs-flag";flag.textContent=country.flag;flag.setAttribute("aria-hidden","true");
+  const body=document.createElement("span");body.className="gs-country-body";
+  const name=document.createElement("strong");name.className="gs-country-name";name.textContent=country.name;
+  const note=document.createElement("small");note.textContent="Open country education dashboard";
+  body.append(name,note);a.append(flag,body);fragment.appendChild(a);
+ });
+ grid.replaceChildren(fragment);
+ const count=document.getElementById("countryCount");
+ if(count)count.textContent=entries.length+" countries shown · "+entries.length+" country routes available";
+}
 window.CBE_GLOBAL_REGISTRY_FALLBACK=true;
 })();
