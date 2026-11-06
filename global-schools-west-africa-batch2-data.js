@@ -27,7 +27,7 @@ teachers:[{name:"National Teaching Council",url:"https://ntc.gov.gh/"},{name:"Gh
 further:[{name:"Ghana Tertiary Education Commission",url:"https://gtec.edu.gh/"},{name:"Commission for Technical and Vocational Education and Training",url:"https://ctvet.gov.gh/"}],
 sources:[{label:"WAEC Ghana — BECE school candidates",url:"https://waecgh.org/home/bece-school/"},{label:"WAEC Ghana — WASSCE school candidates",url:"https://waecgh.org/home/wassce-school/"},{label:"WAEC Ghana — examination timetables",url:"https://waecgh.org/timetable/"},{label:"National Teaching Council — mandate",url:"https://ntc.gov.gh/mandate/"},{label:"NaSIA — school licensing",url:"https://www.nasia.gov.gh/school-licensing/"},{label:"Ghana Education Service",url:"https://ges.gov.gh/"}]
 },
-"the-gambia":{
+"gambia":{
 researchStatus:"GABECE and WASSCE are confirmed through WAEC Gambia. Teacher recruitment portal is linked to the Ministry of Basic and Secondary Education; confirm current qualification thresholds and vacancies in live notices.",
 officialLanguages:"English is the official language and the principal language of formal schooling. Mandinka, Wolof, Fula, Jola and other Gambian languages are widely spoken.",
 authority:"Ministry of Basic and Secondary Education (MoBSE); West African Examinations Council (WAEC), The Gambia; Ministry teacher-recruitment and education portal.",
