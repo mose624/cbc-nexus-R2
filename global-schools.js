@@ -208,7 +208,67 @@ function renderCountry(){
  const countrySchoolLinks=Array.isArray(d.schools)?d.schools.slice():[];
  if(!countrySchoolLinks.some(s=>s&&s.url===worldDirectoryLink.url))countrySchoolLinks.push(worldDirectoryLink);
  linkList("schoolLinks",countrySchoolLinks,"schoolEmpty","No verified school directory records have been added for this country yet.",c.flag);
- linkList("examLinks",d.exams,"examEmpty","No verified national examination records or current examination dates have been added for this country yet.");
+ 
+// Build a dedicated national-examinations dashboard inside every country page.
+// Only records already present in the country data are presented as country-specific exams;
+// empty categories receive research links, never invented examination names.
+(function renderNationalExamDashboard(){
+ const host=$("examLinks");if(!host)return;
+ const records=Array.isArray(d.exams)?d.exams.filter(x=>x&&typeof x==="object"):[];
+ const groups=[
+  {id:"primary",title:"Primary examinations and assessments",terms:/primary|elementary|foundation|kpsea|psle|ple|p6|grade ?6|grade ?7|class ?6|class ?7/},
+  {id:"junior",title:"Junior secondary examinations",terms:/junior|lower secondary|middle school|jss|kjsea|junior cert|grade ?8|grade ?9|grade ?10/},
+  {id:"senior",title:"Senior secondary and school-leaving examinations",terms:/senior|upper secondary|secondary|school leaving|leaving certificate|kcse|waec|neco|ssce|hsc|a.level|gce|baccalaureate|bac|matric|abitur|gaokao|csat|national.*exam/},
+  {id:"university",title:"University entrance and admission examinations",terms:/university|tertiary|entrance|admission|placement|aptitude|sat|act|jee|neet|cuet|utme|post.?utme|g?t.?exam|ucat/},
+  {id:"vocational",title:"Technical, vocational and professional assessments",terms:/technical|vocational|trade|professional|certification|competency|polytechnic|tv(et|e)|artisan/}
+ ];
+ const section=node("div","gs-exam-dashboard");
+ const intro=node("p","gs-muted");intro.textContent="Explore the national assessment pathway by education level. Examination names and links below are shown as country-specific facts only when curated in the country record; research links are clearly identified and are not verified examination listings.";
+ section.appendChild(intro);
+ const grid=node("div","gs-exam-level-grid");
+ const makeResearch=(title,query)=>{
+  const a=node("a","gs-exam-research");a.href="https://www.google.com/search?q="+encodeURIComponent(query);
+  a.textContent="Find official "+title+" information for "+c.name+" ↗";a.target="_blank";a.rel="noopener noreferrer";return a;
+ };
+ groups.forEach(group=>{
+  const card=node("article","gs-card gs-exam-level-card");
+  const h=node("h3");h.textContent=group.title;
+  const list=node("div","gs-exam-records");
+  const matched=records.filter(item=>{
+   const hay=[item.name,item.label,item.body,item.level,item.type,item.description].filter(Boolean).join(" ").toLowerCase();
+   return group.terms.test(hay);
+  });
+  matched.forEach(item=>{
+   const a=node("a");a.href=safeUrl(item.url);a.textContent=(item.name||item.label||"Examination")+(item.body?" — "+item.body:"")+(item.level?" · "+item.level:"");
+   if(/^https?:/.test(item.url||"")){a.target="_blank";a.rel="noopener noreferrer";}
+   list.appendChild(a);
+  });
+  if(!matched.length){
+   const p=node("p","gs-exam-unverified");p.textContent="No country-specific examination record has yet been verified in this category.";
+   list.append(p,makeResearch(group.title.toLowerCase(),"official "+group.title+" examining board examination authority "+c.name+" government"));
+  }
+  card.append(h,list);grid.appendChild(card);
+ });
+ section.appendChild(grid);
+ const existing=node("div","gs-exam-all-records");
+ const allTitle=node("h3");allTitle.textContent="All currently curated national examination links";
+ existing.appendChild(allTitle);
+ if(records.length){
+  records.forEach(item=>{const a=node("a");a.href=safeUrl(item.url);a.textContent=(item.name||item.label||"Examination")+(item.level?" · "+item.level:"")+(item.body?" — "+item.body:"");if(/^https?:/.test(item.url||"")){a.target="_blank";a.rel="noopener noreferrer";}existing.appendChild(a);});
+ }else{
+  const p=node("p","gs-exam-unverified");p.textContent="The country examination register is awaiting verified entries. CBE Nexus will not guess examination names, grade levels, dates or examining bodies.";
+  existing.append(p);
+ }
+ existing.append(makeResearch("national examinations and the official examining authority","official national examinations examination council board "+c.name+" government"));
+ section.appendChild(existing);
+ const note=node("p","gs-note");note.textContent="Verification standard: each examination entry should identify the education level, official examination name, examining authority, official source URL and latest verification date. Past-paper links must be checked for copyright and reuse permission.";
+ section.appendChild(note);
+ const style=node("style");style.textContent=".gs-exam-dashboard{margin:14px 0}.gs-exam-level-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}.gs-exam-level-card{margin:0;padding:15px;border:1px solid #dbe5ef;border-radius:12px;background:#fff}.gs-exam-level-card h3,.gs-exam-all-records h3{margin:0 0 10px;color:#075080;font-size:16px}.gs-exam-records,.gs-exam-all-records{display:grid;gap:8px}.gs-exam-records a,.gs-exam-all-records>a{display:block;padding:9px 11px;border-radius:8px;background:#eaf6fd;color:#075080!important;font-weight:750;text-decoration:none;overflow-wrap:anywhere}.gs-exam-records a:hover,.gs-exam-all-records>a:hover{background:#d9effb;text-decoration:underline}.gs-exam-unverified{margin:0;color:#64748b;font-size:13px;line-height:1.5}.gs-exam-records .gs-exam-research{background:#fff7e6;border:1px solid #f5d99b;color:#805500!important;font-size:12px}.gs-exam-all-records{margin-top:18px;padding:14px;border:1px solid #dbe5ef;border-radius:12px;background:#f8fbfe}.gs-exam-all-records>p{margin:0}.gs-exam-dashboard>.gs-note{margin-top:14px}@media(max-width:650px){.gs-exam-level-grid{grid-template-columns:1fr}.gs-exam-level-card{padding:13px}}";
+ section.appendChild(style);
+ host.replaceChildren(section);
+ const empty=$("examEmpty");if(empty)empty.classList.add("gs-hidden");
+})();
+
  linkList("paperLinks",d.papers,null);linkList("jobLinks",d.jobs,null);
  // Add country-specific live search links for every registered country. These are discovery links,
  // not claims that a vacancy is open; deadlines must be checked on the original employer advert.
