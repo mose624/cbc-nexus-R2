@@ -220,6 +220,28 @@ function renderCountry(){
  const examPanel=node("div","gs-learning-exam-panel");
  const examTitle=node("h3");examTitle.textContent=c.name+" examination preparation";
  const examIntro=node("p");examIntro.textContent="Prepare for the national examinations and school-leaving assessments relevant to "+c.name+". Use the examination links and subject resources below; confirm current syllabuses, paper formats and marking guidance with the examining authority.";
+ const examCards=node("div","gs-learning-exam-cards");
+ (d.exams||[]).forEach(exam=>{
+  const card=node("article","gs-learning-exam-card");
+  const title=node("strong");title.textContent=exam.name||"National examination";
+  const level=node("span");level.textContent=exam.level||"";
+  const body=node("p");body.textContent=exam.body||"Check the examination authority for current candidate guidance.";
+  const link=node("a");link.href=safeUrl(exam.url);link.textContent="Official examination information →";link.target="_blank";link.rel="noopener noreferrer";
+  card.append(title,level,body,link);examCards.appendChild(card);
+ });
+ if(examCards.childElementCount)examPanel.appendChild(examCards);
+ if(Array.isArray(d.examPreparation)&&d.examPreparation.length){
+  const prep=node("div","gs-learning-subject-paths");
+  d.examPreparation.forEach(group=>{
+   const item=node("article","gs-learning-subject-group");
+   const h=node("h4");h.textContent=group.title;
+   const p=node("p");p.textContent=group.description;
+   const subjects=node("div","gs-learning-subject-tags");
+   (group.subjects||[]).forEach(subject=>{const tag=node("span");tag.textContent=subject;subjects.appendChild(tag);});
+   item.append(h,p,subjects);prep.appendChild(item);
+  });
+  examPanel.appendChild(prep);
+ }
  const examList=node("ul","gs-learning-exam-list");
  ["National examination subject resources and revision","Past papers by year, where publicly available","Marking schemes and model answers, where authorised","University and college admission guidance"].forEach(label=>{const li=node("li");li.textContent=label;examList.appendChild(li);});
  const examActions=node("div","gs-learning-actions");
@@ -229,6 +251,7 @@ function renderCountry(){
  learningHub.append(hubHeading,resourceGrid,examPanel);
  const learningStyle=node("style");
  learningStyle.textContent=".gs-country-learning-hub{overflow:hidden;background:linear-gradient(145deg,#fffefb,#f1f8fc);border-color:#d9e7ef}.gs-learning-heading{padding:4px 2px 16px}.gs-learning-eyebrow{display:inline-flex;padding:5px 10px;border-radius:999px;background:#e0f2fe;color:#075080;font-size:10px;font-weight:900;letter-spacing:.1em}.gs-learning-heading h2{margin:10px 0 4px;font-family:Georgia,'Times New Roman',serif;color:#124a7c;font-size:clamp(23px,3vw,30px)}.gs-learning-tagline{margin:0 0 8px;color:#08734f;font-weight:900;letter-spacing:.025em}.gs-learning-heading .gs-muted{max-width:850px;margin:0;font-size:13px}.gs-learning-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}.gs-learning-card{display:flex;min-width:0;min-height:158px;flex-direction:column;align-items:flex-start;padding:15px;border:1px solid #dbe7ef;border-radius:12px;background:#fff;color:#123b62!important;text-decoration:none;box-shadow:0 3px 10px #173b590a;transition:transform .18s,box-shadow .18s,border-color .18s}.gs-learning-card:hover{transform:translateY(-3px);border-color:#7cc4e8;box-shadow:0 8px 18px #173b5918}.gs-learning-icon{font-size:25px;margin-bottom:9px}.gs-learning-card strong{font-size:14px;color:#075080}.gs-learning-description{font-size:11px;line-height:1.45;color:#526b80;margin-top:5px;flex:1}.gs-learning-cta{font-size:10px;font-weight:900;color:#08734f;margin-top:12px}.gs-learning-exam-panel{margin-top:16px;padding:17px;border:1px solid #eadfbe;border-radius:12px;background:#fffaf0}.gs-learning-exam-panel h3{margin:0 0 7px;color:#124a7c;font-size:17px}.gs-learning-exam-panel p{font-size:12px;line-height:1.55;color:#526b80}.gs-learning-exam-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 22px;padding-left:20px;color:#244c6c;font-size:12px;line-height:1.5}.gs-learning-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.gs-learning-action{display:inline-flex;padding:10px 13px;border-radius:8px;background:#075080;color:#fff!important;font-size:11px;font-weight:850;text-decoration:none}.gs-learning-action.secondary{background:#e0f2fe;color:#075080!important;border:1px solid #b9def1}@media(max-width:900px){.gs-learning-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:480px){.gs-learning-grid{grid-template-columns:1fr}.gs-learning-card{min-height:0}.gs-learning-exam-list{grid-template-columns:1fr}.gs-learning-actions .gs-learning-action{width:100%;justify-content:center}}";
+ learningStyle.textContent+=".gs-learning-exam-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.gs-learning-exam-card{padding:12px;border:1px solid #dbe7ef;border-radius:10px;background:#fff}.gs-learning-exam-card strong,.gs-learning-exam-card span{display:block}.gs-learning-exam-card strong{color:#075080;font-size:13px}.gs-learning-exam-card span{margin-top:4px;color:#08734f;font-size:10px;font-weight:800}.gs-learning-exam-card p,.gs-learning-subject-group p{font-size:11px;line-height:1.5;color:#526b80}.gs-learning-exam-card a{font-size:11px;font-weight:850;color:#075080}.gs-learning-subject-paths{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}.gs-learning-subject-group{padding:12px;border:1px solid #dbe7ef;border-radius:10px;background:#f8fcff}.gs-learning-subject-group h4{margin:0;color:#075080;font-size:13px}.gs-learning-subject-tags{display:flex;gap:6px;flex-wrap:wrap}.gs-learning-subject-tags span{padding:5px 8px;border-radius:999px;background:#e0f2fe;color:#075080;font-size:10px;font-weight:800}@media(max-width:560px){.gs-learning-exam-cards,.gs-learning-subject-paths{grid-template-columns:1fr}}";
  document.head.appendChild(learningStyle);
 
  if(countryLayout){const main=countryLayout.querySelector(".gs-main-content");if(main){main.prepend(marketplace);main.prepend(learningHub);}else countryLayout.prepend(learningHub,marketplace);}
