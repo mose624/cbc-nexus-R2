@@ -9,6 +9,10 @@ if(!d) return;
 Object.assign(d,{
 "ghana":{
 researchStatus:"Core examination and teacher-regulation facts checked against WAEC Ghana, the Ministry of Education and the National Teaching Council. School directories, current calendar circulars and live recruitment notices should be checked at source.",
+examPreparation:[
+{title:"BECE — Junior High School",description:"Build a strong foundation across the core basic-education learning areas. Confirm the current BECE subject list, syllabus, paper structure and school-candidate instructions with WAEC Ghana and NaCCA.",subjects:["English Language","Mathematics","Integrated Science","Social Studies","Computing","Career Technology","Creative Arts & Design","Religious & Moral Education","Ghanaian Language"]},
+{title:"WASSCE — Senior High School",description:"Prepare for the core subjects and the elective programme selected at school. Subject combinations and available papers depend on the candidate's programme and current WAEC regulations.",subjects:["Core English Language","Core Mathematics","Integrated Science","Social Studies","General Science electives","General Arts electives","Business electives","Technical & Vocational electives","Agriculture electives"]}
+],
 officialLanguages:"English is Ghana’s official language and the principal language of formal schooling. Ghanaian languages are used in communities and in approved early-grade language programmes.",
 authority:"Ministry of Education; Ghana Education Service (GES) for pre-tertiary public education; National Council for Curriculum and Assessment (NaCCA) for curriculum; West African Examinations Council (WAEC), Ghana for BECE and WASSCE; National Teaching Council (NTC) for teacher licensing.",
 system:"The mainstream structure is kindergarten, six years of primary, three years of junior high school and three years of senior high school or technical/vocational education, followed by tertiary education. Ghana’s standards-based curriculum and Common Core Programme apply at the relevant basic-education stages; confirm current implementation and approved pathways with NaCCA and GES.",
