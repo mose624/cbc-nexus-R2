@@ -43,9 +43,9 @@ exams:[
 ],
 schools:[{name:"Ministry of National Education",type:"National school education authority",url:"https://education.gouv.tg/"},{name:"TG Examens",type:"Official school examination portal",url:"https://www.exasco.gouv.tg/"}],
 papers:[{name:"TG Examens",type:"Official CEPD, BEPC and BAC examination portal",url:"https://www.exasco.gouv.tg/"},{name:"Ministry of National Education",type:"Curriculum and current examination notices",url:"https://education.gouv.tg/"}],
-jobs:[{name:"Ministry of National Education",type:"Teacher recruitment and education notices",url:"https://education.gouv.tg/"},{name:"Togo Government",type:"Official government announcements",url:"https://www.republiquetogolaise.com/"}],
+jobs:[{name:"Ministry of National Education",type:"Teacher recruitment and education notices",url:"https://education.gouv.tg/"},{name:"Togo Government",type:"Official government announcements",url:"https://togo.gouv.tg/"}],
 teachers:[{name:"Ministry of National Education",url:"https://education.gouv.tg/"}],
-further:[{name:"Ministry of Higher Education and Research",url:"https://enseignementsuperieur.gouv.tg/"},{name:"Ministry of National Education",url:"https://education.gouv.tg/"}],
+further:[{name:"Ministry of Higher Education and Research",url:"https://edusup.gouv.tg/"},{name:"Ministry of National Education",url:"https://education.gouv.tg/"}],
 sources:[{label:"Ministry — national examinations 2026",url:"https://education.gouv.tg/examens-nationaux-2026-mama-omorou-sadresse-a-la-communaute-educative/"},{label:"TG Examens",url:"https://www.exasco.gouv.tg/"}]
 },
 "burkina-faso":{
@@ -65,11 +65,11 @@ exams:[
 {name:"BEP and CAP",body:"Technical/vocational awards certifying occupational and practical competencies.",level:"Technical/vocational",url:"https://gouvernement.gov.bf/"},
 {name:"CQP, BQP, BPT and BPTS",body:"Professional qualification certificates and technician awards; distinct from general school-leaving examinations.",level:"Professional/vocational",url:"https://gouvernement.gov.bf/"}
 ],
-schools:[{name:"MEBAPLN",type:"Basic education authority",url:"https://www.education.gov.bf/"},{name:"Government of Burkina Faso",type:"Official education and examination announcements",url:"https://gouvernement.gov.bf/"},{name:"SIGEC-CEP",type:"Official MEBAPLN examination-results platform",url:"https://www.educollect.education.gov.bf/"}],
+schools:[{name:"MEBAPLN",type:"Basic education authority",url:"https://www.education.gov.bf/"},{name:"MESFPT",type:"Secondary, technical and vocational education authority",url:"https://formationpro.gov.bf/"},{name:"Government of Burkina Faso",type:"Official education and examination announcements",url:"https://gouvernement.gov.bf/"},{name:"SIGEC-CEP",type:"Official MEBAPLN examination-results platform",url:"https://www.educollect.education.gov.bf/"}],
 papers:[{name:"MEBAPLN",type:"Official curriculum and CEP information",url:"https://www.education.gov.bf/"},{name:"SIGEC-CEP",type:"Official CEP results and school-examination platform",url:"https://www.educollect.education.gov.bf/"}],
-jobs:[{name:"MEBAPLN",type:"Official primary teacher recruitment notices",url:"https://www.education.gov.bf/"},{name:"Government of Burkina Faso",type:"Public-service announcements",url:"https://gouvernement.gov.bf/"}],
-teachers:[{name:"MEBAPLN",url:"https://www.education.gov.bf/"},{name:"Government of Burkina Faso",url:"https://gouvernement.gov.bf/"}],
-further:[{name:"Ministry responsible for Higher Education",url:"https://www.enseignementsup.gov.bf/"},{name:"Government of Burkina Faso",url:"https://gouvernement.gov.bf/"}],
+jobs:[{name:"MEBAPLN",type:"Official primary teacher recruitment notices",url:"https://www.education.gov.bf/"},{name:"MESFPT",type:"Secondary and vocational teacher notices",url:"https://formationpro.gov.bf/"},{name:"Government of Burkina Faso",type:"Public-service announcements",url:"https://gouvernement.gov.bf/"}],
+teachers:[{name:"MEBAPLN",url:"https://www.education.gov.bf/"},{name:"MESFPT",url:"https://formationpro.gov.bf/"},{name:"Government of Burkina Faso",url:"https://gouvernement.gov.bf/"}],
+further:[{name:"Ministry of Higher Education, Research and Innovation",url:"https://primature.gov.bf/composition/"},{name:"Government of Burkina Faso",url:"https://gouvernement.gov.bf/"}],
 sources:[{label:"Government — 2026 examinations and professional certifications",url:"https://gouvernement.gov.bf/actualites/education-plus-de-27-milliards-f-cfa-mobilises-pour-lorganisation-des-examens-et-concours-session-2026/"},{label:"MEBAPLN official portal",url:"https://www.education.gov.bf/"},{label:"SIGEC-CEP results portal",url:"https://www.educollect.education.gov.bf/"}]
 },
 "niger":{
@@ -100,7 +100,7 @@ researchStatus:"CNECE and the government administrative portal confirm DEF, Bacc
 officialLanguages:"National languages have official status under the current constitutional framework; French is a working language. Bamanankan, Fula, Songhay, Tamasheq, Soninke, Dogon and other languages are spoken.",
 authority:"Ministry of National Education; Centre National des Examens et Concours de l'Éducation (CNECE); technical/vocational and higher-education authorities.",
 curriculum:"National curriculum and fundamental/secondary education programmes are overseen by the Ministry of National Education. Technical, vocational and teacher-training programmes have separate pathways; verify current syllabus documents through official portals.",
-curriculumSources:[{name:"Ministry of National Education",url:"https://www.education.gov.ml/"},{name:"CNECE — examinations and programme notices",url:"https://cnece-men-examens.ml/"}],
+curriculumSources:[{name:"Ministry of National Education",url:"https://gouvernement.ml/"},{name:"CNECE — examinations and programme notices",url:"https://cnece-men-examens.ml/"}],
 system:"Preschool, fundamental education, general/technical secondary, teacher-training institutes and higher education. DEF marks fundamental-cycle completion; Baccalauréat is senior-secondary qualification; CAP and BT are technical/professional awards; IFM relates to teacher preparation.",
 termCalendar:"The Ministry issues school calendars and examination arrangements; check current Ministry, CNECE and Portail Education notices.",
 calendar:"Use current school calendar and CNECE notices; do not carry forward old timetables.",
@@ -112,11 +112,11 @@ exams:[
 {name:"Brevet de Technicien (BT 1 and BT 2)",body:"Technical education qualifications; current specialisms and candidate rules are set by official notices.",level:"Technical/vocational",url:"https://cnece-men-examens.ml/"},
 {name:"Institut de Formation des Maîtres (IFM) examinations",body:"Teacher-training admission/professional assessment route, not a pupil school-leaving certificate.",level:"Teacher preparation",url:"https://cnece-men-examens.ml/"}
 ],
-schools:[{name:"Ministry of National Education",type:"National school education authority",url:"https://www.education.gov.ml/"},{name:"CNECE",type:"Official national examination portal",url:"https://cnece-men-examens.ml/"},{name:"Portail Education",type:"Official education and examination portal",url:"https://www.porteduc.ml/"}],
+schools:[{name:"Ministry of National Education",type:"National school education authority; official government ministry directory",url:"https://primature.ml/gouvernement/"},{name:"CNECE",type:"Official national examination portal",url:"https://cnece-men-examens.ml/"},{name:"Portail Education",type:"Official education and examination portal",url:"https://www.porteduc.ml/"}],
 papers:[{name:"CNECE",type:"DEF, Baccalauréat, CAP, BT and IFM examination information",url:"https://cnece-men-examens.ml/"},{name:"Portail Education — examinations",type:"Official calendars, candidate-centre and results services",url:"https://www.porteduc.ml/portail/examen"},{name:"Government — DEF diploma procedure",type:"Official DEF certification information",url:"https://demarchesadministratives.gouv.ml/diplome-attestation-du-diplome-detudes-fondamentales/"}],
-jobs:[{name:"Ministry of National Education",type:"Official teacher recruitment and ministry notices",url:"https://www.education.gov.ml/"},{name:"Government of Mali",type:"Public-service announcements",url:"https://www.gouvernement.ml/"}],
-teachers:[{name:"Ministry of National Education",url:"https://www.education.gov.ml/"},{name:"CNECE — IFM information",url:"https://cnece-men-examens.ml/"}],
-further:[{name:"Government of Mali — higher education and vocational information",url:"https://www.gouvernement.ml/"}],
+jobs:[{name:"Ministry of National Education",type:"Official teacher recruitment and ministry notices",url:"https://gouvernement.ml/"},{name:"Government of Mali",type:"Public-service announcements",url:"https://www.gouvernement.ml/"}],
+teachers:[{name:"Ministry of National Education",url:"https://gouvernement.ml/"},{name:"CNECE — IFM information",url:"https://cnece-men-examens.ml/"}],
+further:[{name:"Ministry of Higher Education and Scientific Research — ministry listing",url:"https://primature.ml/gouvernement/"}],
 sources:[{label:"CNECE — national examinations",url:"https://cnece-men-examens.ml/"},{label:"Portail Education — examination calendars/results",url:"https://www.porteduc.ml/portail/examen"},{label:"Government — DEF diploma procedure",url:"https://demarchesadministratives.gouv.ml/diplome-attestation-du-diplome-detudes-fondamentales/"},{label:"Government — Baccalauréat, BT and CAP diploma procedure",url:"https://demarchesadministratives.gouv.ml/diplome-attestation-du-baccalaureat-du-brevet-de-technicien-et-du-certificat-daptitude-professionnelle/"}]
 }
 });
