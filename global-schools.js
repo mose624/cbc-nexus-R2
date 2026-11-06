@@ -58,10 +58,11 @@ function renderCountries(filter){
    {label:"ISS",url:"https://www.iss.edu/for-individuals/find-a-job/current-openings/"}
   ];
   sourceLinks.forEach(source=>{const a=node("a");a.href=safeUrl(source.url);a.textContent=source.label;a.target="_blank";a.rel="noopener noreferrer";a.setAttribute("aria-label","Search "+c.name+" teaching vacancies on "+source.label);links.appendChild(a);});
-  body.append(nameLink,small,snapshot,links);card.append(flag,body);grid.appendChild(card);
+  const openProfile=node("a","gs-country-open-profile");openProfile.href=c.url;openProfile.textContent="Open country page →";openProfile.setAttribute("aria-label","Open "+c.name+" dedicated education page");body.append(nameLink,small,snapshot,openProfile,links);card.append(flag,body);grid.appendChild(card);
  });
  if(!matches.length){const p=node("p","gs-empty");p.textContent="No matching country found. Try another spelling.";grid.appendChild(p);}
 }
+const countryCardActionStyle=document.createElement("style");countryCardActionStyle.textContent=".gs-country-open-profile{display:inline-flex;align-self:flex-start;margin:5px 0 2px;padding:6px 9px;border-radius:7px;background:#e0f2fe;color:#075080!important;font-size:11px;font-weight:850;text-decoration:none}.gs-country-open-profile:hover{background:#cdeafa}";document.head.appendChild(countryCardActionStyle);
 // Learner photography is selected deterministically by country so all country pages have a visual hero.
 const learnerPhotos=[
  'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1800&q=82',
@@ -190,70 +191,72 @@ function renderCountry(){
  else {const countryPanel=document.querySelector("#gsCountry > .gs-panel");if(countryPanel){const header=countryPanel.querySelector(".gs-country-head");if(header)header.insertAdjacentElement("afterend",portalNav);else countryPanel.prepend(portalNav);}else if(countryLayout){countryLayout.parentNode.insertBefore(portalNav,countryLayout);}}
  portalNav.style.display="grid";portalNav.style.visibility="visible";portalNav.style.opacity="1";
 
- // Country learning hub: a consistent, country-labelled resource dashboard on every profile.
- const learningHub=node("section","gs-panel gs-section gs-country-learning-hub");learningHub.id="country-learning-hub";
- const hubHeading=node("div","gs-learning-heading");
- const hubEyebrow=node("div","gs-learning-eyebrow");hubEyebrow.textContent="CBE NEXUS · COUNTRY LEARNING HUB";
- const hubTitle=node("h2");hubTitle.textContent=c.name+" Education Resources";
- const hubTagline=node("p","gs-learning-tagline");hubTagline.textContent="Learn • Practise • Revise • Succeed";
- const hubIntro=node("p","gs-muted");hubIntro.textContent="Explore learning and examination-preparation pathways for learners, parents and teachers in "+c.name+". Resource availability and curriculum alignment vary by subject and grade; check each resource page for coverage.";
- hubHeading.append(hubEyebrow,hubTitle,hubTagline,hubIntro);
+ // Country education dashboard: shared visual system, country-specific content and links.
+ const learningHub=node("section","gs-country-learning-dashboard");learningHub.id="country-learning-hub";
+ const hero=node("header","gs-country-learning-hero");
+ const heroBrand=node("div","gs-country-learning-brand");
+ const flagMark=node("span","gs-country-learning-flag");flagMark.textContent=c.flag||"🌍";
+ const brandText=node("strong");brandText.textContent=c.name+" Education Resources";
+ heroBrand.append(flagMark,brandText);
+ const heroCopy=node("div","gs-country-learning-hero-copy");
+ const heroTitle=node("h2");heroTitle.textContent=c.name+" Education Resources";
+ const heroTag=node("span","gs-country-learning-tagline");heroTag.textContent="Learn • Practise • Revise • Succeed";
+ const heroDesc=node("p");heroDesc.textContent="Explore curriculum learning resources and prepare for "+((d.exams||[]).slice(0,2).map(x=>x.name).join(" and ")||"national examinations")+".";
+ heroCopy.append(heroTitle,heroTag,heroDesc);hero.append(heroBrand,heroCopy);
+ const dashBody=node("div","gs-country-learning-body");
+ const leftColumn=node("div","gs-country-learning-left");
  const resourceGrid=node("div","gs-learning-grid");
  const resourceItems=[
-  {icon:"📘",title:"Online Notes",desc:"Subject notes and curriculum learning guides",type:"notes"},
-  {icon:"📝",title:"Past Papers",desc:"Find examination papers and revision resources",type:"past-papers"},
-  {icon:"📋",title:"Mock Exams",desc:"Practise with timed examination-style tasks",type:"mock-exams"},
-  {icon:"🎯",title:"Interactive Quizzes",desc:"Test understanding with self-check questions",type:"quizzes"},
-  {icon:"🧮",title:"Worked Examples",desc:"Step-by-step solutions and explanations",type:"worked-examples"},
-  {icon:"🔬",title:"Science Practicals",desc:"Practical skills, investigations and lab guidance",type:"practicals"},
-  {icon:"🎬",title:"Video Lessons",desc:"Visual explanations and topic demonstrations",type:"video-lessons"},
-  {icon:"🎓",title:"Scholarships",desc:"Explore further study and funding opportunities",type:"scholarships"}
+  {icon:"▤",tone:"teal",title:"Online Notes",desc:"Subject notes and curriculum learning guides",type:"notes"},
+  {icon:"▤",tone:"gold",title:"Past Papers",desc:"Past examination papers and revision resources",type:"past-papers"},
+  {icon:"☑",tone:"red",title:"Mock Exams",desc:"Practise with examination-style tasks",type:"mock-exams"},
+  {icon:"⚡",tone:"blue",title:"Interactive Quizzes",desc:"Test understanding with self-check questions",type:"quizzes"},
+  {icon:"x²",tone:"purple",title:"Worked Examples",desc:"Step-by-step solutions and explanations",type:"worked-examples"},
+  {icon:"⚗",tone:"green",title:"Science Practicals",desc:"Investigations, experiments and lab guidance",type:"practicals"},
+  {icon:"▶",tone:"orange",title:"Video Lessons",desc:"Visual explanations and topic demonstrations",type:"video-lessons"},
+  {icon:"🎓",tone:"gold",title:"Scholarships",desc:"Further study and funding opportunities",type:"scholarships"}
  ];
  resourceItems.forEach(item=>{
   const card=node("a","gs-learning-card");card.href=item.type==="quizzes"?"/interactive-questions.html?country="+countryQuery:"/resources.html?country="+countryQuery+"&type="+encodeURIComponent(item.type);
-  const icon=node("span","gs-learning-icon");icon.textContent=item.icon;icon.setAttribute("aria-hidden","true");
+  const icon=node("span","gs-learning-icon gs-learning-icon-"+item.tone);icon.textContent=item.icon;icon.setAttribute("aria-hidden","true");
   const title=node("strong");title.textContent=item.title;
   const desc=node("span","gs-learning-description");desc.textContent=item.desc;
-  const cta=node("span","gs-learning-cta");cta.textContent="Explore learning resources →";
+  const cta=node("span","gs-learning-cta");cta.textContent="Explore learning resources  ›";
   card.append(icon,title,desc,cta);resourceGrid.appendChild(card);
  });
- const examPanel=node("div","gs-learning-exam-panel");
- const examTitle=node("h3");examTitle.textContent=c.name+" examination preparation";
- const examIntro=node("p");examIntro.textContent="Prepare for the national examinations and school-leaving assessments relevant to "+c.name+". Use the examination links and subject resources below; confirm current syllabuses, paper formats and marking guidance with the examining authority.";
- const examCards=node("div","gs-learning-exam-cards");
+ leftColumn.appendChild(resourceGrid);
+ const rightColumn=node("div","gs-country-learning-right");
+ const examPanel=node("section","gs-learning-side-panel gs-learning-exam-panel");
+ const examHead=node("div","gs-learning-side-heading");
+ const examIcon=node("span","gs-learning-side-icon");examIcon.textContent="🎓";
+ const examTitle=node("h3");examTitle.textContent="Examination preparation";examHead.append(examIcon,examTitle);
+ const examList=node("div","gs-learning-side-links");
  (d.exams||[]).forEach(exam=>{
-  const card=node("article","gs-learning-exam-card");
-  const title=node("strong");title.textContent=exam.name||"National examination";
-  const level=node("span");level.textContent=exam.level||"";
-  const body=node("p");body.textContent=exam.body||"Check the examination authority for current candidate guidance.";
-  const link=node("a");link.href=safeUrl(exam.url);link.textContent="Official examination information →";link.target="_blank";link.rel="noopener noreferrer";
-  card.append(title,level,body,link);examCards.appendChild(card);
+  const a=node("a");a.href=safeUrl(exam.url);a.target="_blank";a.rel="noopener noreferrer";
+  const label=node("span");label.textContent=exam.name||"National examination";
+  const arrow=node("b");arrow.textContent="→";a.append(label,arrow);examList.appendChild(a);
  });
- if(examCards.childElementCount)examPanel.appendChild(examCards);
- if(Array.isArray(d.examPreparation)&&d.examPreparation.length){
-  const prep=node("div","gs-learning-subject-paths");
-  d.examPreparation.forEach(group=>{
-   const item=node("article","gs-learning-subject-group");
-   const h=node("h4");h.textContent=group.title;
-   const p=node("p");p.textContent=group.description;
-   const subjects=node("div","gs-learning-subject-tags");
-   (group.subjects||[]).forEach(subject=>{const tag=node("span");tag.textContent=subject;subjects.appendChild(tag);});
-   item.append(h,p,subjects);prep.appendChild(item);
-  });
-  examPanel.appendChild(prep);
- }
- const examList=node("ul","gs-learning-exam-list");
- ["National examination subject resources and revision","Past papers by year, where publicly available","Marking schemes and model answers, where authorised","University and college admission guidance"].forEach(label=>{const li=node("li");li.textContent=label;examList.appendChild(li);});
- const examActions=node("div","gs-learning-actions");
- const examsLink=node("a","gs-learning-action");examsLink.href="#exams";examsLink.textContent="Explore "+c.name+" examination system";
- const papersLink=node("a","gs-learning-action secondary");papersLink.href="/resources.html?country="+countryQuery+"&type=past-papers";papersLink.textContent="Browse past-paper resources";
- examActions.append(examsLink,papersLink);examPanel.append(examTitle,examIntro,examList,examActions);
- learningHub.append(hubHeading,resourceGrid,examPanel);
+ [
+  {label:"Past papers by year",url:"/resources.html?country="+countryQuery+"&type=past-papers"},
+  {label:"Marking schemes and model answers",url:"/resources.html?country="+countryQuery+"&type=marking-schemes"}
+ ].forEach(item=>{const a=node("a");a.href=item.url;const label=node("span");label.textContent=item.label;const arrow=node("b");arrow.textContent="→";a.append(label,arrow);examList.appendChild(a);});
+ examPanel.append(examHead,examList);
+ const systemPanel=node("section","gs-learning-side-panel gs-learning-system-panel");
+ const systemHead=node("div","gs-learning-side-heading");
+ const systemIcon=node("span","gs-learning-side-icon");systemIcon.textContent="🏛️";
+ const systemTitle=node("h3");systemTitle.textContent="Explore "+c.name+"'s education system";systemHead.append(systemIcon,systemTitle);
+ const systemList=node("div","gs-learning-side-links");
+ [
+  {label:"National curriculum",url:"#curriculum"},
+  {label:"Schools directory",url:"#schools"},
+  {label:"Examination authority",url:"#exams"},
+  {label:"University admission guidance",url:"#further"}
+ ].forEach(item=>{const a=node("a");a.href=item.url;const label=node("span");label.textContent=item.label;const arrow=node("b");arrow.textContent="→";a.append(label,arrow);systemList.appendChild(a);});
+ systemPanel.append(systemHead,systemList);
+ rightColumn.append(examPanel,systemPanel);dashBody.append(leftColumn,rightColumn);learningHub.append(hero,dashBody);
  const learningStyle=node("style");
- learningStyle.textContent=".gs-country-learning-hub{overflow:hidden;background:linear-gradient(145deg,#fffefb,#f1f8fc);border-color:#d9e7ef}.gs-learning-heading{padding:4px 2px 16px}.gs-learning-eyebrow{display:inline-flex;padding:5px 10px;border-radius:999px;background:#e0f2fe;color:#075080;font-size:10px;font-weight:900;letter-spacing:.1em}.gs-learning-heading h2{margin:10px 0 4px;font-family:Georgia,'Times New Roman',serif;color:#124a7c;font-size:clamp(23px,3vw,30px)}.gs-learning-tagline{margin:0 0 8px;color:#08734f;font-weight:900;letter-spacing:.025em}.gs-learning-heading .gs-muted{max-width:850px;margin:0;font-size:13px}.gs-learning-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}.gs-learning-card{display:flex;min-width:0;min-height:158px;flex-direction:column;align-items:flex-start;padding:15px;border:1px solid #dbe7ef;border-radius:12px;background:#fff;color:#123b62!important;text-decoration:none;box-shadow:0 3px 10px #173b590a;transition:transform .18s,box-shadow .18s,border-color .18s}.gs-learning-card:hover{transform:translateY(-3px);border-color:#7cc4e8;box-shadow:0 8px 18px #173b5918}.gs-learning-icon{font-size:25px;margin-bottom:9px}.gs-learning-card strong{font-size:14px;color:#075080}.gs-learning-description{font-size:11px;line-height:1.45;color:#526b80;margin-top:5px;flex:1}.gs-learning-cta{font-size:10px;font-weight:900;color:#08734f;margin-top:12px}.gs-learning-exam-panel{margin-top:16px;padding:17px;border:1px solid #eadfbe;border-radius:12px;background:#fffaf0}.gs-learning-exam-panel h3{margin:0 0 7px;color:#124a7c;font-size:17px}.gs-learning-exam-panel p{font-size:12px;line-height:1.55;color:#526b80}.gs-learning-exam-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 22px;padding-left:20px;color:#244c6c;font-size:12px;line-height:1.5}.gs-learning-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.gs-learning-action{display:inline-flex;padding:10px 13px;border-radius:8px;background:#075080;color:#fff!important;font-size:11px;font-weight:850;text-decoration:none}.gs-learning-action.secondary{background:#e0f2fe;color:#075080!important;border:1px solid #b9def1}@media(max-width:900px){.gs-learning-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:480px){.gs-learning-grid{grid-template-columns:1fr}.gs-learning-card{min-height:0}.gs-learning-exam-list{grid-template-columns:1fr}.gs-learning-actions .gs-learning-action{width:100%;justify-content:center}}";
- learningStyle.textContent+=".gs-learning-exam-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.gs-learning-exam-card{padding:12px;border:1px solid #dbe7ef;border-radius:10px;background:#fff}.gs-learning-exam-card strong,.gs-learning-exam-card span{display:block}.gs-learning-exam-card strong{color:#075080;font-size:13px}.gs-learning-exam-card span{margin-top:4px;color:#08734f;font-size:10px;font-weight:800}.gs-learning-exam-card p,.gs-learning-subject-group p{font-size:11px;line-height:1.5;color:#526b80}.gs-learning-exam-card a{font-size:11px;font-weight:850;color:#075080}.gs-learning-subject-paths{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}.gs-learning-subject-group{padding:12px;border:1px solid #dbe7ef;border-radius:10px;background:#f8fcff}.gs-learning-subject-group h4{margin:0;color:#075080;font-size:13px}.gs-learning-subject-tags{display:flex;gap:6px;flex-wrap:wrap}.gs-learning-subject-tags span{padding:5px 8px;border-radius:999px;background:#e0f2fe;color:#075080;font-size:10px;font-weight:800}@media(max-width:560px){.gs-learning-exam-cards,.gs-learning-subject-paths{grid-template-columns:1fr}}";
+ learningStyle.textContent=".gs-country-learning-dashboard{width:100%;margin:18px 0 22px;overflow:hidden;border:1px solid #d8e2e9;border-radius:14px;background:#f1f5f8;box-shadow:0 8px 24px rgba(18,52,77,.08);color:#102d4d}.gs-country-learning-hero{position:relative;display:flex;align-items:center;min-height:190px;padding:28px 32px;background:linear-gradient(100deg,rgba(0,72,52,.98),rgba(0,103,70,.92) 56%,rgba(0,103,70,.35)),url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1800&q=82') center 42%/cover;color:#fff}.gs-country-learning-brand{position:absolute;top:14px;left:24px;display:flex;align-items:center;gap:10px;color:#102d4d;background:rgba(255,255,255,.94);border-radius:999px;padding:7px 14px 7px 8px;font-size:14px}.gs-country-learning-flag{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#fff;font-size:23px}.gs-country-learning-hero-copy{max-width:850px;margin-top:34px}.gs-country-learning-hero h2{margin:0 0 8px;color:#fff;font-size:clamp(26px,4vw,40px);line-height:1.1;font-weight:900}.gs-country-learning-tagline{display:inline-block;padding:7px 15px;border-radius:999px;background:#f3c52e;color:#142d45;font-size:15px;font-weight:900}.gs-country-learning-hero p{margin:10px 0 0;color:#fff;font-size:14px;line-height:1.5}.gs-country-learning-body{display:grid;grid-template-columns:minmax(0,2fr) minmax(280px,1fr);gap:18px;padding:18px;background:linear-gradient(140deg,#f4f7f9,#eaf0f4)}.gs-country-learning-left{min-width:0}.gs-learning-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.gs-learning-card{display:flex;min-width:0;min-height:190px;flex-direction:column;align-items:flex-start;padding:18px 16px;border:1px solid #d2dce5;border-radius:11px;background:#fff;color:#102d4d!important;text-decoration:none;box-shadow:0 2px 5px rgba(17,46,73,.09);transition:transform .18s,box-shadow .18s}.gs-learning-card:hover{transform:translateY(-3px);box-shadow:0 8px 18px rgba(17,46,73,.14)}.gs-learning-icon{display:grid;place-items:center;width:70px;height:70px;margin:0 0 14px;border-radius:50%;color:#fff;font-size:30px;font-weight:800}.gs-learning-icon-teal{background:#087f7b}.gs-learning-icon-gold{background:#d6a10c}.gs-learning-icon-red{background:#c9272c}.gs-learning-icon-blue{background:#2867bd}.gs-learning-icon-purple{background:#7040a2}.gs-learning-icon-green{background:#16845b}.gs-learning-icon-orange{background:#e65d3e}.gs-learning-card strong{color:#102d4d;font-size:15px;line-height:1.25}.gs-learning-description{margin-top:7px;color:#667587;font-size:11px;line-height:1.45;flex:1}.gs-learning-cta{margin-top:14px;color:#647487;font-size:11px;font-weight:700}.gs-country-learning-right{display:flex;flex-direction:column;gap:14px;min-width:0}.gs-learning-side-panel{overflow:hidden;border:1px solid #d4dfe7;border-radius:11px;background:#fff;box-shadow:0 2px 6px rgba(17,46,73,.08)}.gs-learning-exam-panel{margin:0;padding:0;border-left:9px solid #d4a10e;background:#fff}.gs-learning-system-panel{border-left:9px solid #13885c}.gs-learning-side-heading{display:flex;align-items:center;gap:12px;padding:16px 15px 11px}.gs-learning-side-heading h3{margin:0;color:#102d4d;font-size:16px;line-height:1.3}.gs-learning-side-icon{font-size:27px}.gs-learning-side-links{padding:0 15px 10px}.gs-learning-side-links a{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 2px;border-top:1px solid #e8edf1;color:#102d4d!important;font-size:12px;line-height:1.35;text-decoration:none}.gs-learning-side-links a b{color:#7b8997;font-size:18px}.gs-learning-exam-panel .gs-learning-side-links a b{color:#c59a12}.gs-learning-system-panel .gs-learning-side-links a b{color:#16845b}.gs-learning-side-links a:hover{color:#0873a5!important;background:#f7fbfd}.gs-learning-exam-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.gs-learning-exam-card{padding:12px;border:1px solid #dbe7ef;border-radius:10px;background:#fff}.gs-learning-exam-card strong,.gs-learning-exam-card span{display:block}.gs-learning-exam-card strong{color:#075080;font-size:13px}.gs-learning-exam-card span{margin-top:4px;color:#08734f;font-size:10px;font-weight:800}.gs-learning-exam-card p,.gs-learning-subject-group p{font-size:11px;line-height:1.5;color:#526b80}.gs-learning-exam-card a{font-size:11px;font-weight:850;color:#075080}.gs-learning-subject-paths{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}.gs-learning-subject-group{padding:12px;border:1px solid #dbe7ef;border-radius:10px;background:#f8fcff}.gs-learning-subject-group h4{margin:0;color:#075080;font-size:13px}.gs-learning-subject-tags{display:flex;gap:6px;flex-wrap:wrap}.gs-learning-subject-tags span{padding:5px 8px;border-radius:999px;background:#e0f2fe;color:#075080;font-size:10px;font-weight:800}@media(max-width:1050px){.gs-learning-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gs-country-learning-body{grid-template-columns:minmax(0,1.4fr) minmax(260px,1fr)}}@media(max-width:760px){.gs-country-learning-body{grid-template-columns:1fr;padding:12px}.gs-country-learning-hero{min-height:180px;padding:22px 18px}.gs-country-learning-brand{left:12px;top:10px;font-size:12px}.gs-country-learning-hero-copy{margin-top:42px}.gs-learning-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gs-learning-card{min-height:155px;padding:14px}.gs-learning-icon{width:58px;height:58px;font-size:25px}}@media(max-width:420px){.gs-learning-grid{gap:8px}.gs-learning-card{padding:12px;min-height:150px}.gs-learning-card strong{font-size:13px}.gs-learning-description{font-size:10px}.gs-country-learning-hero h2{font-size:25px}.gs-country-learning-tagline{font-size:12px}}";
  document.head.appendChild(learningStyle);
-
  if(countryLayout){const main=countryLayout.querySelector(".gs-main-content");if(main){main.prepend(marketplace);main.prepend(learningHub);}else countryLayout.prepend(learningHub,marketplace);}
  fetch("/api/global-country-stats?country="+encodeURIComponent(c.name),{headers:{Accept:"application/json"},cache:"no-store"}).then(r=>r.json()).then(data=>{if(data&&data.ok){teacherNum.textContent=String(data.approvedTeachers||0);teacherLabel.textContent=(data.approvedTeachers===1?"approved teacher":"approved teachers")+" registered for "+c.name;learnerNum.textContent=String(data.activeLearnerRequests||0);learnerLabel.textContent=(data.activeLearnerRequests===1?"active learner request":"active learner requests")+" in "+c.name+" (identities kept private)";}else{teacherNum.textContent="—";teacherLabel.textContent="Teacher count temporarily unavailable";learnerNum.textContent="—";learnerLabel.textContent="Learner count temporarily unavailable";}}).catch(()=>{teacherNum.textContent="—";teacherLabel.textContent="Teacher count temporarily unavailable";learnerNum.textContent="—";learnerLabel.textContent="Learner count temporarily unavailable";});
 
