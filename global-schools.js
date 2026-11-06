@@ -115,6 +115,8 @@ function renderCountry(){
  const slug=routeSlug();if(!slug)return;
  const c=countries.find(x=>x.slug===slug);if(!c){text($("gsTitle"),"Country not found");text($("gsIntro"),"This country slug is not in the current country registry. Return to the directory and select a listed country.");return;}
  const d=details[slug]||{};
+ // Worldwide vacancy roundup belongs on the central directory page only, never on every country profile.
+ const worldwideVacancies=$("globalVacancies");if(worldwideVacancies)worldwideVacancies.classList.add("gs-hidden");
  $("gsDirectory").classList.add("gs-hidden");$("gsSearchWrap").classList.add("gs-hidden");$("gsCountry").classList.remove("gs-hidden");
  text($("gsTitle"),c.name+" Schools, Education & Teaching Vacancies");text($("gsIntro"),"Country guide for "+c.name+": school directory, education system, national examinations, revision papers, teaching vacancies, teacher requirements and further education.");
  text($("countryFlag"),c.flag);text($("countryName"),c.name);text($("countrySub"),"Dedicated country page · /global-schools/"+c.slug);
@@ -174,7 +176,7 @@ function renderCountry(){
   {label:"💼 International & Local Teaching Jobs",url:"#country-teaching-pathways"},
   {label:"🌍 Online & Remote Teaching",url:"#country-teaching-pathways"},
   {label:"📜 Teaching Requirements & Certification",url:"#qualification-requirements"},
-  {label:"✈️ International Teaching Vacancies & Eligible Countries",url:"#vacancies"},
+  {label:"🌍 Worldwide Teaching Vacancies",url:"/international-teaching-jobs.html"},
   {label:"🤝 Sponsors & Official Sources",url:"#sources"},
   {label:"🎓 Scholarships by Country",url:"#further"},
   {label:"🏫 All Schools",url:"#schools"}
