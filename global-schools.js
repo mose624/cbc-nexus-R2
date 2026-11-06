@@ -269,7 +269,31 @@ function renderCountry(){
  const empty=$("examEmpty");if(empty)empty.classList.add("gs-hidden");
 })();
 
- linkList("paperLinks",d.papers,null);linkList("jobLinks",d.jobs,null);
+ linkList("paperLinks",d.papers,null);
+(function renderCountryPaperDashboard(){
+ const host=$("paperLinks");if(!host)return;
+ const records=Array.isArray(d.papers)?d.papers.filter(x=>x&&typeof x==="object"):[];
+ const levels=[
+  {title:"Primary-level past papers",terms:/primary|elementary|foundation|kpsea|psle|ple|class ?[1-7]|grade ?[1-7]/},
+  {title:"Junior secondary past papers",terms:/junior|lower secondary|middle school|jss|kjsea|grade ?[8-10]/},
+  {title:"Senior secondary and school-leaving papers",terms:/senior|upper secondary|secondary|school leaving|kcse|waec|neco|ssce|hsc|a.level|gce|baccalaureate|matric|abitur/},
+  {title:"University entrance and admission practice",terms:/university|tertiary|entrance|admission|placement|aptitude|sat|act|jee|neet|cuet|utme/}
+ ];
+ const wrap=node("div","gs-paper-dashboard");
+ const intro=node("p","gs-muted");intro.textContent="Browse papers by level. CBE Nexus original practice questions must be distinguished from official past examination papers; use official examination-board sources wherever available.";wrap.appendChild(intro);
+ const grid=node("div","gs-paper-level-grid");
+ levels.forEach(level=>{
+  const card=node("article","gs-card gs-paper-level-card"),h=node("h3"),list=node("div","gs-paper-level-links");h.textContent=level.title;
+  const matches=records.filter(item=>level.terms.test([item.name,item.label,item.body,item.level,item.type,item.description].filter(Boolean).join(" ").toLowerCase()));
+  matches.forEach(item=>{const a=node("a");a.href=safeUrl(item.url);a.textContent=(item.name||item.label||"Paper resource")+(item.level?" · "+item.level:"")+(item.body?" — "+item.body:"");if(/^https?:/.test(item.url||"")){a.target="_blank";a.rel="noopener noreferrer";}list.appendChild(a);});
+  if(!matches.length){const p=node("p","gs-exam-unverified");p.textContent="No verified paper collection is currently linked for this level.";list.append(p);}
+  card.append(h,list);grid.appendChild(card);
+ });
+ wrap.appendChild(grid);
+ const research=node("a","gs-paper-official-search");research.href="https://www.google.com/search?q="+encodeURIComponent("official "+c.name+" national examination board past papers specimen papers marking schemes");research.textContent="Research official past papers, specimen papers and marking schemes for "+c.name+" ↗";research.target="_blank";research.rel="noopener noreferrer";wrap.appendChild(research);
+ const style=node("style");style.textContent=".gs-paper-dashboard{margin:14px 0}.gs-paper-level-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}.gs-paper-level-card{margin:0;padding:14px;border:1px solid #dbe5ef;border-radius:12px;background:#fff}.gs-paper-level-card h3{margin:0 0 10px;color:#075080;font-size:15px}.gs-paper-level-links{display:grid;gap:7px}.gs-paper-level-links a,.gs-paper-official-search{display:block;padding:9px 11px;border-radius:8px;background:#eaf6fd;color:#075080!important;font-size:13px;font-weight:750;text-decoration:none;overflow-wrap:anywhere}.gs-paper-official-search{background:#fff7e6;border:1px solid #f5d99b;color:#805500!important;margin-top:12px}@media(max-width:650px){.gs-paper-level-grid{grid-template-columns:1fr}}";
+ wrap.appendChild(style);host.replaceChildren(wrap);
+})();linkList("jobLinks",d.jobs,null);
  // Add country-specific live search links for every registered country. These are discovery links,
  // not claims that a vacancy is open; deadlines must be checked on the original employer advert.
  const jobsHost=$("jobLinks");
