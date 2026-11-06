@@ -218,9 +218,9 @@ function renderCountry(){
  const host=$("examLinks");if(!host)return;
  const records=Array.isArray(d.exams)?d.exams.filter(x=>x&&typeof x==="object"):[];
  const groups=[
-  {id:"primary",title:"Primary examinations and assessments",terms:/primary|elementary|foundation|kpsea|kilea|kplea|sfna|psle|ple\\b|ncee|p6\\b|grade ?[1-7]|class ?[1-7]/},
-  {id:"junior",title:"Junior secondary examinations",terms:/junior|lower secondary|middle school|jss|kjsea|kplea|ftna|uce\\b|bece|s3\\b|grade ?[8-10]/},
-  {id:"senior",title:"Senior secondary and school-leaving examinations",terms:/senior|upper secondary|secondary|school leaving|leaving certificate|kcse|waec|neco|ssce|wassce|csee|acsee|uace|hsc|a.level|gce|baccalaureate|bac|matric|abitur|gaokao|csat|national.*exam|s6\\b/},
+  {id:"primary",title:"Primary examinations and assessments",terms:/primary|elementary|foundation|kpsea|kilea|kplea|sfna|psle|ple\b|ncee|p6\b|grade ?[1-7]|class ?[1-7]/},
+  {id:"junior",title:"Junior secondary examinations",terms:/junior|lower secondary|middle school|jss|kjsea|kplea|ftna|uce\b|bece|s3\b|grade ?[8-10]/},
+  {id:"senior",title:"Senior secondary and school-leaving examinations",terms:/senior|upper secondary|secondary|school leaving|leaving certificate|kcse|waec|neco|ssce|wassce|csee|acsee|uace|hsc|a.level|gce|baccalaureate|bac|matric|abitur|gaokao|csat|national.*exam|s6\b/},
   {id:"university",title:"University entrance and admission examinations",terms:/university|tertiary|entrance|admission|placement|aptitude|sat|act|jee|neet|cuet|utme|post.?utme|g?t.?exam|ucat/},
   {id:"vocational",title:"Technical, vocational and professional assessments",terms:/technical|vocational|trade|professional|certification|competency|polytechnic|tv(et|e)|artisan|gbce|abce/}
  ];
