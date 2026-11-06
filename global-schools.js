@@ -167,6 +167,8 @@ function renderCountry(){
  const countryQuery=encodeURIComponent(c.name);
  const portalItems=[
   {label:"📘 Notes & Learning Resources",url:"/resources.html?country="+countryQuery+"&type=notes"},
+  {label:"🏛️ National Examinations",url:"#exams"},
+  {label:"📚 Curriculum & Syllabus",url:"#curriculum"},
   {label:"📝 Past National Exam Papers",url:"/resources.html?country="+countryQuery+"&type=past-papers"},
   {label:"🎯 Interactive Questions",url:"/interactive-questions.html?country="+countryQuery},
   {label:"💼 International & Local Teaching Jobs",url:"#country-teaching-pathways"},
