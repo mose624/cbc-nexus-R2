@@ -189,7 +189,49 @@ function renderCountry(){
  if(countryHeader){if(portalNav.parentElement!==countryHeader)countryHeader.appendChild(portalNav);countryHeader.classList.add("gs-country-head-with-nav");}
  else {const countryPanel=document.querySelector("#gsCountry > .gs-panel");if(countryPanel){const header=countryPanel.querySelector(".gs-country-head");if(header)header.insertAdjacentElement("afterend",portalNav);else countryPanel.prepend(portalNav);}else if(countryLayout){countryLayout.parentNode.insertBefore(portalNav,countryLayout);}}
  portalNav.style.display="grid";portalNav.style.visibility="visible";portalNav.style.opacity="1";
- if(countryLayout){const main=countryLayout.querySelector(".gs-main-content");if(main)main.prepend(marketplace);else countryLayout.prepend(marketplace);}
+
+ // Country learning hub: a consistent, country-labelled resource dashboard on every profile.
+ const learningHub=node("section","gs-panel gs-section gs-country-learning-hub");learningHub.id="country-learning-hub";
+ const hubHeading=node("div","gs-learning-heading");
+ const hubEyebrow=node("div","gs-learning-eyebrow");hubEyebrow.textContent="CBE NEXUS · COUNTRY LEARNING HUB";
+ const hubTitle=node("h2");hubTitle.textContent=c.name+" Education Resources";
+ const hubTagline=node("p","gs-learning-tagline");hubTagline.textContent="Learn • Practise • Revise • Succeed";
+ const hubIntro=node("p","gs-muted");hubIntro.textContent="Explore learning and examination-preparation pathways for learners, parents and teachers in "+c.name+". Resource availability and curriculum alignment vary by subject and grade; check each resource page for coverage.";
+ hubHeading.append(hubEyebrow,hubTitle,hubTagline,hubIntro);
+ const resourceGrid=node("div","gs-learning-grid");
+ const resourceItems=[
+  {icon:"📘",title:"Online Notes",desc:"Subject notes and curriculum learning guides",type:"notes"},
+  {icon:"📝",title:"Past Papers",desc:"Find examination papers and revision resources",type:"past-papers"},
+  {icon:"📋",title:"Mock Exams",desc:"Practise with timed examination-style tasks",type:"mock-exams"},
+  {icon:"🎯",title:"Interactive Quizzes",desc:"Test understanding with self-check questions",type:"quizzes"},
+  {icon:"🧮",title:"Worked Examples",desc:"Step-by-step solutions and explanations",type:"worked-examples"},
+  {icon:"🔬",title:"Science Practicals",desc:"Practical skills, investigations and lab guidance",type:"practicals"},
+  {icon:"🎬",title:"Video Lessons",desc:"Visual explanations and topic demonstrations",type:"video-lessons"},
+  {icon:"🎓",title:"Scholarships",desc:"Explore further study and funding opportunities",type:"scholarships"}
+ ];
+ resourceItems.forEach(item=>{
+  const card=node("a","gs-learning-card");card.href=item.type==="quizzes"?"/interactive-questions.html?country="+countryQuery:"/resources.html?country="+countryQuery+"&type="+encodeURIComponent(item.type);
+  const icon=node("span","gs-learning-icon");icon.textContent=item.icon;icon.setAttribute("aria-hidden","true");
+  const title=node("strong");title.textContent=item.title;
+  const desc=node("span","gs-learning-description");desc.textContent=item.desc;
+  const cta=node("span","gs-learning-cta");cta.textContent="Explore learning resources →";
+  card.append(icon,title,desc,cta);resourceGrid.appendChild(card);
+ });
+ const examPanel=node("div","gs-learning-exam-panel");
+ const examTitle=node("h3");examTitle.textContent=c.name+" examination preparation";
+ const examIntro=node("p");examIntro.textContent="Prepare for the national examinations and school-leaving assessments relevant to "+c.name+". Use the examination links and subject resources below; confirm current syllabuses, paper formats and marking guidance with the examining authority.";
+ const examList=node("ul","gs-learning-exam-list");
+ ["National examination subject resources and revision","Past papers by year, where publicly available","Marking schemes and model answers, where authorised","University and college admission guidance"].forEach(label=>{const li=node("li");li.textContent=label;examList.appendChild(li);});
+ const examActions=node("div","gs-learning-actions");
+ const examsLink=node("a","gs-learning-action");examsLink.href="#exams";examsLink.textContent="Explore "+c.name+" examination system";
+ const papersLink=node("a","gs-learning-action secondary");papersLink.href="/resources.html?country="+countryQuery+"&type=past-papers";papersLink.textContent="Browse past-paper resources";
+ examActions.append(examsLink,papersLink);examPanel.append(examTitle,examIntro,examList,examActions);
+ learningHub.append(hubHeading,resourceGrid,examPanel);
+ const learningStyle=node("style");
+ learningStyle.textContent=".gs-country-learning-hub{overflow:hidden;background:linear-gradient(145deg,#fffefb,#f1f8fc);border-color:#d9e7ef}.gs-learning-heading{padding:4px 2px 16px}.gs-learning-eyebrow{display:inline-flex;padding:5px 10px;border-radius:999px;background:#e0f2fe;color:#075080;font-size:10px;font-weight:900;letter-spacing:.1em}.gs-learning-heading h2{margin:10px 0 4px;font-family:Georgia,'Times New Roman',serif;color:#124a7c;font-size:clamp(23px,3vw,30px)}.gs-learning-tagline{margin:0 0 8px;color:#08734f;font-weight:900;letter-spacing:.025em}.gs-learning-heading .gs-muted{max-width:850px;margin:0;font-size:13px}.gs-learning-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}.gs-learning-card{display:flex;min-width:0;min-height:158px;flex-direction:column;align-items:flex-start;padding:15px;border:1px solid #dbe7ef;border-radius:12px;background:#fff;color:#123b62!important;text-decoration:none;box-shadow:0 3px 10px #173b590a;transition:transform .18s,box-shadow .18s,border-color .18s}.gs-learning-card:hover{transform:translateY(-3px);border-color:#7cc4e8;box-shadow:0 8px 18px #173b5918}.gs-learning-icon{font-size:25px;margin-bottom:9px}.gs-learning-card strong{font-size:14px;color:#075080}.gs-learning-description{font-size:11px;line-height:1.45;color:#526b80;margin-top:5px;flex:1}.gs-learning-cta{font-size:10px;font-weight:900;color:#08734f;margin-top:12px}.gs-learning-exam-panel{margin-top:16px;padding:17px;border:1px solid #eadfbe;border-radius:12px;background:#fffaf0}.gs-learning-exam-panel h3{margin:0 0 7px;color:#124a7c;font-size:17px}.gs-learning-exam-panel p{font-size:12px;line-height:1.55;color:#526b80}.gs-learning-exam-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 22px;padding-left:20px;color:#244c6c;font-size:12px;line-height:1.5}.gs-learning-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.gs-learning-action{display:inline-flex;padding:10px 13px;border-radius:8px;background:#075080;color:#fff!important;font-size:11px;font-weight:850;text-decoration:none}.gs-learning-action.secondary{background:#e0f2fe;color:#075080!important;border:1px solid #b9def1}@media(max-width:900px){.gs-learning-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:480px){.gs-learning-grid{grid-template-columns:1fr}.gs-learning-card{min-height:0}.gs-learning-exam-list{grid-template-columns:1fr}.gs-learning-actions .gs-learning-action{width:100%;justify-content:center}}";
+ document.head.appendChild(learningStyle);
+
+ if(countryLayout){const main=countryLayout.querySelector(".gs-main-content");if(main){main.prepend(marketplace);main.prepend(learningHub);}else countryLayout.prepend(learningHub,marketplace);}
  fetch("/api/global-country-stats?country="+encodeURIComponent(c.name),{headers:{Accept:"application/json"},cache:"no-store"}).then(r=>r.json()).then(data=>{if(data&&data.ok){teacherNum.textContent=String(data.approvedTeachers||0);teacherLabel.textContent=(data.approvedTeachers===1?"approved teacher":"approved teachers")+" registered for "+c.name;learnerNum.textContent=String(data.activeLearnerRequests||0);learnerLabel.textContent=(data.activeLearnerRequests===1?"active learner request":"active learner requests")+" in "+c.name+" (identities kept private)";}else{teacherNum.textContent="—";teacherLabel.textContent="Teacher count temporarily unavailable";learnerNum.textContent="—";learnerLabel.textContent="Learner count temporarily unavailable";}}).catch(()=>{teacherNum.textContent="—";teacherLabel.textContent="Teacher count temporarily unavailable";learnerNum.textContent="—";learnerLabel.textContent="Learner count temporarily unavailable";});
 
  text($("verificationNote"),d.sources?"Some official-source links are curated below. This is not a complete national school or vacancy register. Check each linked record and its date before relying on it.":"Data status: detailed country-specific information is not yet curated in this directory. No school totals, exam dates, vacancies, salary figures, teacher rules or scholarship listings are being invented. Official sources must be researched before any field is marked verified.");
