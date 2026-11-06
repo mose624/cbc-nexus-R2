@@ -304,9 +304,8 @@ function renderCountry(){
  if(jobsHost){
   const q=encodeURIComponent(c.name);
   const liveSearches=[
-   {name:"Search current international teaching vacancies in "+c.name+" on Tes",url:"https://www.tes.com/jobs/search/international?keywords="+q},
-   {name:"Browse international school vacancies worldwide (filter by country)",url:"https://www.teachabroadagencies.com/jobs/"},
-   {name:"Browse worldwide school openings on ISS",url:"https://www.iss.edu/for-individuals/find-a-job/current-openings/"}
+   {name:"Search current teaching vacancies in "+c.name+" on Tes",url:"https://www.tes.com/jobs/search/international?keywords="+q},
+   {name:"View the central worldwide teaching vacancies roundup",url:"/global-schools#globalVacancies"}
   ];
   liveSearches.forEach(item=>{const a=node("a");a.href=safeUrl(item.url);a.textContent=item.name+" — live search; confirm deadline and visa eligibility";a.target="_blank";a.rel="noopener noreferrer";jobsHost.appendChild(a);});
  }
