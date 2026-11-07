@@ -1,0 +1,724 @@
+{
+  "afghanistan": [
+    "Kankor",
+    "national school examinations"
+  ],
+  "albania": [
+    "State Matura"
+  ],
+  "algeria": [
+    "BEM",
+    "Baccalauréat"
+  ],
+  "andorra": [
+    "Batxillerat examinations"
+  ],
+  "angola": [
+    "National examinations for secondary education"
+  ],
+  "antigua-and-barbuda": [
+    "CSEC",
+    "CAPE"
+  ],
+  "argentina": [
+    "Secondary School Completion Certificate",
+    "provincial examinations"
+  ],
+  "armenia": [
+    "Unified Examinations"
+  ],
+  "australia": [
+    "ATAR",
+    "state Year 12 certificates (HSC, VCE, QCE, WACE, SACE, TCE, ACT Senior Secondary Certificate)"
+  ],
+  "austria": [
+    "Matura"
+  ],
+  "azerbaijan": [
+    "DİM graduation and university entrance examinations"
+  ],
+  "bahamas": [
+    "BJC",
+    "BGCSE"
+  ],
+  "bahrain": [
+    "General Secondary Education Certificate"
+  ],
+  "bangladesh": [
+    "SSC",
+    "HSC"
+  ],
+  "barbados": [
+    "Barbados Secondary Schools Entrance Examination",
+    "CSEC",
+    "CAPE"
+  ],
+  "belarus": [
+    "Centralised Examination",
+    "Centralised Testing"
+  ],
+  "belgium": [
+    "Secondary education final examinations"
+  ],
+  "belize": [
+    "PSE",
+    "CSEC"
+  ],
+  "benin": [
+    "CEP",
+    "BEPC",
+    "Baccalauréat"
+  ],
+  "bhutan": [
+    "Bhutan Certificate of Secondary Education",
+    "Bhutan Higher Secondary Education Certificate"
+  ],
+  "bolivia": [
+    "Secondary school graduation examinations"
+  ],
+  "bosnia-and-herzegovina": [
+    "Entity-level and cantonal graduation examinations"
+  ],
+  "botswana": [
+    "PSLE",
+    "Junior Certificate",
+    "BGCSE"
+  ],
+  "brazil": [
+    "ENEM",
+    "vestibular examinations"
+  ],
+  "brunei": [
+    "Brunei-Cambridge GCE O-Level",
+    "A-Level"
+  ],
+  "bulgaria": [
+    "State Matriculation Examinations"
+  ],
+  "burkina-faso": [
+    "CEP",
+    "BEPC",
+    "Baccalauréat"
+  ],
+  "burundi": [
+    "National examinations",
+    "Diplôme d'État"
+  ],
+  "cabo-verde": [
+    "National secondary school examinations"
+  ],
+  "cambodia": [
+    "Bac II",
+    "Bac I"
+  ],
+  "cameroon": [
+    "GCE Ordinary Level",
+    "GCE Advanced Level",
+    "BEPC",
+    "Baccalauréat"
+  ],
+  "canada": [
+    "Provincial examinations",
+    "e.g. Alberta Diploma Examinations and Quebec MEQ examinations"
+  ],
+  "central-african-republic": [
+    "BEPC",
+    "Baccalauréat"
+  ],
+  "chad": [
+    "BEPC",
+    "Baccalauréat"
+  ],
+  "chile": [
+    "PAES"
+  ],
+  "china": [
+    "Zhongkao",
+    "Gaokao"
+  ],
+  "colombia": [
+    "Saber 11"
+  ],
+  "comoros": [],
+  "republic-of-the-congo": [
+    "BEPC",
+    "Baccalauréat"
+  ],
+  "costa-rica": [
+    "National secondary graduation assessments"
+  ],
+  "cote-d-ivoire": [
+    "CEPE",
+    "BEPC",
+    "Baccalauréat"
+  ],
+  "croatia": [
+    "State Matura"
+  ],
+  "cuba": [
+    "University entrance examinations",
+    "national assessments"
+  ],
+  "cyprus": [
+    "Pancyprian Examinations"
+  ],
+  "czechia": [
+    "Maturita"
+  ],
+  "democratic-republic-of-the-congo": [
+    "TENAFEP",
+    "Examen d'État"
+  ],
+  "denmark": [
+    "Folkeskole Leaving Examination",
+    "upper-secondary examinations"
+  ],
+  "djibouti": [
+    "Brevet d'Enseignement Fondamental (BEF)",
+    "BEPC arabe",
+    "Baccalauréat"
+  ],
+  "dominica": [
+    "CSEC",
+    "CAPE"
+  ],
+  "dominican-republic": [
+    "National Pruebas Nacionales"
+  ],
+  "ecuador": [
+    "National school graduation assessments",
+    "university admission assessments"
+  ],
+  "egypt": [
+    "Preparatory Certificate",
+    "General Secondary Education Certificate"
+  ],
+  "el-salvador": [
+    "PAES (historical)",
+    "AVANZO"
+  ],
+  "equatorial-guinea": [],
+  "eritrea": [
+    "National School Leaving Examination"
+  ],
+  "estonia": [
+    "State Examinations"
+  ],
+  "eswatini": [
+    "EGCSE",
+    "SGCSE"
+  ],
+  "ethiopia": [
+    "Ethiopian General Secondary Education Certificate Examination; Higher Education Entrance Examination"
+  ],
+  "fiji": [
+    "Fiji Year 12 and Year 13 Certificate examinations"
+  ],
+  "finland": [
+    "Matriculation Examination"
+  ],
+  "france": [
+    "Diplôme National du Brevet",
+    "Baccalauréat"
+  ],
+  "gabon": [
+    "BEPC",
+    "Baccalauréat"
+  ],
+  "gambia": [
+    "GABECE",
+    "WASSCE"
+  ],
+  "georgia": [
+    "Unified National Examinations"
+  ],
+  "germany": [
+    "Abitur",
+    "Mittlerer Schulabschluss"
+  ],
+  "ghana": [
+    "BECE",
+    "WASSCE"
+  ],
+  "greece": [
+    "Panhellenic Examinations"
+  ],
+  "grenada": [
+    "CSEC",
+    "CAPE"
+  ],
+  "guatemala": [
+    "National Graduación examinations and assessments"
+  ],
+  "guinea": [
+    "CEPE",
+    "BEPC",
+    "Baccalauréat"
+  ],
+  "guinea-bissau": [
+    "National secondary school examinations"
+  ],
+  "guyana": [
+    "NGSA",
+    "CSEC",
+    "CAPE"
+  ],
+  "haiti": [
+    "National examinations",
+    "Baccalauréat"
+  ],
+  "holy-see": [],
+  "honduras": [
+    "Secondary education graduation examinations"
+  ],
+  "hungary": [
+    "Érettségi"
+  ],
+  "iceland": [
+    "Upper-secondary matriculation examinations"
+  ],
+  "india": [
+    "CBSE Class 10 and 12",
+    "ICSE",
+    "ISC",
+    "State Board examinations"
+  ],
+  "indonesia": [
+    "National Assessment (AN)",
+    "school graduation assessments"
+  ],
+  "iran": [
+    "Konkur",
+    "national final examinations"
+  ],
+  "iraq": [
+    "Ministerial examinations",
+    "Baccalaureate"
+  ],
+  "ireland": [
+    "Junior Cycle",
+    "Leaving Certificate"
+  ],
+  "israel": [
+    "Bagrut"
+  ],
+  "italy": [
+    "Esame di Stato (Maturità)"
+  ],
+  "jamaica": [
+    "PEP",
+    "CSEC",
+    "CAPE"
+  ],
+  "japan": [
+    "Upper Secondary School Entrance Examinations",
+    "Common Test for University Admissions"
+  ],
+  "jordan": [
+    "Tawjihi"
+  ],
+  "kazakhstan": [
+    "Unified National Testing (UNT)",
+    "Final attestation of secondary education"
+  ],
+  "kenya": [
+    "KPSEA",
+    "KJSEA",
+    "KCSE (legacy secondary qualification)"
+  ],
+  "kiribati": [
+    "Kiribati Junior Certificate",
+    "Kiribati National Certificate"
+  ],
+  "kosovo": [
+    "Matura"
+  ],
+  "kuwait": [
+    "Secondary School Certificate"
+  ],
+  "kyrgyzstan": [],
+  "laos": [
+    "National upper-secondary graduation examination"
+  ],
+  "latvia": [
+    "Centralised Examinations"
+  ],
+  "lebanon": [
+    "Baccalauréat Libanais"
+  ],
+  "lesotho": [
+    "PSLCE",
+    "JC",
+    "LGCSE"
+  ],
+  "liberia": [
+    "Liberia Junior High School Certificate Examination",
+    "WASSCE"
+  ],
+  "libya": [
+    "Basic Education Certificate",
+    "Secondary Education Certificate"
+  ],
+  "liechtenstein": [
+    "Matura"
+  ],
+  "lithuania": [
+    "State Matura Examinations"
+  ],
+  "luxembourg": [
+    "Diplôme de fin d'études secondaires"
+  ],
+  "madagascar": [
+    "CEPE",
+    "BEPC",
+    "Baccalauréat"
+  ],
+  "malawi": [
+    "PSLCE",
+    "JCE",
+    "MSCE"
+  ],
+  "malaysia": [
+    "SPM",
+    "STPM",
+    "UEC"
+  ],
+  "maldives": [
+    "GCE O-Level",
+    "GCE A-Level",
+    "national assessments"
+  ],
+  "mali": [
+    "DEF",
+    "Baccalauréat"
+  ],
+  "malta": [
+    "MATSEC examinations"
+  ],
+  "marshall-islands": [
+    "National school assessments"
+  ],
+  "mauritania": [
+    "Brevet",
+    "Baccalauréat"
+  ],
+  "mauritius": [
+    "PSAC",
+    "NCE",
+    "Cambridge School Certificate",
+    "Cambridge Higher School Certificate"
+  ],
+  "mexico": [
+    "EXANI-I",
+    "EXANI-II",
+    "national and state assessments"
+  ],
+  "micronesia": [
+    "State-level school assessments"
+  ],
+  "moldova": [
+    "Baccalaureate Examination"
+  ],
+  "monaco": [
+    "Baccalauréat"
+  ],
+  "mongolia": [
+    "General Entrance Examination"
+  ],
+  "montenegro": [
+    "Matura"
+  ],
+  "morocco": [
+    "Regional examinations",
+    "Baccalauréat"
+  ],
+  "mozambique": [
+    "National examinations at primary and secondary levels",
+    "including Exames Nacionais"
+  ],
+  "myanmar": [
+    "Matriculation Examination"
+  ],
+  "namibia": [
+    "NSSCO",
+    "NSSCAS"
+  ],
+  "nauru": [
+    "Secondary school graduation assessments"
+  ],
+  "nepal": [
+    "SEE",
+    "NEB Grade 12"
+  ],
+  "netherlands": [
+    "VMBO",
+    "HAVO",
+    "VWO final examinations"
+  ],
+  "new-zealand": [
+    "NCEA Levels 1",
+    "2 and 3"
+  ],
+  "nicaragua": [
+    "National secondary graduation assessments"
+  ],
+  "niger": [
+    "BEPC",
+    "Baccalauréat"
+  ],
+  "nigeria": [
+    "WAEC WASSCE",
+    "NECO SSCE",
+    "BECE",
+    "UTME"
+  ],
+  "north-korea": [
+    "National examinations for secondary education"
+  ],
+  "north-macedonia": [
+    "State Matura"
+  ],
+  "norway": [
+    "National Examinations and upper-secondary assessments"
+  ],
+  "oman": [
+    "General Education Diploma"
+  ],
+  "pakistan": [
+    "SSC",
+    "HSSC",
+    "Matriculation",
+    "Intermediate"
+  ],
+  "palau": [
+    "Palau High School Diploma assessments"
+  ],
+  "palestine": [
+    "General Secondary Education Certificate Examination (Tawjihi)"
+  ],
+  "panama": [
+    "Bachillerato examinations"
+  ],
+  "papua-new-guinea": [
+    "Grade 8",
+    "Grade 10 and Grade 12 national examinations"
+  ],
+  "paraguay": [
+    "National secondary graduation examinations"
+  ],
+  "peru": [
+    "National school assessments",
+    "university entrance examinations"
+  ],
+  "philippines": [
+    "National Achievement Test (NAT)",
+    "school-based graduation assessments"
+  ],
+  "poland": [
+    "Matura",
+    "Eighth-Grade Examination"
+  ],
+  "portugal": [
+    "National Secondary Examinations"
+  ],
+  "qatar": [
+    "Qatar Secondary School Certificate"
+  ],
+  "romania": [
+    "Bacalaureat",
+    "National Evaluation"
+  ],
+  "russia": [
+    "OGE",
+    "Unified State Exam (EGE)"
+  ],
+  "rwanda": [
+    "National Examinations at primary",
+    "lower-secondary and upper-secondary levels"
+  ],
+  "saint-kitts-and-nevis": [
+    "CSEC",
+    "CAPE"
+  ],
+  "saint-lucia": [
+    "CSEC",
+    "CAPE"
+  ],
+  "saint-vincent-and-the-grenadines": [
+    "CSEC",
+    "CAPE"
+  ],
+  "samoa": [
+    "Samoa School Certificate",
+    "Pacific Senior Secondary Certificate"
+  ],
+  "san-marino": [
+    "State examinations"
+  ],
+  "sao-tome-and-principe": [],
+  "saudi-arabia": [
+    "Qudurat",
+    "Tahsili"
+  ],
+  "senegal": [
+    "CFEE",
+    "BFEM",
+    "Baccalauréat"
+  ],
+  "serbia": [
+    "Matura and final examinations"
+  ],
+  "seychelles": [
+    "National examinations and Cambridge qualifications"
+  ],
+  "sierra-leone": [
+    "NPSE",
+    "BECE",
+    "WASSCE"
+  ],
+  "singapore": [
+    "PSLE",
+    "GCE N-Level",
+    "O-Level",
+    "A-Level"
+  ],
+  "slovakia": [
+    "Maturita"
+  ],
+  "slovenia": [
+    "Matura"
+  ],
+  "solomon-islands": [
+    "Solomon Islands School Certificate",
+    "Pacific Senior Secondary Certificate"
+  ],
+  "somalia": [
+    "National Secondary School Leaving Examination"
+  ],
+  "south-africa": [
+    "National Senior Certificate (NSC)",
+    "NCV"
+  ],
+  "south-korea": [
+    "CSAT (Suneung)"
+  ],
+  "south-sudan": [
+    "South Sudan Certificate of Secondary Education"
+  ],
+  "spain": [
+    "Bachillerato",
+    "university access examinations (PAU/EBAU)"
+  ],
+  "sri-lanka": [
+    "GCE O-Level",
+    "GCE A-Level"
+  ],
+  "sudan": [
+    "Sudanese Secondary School Certificate"
+  ],
+  "suriname": [
+    "National secondary school examinations"
+  ],
+  "sweden": [
+    "National Tests"
+  ],
+  "switzerland": [
+    "Matura",
+    "Federal Maturity Certificate"
+  ],
+  "syria": [
+    "General Secondary Certificate"
+  ],
+  "tajikistan": [
+    "Centralized Entrance Examination (CEE)"
+  ],
+  "tanzania": [
+    "PSLE",
+    "CSEE (Form Four)",
+    "ACSEE (Form Six)"
+  ],
+  "thailand": [
+    "O-NET",
+    "TGAT",
+    "TPAT",
+    "A-Level"
+  ],
+  "timor-leste": [
+    "National examinations and secondary school assessments"
+  ],
+  "togo": [
+    "CEPD",
+    "BEPC",
+    "Baccalauréat"
+  ],
+  "tonga": [
+    "Tonga School Certificate",
+    "Tonga National Form Seven Certificate"
+  ],
+  "trinidad-and-tobago": [
+    "SEA",
+    "CSEC",
+    "CAPE"
+  ],
+  "tunisia": [
+    "Baccalauréat"
+  ],
+  "turkiye": [
+    "LGS",
+    "YKS"
+  ],
+  "turkmenistan": [
+    "University entrance examinations"
+  ],
+  "tuvalu": [
+    "Tuvalu National Certificate"
+  ],
+  "uganda": [
+    "PLE",
+    "UCE",
+    "UACE"
+  ],
+  "ukraine": [
+    "NMT",
+    "State Final Attestation (where applicable)"
+  ],
+  "united-arab-emirates": [
+    "EmSAT (where applicable)",
+    "Ministry examinations"
+  ],
+  "united-kingdom": [
+    "GCSE",
+    "A-Level (England, Wales and Northern Ireland); National 5",
+    "Higher",
+    "Advanced Higher (Scotland)"
+  ],
+  "united-states": [
+    "SAT",
+    "ACT",
+    "state-level high school assessments; no single national school-leaving examination"
+  ],
+  "uruguay": [
+    "Bachillerato examinations"
+  ],
+  "uzbekistan": [],
+  "vanuatu": [
+    "Vanuatu School Certificate",
+    "South Pacific Form Seven Certificate"
+  ],
+  "venezuela": [
+    "National secondary graduation examinations"
+  ],
+  "vietnam": [
+    "High School Graduation Examination"
+  ],
+  "yemen": [],
+  "zambia": [
+    "Primary School Leaving Examination",
+    "Junior Secondary and School Certificate examinations"
+  ],
+  "zimbabwe": [
+    "ZIMSEC Grade 7",
+    "O-Level",
+    "A-Level"
+  ]
+}
