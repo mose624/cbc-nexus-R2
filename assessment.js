@@ -170,14 +170,13 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
   const initialParams = new URLSearchParams(window.location.search);
   if (country && initialParams.get("country")) country.value = initialParams.get("country");
   if (country && curriculum) setCurriculumOptions(country,curriculum,initialParams.get("curriculum") || (country.value==="Kenya" ? "Kenya CBC/CBE" : ""));
-  const gradeList=document.getElementById("quizGradeOptions");
-  if(country && curriculum && grade) refreshLevelOptions(country.value,curriculum.value,grade,gradeList);
-  if(country && curriculum) curriculum.addEventListener("change",function(){refreshLevelOptions(country.value,curriculum.value,grade,gradeList);});
-
   if (country && curriculum) country.addEventListener("change",function(){setCurriculumOptions(country,curriculum,"");refreshLevelOptions(country.value,curriculum.value,grade,gradeList);});
 
   const learnerId = document.getElementById("quizLearnerIdInput");
   const grade = document.getElementById("quizGradeInput");
+  const gradeList=document.getElementById("quizGradeOptions");
+  if(country && curriculum && grade) refreshLevelOptions(country.value,curriculum.value,grade,gradeList);
+  if(country && curriculum) curriculum.addEventListener("change",function(){refreshLevelOptions(country.value,curriculum.value,grade,gradeList);});
   const subject = document.getElementById("quizSubjectInput");
   const strand = document.getElementById("quizStrandInput");
   const subStrand = document.getElementById("quizSubStrandInput");
