@@ -226,10 +226,16 @@ function renderCountry(){
   {icon:"x²",tone:"purple",title:"Worked Examples",desc:"Step-by-step solutions and explanations",type:"worked-examples"},
   {icon:"⚗",tone:"green",title:"Science Practicals",desc:"Investigations, experiments and lab guidance",type:"practicals"},
   {icon:"▶",tone:"orange",title:"Video Lessons",desc:"Visual explanations and topic demonstrations",type:"video-lessons"},
-  {icon:"🎓",tone:"gold",title:"Scholarships",desc:"Further study and funding opportunities",type:"scholarships"}
+  {icon:"🎓",tone:"gold",title:"Scholarships",desc:"Further study and funding opportunities",type:"scholarships"},
+  {icon:"🏛",tone:"blue",title:"National Exam Resources",desc:"Explore this country's examinations and revision-paper links",type:"exam-resources"},
+  {icon:"▦",tone:"teal",title:"Curriculum & Syllabuses",desc:"Explore national curriculum and school programmes",type:"curriculum"}
  ];
  resourceItems.forEach(item=>{
-  const card=node("a","gs-learning-card");card.href=item.type==="quizzes"?"/interactive-questions.html?country="+countryQuery:"/resources.html?country="+countryQuery+"&type="+encodeURIComponent(item.type);
+  const card=node("a","gs-learning-card");
+  card.href=item.type==="quizzes"?"/interactive-questions.html?country="+countryQuery:
+   item.type==="exam-resources"?"#papers":
+   item.type==="curriculum"?"#curriculum":
+   "/resources.html?country="+countryQuery+"&type="+encodeURIComponent(item.type);
   const icon=node("span","gs-learning-icon gs-learning-icon-"+item.tone);icon.textContent=item.icon;icon.setAttribute("aria-hidden","true");
   const title=node("strong");title.textContent=item.title;
   const desc=node("span","gs-learning-description");desc.textContent=item.desc;
