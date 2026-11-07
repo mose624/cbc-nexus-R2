@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Free Interactive Questions & Quizzes | CBE Nexus</title>
-  <meta name="description" content="Practise CBC and CBE questions for free on CBE Nexus. Find quizzes by grade and subject, get instant marking, review explanations and improve your learning.">
+  <title>International Interactive Questions & Quizzes | CBE Nexus</title>
+  <meta name="description" content="Practise curriculum-aligned questions from national and international curricula worldwide. Select your country, curriculum, level and subject for focused quizzes.">
   <link rel="canonical" href="https://cbenexus.co.ke/interactive-questions.html">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="interactive-yellow.css?v=20261018-free-portal">
@@ -102,7 +102,7 @@ img.cbe-context-image{animation:cbeImageMotion 7s ease-in-out infinite alternate
       <div>
         <p class="iq-kicker">CBE Nexus · Learning & Assessment</p>
         <h1 id="iq-title">Free Interactive Questions</h1>
-        <p>Practise at your own pace with curriculum-focused questions. Choose your level, find a subject, test your understanding, and review your answers with instant marking where available.</p>
+        <p>Practise at your own pace with national and international curriculum-focused questions. Select your country, curriculum or examination board, class level and subject, then review your answers with marking and explanations where available.</p>
         <div class="iq-actions">
           <a class="iq-btn" href="quizzes.html#quizCentre">Start practising free →</a>
           <a class="iq-btn secondary" href="learning-hub.html">Explore the Learning Hub</a>
@@ -118,6 +118,20 @@ img.cbe-context-image{animation:cbeImageMotion 7s ease-in-out infinite alternate
           <li>Works on mobile, tablet and desktop</li>
         </ul>
       </aside>
+    </section>
+
+    <section class="iq-section" id="global-curriculum" aria-labelledby="global-curriculum-heading">
+      <div class="iq-section-head"><div><h2 id="global-curriculum-heading">Choose your country and curriculum</h2><p>Enter any country and select its national curriculum or an international examination programme. Question availability depends on published, curriculum-tagged question banks.</p></div></div>
+      <div class="iq-tools" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+        <label>Country<input id="iqCountry" list="iqCountryList" value="Kenya" placeholder="Enter any country" maxlength="100"></label>
+        <label>Curriculum / examination board<input id="iqCurriculum" list="iqCurriculumList" value="Kenya CBC/CBE" placeholder="Enter exact curriculum" maxlength="120"></label>
+        <label>Class / level<input id="iqLevel" list="iqLevelList" value="Grade 7" placeholder="e.g. Form 4, Year 11, S5"></label>
+      </div>
+      <datalist id="iqCountryList"><option value="Kenya"></option><option value="South Africa"></option><option value="Ghana"></option><option value="Nigeria"></option><option value="Uganda"></option><option value="Tanzania"></option><option value="Rwanda"></option><option value="Zambia"></option><option value="Zimbabwe"></option><option value="Namibia"></option><option value="Botswana"></option><option value="Malawi"></option><option value="India"></option><option value="Pakistan"></option><option value="United Kingdom"></option><option value="United States"></option><option value="Canada"></option><option value="Australia"></option><option value="New Zealand"></option><option value="United Arab Emirates"></option><option value="Saudi Arabia"></option><option value="Qatar"></option><option value="Singapore"></option><option value="Malaysia"></option><option value="China"></option><option value="Japan"></option><option value="Germany"></option><option value="France"></option><option value="Brazil"></option><option value="Mexico"></option><option value="Ethiopia"></option><option value="Lesotho"></option><option value="Eswatini"></option></datalist>
+      <datalist id="iqCurriculumList"><option value="Kenya CBC/CBE"></option><option value="Cambridge Primary"></option><option value="Cambridge Lower Secondary"></option><option value="Cambridge IGCSE"></option><option value="Cambridge International AS & A Level"></option><option value="IB PYP"></option><option value="IB MYP"></option><option value="IB Diploma Programme"></option><option value="Pearson Edexcel International GCSE"></option><option value="Pearson Edexcel International A Level"></option><option value="United States Common Core / NGSS"></option><option value="England National Curriculum / GCSE / A Level"></option><option value="South Africa CAPS"></option><option value="India CBSE"></option><option value="India CISCE / ICSE"></option><option value="Nigeria NERDC / WAEC / NECO"></option><option value="Ghana NaCCA / WASSCE"></option><option value="ZIMSEC"></option><option value="Botswana BGCSE"></option><option value="Namibia NSSCO / NSSCAS"></option><option value="Zambia ECZ"></option><option value="Pakistan FBISE"></option></datalist>
+      <datalist id="iqLevelList"><option value="Grade 1"></option><option value="Grade 2"></option><option value="Grade 3"></option><option value="Grade 4"></option><option value="Grade 5"></option><option value="Grade 6"></option><option value="Grade 7"></option><option value="Grade 8"></option><option value="Grade 9"></option><option value="Grade 10"></option><option value="Grade 11"></option><option value="Grade 12"></option><option value="Form 1"></option><option value="Form 2"></option><option value="Form 3"></option><option value="Form 4"></option><option value="Form 5"></option><option value="Form 6"></option><option value="Year 7"></option><option value="Year 8"></option><option value="Year 9"></option><option value="Year 10"></option><option value="Year 11"></option><option value="Year 12"></option><option value="Year 13"></option><option value="IGCSE"></option><option value="AS Level"></option><option value="A Level"></option><option value="IB MYP 5"></option><option value="IB DP Year 1"></option><option value="IB DP Year 2"></option><option value="S1"></option><option value="S2"></option><option value="S3"></option><option value="S4"></option><option value="S5"></option><option value="S6"></option><option value="JSS1"></option><option value="JSS2"></option><option value="JSS3"></option><option value="SS1"></option><option value="SS2"></option><option value="SS3"></option></datalist>
+      <p style="margin:12px 0 0"><a class="iq-btn" id="iqOpenSelected" href="quizzes.html#quizCentre">Open selected question bank →</a></p>
+      <p style="margin:8px 0;color:#586574;font-size:.9rem">You can enter a country not shown in the suggestions. Do not select a different curriculum just to access questions from another syllabus.</p>
     </section>
 
     <section class="iq-section" id="choose-level" aria-labelledby="level-heading">
@@ -199,6 +213,22 @@ img.cbe-context-image{animation:cbeImageMotion 7s ease-in-out infinite alternate
 
   <script>
     (function(){
+      const country = document.getElementById('iqCountry');
+      const curriculum = document.getElementById('iqCurriculum');
+      const level = document.getElementById('iqLevel');
+      const openSelected = document.getElementById('iqOpenSelected');
+      function updateQuizLinks(){
+        const params = new URLSearchParams({
+          country: (country.value || 'Kenya').trim(),
+          curriculum: (curriculum.value || 'Kenya CBC/CBE').trim(),
+          level: (level.value || 'Grade 7').trim()
+        });
+        const target = 'quizzes.html?' + params.toString() + '#quizCentre';
+        openSelected.href = target;
+        document.querySelectorAll('a[href^="quizzes.html"]').forEach(function(link){ link.href = target; });
+      }
+      [country,curriculum,level].forEach(function(field){ field.addEventListener('input',updateQuizLinks); field.addEventListener('change',updateQuizLinks); });
+      updateQuizLinks();
       const search = document.getElementById('subjectSearch');
       const filter = document.getElementById('subjectFilter');
       const cards = Array.from(document.querySelectorAll('#subjectGrid .iq-subject'));
