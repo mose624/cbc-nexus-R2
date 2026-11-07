@@ -2,6 +2,7 @@ const { supabase, supabaseConfigured } = require("./supabase");
 const fs = require("fs/promises");
 const path = require("path");
 const globalSchools = require("./global-schools-data.js");
+const countryExamSeoIndex = require("./global-country-examination-index.json");
 const GRADES=Array.from({length:12},(_,i)=>String(i+1));
 const PRIMARY_SUBJECTS=["English","Kiswahili","Mathematics","Environmental Activities","Science and Technology","Social Studies","Agriculture","Home Science","Creative Arts","Physical Education","Christian Religious Education","Islamic Religious Education"];
 const JUNIOR_SUBJECTS=["Mathematics","English","Kiswahili","Integrated Science","Social Studies","Agriculture","Creative Arts","Pre-Technical Studies"];
@@ -260,6 +261,16 @@ async function sitemap(req){
   "/free-cv-writing","/free-international-jobs","/all-schools-in-kenya","/global-schools"
  ];
  try{(globalSchools.countries||[]).forEach(c=>{urls.push(c.url);urls.push("/global-teaching-jobs/"+c.slug);urls.push("/online-teaching/"+c.slug);});}catch(e){console.warn("Global schools sitemap lookup failed:",e.message||e);}
+ try{
+  const examSlug=value=>String(value||"").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  (globalSchools.countries||[]).forEach(country=>{
+   const names=Array.isArray(countryExamSeoIndex[country.slug])?countryExamSeoIndex[country.slug]:[];
+   names.forEach(name=>{const slug=examSlug(name);if(slug)urls.push("/global-exams/"+country.slug+"/"+slug);});
+   const profile=globalSchools.countryData&&globalSchools.countryData[country.slug]||{};
+   (Array.isArray(profile.exams)?profile.exams:[]).forEach(item=>{const slug=examSlug(item&&item.name);if(slug)urls.push("/global-exams/"+country.slug+"/"+slug);});
+  });
+ }catch(e){console.warn("Country examination sitemap lookup failed:",e.message||e);}
+
  try{
   if(Array.isArray(KENYA_COUNTIES)) KENYA_COUNTIES.forEach(c=>urls.push("/kenya-education-county/"+slug(c)));
  }catch(e){console.warn("SEO sitemap county lookup failed:",e.message||e);}
