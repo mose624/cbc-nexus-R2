@@ -879,6 +879,7 @@ async function handleApi(req,res,url){
       if(error){try{await deleteObject(stored.key);}catch(cleanupError){console.warn("Could not remove unlinked vacancy CV:",cleanupError.message||cleanupError);}throw error;}
       let notificationSent=false;
       if(String(process.env.RESEND_API_KEY||"").trim()){
+        try{
         const recipient=firstEnv("VACANCY_APPLICATIONS_EMAIL","ADMIN_EMAIL")||"info@cbenexus.co.ke";
         const sender=firstEnv("RESEND_FROM_EMAIL")||"CBE Nexus <info@cbenexus.co.ke>";
         const cvUrl=await createDownloadUrl(stored.key,fileName);
@@ -888,6 +889,7 @@ async function handleApi(req,res,url){
         if(!mail.ok){const detail=await mail.text().catch(()=>"");console.warn("Vacancy application email notification failed:",mail.status,detail.slice(0,400));}else notificationSent=true;
         const ackHtml="<p>Hello "+esc(name)+",</p><p>CBE Nexus has received your application for <b>"+esc(vacancy.title)+"</b> at "+esc(vacancy.school)+". Your application reference is <b>"+esc(data.id)+"</b>. Our team will review your submission and contact you using the details you provided.</p><p>Thank you,<br>CBE Nexus Careers</p>";
         try{await fetch("https://api.resend.com/emails",{method:"POST",headers:{"Authorization":"Bearer "+String(process.env.RESEND_API_KEY).trim(),"Content-Type":"application/json"},body:JSON.stringify({from:sender,to:[email],subject:"We received your CBE Nexus application",html:ackHtml,text:"CBE Nexus received your application for "+vacancy.title+". Reference: "+data.id+". Our team will contact you using your supplied details."})});}catch(mailError){console.warn("Applicant acknowledgement email failed:",mailError.message||mailError);}
+        }catch(notificationError){console.error("Vacancy application saved, but email notification failed:",notificationError.message||notificationError);}
       }else console.warn("Vacancy application saved, but email notifications are disabled because RESEND_API_KEY is not configured.");
       sendJson(res,201,{ok:true,applicationId:data.id,notificationSent,message:"Application received by CBE Nexus."});return true;
     }catch(error){console.error("CBE Nexus vacancy application submission failed:",error);sendJson(res,500,{ok:false,error:"We could not save your application. Please try again or contact info@cbenexus.co.ke."});return true;}
