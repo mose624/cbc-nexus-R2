@@ -1,15 +1,13 @@
 User-agent: *
 Allow: /
-Allow: /ads.txt
 Disallow: /api/
 Disallow: /admin
 Disallow: /upload.html
 Disallow: /backend-data/
 
-# AI and search crawlers may index public educational pages, not private/admin endpoints.
+# Search and AI answer crawlers can access public educational pages.
 User-agent: Googlebot
 Allow: /
-Allow: /ads.txt
 Disallow: /api/
 Disallow: /admin
 Disallow: /upload.html
@@ -17,7 +15,6 @@ Disallow: /backend-data/
 
 User-agent: OAI-SearchBot
 Allow: /
-Allow: /ads.txt
 Disallow: /api/
 Disallow: /admin
 Disallow: /upload.html
@@ -25,15 +22,11 @@ Disallow: /backend-data/
 
 User-agent: GPTBot
 Allow: /
-Allow: /ads.txt
 Disallow: /api/
 Disallow: /admin
 Disallow: /upload.html
 Disallow: /backend-data/
 
-Sitemap: https://cbenexus.com/sitemap-index.xml\nSitemap: https://cbenexus.com/sitemap.xml
-
-# Additional AI answer/search crawlers may access public educational content.
 User-agent: ClaudeBot
 Allow: /
 Disallow: /api/
@@ -54,3 +47,5 @@ Disallow: /api/
 Disallow: /admin
 Disallow: /upload.html
 Disallow: /backend-data/
+
+Sitemap: https://cbenexus.com/sitemap.xml
