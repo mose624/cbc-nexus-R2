@@ -19,7 +19,7 @@
   revisionCoverage:{
    fourCoreSubjects:["Biology","Chemistry","Mathematics","Physics"],
    levels:[
-    {level:"Forms 1–4",qualification:"Ordinary Level pathway",subjects:["Mathematics","Biology","Chemistry","Physics","Combined Science"],scienceStrands:["Biology","Chemistry","Physics"],note:"Forms 1–2 provide foundational learning; O-Level syllabuses and examination preparation extend through Forms 3–4. Combined Science is a distinct option and should not be confused with the separate Biology, Chemistry and Physics subjects."},
+    {level:"Forms 1–4",qualification:"Ordinary Level pathway",subjects:["Mathematics","Biology","Chemistry","Physics","Combined Science"],scienceStrands:["Biology","Chemistry","Physics"],note:"The heritage-based framework identifies Combined Science as a core learning area; separate Biology, Chemistry and Physics syllabuses are listed for Forms 3–4. Do not treat the separate science subjects as compulsory for every learner."},
     {level:"Forms 5–6",qualification:"Advanced Level",subjects:["Mathematics","Biology","Chemistry","Physics"],note:"Advanced subject study for learners selecting the relevant science and mathematics pathways."}
    ],
    sequenceRule:"Use the MoPSE syllabus version for the candidate's cohort and the ZIMSEC subject syllabus for the relevant examination. This extension currently provides subject/level coverage and starter lessons; it does not claim that every official topic heading has been transcribed or authored.",
@@ -34,7 +34,7 @@
    },
    "Advanced Level Forms 5–6":{
     Mathematics:"ZIMSEC Advanced Level Mathematics syllabus. Confirm the subject route (Mathematics / Further Mathematics / Statistics) before assigning optional units.",
-    Biology:"MoPSE Biology syllabus Forms 5–6, current 2024–2030 edition.",
+    Biology:"MoPSE Biology syllabus Forms 5–6, 2024–2030 edition. Published topic headings: Cell Structure and Function; Biological Molecules and Water; Cell and Nuclear Division; Genetic Control; Gene Technology; Inherited Change and Evolution; Energetics; Transport Systems; Nervous Control; Sexual Reproduction; Ecology; Biodiversity; Human Health and Disease.",
     Chemistry:"MoPSE Chemistry syllabus Forms 5–6, current 2024–2030 edition.",
     Physics:"ZIMSEC / MoPSE Advanced Level Physics syllabus Forms 5–6. Full current topic sequence pending direct syllabus transcription."
    }
