@@ -699,7 +699,7 @@
     setImportStatus("Publishing valid questions… keep this page open. 0 / "+ready.length);
     for(const r of ready){
       try {
-        await request(api,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({grade:r.grade,subject:r.subject,strand:r.strand||"All Topics",question:r.question,options:r.options,correctIndex:r.correctIndex,explanation:r.explanation||"",imageUrl:r.imageUrl||"",imageData:r.imageData||"",imageAlt:r.imageAlt||r.question.slice(0,160)})});
+        await request(api,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({country:$("iqAdminCountry").value.trim()||"Kenya",curriculum:$("iqAdminCurriculum").value.trim()||"Kenya CBC/CBE",grade:r.grade,subject:r.subject,strand:r.strand||"All Topics",question:r.question,options:r.options,correctIndex:r.correctIndex,explanation:r.explanation||"",imageUrl:r.imageUrl||"",imageData:r.imageData||"",imageAlt:r.imageAlt||r.question.slice(0,160)})});
         published++;
       } catch(e) { failed.push({"Source row":r.rowNumber,"Grade":r.grade,"Subject":r.subject,"Question":r.question,"Status":"Failed to publish","Errors":e.message||"Save failed"}); }
       if(published%5===0 || published+failed.length===ready.length) setImportStatus("Publishing valid questions… "+(published+failed.length)+" / "+ready.length+" processed.");
