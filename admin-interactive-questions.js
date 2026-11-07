@@ -25,9 +25,13 @@
     junior:["English","Kiswahili","Mathematics","Integrated Science","Health Education","Pre-Technical Studies","Social Studies","Religious Education","Business Studies","Agriculture","Life Skills Education","Sports & Physical Education","Visual Arts","Performing Arts","Home Science","Computer Science","French","German","Mandarin","Arabic","Kenyan Sign Language","Indigenous Languages"],
     senior:["English","Kiswahili","Core Mathematics","Essential Mathematics","Community Service Learning","Biology","Chemistry","Physics","General Science","Agriculture","Computer Studies","Home Science","Aviation","Building Construction","Electricity","Metalwork","Power Mechanics","Wood Technology","Media Technology","Marine & Fisheries Technology","Business Studies","History & Citizenship","Geography","Literature in English","Indigenous Languages","Fasihi ya Kiswahili","Sign Language","Arabic","French","German","Mandarin Chinese","Christian Religious Education","Islamic Religious Education","Hindu Religious Education","Sports & Recreation","Music & Dance","Theatre & Film","Fine Arts"]
   };
+  const internationalSubjects = [
+    "Mathematics","Further Mathematics","Core Mathematics","Essential Mathematics","Biology","Chemistry","Physics","Combined Science","Integrated Science","Life Science","Life Sciences","Physical Science","Physical Sciences","General Science","Environmental Science","English","English Language","English Literature","Kiswahili","French","Spanish","German","Arabic","Mandarin Chinese","Hindi","Urdu","Geography","History","Global Perspectives","Social Studies","Civics","Economics","Business Studies","Accounting","Computer Science","Computer Studies","ICT","Information Technology","Design and Technology","Agriculture","Food and Nutrition","Home Economics","Art and Design","Visual Arts","Music","Drama","Physical Education","Religious Studies","Environmental Management","Psychology","Sociology"
+  ];
   function populateSubjects(preferred) {
     const grade = Number(String($("iqAdminGrade").value).replace(/[^0-9]/g, ""));
-    const options = grade <= 3 ? gradeSubjects.lower : grade <= 6 ? gradeSubjects.upper : grade <= 9 ? gradeSubjects.junior : gradeSubjects.senior;
+    const isKenya = String($("iqAdminCountry").value || "Kenya").trim().toLowerCase() === "kenya" && String($("iqAdminCurriculum").value || "Kenya CBC/CBE").trim().toLowerCase() === "kenya cbc/cbe";
+    const options = isKenya ? (grade <= 3 ? gradeSubjects.lower : grade <= 6 ? gradeSubjects.upper : grade <= 9 ? gradeSubjects.junior : gradeSubjects.senior) : internationalSubjects;
     const subject = $("iqAdminSubject");
     subject.replaceChildren();
     const first = document.createElement("option");
@@ -43,6 +47,7 @@
     subject.value = options.includes(preferred) ? preferred : "";
   }
   $("iqAdminGrade").addEventListener("change", () => populateSubjects(""));
+  ["iqAdminCountry","iqAdminCurriculum"].forEach((id) => $(id).addEventListener("change", () => populateSubjects("")));
   populateSubjects("");
 
   async function loadQuestions() {
