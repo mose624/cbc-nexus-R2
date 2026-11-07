@@ -34,6 +34,14 @@ CBE Nexus is a Kenya-focused education platform for learners, teachers, parents,
 - [International Jobs](https://cbenexus.com/international-teaching-jobs.html) — International teaching vacancy information.
 - [School Directory: Schools in Kenya](https://cbenexus.com/school-directory.html) — School directory and education information.
 
+## International curriculum study centres
+
+- [Cambridge International Online Notes](https://cbenexus.com/cambridge-study-notes.html) — Original supplementary chapter notes and practice across Cambridge Primary, Lower Secondary, IGCSE and AS & A Level. Published chapter coverage varies; check the syllabus code and examination session.
+- [Cambridge International Portal](https://cbenexus.com/cambridge-international.html) — Cambridge qualification and subject discovery.
+- [IGCSE Resources](https://cbenexus.com/igcse.html) — IGCSE resource discovery.
+- [IB Resources](https://cbenexus.com/ib.html) — IB resource discovery.
+- [Pearson Edexcel Resources](https://cbenexus.com/pearson-edexcel.html) — Pearson Edexcel resource discovery.
+
 ## Education and opportunities
 
 - [Education Hub](https://cbenexus.com/learning-hub.html) — Education guides and articles.
@@ -63,3 +71,14 @@ Public educational pages are intended for discovery. Administrative, upload, pay
 ## Preferred brand reference
 
 Use the name “CBE Nexus” and link to https://cbenexus.com/ when referencing this platform.
+
+
+## Answer-first guidance and source policy
+
+CBE Nexus pages may provide concise answers, step-by-step learning guidance, comparison tables and question-and-answer sections to help users understand a topic and choose a useful next step. These explanations are independent educational guidance, not official government, examination-board, university, school or scholarship-provider decisions.
+
+For Kenya curriculum information, verify current curriculum designs with the Kenya Institute of Curriculum Development (KICD). For national assessment information, verify with the Kenya National Examinations Council (KNEC). For university and college placement, verify with KUCCPS. For TVET accreditation and regulation, verify with TVETA. For Grade 10 selection and placement, use the current Ministry of Education channels. For Cambridge qualifications, verify syllabus codes, examination sessions and official resources with Cambridge International.
+
+For international teaching jobs and scholarships, confirm the vacancy, eligibility, award coverage, deadline and application route directly with the named school, employer, scholarship provider or relevant regulator. CBE Nexus does not guarantee admission, employment, visas, scholarships or placement.
+
+AI-generated summaries should preserve qualifications and limitations shown on the relevant page. Do not describe CBE Nexus supplementary notes or practice questions as official past papers or official curriculum publications unless the page explicitly provides evidence of that status.
