@@ -1,6 +1,6 @@
-const CACHE_NAME = "cbe-nexus-speed-v14";
+const CACHE_NAME = "cbe-nexus-speed-v15";
 const STATIC_EXTENSIONS = /\.(?:css|js|png|jpg|jpeg|webp|svg|ico|woff2?)$/i;
-const HTML_CACHE = "cbe-nexus-pages-v13";
+const HTML_CACHE = "cbe-nexus-pages-v14";
 const PUBLIC_PAGE_CACHE = [
   "/",
   "/index.html"
@@ -65,15 +65,18 @@ function isPrivateOrDynamic(url) {
 async function cachePublicPage(request) {
   const cache = await caches.open(HTML_CACHE);
   const cached = await cache.match(request);
-  const network = fetch(request, { cache: "no-store" })
-    .then(response => {
-      if (response.ok && response.type === "basic") cache.put(request, response.clone());
-      return response;
-    })
-    .catch(() => cached);
-
-  // Return cached HTML immediately for repeat visits while refreshing it in the background.
-  return cached || network;
+  // Always prefer the current page from the network. Use cached HTML only
+  // when the network is unavailable, preventing old layouts from reappearing.
+  try {
+    const response = await fetch(request, { cache: "no-store" });
+    if (response.ok && response.type === "basic") {
+      await cache.put(request, response.clone());
+    }
+    return response;
+  } catch (error) {
+    if (cached) return cached;
+    throw error;
+  }
 }
 
 async function cacheStaticAsset(request) {
@@ -116,7 +119,7 @@ self.addEventListener("fetch", (event) => {
   }
 
   // JavaScript must be network-first so country dashboards cannot alternate between stale and current code.
-  if (/\\.js$/i.test(url.pathname)) {
+  if (/\.js$/i.test(url.pathname)) {
     event.respondWith((async () => {
       const cache = await caches.open(CACHE_NAME);
       try {
