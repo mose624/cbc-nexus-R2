@@ -8,6 +8,7 @@ const mammoth = require("mammoth");
 const { supabase, supabaseConfigured } = require("./supabase");
 const seo = require("./seo");
 const globalSchools = require("./global-schools-data.js");
+const countryExamSeoIndex = require("./global-country-examination-index.json");
 
 const PORT = Number(process.env.PORT || 8000);
 const ROOT = __dirname;
@@ -2646,15 +2647,65 @@ async function serveStatic(req,res,url){
     }
     let html=await fs.readFile(path.join(ROOT,"global-schools.html"),"utf8");
     const canonical=seo.base(req)+(country?country.url:"/global-schools");
-    const title=country
-      ? country.name+" Schools, Education System & Teaching Vacancies | CBE Nexus Global Schools"
+    const countryProfile=country?(globalSchools.countryData&&globalSchools.countryData[country.slug]||{}):{};
+    const indexNames=country&&Array.isArray(countryExamSeoIndex[country.slug])?countryExamSeoIndex[country.slug]:[];
+    const curatedNames=Array.isArray(countryProfile.exams)?countryProfile.exams.map(item=>item&&item.name).filter(Boolean):[];
+    const normalizeExamName=value=>String(value||"").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
+    const examNames=[...curatedNames,...indexNames].filter((name,index,list)=>name&&list.findIndex(other=>normalizeExamName(other)===normalizeExamName(name))===index);
+    const titleExamNames=examNames.slice(0,2).map(name=>String(name).replace(/\\s*\\([^)]*\\)/g,"").trim()).join(" & ");
+    let title=country
+      ? (titleExamNames?country.name+" National Exams: "+titleExamNames+" | CBE Nexus":country.name+" Education System & Exams | CBE Nexus")
       : "Global Schools Directory by Country | CBE Nexus";
+    if(title.length>78&&country)title=country.name+" National Exams & Education Resources | CBE Nexus";
+    const examSnippet=examNames.slice(0,3).join(", ");
     const description=country
-      ? "Explore school directories, education systems, national examinations, sample papers, teaching vacancies, teacher requirements and further education in "+country.name+". Verify each listing with official sources."
+      ? (examNames.length
+        ? ("Explore "+country.name+" national examinations including "+examSnippet+". Find curriculum information, online notes and exam revision resources; confirm current requirements with official authorities.")
+        : ("Explore "+country.name+"'s education system, school directory, curriculum, online notes and national assessment guidance. Check official authorities for current examination names and requirements."))
       : "Explore country-by-country school directories, education systems, national examinations, sample papers, teaching vacancies, teacher requirements and further education on CBE Nexus Global Schools.";
-    html=html.replace(/<title>[\s\S]*?<\/title>/i,"<title>"+escapeSeoAttribute(title)+"</title>");
-    html=html.replace(/<meta name="description" content="[^"]*">/i,'<meta name="description" content="'+escapeSeoAttribute(description)+'">');
+    const escapeHtml=value=>String(value??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+    html=html.replace(/<title>[\\s\\S]*?<\\/title>/i,"<title>"+escapeSeoAttribute(title)+"</title>");
+    html=html.replace(/<meta name="description" content="[^"]*">/i,'<meta name="description" content="'+escapeSeoAttribute(description.slice(0,300))+'">');
     html=html.replace(/<link rel="canonical" href="[^"]*">/i,'<link rel="canonical" href="'+escapeSeoAttribute(canonical)+'">');
+    const upsertMeta=(kind,name,value)=>{
+      const re=new RegExp('<meta\\\\b(?=[^>]*\\\\b'+kind+'\\\\s*=\\\\s*["\\\\\\']'+name+'["\\\\\\'])[^>]*>','i');
+      const tag='<meta '+kind+'="'+name+'" content="'+escapeSeoAttribute(value)+'">';
+      if(re.test(html))html=html.replace(re,tag);else html=html.replace(/<\\/head>/i,tag+'<\\/head>');
+    };
+    upsertMeta("name","robots","index,follow,max-image-preview:large");
+    upsertMeta("property","og:type","website");
+    upsertMeta("property","og:title",title);
+    upsertMeta("property","og:description",description.slice(0,300));
+    upsertMeta("property","og:url",canonical);
+    upsertMeta("name","twitter:card","summary");
+    upsertMeta("name","twitter:title",title);
+    upsertMeta("name","twitter:description",description.slice(0,300));
+    if(country){
+      const h1=country.name+" Education Resources & National Examinations";
+      html=html.replace(/(<h1\\b[^>]*id=["']gsTitle["'][^>]*>)[\\s\\S]*?(<\\/h1>)/i,"$1"+escapeHtml(h1)+"$2");
+      const intro=examNames.length
+        ? "Explore "+country.name+"'s education system and prepare for "+examNames.slice(0,4).join(", ")+". Find curriculum guidance, online notes, revision resources, school information and official education links."
+        : "Explore "+country.name+"'s education system, school information, curriculum guidance and online learning resources. National examination details are being researched and should be confirmed with the official education authority.";
+      html=html.replace(/(<[^>]+id=["']gsIntro["'][^>]*>)[\\s\\S]*?(<\\/[^>]+>)/i,"$1"+escapeHtml(intro)+"$2");
+      const examItems=examNames.map((name,index)=>{
+        const detail=(countryProfile.exams||[]).find(item=>item&&normalizeExamName(item.name)===normalizeExamName(name))||{};
+        const sub=[detail.level,detail.body].filter(Boolean).join(" — ");
+        return "<li><strong>"+escapeHtml(name)+"</strong>"+(sub?"<p>"+escapeHtml(sub)+"</p>":"")+"</li>";
+      }).join("");
+      const context=[["Education curriculum",countryProfile.curriculum],["Education system",countryProfile.system],["Responsible education authority",countryProfile.authority]].filter(item=>item[1]).map(item=>"<h3>"+escapeHtml(item[0])+"</h3><p>"+escapeHtml(item[1])+"</p>").join("");
+      const examContent=examNames.length
+        ? "<h3>Examinations currently listed for "+escapeHtml(country.name)+"</h3><ul>"+examItems+"</ul>"
+        : "<p>CBE Nexus has not yet added a verified country-specific examination name for "+escapeHtml(country.name)+". We do not guess examination titles or grade levels. Check the national education ministry or examining authority for the current assessment framework.</p>";
+      const seoSection='<section id="country-seo-examination-overview" class="gs-country-seo-overview"><h2>National examinations and education resources in '+escapeHtml(country.name)+'</h2><p>This country guide brings together national examination names and education information to help learners, parents and teachers identify the correct curriculum and assessment pathway. Examination structures, subjects, registration rules and timetables can change; confirm current details with the responsible national authority.</p>'+examContent+context+'<p>Use the country dashboard to explore <a href="/country-online-notes.html?country='+encodeURIComponent(country.name)+'">online study notes</a>, <a href="/resources.html?country='+encodeURIComponent(country.name)+'">learning and revision resources</a>, and <a href="/interactive-questions.html?country='+encodeURIComponent(country.name)+'">interactive practice questions</a>.</p><p class="gs-seo-review-note">Examination names are an educational index, not a substitute for official registration notices, syllabuses or examination timetables. Verify each examination with its examining body.</p></section><style>.gs-country-seo-overview{max-width:1180px;margin:22px auto;padding:clamp(18px,3vw,30px);background:#fff;border:1px solid #dbe5ef;border-radius:14px;color:#17324b;line-height:1.7}.gs-country-seo-overview h2{margin:0 0 12px;color:#075080;font-size:clamp(21px,2.4vw,28px)}.gs-country-seo-overview h3{margin:20px 0 8px;color:#075080;font-size:17px}.gs-country-seo-overview ul{padding-left:22px}.gs-country-seo-overview li{margin:8px 0}.gs-country-seo-overview li p{margin:3px 0;color:#526579;font-size:14px}.gs-country-seo-overview a{color:#075985;font-weight:750}.gs-seo-review-note{font-size:12px;color:#64748b;border-top:1px solid #e2e8f0;padding-top:12px}</style>';
+      if(!html.includes('id="country-seo-examination-overview"'))html=html.replace(/<\\/main>/i,seoSection+"<\\/main>");
+      const schemaGraph=[
+        {"@type":"WebPage","@id":canonical+"#webpage","url":canonical,"name":title,"description":description,"inLanguage":"en","dateModified":"2026-11-07","about":{"@type":"Country","name":country.name}},
+        {"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://cbenexus.com/"},{"@type":"ListItem","position":2,"name":"Global Schools","item":"https://cbenexus.com/global-schools"},{"@type":"ListItem","position":3,"name":country.name,"item":canonical}]}
+      ];
+      if(examNames.length)schemaGraph.push({"@type":"ItemList","@id":canonical+"#national-examinations","name":"National examinations in "+country.name,"numberOfItems":examNames.length,"itemListElement":examNames.map((name,index)=>({"@type":"ListItem","position":index+1,"name":name}))});
+      const schema='<script type="application/ld+json">'+JSON.stringify({"@context":"https://schema.org","@graph":schemaGraph}).replace(/</g,"\\\\u003c")+'</script>';
+      html=html.replace(/<\\/head>/i,schema+"<\\/head>");
+    }
     html=injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(injectPageMetadata(injectTrustedReferenceSection(html,url.pathname),url.pathname,req)),url.pathname));
     res.writeHead(200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"public, max-age=300, must-revalidate"});
     res.end(html);
