@@ -711,7 +711,8 @@
     const current = subject.value;
     const gradeNumber = (value) => String(value == null ? "" : value).toLowerCase().replace(/[^a-z0-9]/g, "");
     const normalizeSubject = (value) => String(value || "").toLowerCase().replace(/[^a-z0-9]/g, "");
-    const baseList = subjectsForGrade(grade.value);
+    const isKenyaCbc = String(country && country.value || "Kenya").trim().toLowerCase() === "kenya" && String(curriculum && curriculum.value || "Kenya CBC/CBE").trim().toLowerCase() === "kenya cbc/cbe";
+    const baseList = isKenyaCbc ? subjectsForGrade(grade.value) : [];
     // Include every subject that has published Admin Dashboard questions for this grade.
     // This changes only discoverability/filtering; saved question text and answers are untouched.
     const adminSubjects = (Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [])
@@ -766,16 +767,16 @@
   }
 
   function getGradeQuestionBank(selectedGrade, selectedSubject) {
-    const gradeNumber = (value) => String(value == null ? "" : value).match(/\d+/)?.[0] || "";
+    const gradeNumber = (value) => String(value == null ? "" : value).toLowerCase().replace(/[^a-z0-9]/g, "");
     const normalizeSubject = (value) => String(value || "").toLowerCase().replace(/[^a-z0-9]/g, "");
-    const gradeBank = window.CBENexusCBCBanks &&
+    const selectedCountry = String(country && country.value || "Kenya").trim();
+    const selectedCurriculum = String(curriculum && curriculum.value || "Kenya CBC/CBE").trim();
+    const gradeBank = selectedCountry.toLowerCase() === "kenya" && selectedCurriculum.toLowerCase() === "kenya cbc/cbe" && window.CBENexusCBCBanks &&
       window.CBENexusCBCBanks.banks &&
       window.CBENexusCBCBanks.banks[selectedGrade] &&
       window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject];
 
     const adminQuestions = Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [];
-    const selectedCountry = String(country && country.value || "Kenya").trim();
-    const selectedCurriculum = String(curriculum && curriculum.value || "Kenya CBC/CBE").trim();
     const publishedSource = adminQuestions.filter((item) =>
       String(item.country || "Kenya").toLowerCase() === selectedCountry.toLowerCase() &&
       String(item.curriculum || "Kenya CBC/CBE").toLowerCase() === selectedCurriculum.toLowerCase() &&
@@ -921,6 +922,8 @@
     const items = readCustomQuestions();
     items.unshift({
       id: "custom-" + Date.now(),
+      country: country ? country.value.trim() : "Kenya",
+      curriculum: curriculum ? curriculum.value.trim() : "Kenya CBC/CBE",
       country: country ? country.value.trim() : "Kenya",
       curriculum: curriculum ? curriculum.value.trim() : "Kenya CBC/CBE",
       grade: grade.value,
