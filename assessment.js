@@ -74,10 +74,84 @@
   const learner = document.getElementById("quizLearnerInput");
   const country = document.getElementById("quizCountryInput");
   const curriculum = document.getElementById("quizCurriculumInput");
+  const curriculumByCountry = {
+  "Kenya":["Kenya CBC/CBE","Kenya 8-4-4 / KCSE","Cambridge International","Pearson Edexcel","IB"],
+  "Uganda":["Uganda NCDC Curriculum / UNEB","Cambridge International","Pearson Edexcel"],
+  "Tanzania":["Tanzania NECTA Curriculum","Cambridge International","Pearson Edexcel"],
+  "Rwanda":["Rwanda REB Curriculum / NESA","Cambridge International"],
+  "South Africa":["South Africa CAPS / NSC (DBE)","IEB NSC","Cambridge International","Pearson Edexcel","IB"],
+  "Ghana":["Ghana NaCCA Curriculum / WASSCE","Cambridge International"],
+  "Nigeria":["Nigeria NERDC Curriculum / WAEC / NECO","Cambridge International"],
+  "Zambia":["Zambia ZEC / ECZ Curriculum","Cambridge International"],
+  "Zimbabwe":["Zimbabwe ZIMSEC","Cambridge International","Pearson Edexcel"],
+  "Botswana":["Botswana BGCSE / BEC","Cambridge International"],
+  "Namibia":["Namibia NSSCO / NSSCAS","Cambridge International"],
+  "Malawi":["Malawi MANEB Curriculum","Cambridge International"],
+  "Lesotho":["Lesotho LGCSE / ECOL","Cambridge International"],
+  "Eswatini":["Eswatini EGCSE / ECESWA","Cambridge International"],
+  "India":["India CBSE","India CISCE / ICSE / ISC","State Board","Cambridge International","Pearson Edexcel","IB"],
+  "Pakistan":["Pakistan National Curriculum / FBISE","Punjab Board (BISE)","Cambridge O Level / A Level","Pearson Edexcel","IB"],
+  "Bangladesh":["Bangladesh NCTB / SSC / HSC","Cambridge O Level / A Level","Pearson Edexcel","IB"],
+  "United Kingdom":["England National Curriculum / GCSE / A Level","Wales Curriculum for Wales / WJEC","Scotland Curriculum for Excellence / SQA","Northern Ireland CCEA","Cambridge International","Pearson Edexcel","IB"],
+  "United States":["US Common Core / NGSS","State Standards / State Assessments","AP","IB"],
+  "Canada":["Canadian Provincial Curriculum","Ontario Curriculum / OSSLT","British Columbia Curriculum","Alberta Curriculum","IB"],
+  "Australia":["Australian Curriculum / ACARA","NSW NESA","VCE (Victoria)","QCE (Queensland)","WACE (Western Australia)","IB"],
+  "New Zealand":["New Zealand Curriculum / NCEA","Cambridge International","IB"],
+  "Singapore":["Singapore MOE Curriculum / GCE","Cambridge International","IB"],
+  "Malaysia":["Malaysia KSSM / KSSR / SPM","Cambridge IGCSE","IB"],
+  "China":["China National Curriculum / Gaokao","Cambridge International","Pearson Edexcel","IB"],
+  "Japan":["Japan MEXT Curriculum","Cambridge International","IB"],
+  "United Arab Emirates":["UAE Ministry of Education Curriculum","British Curriculum / GCSE / A Level","US Curriculum","IB","CBSE"],
+  "Saudi Arabia":["Saudi Ministry of Education Curriculum","International British Curriculum","American Curriculum","IB"],
+  "Qatar":["Qatar National Curriculum","British Curriculum","American Curriculum","IB"],
+  "Egypt":["Egypt Ministry of Education Curriculum / Thanaweya Amma","IGCSE","IB"],
+  "Ethiopia":["Ethiopia Ministry of Education Curriculum / Ethiopian General School Leaving Examination"],
+  "Ireland":["Irish Primary Curriculum / Junior Cycle / Leaving Certificate","Cambridge International","IB"],
+  "France":["French National Curriculum / Baccalauréat","Cambridge International","IB"],
+  "Germany":["German Länder Curriculum / Abitur","Cambridge International","IB"],
+  "Netherlands":["Dutch National Curriculum / VMBO / HAVO / VWO","Cambridge International","IB"],
+  "Brazil":["Brazil BNCC / ENEM","Cambridge International","IB"],
+  "Mexico":["Mexico SEP Curriculum","Cambridge International","IB"],
+  "Philippines":["Philippines DepEd K to 12 / MATATAG","Cambridge International","IB"],
+  "Indonesia":["Indonesia Merdeka Curriculum / National Assessment","Cambridge International","IB"],
+  "South Korea":["South Korea National Curriculum / CSAT (Suneung)","IB"],
+  "Sri Lanka":["Sri Lanka National Curriculum / GCE O/L & A/L","Cambridge International","Pearson Edexcel"],
+  "Nepal":["Nepal CDC Curriculum / NEB","Cambridge International"],
+  "Myanmar":["Myanmar Basic Education Curriculum / Matriculation","Cambridge International"],
+  "Oman":["Oman Ministry of Education Curriculum","British Curriculum","IB"],
+  "Kuwait":["Kuwait Ministry of Education Curriculum","British Curriculum","American Curriculum","IB"],
+  "Bahrain":["Bahrain Ministry of Education Curriculum","British Curriculum","American Curriculum","IB"],
+  "Jordan":["Jordan National Curriculum / Tawjihi","Cambridge International","IB"],
+  "Israel":["Israel Ministry of Education / Bagrut","IB"],
+  "Turkey":["Türkiye Ministry of National Education / YKS","Cambridge International","IB"],
+  "Türkiye":["Türkiye Ministry of National Education / YKS","Cambridge International","IB"],
+  "Russia":["Russian Federal State Educational Standards / EGE","IB"],
+  "Ukraine":["Ukraine State Standard / NMT","IB"],
+  "Jamaica":["Jamaica National Standards Curriculum / CSEC / CAPE","Cambridge International"],
+  "Trinidad and Tobago":["Trinidad and Tobago National Curriculum / CSEC / CAPE","Cambridge International"],
+  "Barbados":["Barbados National Curriculum / CSEC / CAPE","Cambridge International"],
+  "Fiji":["Fiji National Curriculum / FSLC","Cambridge International"],
+  "Papua New Guinea":["PNG National Curriculum / Grade 10 & 12 National Examinations"],
+  "Mauritius":["Mauritius National Curriculum / NCE / SC / HSC","Cambridge International"],
+  "Seychelles":["Seychelles National Curriculum / IGCSE","Cambridge International"]
+};
+function boardsForCountry(name){
+  return curriculumByCountry[name] || ["National curriculum / national examinations (confirm board)","Cambridge International","Pearson Edexcel","IB"];
+}
+function setCurriculumOptions(countryEl, curriculumEl, preferred){
+  if(!countryEl || !curriculumEl) return;
+  const boards=boardsForCountry(countryEl.value);
+  curriculumEl.replaceChildren();
+  const prompt=document.createElement("option"); prompt.value=""; prompt.textContent="Select curriculum / examination board"; curriculumEl.appendChild(prompt);
+  boards.forEach(function(board){const option=document.createElement("option");option.value=board;option.textContent=board;curriculumEl.appendChild(option);});
+  if(preferred && !boards.includes(preferred)){const option=document.createElement("option");option.value=preferred;option.textContent=preferred+" (from link)";curriculumEl.appendChild(option);}
+  curriculumEl.value=preferred && (boards.includes(preferred)||curriculumEl.querySelector('option[value="'+CSS.escape(preferred)+'"]')) ? preferred : (countryEl.value==="Kenya" ? "Kenya CBC/CBE" : boards[0]);
+}
   const initialParams = new URLSearchParams(window.location.search);
   if (country && initialParams.get("country")) country.value = initialParams.get("country");
-  if (curriculum && initialParams.has("curriculum")) curriculum.value = initialParams.get("curriculum");
-  else if (country && country.value.trim().toLowerCase() !== "kenya" && curriculum) curriculum.value = "";
+  if (country && curriculum) setCurriculumOptions(country,curriculum,initialParams.get("curriculum") || (country.value==="Kenya" ? "Kenya CBC/CBE" : ""));
+  if (country && curriculum) country.addEventListener("change",function(){setCurriculumOptions(country,curriculum,"");});
+
   const learnerId = document.getElementById("quizLearnerIdInput");
   const grade = document.getElementById("quizGradeInput");
   const subject = document.getElementById("quizSubjectInput");
