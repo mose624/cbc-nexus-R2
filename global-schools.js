@@ -9,9 +9,9 @@ function linkList(id,items,emptyId,emptyText,flagSymbol){
  const host=$(id); if(!host)return; host.replaceChildren();
  (items||[]).forEach(item=>{
   if(!item||!item.name&&!item.label)return;
-  const a=node("a");a.href=safeUrl(item.url);
-  a.textContent=(item.name||item.label)+(item.body?" — "+item.body:"")+(item.level?" · "+item.level:"")+(item.type?" — "+item.type:"");
-  if(/^https?:/.test(item.url||"")){a.target="_blank";a.rel="noopener noreferrer";}
+  const label=(item.name||item.label)+(item.body?" — "+item.body:"")+(item.level?" · "+item.level:"")+(item.type?" — "+item.type:"");
+  const a=item.url?node("a"):node("span");if(item.url){a.href=safeUrl(item.url);if(/^https?:/.test(item.url)){a.target="_blank";a.rel="noopener noreferrer";}}
+  a.textContent=label;
   if(flagSymbol){
    const row=node("div","gs-school-link-row");
    const flag=node("span","gs-school-flag");flag.textContent=flagSymbol;flag.setAttribute("aria-hidden","true");flag.title="Country flag";
@@ -244,9 +244,10 @@ function renderCountry(){
  const examTitle=node("h3");examTitle.textContent="Examination preparation";examHead.append(examIcon,examTitle);
  const examList=node("div","gs-learning-side-links");
  (d.exams||[]).forEach(exam=>{
-  const a=node("a");a.href=safeUrl(exam.url);a.target="_blank";a.rel="noopener noreferrer";
+  const a=exam.url?node("a"):node("span");if(exam.url){a.href=safeUrl(exam.url);a.target="_blank";a.rel="noopener noreferrer";}
   const label=node("span");label.textContent=exam.name||"National examination";
-  const arrow=node("b");arrow.textContent="→";a.append(label,arrow);examList.appendChild(a);
+  if(exam.url){const arrow=node("b");arrow.textContent="→";a.append(label,arrow);}else a.append(label);
+  examList.appendChild(a);
  });
  [
   {label:"Past papers by year",url:"/resources.html?country="+countryQuery+"&type=past-papers"},
@@ -298,6 +299,7 @@ function renderCountry(){
  text($("countryAuthority"),d.authority||"Not yet curated. The responsible national or subnational education authority must be identified and linked before this field is marked verified.");
  text($("countryCurriculum"),d.curriculum||"Not yet verified for this country. The curriculum name, responsible authority, grade coverage and approved international programmes need country-specific sources.");
  linkList("curriculumLinks",d.curriculumSources,null);
+ linkList("examLinks",d.exams,"examEmpty","The supplied country examination list does not include this country.");
  text($("countryTerms"),d.termCalendar||"Not yet verified for this country. No start dates, closing dates or academic-year dates are supplied until a current official calendar is located.");
  text($("countryQualifications"),d.qualificationRequirements||"Not yet verified for this country. Confirm the minimum academic qualification, teacher-training award, registration/licence, subject grades, language rules and work authorisation with the relevant regulator and employer.");
  text($("countrySystem"),d.system||"Not yet verified. School stages, grade equivalents and curriculum information need country-specific official sources.");
