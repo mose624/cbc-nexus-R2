@@ -459,7 +459,9 @@
   }
 
   function getAvailableQuestions(selectedGrade, selectedSubject) {
-    const gradeBank = selectedCountry.toLowerCase() === "kenya" && selectedCurriculum.toLowerCase() === "kenya cbc/cbe" && window.CBENexusCBCBanks &&
+    const isKenyaCbc = String(country && country.value || "Kenya").trim().toLowerCase() === "kenya" && String(curriculum && curriculum.value || "Kenya CBC/CBE").trim().toLowerCase() === "kenya cbc/cbe";
+    if (!isKenyaCbc) return [];
+    const gradeBank = window.CBENexusCBCBanks &&
       window.CBENexusCBCBanks.banks &&
       window.CBENexusCBCBanks.banks[selectedGrade] &&
       window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject];
