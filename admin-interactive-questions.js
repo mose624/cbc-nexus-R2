@@ -66,7 +66,7 @@
         title.textContent = q.question;
         const meta = document.createElement("span");
         meta.className = "iq-admin-meta";
-        meta.textContent = [q.grade, q.subject, q.strand || "General topic", "Correct: " + ["A","B","C","D"][Number(q.correctIndex)]].join(" · ");
+        meta.textContent = [q.country || "Kenya", q.curriculum || "Kenya CBC/CBE", q.grade, q.subject, q.strand || "General topic", "Correct: " + ["A","B","C","D"][Number(q.correctIndex)]].join(" · ");
         info.append(title, meta);
         const del = document.createElement("button");
         del.type = "button";
@@ -99,6 +99,8 @@
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const payload = {
+      country: $("iqAdminCountry").value.trim() || "Kenya",
+      curriculum: $("iqAdminCurriculum").value.trim() || "Kenya CBC/CBE",
       grade: $("iqAdminGrade").value,
       subject: $("iqAdminSubject").value.trim(),
       strand: $("iqAdminTopic").value.trim() || "All Topics",
@@ -179,6 +181,8 @@
   if (generateBatch && batchEditor && publishBatch) {
     generateBatch.addEventListener("click", generateBatchForms);
     publishBatch.addEventListener("click", async () => {
+      const country = $("iqAdminCountry").value.trim() || "Kenya";
+      const curriculum = $("iqAdminCurriculum").value.trim() || "Kenya CBC/CBE";
       const grade = $("iqAdminGrade").value;
       const subject = $("iqAdminSubject").value.trim();
       const strand = $("iqAdminTopic").value.trim() || "All Topics";
@@ -202,7 +206,7 @@
           card.querySelector(":invalid")?.focus();
           return;
         }
-        payloads.push({grade, subject, strand, question, options, correctIndex:Number(get("correct")), explanation:get("explanation")});
+        payloads.push({country, curriculum, grade, subject, strand, question, options, correctIndex:Number(get("correct")), explanation:get("explanation")});
       }
       publishBatch.disabled = true;
       generateBatch.disabled = true;
