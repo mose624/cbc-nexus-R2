@@ -216,6 +216,10 @@ img.cbe-context-image{animation:cbeImageMotion 7s ease-in-out infinite alternate
       const country = document.getElementById('iqCountry');
       const curriculum = document.getElementById('iqCurriculum');
       const level = document.getElementById('iqLevel');
+      const incoming = new URLSearchParams(window.location.search);
+      if (incoming.get('country')) country.value = incoming.get('country');
+      if (incoming.get('curriculum')) curriculum.value = incoming.get('curriculum');
+      if (incoming.get('level')) level.value = incoming.get('level');
       const openSelected = document.getElementById('iqOpenSelected');
       function updateQuizLinks(){
         const params = new URLSearchParams({
