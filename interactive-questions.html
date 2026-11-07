@@ -218,20 +218,23 @@ img.cbe-context-image{animation:cbeImageMotion 7s ease-in-out infinite alternate
       const level = document.getElementById('iqLevel');
       const incoming = new URLSearchParams(window.location.search);
       if (incoming.get('country')) country.value = incoming.get('country');
-      if (incoming.get('curriculum')) curriculum.value = incoming.get('curriculum');
+      if (incoming.has('curriculum')) curriculum.value = incoming.get('curriculum');
+      else if (country.value.trim().toLowerCase() !== 'kenya') curriculum.value = '';
       if (incoming.get('level')) level.value = incoming.get('level');
       const openSelected = document.getElementById('iqOpenSelected');
       function updateQuizLinks(){
         const params = new URLSearchParams({
           country: (country.value || 'Kenya').trim(),
-          curriculum: (curriculum.value || 'Kenya CBC/CBE').trim(),
+          curriculum: (curriculum.value || (country.value.trim().toLowerCase() === 'kenya' ? 'Kenya CBC/CBE' : '')).trim(),
           level: (level.value || 'Grade 7').trim()
         });
         const target = 'quizzes.html?' + params.toString() + '#quizCentre';
         openSelected.href = target;
+        openSelected.setAttribute('aria-disabled', !country.value.trim() || !curriculum.value.trim() ? 'true' : 'false');
         document.querySelectorAll('a[href^="quizzes.html"]').forEach(function(link){ link.href = target; });
       }
       [country,curriculum,level].forEach(function(field){ field.addEventListener('input',updateQuizLinks); field.addEventListener('change',updateQuizLinks); });
+      openSelected.addEventListener('click',function(event){if(!country.value.trim()||!curriculum.value.trim()){event.preventDefault();curriculum.focus();curriculum.setCustomValidity('Enter the curriculum or examination board for this country.');curriculum.reportValidity();curriculum.addEventListener('input',function(){curriculum.setCustomValidity('');},{once:true});}});
       updateQuizLinks();
       const search = document.getElementById('subjectSearch');
       const filter = document.getElementById('subjectFilter');
