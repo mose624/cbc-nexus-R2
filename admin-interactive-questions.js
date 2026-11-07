@@ -7,6 +7,21 @@
   const list = $("adminInteractiveQuestionList");
   const submit = $("adminInteractiveQuestionSubmit");
   const api = "/api/admin/interactive-questions";
+  const generator=document.createElement("section");
+  generator.className="iq-admin-generator";
+  generator.style.cssText="border:2px solid #0ea5e9;border-radius:12px;padding:16px;margin:16px 0;background:#f0f9ff";
+  generator.innerHTML='<h3 style="margin:0 0 8px">AI High-Order MCQ Generator</h3><p>Generate original multiple-choice questions for the country, curriculum, level and subject selected below. Generated questions are saved directly to that question bank.</p><label>Topic / syllabus area <input id="iqAiTopic" placeholder="e.g. Chemical bonding, algebra, genetics" style="width:100%;padding:10px;box-sizing:border-box"></label><label style="display:block;margin-top:8px">Number of MCQs <select id="iqAiCount"><option>5</option><option>10</option></select></label><button type="button" id="iqAiGenerate" style="margin-top:12px;background:#0284c7;color:white;border:0;border-radius:8px;padding:11px 16px;font-weight:700">Generate and publish MCQs</button><p id="iqAiStatus" aria-live="polite"></p>';
+  form.parentNode.insertBefore(generator,form);
+  $("iqAiGenerate").addEventListener("click",async()=>{
+    const button=$("iqAiGenerate"),status=$("iqAiStatus");
+    const payload={country:$("iqAdminCountry").value.trim(),curriculum:$("iqAdminCurriculum").value.trim(),grade:$("iqAdminGrade").value.trim(),subject:$("iqAdminSubject").value.trim(),topic:$("iqAiTopic").value.trim()||$("iqAdminTopic").value.trim()||"All syllabus topics",count:Number($("iqAiCount").value)};
+    if(!payload.country||!payload.curriculum||!payload.grade||!payload.subject){status.textContent="Select country, curriculum, level and subject in the question form first.";return;}
+    button.disabled=true;button.textContent="Generating…";status.textContent="Creating and validating original high-order MCQs…";
+    try{const response=await fetch("/api/admin/interactive-questions/generate",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});const data=await response.json().catch(()=>({}));if(!response.ok||!data.ok)throw new Error(data.error||"Generation failed.");status.textContent=data.generated+" MCQs generated and saved to the selected question bank.";await loadQuestions();window.dispatchEvent(new Event("cbe:interactive-questions-updated"));}
+    catch(error){status.textContent=error.message||"MCQ generation failed.";}
+    finally{button.disabled=false;button.textContent="Generate and publish MCQs";}
+  });
+
   const esc = (value) => String(value == null ? "" : value).replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   function setStatus(message, bad) {
     status.textContent = message || "";
