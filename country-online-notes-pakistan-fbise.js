@@ -117,7 +117,7 @@
       {q:"Factorise 6x+12.",a:"6(x+2).",worked:"The highest common factor is 6; divide each term by 6.",explanation:"Factorisation reverses expansion."},
       {q:"A taxi charges K40 plus K15 per kilometre. Write an expression for a journey of d kilometres.",a:"40+15d.",worked:"Fixed fee=40; distance charge=15×d; total=40+15d.",explanation:"Separate fixed and variable costs."},
       {q:"Solve 2(x+4)=3x−1.",a:"x=9.",worked:"2x+8=3x−1; add 1: 2x+9=3x; subtract 2x: x=9.",explanation:"Expand first, then collect variable and constant terms."},
-      {q:"Verify whether x=−2 satisfies x²+3x−10=0.",a:"Yes.",worked:"(−2)²+3(−2)−10=4−6−10=−12; therefore it does not satisfy the equation.",explanation:"Correction: the expression evaluates to −12, not 0; x=−2 is not a solution."},
+      {q:"Verify whether x=−2 satisfies x²+3x−10=0.",a:"No.",worked:"(−2)²+3(−2)−10=4−6−10=−12, which is not 0.",explanation:"A solution must make the left-hand side equal zero."},
       {q:"A number increased by 8 is 23. Form an equation and find the number.",a:"15.",worked:"Let the number be x. x+8=23, so x=15.",explanation:"Define the unknown and translate the statement before solving."},
       {q:"Solve x/4+3=8.",a:"x=20.",worked:"x/4=5; multiply both sides by 4: x=20.",explanation:"Undo addition before undoing division."},
       {q:"Explain why checking a solution by substitution is useful.",a:"It confirms that the proposed value satisfies the original equation and can reveal algebraic or arithmetic errors.",worked:"Substitute the value into the original equation and compare both sides.",explanation:"Verification is a mathematical habit, not an optional decoration."}
