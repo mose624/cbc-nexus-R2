@@ -61,9 +61,27 @@ function copyTree(source, destination, relative = "") {
 
 copyTree(root, out);
 
-for (const required of ["index.html", "blog.html", "blog.js", "sitemap.xml", "robots.txt"]) {
+for (const required of ["index.html", "blog.html", "blog.js", "sitemap.xml", "sitemap-index.xml", "robots.txt", "llms.txt"]) {
   if (!fs.existsSync(path.join(out, required))) {
     throw new Error("Build failed: required public file missing: " + required);
   }
 }
-console.log("Cloudflare Pages frontend build complete. Public files copied: " + copied);
+// Fail the build if a public HTML page still advertises the legacy host as a URL.
+const htmlFiles = [];
+function collectHtml(dir) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const file = path.join(dir, entry.name);
+    if (entry.isDirectory()) collectHtml(file);
+    else if (entry.isFile() && entry.name.toLowerCase().endsWith(".html")) htmlFiles.push(file);
+  }
+}
+collectHtml(out);
+const legacyCanonicalFiles = htmlFiles.filter(file => {
+  const html = fs.readFileSync(file, "utf8");
+  return /<link\\b[^>]*rel=["']canonical["'][^>]*href=["']https?:\\/\\/(?:www\\.)?cbenexus\\.co\\.ke/i.test(html)
+    || /<link\\b[^>]*href=["']https?:\\/\\/(?:www\\.)?cbenexus\\.co\\.ke[^"']*["'][^>]*rel=["']canonical["']/i.test(html);
+});
+if (legacyCanonicalFiles.length) {
+  throw new Error("Build failed: legacy .co.ke canonical URLs remain in: " + legacyCanonicalFiles.slice(0, 20).join(", "));
+}
+console.log("Cloudflare Pages frontend build complete. Public files copied: " + copied + ". Primary-domain SEO normalization checked across " + htmlFiles.length + " HTML pages.");
