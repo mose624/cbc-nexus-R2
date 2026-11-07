@@ -465,9 +465,22 @@ function calc(){const s=Number(document.getElementById("calcSalary").value||0),l
   const safeUrl=v=>{try{const u=new URL(String(v||""),location.href);return /^https?:$/.test(u.protocol)?u.href:"#";}catch{return "#";}};
   async function load(){
     try{
-      const r=await fetch("/api/vacancies?_="+Date.now(),{credentials:"same-origin",cache:"no-store",headers:{"Accept":"application/json","Cache-Control":"no-cache"}});
-      const d=await r.json().catch(()=>({}));
-      if(!r.ok||!d.ok) throw new Error(d.error||"Vacancies could not be loaded.");
+      let d=null,lastError=null;
+      const vacancyEndpoints=[
+        {url:"/api/vacancies?_="+Date.now(),crossOrigin:false},
+        {url:"https://cbc-nexus-r2.onrender.com/api/vacancies?_="+Date.now(),crossOrigin:true}
+      ];
+      for(const endpoint of vacancyEndpoints){
+        try{
+          const options={credentials:endpoint.crossOrigin?"omit":"same-origin",cache:"no-store",headers:{"Accept":"application/json"}};
+          if(!endpoint.crossOrigin)options.headers["Cache-Control"]="no-cache";
+          const response=await fetch(endpoint.url,options);
+          const payload=await response.json().catch(()=>({}));
+          if(!response.ok||!payload.ok)throw new Error(payload.error||"Vacancies could not be loaded.");
+          d=payload;break;
+        }catch(error){lastError=error;}
+      }
+      if(!d)throw lastError||new Error("Vacancies could not be loaded.");
       const rows=Array.isArray(d.vacancies)?d.vacancies:[];
       if(!rows.length){grid.innerHTML='<div class="empty-state">No teaching vacancies published yet.</div>';return;}
       const inferCurriculum=v=>{const t=[v.title,v.description,v.requirements,v.subject].filter(Boolean).join(" ").toLowerCase();if(/\bib\b|ibdp|pyp|myp/.test(t))return "IB";if(/igcse|cambridge|a level|as level|british curriculum|uk national/.test(t))return "British / Cambridge / IGCSE";if(/american|us curriculum|ngss|common core/.test(t))return "American";if(/cbc|cbe|kenya curriculum/.test(t))return "CBC / CBE";if(/ipc|international primary/.test(t))return "IPC";return "International / Not specified";};
