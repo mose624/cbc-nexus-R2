@@ -3,6 +3,7 @@
 const countries=window.CBE_GLOBAL_COUNTRIES||[], details=window.CBE_GLOBAL_COUNTRY_DATA||{}, officialLanguageReference=window.CBE_GLOBAL_OFFICIAL_LANGUAGES||{};
 const $=id=>document.getElementById(id);
 function text(el,value){if(el)el.textContent=value==null?"":String(value);}
+function setSeoMeta(selector,key,value){let el=document.querySelector(selector);if(!el){el=document.createElement("meta");el.setAttribute(key,selector.includes("property=")?selector.match(/property="([^"]+)"/)[1]:selector.match(/name="([^"]+)"/)[1]);document.head.appendChild(el);}el.setAttribute("content",value);}
 function node(tag,cls){const e=document.createElement(tag);if(cls)e.className=cls;return e;}
 function safeUrl(value){try{const u=new URL(value,location.origin);return ["http:","https:"].includes(u.protocol)?u.href:"#";}catch{return "#";}}
 function linkList(id,items,emptyId,emptyText,flagSymbol){
@@ -456,8 +457,20 @@ function renderCountry(){
  const title=examTitleNames.length?c.name+" National Exams: "+examTitleNames.slice(0,2).join(" & ")+" | CBE Nexus":c.name+" Education System & Exams | CBE Nexus";
  document.title=title.length>78?c.name+" National Exams & Education Resources | CBE Nexus":title;
  const desc=examTitleNames.length?"Explore "+c.name+" national examinations including "+examTitleNames.slice(0,3).join(", ")+". Find curriculum information, online notes and exam revision resources; confirm current requirements with official authorities.":"Explore "+c.name+" education system, school directory, curriculum, online notes and national assessment guidance. Check official authorities for current examination names and requirements.";
- let meta=document.querySelector('meta[name="description"]');if(meta)meta.content=desc;
- let canonical=document.querySelector('link[rel="canonical"]');if(canonical)canonical.href=location.origin+"/global-schools/"+c.slug;
+ const canonicalUrl="https://cbenexus.com/global-schools/"+c.slug;
+ setSeoMeta('meta[name="description"]',"name",desc);
+ setSeoMeta('meta[property="og:type"]',"property","website");
+ setSeoMeta('meta[property="og:site_name"]',"property","CBE Nexus");
+ setSeoMeta('meta[property="og:title"]',"property",document.title);
+ setSeoMeta('meta[property="og:description"]',"property",desc);
+ setSeoMeta('meta[property="og:url"]',"property",canonicalUrl);
+ setSeoMeta('meta[name="twitter:card"]',"name","summary");
+ setSeoMeta('meta[name="twitter:title"]',"name",document.title);
+ setSeoMeta('meta[name="twitter:description"]',"name",desc);
+ let canonical=document.querySelector('link[rel="canonical"]');if(canonical)canonical.href=canonicalUrl;
+ const examItems=examTitleNames.map((name,index)=>({"@type":"ListItem","position":index+1,"name":name}));
+ const seoGraph={"@context":"https://schema.org","@graph":[{"@type":"WebPage","name":document.title,"description":desc,"url":canonicalUrl,"isPartOf":{"@type":"WebSite","name":"CBE Nexus","url":"https://cbenexus.com"},"about":[{"@type":"Country","name":c.name},...examTitleNames.map(name=>({"@type":"Thing","name":name}))]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"CBE Nexus","item":"https://cbenexus.com/"},{"@type":"ListItem","position":2,"name":"Global Schools Directory","item":"https://cbenexus.com/global-schools"},{"@type":"ListItem","position":3,"name":c.name,"item":canonicalUrl}]}]};
+ let schema=document.getElementById("country-seo-jsonld");if(!schema){schema=document.createElement("script");schema.id="country-seo-jsonld";schema.type="application/ld+json";document.head.appendChild(schema);}schema.textContent=JSON.stringify(seoGraph);
 }
 $("searchButton").addEventListener("click",()=>{const q=$("countrySearch").value.trim();const match=countries.find(c=>c.name.toLowerCase()===q.toLowerCase()||c.slug===q.toLowerCase().replace(/\s+/g,"-"));if(match){location.href=match.url;return;}renderCountries(q);});
 $("countrySearch").addEventListener("input",e=>renderCountries(e.target.value));
