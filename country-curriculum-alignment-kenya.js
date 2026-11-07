@@ -95,5 +95,36 @@
   investigation.title="Supplementary: Scientific investigation skills in Biology";
   investigation.curriculumContext="Supplementary learning support. This is not labelled as a separate KICD Grade 10 Biology sub-strand in the published strand summary.";
  }
+
+ const enrich=(chapter,index,extra,keyTerms,workedExamples)=>{
+  const s=chapter?.sections?.[index]; if(!s) return;
+  s.paragraphs=[s.body||"",...extra].filter(Boolean);
+  if(keyTerms) s.keyTerms=keyTerms;
+  if(workedExamples) s.workedExamples=workedExamples;
+ };
+ enrich(intro,0,[
+  "Biology is evidence-based: biologists observe patterns, ask questions, collect data and test explanations. A scientific explanation must be open to checking and revision when stronger evidence becomes available. The same biological question may be investigated at different scales, from molecules and cells to whole ecosystems.",
+  "A useful way to appreciate the scope of Biology is to connect a local issue to a biological field. For example, investigating a crop pest may involve Entomology to identify the insect, Ecology to understand its interactions, Genetics to study resistance and Plant Physiology to understand effects on the crop."
+ ],[
+  {term:"Biology",definition:"The scientific study of living organisms and life processes."},
+  {term:"Biodiversity",definition:"The variety of living organisms, including variation within species, between species and among ecosystems."},
+  {term:"Physiology",definition:"The study of how living organisms and their parts function."}
+ ],[
+  {title:"Choosing a biological field",question:"A community wants to reduce mosquito-borne disease without damaging wetland biodiversity. Which biological fields could contribute?",method:"Entomology can identify mosquito species; Ecology can examine breeding habitats and food webs; Parasitology and Microbiology can study disease-causing organisms; Public Health can guide prevention.",answer:"Several fields are relevant and should work together.",explanation:"Real biological problems are often interdisciplinary. A sound solution considers human health and ecosystem effects."}
+ ]);
+ enrich(cells,0,[
+  "Cell theory is commonly expressed through three linked ideas: living organisms are made of one or more cells; the cell is the basic unit of structure and function; and new cells arise from pre-existing cells. These ideas help explain growth, repair and reproduction in living organisms.",
+  "Cell size is limited partly by exchange requirements. As a cell becomes larger, its volume increases faster than its surface area. This can make it harder to exchange enough nutrients, gases and wastes across the membrane to support the whole cell."
+ ],[
+  {term:"Cell theory",definition:"The principle that organisms are made of cells, cells are the basic units of life, and cells arise from pre-existing cells."},
+  {term:"Surface-area-to-volume ratio",definition:"The amount of surface area available for exchange compared with the volume that requires resources."}
+ ]);
+ enrich(chemicals,0,[
+  "The chemical composition of an organism is closely linked to its activities. Water provides a medium in which many reactions occur and allows dissolved substances to be transported. Carbohydrates and lipids are important energy stores, while proteins have structural, transport, defensive and catalytic roles.",
+  "A balanced diet supplies different nutrients in suitable amounts. Deficiency may impair growth, repair or normal body function, while excess intake of some nutrients can also be harmful. The role of a nutrient should be distinguished from the food source that supplies it."
+ ],[
+  {term:"Nutrient",definition:"A chemical substance obtained from food or the environment and used for energy, growth, repair or regulation."},
+  {term:"Enzyme",definition:"A biological catalyst that increases the rate of a reaction without being used up overall."}
+ ]);
  kenya.Biology=core.concat(remainder);
 })();
