@@ -6,6 +6,20 @@
  const malawi={
   curriculum:"Malawi • Malawi Institute of Education (MIE) • Secondary Forms 1–4 • transition-aware curriculum support",
   authority:"Malawi Institute of Education (MIE) • Ministry of Education • Malawi National Examinations Board (MANEB)",
+
+  revisionCoverage:{
+   purpose:"Full examination revision across subjects and examinable classes, not a four-science-only resource.",
+   classLevels:[
+    {level:"Forms 1–2",stage:"Lower secondary",status:"2025 framework subject matrix identified; draft revised syllabuses were under validation in March 2026. Verify the learner's cohort before assigning final topic order."},
+    {level:"Forms 3–4",stage:"Upper secondary",status:"Include the complete MSCE preparation content and cumulative concepts from earlier forms, according to the approved subject syllabus for the examination cohort."},
+    {level:"Forms 5–6",stage:"Advanced level",status:"Advanced-level pathway is identified in the 2025 framework; add its subjects and syllabuses as a distinct revision level, not as MSCE content."}
+   ],
+   lowerSecondaryCore:["Mathematics","Chichewa","English and Sign Language","Social Studies (Life Skills, Geography, History and Civics)","Technical Studies (Material Science, Technical and Computer-aided Drawing, ICT)","Integrated Science (Sports Science, Agriculture and Biology)"],
+   lowerSecondaryElectives:["Business and Financial Studies","Creative Arts (Visual and Performing Arts)","Foreign Languages (French, Kiswahili, Arabic, Mandarin Chinese and Portuguese)","Sign Language","Religious and Moral Education","Islamic Education","Christian Education","Carpentry and Joinery","Welding and Fabrication","Human Ecology (Fashion and Fabrics, Food and Nutrition)","Physical Education","Sports and Recreation","Media Technology","Chemistry","Physics"],
+   upperSecondaryPathways:["Arts and Sports Science","Social Sciences and Humanities","Science, Technology, Engineering and Mathematics (STEM)","Technical, Entrepreneurial, Vocational Education and Training (TEVET)"],
+   examRevisionRule:"For MSCE, revise all subjects the learner is registered for, including English and Mathematics where required by the applicable MANEB rules. The official MANEB page states that MSCE is the final secondary examination and requires passes in five or six subjects including English, with credit thresholds. Subject entry and cohort-specific syllabus must be checked with MANEB.",
+   sequenceRule:"Do not invent topic order. Populate each subject and class from the approved MIE syllabus and the MANEB examination syllabus/model papers that apply to the candidate's cohort."
+  },
   source:"https://mie.edu.mw/downloads/",
   exam:"Malawi School Certificate of Education (MSCE), administered by MANEB, is the final secondary-school examination. Learners should confirm the syllabus and approved learning materials applicable to their examination cohort.",
   curriculumAuditStatus:"official-framework-2025-and-reform-process-verified-subject-sequences-pending",
