@@ -48,4 +48,32 @@ Disallow: /admin
 Disallow: /upload.html
 Disallow: /backend-data/
 
+# Microsoft Bing search (also supports discovery in Copilot)
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /upload.html
+Disallow: /backend-data/
+
+# Google-Extended is a Google product-control token, not a separate search crawler.
+# Allowing it does not replace Googlebot access or guarantee Gemini citations.
+User-agent: Google-Extended
+Allow: /
+
+# User-requested retrieval agents
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /upload.html
+Disallow: /backend-data/
+
+User-agent: Perplexity-User
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /upload.html
+Disallow: /backend-data/
+
 Sitemap: https://cbenexus.com/sitemap.xml
