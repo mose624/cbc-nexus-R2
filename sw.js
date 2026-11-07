@@ -1,6 +1,6 @@
-const CACHE_NAME = "cbe-nexus-speed-v15";
+const CACHE_NAME = "cbe-nexus-speed-v16";
 const STATIC_EXTENSIONS = /\.(?:css|js|png|jpg|jpeg|webp|svg|ico|woff2?)$/i;
-const HTML_CACHE = "cbe-nexus-pages-v14";
+const HTML_CACHE = "cbe-nexus-pages-v15";
 const PUBLIC_PAGE_CACHE = [
   "/",
   "/index.html"
@@ -110,6 +110,12 @@ self.addEventListener("fetch", (event) => {
 
   if (url.pathname === "/" || url.pathname.endsWith("/index.html")) {
     event.respondWith(getDashboardResponse(request));
+    return;
+  }
+
+  if (request.mode === "navigate" && url.pathname === "/international-teaching-jobs.html") {
+    // Careers listings must never fall back to stale HTML: fetch the current deployment directly.
+    event.respondWith(fetch(request, { cache: "no-store" }));
     return;
   }
 
