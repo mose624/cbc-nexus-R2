@@ -139,7 +139,11 @@
   "colombia": [
     "Saber 11"
   ],
-  "comoros": [],
+  "comoros": [
+    "Diplôme de Fin d’Études Élémentaires (DFEE)",
+    "Brevet d’Études du Premier Cycle (BEPC)",
+    "Baccalauréat"
+  ],
   "republic-of-the-congo": [
     "BEPC",
     "Baccalauréat"
@@ -197,7 +201,11 @@
     "PAES (historical)",
     "AVANZO"
   ],
-  "equatorial-guinea": [],
+  "equatorial-guinea": [
+    "Certificado de Estudios Primarios",
+    "Bachillerato",
+    "Selectividad (university entrance examination)"
+  ],
   "eritrea": [
     "National School Leaving Examination"
   ],
@@ -336,7 +344,9 @@
   "kuwait": [
     "Secondary School Certificate"
   ],
-  "kyrgyzstan": [],
+  "kyrgyzstan": [
+    "General Republican Testing (ORT)"
+  ],
   "laos": [
     "National upper-secondary graduation examination"
   ],
@@ -700,7 +710,9 @@
   "uruguay": [
     "Bachillerato examinations"
   ],
-  "uzbekistan": [],
+  "uzbekistan": [
+    "Final State Attestation (Grades 9 and 11)"
+  ],
   "vanuatu": [
     "Vanuatu School Certificate",
     "South Pacific Form Seven Certificate"
@@ -711,7 +723,10 @@
   "vietnam": [
     "High School Graduation Examination"
   ],
-  "yemen": [],
+  "yemen": [
+    "Intermediate School Certificate Examination",
+    "General Secondary Education Certificate (Al Thanawiya)"
+  ],
   "zambia": [
     "Primary School Leaving Examination",
     "Junior Secondary and School Certificate examinations"
