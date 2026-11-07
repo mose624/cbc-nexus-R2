@@ -29,6 +29,14 @@ const excludedFiles = new Set([
 fs.rmSync(out, { recursive: true, force: true });
 fs.mkdirSync(out, { recursive: true });
 
+// Normalize legacy host references in public pages and crawler feeds.
+// Do not alter email addresses or non-URL text.
+function normalizePrimaryDomain(content) {
+  return String(content)
+    .replace(/https?:\/\/(?:www\.)?cbenexus\.(?:co\.ke|com)(?=[:/?#]|$)/gi, "https://cbenexus.com")
+    .replace(/\/\/(?:www\.)?cbenexus\.co\.ke(?=[:/?#]|$)/gi, "https://cbenexus.com");
+}
+
 let copied = 0;
 function copyTree(source, destination, relative = "") {
   for (const entry of fs.readdirSync(source, { withFileTypes: true })) {
@@ -54,7 +62,11 @@ function copyTree(source, destination, relative = "") {
     if (extension === ".json" && !/^(data|learning)\//.test(rel)) continue;
 
     fs.mkdirSync(path.dirname(dest), { recursive: true });
-    fs.copyFileSync(src, dest);
+    if ([".html", ".xml", ".txt"].includes(extension)) {
+      fs.writeFileSync(dest, normalizePrimaryDomain(fs.readFileSync(src, "utf8")), "utf8");
+    } else {
+      fs.copyFileSync(src, dest);
+    }
     copied++;
   }
 }
@@ -78,8 +90,8 @@ function collectHtml(dir) {
 collectHtml(out);
 const legacyCanonicalFiles = htmlFiles.filter(file => {
   const html = fs.readFileSync(file, "utf8");
-  return /<link\\b[^>]*rel=["']canonical["'][^>]*href=["']https?:\\/\\/(?:www\\.)?cbenexus\\.co\\.ke/i.test(html)
-    || /<link\\b[^>]*href=["']https?:\\/\\/(?:www\\.)?cbenexus\\.co\\.ke[^"']*["'][^>]*rel=["']canonical["']/i.test(html);
+  return /<link\b[^>]*rel=["']canonical["'][^>]*href=["']https?:\/\/(?:www\.)?cbenexus\.co\.ke/i.test(html)
+    || /<link\b[^>]*href=["']https?:\/\/(?:www\.)?cbenexus\.co\.ke[^"']*["'][^>]*rel=["']canonical["']/i.test(html);
 });
 if (legacyCanonicalFiles.length) {
   throw new Error("Build failed: legacy .co.ke canonical URLs remain in: " + legacyCanonicalFiles.slice(0, 20).join(", "));
