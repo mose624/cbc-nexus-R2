@@ -76,6 +76,14 @@ img.cbe-context-image{animation:cbeImageMotion 7s ease-in-out infinite alternate
 <body>
   <main class="resource-library-page">
     <nav aria-label="Breadcrumb"><a href="/">Home</a> / <span aria-current="page">Resource Library</span></nav>
+    <section id="country-online-hub" hidden aria-labelledby="country-online-title">
+      <p class="eyebrow">CBE Nexus · Country learning centre</p>
+      <h1 id="country-online-title">Online Learning Resources</h1>
+      <p id="country-online-intro">Choose a resource to study and practise online.</p>
+      <p class="rl-note">Resources are organised for this country. Availability depends on the materials currently published. Official past papers are linked only where an authorised source is available; CBE Nexus-created practice is identified separately.</p>
+      <div class="rl-grid" id="country-online-grid"></div>
+      <p><a id="country-online-exams" href="#">View this country's national examinations →</a> · <a id="country-online-profile" href="#">Return to country education dashboard</a></p>
+    </section>
     <section class="rl-hero">
 <img class="cbe-context-image" src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1200&q=80" alt="Learners using books and study materials in a school library" loading="lazy" decoding="async" style="display:block;width:100%;max-width:100%;height:clamp(180px,28vw,320px);object-fit:cover;object-position:center;border-radius:18px;margin:20px auto 26px;box-shadow:0 12px 30px rgba(15,35,60,.14)">
 
@@ -156,6 +164,42 @@ img.cbe-context-image{animation:cbeImageMotion 7s ease-in-out infinite alternate
     </section>
     <p><a href="/">Return to CBE Nexus home</a> · <a href="/contact.html">Contact support</a></p>
   </main>
+  <script>
+  (function(){
+    const params=new URLSearchParams(location.search);
+    const country=(params.get('country')||'').trim();
+    if(!country)return;
+    const hub=document.getElementById('country-online-hub');
+    hub.hidden=false;
+    document.querySelectorAll('.resource-library-page > .rl-hero, .resource-library-page > section:not(#country-online-hub)').forEach(el=>el.hidden=true);
+    document.querySelector('nav[aria-label="Breadcrumb"]')?.insertAdjacentText('beforeend',' / '+country);
+    document.title=country+' Online Notes, Past Papers & Mock Exams | CBE Nexus';
+    const heading=document.getElementById('country-online-title');
+    heading.textContent=country+' Online Learning & Examination Resources';
+    document.getElementById('country-online-intro').textContent='Study, practise and revise for '+country+' national examinations. Select a resource below; materials are displayed online wherever the relevant collection is available.';
+    const q=encodeURIComponent(country);
+    const resources=[
+      {icon:'📘',title:'Online Notes',desc:'Read subject notes and topic explanations online.',url:'/resource-category.html?type=Notes&country='+q},
+      {icon:'📄',title:'Past Papers',desc:'Find authorised past papers and examination resources.',url:'/resource-category.html?type=Past%20Papers&country='+q},
+      {icon:'⏱️',title:'Online Mock Exams',desc:'Attempt examination-style practice and review your performance.',url:'/quizzes.html?country='+q},
+      {icon:'⚡',title:'Interactive Questions',desc:'Practise questions online and check answers where supported.',url:'/interactive-questions.html?country='+q},
+      {icon:'🧮',title:'Worked Examples',desc:'Follow step-by-step solutions and explanations.',url:'/resource-category.html?type=Worked%20Examples&country='+q},
+      {icon:'🧪',title:'Science Practicals',desc:'Explore experiments, practical skills and science revision.',url:'/resource-category.html?type=Science%20Practicals&country='+q},
+      {icon:'✓',title:'Marking Schemes & Answers',desc:'Review answer guides where they are available and authorised.',url:'/resource-category.html?type=Marking%20Schemes&country='+q},
+      {icon:'🏛️',title:'Curriculum & Syllabuses',desc:'Explore curriculum and examination information for this country.',url:'/global-schools/'+country.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'#curriculum'}
+    ];
+    const grid=document.getElementById('country-online-grid');
+    resources.forEach(item=>{
+      const a=document.createElement('a');a.className='rl-tile';a.href=item.url;
+      const strong=document.createElement('strong');strong.textContent=item.icon+' '+item.title;
+      const span=document.createElement('span');span.textContent=item.desc;
+      a.append(strong,span);grid.append(a);
+    });
+    const slug=country.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+    document.getElementById('country-online-exams').href='/global-schools/'+slug+'#exams';
+    document.getElementById('country-online-profile').href='/global-schools/'+slug;
+  })();
+  </script>
   <script src="customer-care.js?v=20261010-subscribe1" defer></script>
 </body>
 </html>
