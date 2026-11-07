@@ -57,11 +57,19 @@ img.cbe-context-image{animation:cbeImageMotion 7s ease-in-out infinite alternate
               <input id="quizLearnerIdInput" maxlength="100" placeholder="Admission number or learner ID">
             </label>
             <label>
-              Grade
+              Country
+              <input id="quizCountryInput" list="quizCountryOptions" value="Kenya" required maxlength="100" placeholder="Enter any country">
+            </label>
+            <label>
+              Curriculum / Examination Board
+              <input id="quizCurriculumInput" list="quizCurriculumOptions" value="Kenya CBC/CBE" required maxlength="120" placeholder="e.g. Cambridge IGCSE, IB Diploma">
+            </label>
+            <label>
+              Grade / Class / Level
               <select id="quizGradeInput" required></select>
             </label>
             <label>
-              Subject
+              Subject / Learning Area
               <select id="quizSubjectInput" required></select>
             </label>
             <label>
@@ -167,6 +175,8 @@ img.cbe-context-image{animation:cbeImageMotion 7s ease-in-out infinite alternate
             <button class="ghost-button" id="clearQuizButton" type="button">Clear Answers</button>
           </div>
           <p id="quizStatus" class="form-status" aria-live="polite"></p>
+        <datalist id="quizCountryOptions"><option value="Kenya"></option><option value="South Africa"></option><option value="Ghana"></option><option value="Nigeria"></option><option value="Uganda"></option><option value="Tanzania"></option><option value="Rwanda"></option><option value="Zambia"></option><option value="Zimbabwe"></option><option value="Namibia"></option><option value="Botswana"></option><option value="Malawi"></option><option value="India"></option><option value="Pakistan"></option><option value="United Kingdom"></option><option value="United States"></option><option value="Canada"></option><option value="Australia"></option><option value="New Zealand"></option><option value="United Arab Emirates"></option><option value="Saudi Arabia"></option><option value="Qatar"></option><option value="Singapore"></option><option value="Malaysia"></option><option value="China"></option><option value="Japan"></option><option value="Germany"></option><option value="France"></option><option value="Brazil"></option><option value="Mexico"></option><option value="Ethiopia"></option><option value="Lesotho"></option><option value="Eswatini"></option></datalist>
+        <datalist id="quizCurriculumOptions"><option value="Kenya CBC/CBE"></option><option value="Cambridge Primary"></option><option value="Cambridge Lower Secondary"></option><option value="Cambridge IGCSE"></option><option value="Cambridge International AS & A Level"></option><option value="IB PYP"></option><option value="IB MYP"></option><option value="IB Diploma Programme"></option><option value="Pearson Edexcel International GCSE"></option><option value="Pearson Edexcel International A Level"></option><option value="United States Common Core / NGSS"></option><option value="England National Curriculum / GCSE / A Level"></option><option value="South Africa CAPS"></option><option value="India CBSE"></option><option value="India CISCE / ICSE"></option><option value="Nigeria NERDC / WAEC / NECO"></option><option value="Ghana NaCCA / WASSCE"></option><option value="ZIMSEC"></option><option value="Botswana BGCSE"></option><option value="Namibia NSSCO / NSSCAS"></option><option value="Zambia ECZ"></option><option value="Pakistan FBISE"></option></datalist>
         </form>
 
         <div id="quizResultPanel" class="quiz-result-panel hidden-section" aria-live="polite"></div>
