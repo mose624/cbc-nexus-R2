@@ -247,7 +247,8 @@ img.cbe-context-image{animation:cbeImageMotion 7s ease-in-out infinite alternate
 .cbe-vacancy-apply h3{margin:0 0 7px;color:#12395f}
 .cbe-vacancy-apply p{font-size:12px;line-height:1.6;color:#506477}
 @media(max-width:700px){#internationalVacanciesPublic{padding:16px!important}.career-portal-heading{padding:19px 16px}.career-portal-mark{display:none}.career-standard-strip{grid-template-columns:1fr}.career-standard-strip>div{padding:11px 13px}.career-trust-note{display:block}.career-trust-note strong{display:block;margin-bottom:5px}}
-</style></head>
+</style><style id="vacancy-photo-cards">#internationalVacancyGrid .vacancy-card-image{display:block;width:100%;height:142px;object-fit:cover;border-radius:9px;margin:0 0 8px;background:#dbeafe}#internationalVacancyGrid .vacancy-card{overflow:hidden}#internationalVacancyGrid .vacancy-detail-image{display:block;width:100%;height:220px;object-fit:cover;border-radius:11px;margin:12px 0 16px;background:#dbeafe}.vacancy-detail-modal .vacancy-detail-school{margin-bottom:8px}@media(max-width:650px){#internationalVacancyGrid .vacancy-card-image{height:165px}.vacancy-detail-modal .vacancy-detail-image{height:170px}}</style>
+</head>
 <body>
 <header class="site-header international-brand-header">
   <div class="international-masthead">
@@ -474,7 +475,6 @@ function calc(){const s=Number(document.getElementById("calcSalary").value||0),l
 <button class="secondary-button" id="clearVacancyFilters" type="button">Reset filters</button>
 </div>
 <div id="internationalVacancyGrid" class="vacancy-grid" data-stable-vacancy-board><p class="form-status">Loading vacancies...</p></div></section><script src="app.js" defer></script><script>
-<style id="vacancy-photo-cards">#internationalVacancyGrid .vacancy-card-image{display:block;width:100%;height:142px;object-fit:cover;border-radius:9px;margin:0 0 8px;background:#dbeafe}#internationalVacancyGrid .vacancy-card{overflow:hidden}#internationalVacancyGrid .vacancy-detail-image{display:block;width:100%;height:220px;object-fit:cover;border-radius:11px;margin:12px 0 16px;background:#dbeafe}.vacancy-detail-modal .vacancy-detail-school{margin-bottom:8px}@media(max-width:650px){#internationalVacancyGrid .vacancy-card-image{height:165px}.vacancy-detail-modal .vacancy-detail-image{height:170px}}</style>
 /* CBE NEXUS vacancy-board fallback loader: keeps the public board independent of optional app.js initializers. */
 (function(){
   const grid=document.getElementById("internationalVacancyGrid");
