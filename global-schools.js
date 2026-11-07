@@ -222,7 +222,10 @@ function renderCountry(){
  const leftColumn=node("div","gs-country-learning-left");
  const resourceGrid=node("div","gs-learning-grid");
  const resourceItems=[
-  {icon:"▤",tone:"teal",title:"Online Notes",desc:"Subject notes and curriculum learning guides",type:"notes"},
+  {icon:"∑",tone:"teal",title:"Mathematics Notes",desc:"Country curriculum lessons, worked examples and practice",type:"subject-notes",subject:"Mathematics"},
+  {icon:"⚗",tone:"green",title:"Chemistry Notes",desc:"Illustrated chemistry lessons and revision questions",type:"subject-notes",subject:"Chemistry"},
+  {icon:"🧬",tone:"purple",title:"Biology Notes",desc:"Biology explanations, diagrams and practice questions",type:"subject-notes",subject:"Biology"},
+  {icon:"⚛",tone:"blue",title:"Physics Notes",desc:"Physics concepts, diagrams and worked calculations",type:"subject-notes",subject:"Physics"},
   {icon:"▤",tone:"gold",title:"Past Papers",desc:"Past examination papers and revision resources",type:"past-papers"},
   {icon:"☑",tone:"red",title:"Mock Exams",desc:"Practise with examination-style tasks",type:"mock-exams"},
   {icon:"⚡",tone:"blue",title:"Interactive Quizzes",desc:"Test understanding with self-check questions",type:"quizzes"},
@@ -235,7 +238,8 @@ function renderCountry(){
  ];
  resourceItems.forEach(item=>{
   const card=node("a","gs-learning-card");
-  card.href=item.type==="quizzes"?"/interactive-questions.html?country="+countryQuery:
+  card.href=item.type==="subject-notes"?"/country-online-notes.html?country="+countryQuery+"&subject="+encodeURIComponent(item.subject):
+   item.type==="quizzes"?"/interactive-questions.html?country="+countryQuery:
    item.type==="exam-resources"?"#papers":
    item.type==="curriculum"?"#curriculum":
    item.type==="notes"?"/country-online-notes.html?country="+countryQuery:
