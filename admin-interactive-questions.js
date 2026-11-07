@@ -129,7 +129,7 @@
       $("iqAdminGrade").value = payload.grade;
       populateSubjects(payload.subject);
       $("iqAdminCorrect").value = "0";
-      setStatus("Question published. It is now available to learners in the matching grade and subject.");
+      setStatus("Question published. It is available under the matching country, curriculum, level and subject.");
       await loadQuestions();
       window.dispatchEvent(new Event("cbe:interactive-questions-updated"));
     } catch (error) {
