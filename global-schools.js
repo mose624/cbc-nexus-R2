@@ -119,7 +119,9 @@ function renderCountry(){
  // Worldwide vacancy roundup belongs on the central directory page only, never on every country profile.
  const worldwideVacancies=$("globalVacancies");if(worldwideVacancies)worldwideVacancies.classList.add("gs-hidden");
  $("gsHero").classList.add("gs-hidden");$("gsDirectory").classList.add("gs-hidden");$("gsSearchWrap").classList.add("gs-hidden");$("gsCountry").classList.remove("gs-hidden");
- text($("gsTitle"),c.name+" Schools, Education & Teaching Vacancies");text($("gsIntro"),"Country guide for "+c.name+": school directory, education system, national examinations, revision papers, teaching vacancies, teacher requirements and further education.");
+ const countryExamNames=(d.exams||[]).map(item=>item&&item.name).filter(Boolean);
+ const countryExamPhrase=countryExamNames.length?countryExamNames.slice(0,4).join(", "):"the national assessment pathway";
+ text($("gsTitle"),c.name+" Education Resources & National Examinations");text($("gsIntro"),"Explore "+c.name+" education resources and prepare for "+countryExamPhrase+". Find curriculum guidance, online notes, revision resources, school information and official education links.");
  text($("countryFlag"),c.flag);text($("countryName"),c.name);text($("countrySub"),"Dedicated country page · /global-schools/"+c.slug);
  text($("countryIntro"),"This page brings together source links and country-specific education information for "+c.name+". Do not treat a missing record as proof that no school, exam, vacancy or scholarship exists.");
  const status=$("countryStatus");status.replaceChildren();const badge=node("span","gs-status "+(d.sources?"partial":"missing"));badge.textContent=d.sources?"Some official sources curated — individual records require verification":"Framework available — country-specific data not yet verified";status.appendChild(badge);
@@ -450,9 +452,10 @@ function renderCountry(){
   link.target="_blank";link.rel="noopener noreferrer";host.appendChild(link);
  });
  applyCountryLocale(slug);
- const title=c.name+" Schools, Education System & Teaching Vacancies | CBE Nexus Global Schools";
- document.title=title;
- const desc="Explore school directories, education systems, national examinations, sample papers, teaching vacancies and teacher requirements in "+c.name+". Verify each listing with official sources.";
+ const examTitleNames=(d.exams||[]).map(item=>item&&item.name).filter(Boolean);
+ const title=examTitleNames.length?c.name+" National Exams: "+examTitleNames.slice(0,2).join(" & ")+" | CBE Nexus":c.name+" Education System & Exams | CBE Nexus";
+ document.title=title.length>78?c.name+" National Exams & Education Resources | CBE Nexus":title;
+ const desc=examTitleNames.length?"Explore "+c.name+" national examinations including "+examTitleNames.slice(0,3).join(", ")+". Find curriculum information, online notes and exam revision resources; confirm current requirements with official authorities.":"Explore "+c.name+" education system, school directory, curriculum, online notes and national assessment guidance. Check official authorities for current examination names and requirements.";
  let meta=document.querySelector('meta[name="description"]');if(meta)meta.content=desc;
  let canonical=document.querySelector('link[rel="canonical"]');if(canonical)canonical.href=location.origin+"/global-schools/"+c.slug;
 }
