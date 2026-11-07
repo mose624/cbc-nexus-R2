@@ -853,6 +853,49 @@ async function handleApi(req,res,url){
     sendJson(res,200,{ok:true,deletedId:id});return true;
   }
   if(req.method==="GET"&&url.pathname==="/api/vacancies"){res.setHeader("Cache-Control","no-store, no-cache, must-revalidate");try{sendJson(res,200,{ok:true,vacancies:await getTeachingVacancies()});}catch(error){console.error("Teaching vacancies lookup error:",error);sendJson(res,500,{ok:false,error:"Teaching vacancies could not be loaded."});}return true;}
+  if(req.method==="POST"&&url.pathname==="/api/vacancy-applications"){
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"The application service is not configured yet. Please contact CBE Nexus support."});return true;}
+      const p=JSON.parse((await readBody(req))||"{}");
+      const clean=(v,n=500)=>String(v??"").trim().slice(0,n);
+      if(clean(p.website,200)){sendJson(res,200,{ok:true,applicationId:""});return true;}
+      const vacancyId=clean(p.vacancyId,160),name=clean(p.applicantName,120),email=clean(p.applicantEmail,254).toLowerCase(),phone=clean(p.applicantPhone,40),country=clean(p.applicantCountry,100),qualification=clean(p.qualification,240),experience=clean(p.experience,240),message=clean(p.message,3000);
+      if(!vacancyId||!name||!/^\S+@\S+\.\S+$/.test(email)||!phone||!country||!qualification||!experience){sendJson(res,400,{ok:false,error:"Complete all required applicant details and provide a valid email address."});return true;}
+      const vacancies=await getTeachingVacancies(),vacancy=vacancies.find(v=>String(v.id)===vacancyId);
+      if(!vacancy){sendJson(res,404,{ok:false,error:"This vacancy is no longer available. Refresh the jobs page and try again."});return true;}
+      const fileName=clean(p.cvFileName,180),contentType=clean(p.cvContentType,120).toLowerCase(),base64=String(p.cvBase64||"");
+      const ext=(fileName.match(/\.([a-z0-9]{1,8})$/i)||[])[1]?.toLowerCase()||"";
+      if(!["pdf","doc","docx"].includes(ext)){sendJson(res,400,{ok:false,error:"Upload your CV as a PDF, DOC or DOCX file."});return true;}
+      if(!base64||base64.length>7*1024*1024||!/^[A-Za-z0-9+/]+={0,2}$/.test(base64)){sendJson(res,400,{ok:false,error:"CV file is missing, invalid or exceeds the 5 MB limit."});return true;}
+      const bytes=Buffer.from(base64,"base64");
+      if(!bytes.length||bytes.length>5*1024*1024){sendJson(res,400,{ok:false,error:"CV file must be 5 MB or smaller."});return true;}
+      const allowedTypes=new Set(["application/pdf","application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/octet-stream"]);
+      if(contentType&&!allowedTypes.has(contentType)){sendJson(res,400,{ok:false,error:"The uploaded CV file type is not supported."});return true;}
+      const expectedType=ext==="pdf"?"application/pdf":ext==="doc"?"application/msword":"application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+      if(ext==="pdf"&&bytes.subarray(0,5).toString("ascii")!=="%PDF-"){sendJson(res,400,{ok:false,error:"The uploaded file does not appear to be a valid PDF."});return true;}
+      const stored=await uploadObject({grade:"vacancy-applications",subject:vacancyId,type:"applicant-cv",fileName,contentType:expectedType},bytes,bytes.length);
+      const row={vacancy_id:vacancyId,vacancy_title:clean(vacancy.title,220),employer:clean(vacancy.school,220),applicant_name:name,applicant_email:email,applicant_phone:phone,applicant_country:country,qualification,experience,cover_message:message,cv_file_name:fileName,cv_content_type:expectedType,cv_storage_key:stored.key,status:"received",created_at:new Date().toISOString()};
+      const {data,error}=await supabase.from("vacancy_applications").insert(row).select("id,created_at").single();
+      if(error){try{await deleteObject(stored.key);}catch(cleanupError){console.warn("Could not remove unlinked vacancy CV:",cleanupError.message||cleanupError);}throw error;}
+      let notificationSent=false;
+      if(String(process.env.RESEND_API_KEY||"").trim()){
+        const recipient=firstEnv("VACANCY_APPLICATIONS_EMAIL","ADMIN_EMAIL")||"info@cbenexus.co.ke";
+        const sender=firstEnv("RESEND_FROM_EMAIL")||"CBE Nexus <info@cbenexus.co.ke>";
+        const cvUrl=await createDownloadUrl(stored.key,fileName);
+        const esc=resourceEmailEscape;
+        const html="<div style=\"font-family:Arial,sans-serif;max-width:680px;margin:auto;line-height:1.6;color:#172033\"><h2>New CBE Nexus vacancy application</h2><p><b>Vacancy:</b> "+esc(vacancy.title)+"</p><p><b>Employer:</b> "+esc(vacancy.school)+"</p><p><b>Applicant:</b> "+esc(name)+"</p><p><b>Email:</b> "+esc(email)+"</p><p><b>Phone:</b> "+esc(phone)+"</p><p><b>Country:</b> "+esc(country)+"</p><p><b>Qualification:</b> "+esc(qualification)+"</p><p><b>Experience:</b> "+esc(experience)+"</p><p><b>Cover message:</b><br>"+esc(message||"Not provided")+"</p><p><a href=\""+esc(cvUrl)+"\">Download applicant CV / credentials</a> (private link expires in 30 minutes)</p><p>Application ID: "+esc(data.id)+"</p></div>";
+        const mail=await fetch("https://api.resend.com/emails",{method:"POST",headers:{"Authorization":"Bearer "+String(process.env.RESEND_API_KEY).trim(),"Content-Type":"application/json"},body:JSON.stringify({from:sender,to:[recipient],reply_to:email,subject:"New application: "+clean(vacancy.title,120)+" — "+name,html,text:"New CBE Nexus vacancy application\nVacancy: "+vacancy.title+"\nEmployer: "+vacancy.school+"\nApplicant: "+name+"\nEmail: "+email+"\nPhone: "+phone+"\nCountry: "+country+"\nQualification: "+qualification+"\nExperience: "+experience+"\nCV: "+cvUrl+"\nApplication ID: "+data.id})});
+        if(!mail.ok){const detail=await mail.text().catch(()=>"");console.warn("Vacancy application email notification failed:",mail.status,detail.slice(0,400));}else notificationSent=true;
+        const ackHtml="<p>Hello "+esc(name)+",</p><p>CBE Nexus has received your application for <b>"+esc(vacancy.title)+"</b> at "+esc(vacancy.school)+". Your application reference is <b>"+esc(data.id)+"</b>. Our team will review your submission and contact you using the details you provided.</p><p>Thank you,<br>CBE Nexus Careers</p>";
+        try{await fetch("https://api.resend.com/emails",{method:"POST",headers:{"Authorization":"Bearer "+String(process.env.RESEND_API_KEY).trim(),"Content-Type":"application/json"},body:JSON.stringify({from:sender,to:[email],subject:"We received your CBE Nexus application",html:ackHtml,text:"CBE Nexus received your application for "+vacancy.title+". Reference: "+data.id+". Our team will contact you using your supplied details."})});}catch(mailError){console.warn("Applicant acknowledgement email failed:",mailError.message||mailError);}
+      }else console.warn("Vacancy application saved, but email notifications are disabled because RESEND_API_KEY is not configured.");
+      sendJson(res,201,{ok:true,applicationId:data.id,notificationSent,message:"Application received by CBE Nexus."});return true;
+    }catch(error){console.error("CBE Nexus vacancy application submission failed:",error);sendJson(res,500,{ok:false,error:"We could not save your application. Please try again or contact info@cbenexus.co.ke."});return true;}
+  }
+  if(req.method==="GET"&&url.pathname==="/api/admin/vacancy-applications"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{const {data,error}=await supabase.from("vacancy_applications").select("id,vacancy_id,vacancy_title,employer,applicant_name,applicant_email,applicant_phone,applicant_country,qualification,experience,cover_message,cv_file_name,cv_storage_key,status,created_at").order("created_at",{ascending:false}).limit(300);if(error)throw error;const applications=await Promise.all((data||[]).map(async a=>({...a,cv_download_url:await createDownloadUrl(a.cv_storage_key,a.cv_file_name)})));sendJson(res,200,{ok:true,applications});return true;}catch(error){console.error("Admin vacancy applications lookup failed:",error);sendJson(res,500,{ok:false,error:"Could not load vacancy applications. Check the vacancy application database migration."});return true;}
+  }
   if(req.method==="POST"&&url.pathname==="/api/admin/vacancy"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}try{const item=await saveTeachingVacancy(JSON.parse((await readBody(req))||"{}"));sendJson(res,201,{ok:true,vacancy:item});}catch(error){sendJson(res,400,{ok:false,error:error.message||"Vacancy could not be saved."});}return true;}
   if(req.method==="POST"&&url.pathname==="/api/admin/vacancy-delete"){if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}const p=JSON.parse((await readBody(req))||"{}"),id=String(p.id||"").trim();if(!id){sendJson(res,400,{ok:false,error:"Vacancy ID is required."});return true;}if(supabaseConfigured){try{const {error}=await supabase.from("teaching_vacancies").update({status:"deleted",updated_at:new Date().toISOString()}).eq("id",id);if(!error){sendJson(res,200,{ok:true,deletedId:id});return true;}}catch(error){console.warn("Supabase vacancy delete failed:",error.message||error);}}const items=await readJsonStore("teaching-vacancies.json"),next=items.map(x=>x.id===id?{...x,status:"deleted",updatedAt:new Date().toISOString()}:x);await fs.writeFile(path.join(DATA_DIR,"teaching-vacancies.json"),JSON.stringify(next,null,2));sendJson(res,200,{ok:true,deletedId:id});return true;}
   if(req.method==="GET"&&url.pathname==="/api/ai-courses"){
