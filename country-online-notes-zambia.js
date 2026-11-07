@@ -125,6 +125,31 @@
       {q:"A laboratory has used batteries, paper towels and broken glass. Explain how each should be handled.",a:"Batteries go to an approved battery/e-waste collection point; clean paper towels may follow ordinary waste rules unless contaminated; broken glass goes into a designated sharps container.",worked:"Classify each waste stream and explain safe segregation; contaminated paper towels require the relevant hazardous-waste procedure.",explanation:"Disposal depends on material and contamination status."}
      ]
     }],
+    "Mathematics I":[{
+     id:"zambia-f1-maths1-numbers",title:"1.1 Numbers",lessons:"Zambia • Ordinary Level • Form 1 • Mathematics I • 2024 syllabus",
+     objectives:["Use number concepts and notation accurately.","Perform operations with numbers in practical contexts.","Apply place value, factors, multiples and divisibility where appropriate.","Explain and check numerical solutions."],
+     sections:[
+      {heading:"Numbers and their uses",body:"Numbers describe quantities, order, measurement and relationships. In practical work, identify whether a quantity is counted, measured, estimated or represented as a ratio. The Mathematics I pathway begins with Numbers, followed by Integers, Approximations and Estimation, Sets, Algebra, Matrices, Angles, Trigonometry and Statistics in the Form 1 syllabus."},
+      {heading:"Place value and numerical operations",body:"The value of a digit depends on its position. When adding or subtracting decimals, align decimal points. When multiplying or dividing, estimate first so that the final result can be checked for reasonableness. Use brackets and the conventional order of operations to avoid ambiguity."},
+      {heading:"Factors, multiples and divisibility",body:"A factor divides a number exactly; a multiple is obtained by multiplying a number by an integer. Prime factorisation expresses a composite number as a product of primes. The highest common factor (HCF) is the greatest common factor, while the lowest common multiple (LCM) is the smallest positive common multiple."}
+     ],
+     example:"Find the HCF and LCM of 18 and 24. Prime factors: 18 = 2 × 3²; 24 = 2³ × 3. HCF = 2 × 3 = 6. LCM = 2³ × 3² = 72.",
+     activity:"Choose three everyday quantities such as a price, a distance and a number of items. Explain whether each is counted or measured, then estimate and calculate a total.",
+     summary:["Numbers represent quantities, measurements and relationships.","Place value supports accurate calculations with whole numbers and decimals.","Prime factorisation can be used to determine HCF and LCM.","Estimate first and check whether a calculated answer is reasonable."],
+     curriculumContext:"Zambia Ministry of Education, Mathematics I Syllabus, Ordinary Level Forms 1–4 (2024), Form 1 begins with 1.1 Numbers. Mathematics I is distinct from Mathematics II.",
+     questions:[
+      {q:"Find the HCF of 36 and 60 using prime factorisation.",a:"12.",worked:"36=2²×3²; 60=2²×3×5. Common prime factors with lowest powers: 2²×3=12.",explanation:"For HCF use only common prime factors at their smallest powers."},
+      {q:"Find the LCM of 12 and 18.",a:"36.",worked:"12=2²×3; 18=2×3². LCM=2²×3²=36.",explanation:"For LCM include every prime factor at its greatest power."},
+      {q:"A school buys 24 exercise books at K8.50 each. Calculate the total cost.",a:"K204.00.",worked:"24×8.50 = 24×8 + 24×0.50 = 192 + 12 = K204.",explanation:"Show multiplication and include the currency unit."},
+      {q:"Round 48,763 to the nearest thousand.",a:"49,000.",worked:"The hundreds digit is 7, so increase the thousands digit from 8 to 9 and replace later digits with zeros.",explanation:"The next digit determines whether the rounding digit stays or increases."},
+      {q:"A learner calculates 7 + 3 × 4 = 40. Correct the working.",a:"19.",worked:"Multiplication first: 3×4=12; then 7+12=19.",explanation:"Multiplication takes precedence over addition unless brackets change the order."},
+      {q:"A bus travels 165 km in 3 hours at a constant average speed. Find its average speed.",a:"55 km/h.",worked:"Speed=distance÷time=165÷3=55 km/h.",explanation:"The unit follows from kilometres divided by hours."},
+      {q:"Explain why an estimate is useful before calculating 398 × 51.",a:"An estimate gives a reasonableness check; 400×50≈20,000, so a result far from 20,000 should be checked.",worked:"Round 398 to 400 and 51 to 50; calculate 20,000 as an approximate benchmark.",explanation:"Estimation helps identify arithmetic or input errors."},
+      {q:"Express 0.375 as a fraction in its simplest form.",a:"3/8.",worked:"0.375=375/1000. Divide numerator and denominator by 125 to obtain 3/8.",explanation:"A decimal can be written over a power of ten and simplified."},
+      {q:"A farmer packs 96 oranges equally into boxes of 8. How many boxes are needed?",a:"12 boxes.",worked:"96÷8=12.",explanation:"The division represents equal grouping."},
+      {q:"A learner says the HCF of two numbers is always greater than their LCM. Explain the error.",a:"The HCF cannot exceed the LCM for positive integers; the LCM is a common multiple and is at least as large as either number.",worked:"Use an example such as 12 and 18: HCF=6, LCM=36.",explanation:"Check general claims against definitions and numerical examples."}
+     ]
+    }],
     "Mathematics II":[{
      id:"zambia-f1-maths2-real-numbers",title:"1.1 Real Numbers",lessons:"Zambia • Ordinary Level • Form 1 • Mathematics II • 2024 syllabus",
      objectives:["Classify natural, whole, integer, rational and irrational numbers.","Represent rational numbers as fractions, terminating decimals or recurring decimals.","Compare and order real numbers.","Apply number properties and operations accurately."],
