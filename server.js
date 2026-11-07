@@ -2529,7 +2529,15 @@ async function serveStatic(req,res,url){
   }
   if(req.method==="GET" && url.pathname==="/sitemap.xml"){
     res.writeHead(200,{"Content-Type":"application/xml; charset=utf-8","Cache-Control":"public, max-age=3600"});
-    const xml=await seo.sitemap(req);const base=seo.base(req);let guideUrls="";try{const guides=JSON.parse(await fs.readFile(path.join(ROOT,"education-hub-articles.json"),"utf8"));guideUrls=guides.map(g=>`<url><loc>${base}/${g.slug}.html</loc><lastmod>${g.lastReviewed||"2026-11-01"}</lastmod></url>`).join("");}catch(e){console.error("Education guide sitemap error:",e.message||e)}
+    const xml=await seo.sitemap(req);const base=seo.base(req);let guideUrls="";try{
+      const guides=JSON.parse(await fs.readFile(path.join(ROOT,"education-hub-articles.json"),"utf8"));
+      const existing=new Set([...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>m[1]));
+      guideUrls=(Array.isArray(guides)?guides:[]).filter(g=>g&&/^[a-z0-9]+(?:-[a-z0-9]+)*$/i.test(String(g.slug||""))).map(g=>{
+        const loc=base+"/"+g.slug+".html";if(existing.has(loc))return "";
+        const reviewed=String(g.lastReviewed||"");const lastmod=/^\\d{4}-\\d{2}-\\d{2}$/.test(reviewed)?reviewed:"";
+        return "<url><loc>"+xmlEscape(loc)+"</loc>"+(lastmod?"<lastmod>"+lastmod+"</lastmod>":"")+"</url>";
+      }).join("");
+    }catch(e){console.error("Education guide sitemap error:",e.message||e)}
     res.end(xml.replace("</urlset>",guideUrls+"</urlset>"));
     return;
   }
