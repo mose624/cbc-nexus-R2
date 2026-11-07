@@ -2730,7 +2730,8 @@ async function serveStatic(req,res,url){
       const examItems=examNames.map(name=>{
         const detail=(countryProfile.exams||[]).find(item=>item&&normalizeExamName(item.name)===normalizeExamName(name))||{};
         const sub=[detail.level,detail.body].filter(Boolean).join(" — ");
-        return "<li><strong>"+escapeHtml(name)+"</strong>"+(sub?"<p>"+escapeHtml(sub)+"</p>":"")+"</li>";
+        const examPath="/global-exams/"+country.slug+"/"+String(name).normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+                return '<li><a href="'+examPath+'"><strong>'+escapeHtml(name)+'</strong></a>'+(sub?"<p>"+escapeHtml(sub)+"</p>":"")+"</li>";
       }).join("");
       const context=[["Education curriculum",countryProfile.curriculum],["Education system",countryProfile.system],["Responsible education authority",countryProfile.authority]].filter(item=>item[1]).map(item=>"<h3>"+escapeHtml(item[0])+"</h3><p>"+escapeHtml(item[1])+"</p>").join("");
       const examContent=examNames.length
