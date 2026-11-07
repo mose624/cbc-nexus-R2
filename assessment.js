@@ -1,6 +1,6 @@
 (() => {
   const QUIZ_KEY = "cbeQuizProgress";
-  const grades = ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"];
+  const grades = ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12","Form 1","Form 2","Form 3","Form 4","Form 5","Form 6","Class 1","Class 2","Class 3","Class 4","Class 5","Class 6","Class 7","Class 8","Class 9","Class 10","Class 11","Class 12","Year 1","Year 2","Year 3","Year 4","Year 5","Year 6","Year 7","Year 8","Year 9","Year 10","Year 11","Year 12","Year 13","Primary 1","Primary 2","Primary 3","Primary 4","Primary 5","Primary 6","Secondary 1","Secondary 2","Secondary 3","Secondary 4","Secondary 5","Secondary 6","S1","S2","S3","S4","S5","S6","JSS1","JSS2","JSS3","SS1","SS2","SS3","IGCSE","AS Level","A Level","IB MYP 1","IB MYP 2","IB MYP 3","IB MYP 4","IB MYP 5","IB DP Year 1","IB DP Year 2"];
   const bank = {
     Mathematics: [
       ["What is 7 × 8?",["54","56","64","48"],1,"Number","7 groups of 8 make 56."],
@@ -72,6 +72,11 @@
   }
 
   const learner = document.getElementById("quizLearnerInput");
+  const country = document.getElementById("quizCountryInput");
+  const curriculum = document.getElementById("quizCurriculumInput");
+  const initialParams = new URLSearchParams(window.location.search);
+  if (country && initialParams.get("country")) country.value = initialParams.get("country");
+  if (curriculum && initialParams.get("curriculum")) curriculum.value = initialParams.get("curriculum");
   const learnerId = document.getElementById("quizLearnerIdInput");
   const grade = document.getElementById("quizGradeInput");
   const subject = document.getElementById("quizSubjectInput");
@@ -107,7 +112,8 @@
   const questionSetterStatus = document.getElementById("questionSetterStatus");
   const setQuestionsList = document.getElementById("setQuestionsList");
 
-  // Populate the assessment Grade dropdown with Grade 1–12.
+  // Populate common national and international grade/class labels. The question bank is
+  // still scoped to the exact country + curriculum + level selected by the learner.
   // Clear existing options first so this remains safe if the page already has options.
   grade.innerHTML = "";
   grades.forEach((g) => {
@@ -116,10 +122,16 @@
     option.textContent = g;
     grade.appendChild(option);
   });
-  grade.value = grade.querySelector('option[value="Grade 7"]') ? "Grade 7" : grades[0];
+  grade.value = initialParams.get("level") && grades.includes(initialParams.get("level")) ? initialParams.get("level") : (grade.querySelector('option[value="Grade 7"]') ? "Grade 7" : grades[0]);
   // Subject options are initialized after gradeSubjects is declared below.
 
   // Keep the selected grade visible and usable whenever the learner changes it.
+  [country, curriculum].filter(Boolean).forEach((field) => field.addEventListener("change", () => {
+    refreshSubjectOptions();
+    refreshStrandOptions();
+    renderSetQuestions();
+    if (instructions) instructions.textContent = country.value + " · " + curriculum.value + " selected. Choose level and subject.";
+  }));
   grade.addEventListener("change", () => {
     refreshSubjectOptions();
     refreshStrandOptions();
@@ -447,7 +459,7 @@
   }
 
   function getAvailableQuestions(selectedGrade, selectedSubject) {
-    const gradeBank = window.CBENexusCBCBanks &&
+    const gradeBank = selectedCountry.toLowerCase() === "kenya" && selectedCurriculum.toLowerCase() === "kenya cbc/cbe" && window.CBENexusCBCBanks &&
       window.CBENexusCBCBanks.banks &&
       window.CBENexusCBCBanks.banks[selectedGrade] &&
       window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject];
@@ -697,13 +709,15 @@
   function refreshSubjectOptions() {
     if (!subject) return;
     const current = subject.value;
-    const gradeNumber = (value) => String(value == null ? "" : value).match(/\d+/)?.[0] || "";
+    const gradeNumber = (value) => String(value == null ? "" : value).toLowerCase().replace(/[^a-z0-9]/g, "");
     const normalizeSubject = (value) => String(value || "").toLowerCase().replace(/[^a-z0-9]/g, "");
     const baseList = subjectsForGrade(grade.value);
     // Include every subject that has published Admin Dashboard questions for this grade.
     // This changes only discoverability/filtering; saved question text and answers are untouched.
     const adminSubjects = (Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [])
       .filter((item) => item && item.published !== false &&
+        String(item.country || "Kenya").toLowerCase() === String(country && country.value || "Kenya").trim().toLowerCase() &&
+        String(item.curriculum || "Kenya CBC/CBE").toLowerCase() === String(curriculum && curriculum.value || "Kenya CBC/CBE").trim().toLowerCase() &&
         gradeNumber(item.grade) === gradeNumber(grade.value) &&
         String(item.subject || "").trim() &&
         String(item.question || "").trim() &&
@@ -760,7 +774,11 @@
       window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject];
 
     const adminQuestions = Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [];
+    const selectedCountry = String(country && country.value || "Kenya").trim();
+    const selectedCurriculum = String(curriculum && curriculum.value || "Kenya CBC/CBE").trim();
     const publishedSource = adminQuestions.filter((item) =>
+      String(item.country || "Kenya").toLowerCase() === selectedCountry.toLowerCase() &&
+      String(item.curriculum || "Kenya CBC/CBE").toLowerCase() === selectedCurriculum.toLowerCase() &&
       gradeNumber(item.grade) === gradeNumber(selectedGrade) &&
       normalizeSubject(item.subject) === normalizeSubject(selectedSubject) &&
       item.published !== false &&
@@ -786,6 +804,8 @@
     // admin bank, use only the exact matching subject bank for that grade.
     const gradeHasPublishedAdminQuestions = adminQuestions.some((item) =>
       item && item.published !== false &&
+      String(item.country || "Kenya").toLowerCase() === selectedCountry.toLowerCase() &&
+      String(item.curriculum || "Kenya CBC/CBE").toLowerCase() === selectedCurriculum.toLowerCase() &&
       gradeNumber(item.grade) === gradeNumber(selectedGrade) &&
       String(item.question || "").trim() &&
       Array.isArray(item.options) && item.options.length >= 4
@@ -799,6 +819,8 @@
     } else {
       const customBank = readCustomQuestions()
         .filter((item) =>
+          String(item.country || "Kenya").toLowerCase() === selectedCountry.toLowerCase() &&
+          String(item.curriculum || "Kenya CBC/CBE").toLowerCase() === selectedCurriculum.toLowerCase() &&
           gradeNumber(item.grade) === gradeNumber(selectedGrade) &&
           normalizeSubject(item.subject) === normalizeSubject(selectedSubject)
         )
@@ -899,6 +921,8 @@
     const items = readCustomQuestions();
     items.unshift({
       id: "custom-" + Date.now(),
+      country: country ? country.value.trim() : "Kenya",
+      curriculum: curriculum ? curriculum.value.trim() : "Kenya CBC/CBE",
       grade: grade.value,
       subject: subject.value,
       strand: strand ? strand.value : "All Topics",
