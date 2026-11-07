@@ -145,10 +145,10 @@ let interactiveQuestionMigrationPromise=null;
 let interactiveQuestionLastKnownGood=null;
 let publishedResourcesLastKnownGood=new Map();
 function interactiveQuestionToDb(q){
-  return {id:String(q.id),grade:String(q.grade||""),subject:String(q.subject||""),strand:String(q.strand||"All Topics")+(q.substrand?" — "+String(q.substrand):""),question:String(q.question||""),options:Array.isArray(q.options)?q.options:[],correct_index:Number(q.correctIndex),explanation:String(q.explanation||""),image_url:String(q.imageUrl||""),image_data:String(q.imageData||""),image_alt:String(q.imageAlt||q.question||""),published:q.published!==false,created_at:q.createdAt||new Date().toISOString(),updated_at:q.updatedAt||q.createdAt||new Date().toISOString()};
+  return {id:String(q.id),country:String(q.country||"Kenya"),curriculum:String(q.curriculum||"Kenya CBC/CBE"),grade:String(q.grade||""),subject:String(q.subject||""),strand:String(q.strand||"All Topics")+(q.substrand?" — "+String(q.substrand):""),question:String(q.question||""),options:Array.isArray(q.options)?q.options:[],correct_index:Number(q.correctIndex),explanation:String(q.explanation||""),image_url:String(q.imageUrl||""),image_data:String(q.imageData||""),image_alt:String(q.imageAlt||q.question||""),published:q.published!==false,created_at:q.createdAt||new Date().toISOString(),updated_at:q.updatedAt||q.createdAt||new Date().toISOString()};
 }
 function interactiveQuestionFromDb(q){
-  return {id:q.id,grade:q.grade,subject:q.subject,strand:q.strand||"All Topics",question:q.question,options:Array.isArray(q.options)?q.options:[],correctIndex:Number(q.correct_index),explanation:q.explanation||"",imageUrl:q.image_url||"",imageData:q.image_data||"",imageAlt:q.image_alt||q.question||"",published:q.published!==false,createdAt:q.created_at||null,updatedAt:q.updated_at||q.created_at||null};
+  return {id:q.id,country:q.country||"Kenya",curriculum:q.curriculum||"Kenya CBC/CBE",grade:q.grade,subject:q.subject,strand:q.strand||"All Topics",question:q.question,options:Array.isArray(q.options)?q.options:[],correctIndex:Number(q.correct_index),explanation:q.explanation||"",imageUrl:q.image_url||"",imageData:q.image_data||"",imageAlt:q.image_alt||q.question||"",published:q.published!==false,createdAt:q.created_at||null,updatedAt:q.updated_at||q.created_at||null};
 }
 let interactiveQuestionsCache = null;
 let interactiveQuestionsCacheAt = 0;
@@ -1109,7 +1109,7 @@ async function handleApi(req,res,url){
   // Public learner-facing question bank. Only published questions are exposed.
   if(req.method==="GET"&&url.pathname==="/api/interactive-questions"){
     const questions=await readInteractiveQuestionRows();
-    sendJson(res,200,{ok:true,questions:questions.filter(q=>q&&q.published!==false).map(q=>({id:q.id,grade:q.grade,subject:q.subject,strand:q.strand||"All Topics",question:q.question,options:q.options,correctIndex:Number(q.correctIndex),explanation:q.explanation||"",imageUrl:q.imageUrl||"",imageData:q.imageData||"",imageAlt:q.imageAlt||q.question||"",createdAt:q.createdAt||null}))});
+    sendJson(res,200,{ok:true,questions:questions.filter(q=>q&&q.published!==false).map(q=>({id:q.id,country:q.country||"Kenya",curriculum:q.curriculum||"Kenya CBC/CBE",grade:q.grade,subject:q.subject,strand:q.strand||"All Topics",question:q.question,options:q.options,correctIndex:Number(q.correctIndex),explanation:q.explanation||"",imageUrl:q.imageUrl||"",imageData:q.imageData||"",imageAlt:q.imageAlt||q.question||"",createdAt:q.createdAt||null}))});
     return true;
   }
   // Admin-only management endpoints for the isolated Interactive Questions module.
@@ -1123,7 +1123,9 @@ async function handleApi(req,res,url){
     if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
     try{
       const p=JSON.parse((await readBody(req))||"{}");
-      const grade=String(p.grade||"").trim();
+      const country=String(p.country||"Kenya").trim().slice(0,100)||"Kenya";
+      const curriculum=String(p.curriculum||"Kenya CBC/CBE").trim().slice(0,120)||"Kenya CBC/CBE";
+      const grade=String(p.grade||"").trim().slice(0,60);
       const subject=String(p.subject||"").trim().slice(0,100);
       const strand=String(p.strand||"All Topics").trim().slice(0,140)||"All Topics";
       const question=String(p.question||"").trim().slice(0,20000);
@@ -1135,19 +1137,19 @@ async function handleApi(req,res,url){
       const imageAlt=String(p.imageAlt||question).trim().slice(0,200);
       if(imageUrl&&!/^https:\/\//i.test(imageUrl)){sendJson(res,400,{ok:false,error:"Image URL must use HTTPS."});return true;}
       if(imageData&&(!/^data:image\/(?:png|jpeg|gif|webp|svg\+xml);base64,[A-Za-z0-9+/=\r\n]+$/.test(imageData)||imageData.length>1400000)){sendJson(res,400,{ok:false,error:"Image attachment must be a supported image under 1 MB."});return true;}
-      if(!/^Grade (?:[1-9]|1[0-2])$/.test(grade)){sendJson(res,400,{ok:false,error:"Choose a valid grade from Grade 1 to Grade 12."});return true;}
+      if(!grade||!subject){sendJson(res,400,{ok:false,error:"Choose a country, curriculum, level and subject."});return true;}
       if(!subject||!question||options.length!==4||options.some(x=>!x)||![0,1,2,3].includes(correctIndex)){sendJson(res,400,{ok:false,error:"Enter a subject, question, four answer options and a valid correct answer."});return true;}
       await ensureDataDir();
       const rows=await readJsonStore("interactive-questions.json");
       const normalized=question.toLowerCase().replace(/\s+/g," ");
-      let duplicate=rows.find(q=>q&&q.grade===grade&&String(q.subject||"").toLowerCase()===subject.toLowerCase()&&String(q.question||"").toLowerCase().replace(/\s+/g," ")===normalized);
+      let duplicate=rows.find(q=>q&&String(q.country||"Kenya").toLowerCase()===country.toLowerCase()&&String(q.curriculum||"Kenya CBC/CBE").toLowerCase()===curriculum.toLowerCase()&&q.grade===grade&&String(q.subject||"").toLowerCase()===subject.toLowerCase()&&String(q.question||"").toLowerCase().replace(/\s+/g," ")===normalized);
       if(!duplicate&&supabaseConfigured){
-        const {data:existing,error:duplicateError}=await supabase.from("interactive_questions").select("question").eq("grade",grade).eq("subject",subject);
+        const {data:existing,error:duplicateError}=await supabase.from("interactive_questions").select("question").eq("country",country).eq("curriculum",curriculum).eq("grade",grade).eq("subject",subject);
         if(duplicateError) throw duplicateError;
         duplicate=(existing||[]).find(q=>String(q.question||"").toLowerCase().replace(/\s+/g," ")===normalized);
       }
       if(duplicate){sendJson(res,409,{ok:false,error:"A matching question already exists for this grade and subject."});return true;}
-      const item={id:"iq-"+Date.now()+"-"+Math.random().toString(36).slice(2,8),grade,subject,strand,question,options,correctIndex,explanation,imageUrl,imageData,imageAlt,published:true,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};
+      const item={id:"iq-"+Date.now()+"-"+Math.random().toString(36).slice(2,8),country,curriculum,grade,subject,strand,question,options,correctIndex,explanation,imageUrl,imageData,imageAlt,published:true,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};
       if(supabaseConfigured){
         const {error}=await supabase.from("interactive_questions").insert(interactiveQuestionToDb(item));
         if(error) throw error;
