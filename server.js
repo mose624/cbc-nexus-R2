@@ -852,7 +852,15 @@ async function handleApi(req,res,url){
     const rows=await readJsonStore("scholarship-opportunities.json");await fs.writeFile(path.join(DATA_DIR,"scholarship-opportunities.json"),JSON.stringify(rows.filter(x=>String(x.id)!==id),null,2));
     sendJson(res,200,{ok:true,deletedId:id});return true;
   }
-  if(req.method==="GET"&&url.pathname==="/api/vacancies"){res.setHeader("Cache-Control","no-store, no-cache, must-revalidate");try{sendJson(res,200,{ok:true,vacancies:await getTeachingVacancies()});}catch(error){console.error("Teaching vacancies lookup error:",error);sendJson(res,500,{ok:false,error:"Teaching vacancies could not be loaded."});}return true;}
+  if(req.method==="GET"&&url.pathname==="/api/vacancies"){
+    res.setHeader("Cache-Control","no-store, no-cache, must-revalidate");
+    const requestOrigin=String(req.headers.origin||"");
+    const allowedVacancyOrigins=["https://cbenexus.com","https://www.cbenexus.com","https://cbenexus.co.ke","https://www.cbenexus.co.ke"];
+    if(allowedVacancyOrigins.includes(requestOrigin)){res.setHeader("Access-Control-Allow-Origin",requestOrigin);res.setHeader("Vary","Origin");}
+    try{sendJson(res,200,{ok:true,vacancies:await getTeachingVacancies()});}
+    catch(error){console.error("Teaching vacancies lookup error:",error);sendJson(res,500,{ok:false,error:"Teaching vacancies could not be loaded."});}
+    return true;
+  }
   if(req.method==="POST"&&url.pathname==="/api/vacancy-applications"){
     try{
       if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"The application service is not configured yet. Please contact CBE Nexus support."});return true;}
