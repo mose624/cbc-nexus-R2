@@ -680,7 +680,9 @@
     const questions = getAvailableQuestions(grade.value, subject.value);
     const questionTopics = Array.from(new Set(questions.map((item) => item[3]).filter(Boolean)));
     const adminTopics = (Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [])
-      .filter((item) => String(item.grade || "").match(/\d+/)?.[0] === String(grade.value || "").match(/\d+/)?.[0] &&
+      .filter((item) => String(item.country || "Kenya").toLowerCase() === String(country && country.value || "Kenya").trim().toLowerCase() &&
+        String(item.curriculum || "Kenya CBC/CBE").toLowerCase() === String(curriculum && curriculum.value || "Kenya CBC/CBE").trim().toLowerCase() &&
+        String(item.grade || "").toLowerCase().replace(/[^a-z0-9]/g, "") === String(grade.value || "").toLowerCase().replace(/[^a-z0-9]/g, "") &&
         String(item.subject || "").toLowerCase().replace(/[^a-z0-9]/g, "") === String(subject.value || "").toLowerCase().replace(/[^a-z0-9]/g, "") &&
         item.published !== false)
       .map((item) => String(item.strand || "").trim())
@@ -1128,7 +1130,7 @@
     }
     const selectedBank = getGradeQuestionBank(grade.value, subject.value);
     if (!selectedBank.length) {
-      status.textContent = "No question bank is available for " + grade.value + " — " + subject.value + (strand && strand.value !== "All Topics" ? " — " + strand.value : "") + ". Please choose another topic or subject.";
+      status.textContent = "No published questions are available yet for " + (country ? country.value : "Kenya") + " · " + (curriculum ? curriculum.value : "Kenya CBC/CBE") + " · " + grade.value + " · " + subject.value + (strand && strand.value !== "All Topics" ? " · " + strand.value : "") + ". Ask an administrator to publish questions for this exact curriculum and level.";
       questionsBox.innerHTML = "";
       submitButton.disabled = true;
       return;
