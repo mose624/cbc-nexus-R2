@@ -169,7 +169,7 @@ function renderCountry(){
  portalNav.classList.add("gs-country-portal-nav");portalNav.setAttribute("aria-label","Country education and career dashboard");portalNav.replaceChildren();
  const countryQuery=encodeURIComponent(c.name);
  const portalItems=[
-  {label:"📘 Notes & Learning Resources",url:"/resources.html?country="+countryQuery+"&type=notes"},
+  {label:"📘 Notes & Learning Resources",url:"/resource-category.html?type=Notes&country="+countryQuery},
   {label:"🏛️ National Examinations",url:"#exams"},
   {label:"📚 Curriculum & Syllabus",url:"#curriculum"},
   {label:"📝 Past National Exam Papers",url:"/resources.html?country="+countryQuery+"&type=past-papers"},
@@ -235,7 +235,8 @@ function renderCountry(){
   card.href=item.type==="quizzes"?"/interactive-questions.html?country="+countryQuery:
    item.type==="exam-resources"?"#papers":
    item.type==="curriculum"?"#curriculum":
-   "/resources.html?country="+countryQuery+"&type="+encodeURIComponent(item.type);
+   item.type==="notes"?"/resource-category.html?type=Notes&country="+countryQuery:
+   "/resource-category.html?type="+encodeURIComponent(item.type)+"&country="+countryQuery;
   const icon=node("span","gs-learning-icon gs-learning-icon-"+item.tone);icon.textContent=item.icon;icon.setAttribute("aria-hidden","true");
   const title=node("strong");title.textContent=item.title;
   const desc=node("span","gs-learning-description");desc.textContent=item.desc;
