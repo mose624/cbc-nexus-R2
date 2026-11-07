@@ -1119,6 +1119,44 @@ async function handleApi(req,res,url){
     sendJson(res,200,{ok:true,questions:questions.filter(Boolean)});
     return true;
   }
+  if(req.method==="POST"&&url.pathname==="/api/admin/interactive-questions/generate"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    try{
+      const p=JSON.parse((await readBody(req))||"{}");
+      const country=String(p.country||"").trim().slice(0,100), curriculum=String(p.curriculum||"").trim().slice(0,120), grade=String(p.grade||"").trim().slice(0,60), subject=String(p.subject||"").trim().slice(0,100), topic=String(p.topic||"All syllabus topics").trim().slice(0,180);
+      const count=Math.max(1,Math.min(10,Number(p.count)||5));
+      if(!country||!curriculum||!grade||!subject){sendJson(res,400,{ok:false,error:"Select country, curriculum, level and subject first."});return true;}
+      const apiKey=String(process.env.OPENAI_API_KEY||"").trim();
+      if(!apiKey){sendJson(res,503,{ok:false,error:"AI generation is not configured. Add OPENAI_API_KEY to Render environment variables."});return true;}
+      const model=String(process.env.OPENAI_MODEL||"gpt-6-luna").trim();
+      const messages=[
+        {role:"system",content:"You are an expert international school assessment writer. Generate original, curriculum-aligned multiple-choice questions only. Do not claim questions are past-paper questions. Create higher-order questions testing application, analysis, evaluation and problem-solving, not mere recall. Each item must have exactly four plausible options, exactly one correct answer, and a clear explanation. Avoid ambiguity, factual errors and duplicate questions. If exact syllabus detail is not supplied, use broadly accepted age-appropriate subject knowledge and label the topic as a suggested topic; do not invent official syllabus claims. Return valid JSON only: {questions:[{question:string,options:[string,string,string,string],correctIndex:0|1|2|3,explanation:string,topic:string,difficulty:"Moderate"|"Challenging"}]}."},
+        {role:"user",content:JSON.stringify({task:"Create "+count+" original high-order MCQs",country,curriculum,level:grade,subject,topic,requirements:"Age-appropriate, culturally neutral, accurate, four options, one answer, explanation. Spread difficulty across moderate and challenging."})}
+      ];
+      const https=require("https");
+      const result=await new Promise((resolve,reject)=>{const req=https.request("https://api.openai.com/v1/chat/completions",{method:"POST",headers:{"Authorization":"Bearer "+apiKey,"Content-Type":"application/json"}},res=>{let data="";res.on("data",d=>data+=d);res.on("end",()=>{try{resolve({status:res.statusCode||500,data:JSON.parse(data)})}catch{resolve({status:res.statusCode||500,data:{}})}})});req.on("error",reject);req.write(JSON.stringify({model,messages,response_format:{type:"json_object"},temperature:0.4}));req.end();});
+      if(result.status<200||result.status>=300)throw new Error("AI question generation service returned an error.");
+      const raw=String(result.data?.choices?.[0]?.message?.content||"");let parsed;try{parsed=JSON.parse(raw)}catch{throw new Error("AI returned invalid question data.");}
+      const generated=Array.isArray(parsed.questions)?parsed.questions.slice(0,count):[];
+      if(!generated.length)throw new Error("No valid MCQs were generated.");
+      await ensureDataDir();const rows=await readJsonStore("interactive-questions.json");const saved=[];
+      for(const q of generated){
+        const question=String(q.question||"").trim(),options=Array.isArray(q.options)?q.options.map(x=>String(x||"").trim()):[],correctIndex=Number(q.correctIndex);
+        if(!question||options.length!==4||options.some(x=>!x)||![0,1,2,3].includes(correctIndex)||!String(q.explanation||"").trim())continue;
+        const norm=question.toLowerCase().replace(/\\s+/g," ");
+        if(rows.some(x=>x&&String(x.country||"").toLowerCase()===country.toLowerCase()&&String(x.curriculum||"").toLowerCase()===curriculum.toLowerCase()&&x.grade===grade&&String(x.subject||"").toLowerCase()===subject.toLowerCase()&&String(x.question||"").toLowerCase().replace(/\\s+/g," ")===norm))continue;
+        const item={id:"iq-"+Date.now()+"-"+Math.random().toString(36).slice(2,8),country,curriculum,grade,subject,strand:String(q.topic||topic).slice(0,140),question,options,correctIndex,explanation:String(q.explanation).slice(0,2000),imageUrl:"",imageData:"",imageAlt:question,published:true,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),difficulty:String(q.difficulty||"Challenging")};
+        if(supabaseConfigured){const {error}=await supabase.from("interactive_questions").insert(interactiveQuestionToDb(item));if(error)throw error;}
+        rows.unshift(item);saved.push(item);
+      }
+      if(!saved.length)throw new Error("Generated questions were duplicates or failed validation. Try again with a different topic.");
+      await fs.writeFile(path.join(DATA_DIR,"interactive-questions.json"),JSON.stringify(rows.slice(0,5000),null,2));
+      const known=Array.isArray(interactiveQuestionLastKnownGood)?interactiveQuestionLastKnownGood:[];
+      interactiveQuestionLastKnownGood=[...saved,...known].slice(0,5000);
+      sendJson(res,201,{ok:true,generated:saved.length,questions:saved,message:"Generated MCQs saved to the selected question bank."});
+    }catch(error){console.error("MCQ generation error:",error);sendJson(res,500,{ok:false,error:error.message||"MCQ generation failed."});}
+    return true;
+  }
   if(req.method==="POST"&&url.pathname==="/api/admin/interactive-questions"){
     if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
     try{
