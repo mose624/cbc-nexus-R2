@@ -383,8 +383,20 @@ if(val('cvAchievements'))html+='<h3>Selected Achievements</h3><ul>'+lines(val('c
 if(val('cvProfessionalDev'))html+='<h3>Professional Development</h3><ul>'+lines(val('cvProfessionalDev'))+'</ul>';
 if(val('cvLanguages'))html+='<h3>Languages</h3><p>'+escapeHtml(val('cvLanguages')).replace(/\n/g,'<br>')+'</p>';
 if(val('cvReferees'))html+='<h3>Professional Referees</h3><ul>'+lines(val('cvReferees'))+'</ul>';
-if(val('cvVacancy'))html+='<div style="margin-top:20px;padding:10px;background:#f8fafc;font-size:9px;color:#667085"><strong>Tailoring note:</strong> This CV was prepared for a specific vacancy using only information supplied by the candidate. Verify all details before submission.</div>';
-$('cvPreview').innerHTML=html;$('builderStatus').textContent='CV preview generated. Review every statement for accuracy before submitting.';score();$('cvPreviewSection').scrollIntoView({behavior:'smooth',block:'start'});return true}
+let alignmentMessage='';
+if(val('cvVacancy')){
+ const source=val('cvVacancy');
+ const evidence=[val('cvProfile'),val('cvEducation'),val('cvExperience'),val('cvSubjects'),val('cvSkills'),val('cvLicence'),val('cvAchievements'),val('cvProfessionalDev')].join(' ').toLowerCase();
+ const stop=new Set(['about','above','across','after','all','also','and','any','are','based','be','because','before','being','below','between','both','can','candidate','career','carry','closing','date','deliver','description','develop','duties','each','education','employer','employment','ensure','essential','experience','for','from','full','have','having','how','in','include','including','into','is','job','knowledge','least','level','looking','must','new','not','of','on','one','only','or','other','our','over','per','please','position','preferred','provide',' role','role','school','should','skills','such','team','that','the','their','them','then','there','these','this','those','through','to','under','use','using','will','with','work','working','you','your']);
+ const words=[...new Set((source.toLowerCase().match(/[a-z][a-z+#.-]{2,}/g)||[]).filter(w=>!stop.has(w)&&!/^20\\d\\d$/.test(w)))];
+ const matched=words.filter(w=>evidence.includes(w)).slice(0,18);
+ const unmatched=words.filter(w=>!evidence.includes(w)).slice(0,12);
+ if(matched.length)html+='<h3>Role-Specific Skills & Vacancy Alignment</h3><p>'+matched.map(escapeHtml).join(' • ')+'</p>';
+ alignmentMessage=' Vacancy keywords supported by your supplied information: '+(matched.length?matched.join(', '):'none detected')+'.';
+ if(unmatched.length)alignmentMessage+=' Review these vacancy terms and add truthful evidence only if they genuinely apply to you: '+unmatched.join(', ')+'.';
+ html+='<div style="margin-top:16px;padding:9px;background:#f8fafc;font-size:9px;color:#667085"><strong>Tailoring note:</strong> Vacancy information was used to tailor this CV. Only keywords also supported by your supplied qualifications or experience are shown as candidate strengths. Check all details before submission.</div>';
+}
+$('cvPreview').innerHTML=html;$('builderStatus').textContent='CV preview generated. Vacancy details have been checked against your profile and relevant supported keywords added.'+alignmentMessage+' Review every statement for accuracy before submitting.';score();$('cvPreviewSection').scrollIntoView({behavior:'smooth',block:'start'});return true}
 $('generateCv').addEventListener('click',generate);
 $('printCv').addEventListener('click',()=>{if($('cvPreview').querySelector('.empty-preview')){generate();if($('cvPreview').querySelector('.empty-preview'))return}window.print()});
 $('clearCv').addEventListener('click',()=>{setTimeout(()=>{$('cvForm').reset();document.querySelectorAll('.check-grid input').forEach(x=>x.checked=false);$('cvPreview').innerHTML='<div class="empty-preview">Your CV preview will appear here.<br><br>Fill in the builder above and click <strong>Generate CV Preview</strong>.</div>';$('builderStatus').textContent='';score()},50)});
