@@ -124,6 +124,8 @@
     try {
       await request(api, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload)});
       form.reset();
+      $("iqAdminCountry").value = payload.country;
+      $("iqAdminCurriculum").value = payload.curriculum;
       $("iqAdminGrade").value = payload.grade;
       populateSubjects(payload.subject);
       $("iqAdminCorrect").value = "0";
