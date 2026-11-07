@@ -41,6 +41,5 @@
  Q("A research team compares pressure at the same depth in fresh water and seawater. Predict the result and explain what measurement would strengthen the conclusion. [3 marks]","Seawater generally has slightly greater density than fresh water, so pressure is slightly greater at the same depth. Measure each liquid’s density and record pressure at the same depth and temperature, with repeats.","Apply p = ρgh. Control depth and g; measure density and pressure directly; repeat measurements.","Avoid giving a numerical difference unless actual density measurements are supplied.","Investigation and prediction",3,["1 mark: seawater pressure slightly greater","1 mark: density explanation","1 mark: controlled measurement/repeats"])
  ];
  lesson.questionSetVersion="25-curated-kenya-physics-pressure-v1";
- lesson.questionNotice="These 25 questions are original CBE Nexus examiner-style practice questions. They are not reproduced from, or claimed to be, official KNEC past examination papers.";
- lesson.assessmentMix={"Higher-order reasoning":5,"Investigation and evaluation":5,"Calculation and problem-solving":10,"Application and explanation":5};
+ lesson.questionNotice="These 30 questions are original CBE Nexus examiner-style practice questions. They are not reproduced from, or claimed to be, official KNEC past examination papers.";
 })();
