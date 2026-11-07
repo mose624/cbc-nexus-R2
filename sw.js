@@ -1,4 +1,4 @@
-const CACHE_NAME = "cbe-nexus-speed-v13";
+const CACHE_NAME = "cbe-nexus-speed-v14";
 const STATIC_EXTENSIONS = /\.(?:css|js|png|jpg|jpeg|webp|svg|ico|woff2?)$/i;
 const HTML_CACHE = "cbe-nexus-pages-v13";
 const PUBLIC_PAGE_CACHE = [
@@ -112,6 +112,23 @@ self.addEventListener("fetch", (event) => {
 
   if (request.mode === "navigate" && !isPrivateOrDynamic(url) && url.pathname.endsWith(".html")) {
     event.respondWith(cachePublicPage(request));
+    return;
+  }
+
+  // JavaScript must be network-first so country dashboards cannot alternate between stale and current code.
+  if (/\\.js$/i.test(url.pathname)) {
+    event.respondWith((async () => {
+      const cache = await caches.open(CACHE_NAME);
+      try {
+        const response = await fetch(request, { cache: "no-store" });
+        if (response.ok) await cache.put(request, response.clone());
+        return response;
+      } catch (error) {
+        const cached = await cache.match(request);
+        if (cached) return cached;
+        throw error;
+      }
+    })());
     return;
   }
 
