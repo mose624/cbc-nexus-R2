@@ -8,20 +8,21 @@
   authority:"Malawi Institute of Education (MIE) • Ministry of Education • Malawi National Examinations Board (MANEB)",
 
   revisionCoverage:{
-   purpose:"Full examination revision across subjects and examinable classes, not a four-science-only resource.",
-   classLevels:[
-    {level:"Forms 1–2",stage:"Lower secondary",status:"2025 framework subject matrix identified; draft revised syllabuses were under validation in March 2026. Verify the learner's cohort before assigning final topic order."},
-    {level:"Forms 3–4",stage:"Upper secondary",status:"Include the complete MSCE preparation content and cumulative concepts from earlier forms, according to the approved subject syllabus for the examination cohort."},
-    {level:"Forms 5–6",stage:"Advanced level",status:"Advanced-level pathway is identified in the 2025 framework; add its subjects and syllabuses as a distinct revision level, not as MSCE content."}
+   purpose:"Four core revision subjects only: Biology, Chemistry, Mathematics and Physics. Every subject is organised by the learner's examinable class and syllabus, not by a single starter lesson.",
+   subjects:{
+    Biology:{forms:["Forms 1–2: Biology concepts within Integrated Science, following the approved lower-secondary syllabus","Forms 3–4: Biology syllabus and MSCE examination preparation","Forms 5–6: Biology in the STEM / relevant advanced-level pathway"],coverage:"All examinable topics, practical skills, diagrams, data interpretation, structured responses and examination questions."},
+    Chemistry:{forms:["Forms 1–2: Chemistry concepts within Integrated Science; separate Chemistry elective where offered under the applicable syllabus","Forms 3–4: Chemistry syllabus and MSCE examination preparation","Forms 5–6: Chemistry in the STEM / relevant advanced-level pathway"],coverage:"All examinable topics, equations, calculations, practical chemistry, observations, explanations and examination questions."},
+    Mathematics:{forms:["Forms 1–2: Mathematics","Forms 3–4: Mathematics and MSCE examination preparation","Forms 5–6: Mathematics where included in the applicable advanced-level pathway"],coverage:"All examinable strands, methods, worked calculations, proofs, graphs, modelling and examination questions."},
+    Physics:{forms:["Forms 1–2: Physics concepts within Integrated Science; separate Physics elective where offered under the applicable syllabus","Forms 3–4: Physics syllabus and MSCE examination preparation","Forms 5–6: Physics in the STEM / relevant advanced-level pathway"],coverage:"All examinable topics, formulae, derivations, calculations, practical investigations, graphs and examination questions."}
+   },
+   levels:[
+    {level:"Forms 1–2",stage:"Lower secondary",status:"Use the approved syllabus for the learner's cohort. Biology, Chemistry and Physics concepts may be integrated in lower-secondary science; separate Chemistry and Physics electives are listed in the 2025 framework."},
+    {level:"Forms 3–4",stage:"Upper secondary / MSCE",status:"Provide full subject revision for the four subjects where selected and examinable. STEM pathway framework lists Mathematics, Biology, Physics and Chemistry as core subjects."},
+    {level:"Forms 5–6",stage:"Advanced level",status:"Provide separate advanced-level revision for the four subjects only where included in the learner's chosen pathway and approved syllabus."}
    ],
-   lowerSecondaryCore:["Mathematics","Chichewa","English and Sign Language","Social Studies (Life Skills, Geography, History and Civics)","Technical Studies (Material Science, Technical and Computer-aided Drawing, ICT)","Integrated Science (Sports Science, Agriculture and Biology)"],
-   lowerSecondaryElectives:["Business and Financial Studies","Creative Arts (Visual and Performing Arts)","Foreign Languages (French, Kiswahili, Arabic, Mandarin Chinese and Portuguese)","Sign Language","Religious and Moral Education","Islamic Education","Christian Education","Carpentry and Joinery","Welding and Fabrication","Human Ecology (Fashion and Fabrics, Food and Nutrition)","Physical Education","Sports and Recreation","Media Technology","Chemistry","Physics"],
-   upperSecondaryPathways:["Arts and Sports Science","Social Sciences and Humanities","Science, Technology, Engineering and Mathematics (STEM)","Technical, Entrepreneurial, Vocational Education and Training (TEVET)"],
-   examRevisionRule:"For MSCE, revise all subjects the learner is registered for, including English and Mathematics where required by the applicable MANEB rules. The official MANEB page states that MSCE is the final secondary examination and requires passes in five or six subjects including English, with credit thresholds. Subject entry and cohort-specific syllabus must be checked with MANEB.",
-   sequenceRule:"Do not invent topic order. Populate each subject and class from the approved MIE syllabus and the MANEB examination syllabus/model papers that apply to the candidate's cohort."
+   revisionFeatures:["Complete class-by-class syllabus checklist","Topic and subtopic notes in official order","Diagrams, graphs, tables and labelled practical apparatus","Worked examples and step-by-step calculations","At least 25 topic-specific practice questions per chapter as content is authored","Model answers, explanations and mark-by-mark marking points","Past-paper questions clearly identified by examination, year and paper; adapted and original questions labelled separately"],
+   sequenceRule:"Do not invent topic order. Populate each subject and class from the approved MIE syllabus and the MANEB examination syllabus/model papers applicable to the learner's cohort. Where a current syllabus is still under validation, label the content provisional rather than presenting it as the final official sequence."
   },
-  source:"https://mie.edu.mw/downloads/",
-  exam:"Malawi School Certificate of Education (MSCE), administered by MANEB, is the final secondary-school examination. Learners should confirm the syllabus and approved learning materials applicable to their examination cohort.",
   curriculumAuditStatus:"official-framework-2025-and-reform-process-verified-subject-sequences-pending",
   notice:"MIE published the Curriculum and Assessment Framework for Schools and Colleges in Malawi in July 2025. In March 2026, MIE reported validation work on draft revised lower-secondary (Forms 1–2) syllabuses. Therefore, these four starter lessons are explicitly supplementary bridging modules, not a claim about the first official unit or complete 2026 topic sequence. Use the MIE/Ministry-approved syllabus and MANEB guidance applicable to the learner's cohort. Do not mix old and revised syllabus cohorts.",
   verifiedCurriculumSequence:{
