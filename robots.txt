@@ -31,7 +31,7 @@ Disallow: /admin
 Disallow: /upload.html
 Disallow: /backend-data/
 
-Sitemap: https://cbenexus.com/sitemap.xml
+Sitemap: https://cbenexus.com/sitemap-index.xml\nSitemap: https://cbenexus.com/sitemap.xml
 
 # Additional AI answer/search crawlers may access public educational content.
 User-agent: ClaudeBot
