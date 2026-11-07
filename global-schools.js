@@ -236,6 +236,8 @@ function renderCountry(){
   {icon:"🏛",tone:"blue",title:"National Exam Resources",desc:"Explore this country's examinations and revision-paper links",type:"exam-resources"},
   {icon:"▦",tone:"teal",title:"Curriculum & Syllabuses",desc:"Explore national curriculum and school programmes",type:"curriculum"}
  ];
+ const notesRolloutCountries=["Kenya","Ghana","Nigeria","Uganda","Tanzania","South Africa"];
+ if(!notesRolloutCountries.includes(c.name))resourceItems.splice(0,4,{icon:"▤",tone:"teal",title:"Online Notes",desc:"Country-specific Mathematics and science notes are being prepared. Current rollout: Kenya, Ghana, Nigeria, Uganda, Tanzania and South Africa.",type:"notes"});
  resourceItems.forEach(item=>{
   const card=node("a","gs-learning-card");
   card.href=item.type==="subject-notes"?"/country-online-notes.html?country="+countryQuery+"&subject="+encodeURIComponent(item.subject):
