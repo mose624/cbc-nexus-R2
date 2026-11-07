@@ -76,7 +76,8 @@
   const curriculum = document.getElementById("quizCurriculumInput");
   const initialParams = new URLSearchParams(window.location.search);
   if (country && initialParams.get("country")) country.value = initialParams.get("country");
-  if (curriculum && initialParams.get("curriculum")) curriculum.value = initialParams.get("curriculum");
+  if (curriculum && initialParams.has("curriculum")) curriculum.value = initialParams.get("curriculum");
+  else if (country && country.value.trim().toLowerCase() !== "kenya" && curriculum) curriculum.value = "";
   const learnerId = document.getElementById("quizLearnerIdInput");
   const grade = document.getElementById("quizGradeInput");
   const subject = document.getElementById("quizSubjectInput");
