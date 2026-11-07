@@ -2337,7 +2337,16 @@ async function notifyIndexNow(req, urls){
 }
 async function buildBlogRss(req){
   const base=seo.base(req).replace(/\/$/,"");
-  const posts=await getBlogPosts(false);
+  // getBlogPosts is scoped inside handleApi; load published posts here directly.
+  let posts=[];
+  if(supabaseConfigured){
+    const {data,error}=await supabase.from("blog_posts").select("title,slug,excerpt,content,author,category,published_at,created_at").eq("status","published").order("created_at",{ascending:false}).limit(500);
+    if(error)throw error;
+    posts=(data||[]).map(p=>({title:p.title,slug:p.slug,excerpt:p.excerpt||"",content:p.content||"",author:p.author||"CBE Nexus",category:p.category||"Education",publishedAt:p.published_at,createdAt:p.created_at}));
+  }else{
+    const rows=await readJsonStore("blog-posts.json");
+    posts=rows.filter(p=>p.status==="published");
+  }
   const items=posts.slice(0,50).map(p=>{
     const link=base+"/blog-article.html?slug="+encodeURIComponent(String(p.slug||""));
     const date=p.publishedAt||p.createdAt||new Date().toISOString();
