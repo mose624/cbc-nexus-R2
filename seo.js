@@ -253,7 +253,7 @@ async function sitemap(req){
   "/university-course-catalogue.html","/technical-vocational-catalogue.html","/tvet-colleges.html",
   "/teacher-training-colleges.html","/kmtc.html","/technical-institutions.html","/higher-education-jobs.html",
   "/scholarships-opportunities.html","/international-teaching-jobs.html","/professional-cv-writing.html",
-  "/ai-training.html","/school-directory.html","/international-curriculum.html","/cambridge-study-notes.html","/pearson-study-notes.html","/ib-comprehensive-study-guides.html","/ib-myp-study-notes.html","/country-online-notes.html","/igcse.html",
+  "/ai-training.html","/school-directory.html","/international-curriculum.html","/cambridge-study-notes.html","/pearson-study-notes.html","/ib-comprehensive-study-guides.html","/ib-myp-study-notes.html","/country-online-notes.html","/international-subjects/pearson-biology.html","/international-subjects/pearson-chemistry.html","/international-subjects/pearson-physics.html","/international-subjects/pearson-mathematics.html","/igcse.html",
   "/cambridge-international.html","/ib.html","/pearson-edexcel.html","/a-levels.html","/o-levels.html",
   "/cbc-notes-kenya","/cbc-exams-kenya","/kjsea-revision",
   "/free-interactive-questions","/daily-quiz","/grade-9-kjsea-revision-questions","/grade-10-cbe-practice-questions",
