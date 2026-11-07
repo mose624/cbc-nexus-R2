@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Country Online Notes | CBE Nexus</title>
+<meta name="description" content="Read country-specific curriculum notes online with explanations, worked examples, practical activities and revision questions.">
+<style>
+:root{--red:#c62828;--navy:#12345b;--line:#dce4eb;--ink:#182432;--soft:#f4f8fc}
+*{box-sizing:border-box}body{margin:0;background:#f3f6fa;color:var(--ink);font-family:Arial,sans-serif;line-height:1.65}
+header{background:var(--red);color:#fff;padding:15px max(18px,calc((100% - 1180px)/2));display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+header a{color:#fff;text-decoration:none;font-weight:800}.brand{font-size:21px}.brand small{display:block;font-size:11px}
+main{max-width:1180px;margin:auto;padding:24px 18px 55px}.hero,.panel,.note{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:0 3px 12px #142b4408}
+.hero{background:linear-gradient(120deg,#eaf4ff,#fff);border-top:5px solid var(--red)}h1{margin:4px 0 8px;line-height:1.2}.muted{color:#647386}.eyebrow{color:var(--red);font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+.controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}label{font-size:13px;font-weight:800}select{display:block;width:100%;padding:12px;border:1px solid #cbd5df;border-radius:8px;margin-top:5px;background:#fff;font:inherit}
+.layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:16px;align-items:start}.chapter-list{position:sticky;top:12px}.chapter-list button{display:block;width:100%;text-align:left;padding:11px;margin:6px 0;border:1px solid var(--line);background:#f8fafc;border-radius:8px;font-weight:700;cursor:pointer;color:var(--navy)}.chapter-list button.active{background:#eaf4ff;border-color:#6fa6d6}
+.note h2{margin-top:4px;color:var(--navy)}.note h3{margin:22px 0 8px;color:#194c73}.note ul,.note ol{padding-left:24px}.callout{background:#fff8df;border-left:4px solid #e0b52c;padding:12px 15px;border-radius:6px;margin:14px 0}.example{background:#eff8f1;border-left:4px solid #31945a;padding:13px 15px;border-radius:6px;margin:14px 0}.diagram{background:#f7f9fc;border:1px dashed #9eafbf;border-radius:9px;padding:14px;text-align:center;font-family:monospace;white-space:pre-wrap;line-height:1.6}
+.question{padding:12px 0;border-bottom:1px solid var(--line)}.answer{color:#17623c;font-weight:700}.status{padding:12px;background:#fff4db;border:1px solid #ead08b;border-radius:8px}
+@media(max-width:760px){.layout{grid-template-columns:1fr}.chapter-list{position:static}.controls{grid-template-columns:1fr}}
+</style></head><body>
+<header><a class="brand" href="/global-schools.html">CBE Nexus<small>Connecting learners to excellence</small></a><a href="/global-schools.html">← Global Schools</a></header>
+<main><section class="hero"><div class="eyebrow">Country curriculum • Online learning</div><h1 id="pageTitle">Country Online Notes</h1><p id="intro" class="muted">Choose a country, level and subject to read chapter-by-chapter notes.</p>
+<div class="controls"><label>Country<select id="country"></select></label><label>Level<select id="level"></select></label><label>Subject<select id="subject"></select></label></div></section>
+<div class="layout"><aside class="panel chapter-list"><h3>Chapters</h3><div id="chapters"></div></aside><article id="reader" class="note" aria-live="polite"><p>Select a chapter to begin.</p></article></div></main>
+<script src="/country-online-notes-data.js?v=20261107-01"></script><script src="/country-online-notes.js?v=20261107-01"></script></body></html>
