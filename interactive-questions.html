@@ -38,6 +38,7 @@
     .iq-grade p{margin:0;color:var(--portal-muted);font-size:.93rem;line-height:1.5}
     .iq-grade strong{margin-top:auto;padding-top:15px;color:#14723a;font-size:.92rem}
     .iq-tools{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:12px;margin:15px 0}
+    .iq-global-selectors{grid-template-columns:repeat(3,minmax(0,1fr))}
     .iq-tools input,.iq-tools select{width:100%;min-height:48px;border:1px solid #cbd5d1;border-radius:10px;background:#fff;padding:11px 13px;color:#17202a;font:inherit}
     .iq-tools input:focus,.iq-tools select:focus{outline:3px solid #16803d25;border-color:#16803d}
     .iq-subject-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
@@ -55,7 +56,8 @@
     .iq-bottom h2{margin:0 0 5px;font-size:1.25rem}.iq-bottom p{margin:0;color:#425148}
     .iq-footer{text-align:center;padding:24px 10px 0;color:#65716a;font-size:.9rem}
     @media(max-width:850px){.iq-hero{grid-template-columns:1fr}.iq-grade-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.iq-subject-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media(max-width:560px){.iq-wrap{width:calc(100% - 20px);margin:12px auto 30px}.iq-nav{align-items:flex-start}.iq-navlinks{width:100%}.iq-navlinks a{flex:1;justify-content:center;font-size:.85rem;padding:9px 7px}.iq-hero{padding:22px 17px;border-radius:15px}.iq-grade-grid,.iq-subject-grid,.iq-steps{grid-template-columns:1fr}.iq-grade{min-height:145px}.iq-tools{grid-template-columns:1fr}.iq-subject{min-height:72px}}
+    @media(max-width:850px){.iq-global-selectors{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:560px){.iq-global-selectors{grid-template-columns:1fr}.iq-wrap{width:calc(100% - 20px);margin:12px auto 30px}.iq-nav{align-items:flex-start}.iq-navlinks{width:100%}.iq-navlinks a{flex:1;justify-content:center;font-size:.85rem;padding:9px 7px}.iq-hero{padding:22px 17px;border-radius:15px}.iq-grade-grid,.iq-subject-grid,.iq-steps{grid-template-columns:1fr}.iq-grade{min-height:145px}.iq-tools{grid-template-columns:1fr}.iq-subject{min-height:72px}}
     @media(prefers-reduced-motion:reduce){.iq-grade,.iq-subject{transition:none}.iq-grade:hover,.iq-subject:hover{transform:none}}
   </style>
 <meta name="robots" content="index,follow,max-image-preview:large">
@@ -122,7 +124,7 @@ img.cbe-context-image{animation:cbeImageMotion 7s ease-in-out infinite alternate
 
     <section class="iq-section" id="global-curriculum" aria-labelledby="global-curriculum-heading">
       <div class="iq-section-head"><div><h2 id="global-curriculum-heading">Choose your country and curriculum</h2><p>Enter any country and select its national curriculum or an international examination programme. Question availability depends on published, curriculum-tagged question banks.</p></div></div>
-      <div class="iq-tools" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+      <div class="iq-tools iq-global-selectors">
         <label>Country<input id="iqCountry" list="iqCountryList" value="Kenya" placeholder="Enter any country" maxlength="100"></label>
         <label>Curriculum / examination board<input id="iqCurriculum" list="iqCurriculumList" value="Kenya CBC/CBE" placeholder="Enter exact curriculum" maxlength="120"></label>
         <label>Class / level<input id="iqLevel" list="iqLevelList" value="Grade 7" placeholder="e.g. Form 4, Year 11, S5"></label>
