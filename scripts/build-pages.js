@@ -5,7 +5,7 @@ const path = require("node:path");
 
 const root = process.cwd();
 const out = path.join(root, "dist");
-const allowed = new Set([
+const specialPublicFiles = new Set(["_redirects"]);\nconst allowed = new Set([
   ".html", ".css", ".js", ".mjs", ".svg", ".png", ".jpg", ".jpeg",
   ".webp", ".gif", ".ico", ".avif", ".woff", ".woff2", ".ttf", ".eot",
   ".pdf", ".txt", ".xml", ".webmanifest", ".mp4", ".webm", ".json"
@@ -57,7 +57,7 @@ function copyTree(source, destination, relative = "") {
     if (entry.name === "upload.html" || /-server-/i.test(entry.name)) continue;
 
     const extension = path.extname(entry.name).toLowerCase();
-    if (!allowed.has(extension)) continue;
+    if (!allowed.has(extension) && !specialPublicFiles.has(entry.name)) continue;
     // Only known public JSON data is included; backend-data is excluded above.
     if (extension === ".json" && !/^(data|learning)\//.test(rel)) continue;
 
