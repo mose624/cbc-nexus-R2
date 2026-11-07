@@ -311,7 +311,7 @@
     const imageUrl = first(row, ["Image URL","ImageURL","Diagram URL","Image"]);
     
     const errors = [];
-    if (!/^Grade (?:[1-9]|1[0-2])$/i.test(grade)) errors.push("Grade must be Grade 1–12");
+    if (!grade || grade.length > 60) errors.push("Enter a valid grade, class, form, year or examination level (maximum 60 characters)");
     if (!subject) errors.push("Subject is missing");
     if (!question) errors.push("Question text is missing");
     if (question.length > 20000) errors.push("Question or passage exceeds 20,000 characters");
