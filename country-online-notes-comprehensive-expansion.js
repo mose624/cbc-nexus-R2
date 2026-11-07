@@ -87,7 +87,7 @@
      sections:[{heading:"Core knowledge and concepts",body:core+" "+local},{heading:"Application and exam approach",body:application+" Use correct scientific vocabulary, show working and include units where required."}],
      example:example+" "+local,
      diagramHtml:svg[subject],
-     summary:[parts[0],parts[1]],
+     summary:[objectives,core],
      questions:qas,
      curriculumContext:meta[1]+" • "+meta[2]+" • "+mapping+" • "+(record.exam||"national assessment pathway")
     });
