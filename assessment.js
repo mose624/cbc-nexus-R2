@@ -112,17 +112,20 @@
   const questionSetterStatus = document.getElementById("questionSetterStatus");
   const setQuestionsList = document.getElementById("setQuestionsList");
 
-  // Populate common national and international grade/class labels. The question bank is
-  // still scoped to the exact country + curriculum + level selected by the learner.
-  // Clear existing options first so this remains safe if the page already has options.
-  grade.innerHTML = "";
-  grades.forEach((g) => {
-    const option = document.createElement("option");
-    option.value = g;
-    option.textContent = g;
-    grade.appendChild(option);
-  });
-  grade.value = initialParams.get("level") && grades.includes(initialParams.get("level")) ? initialParams.get("level") : (grade.querySelector('option[value="Grade 7"]') ? "Grade 7" : grades[0]);
+  // Support any national grade, class, form, year or examination-level label.
+  // Select elements retain a fallback option list; the learner-facing input accepts custom labels.
+  if (grade && grade.tagName === "SELECT") {
+    grade.innerHTML = "";
+    grades.forEach((g) => {
+      const option = document.createElement("option");
+      option.value = g;
+      option.textContent = g;
+      grade.appendChild(option);
+    });
+    grade.value = initialParams.get("level") && grades.includes(initialParams.get("level")) ? initialParams.get("level") : "Grade 7";
+  } else if (grade) {
+    grade.value = initialParams.get("level") || grade.value || "Grade 7";
+  }
   // Subject options are initialized after gradeSubjects is declared below.
 
   // Keep the selected grade visible and usable whenever the learner changes it.
