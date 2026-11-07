@@ -152,7 +152,8 @@ function refreshLevelOptions(countryName, curriculumName, input, list){
   list.replaceChildren();
   levelOptionsFor(countryName,curriculumName).forEach(function(label){const option=document.createElement("option");option.value=label;list.appendChild(option);});
   input.placeholder="Choose or type a class / level";
-  if(previous) input.value=previous;
+  if(previous && Array.from(list.options).some(function(option){return option.value===previous;})) input.value=previous;
+  else input.value=list.options.length ? list.options[0].value : "";
 }
 
 function boardsForCountry(name){
