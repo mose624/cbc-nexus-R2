@@ -13,6 +13,16 @@
   "South Africa":"https://www.education.gov.za/Curriculum/NCSGradesR12/CAPSFET.aspx"
  };
  const ghana={
+  "Mathematics":[
+   "Strand 1 — Numbers for Everyday Life: Real Number System",
+   "Strand 1 — Numbers for Everyday Life: Proportional Reasoning",
+   "Strand 2 — Algebraic Thinking: Applications of Expressions, Equations and Inequalities",
+   "Strand 2 — Algebraic Thinking: Patterns and Relationships",
+   "Strand 3 — Geometry Around Us: Spatial Sense",
+   "Strand 3 — Geometry Around Us: Measurement",
+   "Strand 4 — Making Sense of and Using Data: Statistical Reasoning and Its Application in Real Life",
+   "Strand 4 — Making Sense of and Using Data: Chance"
+  ],
   "Biology":[
    "Strand 1 — Exploring Biology in Society: Biology as the Science of Life",
    "Strand 1 — Exploring Biology in Society: Biology and Entrepreneurship",
@@ -46,7 +56,7 @@
   ]
  };
  const sourceText={
-  Ghana:"NaCCA SHS curriculum (September 2023). Biology, Chemistry and Physics SHS Year One scope-and-sequence headings have been checked. Mathematics sequence is still being checked. The sequence is not a claim that every lesson has been written.",
+  Ghana:"NaCCA SHS curriculum (September 2023). Mathematics SHS Year One scope-and-sequence strands and sub-strands are verified against the official curriculum PDF; Biology, Chemistry and Physics headings are a partial sequence check. This is a curriculum map, not a claim that every lesson has been written.",
   Nigeria:"NERDC revised Senior Secondary curriculum portal. SSS1 subject-level topics must be verified against the current SSS1 curriculum and approved learner materials before any topic bank is promoted as core.",
   Uganda:"NCDC Lower Secondary Curriculum. Senior 1 is Lower Secondary Year 1; separate Physics, Chemistry and Biology syllabi apply. Subject sequence must be checked against the NCDC syllabus, not copied from another country.",
   Tanzania:"TIE Ordinary Secondary Education syllabus. Form I–IV subject syllabi and the current TIE student books are the references. Do not use Advanced Form V–VI sequences for Form I.",
