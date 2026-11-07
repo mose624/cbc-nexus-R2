@@ -135,6 +135,26 @@
   "Mauritius":["Mauritius National Curriculum / NCE / SC / HSC","Cambridge International"],
   "Seychelles":["Seychelles National Curriculum / IGCSE","Cambridge International"]
 };
+
+function levelOptionsFor(countryName, curriculumName){
+  const c=(curriculumName||"").toLowerCase();
+  if(c.includes("kenya cbc") || c.includes("kenya cbe")) return Array.from({length:12},(_,i)=>"Grade "+(i+1));
+  if(c.includes("8-4-4") || c.includes("kcse")) return [...Array.from({length:8},(_,i)=>"Standard "+(i+1)),...Array.from({length:4},(_,i)=>"Form "+(i+1))];
+  if(c.includes("cambridge") || c.includes("igcse") || c.includes("pearson") || c.includes("edexcel") || c.includes("gcse")) return [...Array.from({length:13},(_,i)=>"Year "+(i+1)),"IGCSE","O Level","AS Level","A Level"];
+  if(c.includes("ib") || c.includes("international baccalaureate")) return ["PYP Year 1","PYP Year 2","PYP Year 3","PYP Year 4","PYP Year 5","PYP Year 6","MYP Year 1","MYP Year 2","MYP Year 3","MYP Year 4","MYP Year 5","DP Year 1","DP Year 2"];
+  if(c.includes("common core") || c.includes("ngss") || c.includes("state standard") || c.includes("american curriculum") || c==="ap") return ["Kindergarten",...Array.from({length:12},(_,i)=>"Grade "+(i+1)),"AP"];
+  if(c.includes("cbse") || c.includes("cisce") || c.includes("icse") || c.includes("nctb") || c.includes("national curriculum") || c.includes("ministry of education") || c.includes("caps") || c.includes("ncdc") || c.includes("necta") || c.includes("reb") || c.includes("nerdc") || c.includes("na cca") || c.includes("nacca")) return [...Array.from({length:12},(_,i)=>"Class "+(i+1)),...Array.from({length:12},(_,i)=>"Grade "+(i+1))];
+  return [...Array.from({length:12},(_,i)=>"Grade "+(i+1)),...Array.from({length:6},(_,i)=>"Form "+(i+1)),...Array.from({length:13},(_,i)=>"Year "+(i+1))];
+}
+function refreshLevelOptions(countryName, curriculumName, input, list){
+  if(!input || !list) return;
+  const previous=input.value;
+  list.replaceChildren();
+  levelOptionsFor(countryName,curriculumName).forEach(function(label){const option=document.createElement("option");option.value=label;list.appendChild(option);});
+  input.placeholder="Choose or type a class / level";
+  if(previous) input.value=previous;
+}
+
 function boardsForCountry(name){
   return curriculumByCountry[name] || ["National curriculum / national examinations (confirm board)","Cambridge International","Pearson Edexcel","IB"];
 }
@@ -150,7 +170,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
   const initialParams = new URLSearchParams(window.location.search);
   if (country && initialParams.get("country")) country.value = initialParams.get("country");
   if (country && curriculum) setCurriculumOptions(country,curriculum,initialParams.get("curriculum") || (country.value==="Kenya" ? "Kenya CBC/CBE" : ""));
-  if (country && curriculum) country.addEventListener("change",function(){setCurriculumOptions(country,curriculum,"");});
+  const gradeList=document.getElementById("quizGradeOptions");
+  if(country && curriculum && grade) refreshLevelOptions(country.value,curriculum.value,grade,gradeList);
+  if(country && curriculum) curriculum.addEventListener("change",function(){refreshLevelOptions(country.value,curriculum.value,grade,gradeList);});
+
+  if (country && curriculum) country.addEventListener("change",function(){setCurriculumOptions(country,curriculum,"");refreshLevelOptions(country.value,curriculum.value,grade,gradeList);});
 
   const learnerId = document.getElementById("quizLearnerIdInput");
   const grade = document.getElementById("quizGradeInput");
