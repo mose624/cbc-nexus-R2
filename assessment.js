@@ -470,7 +470,8 @@
   }
 
   function getCurriculumItems(selectedGrade, selectedSubject) {
-    const map = window.CBENexusCBCBanks &&
+    const isKenyaCbc = String(country && country.value || "Kenya").trim().toLowerCase() === "kenya" && String(curriculum && curriculum.value || "Kenya CBC/CBE").trim().toLowerCase() === "kenya cbc/cbe";
+    const map = isKenyaCbc && window.CBENexusCBCBanks &&
       window.CBENexusCBCBanks.curriculum &&
       window.CBENexusCBCBanks.curriculum[selectedGrade] &&
       window.CBENexusCBCBanks.curriculum[selectedGrade][selectedSubject];
