@@ -68,8 +68,8 @@
    for(const item of items){
     const title=item[0];
     if(existing.has(title)) continue;
-    const parts=item.slice(1,4);
-    const qas=item.slice(4).map(s=>{const p=s.split(" — ");return {q:p[0],a:p.slice(1).join(" — ")};});
+    const objectives=item[1], core=item[2], application=item[3], example=item[4];
+    const qas=item.slice(5).map(s=>{const p=s.split(" — ");return {q:p[0],a:p.slice(1).join(" — ")};});
     const local={
      Kenya:"Kenyan examples may be linked to agriculture, water, transport, energy and local ecosystems.",
      Ghana:"Ghanaian examples may be linked to cocoa production, mining, markets, energy and local ecosystems.",
@@ -83,9 +83,9 @@
      id:"extended-"+country.toLowerCase().replace(/[^a-z0-9]+/g,"-")+"-"+subject.toLowerCase()+"-"+title.toLowerCase().replace(/[^a-z0-9]+/g,"-"),
      title:(level[subject].length+1)+". "+title,
      lessons:meta[0]+" • expanded syllabus topic",
-     objectives:parts[0].split("; ").map(x=>x.trim()),
-     sections:[{heading:"Core knowledge and concepts",body:parts[1]+" "+local},{heading:"Application and exam approach",body:parts[2]+" Use correct scientific vocabulary, show working and include units where required."}],
-     example:parts[3]+" "+local,
+     objectives:objectives.split("; ").map(x=>x.trim()),
+     sections:[{heading:"Core knowledge and concepts",body:core+" "+local},{heading:"Application and exam approach",body:application+" Use correct scientific vocabulary, show working and include units where required."}],
+     example:example+" "+local,
      diagramHtml:svg[subject],
      summary:[parts[0],parts[1]],
      questions:qas,
