@@ -4,6 +4,10 @@ alter table public.resources
   add column if not exists country text,
   add column if not exists currency text not null default 'KES';
 
+alter table public.purchases
+  add column if not exists currency text not null default 'KES',
+  add column if not exists payment_provider text not null default 'mpesa';
+
 create table if not exists public.seller_earnings (
   id uuid primary key default gen_random_uuid(),
   purchase_id uuid not null unique references public.purchases(id) on delete restrict,
