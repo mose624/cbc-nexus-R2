@@ -115,6 +115,17 @@ fillSubjects();paintCachedResources();rebuildGradeOptionsFromResources();rebuild
 
 
 async function startDirectMpesaPurchase(resource,b){
+  const resourceCurrency=String(resource.currency||"KES").toUpperCase();
+  if(resourceCurrency!=="KES"){
+    const email=window.prompt("Enter your email address for secure Paystack checkout:","");
+    if(!email)return;
+    const id=String(resource.id||resource._id||resource.key||"").trim();
+    if(!id)throw new Error("This resource has no valid ID.");
+    const response=await fetch("/api/resources/paystack/checkout",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({resourceId:id,email})});
+    const data=await response.json().catch(()=>({}));
+    if(!response.ok||!data.ok)throw new Error(data.error||"Paystack checkout could not be started.");
+    window.location.href=data.authorizationUrl;return;
+  }
   const phone=window.prompt("Enter the M-Pesa phone number to receive the STK Push (e.g. 0712345678):","");
   if(!phone)return;
   const id=String(resource.id||resource._id||resource.key||"").trim();
@@ -289,3 +300,25 @@ document.addEventListener("click",event=>{
   history.replaceState(null,"",target.pathname+"?"+p.toString());
   window.scrollTo({top:0,behavior:"smooth"});
 });
+
+/* Verify Paystack resource purchases on the secure return URL. */
+(async function completePaystackResourceCheckout(){
+  const params=new URLSearchParams(location.search),reference=params.get("payment_reference");
+  if(!reference)return;
+  const notice=document.createElement("div");
+  notice.setAttribute("role","status");
+  notice.style.cssText="position:sticky;top:8px;z-index:99999;margin:12px auto;padding:14px 18px;max-width:760px;border-radius:10px;background:#eaf6ff;border:1px solid #9ac9e8;color:#12345b;font-weight:800";
+  notice.textContent="Verifying your Paystack payment securely…";
+  document.body.prepend(notice);
+  try{
+    const response=await fetch("/api/resources/paystack/verify?reference="+encodeURIComponent(reference),{credentials:"same-origin",cache:"no-store"});
+    const data=await response.json().catch(()=>({}));
+    if(!response.ok||!data.ok)throw new Error(data.error||"Payment verification failed. If you were charged, contact CBE Nexus support with your payment reference.");
+    notice.textContent="Payment verified. Your secure resource download is starting…";
+    history.replaceState(null,"",location.pathname+location.hash);
+    location.href=data.downloadUrl;
+  }catch(error){
+    notice.style.background="#fff1f2";notice.style.borderColor="#fda4af";notice.style.color="#9f1239";
+    notice.textContent=error.message||"Payment verification could not be completed. Please retry.";
+  }
+})();
