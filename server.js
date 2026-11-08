@@ -2832,9 +2832,9 @@ async function serveStatic(req,res,url){
     const examSnippet=examNames.slice(0,3).join(", ");
     const description=country
       ? (examNames.length
-        ? ("Explore "+country.name+" national examinations including "+examSnippet+". Find curriculum information, online notes and exam revision resources; confirm current requirements with official authorities.")
-        : ("Explore "+country.name+"'s education system, school directory, curriculum, online notes and national assessment guidance. Check official authorities for current examination names and requirements."))
-      : "Explore country-by-country school directories, education systems, national examinations, sample papers, teaching vacancies, teacher requirements and further education on CBE Nexus Global Schools.";
+        ? ("Explore "+country.name+" national exams, curriculum guidance, school information and online revision resources. Verify current requirements with official authorities.")
+        : ("Explore "+country.name+"'s education system, schools, curriculum and online learning resources. Verify examination details with official authorities."))
+      : "Explore school directories, education systems, national examinations, curricula and online learning resources for countries worldwide on CBE Nexus.";
     const escapeHtml=value=>String(value??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
     html=html.replace(/<title>[\s\S]*?<\/title>/i,"<title>"+escapeSeoAttribute(title)+"</title>");
     html=html.replace(/<meta name="description" content="[^"]*">/i,'<meta name="description" content="'+escapeSeoAttribute(description.slice(0,300))+'">');
