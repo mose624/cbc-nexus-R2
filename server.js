@@ -1392,6 +1392,55 @@ async function handleApi(req,res,url){
     }catch(error){console.error("Maths competition registration error:",error);sendJson(res,500,{ok:false,error:"Registration could not be submitted. Please try again or contact info@cbenexus.co.ke."});}
     return true;
   }
+  if(req.method==="POST"&&url.pathname==="/api/resources/paystack/checkout"){
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure resource checkout requires Supabase."});return true;}
+      const secret=String(process.env.PAYSTACK_SECRET_KEY||"").trim();
+      if(!secret){sendJson(res,503,{ok:false,error:"Paystack is not configured. Contact CBE Nexus support."});return true;}
+      const p=JSON.parse((await readBody(req))||"{}"),resourceId=String(p.resourceId||"").trim(),email=String(p.email||"").trim().toLowerCase();
+      if(!resourceId||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){sendJson(res,400,{ok:false,error:"A resource and valid email address are required."});return true;}
+      const resource=await findResourceForPayment(resourceId);
+      if(!resource||String(resource.status||"").toLowerCase()!=="approved"||!resource.r2_key){sendJson(res,404,{ok:false,error:"This resource is not available for purchase."});return true;}
+      const amount=resourcePrice(resource),currency=String(resource.currency||"KES").toUpperCase();
+      const supported=["KES","USD","NGN","GHS","ZAR"];
+      const minimum={KES:3,USD:2,NGN:50,GHS:0.1,ZAR:1};
+      if(!supported.includes(currency)){sendJson(res,400,{ok:false,error:"Paystack does not support "+currency+" for this marketplace checkout. Choose a Paystack-enabled currency or contact CBE Nexus about another gateway."});return true;}
+      if(amount<Number(minimum[currency]||1)){sendJson(res,400,{ok:false,error:"The minimum Paystack transaction in "+currency+" is "+minimum[currency]+"."});return true;}
+      const reference="CBER-"+crypto.randomBytes(18).toString("hex");
+      const origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.com").replace(/\/$/,"");
+      const response=await fetch("https://api.paystack.co/transaction/initialize",{method:"POST",headers:{"Authorization":"Bearer "+secret,"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({email,amount:Math.round(amount*100),currency,reference,callback_url:origin+"/resource-category.html?payment_reference="+encodeURIComponent(reference),metadata:{resource_id:resourceId,product:"cbe_nexus_teacher_resource",resource_title:String(resource.title||"").slice(0,180)}})});
+      const result=await response.json().catch(()=>({}));
+      if(!response.ok||!result.status||!result.data?.authorization_url)throw new Error(String(result.message||"Paystack could not initialize this currency or merchant account."));
+      const purchase=await savePayment({resource_id:resourceId,customer_phone:"paystack:"+email,amount,currency,payment_provider:"paystack",status:"pending",payment_reference:reference,checkout_request_id:"PAYSTACK-"+reference,merchant_request_id:"",result_code:null,result_desc:"Paystack hosted checkout initialized",mpesa_receipt:null,transaction_time:null});
+      sendJson(res,200,{ok:true,authorizationUrl:result.data.authorization_url,reference,amount,currency,purchaseId:purchase.id});return true;
+    }catch(error){console.error("Resource Paystack checkout initialization error:",error);sendJson(res,502,{ok:false,error:String(error?.message||"Secure Paystack checkout could not be started.")});return true;}
+  }
+  if(req.method==="GET"&&url.pathname==="/api/resources/paystack/verify"){
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Payment verification is temporarily unavailable."});return true;}
+      const secret=String(process.env.PAYSTACK_SECRET_KEY||"").trim(),reference=String(url.searchParams.get("reference")||"").trim();
+      if(!secret||!/^CBER-[a-f0-9]{36}$/i.test(reference)){sendJson(res,400,{ok:false,error:"A valid Paystack resource payment reference is required."});return true;}
+      const {data:purchase,error:purchaseError}=await supabase.from("purchases").select("*").eq("payment_reference",reference).maybeSingle();
+      if(purchaseError)throw purchaseError;
+      if(!purchase||String(purchase.payment_provider||"").toLowerCase()!=="paystack"){sendJson(res,404,{ok:false,error:"Resource payment reference was not found."});return true;}
+      const {data:resource,error:resourceError}=await supabase.from("resources").select("id,title,r2_key,filename,status,currency,seller_id").eq("id",purchase.resource_id).maybeSingle();
+      if(resourceError)throw resourceError;
+      if(!resource||!resource.r2_key||String(resource.status||"").toLowerCase()!=="approved"){sendJson(res,404,{ok:false,error:"The purchased resource is no longer available."});return true;}
+      let paidPurchase=purchase;
+      if(!["paid","completed","success"].includes(String(purchase.status||"").toLowerCase())){
+        const verifyResponse=await fetch("https://api.paystack.co/transaction/verify/"+encodeURIComponent(reference),{headers:{"Authorization":"Bearer "+secret,"Accept":"application/json"}});
+        const verified=await verifyResponse.json().catch(()=>({}));
+        const tx=verified.data||{};
+        if(!verifyResponse.ok||!verified.status||String(tx.status||"").toLowerCase()!=="success"){sendJson(res,402,{ok:false,pending:true,error:"Paystack has not confirmed this payment yet. Please wait a moment and retry."});return true;}
+        if(Number(tx.amount)!==Math.round(Number(purchase.amount||0)*100)||String(tx.currency||"").toUpperCase()!==String(purchase.currency||resource.currency||"KES").toUpperCase()||String(tx.reference||"")!==reference){sendJson(res,400,{ok:false,error:"The verified payment amount, currency or reference did not match this resource order."});return true;}
+        const {data:updated,error:updateError}=await supabase.from("purchases").update({status:"paid",verified_at:new Date().toISOString(),result_code:0,result_desc:"Paystack payment verified",mpesa_receipt:reference,transaction_time:String(tx.paid_at||"")}).eq("id",purchase.id).select("*").single();
+        if(updateError)throw updateError;paidPurchase=updated;
+      }
+      await recordSellerEarning(paidPurchase);
+      const downloadUrl=await createDownloadUrl(resource.r2_key,String(resource.filename||resource.title||"resource"));
+      sendJson(res,200,{ok:true,status:"paid",resourceId:resource.id,title:resource.title,downloadUrl,expiresIn:300,currency:purchase.currency||resource.currency||"KES",amount:Number(purchase.amount||0)});return true;
+    }catch(error){console.error("Resource Paystack verification error:",error);sendJson(res,500,{ok:false,error:"Paystack payment could not be verified securely."});return true;}
+  }
   if(req.method==="POST"&&url.pathname==="/api/mpesa/stk-push"){
     const p=JSON.parse((await readBody(req))||"{}");
     const phone=normalizeMpesaPhone(p.customerPhone||p.phone||"");
