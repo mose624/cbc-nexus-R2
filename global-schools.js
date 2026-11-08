@@ -196,6 +196,7 @@ function renderCountry(){
  const countryQuery=encodeURIComponent(c.name);
  const portalItems=[
   {label:"📘 Notes & Learning Resources",url:"/country-online-notes.html?country="+countryQuery},
+  {label:"💚 Sell Teaching Resources (Earn 70%)",url:"/seller-marketplace.html?country="+countryQuery},
   {label:"🏛️ National Examinations",url:"#exams"},
   {label:"📚 Curriculum & Syllabus",url:"#curriculum"},
   {label:"📝 Past National Exam Papers",url:"/resources.html?country="+countryQuery+"&type=past-papers"},
