@@ -138,8 +138,31 @@ function renderCountry(){
  const learnerLink=node("a","gs-market-btn");learnerLink.href="/online-teaching.html?country="+encodeURIComponent(c.name)+"#learner-request-form";learnerLink.textContent="🎓 Register as a learner";
  const teacherLink=node("a","gs-market-btn");teacherLink.href="/online-teaching.html?country="+encodeURIComponent(c.name)+"#teacher-registration";teacherLink.textContent="🧑‍🏫 Register as a teacher";
  const browseLink=node("a","gs-market-btn");browseLink.href="/online-teaching.html?country="+encodeURIComponent(c.name)+"#teacher-directory";browseLink.textContent="Browse approved teachers";
- const boardNote=node("p","gs-muted");boardNote.textContent="For privacy, learner names and contact details are not displayed publicly. Eligible approved teachers sign in to view appropriate learner requests.";
- actions.append(learnerLink,teacherLink,browseLink);marketplace.append(marketTitle,marketIntro,stats,actions,boardNote);
+ const boardNote=node("p","gs-muted");boardNote.textContent="Public cards show learner first name and last initial with tuition requirements. Parent/guardian names, phone numbers and email addresses remain private.";
+ const learnerSection=node("section","gs-country-learners");learnerSection.id="country-learner-profiles";
+ const learnerHeading=node("h3");learnerHeading.textContent="Learners seeking online tuition in "+c.name;
+ const learnerDescription=node("p","gs-muted");learnerDescription.textContent="Browse consented learner profiles and match subjects, curriculum, time zone and budget. Contact details are never displayed on this page.";
+ const learnerCards=node("div","gs-country-learner-cards");learnerCards.textContent="Loading learner profiles…";
+ learnerSection.append(learnerHeading,learnerDescription,learnerCards);
+ const learnerStyle=node("style");learnerStyle.textContent=".gs-country-learner-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}.gs-country-learner-card{background:#fff;border:1px solid #dbe5ef;border-radius:11px;padding:14px;min-width:0}.gs-country-learner-card h4{margin:0 0 8px;color:#075080;font-size:16px}.gs-country-learner-card p{margin:5px 0;font-size:12px;line-height:1.5;color:#334155;overflow-wrap:anywhere}.gs-country-learner-card strong{color:#17324d}.gs-country-learner-empty{padding:14px;border:1px dashed #cbd5e1;border-radius:10px;color:#64748b;font-size:13px}@media(max-width:620px){.gs-country-learner-cards{grid-template-columns:1fr}}";document.head.appendChild(learnerStyle);
+ fetch("/api/public/active-learners?country="+encodeURIComponent(c.name),{headers:{Accept:"application/json"},cache:"no-store"}).then(r=>r.json()).then(data=>{
+  learnerCards.replaceChildren();
+  const profiles=Array.isArray(data&&data.profiles)?data.profiles:[];
+  if(!data||!data.ok||!profiles.length){const empty=node("div","gs-country-learner-empty");empty.textContent=profiles.length?"Learner profiles could not be loaded.":"No active learner profiles are currently listed for "+c.name+".";learnerCards.appendChild(empty);return;}
+  profiles.forEach(profile=>{
+   const card=node("article","gs-country-learner-card");
+   const h=node("h4");h.textContent=profile.display_name||"Learner";
+   const fields=[
+    ["Grade / level",profile.education_level],["Subjects",profile.subjects],["Curriculum",profile.curriculum],
+    ["Preferred times",profile.preferred_times],["Time zone",profile.time_zone],["Lesson preference",profile.lesson_mode],
+    ["Sessions per week",profile.sessions_per_week],["Budget",profile.budget]
+   ];
+   card.appendChild(h);
+   fields.forEach(([label,value])=>{if(!value)return;const p=node("p");const strong=node("strong");strong.textContent=label+": ";p.append(strong,document.createTextNode(String(value)));card.appendChild(p);});
+   learnerCards.appendChild(card);
+  });
+ }).catch(()=>{learnerCards.textContent="Learner profiles are temporarily unavailable.";});
+ actions.append(learnerLink,teacherLink,browseLink);marketplace.append(marketTitle,marketIntro,stats,actions,boardNote,learnerSection);
  // Country-specific international recruitment and remote-teaching pathways.
  const pathways=node("section","gs-panel gs-section");pathways.id="country-teaching-pathways";
  const pathwayTitle=node("h2");pathwayTitle.textContent="Teaching Jobs & Remote Teaching Opportunities in "+c.name;
