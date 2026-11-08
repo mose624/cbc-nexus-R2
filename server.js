@@ -569,6 +569,24 @@ async function handleApi(req,res,url){
       sendJson(res,200,{ok:true,country,approvedTeachers:teacherCount||0,activeLearnerRequests:learnerCount||0});return true;
     }catch(error){console.error("Country marketplace statistics error:",error);sendJson(res,500,{ok:false,error:"Country marketplace statistics could not be loaded."});return true;}
   }
+  // Public country-page learner cards: consented matching details only; never return guardian/contact data.
+  if(req.method==="GET"&&url.pathname==="/api/public/active-learners"){
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Learner profiles are temporarily unavailable."});return true;}
+      const country=String(url.searchParams.get("country")||"").trim().slice(0,100);
+      if(!country){sendJson(res,400,{ok:false,error:"A country is required."});return true;}
+      const {data,error}=await supabase.from("active_learner_requests")
+        .select("learner_name,learner_country,education_level,subjects,curriculum,preferred_times,time_zone,lesson_mode,sessions_per_week,budget")
+        .eq("status","active").ilike("learner_country",country).order("created_at",{ascending:false}).limit(100);
+      if(error)throw error;
+      const profiles=(data||[]).map(x=>{
+        const parts=String(x.learner_name||"Learner").trim().split(/\\s+/).filter(Boolean);
+        const displayName=parts.length>1?parts[0]+" "+parts[parts.length-1].slice(0,1)+".":(parts[0]||"Learner");
+        return {display_name:displayName,learner_country:x.learner_country,education_level:x.education_level,subjects:x.subjects,curriculum:x.curriculum,preferred_times:x.preferred_times,time_zone:x.time_zone,lesson_mode:x.lesson_mode,sessions_per_week:x.sessions_per_week,budget:x.budget};
+      });
+      sendJson(res,200,{ok:true,country,profiles});return true;
+    }catch(error){console.error("Public country learner profiles failed:",error);sendJson(res,500,{ok:false,error:"Learner profiles could not be loaded."});return true;}
+  }
   if(req.method==="GET"&&url.pathname==="/api/global-teachers"){
     try{
       if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Teacher directory is temporarily unavailable because the database is not configured."});return true;}
