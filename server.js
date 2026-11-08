@@ -643,7 +643,7 @@ async function handleApi(req,res,url){
   if(req.method==="GET"&&url.pathname==="/api/admin/active-learner-requests"){
     try{
       if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Administrator sign-in required."});return true;}
-      const {data,error}=await supabase.from("active_learner_requests").select("*").order("created_at",{ascending:false}).limit(500);
+      const {data,error}=await supabase.from("active_learner_requests").select("id,learner_name,learner_country,education_level,subjects,curriculum,preferred_times,time_zone,lesson_mode,sessions_per_week,budget,learner_notes,status,created_at,updated_at").order("created_at",{ascending:false}).limit(500);
       if(error)throw error;sendJson(res,200,{ok:true,requests:data||[]});return true;
     }catch(e){console.error("Admin learner request list failed:",e);sendJson(res,500,{ok:false,error:"Could not load learner requests. Check the Supabase migration."});return true;}
   }
