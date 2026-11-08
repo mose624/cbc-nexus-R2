@@ -134,6 +134,18 @@ body{font-family:Inter,"Segoe UI",Arial,sans-serif;background:#f8fbff;color:#101
 
 /* Keep learner photography sharp behind the dashboard panels. */
 .hero-panel{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(4,19,40,.48)!important}
+
+/* Global learner opportunity cards: soft pink with a clear green Apply action. */
+.learner-opportunity-card{background:linear-gradient(145deg,#fff1f7 0%,#fce7f3 55%,#fff7fb 100%);border:1px solid #f9a8d4;border-top:4px solid #ec4899;box-shadow:0 8px 24px rgba(190,24,93,.09)}
+.learner-opportunity-card h3{color:#831843}
+.learner-opportunity-card .teacher-country{color:#9d174d!important;font-weight:800}
+.learner-opportunity-card dl dt{color:#9d174d}
+.learner-opportunity-card dl dd{color:#3f1730}
+.learner-opportunity-card .smallprint{display:block;margin:12px 0;color:#831843}
+.learner-apply-btn{display:inline-flex;align-items:center;justify-content:center;width:100%;min-height:43px;margin-top:8px;padding:11px 16px;border:0;border-radius:11px;background:linear-gradient(100deg,#15803d,#22c55e);color:#fff!important;font-weight:900;font-size:14px;text-decoration:none;box-shadow:0 5px 15px rgba(22,163,74,.25);animation:learnerApplyGlow 1.35s ease-in-out infinite}
+.learner-apply-btn:hover,.learner-apply-btn:focus-visible{background:linear-gradient(100deg,#166534,#16a34a);transform:translateY(-1px);outline:3px solid rgba(34,197,94,.25);outline-offset:2px}
+@keyframes learnerApplyGlow{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.35),0 5px 15px rgba(22,163,74,.2)}50%{box-shadow:0 0 0 6px rgba(34,197,94,0),0 7px 20px rgba(22,163,74,.38)}}
+@media(prefers-reduced-motion:reduce){.learner-apply-btn{animation:none}}
 </style>
 </head>
 <body>
@@ -325,7 +337,7 @@ loadTeachers();
    const data=await response.json();if(!response.ok||!data.ok)throw new Error('Unavailable');
    const requests=data.requests||[];root.setAttribute('aria-busy','false');
    if(!requests.length){root.innerHTML='<div class="directory-empty" style="grid-column:1/-1"><strong>No published learner requests yet</strong><p>Genuine opportunities will appear here after CBE Nexus reviews and publishes requests from learners and families.</p></div>';return;}
-   root.innerHTML=requests.map(x=>'<article class="teacher-card learner-opportunity-card"><div class="teacher-country">🌍 '+esc(x.learner_country)+'</div><h3>'+esc(x.education_level||'Learner')+'</h3><dl>'+field('Subjects',x.subjects)+field('Curriculum',x.curriculum)+field('Preferred lesson times',x.preferred_times)+field('Time zone',x.time_zone)+field('Lesson mode',x.lesson_mode||'Online')+field('Sessions per week',x.sessions_per_week)+field('Budget',x.budget)+'</dl><span class="smallprint">Published learner opportunity · Contact details protected</span></article>').join('');
+   root.innerHTML=requests.map(x=>'<article class="teacher-card learner-opportunity-card"><div class="teacher-country">🌍 '+esc(x.learner_country)+'</div><h3>'+esc(x.education_level||'Learner')+'</h3><dl>'+field('Subjects',x.subjects)+field('Curriculum',x.curriculum)+field('Preferred lesson times',x.preferred_times)+field('Time zone',x.time_zone)+field('Lesson mode',x.lesson_mode||'Online')+field('Sessions per week',x.sessions_per_week)+field('Budget',x.budget)+'</dl><span class="smallprint">Published learner opportunity · Contact details protected</span><a class="learner-apply-btn" href="#active-learners" aria-label="Apply to teach this learner; sign in required">✓ Apply</a></article>').join('');
    status.textContent=requests.length+' published learner opportunit'+(requests.length===1?'y':'ies')+' in the global marketplace.';
   }catch(e){root.setAttribute('aria-busy','false');root.innerHTML='<div class="directory-empty" style="grid-column:1/-1"><strong>Global learner board is temporarily unavailable</strong><p>Please refresh this page shortly.</p></div>';}
  }
