@@ -10,9 +10,9 @@ alter table public.purchases
 
 create table if not exists public.seller_earnings (
   id uuid primary key default gen_random_uuid(),
-  purchase_id uuid not null unique references public.purchases(id) on delete restrict,
-  resource_id uuid not null references public.resources(id) on delete restrict,
-  seller_id uuid not null references public.sellers(id) on delete restrict,
+  purchase_id text not null unique,
+  resource_id text not null,
+  seller_id text not null,
   gross_amount numeric(14,2) not null check (gross_amount > 0),
   seller_amount numeric(14,2) not null check (seller_amount >= 0),
   platform_amount numeric(14,2) not null check (platform_amount >= 0),
