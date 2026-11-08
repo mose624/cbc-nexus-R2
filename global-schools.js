@@ -485,7 +485,7 @@ function renderCountry(){
  const examTitleNames=(d.exams||[]).map(item=>item&&item.name).filter(Boolean);
  const title=examTitleNames.length?c.name+" National Exams: "+examTitleNames.slice(0,2).join(" & ")+" | CBE Nexus":c.name+" Education System & Exams | CBE Nexus";
  document.title=title.length>78?c.name+" National Exams & Education Resources | CBE Nexus":title;
- const desc=examTitleNames.length?"Explore "+c.name+" national examinations including "+examTitleNames.slice(0,3).join(", ")+". Find curriculum information, online notes and exam revision resources; confirm current requirements with official authorities.":"Explore "+c.name+" education system, school directory, curriculum, online notes and national assessment guidance. Check official authorities for current examination names and requirements.";
+ const desc=examTitleNames.length?"Explore "+c.name+" national exams, curriculum and online study notes. Confirm current exam names and requirements with official education authorities.":"Explore "+c.name+" schools, curriculum, national exams and online study notes. Confirm current requirements with official education authorities.";
  const canonicalUrl="https://cbenexus.com/global-schools/"+c.slug;
  setSeoMeta('meta[name="description"]',"name",desc);
  setSeoMeta('meta[property="og:type"]',"property","website");
