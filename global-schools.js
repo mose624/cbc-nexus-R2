@@ -214,8 +214,24 @@ function renderCountry(){
  portalStyle.textContent=".gs-country-seller-banner{display:flex!important;align-items:center;justify-content:center;gap:10px;width:100%;flex:0 0 100%;margin:14px 0 4px;padding:14px 18px;border-radius:12px;background:linear-gradient(110deg,#087a4c,#16a34a,#0ea5e9);border:2px solid #d1fae5;color:#fff!important;font-size:clamp(14px,2vw,18px);font-weight:950;text-align:center;text-decoration:none!important;box-shadow:0 6px 20px #087a4c35;animation:gsSellerPulse 1.8s infinite;position:relative;z-index:6}.gs-country-seller-banner:hover{filter:brightness(1.08);transform:translateY(-1px)}.gs-country-seller-banner:focus-visible{outline:3px solid #fbbf24;outline-offset:3px}.gs-country-portal-nav{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;width:100%;flex:0 0 100%;grid-column:1/-1;margin:16px 0 0;position:relative;z-index:5;visibility:visible;opacity:1}.gs-country-head-with-nav{display:grid!important;grid-template-columns:auto minmax(0,1fr);align-items:center}.gs-country-head-with-nav>.gs-country-portal-nav{grid-column:1/-1}.gs-country-portal-nav a{display:flex;align-items:center;justify-content:center;min-height:48px;padding:9px 10px;text-align:center;border:1px solid rgba(255,255,255,.72);border-radius:10px;background:rgba(255,255,255,.94);color:#075080!important;font-weight:850;font-size:12px;text-decoration:none;box-shadow:0 3px 10px #173b5910;transition:transform .18s,background .18s}.gs-country-portal-nav a:hover{background:#e0f2fe;transform:translateY(-2px)}.gs-country-head{background:linear-gradient(90deg,rgba(4,28,48,.76),rgba(7,89,133,.38)),var(--gs-learner-bg)!important;background-size:cover!important;background-position:center!important;color:#fff!important;min-height:180px}.gs-country-head h1,.gs-country-head .gs-muted{color:#fff!important;text-shadow:0 1px 3px rgba(0,0,0,.38)}@media(max-width:900px){.gs-country-portal-nav{grid-template-columns:repeat(2,minmax(0,1fr))}.gs-country-portal-nav a:last-child{grid-column:1/-1}}@media(max-width:460px){.gs-country-portal-nav{grid-template-columns:1fr}.gs-country-portal-nav a:last-child{grid-column:auto}.gs-country-head{gap:10px}.gs-country-portal-nav{margin-top:12px}}";
  document.head.appendChild(portalStyle);
  const countryHeader=document.querySelector(".gs-country-head");
- if(countryHeader){const sellerBanner=node("a","gs-country-seller-banner");sellerBanner.href="/seller-marketplace.html?country="+countryQuery;sellerBanner.textContent="💚 Earn Online by Selling Quality Education Resources — Teachers Keep 70% of Approved Sales";sellerBanner.setAttribute("aria-label","Earn online by selling quality education resources in "+c.name);if(portalNav.parentElement!==countryHeader)countryHeader.appendChild(portalNav);if(!countryHeader.querySelector(".gs-country-seller-banner"))countryHeader.insertBefore(sellerBanner,portalNav);countryHeader.classList.add("gs-country-head-with-nav");}
- else {const countryPanel=document.querySelector("#gsCountry > .gs-panel");if(countryPanel){const header=countryPanel.querySelector(".gs-country-head");if(header)header.insertAdjacentElement("afterend",portalNav);else countryPanel.prepend(portalNav);}else if(countryLayout){countryLayout.parentNode.insertBefore(portalNav,countryLayout);}}
+ const countryPanel=document.querySelector("#gsCountry > .gs-panel")||document.querySelector("#gsCountry");
+ const sellerBanner=node("a","gs-country-seller-banner");
+ sellerBanner.href="/seller-marketplace.html?country="+countryQuery;
+ sellerBanner.textContent="💚 TEACHERS: SELL YOUR NOTES, MOCKS & PAST PAPERS — EARN 70%";
+ sellerBanner.setAttribute("aria-label","Create a teacher seller account and earn 70% of approved resource sales in "+c.name);
+ if(countryHeader){
+  if(portalNav.parentElement!==countryHeader)countryHeader.appendChild(portalNav);
+  if(!countryHeader.querySelector(".gs-country-seller-banner"))countryHeader.insertBefore(sellerBanner,portalNav);
+  countryHeader.classList.add("gs-country-head-with-nav");
+ }else if(countryPanel){
+  countryPanel.insertBefore(sellerBanner,countryPanel.firstChild);
+  if(portalNav.parentElement!==countryPanel)countryPanel.appendChild(portalNav);
+ }else if(countryLayout){
+  countryLayout.parentNode.insertBefore(sellerBanner,countryLayout);
+  countryLayout.parentNode.insertBefore(portalNav,countryLayout);
+ }
+ if(!sellerBanner.isConnected){const fallback=document.querySelector("#gsCountry");if(fallback)fallback.prepend(sellerBanner);}
+ sellerBanner.style.cssText="display:flex!important;visibility:visible!important;opacity:1!important;position:relative!important;z-index:20!important;width:100%!important;min-height:58px;box-sizing:border-box;align-items:center;justify-content:center;text-align:center;padding:16px 18px;margin:14px 0;background:linear-gradient(100deg,#087a4c,#16a34a,#0284c7)!important;color:#fff!important;border:3px solid #fef08a;border-radius:14px;font-size:clamp(14px,2vw,19px);font-weight:900;text-decoration:none!important;box-shadow:0 8px 24px #07598544;";
  portalNav.style.display="grid";portalNav.style.visibility="visible";portalNav.style.opacity="1";
 
  // Country education dashboard: shared visual system, country-specific content and links.
