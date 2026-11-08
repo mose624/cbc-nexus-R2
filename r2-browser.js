@@ -77,6 +77,8 @@
           sellerPhone: document.querySelector("#sellerPhoneInput").value.trim(),
           title: document.querySelector("#sellerTitleInput").value.trim(),
           price: Number(document.querySelector("#sellerPriceInput").value || 0),
+          currency: document.querySelector("#sellerCurrencyInput")?.value || "KES",
+          country: document.querySelector("#sellerCountryInput")?.value || "",
           grade, subject, type,
           discount: Number(document.querySelector("#sellerDiscountInput").value || 0),
           description: document.querySelector("#sellerDescriptionInput").value.trim(),
