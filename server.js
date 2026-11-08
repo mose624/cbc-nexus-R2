@@ -338,7 +338,7 @@ async function recordSellerEarning(purchase){
   const {data:resource,error:resourceError}=await supabase.from("resources").select("id,seller_id,currency").eq("id",resourceId).maybeSingle();
   if(resourceError)throw resourceError;if(!resource?.seller_id)return null;
   const gross=Number(purchase.amount||0);if(!Number.isFinite(gross)||gross<=0)return null;
-  const row={purchase_id:purchase.id,resource_id:resource.id,seller_id:resource.seller_id,gross_amount:gross,seller_amount:Math.round(gross*70)/100,platform_amount:Math.round(gross*30)/100,currency:String(resource.currency||"KES").toUpperCase(),status:"earned",created_at:new Date().toISOString()};
+  const row={purchase_id:purchase.id,resource_id:resource.id,seller_id:resource.seller_id,gross_amount:gross,seller_amount:Math.round(gross*0.70*100)/100,platform_amount:Math.round(gross*0.30*100)/100,currency:String(resource.currency||"KES").toUpperCase(),status:"earned",created_at:new Date().toISOString()};
   const {data,error}=await supabase.from("seller_earnings").upsert(row,{onConflict:"purchase_id"}).select("*").single();
   if(error)throw error;return data;
 }
@@ -1361,6 +1361,10 @@ async function handleApi(req,res,url){
       sendJson(res,200,{ok:true,seller:{name:seller.name,username:seller.username,status:seller.status},resources:resources||[],sales,earnings,storage:"supabase"});return true;
     }catch(error){console.error("Seller dashboard lookup error:",error);sendJson(res,500,{ok:false,error:"Seller dashboard could not be loaded."});return true;}
   }
+  if(req.method==="POST"&&url.pathname==="/api/seller/logout"){
+    res.setHeader("Set-Cookie","cbe_seller_session=; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=0");
+    sendJson(res,200,{ok:true});return true;
+  }
   if(req.method==="POST"&&url.pathname==="/api/admin/seller-resource-status"){
     if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
     const p=JSON.parse((await readBody(req))||"{}"),resourceId=String(p.resourceId||"").trim(),status=String(p.status||"pending").toLowerCase();
@@ -1418,6 +1422,7 @@ async function handleApi(req,res,url){
         resource=await findResourceForPayment(resourceId);
         if(!resource||String(resource.status||"approved").toLowerCase()!=="approved"){sendJson(res,404,{ok:false,error:"The selected resource is not available for purchase."});return true;}
         amount=resourcePrice(resource);
+        if(String(resource.currency||"KES").toUpperCase()!=="KES"){sendJson(res,400,{ok:false,error:"This resource is priced in "+String(resource.currency||"").toUpperCase()+". Please use the international card checkout when it is enabled for this resource; M-Pesa checkout is available for KES-priced resources only."});return true;}
         if(amount<1){sendJson(res,400,{ok:false,error:"This resource does not require an M-Pesa payment."});return true;}
       }
       const tokenResult=await tokenResultPromise;if(tokenResult.error)throw tokenResult.error;const token=tokenResult.token,timestamp=mpesaTimestamp();
@@ -1461,6 +1466,7 @@ async function handleApi(req,res,url){
       /* Give the asynchronous STK callback time to arrive before querying Daraja. Immediate query responses can be transient. */
       const paymentAgeMs=payment?.created_at?Date.now()-Date.parse(payment.created_at):0;
       if(["pending","failed","cancelled"].includes(String(payment?.status||"").toLowerCase())&&paymentAgeMs>=15000){try{payment=await verifyMpesaPaymentByQuery(checkoutRequestId)||payment;}catch(error){console.warn("M-Pesa status query fallback failed:",error.message||error);}}
+      if(payment&&["paid","completed","success"].includes(String(payment.status||"").toLowerCase())){try{await recordSellerEarning(payment);}catch(earningError){console.error("Seller earnings ledger update failed:",earningError);}}
       sendJson(res,200,{ok:true,status:String(payment?.status||"unknown"),payment:payment?{id:payment.id,resourceId:payment.resource_id,amount:payment.amount,status:payment.status,receipt:payment.mpesa_receipt||null,verifiedAt:payment.verified_at||null}:null});
     }catch(error){console.error("M-Pesa status lookup error:",error);sendJson(res,500,{ok:false,error:"Payment status could not be checked securely."});}
     return true;
