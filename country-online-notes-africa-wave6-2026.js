@@ -1,0 +1,118 @@
+/* CBE Nexus online-notes expansion — Wave 6.
+   Original supplementary study lessons. Use the current national subject syllabus and school sequence for final alignment.
+*/
+(()=> {
+ const all=window.CBE_COUNTRY_NOTES||(window.CBE_COUNTRY_NOTES={});
+ const build=(id,title,sections,example,activity,qa,status)=>({
+  id,title,lessons:"Comprehensive online lesson",
+  curriculumContext:status+" Original CBE Nexus online study notes; not official examination papers.",
+  curriculumStatus:"supplementary-national-curriculum-support",
+  objectives:["Explain key ideas using accurate subject vocabulary.","Apply principles to familiar and unfamiliar problems.","Interpret diagrams, data, graphs and practical observations.","Communicate reasoning clearly and use appropriate units."],
+  sections:sections.map((body,i)=>({heading:["Core concepts","Detailed explanation","Applications","Practical and analytical skills"][i],body,paragraphs:[body]})),
+  example,activity,summary:sections.map(s=>s.split(".")[0]+"."),
+  questions:qa.map(([q,a])=>({q,a,worked:a,explanation:a}))
+ });
+ const packs=[
+ {name:"Senegal",level:"Lycée • séries scientifiques",curriculum:"Senegal General Secondary Education • scientific series",authority:"Ministère de l'Éducation nationale; Direction de l'Enseignement moyen secondaire général; INEADE",source:"https://www.education.sn/organisation/direction-de-lenseignement-moyen-secondaire-general-demsg",status:"The Ministry's secondary education directorate describes science and mathematics as core learning areas and scientific pathways. These English-language lessons are supplementary foundations; match the exact chapter order to the current French-language series syllabus and official INEADE programme.",subjects:{
+ Biology:["Cellular organisation, genetics and ecosystems",[
+ "The cell is the basic unit of life. Prokaryotic cells lack a membrane-bound nucleus, while eukaryotic cells contain a nucleus and specialised organelles. Cell membranes regulate the movement of substances between cells and their environments.",
+ "DNA carries hereditary information in genes. During mitosis, one parent cell produces two genetically similar daughter cells for growth and repair. Meiosis produces haploid reproductive cells and creates genetic variation through processes such as crossing over and independent assortment.",
+ "An ecosystem includes organisms and their physical environment. Producers convert light energy into chemical energy; consumers obtain energy by feeding; decomposers return nutrients to the environment. Food webs show interconnected feeding relationships.",
+ "Natural selection acts on heritable variation in populations. Individuals with traits that improve survival or reproductive success in a particular environment may leave more offspring, changing trait frequencies over generations."
+ ],"A diploid cell has 2n=16 chromosomes. After meiosis, each haploid cell has n=8 chromosomes.","Construct a food web from organisms in a local Senegalese habitat. Identify trophic levels and predict the effect of removing one species.",[
+ ["What is the function of the cell membrane?","It regulates movement of substances into and out of the cell."],["How does mitosis differ from meiosis?","Mitosis produces two similar daughter cells; meiosis produces haploid cells and increases variation."],["What is a gene?","A section of DNA carrying information for a functional product or inherited characteristic."],["What is the role of decomposers?","They break down dead organic matter and recycle nutrients."],["Define natural selection.","Differential survival and reproduction associated with heritable variation."],["If 2n=24, how many chromosomes are in a haploid cell?","n=12."]])],
+ Chemistry:["Atomic structure, chemical bonding and solutions",[
+ "Atoms contain protons and neutrons in a nucleus and electrons in surrounding energy levels. Atomic number is proton number; isotopes have the same proton number but different neutron numbers. Electron arrangement helps explain chemical behaviour.",
+ "Ionic bonding is electrostatic attraction between oppositely charged ions; covalent bonding involves shared electron pairs; metallic bonding involves positive ions attracted to delocalised electrons. Bonding and structure help explain melting point, conductivity and solubility.",
+ "The mole connects microscopic particles with measurable quantities. Relative formula mass and molar mass allow conversion between mass and amount. Balanced equations provide mole ratios for reacting substances.",
+ "A solution contains a solute dissolved in a solvent. Molar concentration is amount of solute divided by solution volume. Acids donate protons and bases accept protons in Brønsted-Lowry theory; neutralisation and titration are quantitative applications."
+ ],"For 0.25 mol solute in 0.50 dm³, c=n/V=0.25/0.50=0.50 mol dm⁻³.","Prepare a series of safe dilute solutions by measured dilution. Record volumes accurately and calculate final concentration using C₁V₁=C₂V₂.",[
+ ["What is an isotope?","Atoms of the same element with different numbers of neutrons."],["Describe covalent bonding.","A shared pair or pairs of electrons between atoms."],["What is one mole?","An amount containing Avogadro's number of specified particles."],["Calculate concentration for 0.4 mol in 0.2 dm³.","0.4/0.2=2.0 mol dm⁻³."],["What does a balanced equation show?","Conservation of atoms and stoichiometric mole ratios."],["Define a Brønsted-Lowry acid.","A proton donor."]])],
+ Physics:["Mechanics, energy and electricity",[
+ "Displacement and velocity are vector quantities because direction matters. Speed is scalar. Acceleration is change in velocity per unit time. Motion can be described using equations and displacement-time or velocity-time graphs.",
+ "Newton's laws relate forces and motion. A resultant force produces acceleration according to F=ma. Momentum is mass multiplied by velocity; in an isolated system, total momentum is conserved during interactions.",
+ "Work is energy transferred when a force moves an object. Kinetic energy is one-half mv² and gravitational potential energy near Earth's surface is mgh. Power is rate of energy transfer or work done per unit time.",
+ "Electric current is rate of charge flow and potential difference is energy transferred per unit charge. Ohm's law relates voltage, current and resistance for an ohmic conductor at constant temperature. Electrical power is P=VI."
+ ],"A 0.5 kg ball moving at 8 m/s has kinetic energy ½×0.5×8²=16 J.","Use a low-voltage circuit to measure current and potential difference across a resistor. Plot V against I and use the gradient to determine resistance.",[
+ ["Define acceleration.","Change in velocity divided by time taken."],["Find force on 3 kg accelerating at 4 m/s².","F=ma=12 N."],["What does the area under a velocity-time graph represent?","Displacement."],["State the conservation of momentum principle.","Total momentum remains constant in an isolated system."],["Calculate GPE for 2 kg raised 5 m using g=10 N/kg.","mgh=2×10×5=100 J."],["State Ohm's law.","For an ohmic conductor at constant temperature, current is proportional to potential difference."]])],
+ Mathematics:["Functions, calculus and probability",[
+ "A function assigns exactly one output to each permitted input. The domain is the set of inputs and the range is the set of outputs. Functions may be represented by equations, tables, mappings and graphs.",
+ "Linear functions have constant gradient. Quadratic functions have parabolic graphs and may have zero, one or two real roots. Factorisation, completing the square and the quadratic formula are methods for solving quadratic equations.",
+ "Differentiation gives the gradient of a curve and instantaneous rate of change. For a power function y=xⁿ, dy/dx=nxⁿ⁻¹. Stationary points occur where the first derivative is zero.",
+ "Probability quantifies uncertainty. For independent events, the probability of both occurring is the product of their probabilities. Conditional probability considers how information about one event changes the probability of another."
+ ],"For y=2x²+3x, dy/dx=4x+3; at x=2 the gradient is 11.","Plot y=x²−4x+3, estimate its roots and turning point, then use factorisation and differentiation to verify the graph.",[
+ ["Evaluate f(3) if f(x)=2x+5.","f(3)=11."],["Solve x²−5x+6=0.","(x−2)(x−3)=0, so x=2 or x=3."],["Differentiate y=7x³.","dy/dx=21x²."],["Find the gradient of y=4x−9.","4."],["What is the probability of an impossible event?","0."],["For independent events A and B, how is P(A and B) found?","P(A and B)=P(A)×P(B)."]])]}
+ },
+ {name:"Cameroon",level:"Form 5 / Lower Sixth • Science pathways",curriculum:"Cameroon General Secondary Education • English-speaking subsystem, Science series",authority:"Ministry of Secondary Education (MINESEC)",source:"https://www.minesec.gov.cm/web/index.php/en/systeme-educatif-en/offre-de-formation-en/sous-systeme-anglophone-en",status:"MINESEC describes a five-year first cycle and two-year second cycle, with science combinations S1–S4. This English-subsystem support is supplementary; students should follow their selected science combination and current GCE syllabus.",subjects:{
+ Biology:["Cell division, inheritance and human physiology",[
+ "Cells contain genetic material in DNA. Mitosis supports growth and repair by producing genetically similar cells; meiosis produces haploid gametes and introduces variation through independent assortment and crossing over.",
+ "Inheritance involves genes and alleles. Genotype describes allele combination and phenotype describes observable characteristics resulting from genotype and environment. Monohybrid crosses can model simple dominant and recessive inheritance.",
+ "The human transport system includes the heart, blood and blood vessels. Arteries carry blood away from the heart, veins return blood, and capillaries allow exchange with tissues. The heart's chambers and valves maintain one-way blood flow.",
+ "Gas exchange occurs in alveoli. Their large surface area, thin walls, moist lining and dense capillary network allow rapid diffusion. Ventilation maintains concentration gradients between air in the lungs and blood."
+ ],"For Tt × Tt, offspring genotypes are TT, Tt, Tt and tt, giving 3 dominant phenotype : 1 recessive phenotype under complete dominance.","Model inheritance with allele cards, then draw a labelled heart or alveolus and explain how its structure supports its function.",[
+ ["What is mitosis used for?","Growth, repair and replacement of cells."],["What does meiosis produce?","Haploid cells, such as gametes."],["Distinguish genotype from phenotype.","Genotype is allele combination; phenotype is observable characteristic."],["What is the function of valves in the heart?","They prevent backflow of blood."],["Name two adaptations of alveoli.","Thin walls and large surface area (also moist lining and rich capillary supply)."],["What phenotype ratio is expected from Tt × Tt with complete dominance?","3 dominant : 1 recessive."]])],
+ Chemistry:["Chemical reactions, acids and redox",[
+ "Chemical reactions involve rearrangement of atoms and changes in chemical bonds. Equations represent reactants and products; balancing ensures each element has the same number of atoms on both sides.",
+ "Acids and bases can be described using proton transfer. Strong acids ionise extensively in water, while weak acids ionise partially. pH is related to hydrogen ion concentration; indicators and pH meters estimate acidity.",
+ "Oxidation is loss of electrons and reduction is gain of electrons. Oxidising agents accept electrons and reducing agents donate electrons. Oxidation numbers help identify electron transfer in redox equations.",
+ "Reaction rate depends on factors including concentration, temperature, surface area and catalysts. Collision theory explains that successful reactions require particles to collide with sufficient energy and suitable orientation."
+ ],"For Zn + Cu²⁺ → Zn²⁺ + Cu, zinc loses two electrons and is oxidised; copper ions gain two electrons and are reduced.","Investigate how temperature affects the rate of a safe dilute reaction under teacher supervision. Keep concentration and surface area constant.",[
+ ["Why must equations be balanced?","To obey conservation of atoms."],["Define oxidation using electrons.","Loss of electrons."],["What is a strong acid?","An acid that ionises extensively in aqueous solution."],["What is the role of a catalyst?","It increases reaction rate by providing an alternative pathway with lower activation energy."],["Name two factors affecting reaction rate.","Temperature and concentration (also surface area and catalysts)."],["In Zn + Cu²⁺ → Zn²⁺ + Cu, which species is reduced?","Cu²⁺, because it gains electrons."]])],
+ Physics:["Kinematics, dynamics and energy",[
+ "Physical quantities are measured with standard units. Scalars have magnitude only; vectors have magnitude and direction. Displacement, velocity, acceleration and force are vectors; distance, speed, mass and time are scalars.",
+ "For constant acceleration, equations of motion connect initial velocity, final velocity, acceleration, time and displacement. Graph gradients and areas provide ways to interpret motion data.",
+ "Newton's laws describe the relationship between forces and motion. The resultant force equals mass multiplied by acceleration. Friction and air resistance oppose motion and may convert mechanical energy into thermal energy.",
+ "Energy is conserved but can be transferred between stores. Work done by a constant force parallel to displacement is W=Fs. Power is work done per unit time, and efficiency compares useful output with total input."
+ ],"A vehicle changes velocity from 5 m/s to 25 m/s in 4 s. Acceleration=(25−5)/4=5 m/s².","Use a trolley and ramp to collect motion data. Plot velocity-time and distance-time graphs and compare gradients with calculated values.",[
+ ["What is a vector?","A quantity with magnitude and direction."],["Calculate acceleration from 10 to 22 m/s in 3 s.","(22−10)/3=4 m/s²."],["State Newton's second law.","Resultant force equals mass multiplied by acceleration, F=ma."],["What is the SI unit of work?","Joule (J)."],["Calculate work done by 20 N over 3 m in its direction.","W=Fs=60 J."],["Define efficiency.","Useful energy or power output divided by total input, usually expressed as a percentage."]])],
+ Mathematics:["Algebra, trigonometry and coordinate geometry",[
+ "Algebraic expressions can be simplified by collecting like terms and applying index laws. Equations are solved by performing equivalent operations on both sides; inequalities require care when multiplying or dividing by negative values.",
+ "Quadratic equations can be solved by factorisation, completing the square or the quadratic formula. The discriminant b²−4ac indicates whether a quadratic has two, one or no distinct real roots.",
+ "Trigonometric ratios relate angles and sides in right-angled triangles: sine is opposite over hypotenuse, cosine is adjacent over hypotenuse and tangent is opposite over adjacent.",
+ "Coordinate geometry uses algebra to study points and lines. Gradient is change in y divided by change in x; parallel lines have equal gradients, while perpendicular non-vertical lines have gradients whose product is −1."
+ ],"For a right triangle with opposite=6 and hypotenuse=10, sin θ=6/10=0.6.","Measure a ramp's height and horizontal length, estimate its angle using tan θ=opposite/adjacent, then compare with a protractor reading.",[
+ ["Solve 3x+4=19.","3x=15, x=5."],["Factorise x²−7x+12.","(x−3)(x−4)."],["What is the discriminant of ax²+bx+c?","b²−4ac."],["Define sine in a right triangle.","Opposite side divided by hypotenuse."],["Find the gradient between (1,2) and (4,11).","(11−2)/(4−1)=3."],["What is the gradient of a line parallel to y=−2x+5?","−2."]])]}
+ },
+ {name:"Democratic Republic of the Congo",level:"3ème–5ème Secondaire • Humanités scientifiques",curriculum:"DRC National Science Learning Area • Humanités scientifiques",authority:"Ministère de l'Éducation nationale et Nouvelle Citoyenneté; Direction des programmes scolaires",source:"https://edu-nc.gouv.cd/national-programmes",status:"The national Ministry groups Mathematics, Life and Earth Sciences, and Physical Sciences/Technology within the Science Learning Area and publishes programmes by year. These English-language notes are supplementary; consult the official French-language programme for the learner's exact class.",subjects:{
+ Biology:["Cell structure, plant nutrition and human health",[
+ "The cell is the basic unit of life. Plant cells commonly contain a cellulose wall, chloroplasts in photosynthetic tissues and a large vacuole; animal cells do not have a cellulose wall or chloroplasts. Microscopes reveal structures too small to see unaided.",
+ "Photosynthesis converts light energy into chemical energy in glucose using carbon dioxide and water, releasing oxygen. Chlorophyll absorbs light energy. Factors such as light intensity, carbon dioxide concentration and temperature affect the rate.",
+ "Human nutrition involves ingestion, digestion, absorption and assimilation. Enzymes break down large food molecules, and the small intestine absorbs soluble products into blood or lymph for transport to body cells.",
+ "Health is influenced by nutrition, sanitation, vaccination and disease prevention. Pathogens include bacteria, viruses, fungi and parasites; transmission can occur through air, contaminated water or food, vectors and direct contact."
+ ],"A student views a specimen at 10× eyepiece magnification and 40× objective magnification. Total magnification=400×.","Compare leaf and cheek cells using prepared slides. Draw labelled diagrams and list structures visible in each specimen.",[
+ ["What is the basic unit of life?","The cell."],["Which organelle carries out photosynthesis?","Chloroplast."],["Write the word equation for photosynthesis.","Carbon dioxide + water → glucose + oxygen, in light and chlorophyll."],["Where does most absorption of digested nutrients occur?","The small intestine."],["Name two ways to prevent water-borne disease.","Treat drinking water and practise safe sanitation/handwashing."],["Calculate total magnification for 10× and 40× lenses.","10×40=400×."]])],
+ Chemistry:["Matter, atomic structure and chemical transformations",[
+ "Matter has mass and occupies space. The particle model explains the properties of solids, liquids and gases. Changes of state are physical changes because the chemical identity of the substance remains the same.",
+ "Elements contain one type of atom; compounds contain elements chemically combined in fixed proportions; mixtures contain substances physically combined. Filtration, evaporation, distillation and chromatography separate mixtures using different physical properties.",
+ "Atoms contain protons, neutrons and electrons. Atomic number is proton number; mass number is the total number of protons and neutrons. Atoms form ions by gaining or losing electrons and form molecules through covalent bonding.",
+ "Chemical reactions rearrange atoms to form new substances. Word equations and formula equations represent reactions. Balanced equations show conservation of atoms; reaction evidence can include gas release, precipitate formation or energy change."
+ ],"An atom with 11 protons and 12 neutrons has atomic number 11 and mass number 23.","Separate a mixture of sand and dissolved salt by dissolving, filtering and evaporating. Explain why each step works.",[
+ ["What is an element?","A substance containing only one type of atom."],["How many neutrons are in an atom with mass number 23 and atomic number 11?","23−11=12."],["Which method separates an insoluble solid from a liquid?","Filtration."],["What is an ion?","A charged particle formed when an atom or group gains or loses electrons."],["Why balance a chemical equation?","To conserve atoms of each element."],["Is boiling water a chemical change?","No, it is a physical change of state."]])],
+ Physics:["Measurements, forces and energy",[
+ "Physics describes natural phenomena through observation, measurement and mathematical models. SI units provide common standards. Measurements should include units and suitable precision; repeated readings help identify random variation.",
+ "A force can change an object's speed, direction or shape. Resultant force is the vector sum of forces. For constant mass, Newton's second law gives F=ma. Weight is gravitational force and equals mg near Earth's surface.",
+ "Work is done when a force causes displacement in its direction. Energy is the capacity to do work; kinetic energy is associated with motion and gravitational potential energy with position in a gravitational field.",
+ "Heat is transferred by conduction, convection and radiation. Conduction transfers energy through interactions within matter, convection through bulk movement of fluids and radiation through electromagnetic waves."
+ ],"A 4 kg object has weight W=mg=4×10=40 N when g=10 N/kg.","Measure the mass of several objects and estimate their weight using a force meter. Plot weight against mass and interpret the gradient.",[
+ ["Give the SI unit of force.","Newton (N)."],["Calculate weight of 6 kg at g=10 N/kg.","W=mg=60 N."],["State Newton's second law.","F=ma."],["What is the unit of energy?","Joule (J)."],["Name the three heat-transfer methods.","Conduction, convection and radiation."],["Why repeat measurements?","To improve reliability and identify anomalous readings."]])],
+ Mathematics:["Number, algebra and geometry",[
+ "The number system includes natural numbers, integers, rational numbers and irrational numbers. Fractions, decimals and percentages represent quantities in different forms. Estimation helps check whether answers are reasonable.",
+ "Algebra uses symbols to represent unknown quantities and relationships. Collect like terms, apply index laws and solve equations using equivalent operations. Formulae can be rearranged to make a chosen variable the subject.",
+ "Geometry studies shapes, angles and spatial relationships. Angles on a straight line sum to 180 degrees, around a point sum to 360 degrees, and the interior angles of a triangle sum to 180 degrees.",
+ "The Cartesian plane represents relationships between two variables. Linear equations form straight-line graphs; gradient measures rate of change and intercepts show where a graph crosses an axis. Data can be summarised using mean, median and range."
+ ],"Solve 5x−7=18: add 7 to get 5x=25, then divide by 5; x=5.","Measure angles in several triangles and verify the 180-degree sum. Record results and discuss measurement error.",[
+ ["Simplify 3a+5a−2.","8a−2."],["Solve 4x+3=23.","4x=20, so x=5."],["Convert 0.35 to a percentage.","35%."],["What is the sum of angles in a triangle?","180°."],["Find the gradient between (2,3) and (4,9).","(9−3)/(4−2)=3."],["Find the median of 2,5,7,9,12.","7."]])]}
+ }
+ ];
+ for(const c of packs){
+  const old=all[c.name]||(all[c.name]={});
+  old.curriculum=c.curriculum;old.authority=c.authority;old.source=c.source;old.levels=old.levels||{};
+  const level=old.levels[c.level]||(old.levels[c.level]={});
+  for(const [subject,data] of Object.entries(c.subjects)){
+   const [title,sections,example,activity,qa]=data;
+   const list=level[subject]||(level[subject]=[]);
+   const id=c.name.toLowerCase().replace(/[^a-z0-9]+/g,"-")+"-wave6-"+subject.toLowerCase()+"-01";
+   if(!list.some(x=>x.id===id)) list.push(build(id,title,sections,example,activity,qa,c.status));
+  }
+ }
+})();
