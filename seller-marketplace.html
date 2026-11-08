@@ -51,7 +51,7 @@
 <label class="field">Country<input id="sellerCountry" name="country" required maxlength="80" placeholder="Your country"></label>
 <label class="field">Price currency<select id="sellerCurrency" name="currency" required>
 <option value="KES">KES — Kenyan Shilling</option><option value="USD">USD — US Dollar</option><option value="GBP">GBP — Pound Sterling</option><option value="EUR">EUR — Euro</option><option value="NGN">NGN — Nigerian Naira</option><option value="GHS">GHS — Ghanaian Cedi</option><option value="UGX">UGX — Ugandan Shilling</option><option value="TZS">TZS — Tanzanian Shilling</option><option value="ZAR">ZAR — South African Rand</option><option value="RWF">RWF — Rwandan Franc</option><option value="ETB">ETB — Ethiopian Birr</option><option value="INR">INR — Indian Rupee</option><option value="PKR">PKR — Pakistani Rupee</option><option value="BDT">BDT — Bangladeshi Taka</option><option value="PHP">PHP — Philippine Peso</option><option value="AUD">AUD — Australian Dollar</option><option value="CAD">CAD — Canadian Dollar</option><option value="AED">AED — UAE Dirham</option><option value="SAR">SAR — Saudi Riyal</option><option value="BRL">BRL — Brazilian Real</option><option value="JPY">JPY — Japanese Yen</option><option value="CNY">CNY — Chinese Yuan</option><option value="OTHER">Other / contact admin</option>
-</select></label>
+</select></label><p class="note field full">Prices are stored and displayed in the currency you choose. Paystack checkout only works for currencies enabled on the CBE Nexus merchant account; unsupported currencies must be enabled with the provider before buyers can complete payment.</p>
 <label class="field full">Resource title<input id="sellerTitle" name="title" required maxlength="180" placeholder="e.g. Grade 8 Integrated Science Mock Examination"></label>
 <label class="field">Curriculum / grade<input id="sellerGrade" name="grade" required maxlength="80" placeholder="e.g. Grade 8, IGCSE, IB"></label>
 <label class="field">Subject<input id="sellerSubject" name="subject" required maxlength="100"></label>
@@ -72,6 +72,10 @@
  const $=id=>document.getElementById(id);
  const params=new URLSearchParams(location.search);
  if(params.get("country"))$("sellerCountry").value=params.get("country");
+ const countryCurrency={"kenya":"KES","nigeria":"NGN","ghana":"GHS","south africa":"ZAR","united states":"USD","usa":"USD"};
+ function suggestCurrency(){const key=$("sellerCountry").value.trim().toLowerCase();if(countryCurrency[key])$("sellerCurrency").value=countryCurrency[key];$("currencyLabel").textContent=$("sellerCurrency").value;}
+ if(params.get("country"))suggestCurrency();
+ $("sellerCountry").addEventListener("change",suggestCurrency);
  $("sellerCurrency").addEventListener("change",()=>{$("currencyLabel").textContent=$("sellerCurrency").value;});
  async function api(url,body){const res=await fetch(url,{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});const data=await res.json().catch(()=>({}));if(!res.ok||!data.ok)throw new Error(data.error||"Request failed.");return data;}
  $("sellerRegister").addEventListener("submit",async e=>{e.preventDefault();const f=new FormData(e.currentTarget);$("registerStatus").textContent="Creating your seller account…";try{const d=await api("/api/seller/account",{name:f.get("name"),phone:f.get("phone"),username:f.get("username"),password:f.get("password")});$("registerStatus").textContent="Account created. Sign in below to upload resources. Your resources will be held for admin approval.";e.currentTarget.reset();$("sellerLogin").elements.username.value=f.get("username");}catch(err){$("registerStatus").textContent=err.message;}});
