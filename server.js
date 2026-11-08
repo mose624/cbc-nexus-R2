@@ -677,9 +677,20 @@ async function handleApi(req,res,url){
   if(req.method==="GET"&&url.pathname==="/api/public-learner-opportunities"){
     try{
       if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Learner opportunities are temporarily unavailable."});return true;}
-      const {data,error}=await supabase.from("active_learner_requests").select("id,learner_country,education_level,subjects,curriculum,preferred_times,time_zone,lesson_mode,sessions_per_week,budget,created_at").eq("status","active").order("created_at",{ascending:false}).limit(500);
-      if(error)throw error;
-      sendJson(res,200,{ok:true,requests:data||[]});return true;
+      // Read every published record in pages so the global board is not capped
+      // at the first 500 learners. Only non-identifying matching fields are public.
+      const requests=[];
+      const pageSize=500;
+      for(let from=0;from<10000;from+=pageSize){
+        const {data,error}=await supabase.from("active_learner_requests")
+          .select("id,learner_country,education_level,subjects,curriculum,preferred_times,time_zone,lesson_mode,sessions_per_week,budget,created_at")
+          .eq("status","active").order("created_at",{ascending:false}).range(from,from+pageSize-1);
+        if(error)throw error;
+        const page=data||[];
+        requests.push(...page);
+        if(page.length<pageSize)break;
+      }
+      sendJson(res,200,{ok:true,requests,total:requests.length});return true;
     }catch(e){console.error("Public learner opportunities lookup failed:",e);sendJson(res,500,{ok:false,error:"Learner opportunities could not be loaded."});return true;}
   }
   if(req.method==="GET"&&url.pathname==="/api/active-learner-requests"){try{const t=await eligibleTeacher(req);if(!t){sendJson(res,401,{ok:false,error:"Approved, payment-verified teacher sign-in required."});return true;}const {data,error}=await supabase.from("active_learner_requests").select("id,learner_name,learner_country,education_level,subjects,curriculum,preferred_times,time_zone,lesson_mode,learner_notes,created_at,status").eq("status","active").order("created_at",{ascending:false}).limit(200);if(error)throw error;sendJson(res,200,{ok:true,requests:data||[]});return true;}catch(e){console.error("Learner board lookup failed:",e);sendJson(res,500,{ok:false,error:"Learner requests unavailable. Check the Supabase migration."});return true;}}
