@@ -8,6 +8,10 @@ const L=(name,type,url)=>({name,type,url});
 const P={
 ghana:{
 researchStatus:"Verified 9 November 2026 against WAEC Ghana, GES, NaCCA, NaSIA and NTC. Check each current session circular for changing calendar, subject and recruitment rules.",
+authority:"Ministry of Education; Ghana Education Service (GES); West African Examinations Council (WAEC) Ghana; National Teaching Council (NTC); National Council for Curriculum and Assessment (NaCCA); National Schools Inspectorate Authority (NaSIA).",
+officialLanguages:"English is the official language of instruction in most formal schooling. Ghanaian languages are also used in communities and in approved early-grade/local-language learning contexts.",
+system:"The mainstream pathway includes primary education, Junior High School, Senior High School and technical/vocational routes, followed by tertiary education. BECE is at the end of JHS; WASSCE is the regional senior-secondary qualification.",
+jobs:[{name:"Ghana Education Service",type:"Official public-school recruitment and service notices; vacancies only when formally advertised",url:"https://ges.gov.gh/"},{name:"Ministry of Education",type:"National education policy and official recruitment announcements",url:"https://moe.gov.gh/"}],
 curriculum:"NaCCA publishes national curriculum frameworks. The standards-based basic curriculum and Common Core Programme apply through the approved basic pathway; senior-high and technical/vocational programmes use their respective approved curricula.",
 termCalendar:"The Ministry of Education and GES issue school-year and term calendars. Basic, senior-high, technical/vocational and private-school dates may differ; use the latest circular for the relevant level.",
 qualificationRequirements:"NTC regulates teacher standards and licensing, conducts the GTLE and maintains teacher services/registers. GES publishes public-school appointments and vacancies. Confirm current NTC qualification-recognition and licence rules.",
