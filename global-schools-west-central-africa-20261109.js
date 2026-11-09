@@ -23,6 +23,7 @@ sources:[{label:"WAEC Ghana — BECE",url:"https://waecgh.org/bece/"},{label:"WA
 },
 gambia:{
 researchStatus:"Verified 9 November 2026. WAEC confirms GABECE and WASSCE. The current MoBSE portal publishes a 2025 school list, searchable school finder and 2026 final education statistics yearbook. EduSync criteria are intake-specific recruitment guidance, not a universal teacher licence.",
+officialLanguages:"English is the official language of instruction. Mandinka, Wolof, Fula, Jola, Serer, Soninke and other languages are widely used in communities.",
 authority:"Ministry of Basic and Secondary Education (MoBSE); WAEC The Gambia; regional education directorates; Ministry of Higher Education, Research, Science and Technology.",
 curriculum:"MoBSE oversees early childhood development, lower basic, upper basic and senior secondary education, curriculum and learning materials. Use current Ministry curriculum pages and circulars for grade-specific syllabuses and reforms.",
 system:"The pathway includes early childhood development, lower basic (Grades 1–6), upper basic (Grades 7–9), senior secondary, then technical/vocational and higher education. GABECE is the end-of-basic-cycle examination; WASSCE is a regional senior-secondary qualification.",
@@ -41,8 +42,10 @@ sources:[{label:"WAEC Gambia — GABECE",url:"https://waecgambia.org/examination
 },
 cameroon:{
 researchStatus:"Verified 9 November 2026 against MINEDUB, MINESEC, Cameroon GCE Board and OBC. Cameroon has separate Anglophone and Francophone exam pathways; MINEDUB published the 2026–2027 school-year decree. A consolidated public nationwide school finder was not verified.",
+officialLanguages:"French and English are the official languages. Many national languages are also used across the country.",
 authority:"MINEDUB; MINESEC; MINEFOP; Cameroon GCE Board for Anglophone GCE and TVEE; Office du Baccalauréat du Cameroun (OBC) for Francophone second-cycle examinations.",
 curriculum:"MINEDUB and MINESEC oversee national basic and secondary curricula. Anglophone and Francophone sub-systems retain different school structures, terminology and examinations; technical/vocational programmes have separate ministry and awarding arrangements.",
+system:"Cameroon has Francophone and Anglophone school sub-systems. The Anglophone pathway uses primary, Form 1–5 and Upper Sixth structures; the Francophone pathway uses primary, collège and lycée. Technical/vocational routes are distinct.",
 termCalendar:"MINEDUB published the joint decree of 14 August 2026 establishing the 2026–2027 school-year calendar. Examination timetables are published separately by GCE Board, OBC and MINESEC; check amendments.",
 qualificationRequirements:"Teacher preparation differs by level and subsystem. Routes include teacher-training colleges and higher teacher-training institutions such as ENS/ENSET. Public recruitment competitions are announced through responsible ministries and MINFOPRA; check each notice for diploma, subject, language and public-service conditions. No single nationwide teacher-licence examination is asserted.",
 exams:[
@@ -61,8 +64,10 @@ sources:[{label:"Cameroon GCE Board — examinations",url:"https://camgceb.org/e
 },
 senegal:{
 researchStatus:"Verified 9 November 2026. MEN's DEXCO identifies its national examination role; the Office du Baccalauréat at UCAD publishes the Baccalauréat and 2026 papers/corrections. Regional MEN pages can contain illustrative content, so calendar dates are not copied. A public national school finder was not verified.",
+officialLanguages:"French is the official language of administration and formal schooling. Wolof, Pulaar, Serer, Jola, Mandinka, Soninke and other national languages are used in communities and bilingual education initiatives.",
 authority:"Ministry of National Education (MEN); DEXCO for CFEE and BFEM; Office du Baccalauréat at UCAD for Baccalauréat; CRFPE and FASTEF for teacher preparation.",
 curriculum:"MEN oversees preschool, elementary, middle and secondary general education. National programmes and assessment references are issued through Ministry and curriculum directorates; check current programmes and school stream. Technical/vocational education follows its own ministry and qualification arrangements.",
+system:"The mainstream pathway includes preschool, elementary education, enseignement moyen/collège and secondary lycée, followed by technical/vocational or higher education. Progression and language initiatives may vary by cohort and programme.",
 termCalendar:"The school-year calendar is fixed by annual ministerial order. Regional MEN websites may display draft or illustrative material; rely on the signed national arrêté and current academy/school notices.",
 qualificationRequirements:"CRFPE centres provide teacher preparation and professional development; FASTEF/UCAD trains middle- and secondary-school teachers and education specialists. Public recruitment and contract conditions are defined in current MEN/public-service notices; no universal teacher-licence exam is asserted.",
 exams:[
@@ -80,8 +85,10 @@ sources:[{label:"MEN — DEXCO",url:"https://iakaffrine.education.sn/directions/
 },
 "cote-divoire":{
 researchStatus:"Verified 9 November 2026 against Government, MENET and DECO portals. DECO links 2027 CEPE and BEPC/BAC candidate platforms. Government publishes the 2026–2027 school calendar. No session dates or vacancies are hard-coded.",
+officialLanguages:"French is the official language of schooling and administration. Baoulé, Dioula, Bété, Sénoufo and many other national languages are used across the country.",
 authority:"MENET; Direction des Examens et Concours (DECO) for school examinations; Ministry of Higher Education and Scientific Research; Ministry of Technical Education and Vocational Training.",
 curriculum:"MENET oversees national preschool, primary and secondary curricula. General, technical and vocational streams have distinct programmes and pathways; use current Ministry curriculum and examination notices for the learner's stream and cohort.",
+system:"The pathway includes preschool, primary, collège/lower secondary and lycée/upper secondary, with technical and vocational routes. CEPE, BEPC and Baccalauréat mark key stages; the separate Seconde orientation test is not a leaving certificate.",
 termCalendar:"Government published the official 2026–2027 school-year breakdown and holiday schedule on 5 September 2026. Check that notice and subsequent MENET circulars for revisions; examination dates are published separately by DECO.",
 qualificationRequirements:"MENET describes authorisation-to-teach and training routes: CAFOP for preschool/primary, ENS for most general-secondary teachers, INJS for sport, INSAAC for arts/music and IPNETP for technical-teacher training. Routes are level- and subject-specific; check current recruitment and authorisation rules.",
 exams:[
