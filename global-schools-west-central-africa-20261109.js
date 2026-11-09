@@ -216,3 +216,58 @@ sources:[{label:"Ministry of National Education",url:"https://www.mineduc-rca.ne
 };
 for(const [slug,profile] of Object.entries(P))d[slug]=Object.assign(d[slug]||{},profile);
 })();
+
+/* Côte d'Ivoire safety/source correction: the Ministry domain served injected spam during this review. */
+;(function(){
+"use strict";
+const d=window.CBE_GLOBAL_COUNTRY_DATA;if(!d||!d["cote-divoire"])return;
+const L=(name,type,url)=>({name,type,url});
+Object.assign(d["cote-divoire"],{
+researchStatus:"Reviewed 9 November 2026 against the DECO examination portal, Government school-calendar notice and official SGG government directory. The current Ministry is MENAET. The Ministry's own web domain returned unrelated gambling/SEO spam during this review, so this profile deliberately does not link to it until it is cleaned.",
+authority:"Ministry of National Education, Literacy and Technical Education (MENAET); Direction des Examens et Concours (DECO) for CEPE, BEPC and Baccalauréat; Ministry of Higher Education and Scientific Research; Ministry of Employment, Social Protection and Vocational Training. The SGG directory lists a delegated minister responsible for technical education under MENAET.",
+curriculum:"MENAET is responsible for preschool, primary, secondary and technical education. General, technical and vocational pathways have distinct programmes. A safe public curriculum repository could not be verified because the Ministry's web domain was serving injected unrelated content; no link to that domain is provided.",
+system:"The pathway includes preschool, primary, collège/lower secondary and lycée/upper secondary, with technical and vocational routes. CEPE, BEPC and Baccalauréat mark key stages; the separate Seconde orientation test is not a school-leaving certificate.",
+termCalendar:"The Government published the official 2026–2027 school-year breakdown and holiday schedule. Check that notice and subsequent official circulars for revisions; examination dates are published separately by DECO.",
+calendar:"Use the Government's 2026–2027 school-calendar notice and DECO's current session calendar. No dates are copied forward from earlier sessions.",
+qualificationRequirements:"MENAET is the education authority. Teacher preparation and pedagogical competitions are level- and subject-specific; DECO publishes the current pedagogical-competition list and CAFOP-related notices. Check each official intake for diploma, subject and appointment requirements. No single independent national teacher-licensing board was confirmed.",
+exams:[
+{name:"Certificat d'Études Primaires Élémentaires (CEPE)",body:"National primary-cycle examination/certificate administered under MENAET by DECO; marks the end of primary education and supports progression to collège.",level:"End of primary education",url:"https://agcepe.exam-deco.org/"},
+{name:"Brevet d'Études du Premier Cycle (BEPC)",body:"National lower-secondary examination administered by DECO at the end of collège.",level:"End of collège / lower secondary",url:"https://agce.exam-deco.org/"},
+{name:"Test d'Orientation en classe de Seconde",body:"Separate orientation/selection process for placement into Seconde after the BEPC pathway. It is not the BEPC certificate or a separate school-leaving diploma; check the current DECO/MENAET notice.",level:"Post-BEPC orientation / selection",url:"https://www.men-deco.org/"},
+{name:"Baccalauréat (general, technical and artistic streams)",body:"National upper-secondary school-leaving examination administered by DECO; certifies completion of lycée and supports higher-education admission subject to institutional requirements.",level:"End of lycée / upper secondary",url:"https://agce.exam-deco.org/"}
+],
+schools:[
+L("SGG — Government directory","Official current list of ministries and mandates; not a school directory. No open nationwide searchable school directory was verified.","https://web.sgg.gouv.ci/gouvernement-de-cote-d-ivoire"),
+L("DECO","Official examination directorate; publishes examination information and some establishment rankings, but is not a full national school finder","https://www.men-deco.org/")
+],
+papers:[
+L("DECO — examinations and candidate information","Official CEPE, BEPC and Baccalauréat notices and candidate platforms","https://www.men-deco.org/"),
+L("DECO — CEPE session portal","Official CEPE candidate services","https://agcepe.exam-deco.org/"),
+L("DECO — BEPC/BAC session portal","Official BEPC and Baccalauréat candidate services","https://agce.exam-deco.org/"),
+L("Government — 2026–2027 school calendar","Official school-year breakdown and holidays; not an examination paper","https://www.gouv.ci/index.php/actualite/annee-scolaire-2026-2027-le-decoupage-officiel-et-le-calendrier-des-conges-et-vacances-presentes-9137")
+],
+jobs:[
+L("DECO — Pedagogical Competitions (ePEDAGO)","Official teacher-related competition and intake notices; check each current announcement","https://epedago.men-deco.org/"),
+L("SGG — Government directory","Official current ministry listing to identify education and public-service authorities","https://web.sgg.gouv.ci/gouvernement-de-cote-d-ivoire")
+],
+teachers:[
+L("DECO — Pedagogical Competitions (ePEDAGO)","Official pedagogical competition list and teacher-related intake notices","https://epedago.men-deco.org/"),
+L("DECO — CAFOP and teacher competition notices","Official CAFOP-IA and pedagogical competition results/notices","https://www.men-deco.org/"),
+L("SGG — Government directory","Official education ministry and public-service authority listing","https://web.sgg.gouv.ci/gouvernement-de-cote-d-ivoire")
+],
+further:[
+L("Ministry of Higher Education and Scientific Research","Higher-education authority listed in the official Government directory","https://web.sgg.gouv.ci/gouvernement-de-cote-d-ivoire"),
+L("Ministry of Employment, Social Protection and Vocational Training","Vocational-training and employment authority listed in the official Government directory","https://web.sgg.gouv.ci/gouvernement-de-cote-d-ivoire"),
+L("MENAET — delegated technical education","Technical-education mandate listed under the delegated minister in the official Government directory","https://web.sgg.gouv.ci/gouvernement-de-cote-d-ivoire")
+],
+sources:[
+{label:"DECO — official examination portal",url:"https://www.men-deco.org/"},
+{label:"DECO — CEPE session portal",url:"https://agcepe.exam-deco.org/"},
+{label:"DECO — BEPC/BAC session portal",url:"https://agce.exam-deco.org/"},
+{label:"DECO — pedagogical competitions",url:"https://epedago.men-deco.org/"},
+{label:"SGG — current Government and ministry directory",url:"https://web.sgg.gouv.ci/gouvernement-de-cote-d-ivoire"},
+{label:"Government — 2026–2027 school calendar",url:"https://www.gouv.ci/index.php/actualite/annee-scolaire-2026-2027-le-decoupage-officiel-et-le-calendrier-des-conges-et-vacances-presentes-9137"},
+{label:"Presidency — Council of Ministers communiqué, 23 September 2026",url:"https://www.presidence.ci/communiques-ministres/communique-du-conseil-des-ministres-du-mercredi-23-septembre-2026/"}
+]
+});
+})();
