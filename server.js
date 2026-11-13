@@ -2929,15 +2929,18 @@ async function serveStatic(req,res,url){
     const normalizeExamName=value=>String(value||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
     const examNames=[...curatedNames,...indexNames].filter((name,index,list)=>name&&list.findIndex(other=>normalizeExamName(other)===normalizeExamName(name))===index);
     const titleExamNames=examNames.slice(0,2).map(name=>String(name).replace(/\s*\([^)]*\)/g,"").trim()).join(" & ");
+    const curriculumName=String(countryProfile.curriculum||"").trim();
+    const authorityName=String(countryProfile.authority||"").trim();
+    const systemSummary=String(countryProfile.system||"").trim();
     let title=country
-      ? (titleExamNames?country.name+" National Exams: "+titleExamNames+" | CBE Nexus":country.name+" Education System & Exams | CBE Nexus")
+      ? (titleExamNames
+        ? country.name+" Curriculum & Exams: "+titleExamNames+" | CBE Nexus"
+        : (curriculumName?country.name+" "+curriculumName+" Curriculum & Schools | CBE Nexus":country.name+" Education System, Schools & Resources | CBE Nexus"))
       : "Global Schools Directory by Country | CBE Nexus";
-    if(title.length>78&&country)title=country.name+" National Exams & Education Resources | CBE Nexus";
+    if(title.length>78&&country)title=country.name+(titleExamNames?" National Exams & Study Resources | CBE Nexus":" Education, Curriculum & Schools | CBE Nexus");
     const examSnippet=examNames.slice(0,3).join(", ");
     const description=country
-      ? (examNames.length
-        ? ("Explore "+country.name+" national exams, curriculum guidance, school information and online revision resources. Verify current requirements with official authorities.")
-        : ("Explore "+country.name+"'s education system, schools, curriculum and online learning resources. Verify examination details with official authorities."))
+      ? ("Explore "+country.name+(curriculumName?" "+curriculumName+" curriculum,":" education system,")+(examNames.length?" "+examNames.slice(0,3).join(", ")+" examinations,":" national examinations,")+" school directories, study notes and learning resources. Confirm current details with "+(authorityName||"official education authorities")+".").slice(0,300)
       : "Explore school directories, education systems, national examinations, curricula and online learning resources for countries worldwide on CBE Nexus.";
     const escapeHtml=value=>String(value??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
     html=html.replace(/<title>[\s\S]*?<\/title>/i,"<title>"+escapeSeoAttribute(title)+"</title>");
@@ -2969,7 +2972,24 @@ async function serveStatic(req,res,url){
         const examPath="/global-exams/"+country.slug+"/"+String(name).normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
                 return '<li><a href="'+examPath+'"><strong>'+escapeHtml(name)+'</strong></a>'+(sub?"<p>"+escapeHtml(sub)+"</p>":"")+"</li>";
       }).join("");
-      const context=[["Education curriculum",countryProfile.curriculum],["Education system",countryProfile.system],["Responsible education authority",countryProfile.authority]].filter(item=>item[1]).map(item=>"<h3>"+escapeHtml(item[0])+"</h3><p>"+escapeHtml(item[1])+"</p>").join("");
+      const context=[
+        ["Education curriculum and learning framework",countryProfile.curriculum],
+        ["Education system and school stages",countryProfile.system],
+        ["Responsible education authority",countryProfile.authority],
+        ["Official and recognised languages",countryProfile.officialLanguages],
+        ["Academic year and term calendar",countryProfile.termCalendar],
+        ["School calendar",countryProfile.calendar],
+        ["Teacher qualifications, registration and licensing",countryProfile.qualificationRequirements]
+      ].filter(item=>typeof item[1]==="string"&&item[1].trim()).map(item=>"<h3>"+escapeHtml(item[0])+"</h3><p>"+escapeHtml(item[1])+"</p>").join("");
+      const renderCountryLinks=(items,emptyText)=>{
+        const rows=(Array.isArray(items)?items:[]).filter(item=>item&&typeof item==="object"&&typeof item.url==="string"&&/^https?:\\/\\//i.test(item.url));
+        if(!rows.length)return "<p>"+escapeHtml(emptyText)+"</p>";
+        return "<ul>"+rows.slice(0,12).map(item=>"<li><a href=\\""+escapeHtml(item.url)+"\\" target=\\"_blank\\" rel=\\"noopener noreferrer\\">"+escapeHtml(item.name||item.label||"Open education source")+"</a>"+(item.body?" — "+escapeHtml(item.body):"")+"</li>").join("")+"</ul>";
+      };
+      const schoolDirectoryContent=renderCountryLinks(countryProfile.schools,"School-directory links are being added for this country. Check the national education authority for current school registration and directory information.");
+      const paperContent=renderCountryLinks(countryProfile.papers,"Country-specific past papers, specimen papers and revision links have not yet been curated here. Use the official examining authority's current resources.");
+      const teacherContent=renderCountryLinks(countryProfile.teachers,"Teacher registration and licensing links are being researched. Confirm the requirements with the national or regional regulator before applying.");
+      const furtherContent=renderCountryLinks(countryProfile.further,"Check the official higher-education authority and recognised institutions for current admissions and scholarship information.");
       const examContent=examNames.length
         ? "<h3>Examinations currently listed for "+escapeHtml(country.name)+"</h3><ul>"+examItems+"</ul>"
         : "<p>CBE Nexus has not yet added a verified country-specific examination name for "+escapeHtml(country.name)+". We do not guess examination titles or grade levels. Check the national education ministry or examining authority for the current assessment framework.</p>";
@@ -2985,7 +3005,7 @@ async function serveStatic(req,res,url){
         ["IB Middle Years Programme (MYP) study notes","/ib-myp-study-notes.html"]
       ];
       const internationalLinks=internationalPathways.map(([label,href])=>"<li><a href=\""+href+"\">"+escapeHtml(label)+"</a></li>").join("");
-      const seoSection='<section id="country-seo-examination-overview" class="gs-country-seo-overview"><h2>National examinations and education resources in '+escapeHtml(country.name)+'</h2><p>This country guide brings together national examination names and education information to help learners, parents and teachers identify the correct curriculum and assessment pathway. Examination structures, subjects, registration rules and timetables can change; confirm current details with the responsible national authority.</p>'+examContent+context+'<p>Use the country dashboard to explore <a href="/country-online-notes.html?country='+encodeURIComponent(country.name)+'">online study notes</a>, <a href="/resources.html?country='+encodeURIComponent(country.name)+'">learning and revision resources</a>, and <a href="/interactive-questions.html?country='+encodeURIComponent(country.name)+'">interactive practice questions</a>.</p><h3>International curricula and examination pathways</h3><p>Alongside national assessments, some schools in different countries offer international qualifications. Availability depends on the individual school and approved examination centre; these programmes are not automatically part of the national curriculum.</p><ul>'+internationalLinks+'</ul><p class="gs-seo-review-note">Examination names are an educational index, not a substitute for official registration notices, syllabuses or examination timetables. Verify each examination with its examining body.</p></section><style>.gs-country-seo-overview{max-width:1180px;margin:22px auto;padding:clamp(18px,3vw,30px);background:#fff;border:1px solid #dbe5ef;border-radius:14px;color:#17324b;line-height:1.7}.gs-country-seo-overview h2{margin:0 0 12px;color:#075080;font-size:clamp(21px,2.4vw,28px)}.gs-country-seo-overview h3{margin:20px 0 8px;color:#075080;font-size:17px}.gs-country-seo-overview ul{padding-left:22px}.gs-country-seo-overview li{margin:8px 0}.gs-country-seo-overview li p{margin:3px 0;color:#526579;font-size:14px}.gs-country-seo-overview a{color:#075985;font-weight:750}.gs-seo-review-note{font-size:12px;color:#64748b;border-top:1px solid #e2e8f0;padding-top:12px}</style>';
+      const seoSection='<section id="country-seo-examination-overview" class="gs-country-seo-overview"><h2>Education system, curriculum and national examinations in '+escapeHtml(country.name)+'</h2><p>Explore '+escapeHtml(country.name)+' education information for learners, parents, teachers and schools. This country guide brings together the curriculum and school-stage information currently held in the CBE Nexus country profile, national examination names, school-directory links and education pathways. Confirm current syllabuses, grade structures, admissions, registration rules and examination timetables with the responsible national or regional authority.</p>'+context+'<h3>National examinations and assessment pathways</h3>'+examContent+'<h3>School directory and recognised institutions in '+escapeHtml(country.name)+'</h3>'+schoolDirectoryContent+'<h3>Study notes, past papers and revision resources</h3><p>Find available learning materials and practise by country and subject. The resource library is a discovery point; check each resource for its curriculum, grade and publication status.</p><p><a href="/country-online-notes.html?country='+encodeURIComponent(country.name)+'">Browse '+escapeHtml(country.name)+' online study notes</a> · <a href="/resources.html?country='+encodeURIComponent(country.name)+'">Find '+escapeHtml(country.name)+' learning resources</a> · <a href="/interactive-questions.html?country='+encodeURIComponent(country.name)+'">Practise interactive questions</a></p>'+paperContent+'<h3>Teacher registration and professional requirements</h3>'+teacherContent+'<h3>Higher education, scholarships and further study</h3>'+furtherContent+'<h3>International curricula available through schools</h3><p>Some schools in '+escapeHtml(country.name)+' may offer international qualifications in addition to national programmes. Availability depends on the individual school and approved examination centre; confirm directly with the school.</p><ul>'+internationalLinks+'</ul><p><a href="/global-teaching-jobs/'+country.slug+'">Explore teaching opportunities in '+escapeHtml(country.name)+'</a> · <a href="/online-teaching/'+country.slug+'">Explore online teaching in '+escapeHtml(country.name)+'</a></p><p class="gs-seo-review-note">Country information is included only where it is present in the CBE Nexus country data. Missing information is not a claim that a school, examination, scholarship or teaching opportunity does not exist. Confirm official details with the responsible authority.</p></section><style>.gs-country-seo-overview{max-width:1180px;margin:22px auto;padding:clamp(18px,3vw,30px);background:#fff;border:1px solid #dbe5ef;border-radius:14px;color:#17324b;line-height:1.7}.gs-country-seo-overview h2{margin:0 0 12px;color:#075080;font-size:clamp(21px,2.4vw,28px)}.gs-country-seo-overview h3{margin:20px 0 8px;color:#075080;font-size:17px}.gs-country-seo-overview ul{padding-left:22px}.gs-country-seo-overview li{margin:8px 0}.gs-country-seo-overview li p{margin:3px 0;color:#526579;font-size:14px}.gs-country-seo-overview a{color:#075985;font-weight:750}.gs-seo-review-note{font-size:12px;color:#64748b;border-top:1px solid #e2e8f0;padding-top:12px}</style>';
       if(!html.includes('id="country-seo-examination-overview"'))html=html.replace(/<\/main>/i,seoSection+"</main>");
       const schemaGraph=[
         {"@type":"WebPage","@id":canonical+"#webpage","url":canonical,"name":title,"description":description,"inLanguage":"en","dateModified":"2026-11-07","about":{"@type":"Country","name":country.name}},
@@ -2993,6 +3013,12 @@ async function serveStatic(req,res,url){
       ];
       if(examNames.length)schemaGraph.push({"@type":"ItemList","@id":canonical+"#national-examinations","name":"National examinations in "+country.name,"numberOfItems":examNames.length,"itemListElement":examNames.map((name,index)=>({"@type":"ListItem","position":index+1,"name":name}))});
       schemaGraph.push({"@type":"ItemList","@id":canonical+"#international-curricula","name":"International curriculum and examination pathways","numberOfItems":internationalPathways.length,"itemListElement":internationalPathways.map(([name,href],index)=>({"@type":"ListItem","position":index+1,"name":name,"url":"https://cbenexus.com"+href}))});
+      const countryFaqs=[
+        {"@type":"Question","name":"Which curriculum is used in "+country.name+"?","acceptedAnswer":{"@type":"Answer","text":curriculumName||"Curriculum details should be confirmed with the responsible education authority in "+country.name+"."}},
+        {"@type":"Question","name":"Which national examinations are listed for "+country.name+"?","acceptedAnswer":{"@type":"Answer","text":examNames.length?examNames.join(", "):"The CBE Nexus country examination index does not yet contain a verified examination name for "+country.name+". Confirm the current assessment pathway with the national examining authority."}},
+        {"@type":"Question","name":"Where can learners find study resources for "+country.name+"?","acceptedAnswer":{"@type":"Answer","text":"Use the CBE Nexus country education profile and country online notes and resource links. Confirm the grade, curriculum and subject for each resource before use."}}
+      ];
+      schemaGraph.push({"@type":"FAQPage","@id":canonical+"#country-faq","mainEntity":countryFaqs});
       const schema='<script type="application/ld+json">'+JSON.stringify({"@context":"https://schema.org","@graph":schemaGraph}).replace(/</g,"\\u003c")+'</script>';
       html=html.replace(/<\/head>/i,schema+"</head>");
     }
