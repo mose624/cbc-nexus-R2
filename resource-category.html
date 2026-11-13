@@ -128,7 +128,7 @@ header{border-bottom:4px solid var(--grade-accent)!important}
 
 <section class="subject-learning-support" aria-labelledby="subject-learning-title">
 <h2 id="subject-learning-title">Learn the topic, not just find a file</h2>
-<p>Effective revision combines a clear explanation, a worked example and independent practice. Use the resource filters above to find materials that match the learner's grade, subject and topic, then use these free study guides to strengthen understanding.</p>
+<p id="subject-learning-intro">Effective revision combines a clear explanation, a worked example and independent practice. Use the resource filters above to find materials that match the learner's grade, subject and topic, then use these free study guides to strengthen understanding.</p>
 <div class="subject-learning-cards">
 <article><h3>Integrated Science: electric circuits</h3><p>Review circuit components, current, voltage, resistance and how to apply Ohm's law.</p><a href="/articles/grade-9-integrated-science-electric-circuits.html">Read the worked lesson →</a></article>
 <article><h3>Chemistry: the mole concept</h3><p>Practise converting between mass, molar mass and amount of substance with worked calculations.</p><a href="/articles/grade-10-chemistry-mole-concept-worked-examples.html">Read Chemistry notes →</a></article>
@@ -181,4 +181,18 @@ html,body{min-width:1200px!important;width:1200px!important;max-width:none!impor
 .resource-grade-links a,.resource-type-links a{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:8px 12px;border-radius:7px;text-decoration:none;font-size:12px;font-weight:800;background:#f4f7fa;color:#12345b;border:1px solid #cbd5df;transition:transform .08s ease,filter .08s ease,box-shadow .08s ease}
 .resource-grade-links a:hover,.resource-type-links a:hover{filter:brightness(1.05);box-shadow:0 3px 9px #0002}.resource-grade-links a:active,.resource-type-links a:active{transform:scale(.98)}
 @media(max-width:767px){.resource-navigation{min-width:1136px}.resource-navigation-heading{justify-content:flex-start}.resource-grade-links,.resource-type-links{flex-wrap:nowrap;overflow:visible}}
+</style>
+
+<style id="cbe-resource-mobile-responsive-final">
+html,body{min-width:0!important;width:100%!important;max-width:100%!important;overflow-x:hidden!important}
+header{min-width:0!important;width:100%!important;box-sizing:border-box!important}
+main{width:100%!important;max-width:1200px!important;box-sizing:border-box!important;margin:0 auto!important}
+.resource-navigation{min-width:0!important}.resource-navigation-heading{flex-wrap:wrap}
+.resource-grade-links,.resource-type-links{flex-wrap:wrap!important;overflow:visible!important}
+.subject-learning-support{margin:24px 0;padding:24px;background:#fff;border:1px solid #dfe5ea;border-radius:14px;line-height:1.7}
+.subject-learning-support h2{color:#12345b}
+.subject-learning-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:16px 0}
+.subject-learning-cards article{padding:17px;border:1px solid #dbe7ef;border-radius:12px;background:#f8fcff}
+.subject-learning-cards h3{margin-top:0;color:#12345b}.subject-learning-cards a{font-weight:800;color:#b42336}
+@media(max-width:767px){html,body{min-width:0!important;width:100%!important;overflow-x:hidden!important}header{padding:14px!important;flex-wrap:wrap!important}main{padding:20px 14px!important}.filters{grid-template-columns:1fr!important}.resource-grid{grid-template-columns:1fr!important}.resource-navigation{padding:12px!important}.resource-grade-links a,.resource-type-links a{min-height:40px}.subject-learning-cards{grid-template-columns:1fr}.subject-learning-support{padding:17px}}
 </style>
