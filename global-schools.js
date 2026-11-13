@@ -123,8 +123,8 @@ function renderCountry(){
  const countryExamNames=(d.exams||[]).map(item=>item&&item.name).filter(Boolean);
  const countryExamPhrase=countryExamNames.length?countryExamNames.slice(0,4).join(", "):"the national assessment pathway";
  text($("gsTitle"),c.name+" Education Resources & National Examinations");text($("gsIntro"),"Explore "+c.name+" education resources and prepare for "+countryExamPhrase+". Find curriculum guidance, online notes, revision resources, school information and official education links.");
- text($("countryFlag"),c.flag);text($("countryName"),c.name);text($("countrySub"),"Dedicated country page · /global-schools/"+c.slug);
- text($("countryIntro"),"This page brings together source links and country-specific education information for "+c.name+". Do not treat a missing record as proof that no school, exam, vacancy or scholarship exists.");
+ text($("countryFlag"),c.flag);text($("countryName"),d.seoHeading||c.name);text($("countrySub"),"Country education guide · /global-schools/"+c.slug);
+ text($("countryIntro"),d.seoIntro||("This page brings together source links and country-specific education information for "+c.name+". Do not treat a missing record as proof that no school, exam, vacancy or scholarship exists."));
  const status=$("countryStatus");status.replaceChildren();const badge=node("span","gs-status "+(d.sources?"partial":"missing"));badge.textContent=d.sources?"Some official sources curated — individual records require verification":"Framework available — country-specific data not yet verified";status.appendChild(badge);
  // Country-specific online teaching and learning marketplace.
  const marketStyle=node("style");marketStyle.textContent=".gs-country-market-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0}.gs-country-market-stats .gs-card{margin:0;padding:14px}.gs-country-market-stats strong{display:block;color:#075080;font-size:24px}.gs-country-market-stats p{margin:3px 0 0}.gs-country-market-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.gs-market-btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 13px;border-radius:8px;background:#075080;color:#fff!important;font-weight:800;font-size:12px;text-decoration:none}.gs-country-market-actions .gs-market-btn:first-child{background:#08734f}@media(max-width:560px){.gs-country-market-stats{grid-template-columns:1fr}.gs-country-market-actions .gs-market-btn{width:100%}}";document.head.appendChild(marketStyle);
@@ -500,9 +500,9 @@ function renderCountry(){
  });
  applyCountryLocale(slug);
  const examTitleNames=(d.exams||[]).map(item=>item&&item.name).filter(Boolean);
- const title=examTitleNames.length?c.name+" National Exams: "+examTitleNames.slice(0,2).join(" & ")+" | CBE Nexus":c.name+" Education System & Exams | CBE Nexus";
+ const title=d.seoTitle||(examTitleNames.length?c.name+" National Exams: "+examTitleNames.slice(0,2).join(" & ")+" | CBE Nexus":c.name+" Education System & Exams | CBE Nexus");
  document.title=title.length>78?c.name+" National Exams & Education Resources | CBE Nexus":title;
- const desc=examTitleNames.length?"Explore "+c.name+" national exams, curriculum and online study notes. Confirm current exam names and requirements with official education authorities.":"Explore "+c.name+" schools, curriculum, national exams and online study notes. Confirm current requirements with official education authorities.";
+ const desc=d.seoDescription||(examTitleNames.length?"Explore "+c.name+" national exams, curriculum and online study notes. Confirm current exam names and requirements with official education authorities.":"Explore "+c.name+" schools, curriculum, national exams and online study notes. Confirm current requirements with official education authorities.");
  const canonicalUrl="https://cbenexus.com/global-schools/"+c.slug;
  setSeoMeta('meta[name="description"]',"name",desc);
  setSeoMeta('meta[property="og:type"]',"property","website");
@@ -514,8 +514,29 @@ function renderCountry(){
  setSeoMeta('meta[name="twitter:title"]',"name",document.title);
  setSeoMeta('meta[name="twitter:description"]',"name",desc);
  let canonical=document.querySelector('link[rel="canonical"]');if(canonical)canonical.href=canonicalUrl;
- const examItems=examTitleNames.map((name,index)=>({"@type":"ListItem","position":index+1,"name":name}));
- const seoGraph={"@context":"https://schema.org","@graph":[{"@type":"WebPage","name":document.title,"description":desc,"url":canonicalUrl,"isPartOf":{"@type":"WebSite","name":"CBE Nexus","url":"https://cbenexus.com"},"about":[{"@type":"Country","name":c.name},...examTitleNames.map(name=>({"@type":"Thing","name":name}))]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"CBE Nexus","item":"https://cbenexus.com/"},{"@type":"ListItem","position":2,"name":"Global Schools Directory","item":"https://cbenexus.com/global-schools"},{"@type":"ListItem","position":3,"name":c.name,"item":canonicalUrl}]}]};
+ const seoGraph={"@context":"https://schema.org","@graph":[
+  {"@type":"WebPage","name":document.title,"description":desc,"url":canonicalUrl,"keywords":Array.isArray(d.seoTopics)?d.seoTopics.join(", "):undefined,"isPartOf":{"@type":"WebSite","name":"CBE Nexus","url":"https://cbenexus.com"},"about":[{"@type":"Country","name":c.name},...examTitleNames.map(name=>({"@type":"Thing","name":name})),...(d.curriculum?[{"@type":"Thing","name":d.curriculum}]:[])]},
+  {"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"CBE Nexus","item":"https://cbenexus.com/"},{"@type":"ListItem","position":2,"name":"Global Schools Directory","item":"https://cbenexus.com/global-schools"},{"@type":"ListItem","position":3,"name":c.name,"item":canonicalUrl}]}
+ ]};
+ const faqRecords=Array.isArray(d.seoFaqs)?d.seoFaqs.filter(x=>x&&x.question&&x.answer):[];
+ const faqPanel=$("countrySeoFaqPanel"),faqHost=$("countrySeoFaqs");
+ if(faqPanel&&faqHost){
+  faqHost.replaceChildren();
+  const faqHeading=$("countrySeoFaqHeading");if(faqHeading)text(faqHeading,"Frequently asked questions about "+c.name+" education");
+  faqRecords.forEach(item=>{
+   const details=node("details","gs-country-seo-faq");
+   const question=node("summary");question.textContent=item.question;
+   const answer=node("p");answer.textContent=item.answer;
+   details.append(question,answer);faqHost.appendChild(details);
+  });
+  faqPanel.classList.toggle("gs-hidden",!faqRecords.length);
+  if(faqRecords.length)seoGraph["@graph"].push({"@type":"FAQPage","mainEntity":faqRecords.map(item=>({"@type":"Question","name":item.question,"acceptedAnswer":{"@type":"Answer","text":item.answer}}))});
+ }
+ if(!document.getElementById("country-seo-faq-style")){
+  const style=node("style");style.id="country-seo-faq-style";
+  style.textContent=".gs-country-seo-faqs{display:grid;gap:10px}.gs-country-seo-faq{padding:13px 15px;border:1px solid #dbe5ef;border-radius:10px;background:#fff}.gs-country-seo-faq summary{cursor:pointer;color:#075080;font-weight:800}.gs-country-seo-faq p{margin:10px 0 0;color:#334155;line-height:1.6}";
+  document.head.appendChild(style);
+ }
  let schema=document.getElementById("country-seo-jsonld");if(!schema){schema=document.createElement("script");schema.id="country-seo-jsonld";schema.type="application/ld+json";document.head.appendChild(schema);}schema.textContent=JSON.stringify(seoGraph);
 }
 $("searchButton").addEventListener("click",()=>{const q=$("countrySearch").value.trim();const match=countries.find(c=>c.name.toLowerCase()===q.toLowerCase()||c.slug===q.toLowerCase().replace(/\s+/g,"-"));if(match){location.href=match.url;return;}renderCountries(q);});
