@@ -611,3 +611,15 @@ html body.ai-academy-page>header.ai-nav.academy-unified-header nav a:hover{
   background:#fff!important;
   color:#a90f28!important;
 }
+
+/* Mobile layout: remove the legacy 1200px desktop canvas on AI Academy pages. */
+@media(max-width:760px){
+ html,body{min-width:0!important;width:100%!important;max-width:100%!important;overflow-x:hidden!important}
+ .ai-academy-page header,.ai-academy-page main,.ai-academy-page section{min-width:0!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important}
+ .ai-academy-page header{display:flex!important;flex-wrap:wrap!important;gap:10px!important;padding:12px 14px!important}
+ .ai-academy-page header nav{display:flex!important;flex-wrap:wrap!important;gap:8px!important}
+ .ai-academy-page main{padding:16px 12px!important;margin:0 auto!important}
+ .ai-academy-page .module-list,.ai-academy-page .course-grid,.ai-academy-page .ai-course-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .ai-academy-page input,.ai-academy-page select,.ai-academy-page textarea{max-width:100%!important;min-width:0!important}
+}
+@media(max-width:420px){.ai-academy-page .module-list,.ai-academy-page .course-grid,.ai-academy-page .ai-course-grid{grid-template-columns:1fr!important}}
