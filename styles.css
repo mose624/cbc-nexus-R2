@@ -5321,3 +5321,22 @@ html { scroll-behavior: auto; }
   line-height: 1.1 !important;
   text-align: center !important;
 }
+
+/* 2026 AdSense readiness: genuine responsive layout on phones and small tablets. */
+@media(max-width:760px){
+  html,body{min-width:0!important;width:100%!important;max-width:100%!important;overflow-x:hidden!important}
+  .site-header,.top-strip,.main-nav,.dashboard-shell,.content-band,.admin-band,.trust-band,.promo-band,.seller-band,.urgent-band,.competitive-band,.seo-band,.landing-band,.payment-band,.admin-login-band,.info-band,.site-footer{min-width:0!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important}
+  .site-header .top-strip,.site-header .main-nav,.site-header .main-nav .nav-menu,.site-header .main-nav .nav-actions{flex-wrap:wrap!important;white-space:normal!important;overflow:visible!important}
+  .site-header .main-nav{height:auto!important;min-height:0!important;padding:10px 12px!important;gap:8px!important}
+  .site-header .main-nav .nav-menu{gap:5px!important}
+  .portal-dashboard{display:flex!important;flex-direction:column!important;gap:12px!important;width:calc(100% - 20px)!important;min-width:0!important;max-width:100%!important;margin:12px auto!important}
+  .portal-sidebar,.portal-main,.portal-rightbar{order:initial!important;width:100%!important;min-width:0!important;max-width:100%!important}
+  .portal-category-grid,.home-dashboard-card-grid,.download-grid,.resource-grid,.feature-grid,.trust-grid,.landing-grid,.nexus-quick-links-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+  .filters,.form-row,.refer-form{display:grid!important;grid-template-columns:1fr!important;gap:10px!important}
+  .content-band,.admin-band,.trust-band,.promo-band,.seller-band,.urgent-band,.competitive-band,.seo-band,.landing-band,.payment-band,.admin-login-band,.info-band{padding-left:12px!important;padding-right:12px!important}
+  .site-footer{display:flex!important;flex-wrap:wrap!important;gap:12px!important}
+}
+@media(max-width:420px){
+  .portal-category-grid,.home-dashboard-card-grid,.download-grid,.resource-grid,.feature-grid,.trust-grid,.landing-grid,.nexus-quick-links-grid{grid-template-columns:1fr!important}
+  .site-header .main-nav .nav-menu a,.site-header .main-nav .nav-actions a{max-width:100%!important}
+}
