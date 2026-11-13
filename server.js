@@ -2543,7 +2543,7 @@ function getAdSenseConfig(){
 }
 function isAdExcludedPath(pathname){
   const p=String(pathname||"/").toLowerCase();
-  return p.startsWith("/api/") || p.startsWith("/admin") || p.includes("login") || p.includes("checkout") || p.includes("payment") || p.includes("upload") || p.includes("dashboard");
+  return p === "/" || p === "/index.html" || p === "/resource-category.html" || p === "/resources.html" || p.startsWith("/api/") || p.includes("/admin") || p.startsWith("/admin-") || p.includes("admin-") || p.includes("login") || p.includes("checkout") || p.includes("payment") || p.includes("upload") || p.includes("dashboard") || p.includes("seller-marketplace") || p.includes("teacher-board") || p.includes("online-teaching");
 }
 function optimizeHtmlForAds(html){
   let out=String(html||"");
@@ -2717,7 +2717,7 @@ async function getHomepageHtml(req){
     .replaceAll("https://example.com/",b+"/")
     .replace("<title>CBE E-Learning Resources</title>","<title>CBE Nexus | CBC & CBE Learning Resources Kenya</title>")
     .replace("CBE E-Learning Resources for Grades 1-12","CBE Nexus | CBC & CBE Learning Resources for Grades 1-12 in Kenya");
-  const bridgeScript='<script src="/resource-centre-bridge.js?v=20260930-4" defer></script><script src="/admin-fallback.js?v=20260930-4" defer></script>';
+  const bridgeScript='<script src="/resource-centre-bridge.js?v=20260930-4" defer></script>';
   if(!data.includes("resource-centre-bridge.js")) data=data.replace("</body>",bridgeScript+"</body>");
   data=injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(injectTrustedReferenceSection(data,"/")), "/"));
   homepageHtmlCache=Buffer.from(data);
@@ -3020,7 +3020,7 @@ async function serveStatic(req,res,url){
         .replaceAll("https://example.com/",b+"/")
         .replace("<title>CBE E-Learning Resources</title>","<title>CBE Nexus | CBC & CBE Learning Resources Kenya</title>")
         .replace("CBE E-Learning Resources for Grades 1-12","CBE Nexus | CBC & CBE Learning Resources for Grades 1-12 in Kenya"));
-      const bridgeScript = '<script src="/resource-centre-bridge.js?v=20260930-4" defer></script><script src="/admin-fallback.js?v=20260930-4" defer></script>';
+      const bridgeScript = '<script src="/resource-centre-bridge.js?v=20260930-4" defer></script>';
       if (!data.toString("utf8").includes("resource-centre-bridge.js")) data = Buffer.from(data.toString("utf8").replace("</body>", bridgeScript + "</body>"));
     }
     const ext=path.extname(target).toLowerCase();

@@ -27,7 +27,39 @@ function canonicalSubjectName(subject){return subjectForFilter(String(subject||"
 const typeAliases={"Scheme of Work":"Schemes of Work","Lesson Plans":"Lesson Plan","Assessment Tests":"Assessment Test","Marking Scheme":"Marking Schemes","Topical Question":"Topical Questions","Holiday Workbook":"Holiday Workbooks","Past Paper":"Past Papers","Study Guide":"Study Guides","Assignment":"Assignments","Project":"Projects"};
 function canonicalTypeName(type){const value=String(type||"").trim();return typeAliases[value]||value;}
 function displaySubject(s){return String(s||"").trim();}
-function updateContext(){if(!filterContext)return;const parts=[];if(countryFilter)parts.push(`<span class="context-badge">Country: ${esc(countryFilter)}</span>`);if(grade.value!=="All Grades")parts.push(`<span class="context-badge grade-badge">Grade: ${esc(grade.value)}</span>`);if(subject.value!=="All Subjects")parts.push(`<span class="context-badge subject-badge">Subject: ${esc(subject.value)}</span>`);if(typeSelect.value!=="All Materials")parts.push(`<span class="context-badge">Type: ${esc(typeSelect.value)}</span>`);filterContext.innerHTML=parts.join("");}
+
+function updateLandingMetadata(){
+  const g=grade.value==="All Grades"?"":grade.value;
+  const s=subject.value==="All Subjects"?"":subject.value;
+  const context=[g,s].filter(Boolean).join(" ");
+  const heading=context?context+" Learning Resources, Notes and Practice Questions":"CBC and CBE Learning Resources by Grade and Subject";
+  const title=heading+" | CBE Nexus";
+  const description=context
+    ? "Explore "+context+" learning materials, approved notes, revision resources and practice support. Review worked examples and use the resource filters to find materials for your learning goals."
+    : "Find CBC and CBE learning materials by grade, subject and resource type, with study guides, worked examples and revision support.";
+  const h=document.getElementById("pageTitle");
+  if(h)h.textContent=context?heading: "CBC & CBE Resources by Grade and Subject";
+  const guide=document.getElementById("subject-learning-title");
+  if(guide)guide.textContent=context?"Study support for "+context:"Learn the topic, not just find a file";
+  const intro=document.getElementById("subject-learning-intro");
+  if(intro)intro.textContent=context
+    ? "Use this "+context+" page to find suitable approved learning materials. Build understanding with a clear explanation, a worked example and independent practice; confirm each resource matches the learner's current curriculum and topic."
+    : "Effective revision combines a clear explanation, a worked example and independent practice. Use the filters above to find materials that match the learner's grade, subject and topic, then use these free study guides to strengthen understanding.";
+  document.title=title;
+  const meta=document.querySelector('meta[name="description"]');
+  if(meta)meta.setAttribute("content",description);
+  const canonical=document.querySelector('link[rel="canonical"]');
+  if(canonical){
+    const p=new URLSearchParams();
+    if(countryFilter)p.set("country",countryFilter);
+    if(g)p.set("grade",g);
+    if(s)p.set("subject",s);
+    if(typeSelect.value!=="All Materials")p.set("type",typeSelect.value);
+    canonical.href="https://cbenexus.com/resource-category.html"+(p.toString()?"?"+p.toString():"");
+  }
+}
+
+function updateContext(){if(!filterContext)return;const parts=[];if(countryFilter)parts.push(`<span class="context-badge">Country: ${esc(countryFilter)}</span>`);if(grade.value!=="All Grades")parts.push(`<span class="context-badge grade-badge">Grade: ${esc(grade.value)}</span>`);if(subject.value!=="All Subjects")parts.push(`<span class="context-badge subject-badge">Subject: ${esc(subject.value)}</span>`);if(typeSelect.value!=="All Materials")parts.push(`<span class="context-badge">Type: ${esc(typeSelect.value)}</span>`);filterContext.innerHTML=parts.join("");updateLandingMetadata();}
 const initialGrade=params.get("grade")||"All Grades",initialSubject=subjectForFilter(params.get("subject")||"All Subjects");
 let resources=[];
 grade.value=initialGrade;
