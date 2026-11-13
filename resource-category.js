@@ -51,6 +51,7 @@ function updateLandingMetadata(){
   const canonical=document.querySelector('link[rel="canonical"]');
   if(canonical){
     const p=new URLSearchParams();
+    if(countryFilter)p.set("country",countryFilter);
     if(g)p.set("grade",g);
     if(s)p.set("subject",s);
     if(typeSelect.value!=="All Materials")p.set("type",typeSelect.value);
