@@ -2982,9 +2982,9 @@ async function serveStatic(req,res,url){
         ["Teacher qualifications, registration and licensing",countryProfile.qualificationRequirements]
       ].filter(item=>typeof item[1]==="string"&&item[1].trim()).map(item=>"<h3>"+escapeHtml(item[0])+"</h3><p>"+escapeHtml(item[1])+"</p>").join("");
       const renderCountryLinks=(items,emptyText)=>{
-        const rows=(Array.isArray(items)?items:[]).filter(item=>item&&typeof item==="object"&&typeof item.url==="string"&&/^https?:\\/\\//i.test(item.url));
+        const rows=(Array.isArray(items)?items:[]).filter(item=>item&&typeof item==="object"&&typeof item.url==="string"&&(item.url.startsWith("https://")||item.url.startsWith("http://")));
         if(!rows.length)return "<p>"+escapeHtml(emptyText)+"</p>";
-        return "<ul>"+rows.slice(0,12).map(item=>"<li><a href=\\""+escapeHtml(item.url)+"\\" target=\\"_blank\\" rel=\\"noopener noreferrer\\">"+escapeHtml(item.name||item.label||"Open education source")+"</a>"+(item.body?" — "+escapeHtml(item.body):"")+"</li>").join("")+"</ul>";
+        return '<ul>'+rows.slice(0,12).map(item=>'<li><a href="'+escapeHtml(item.url)+'" target="_blank" rel="noopener noreferrer">'+escapeHtml(item.name||item.label||"Open education source")+'</a>'+(item.body?" — "+escapeHtml(item.body):"")+'</li>').join("")+'</ul>';
       };
       const schoolDirectoryContent=renderCountryLinks(countryProfile.schools,"School-directory links are being added for this country. Check the national education authority for current school registration and directory information.");
       const paperContent=renderCountryLinks(countryProfile.papers,"Country-specific past papers, specimen papers and revision links have not yet been curated here. Use the official examining authority's current resources.");
