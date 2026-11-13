@@ -2543,7 +2543,7 @@ function getAdSenseConfig(){
 }
 function isAdExcludedPath(pathname){
   const p=String(pathname||"/").toLowerCase();
-  return p === "/" || p === "/index.html" || p.startsWith("/api/") || p.startsWith("/admin") || p.includes("login") || p.includes("checkout") || p.includes("payment") || p.includes("upload") || p.includes("dashboard") || p.includes("seller-marketplace") || p.includes("teacher-board");
+  return p === "/" || p === "/index.html" || p.startsWith("/api/") || p.includes("/admin") || p.startsWith("/admin-") || p.includes("admin-") || p.includes("login") || p.includes("checkout") || p.includes("payment") || p.includes("upload") || p.includes("dashboard") || p.includes("seller-marketplace") || p.includes("teacher-board") || p.includes("online-teaching");
 }
 function optimizeHtmlForAds(html){
   let out=String(html||"");
