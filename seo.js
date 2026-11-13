@@ -258,7 +258,10 @@ async function sitemap(req){
   "/cbc-notes-kenya","/cbc-exams-kenya","/kjsea-revision",
   "/free-interactive-questions","/daily-quiz","/grade-9-kjsea-revision-questions","/grade-10-cbe-practice-questions",
   "/free-cbc-online-quizzes","/mashujaa-day-kenyan-heroes-quiz","/free-ai-training",
-  "/free-cv-writing","/free-international-jobs","/all-schools-in-kenya","/global-schools"
+  "/free-cv-writing","/free-international-jobs","/all-schools-in-kenya","/global-schools",
+  "/articles/grade-9-integrated-science-electric-circuits.html",
+  "/articles/grade-10-chemistry-mole-concept-worked-examples.html",
+  "/articles/biology-cell-structure-functions-notes.html"
  ];
  try{(globalSchools.countries||[]).forEach(c=>{urls.push(c.url);urls.push("/global-teaching-jobs/"+c.slug);urls.push("/online-teaching/"+c.slug);});}catch(e){console.warn("Global schools sitemap lookup failed:",e.message||e);}
  try{
