@@ -154,7 +154,7 @@
   "Micronesia":["Federated States of Micronesia National Curriculum Standards and Benchmarks / Secondary supplementary"],
   "Moldova":["Moldova National Curriculum / Gymnasium (Grades V–IX)"],
   "Monaco":["Monaco National Education Programme / French National Programmes with Monaco-specific History"],
-  "Seychelles":["Seychelles National Curriculum / IGCSE","Cambridge International"]
+  "Seychelles":["Seychelles National Curriculum / IGCSE","Cambridge International"],
   "Nicaragua":["Nicaragua Regular Secondary Education / 9° (Fourth Cycle)"],
   "Niger":["Niger General Secondary Education / Second Cycle (Lycée) — Official Programme Reference"],
   "North Korea":["DPR Korea 12-Year Compulsory Education / Lower Secondary Year 3 — Supplementary"],
