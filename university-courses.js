@@ -54,6 +54,8 @@
       }
       card.dataset.courseItems=JSON.stringify(data.items);
       card.dataset.courseSource=data.source;
+      card.dataset.courseUrl=data.url||"";
+      card.dataset.courseDate=data.date||"";
       renderCard(card,box,data);
     }catch(e){
       box.innerHTML="<strong style='color:#075985'>🎓 Institution-specific courses</strong><p style='font-size:.8rem;color:#475569;margin:7px 0'>The official course register is temporarily unavailable. Please check the institution's official website.</p>";
@@ -63,7 +65,7 @@
     let items=[];try{items=JSON.parse(card.dataset.courseItems||"[]")}catch{}
     const shown=items.filter(matchLevel);
     const title=data?.source||card.dataset.courseSource||"Official register";
-    const sourceUrl=data?.url||"https://www.cue.or.ke/";
+    const sourceUrl=data?.url||card.dataset.courseUrl||"https://www.cue.or.ke/";
     const courseName=x=>x.programmeName||x.name||x.courseName||"";
     const courseLevel=x=>x.qualificationLevel||x.level||"Level not stated";
     const tags=shown.slice(0,8).map(x=>"<li style='font-size:.76rem;color:#334155;margin:3px 0'>"+esc(courseName(x))+" <span style='color:#64748b'>("+esc(courseLevel(x))+")</span></li>").join("");
@@ -77,6 +79,6 @@
     });
   }
   const mutation=new MutationObserver(scan);mutation.observe(list,{childList:true,subtree:true});
-  levelEl?.addEventListener("change",()=>list.querySelectorAll(".inst-card").forEach(card=>{const box=card.querySelector(".cbe-course-box");if(box&&card.dataset.courseItems)renderCard(card,box,{source:card.dataset.courseSource,url:"https://www.cue.or.ke/"});}));
+  levelEl?.addEventListener("change",()=>list.querySelectorAll(".inst-card").forEach(card=>{const box=card.querySelector(".cbe-course-box");if(box&&card.dataset.courseItems)renderCard(card,box,{source:card.dataset.courseSource,date:card.dataset.courseDate,url:card.dataset.courseUrl});}));
   scan();
 })();
