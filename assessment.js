@@ -102,6 +102,11 @@
   "China":["China National Curriculum / Gaokao","Cambridge International","Pearson Edexcel","IB"],
   "Japan":["Japan MEXT Curriculum","Cambridge International","IB"],
   "United Arab Emirates":["UAE Ministry of Education Curriculum","British Curriculum / GCSE / A Level","US Curriculum","IB","CBSE"],
+  "Singapore":["Singapore MOE Lower Secondary Curriculum / Secondary 2 / G2-G3"],
+  "Slovakia":["Slovakia State Educational Programme for Basic Education / 9th Grade"],
+  "Slovenia":["Slovenia Basic School National Curriculum / 9th Grade"],
+  "Solomon Islands":["Solomon Islands National Curriculum / Junior Secondary Year 9 / Form 3"],
+  "Somalia":["Somalia National Education Curriculum / Secondary Form 1 (Grade 9)"],
   "Saudi Arabia":["Saudi Ministry of Education Curriculum / Intermediate Grade 9 / Third Intermediate"],
   "Senegal":["Senegal National Curriculum / Collège / Troisième (3e)"],
   "Serbia":["Serbia National Curriculum / Primary Education / Grade 8"],
@@ -750,6 +755,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isNinthseychelles = selectedCountry.toLowerCase() === "seychelles" && selectedCurriculum.toLowerCase() === "seychelles national curriculum framework / secondary 3 (s3)";
     const isNinthsierraleone = selectedCountry.toLowerCase() === "sierra leone" && selectedCurriculum.toLowerCase() === "sierra leone mbsse national senior secondary curriculum framework / sss 1 / sciences and technologies";
     const isNinthFiveNational = isNinthsaudiarabia || isNinthsenegal || isNinthserbia || isNinthseychelles || isNinthsierraleone;
+    const isTenthFiveNational = isTenthsingapore || isTenthslovakia || isTenthslovenia || isTenthsolomonislands || isTenthsomalia;
     const isEthiopiaMoE = selectedCountry === "ethiopia" && selectedCurriculum === "ethiopia ministry of education curriculum / ethiopian general school leaving examination";
     const isEritreaMoE = selectedCountry === "eritrea" && selectedCurriculum === "eritrea ministry of education national curriculum / secondary education certificate examination (esece)";
     if (isKenyaCbc) {
@@ -805,6 +811,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     if (isNinthserbia) { const gradeBank = window.CBENexusNinthFiveBanks && window.CBENexusNinthFiveBanks["Serbia"] && window.CBENexusNinthFiveBanks["Serbia"].banks && window.CBENexusNinthFiveBanks["Serbia"].banks[selectedGrade] && window.CBENexusNinthFiveBanks["Serbia"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     if (isNinthseychelles) { const gradeBank = window.CBENexusNinthFiveBanks && window.CBENexusNinthFiveBanks["Seychelles"] && window.CBENexusNinthFiveBanks["Seychelles"].banks && window.CBENexusNinthFiveBanks["Seychelles"].banks[selectedGrade] && window.CBENexusNinthFiveBanks["Seychelles"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     if (isNinthsierraleone) { const gradeBank = window.CBENexusNinthFiveBanks && window.CBENexusNinthFiveBanks["Sierra Leone"] && window.CBENexusNinthFiveBanks["Sierra Leone"].banks && window.CBENexusNinthFiveBanks["Sierra Leone"].banks[selectedGrade] && window.CBENexusNinthFiveBanks["Sierra Leone"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isTenthsingapore) { const gradeBank = window.CBENexusTenthFiveBanks && window.CBENexusTenthFiveBanks["Singapore"] && window.CBENexusTenthFiveBanks["Singapore"].banks && window.CBENexusTenthFiveBanks["Singapore"].banks[selectedGrade] && window.CBENexusTenthFiveBanks["Singapore"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isTenthslovakia) { const gradeBank = window.CBENexusTenthFiveBanks && window.CBENexusTenthFiveBanks["Slovakia"] && window.CBENexusTenthFiveBanks["Slovakia"].banks && window.CBENexusTenthFiveBanks["Slovakia"].banks[selectedGrade] && window.CBENexusTenthFiveBanks["Slovakia"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isTenthslovenia) { const gradeBank = window.CBENexusTenthFiveBanks && window.CBENexusTenthFiveBanks["Slovenia"] && window.CBENexusTenthFiveBanks["Slovenia"].banks && window.CBENexusTenthFiveBanks["Slovenia"].banks[selectedGrade] && window.CBENexusTenthFiveBanks["Slovenia"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isTenthsolomonislands) { const gradeBank = window.CBENexusTenthFiveBanks && window.CBENexusTenthFiveBanks["Solomon Islands"] && window.CBENexusTenthFiveBanks["Solomon Islands"].banks && window.CBENexusTenthFiveBanks["Solomon Islands"].banks[selectedGrade] && window.CBENexusTenthFiveBanks["Solomon Islands"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isTenthsomalia) { const gradeBank = window.CBENexusTenthFiveBanks && window.CBENexusTenthFiveBanks["Somalia"] && window.CBENexusTenthFiveBanks["Somalia"].banks && window.CBENexusTenthFiveBanks["Somalia"].banks[selectedGrade] && window.CBENexusTenthFiveBanks["Somalia"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     return [];
   }
 
@@ -1101,6 +1112,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const issaintkittsNational = selectedCountry.toLowerCase() === "saint kitts and nevis" && selectedCurriculum.toLowerCase() === "saint kitts and nevis secondary education / form 3 / csec preparation pathway";
     const issaintluciaNational = selectedCountry.toLowerCase() === "saint lucia" && selectedCurriculum.toLowerCase() === "saint lucia national curriculum / lower secondary / form 3";
     const isNinthsaudiarabia = selectedCountry.toLowerCase() === "saudi arabia" && selectedCurriculum.toLowerCase() === "saudi ministry of education curriculum / intermediate grade 9 / third intermediate";
+    const isTenthsingapore = selectedCountry.toLowerCase() === "singapore" && selectedCurriculum.toLowerCase() === "singapore moe lower secondary curriculum / secondary 2 / g2-g3";
+    const isTenthslovakia = selectedCountry.toLowerCase() === "slovakia" && selectedCurriculum.toLowerCase() === "slovakia state educational programme for basic education / 9th grade";
+    const isTenthslovenia = selectedCountry.toLowerCase() === "slovenia" && selectedCurriculum.toLowerCase() === "slovenia basic school national curriculum / 9th grade";
+    const isTenthsolomonislands = selectedCountry.toLowerCase() === "solomon islands" && selectedCurriculum.toLowerCase() === "solomon islands national curriculum / junior secondary year 9 / form 3";
+    const isTenthsomalia = selectedCountry.toLowerCase() === "somalia" && selectedCurriculum.toLowerCase() === "somalia national education curriculum / secondary form 1 (grade 9)";
     const isNinthsenegal = selectedCountry.toLowerCase() === "senegal" && selectedCurriculum.toLowerCase() === "senegal national curriculum / collège / troisième (3e)";
     const isNinthserbia = selectedCountry.toLowerCase() === "serbia" && selectedCurriculum.toLowerCase() === "serbia national curriculum / primary education / grade 8";
     const isNinthseychelles = selectedCountry.toLowerCase() === "seychelles" && selectedCurriculum.toLowerCase() === "seychelles national curriculum framework / secondary 3 (s3)";
@@ -1158,6 +1174,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const subjectsSerbia = isNinthserbia && window.CBENexusNinthFiveBanks && window.CBENexusNinthFiveBanks["Serbia"] && window.CBENexusNinthFiveBanks["Serbia"].banks && window.CBENexusNinthFiveBanks["Serbia"].banks[grade.value] ? Object.keys(window.CBENexusNinthFiveBanks["Serbia"].banks[grade.value]) : [];
     const subjectsSeychelles = isNinthseychelles && window.CBENexusNinthFiveBanks && window.CBENexusNinthFiveBanks["Seychelles"] && window.CBENexusNinthFiveBanks["Seychelles"].banks && window.CBENexusNinthFiveBanks["Seychelles"].banks[grade.value] ? Object.keys(window.CBENexusNinthFiveBanks["Seychelles"].banks[grade.value]) : [];
     const subjectsSierraLeone = isNinthsierraleone && window.CBENexusNinthFiveBanks && window.CBENexusNinthFiveBanks["Sierra Leone"] && window.CBENexusNinthFiveBanks["Sierra Leone"].banks && window.CBENexusNinthFiveBanks["Sierra Leone"].banks[grade.value] ? Object.keys(window.CBENexusNinthFiveBanks["Sierra Leone"].banks[grade.value]) : [];
+    const subjectsTenthsingapore = isTenthsingapore && window.CBENexusTenthFiveBanks && window.CBENexusTenthFiveBanks["Singapore"] && window.CBENexusTenthFiveBanks["Singapore"].banks && window.CBENexusTenthFiveBanks["Singapore"].banks[grade.value] ? Object.keys(window.CBENexusTenthFiveBanks["Singapore"].banks[grade.value]) : [];
+    const subjectsTenthslovakia = isTenthslovakia && window.CBENexusTenthFiveBanks && window.CBENexusTenthFiveBanks["Slovakia"] && window.CBENexusTenthFiveBanks["Slovakia"].banks && window.CBENexusTenthFiveBanks["Slovakia"].banks[grade.value] ? Object.keys(window.CBENexusTenthFiveBanks["Slovakia"].banks[grade.value]) : [];
+    const subjectsTenthslovenia = isTenthslovenia && window.CBENexusTenthFiveBanks && window.CBENexusTenthFiveBanks["Slovenia"] && window.CBENexusTenthFiveBanks["Slovenia"].banks && window.CBENexusTenthFiveBanks["Slovenia"].banks[grade.value] ? Object.keys(window.CBENexusTenthFiveBanks["Slovenia"].banks[grade.value]) : [];
+    const subjectsTenthsolomonislands = isTenthsolomonislands && window.CBENexusTenthFiveBanks && window.CBENexusTenthFiveBanks["Solomon Islands"] && window.CBENexusTenthFiveBanks["Solomon Islands"].banks && window.CBENexusTenthFiveBanks["Solomon Islands"].banks[grade.value] ? Object.keys(window.CBENexusTenthFiveBanks["Solomon Islands"].banks[grade.value]) : [];
+    const subjectsTenthsomalia = isTenthsomalia && window.CBENexusTenthFiveBanks && window.CBENexusTenthFiveBanks["Somalia"] && window.CBENexusTenthFiveBanks["Somalia"].banks && window.CBENexusTenthFiveBanks["Somalia"].banks[grade.value] ? Object.keys(window.CBENexusTenthFiveBanks["Somalia"].banks[grade.value]) : [];
     let baseList = isKenyaCbc ? subjectsForGrade(grade.value) : (isNigeriaNERDC ? nigeriaSubjects : (isTanzaniaTIE ? tanzaniaSubjects : (isEstoniaNational ? estoniaSubjects : (isLatviaNational ? latviaSubjects : (isLithuaniaNational ? lithuaniaSubjects : (isLuxembourgESC ? luxembourgSubjects : (isMaltaNational ? maltaSubjects : (isMauritaniaNational ? subjectsMauritania : (isMexicoNational ? subjectsMexico : (isMicronesiaNational ? subjectsMicronesia : (isMoldovaNational ? subjectsMoldova : (ismarshallislandsNational ? subjectsmarshallislands : (ismongoliaNational ? subjectsmongolia : (ismontenegroNational ? subjectsmontenegro : (ismoroccoNational ? subjectsmorocco : (ismozambiqueNational ? subjectsmozambique : (ismyanmarNational ? subjectsmyanmar : (isnamibiaNational ? subjectsnamibia : (isnauruNational ? subjectsnauru : (isnepalNational ? subjectsnepal : (isnetherlandsNational ? subjectsnetherlands : (isnewzealandNational ? subjectsnewzealand : (isnicaraguaNational ? subjectsnicaragua : (isnigerNational ? subjectsniger : (isnorthkoreaNational ? subjectsnorthkorea : (isnorthmacedoniaNational ? subjectsnorthmacedonia : (isMonacoNational ? subjectsMonaco : mauritiusSubjects)))))))))))))))))))))))))));
     if (ispapuanewguineaNational) baseList = subjectspapuanewguinea;
     if (isparaguayNational) baseList = subjectsparaguay;
@@ -1184,6 +1205,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     if (isNinthserbia) baseList = subjectsSerbia;
     if (isNinthseychelles) baseList = subjectsSeychelles;
     if (isNinthsierraleone) baseList = subjectsSierraLeone;
+    if (isTenthsingapore) baseList = subjectsTenthsingapore;
+    if (isTenthslovakia) baseList = subjectsTenthslovakia;
+    if (isTenthslovenia) baseList = subjectsTenthslovenia;
+    if (isTenthsolomonislands) baseList = subjectsTenthsolomonislands;
+    if (isTenthsomalia) baseList = subjectsTenthsomalia;
     // Include every subject that has published Admin Dashboard questions for this grade.
     // This changes only discoverability/filtering; saved question text and answers are untouched.
     const adminSubjects = (Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [])
@@ -1288,6 +1314,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const issaintkittsNational = selectedCountry.toLowerCase() === "saint kitts and nevis" && selectedCurriculum.toLowerCase() === "saint kitts and nevis secondary education / form 3 / csec preparation pathway";
     const issaintluciaNational = selectedCountry.toLowerCase() === "saint lucia" && selectedCurriculum.toLowerCase() === "saint lucia national curriculum / lower secondary / form 3";
     const isNinthsaudiarabia = selectedCountry.toLowerCase() === "saudi arabia" && selectedCurriculum.toLowerCase() === "saudi ministry of education curriculum / intermediate grade 9 / third intermediate";
+    const isTenthsingapore = selectedCountry.toLowerCase() === "singapore" && selectedCurriculum.toLowerCase() === "singapore moe lower secondary curriculum / secondary 2 / g2-g3";
+    const isTenthslovakia = selectedCountry.toLowerCase() === "slovakia" && selectedCurriculum.toLowerCase() === "slovakia state educational programme for basic education / 9th grade";
+    const isTenthslovenia = selectedCountry.toLowerCase() === "slovenia" && selectedCurriculum.toLowerCase() === "slovenia basic school national curriculum / 9th grade";
+    const isTenthsolomonislands = selectedCountry.toLowerCase() === "solomon islands" && selectedCurriculum.toLowerCase() === "solomon islands national curriculum / junior secondary year 9 / form 3";
+    const isTenthsomalia = selectedCountry.toLowerCase() === "somalia" && selectedCurriculum.toLowerCase() === "somalia national education curriculum / secondary form 1 (grade 9)";
     const isNinthsenegal = selectedCountry.toLowerCase() === "senegal" && selectedCurriculum.toLowerCase() === "senegal national curriculum / collège / troisième (3e)";
     const isNinthserbia = selectedCountry.toLowerCase() === "serbia" && selectedCurriculum.toLowerCase() === "serbia national curriculum / primary education / grade 8";
     const isNinthseychelles = selectedCountry.toLowerCase() === "seychelles" && selectedCurriculum.toLowerCase() === "seychelles national curriculum framework / secondary 3 (s3)";
