@@ -2542,7 +2542,8 @@ function getAdSenseConfig(){
   return {enabled,publisherId};
 }
 function isAdExcludedPath(pathname){
-  const p=String(pathname||"/").toLowerCase().split("?")[0].replace(/\\/+$/,"")||"/";
+  let p=String(pathname||"/").toLowerCase().split("?")[0];
+  while(p.length>1 && p.endsWith("/")) p=p.slice(0,-1);
   // Exclude pages whose primary purpose is navigation, browsing, search, account access,
   // administration or transactions. Ads must not resemble menu items, directory cards,
   // resource links, download controls or other actions visitors use to navigate.
