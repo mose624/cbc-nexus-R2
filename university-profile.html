@@ -86,7 +86,7 @@ body{background:#f8fafc}.up{max-width:1180px;margin:auto;padding:25px 16px 55px}
     const q=search.value.trim().toLowerCase(),lv=level.value;
     const filtered=all.filter(x=>{const hay=(String(x.code||"")+" "+String(x.name||"")).toLowerCase(),qual=String(x.level||inferLevel(x)).toLowerCase();return(!q||hay.includes(q))&&(lv==="all"||qual.includes(lv==="degree"?"bachelor":lv==="postgraduate"?"master":lv));});
     if(!filtered.length){rows.innerHTML='<tr><td colspan="7" class="empty">No matching programmes found.</td></tr>';return;}
-    rows.innerHTML=filtered.map(x=>'<tr><td class="programme-code">'+esc(x.code||"—")+'</td><td><strong>'+esc(x.name||"")+'</strong></td><td>'+esc(x.level||inferLevel(x))+'</td><td>'+esc(entryRequirement(x))+'</td><td class="cutoff">'+esc(x.cutoff2025||"—")+'</td><td>'+esc(x.cutoff2024||"—")+'</td><td>'+esc(x.cutoff2023||"—")+'</td></tr>').join("");
+    rows.innerHTML=filtered.map(x=>'<tr><td class="programme-code">'+esc(x.code||"—")+'</td><td><strong>'+esc(x.name||"")+'</strong></td><td>'+esc(x.level||inferLevel(x))+'</td><td>'+esc(entryRequirement(x))+(x.programmeId?'<details class="profile-req-details" data-programme-id="'+esc(x.programmeId)+'"><summary>View exact KCSE subject requirements</summary><div class="profile-req-content">Open to load the published subject cluster and minimum grades.</div></details>':"")+'</td><td class="cutoff">'+esc(x.cutoff2025||"—")+'</td><td>'+esc(x.cutoff2024||"—")+'</td><td>'+esc(x.cutoff2023||"—")+'</td></tr>').join("");
     updateSchema(filtered);
   }
   function updateSchema(items){
@@ -103,7 +103,7 @@ body{background:#f8fafc}.up{max-width:1180px;margin:auto;padding:25px 16px 55px}
     else tasks.push(get("/api/kuccps/university-programmes?institution="+encodeURIComponent(name)).catch(()=>null));
     const results=(await Promise.all(tasks)).filter(Boolean),cue=results.find(x=>x.source==="CUE")?.programmes||[],kuccps=results.find(x=>x.source==="KUCCPS")?.programmes||[],tveta=results.find(x=>x.source==="TVETA")?.courses||[];
     const byName=new Map(kuccps.map(x=>[norm(x.name||x.programmeName),x]));
-    all=cue.map(x=>{const match=byName.get(norm(x.programmeName));if(match)byName.delete(norm(x.programmeName));return{code:match?.code||x.programmeCode||"",name:x.programmeName||match?.name||"",level:x.qualificationLevel||match?.level||"",cutoff2025:match?.cutoff2025||"",cutoff2024:match?.cutoff2024||"",cutoff2023:match?.cutoff2023||""};});
+    all=cue.map(x=>{const match=byName.get(norm(x.programmeName));if(match)byName.delete(norm(x.programmeName));return{code:match?.code||x.programmeCode||"",programmeId:match?.programmeId||"",name:x.programmeName||match?.name||"",level:x.qualificationLevel||match?.level||"",cutoff2025:match?.cutoff2025||"",cutoff2024:match?.cutoff2024||"",cutoff2023:match?.cutoff2023||""};});
     for(const x of byName.values())all.push({...x,level:x.level||inferLevel(x)});
     if(!all.length&&tveta.length)all=tveta.map(x=>({code:"",name:x.courseName,level:x.level,cutoff2025:"",cutoff2024:"",cutoff2023:""}));
     if(!all.length){status.textContent="No matching institution-specific programme rows are currently available in the connected dataset. This does not mean the institution has no courses.";status.style.background="#fff7ed";status.style.color="#9a3412";rows.innerHTML='<tr><td colspan="7" class="empty">No matching programme rows are currently available.</td></tr>';return;}
@@ -111,6 +111,7 @@ body{background:#f8fafc}.up{max-width:1180px;margin:auto;padding:25px 16px 55px}
     status.textContent=all.length+" courses/programmes listed for "+name+(sources?" • Compiled from "+sources:"")+".";
     render();
   }
+  rows.addEventListener("toggle",async event=>{const details=event.target;if(!details.matches?.(".profile-req-details")||!details.open||details.dataset.loaded)return;details.dataset.loaded="1";const target=details.querySelector(".profile-req-content");try{const response=await fetch("/api/kuccps/programme-requirements?id="+encodeURIComponent(details.dataset.programmeId),{cache:"no-store"}),d=await response.json();if(!response.ok||!d.ok)throw new Error(d.error||"Unavailable");const block=(heading,items)=>"<p><strong>"+heading+"</strong></p>"+(items?.length?"<ul>"+items.map(row=>"<li>"+row.map(esc).join(" — ")+"</li>").join("")+"</ul>":"<p>Not published in the available programme record.</p>");target.innerHTML=block("Minimum entry requirements",d.minimumEntryRequirements)+block("Minimum subject grades",d.minimumSubjectRequirements);}catch(e){target.textContent="Detailed subject requirements are temporarily unavailable.";delete details.dataset.loaded;}},true);
   search.addEventListener("input",render);level.addEventListener("change",render);load();
 })();
 </script>
