@@ -151,11 +151,6 @@
   "Nauru":["Nauru National Curriculum / Year 10 — supplementary learning strands"],
   "Nepal":["Nepal Secondary Education Curriculum 2078 / Grade 9 — compulsory subjects"],
   "Netherlands":["Netherlands SLO Core Objectives / Lower Secondary (VO onderbouw) — supplementary"],
-  "Myanmar":["Myanmar Basic Education Curriculum / Grade 9 — supplementary pathway"],
-  "Namibia":["Namibia National Curriculum for Basic Education / Junior Secondary Grade 9"],
-  "Nauru":["Nauru National Curriculum / Year 10 — supplementary learning strands"],
-  "Nepal":["Nepal Secondary Education Curriculum 2078 / Grade 9 — compulsory subjects"],
-  "Netherlands":["Netherlands SLO Core Objectives / Lower Secondary (VO onderbouw) — supplementary"],
   "Micronesia":["Federated States of Micronesia National Curriculum Standards and Benchmarks / Secondary supplementary"],
   "Moldova":["Moldova National Curriculum / Gymnasium (Grades V–IX)"],
   "Monaco":["Monaco National Education Programme / French National Programmes with Monaco-specific History"],
@@ -979,6 +974,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const ismontenegroNational = selectedCountry === "montenegro" && selectedCurriculum === "montenegro publicly valid nine-year basic education programme / grade ix";
     const ismoroccoNational = selectedCountry === "morocco" && selectedCurriculum === "morocco national curriculum / common core secondary (tronc commun scientifique) — supplementary";
     const ismozambiqueNational = selectedCountry === "mozambique" && selectedCurriculum === "mozambique secondary education curriculum plan / 10th class (2nd cycle)";
+    const ismyanmarNational = selectedCountry === "myanmar" && selectedCurriculum === "myanmar basic education curriculum / grade 9 — supplementary pathway";
+    const isnamibiaNational = selectedCountry === "namibia" && selectedCurriculum === "namibia national curriculum for basic education / junior secondary grade 9";
+    const isnauruNational = selectedCountry === "nauru" && selectedCurriculum === "nauru national curriculum / year 10 — supplementary learning strands";
+    const isnepalNational = selectedCountry === "nepal" && selectedCurriculum === "nepal secondary education curriculum 2078 / grade 9 — compulsory subjects";
+    const isnetherlandsNational = selectedCountry === "netherlands" && selectedCurriculum === "netherlands slo core objectives / lower secondary (vo onderbouw) — supplementary";
     const nigeriaSubjects = isNigeriaNERDC && window.CBENexusNigeriaBanks && window.CBENexusNigeriaBanks.banks &&
       window.CBENexusNigeriaBanks.banks[grade.value] ? Object.keys(window.CBENexusNigeriaBanks.banks[grade.value]) : [];
     const tanzaniaSubjects = isTanzaniaTIE && window.CBENexusTanzaniaBanks && window.CBENexusTanzaniaBanks.banks && window.CBENexusTanzaniaBanks.banks[grade.value] ? Object.keys(window.CBENexusTanzaniaBanks.banks[grade.value]) : [];
@@ -1003,7 +1003,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const subjectsnauru = isnauruNational && window.CBENexusThirdFiveBanks && window.CBENexusThirdFiveBanks["Nauru"] && window.CBENexusThirdFiveBanks["Nauru"].banks && window.CBENexusThirdFiveBanks["Nauru"].banks[grade.value] ? Object.keys(window.CBENexusThirdFiveBanks["Nauru"].banks[grade.value]) : [];
     const subjectsnepal = isnepalNational && window.CBENexusThirdFiveBanks && window.CBENexusThirdFiveBanks["Nepal"] && window.CBENexusThirdFiveBanks["Nepal"].banks && window.CBENexusThirdFiveBanks["Nepal"].banks[grade.value] ? Object.keys(window.CBENexusThirdFiveBanks["Nepal"].banks[grade.value]) : [];
     const subjectsnetherlands = isnetherlandsNational && window.CBENexusThirdFiveBanks && window.CBENexusThirdFiveBanks["Netherlands"] && window.CBENexusThirdFiveBanks["Netherlands"].banks && window.CBENexusThirdFiveBanks["Netherlands"].banks[grade.value] ? Object.keys(window.CBENexusThirdFiveBanks["Netherlands"].banks[grade.value]) : [];
-    const baseList = isKenyaCbc ? subjectsForGrade(grade.value) : (isNigeriaNERDC ? nigeriaSubjects : (isTanzaniaTIE ? tanzaniaSubjects : (isEstoniaNational ? estoniaSubjects : (isLatviaNational ? latviaSubjects : (isLithuaniaNational ? lithuaniaSubjects : (isLuxembourgESC ? luxembourgSubjects : (isMaltaNational ? maltaSubjects : (isMauritaniaNational ? subjectsMauritania : (isMexicoNational ? subjectsMexico : (isMicronesiaNational ? subjectsMicronesia : (isMoldovaNational ? subjectsMoldova : (ismarshallislandsNational ? subjectsmarshallislands : (ismongoliaNational ? subjectsmongolia : (ismontenegroNational ? subjectsmontenegro : (ismoroccoNational ? subjectsmorocco : (ismyanmarNational ? subjectsmyanmar : (isnamibiaNational ? subjectsnamibia : (isnauruNational ? subjectsnauru : (isnepalNational ? subjectsnepal : (isnetherlandsNational ? subjectsnetherlands : (ismozambiqueNational ? subjectsmozambique :))))) (isMonacoNational ? subjectsMonaco : mauritiusSubjects)))))))))))))))));
+    const baseList = isKenyaCbc ? subjectsForGrade(grade.value) : (isNigeriaNERDC ? nigeriaSubjects : (isTanzaniaTIE ? tanzaniaSubjects : (isEstoniaNational ? estoniaSubjects : (isLatviaNational ? latviaSubjects : (isLithuaniaNational ? lithuaniaSubjects : (isLuxembourgESC ? luxembourgSubjects : (isMaltaNational ? maltaSubjects : (isMauritaniaNational ? subjectsMauritania : (isMexicoNational ? subjectsMexico : (isMicronesiaNational ? subjectsMicronesia : (isMoldovaNational ? subjectsMoldova : (ismarshallislandsNational ? subjectsmarshallislands : (ismongoliaNational ? subjectsmongolia : (ismontenegroNational ? subjectsmontenegro : (ismoroccoNational ? subjectsmorocco : (ismozambiqueNational ? subjectsmozambique : (ismyanmarNational ? subjectsmyanmar : (isnamibiaNational ? subjectsnamibia : (isnauruNational ? subjectsnauru : (isnepalNational ? subjectsnepal : (isnetherlandsNational ? subjectsnetherlands : (isMonacoNational ? subjectsMonaco : mauritiusSubjects))))))))))))))))))))));
     // Include every subject that has published Admin Dashboard questions for this grade.
     // This changes only discoverability/filtering; saved question text and answers are untouched.
     const adminSubjects = (Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [])
