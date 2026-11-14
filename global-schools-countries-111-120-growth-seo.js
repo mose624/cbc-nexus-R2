@@ -7,7 +7,7 @@ const $=id=>document.getElementById(id);
 function el(tag,cls,txt){const n=document.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=txt;return n;}
 function addMeta(selector,attr,name,value){let n=document.querySelector(selector);if(!n){n=document.createElement("meta");n.setAttribute(attr,name);document.head.append(n);}n.content=value;}
 function build(){
-const match=location.pathname.match(/^\\/global-schools\\/([^/]+)\\/?$/);if(!match)return;
+const match=location.pathname.match(/^\/global-schools\/([^/]+)\/?$/);if(!match)return;
 const slug=decodeURIComponent(match[1]).toLowerCase(),c=countries[slug];if(!c)return;
 const title=c.name+" Education System, National Examinations, Teaching Jobs & Learning Resources | CBE Nexus";
 const description="Explore "+c.name+" education pathways, "+c.exams+", curriculum-aligned notes, worked examples, interactive revision, teaching opportunities, online tutors and international curricula.";
