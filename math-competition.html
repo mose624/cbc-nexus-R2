@@ -139,7 +139,7 @@
           const result=await response.json().catch(()=>({}));
           if(!response.ok||!result.ok)throw new Error(result.error||"M-Pesa payment could not be started.");
           paymentStatus.textContent="STK Push sent for KSh 200. Complete the prompt on your phone. Registration is not confirmed until payment is verified.";
-        }catch(error){paymentStatus.textContent=error.message||"Payment could not be started. Please try again or contact info@cbenexus.com."}
+        }catch(error){paymentStatus.textContent=error.message||"Payment could not be started. Please try again or contact info@cbenexus.co.ke."}
         finally{payButton.disabled=false}
       });
     })();
