@@ -1,4 +1,6 @@
-/* CBE Nexus country SEO enrichment for countries 31–40. */\n(function(){\n"use strict";const d=window.CBE_GLOBAL_COUNTRY_DATA;if(!d)return;const profiles={
+/* CBE Nexus country SEO enrichment for countries 31–40. */
+(function(){
+"use strict";const d=window.CBE_GLOBAL_COUNTRY_DATA;if(!d)return;const profiles={
   "burkina-faso": {
     "seoHeading": "Burkina Faso Education System, CEP, BEPC & Baccalauréat",
     "seoTitle": "Burkina Faso Education System, CEP, BEPC & Baccalauréat | CBE Nexus",
@@ -279,4 +281,4 @@
       }
     ]
   }
-};Object.keys(profiles).forEach(slug=>{if(d[slug])Object.assign(d[slug],profiles[slug]);});window.CBE_COUNTRY_SEO_31_40=true;})();\n
+};Object.keys(profiles).forEach(slug=>{if(d[slug])Object.assign(d[slug],profiles[slug]);});window.CBE_COUNTRY_SEO_31_40=true;})();
