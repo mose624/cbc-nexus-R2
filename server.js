@@ -2543,7 +2543,8 @@ function getAdSenseConfig(){
 }
 function isAdExcludedPath(pathname){
   const p=String(pathname||"/").toLowerCase();
-  return p === "/" || p === "/index.html" || p === "/resource-category.html" || p === "/resources.html" || p.startsWith("/api/") || p.includes("/admin") || p.startsWith("/admin-") || p.includes("admin-") || p.includes("login") || p.includes("checkout") || p.includes("payment") || p.includes("upload") || p.includes("dashboard") || p.includes("seller-marketplace") || p.includes("teacher-board") || p.includes("online-teaching");
+  // Keep ads off utility, navigation, account, legal and transaction screens; serve them on substantive learning content instead.
+  return p === "/" || p === "/index.html" || p === "/resource-category.html" || p === "/resources.html" || p === "/free-resources.html" || p === "/quizzes.html" || p === "/interactive-questions.html" || p === "/subscriptions.html" || p === "/contact.html" || p === "/privacy-policy.html" || p === "/terms-and-conditions.html" || p.startsWith("/api/") || p.includes("/admin") || p.startsWith("/admin-") || p.includes("admin-") || p.includes("login") || p.includes("checkout") || p.includes("payment") || p.includes("upload") || p.includes("dashboard") || p.includes("seller-marketplace") || p.includes("teacher-board") || p.includes("online-teaching");
 }
 function optimizeHtmlForAds(html){
   let out=String(html||"");
