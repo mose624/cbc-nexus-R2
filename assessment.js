@@ -103,7 +103,7 @@
   "Japan":["Japan MEXT Curriculum","Cambridge International","IB"],
   "United Arab Emirates":["UAE Ministry of Education Curriculum","British Curriculum / GCSE / A Level","US Curriculum","IB","CBSE"],
   "Saudi Arabia":["Saudi Ministry of Education Curriculum","International British Curriculum","American Curriculum","IB"],
-  "Qatar":["Qatar National Curriculum","British Curriculum","American Curriculum","IB"],
+  "Qatar":["Qatar National Curriculum","Qatar National Curriculum / Preparatory Stage / Grade 9","British Curriculum","American Curriculum","IB"],
   "Egypt":["Egypt Ministry of Education Curriculum / Thanaweya Amma","IGCSE","IB"],
   "Ethiopia":["Ethiopia Ministry of Education Curriculum / Ethiopian General School Leaving Examination"],
   "Eritrea":["Eritrea Ministry of Education National Curriculum / Secondary Education Certificate Examination (ESECE)"],
@@ -131,7 +131,7 @@
   "Israel":["Israel Ministry of Education / Bagrut","IB"],
   "Turkey":["Türkiye Ministry of National Education / YKS","Cambridge International","IB"],
   "Türkiye":["Türkiye Ministry of National Education / YKS","Cambridge International","IB"],
-  "Russia":["Russian Federal State Educational Standards / EGE","IB"],
+  "Russia":["Russian Federal State Educational Standards / EGE","Russian Federal State Educational Standards / Basic General Education / Grade 9","IB"],
   "Ukraine":["Ukraine State Standard / NMT","IB"],
   "Jamaica":["Jamaica National Standards Curriculum / CSEC / CAPE","Cambridge International"],
   "Trinidad and Tobago":["Trinidad and Tobago National Curriculum / CSEC / CAPE","Cambridge International"],
@@ -166,9 +166,7 @@
   "Peru":["Perú Currículo Nacional de la Educación Básica / Educación Secundaria / 3°"],
   "Poland":["Poland Podstawa programowa / Szkoła Podstawowa / Klasa VIII"],
   "Portugal":["Portugal Aprendizagens Essenciais / 3.º Ciclo / 9.º Ano"],
-  "Qatar":["Qatar National Curriculum / Preparatory Stage / Grade 9"],
   "Romania":["Romania National Curriculum / Gimnaziu / Grade VIII"],
-  "Russia":["Russian Federal State Educational Standards / Basic General Education / Grade 9"],
   "Saint Kitts and Nevis":["Saint Kitts and Nevis Secondary Education / Form 3 / CSEC preparation pathway"],
 };
 
@@ -200,7 +198,6 @@ const nationalLevelStructures = {
   "North Korea": ["Lower Secondary Year 3"],
   "North Macedonia": ["Grade IX"],
   "Portugal":["9.º Ano"],
-  "Qatar":["Grade 9"],
   "Romania":["Grade VIII"],
   "Russia":["Grade 9"],
   "Saint Kitts and Nevis":["Form 3"],
@@ -1067,6 +1064,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isperuNational = selectedCountry.toLowerCase() === "peru" && selectedCurriculum.toLowerCase() === "perú currículo nacional de la educación básica / educación secundaria / 3°";
     const isphilippinesNational = selectedCountry.toLowerCase() === "philippines" && selectedCurriculum.toLowerCase() === "philippines deped k to 12 / matatag";
     const ispolandNational = selectedCountry.toLowerCase() === "poland" && selectedCurriculum.toLowerCase() === "poland podstawa programowa / szkoła podstawowa / klasa viii";
+    const isportugalNational = selectedCountry.toLowerCase() === "portugal" && selectedCurriculum.toLowerCase() === "portugal aprendizagens essenciais / 3.º ciclo / 9.º ano";
+    const isqatarNational = selectedCountry.toLowerCase() === "qatar" && selectedCurriculum.toLowerCase() === "qatar national curriculum / preparatory stage / grade 9";
+    const isromaniaNational = selectedCountry.toLowerCase() === "romania" && selectedCurriculum.toLowerCase() === "romania national curriculum / gimnaziu / grade viii";
+    const isrussiaNational = selectedCountry.toLowerCase() === "russia" && selectedCurriculum.toLowerCase() === "russian federal state educational standards / basic general education / grade 9";
+    const issaintkittsNational = selectedCountry.toLowerCase() === "saint kitts and nevis" && selectedCurriculum.toLowerCase() === "saint kitts and nevis secondary education / form 3 / csec preparation pathway";
     const nigeriaSubjects = isNigeriaNERDC && window.CBENexusNigeriaBanks && window.CBENexusNigeriaBanks.banks &&
       window.CBENexusNigeriaBanks.banks[grade.value] ? Object.keys(window.CBENexusNigeriaBanks.banks[grade.value]) : [];
     const tanzaniaSubjects = isTanzaniaTIE && window.CBENexusTanzaniaBanks && window.CBENexusTanzaniaBanks.banks && window.CBENexusTanzaniaBanks.banks[grade.value] ? Object.keys(window.CBENexusTanzaniaBanks.banks[grade.value]) : [];
@@ -1219,6 +1221,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isperuNational = selectedCountry.toLowerCase() === "peru" && selectedCurriculum.toLowerCase() === "perú currículo nacional de la educación básica / educación secundaria / 3°";
     const isphilippinesNational = selectedCountry.toLowerCase() === "philippines" && selectedCurriculum.toLowerCase() === "philippines deped k to 12 / matatag";
     const ispolandNational = selectedCountry.toLowerCase() === "poland" && selectedCurriculum.toLowerCase() === "poland podstawa programowa / szkoła podstawowa / klasa viii";
+    const isportugalNational = selectedCountry.toLowerCase() === "portugal" && selectedCurriculum.toLowerCase() === "portugal aprendizagens essenciais / 3.º ciclo / 9.º ano";
+    const isqatarNational = selectedCountry.toLowerCase() === "qatar" && selectedCurriculum.toLowerCase() === "qatar national curriculum / preparatory stage / grade 9";
+    const isromaniaNational = selectedCountry.toLowerCase() === "romania" && selectedCurriculum.toLowerCase() === "romania national curriculum / gimnaziu / grade viii";
+    const isrussiaNational = selectedCountry.toLowerCase() === "russia" && selectedCurriculum.toLowerCase() === "russian federal state educational standards / basic general education / grade 9";
+    const issaintkittsNational = selectedCountry.toLowerCase() === "saint kitts and nevis" && selectedCurriculum.toLowerCase() === "saint kitts and nevis secondary education / form 3 / csec preparation pathway";
     const gradeBank = isKenyaCbc && window.CBENexusCBCBanks &&
       window.CBENexusCBCBanks.banks && window.CBENexusCBCBanks.banks[selectedGrade] && window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject] ||
       isNigeriaNERDC && window.CBENexusNigeriaBanks &&
@@ -1260,6 +1267,12 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       isperuNational && window.CBENexusSixthFiveBanks && window.CBENexusSixthFiveBanks["Peru"] && window.CBENexusSixthFiveBanks["Peru"].banks && window.CBENexusSixthFiveBanks["Peru"].banks[selectedGrade] && window.CBENexusSixthFiveBanks["Peru"].banks[selectedGrade][selectedSubject] ||
       isphilippinesNational && window.CBENexusSixthFiveBanks && window.CBENexusSixthFiveBanks["Philippines"] && window.CBENexusSixthFiveBanks["Philippines"].banks && window.CBENexusSixthFiveBanks["Philippines"].banks[selectedGrade] && window.CBENexusSixthFiveBanks["Philippines"].banks[selectedGrade][selectedSubject] ||
       ispolandNational && window.CBENexusSixthFiveBanks && window.CBENexusSixthFiveBanks["Poland"] && window.CBENexusSixthFiveBanks["Poland"].banks && window.CBENexusSixthFiveBanks["Poland"].banks[selectedGrade] && window.CBENexusSixthFiveBanks["Poland"].banks[selectedGrade][selectedSubject] ||
+
+      isportugalNational && window.CBENexusSeventhFiveBanks && window.CBENexusSeventhFiveBanks["Portugal"] && window.CBENexusSeventhFiveBanks["Portugal"].banks && window.CBENexusSeventhFiveBanks["Portugal"].banks[selectedGrade] && window.CBENexusSeventhFiveBanks["Portugal"].banks[selectedGrade][selectedSubject] ||
+      isqatarNational && window.CBENexusSeventhFiveBanks && window.CBENexusSeventhFiveBanks["Qatar"] && window.CBENexusSeventhFiveBanks["Qatar"].banks && window.CBENexusSeventhFiveBanks["Qatar"].banks[selectedGrade] && window.CBENexusSeventhFiveBanks["Qatar"].banks[selectedGrade][selectedSubject] ||
+      isromaniaNational && window.CBENexusSeventhFiveBanks && window.CBENexusSeventhFiveBanks["Romania"] && window.CBENexusSeventhFiveBanks["Romania"].banks && window.CBENexusSeventhFiveBanks["Romania"].banks[selectedGrade] && window.CBENexusSeventhFiveBanks["Romania"].banks[selectedGrade][selectedSubject] ||
+      isrussiaNational && window.CBENexusSeventhFiveBanks && window.CBENexusSeventhFiveBanks["Russia"] && window.CBENexusSeventhFiveBanks["Russia"].banks && window.CBENexusSeventhFiveBanks["Russia"].banks[selectedGrade] && window.CBENexusSeventhFiveBanks["Russia"].banks[selectedGrade][selectedSubject] ||
+      issaintkittsNational && window.CBENexusSeventhFiveBanks && window.CBENexusSeventhFiveBanks["Saint Kitts and Nevis"] && window.CBENexusSeventhFiveBanks["Saint Kitts and Nevis"].banks && window.CBENexusSeventhFiveBanks["Saint Kitts and Nevis"].banks[selectedGrade] && window.CBENexusSeventhFiveBanks["Saint Kitts and Nevis"].banks[selectedGrade][selectedSubject] ||
       null;
 
     const adminQuestions = Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [];
