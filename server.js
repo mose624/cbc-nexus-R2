@@ -2165,7 +2165,7 @@ function parseKuccpsRequirementTable(html,label){
 }
 async function getKuccpsProgrammeRequirements(programmeId){
   const id=String(programmeId||"").trim();
-  if(!/^\\d{1,8}$/.test(id))throw new Error("A valid programme ID is required.");
+  if(!/^\d{1,8}$/.test(id))throw new Error("A valid programme ID is required.");
   const cached=kuccpsRequirementCache.get(id);
   if(cached&&Date.now()-cached.at<24*60*60*1000)return cached.value;
   const html=await kuccpsHttpGet("https://students.kuccps.net/programmes/detail/"+id+"/");
@@ -2301,7 +2301,7 @@ async function getTvetaCourses(){
   }
   if(req.method==="GET"&&url.pathname==="/api/kuccps/programme-requirements"){
     const programmeId=String(url.searchParams.get("id")||"").trim();
-    if(!/^\\d{1,8}$/.test(programmeId)){sendJson(res,400,{ok:false,error:"A valid programme ID is required."});return true;}
+    if(!/^\d{1,8}$/.test(programmeId)){sendJson(res,400,{ok:false,error:"A valid programme ID is required."});return true;}
     try{const data=await getKuccpsProgrammeRequirements(programmeId);sendJson(res,200,data);}
     catch(error){console.error("KUCCPS programme requirements lookup error:",error);sendJson(res,502,{ok:false,programmeId,error:"The programme-specific subject requirements could not be loaded right now."});}
     return true;
