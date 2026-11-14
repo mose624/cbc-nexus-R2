@@ -141,9 +141,24 @@
   "Mauritius":["Mauritius National Curriculum Framework Grades 7–9 / National Certificate of Education (NCE)","Cambridge GCE O Level (Mauritius Grades 10–11)","Cambridge International","Pearson Edexcel","IB"],
   "Mauritania":["Mauritania National Curriculum / New Republican School (École Républicaine) — Secondary supplementary pathway"],
   "Mexico":["Mexico SEP Plan de Estudio 2022 / Fase 6 (Secondary)"],
+  "Marshall Islands":["Marshall Islands Public School System Curriculum / MISAT Grade 8"],
+  "Mongolia":["Mongolia National Core Curriculum for Basic Education (2019) / Grade 9"],
+  "Montenegro":["Montenegro Publicly Valid Nine-Year Basic Education Programme / Grade IX"],
+  "Morocco":["Morocco National Curriculum / Common Core Secondary (Tronc commun scientifique) — supplementary"],
+  "Mozambique":["Mozambique Secondary Education Curriculum Plan / 10th Class (2nd Cycle)"],
+  "Marshall Islands":["Marshall Islands Public School System Curriculum / MISAT Grade 8"],
+  "Mongolia":["Mongolia National Core Curriculum for Basic Education (2019) / Grade 9"],
+  "Montenegro":["Montenegro Publicly Valid Nine-Year Basic Education Programme / Grade IX"],
+  "Morocco":["Morocco National Curriculum / Common Core Secondary (Tronc commun scientifique) — supplementary"],
+  "Mozambique":["Mozambique Secondary Education Curriculum Plan / 10th Class (2nd Cycle)"],
   "Micronesia":["Federated States of Micronesia National Curriculum Standards and Benchmarks / Secondary supplementary"],
   "Moldova":["Moldova National Curriculum / Gymnasium (Grades V–IX)"],
   "Monaco":["Monaco National Education Programme / French National Programmes with Monaco-specific History"],
+  "Marshall Islands":["Marshall Islands Public School System Curriculum / MISAT Grade 8"],
+  "Mongolia":["Mongolia National Core Curriculum for Basic Education (2019) / Grade 9"],
+  "Montenegro":["Montenegro Publicly Valid Nine-Year Basic Education Programme / Grade IX"],
+  "Morocco":["Morocco National Curriculum / Common Core Secondary (Tronc commun scientifique) — supplementary"],
+  "Mozambique":["Mozambique Secondary Education Curriculum Plan / 10th Class (2nd Cycle)"],
   "Seychelles":["Seychelles National Curriculum / IGCSE","Cambridge International"]
 };
 
@@ -160,6 +175,11 @@ const nationalLevelStructures = {
   "Micronesia": ["Grade 8"],
   "Moldova": ["Grade 9"],
   "Monaco": ["4e"],
+  "Marshall Islands": ["Grade 8"],
+  "Mongolia": ["Grade 9"],
+  "Montenegro": ["Grade IX"],
+  "Morocco": ["Tronc commun"],
+  "Mozambique": ["10th Class"],
   "Kenya": ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Uganda": ["Primary 1","Primary 2","Primary 3","Primary 4","Primary 5","Primary 6","Primary 7","Senior 1","Senior 2","Senior 3","Senior 4","Senior 5","Senior 6"],
   "Tanzania": ["Standard I","Standard II","Standard III","Standard IV","Standard V","Standard VI","Standard VII","Form I","Form II","Form III","Form IV","Form V","Form VI"],
@@ -646,6 +666,16 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isMicronesiaNational = selectedCountry === "micronesia" && selectedCurriculum === "federated states of micronesia national curriculum standards and benchmarks / secondary supplementary";
     const isMoldovaNational = selectedCountry === "moldova" && selectedCurriculum === "moldova national curriculum / gymnasium (grades v–ix)";
     const isMonacoNational = selectedCountry === "monaco" && selectedCurriculum === "monaco national education programme / french national programmes with monaco-specific history";
+    const ismarshallislandsNational = selectedCountry === "marshall islands" && selectedCurriculum === "marshall islands public school system curriculum / misat grade 8";
+    const ismongoliaNational = selectedCountry === "mongolia" && selectedCurriculum === "mongolia national core curriculum for basic education (2019) / grade 9";
+    const ismontenegroNational = selectedCountry === "montenegro" && selectedCurriculum === "montenegro publicly valid nine-year basic education programme / grade ix";
+    const ismoroccoNational = selectedCountry === "morocco" && selectedCurriculum === "morocco national curriculum / common core secondary (tronc commun scientifique) — supplementary";
+    const ismozambiqueNational = selectedCountry === "mozambique" && selectedCurriculum === "mozambique secondary education curriculum plan / 10th class (2nd cycle)";
+    const ismarshallislandsNational = selectedCountry === "marshall islands" && selectedCurriculum === "marshall islands public school system curriculum / misat grade 8";
+    const ismongoliaNational = selectedCountry === "mongolia" && selectedCurriculum === "mongolia national core curriculum for basic education (2019) / grade 9";
+    const ismontenegroNational = selectedCountry === "montenegro" && selectedCurriculum === "montenegro publicly valid nine-year basic education programme / grade ix";
+    const ismoroccoNational = selectedCountry === "morocco" && selectedCurriculum === "morocco national curriculum / common core secondary (tronc commun scientifique) — supplementary";
+    const ismozambiqueNational = selectedCountry === "mozambique" && selectedCurriculum === "mozambique secondary education curriculum plan / 10th class (2nd cycle)";
     const isEthiopiaMoE = selectedCountry === "ethiopia" && selectedCurriculum === "ethiopia ministry of education curriculum / ethiopian general school leaving examination";
     const isEritreaMoE = selectedCountry === "eritrea" && selectedCurriculum === "eritrea ministry of education national curriculum / secondary education certificate examination (esece)";
     if (isKenyaCbc) {
@@ -665,6 +695,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     if (isMicronesiaNational) { const gradeBank = window.CBENexusFiveCountryBanks && window.CBENexusFiveCountryBanks["Micronesia"] && window.CBENexusFiveCountryBanks["Micronesia"].banks && window.CBENexusFiveCountryBanks["Micronesia"].banks[selectedGrade] && window.CBENexusFiveCountryBanks["Micronesia"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     if (isMoldovaNational) { const gradeBank = window.CBENexusFiveCountryBanks && window.CBENexusFiveCountryBanks["Moldova"] && window.CBENexusFiveCountryBanks["Moldova"].banks && window.CBENexusFiveCountryBanks["Moldova"].banks[selectedGrade] && window.CBENexusFiveCountryBanks["Moldova"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     if (isMonacoNational) { const gradeBank = window.CBENexusFiveCountryBanks && window.CBENexusFiveCountryBanks["Monaco"] && window.CBENexusFiveCountryBanks["Monaco"].banks && window.CBENexusFiveCountryBanks["Monaco"].banks[selectedGrade] && window.CBENexusFiveCountryBanks["Monaco"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (ismarshallislandsNational) { const gradeBank = window.CBENexusNextFiveBanks && window.CBENexusNextFiveBanks["Marshall Islands"] && window.CBENexusNextFiveBanks["Marshall Islands"].banks && window.CBENexusNextFiveBanks["Marshall Islands"].banks[selectedGrade] && window.CBENexusNextFiveBanks["Marshall Islands"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (ismongoliaNational) { const gradeBank = window.CBENexusNextFiveBanks && window.CBENexusNextFiveBanks["Mongolia"] && window.CBENexusNextFiveBanks["Mongolia"].banks && window.CBENexusNextFiveBanks["Mongolia"].banks[selectedGrade] && window.CBENexusNextFiveBanks["Mongolia"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (ismontenegroNational) { const gradeBank = window.CBENexusNextFiveBanks && window.CBENexusNextFiveBanks["Montenegro"] && window.CBENexusNextFiveBanks["Montenegro"].banks && window.CBENexusNextFiveBanks["Montenegro"].banks[selectedGrade] && window.CBENexusNextFiveBanks["Montenegro"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (ismoroccoNational) { const gradeBank = window.CBENexusNextFiveBanks && window.CBENexusNextFiveBanks["Morocco"] && window.CBENexusNextFiveBanks["Morocco"].banks && window.CBENexusNextFiveBanks["Morocco"].banks[selectedGrade] && window.CBENexusNextFiveBanks["Morocco"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (ismozambiqueNational) { const gradeBank = window.CBENexusNextFiveBanks && window.CBENexusNextFiveBanks["Mozambique"] && window.CBENexusNextFiveBanks["Mozambique"].banks && window.CBENexusNextFiveBanks["Mozambique"].banks[selectedGrade] && window.CBENexusNextFiveBanks["Mozambique"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     return [];
   }
 
@@ -943,7 +978,12 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const subjectsMicronesia = isMicronesiaNational && window.CBENexusFiveCountryBanks && window.CBENexusFiveCountryBanks["Micronesia"] && window.CBENexusFiveCountryBanks["Micronesia"].banks && window.CBENexusFiveCountryBanks["Micronesia"].banks[grade.value] ? Object.keys(window.CBENexusFiveCountryBanks["Micronesia"].banks[grade.value]) : [];
     const subjectsMoldova = isMoldovaNational && window.CBENexusFiveCountryBanks && window.CBENexusFiveCountryBanks["Moldova"] && window.CBENexusFiveCountryBanks["Moldova"].banks && window.CBENexusFiveCountryBanks["Moldova"].banks[grade.value] ? Object.keys(window.CBENexusFiveCountryBanks["Moldova"].banks[grade.value]) : [];
     const subjectsMonaco = isMonacoNational && window.CBENexusFiveCountryBanks && window.CBENexusFiveCountryBanks["Monaco"] && window.CBENexusFiveCountryBanks["Monaco"].banks && window.CBENexusFiveCountryBanks["Monaco"].banks[grade.value] ? Object.keys(window.CBENexusFiveCountryBanks["Monaco"].banks[grade.value]) : [];
-    const baseList = isKenyaCbc ? subjectsForGrade(grade.value) : (isNigeriaNERDC ? nigeriaSubjects : (isTanzaniaTIE ? tanzaniaSubjects : (isEstoniaNational ? estoniaSubjects : (isLatviaNational ? latviaSubjects : (isLithuaniaNational ? lithuaniaSubjects : (isLuxembourgESC ? luxembourgSubjects : (isMaltaNational ? maltaSubjects : (isMauritaniaNational ? subjectsMauritania : (isMexicoNational ? subjectsMexico : (isMicronesiaNational ? subjectsMicronesia : (isMoldovaNational ? subjectsMoldova : (isMonacoNational ? subjectsMonaco : mauritiusSubjects))))))))))));
+    const subjectsmarshallislands = ismarshallislandsNational && window.CBENexusNextFiveBanks && window.CBENexusNextFiveBanks["Marshall Islands"] && window.CBENexusNextFiveBanks["Marshall Islands"].banks && window.CBENexusNextFiveBanks["Marshall Islands"].banks[grade.value] ? Object.keys(window.CBENexusNextFiveBanks["Marshall Islands"].banks[grade.value]) : [];
+    const subjectsmongolia = ismongoliaNational && window.CBENexusNextFiveBanks && window.CBENexusNextFiveBanks["Mongolia"] && window.CBENexusNextFiveBanks["Mongolia"].banks && window.CBENexusNextFiveBanks["Mongolia"].banks[grade.value] ? Object.keys(window.CBENexusNextFiveBanks["Mongolia"].banks[grade.value]) : [];
+    const subjectsmontenegro = ismontenegroNational && window.CBENexusNextFiveBanks && window.CBENexusNextFiveBanks["Montenegro"] && window.CBENexusNextFiveBanks["Montenegro"].banks && window.CBENexusNextFiveBanks["Montenegro"].banks[grade.value] ? Object.keys(window.CBENexusNextFiveBanks["Montenegro"].banks[grade.value]) : [];
+    const subjectsmorocco = ismoroccoNational && window.CBENexusNextFiveBanks && window.CBENexusNextFiveBanks["Morocco"] && window.CBENexusNextFiveBanks["Morocco"].banks && window.CBENexusNextFiveBanks["Morocco"].banks[grade.value] ? Object.keys(window.CBENexusNextFiveBanks["Morocco"].banks[grade.value]) : [];
+    const subjectsmozambique = ismozambiqueNational && window.CBENexusNextFiveBanks && window.CBENexusNextFiveBanks["Mozambique"] && window.CBENexusNextFiveBanks["Mozambique"].banks && window.CBENexusNextFiveBanks["Mozambique"].banks[grade.value] ? Object.keys(window.CBENexusNextFiveBanks["Mozambique"].banks[grade.value]) : [];
+    const baseList = isKenyaCbc ? subjectsForGrade(grade.value) : (isNigeriaNERDC ? nigeriaSubjects : (isTanzaniaTIE ? tanzaniaSubjects : (isEstoniaNational ? estoniaSubjects : (isLatviaNational ? latviaSubjects : (isLithuaniaNational ? lithuaniaSubjects : (isLuxembourgESC ? luxembourgSubjects : (isMaltaNational ? maltaSubjects : (isMauritaniaNational ? subjectsMauritania : (isMexicoNational ? subjectsMexico : (isMicronesiaNational ? subjectsMicronesia : (isMoldovaNational ? subjectsMoldova : (ismarshallislandsNational ? subjectsmarshallislands : (ismongoliaNational ? subjectsmongolia : (ismontenegroNational ? subjectsmontenegro : (ismoroccoNational ? subjectsmorocco : (ismozambiqueNational ? subjectsmozambique : (isMonacoNational ? subjectsMonaco : mauritiusSubjects)))))))))))))))));
     // Include every subject that has published Admin Dashboard questions for this grade.
     // This changes only discoverability/filtering; saved question text and answers are untouched.
     const adminSubjects = (Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [])
@@ -1016,6 +1056,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isMicronesiaNational = selectedCountry.toLowerCase() === "micronesia" && selectedCurriculum.toLowerCase() === "federated states of micronesia national curriculum standards and benchmarks / secondary supplementary";
     const isMoldovaNational = selectedCountry.toLowerCase() === "moldova" && selectedCurriculum.toLowerCase() === "moldova national curriculum / gymnasium (grades v–ix)";
     const isMonacoNational = selectedCountry.toLowerCase() === "monaco" && selectedCurriculum.toLowerCase() === "monaco national education programme / french national programmes with monaco-specific history";
+    const ismarshallislandsNational = selectedCountry.toLowerCase() === "marshall islands" && selectedCurriculum.toLowerCase() === "marshall islands public school system curriculum / misat grade 8";
+    const ismongoliaNational = selectedCountry.toLowerCase() === "mongolia" && selectedCurriculum.toLowerCase() === "mongolia national core curriculum for basic education (2019) / grade 9";
+    const ismontenegroNational = selectedCountry.toLowerCase() === "montenegro" && selectedCurriculum.toLowerCase() === "montenegro publicly valid nine-year basic education programme / grade ix";
+    const ismoroccoNational = selectedCountry.toLowerCase() === "morocco" && selectedCurriculum.toLowerCase() === "morocco national curriculum / common core secondary (tronc commun scientifique) — supplementary";
+    const ismozambiqueNational = selectedCountry.toLowerCase() === "mozambique" && selectedCurriculum.toLowerCase() === "mozambique secondary education curriculum plan / 10th class (2nd cycle)";
     const gradeBank = isKenyaCbc && window.CBENexusCBCBanks &&
       window.CBENexusCBCBanks.banks && window.CBENexusCBCBanks.banks[selectedGrade] && window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject] ||
       isNigeriaNERDC && window.CBENexusNigeriaBanks &&
@@ -1032,6 +1077,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       isMicronesiaNational && window.CBENexusFiveCountryBanks && window.CBENexusFiveCountryBanks["Micronesia"] && window.CBENexusFiveCountryBanks["Micronesia"].banks && window.CBENexusFiveCountryBanks["Micronesia"].banks[selectedGrade] && window.CBENexusFiveCountryBanks["Micronesia"].banks[selectedGrade][selectedSubject] ||
       isMoldovaNational && window.CBENexusFiveCountryBanks && window.CBENexusFiveCountryBanks["Moldova"] && window.CBENexusFiveCountryBanks["Moldova"].banks && window.CBENexusFiveCountryBanks["Moldova"].banks[selectedGrade] && window.CBENexusFiveCountryBanks["Moldova"].banks[selectedGrade][selectedSubject] ||
       isMonacoNational && window.CBENexusFiveCountryBanks && window.CBENexusFiveCountryBanks["Monaco"] && window.CBENexusFiveCountryBanks["Monaco"].banks && window.CBENexusFiveCountryBanks["Monaco"].banks[selectedGrade] && window.CBENexusFiveCountryBanks["Monaco"].banks[selectedGrade][selectedSubject] ||
+      ismarshallislandsNational && window.CBENexusNextFiveBanks && window.CBENexusNextFiveBanks["Marshall Islands"] && window.CBENexusNextFiveBanks["Marshall Islands"].banks && window.CBENexusNextFiveBanks["Marshall Islands"].banks[selectedGrade] && window.CBENexusNextFiveBanks["Marshall Islands"].banks[selectedGrade][selectedSubject] ||
+      ismongoliaNational && window.CBENexusNextFiveBanks && window.CBENexusNextFiveBanks["Mongolia"] && window.CBENexusNextFiveBanks["Mongolia"].banks && window.CBENexusNextFiveBanks["Mongolia"].banks[selectedGrade] && window.CBENexusNextFiveBanks["Mongolia"].banks[selectedGrade][selectedSubject] ||
+      ismontenegroNational && window.CBENexusNextFiveBanks && window.CBENexusNextFiveBanks["Montenegro"] && window.CBENexusNextFiveBanks["Montenegro"].banks && window.CBENexusNextFiveBanks["Montenegro"].banks[selectedGrade] && window.CBENexusNextFiveBanks["Montenegro"].banks[selectedGrade][selectedSubject] ||
+      ismoroccoNational && window.CBENexusNextFiveBanks && window.CBENexusNextFiveBanks["Morocco"] && window.CBENexusNextFiveBanks["Morocco"].banks && window.CBENexusNextFiveBanks["Morocco"].banks[selectedGrade] && window.CBENexusNextFiveBanks["Morocco"].banks[selectedGrade][selectedSubject] ||
+      ismozambiqueNational && window.CBENexusNextFiveBanks && window.CBENexusNextFiveBanks["Mozambique"] && window.CBENexusNextFiveBanks["Mozambique"].banks && window.CBENexusNextFiveBanks["Mozambique"].banks[selectedGrade] && window.CBENexusNextFiveBanks["Mozambique"].banks[selectedGrade][selectedSubject] ||
       null;
 
     const adminQuestions = Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [];
