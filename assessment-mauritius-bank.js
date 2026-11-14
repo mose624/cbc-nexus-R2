@@ -25,7 +25,7 @@ Q("In a story, what is the climax?",["The opening setting","The list of characte
 ],
 "French":[
 Q("Que signifie « bonjour » en anglais ?",["Good morning / hello","Good night","Goodbye","Thank you"],0,"Vocabulaire","« Bonjour » is a greeting used during the day."),
-Q("Choisissez le bon article : ___ école.",["Le","La","Les","Un"],1,"Grammaire","« École » is feminine: l'école (la before a consonant sound; elision before a vowel)."),
+Q("Choisissez le bon article : ___ école.",["Le","L’","Les","Une"],1,"Grammaire","« École » is feminine; before a vowel, « la » becomes « l’ » by elision."),
 Q("Quel est le pluriel de « un livre » ?",["Des livres","Des livre","Les livree","Un livres"],0,"Grammaire","The plural form is « des livres »."),
 Q("Complétez : Nous ___ à Port-Louis.",["habite","habites","habitons","habitent"],2,"Verbes","With « nous », the verb habiter is « habitons »."),
 Q("Que signifie « merci » ?",["Please","Sorry","Thank you","Welcome"],2,"Vocabulaire","« Merci » means thank you.")
