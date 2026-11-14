@@ -11,7 +11,7 @@ const refresh=()=>{
  if(lev)params.set("level",lev);if(sub)params.set("subject",sub);
  const canonical=base+"?"+params.toString();
  const title="Uganda "+(sub?sub+" ":"")+"NCDC Notes"+(lev?" "+lev:"")+" & UCE Revision | CBE Nexus";
- const description="Read Uganda NCDC Senior 1–4 notes, worked examples and revision questions in Mathematics, English, Biology, Chemistry, Physics and Geography.";
+ const description="Read Uganda NCDC Senior 1–4 notes, worked examples and revision questions in Mathematics, English, Biology, Chemistry and Physics.";
  document.title=title;putMeta("description",description);putMeta("robots","index,follow");
  putMeta("og:title",title,"property");putMeta("og:description",description,"property");putMeta("og:type","article","property");putMeta("og:url",canonical,"property");
  putMeta("twitter:card","summary");putMeta("twitter:title",title);putMeta("twitter:description",description);
