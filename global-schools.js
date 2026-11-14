@@ -501,16 +501,17 @@ function renderCountry(){
  const title=d.seoTitle||(examTitleNames.length?c.name+" National Exams: "+examTitleNames.slice(0,2).join(" & ")+" | CBE Nexus":c.name+" Education System & Exams | CBE Nexus");
  document.title=title.length>78?c.name+" National Exams & Education Resources | CBE Nexus":title;
  const desc=d.seoDescription||(examTitleNames.length?"Explore "+c.name+" national exams, curriculum and online study notes. Confirm current exam names and requirements with official education authorities.":"Explore "+c.name+" schools, curriculum, national exams and online study notes. Confirm current requirements with official education authorities.");
+ const metaDesc=desc.length>158?desc.slice(0,157).replace(/\\s+\\S*$/,"").replace(/[,:;—-]+$/,"")+"…":desc;
  const canonicalUrl="https://cbenexus.com/global-schools/"+c.slug;
- setSeoMeta('meta[name="description"]',"name",desc);
+ setSeoMeta('meta[name="description"]',"name",metaDesc);
  setSeoMeta('meta[property="og:type"]',"property","website");
  setSeoMeta('meta[property="og:site_name"]',"property","CBE Nexus");
  setSeoMeta('meta[property="og:title"]',"property",document.title);
- setSeoMeta('meta[property="og:description"]',"property",desc);
+ setSeoMeta('meta[property="og:description"]',"property",metaDesc);
  setSeoMeta('meta[property="og:url"]',"property",canonicalUrl);
  setSeoMeta('meta[name="twitter:card"]',"name","summary");
  setSeoMeta('meta[name="twitter:title"]',"name",document.title);
- setSeoMeta('meta[name="twitter:description"]',"name",desc);
+ setSeoMeta('meta[name="twitter:description"]',"name",metaDesc);
  let canonical=document.querySelector('link[rel="canonical"]');if(canonical)canonical.href=canonicalUrl;
  const seoGraph={"@context":"https://schema.org","@graph":[
   {"@type":"WebPage","name":document.title,"description":desc,"url":canonicalUrl,"keywords":Array.isArray(d.seoTopics)?d.seoTopics.join(", "):undefined,"isPartOf":{"@type":"WebSite","name":"CBE Nexus","url":"https://cbenexus.com"},"about":[{"@type":"Country","name":c.name},...examTitleNames.map(name=>({"@type":"Thing","name":name})),...(d.curriculum?[{"@type":"Thing","name":d.curriculum}]:[])]},
