@@ -90,7 +90,7 @@
   "Lesotho":["Lesotho LGCSE / ECOL","Cambridge International"],
   "Eswatini":["Eswatini EGCSE / ECESWA","Cambridge International"],
   "India":["India CBSE","India CISCE / ICSE / ISC","State Board","Cambridge International","Pearson Edexcel","IB"],
-  "Pakistan":["Pakistan National Curriculum / FBISE","Punjab Board (BISE)","Cambridge O Level / A Level","Pearson Edexcel","IB"],
+  "Pakistan":["Pakistan National Curriculum / FBISE","Punjab Board (BISE)","Cambridge O Level / A Level","Pearson Edexcel","IB","Pakistan National Curriculum 2026 (NCP-2026) / Grade 9 — Federal & ICT scope"],
   "Bangladesh":["Bangladesh NCTB / SSC / HSC","Cambridge O Level / A Level","Pearson Edexcel","IB"],
   "United Kingdom":["England National Curriculum / GCSE / A Level","Wales Curriculum for Wales / WJEC","Scotland Curriculum for Excellence / SQA","Northern Ireland CCEA","Cambridge International","Pearson Edexcel","IB"],
   "United States":["US Common Core / NGSS","State Standards / State Assessments","AP","IB"],
@@ -124,7 +124,7 @@
   "Sri Lanka":["Sri Lanka National Curriculum / GCE O/L & A/L","Cambridge International","Pearson Edexcel"],
   "Nepal":["Nepal CDC Curriculum / NEB","Cambridge International"],
   "Myanmar":["Myanmar Basic Education Curriculum / Matriculation","Cambridge International"],
-  "Oman":["Oman Ministry of Education Curriculum","British Curriculum","IB"],
+  "Oman":["Oman Ministry of Education Curriculum","British Curriculum","IB","Oman Ministry of Education Curriculum Frameworks 2026 / Grade 10"],
   "Kuwait":["Kuwait Ministry of Education Curriculum","British Curriculum","American Curriculum","IB"],
   "Bahrain":["Bahrain Ministry of Education Curriculum","British Curriculum","American Curriculum","IB"],
   "Jordan":["Jordan National Curriculum / Tawjihi","Cambridge International","IB"],
@@ -159,6 +159,9 @@
   "Niger":["Niger General Secondary Education / Second Cycle (Lycée) — Official Programme Reference"],
   "North Korea":["DPR Korea 12-Year Compulsory Education / Lower Secondary Year 3 — Supplementary"],
   "North Macedonia":["North Macedonia Primary Education Concept / Grade IX — Supplementary Subject Starters"],
+  "Norway":["Norway National Curriculum / Kunnskapsløftet 2020 (LK20) / Year 10"],
+  "Palau":["Palau Ministry of Education Curriculum Frameworks / Grade 9 — supplementary"],
+  "Panama":["Panama MEDUCA Educación Básica General / Premedia 9°"],
 };
 
 const nationalLevelStructures = {
@@ -225,7 +228,11 @@ const nationalLevelStructures = {
   "Saudi Arabia": ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Qatar": ["KG 1","KG 2","Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Egypt": ["Primary 1","Primary 2","Primary 3","Primary 4","Primary 5","Primary 6","Preparatory 1","Preparatory 2","Preparatory 3","Secondary 1","Secondary 2","Secondary 3"],
-  "Ethiopia": ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"]
+  "Ethiopia": ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
+  "Norway": ["Year 10"],
+  "Oman": ["Grade 10"],
+  "Palau": ["Grade 9"],
+  "Panama": ["9°"],
 };
 function levelOptionsFor(countryName, curriculumName){
   const c=(curriculumName||"").toLowerCase();
@@ -689,6 +696,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isnigerNational = selectedCountry === "niger" && selectedCurriculum === "niger general secondary education / second cycle (lycée) — official programme reference";
     const isnorthkoreaNational = selectedCountry === "north korea" && selectedCurriculum === "dpr korea 12-year compulsory education / lower secondary year 3 — supplementary";
     const isnorthmacedoniaNational = selectedCountry === "north macedonia" && selectedCurriculum === "north macedonia primary education concept / grade ix — supplementary subject starters";
+    const isnorwayNational = selectedCountry.toLowerCase() === "norway" && selectedCurriculum.toLowerCase() === "norway national curriculum / kunnskapsløftet 2020 (lk20) / year 10";
+    const isomanNational = selectedCountry.toLowerCase() === "oman" && selectedCurriculum.toLowerCase() === "oman ministry of education curriculum frameworks 2026 / grade 10";
+    const ispakistanNational = selectedCountry.toLowerCase() === "pakistan" && selectedCurriculum.toLowerCase() === "pakistan national curriculum 2026 (ncp-2026) / grade 9 — federal & ict scope";
+    const ispalauNational = selectedCountry.toLowerCase() === "palau" && selectedCurriculum.toLowerCase() === "palau ministry of education curriculum frameworks / grade 9 — supplementary";
+    const ispanamaNational = selectedCountry.toLowerCase() === "panama" && selectedCurriculum.toLowerCase() === "panama meduca educación básica general / premedia 9°";
     const isEthiopiaMoE = selectedCountry === "ethiopia" && selectedCurriculum === "ethiopia ministry of education curriculum / ethiopian general school leaving examination";
     const isEritreaMoE = selectedCountry === "eritrea" && selectedCurriculum === "eritrea ministry of education national curriculum / secondary education certificate examination (esece)";
     if (isKenyaCbc) {
@@ -723,6 +735,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     if (isnigerNational) { const gradeBank = window.CBENexusFourthFiveBanks && window.CBENexusFourthFiveBanks["Niger"] && window.CBENexusFourthFiveBanks["Niger"].banks && window.CBENexusFourthFiveBanks["Niger"].banks[selectedGrade] && window.CBENexusFourthFiveBanks["Niger"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     if (isnorthkoreaNational) { const gradeBank = window.CBENexusFourthFiveBanks && window.CBENexusFourthFiveBanks["North Korea"] && window.CBENexusFourthFiveBanks["North Korea"].banks && window.CBENexusFourthFiveBanks["North Korea"].banks[selectedGrade] && window.CBENexusFourthFiveBanks["North Korea"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     if (isnorthmacedoniaNational) { const gradeBank = window.CBENexusFourthFiveBanks && window.CBENexusFourthFiveBanks["North Macedonia"] && window.CBENexusFourthFiveBanks["North Macedonia"].banks && window.CBENexusFourthFiveBanks["North Macedonia"].banks[selectedGrade] && window.CBENexusFourthFiveBanks["North Macedonia"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isnorwayNational) { const gradeBank = window.CBENexusFifthFiveBanks && window.CBENexusFifthFiveBanks["Norway"] && window.CBENexusFifthFiveBanks["Norway"].banks && window.CBENexusFifthFiveBanks["Norway"].banks[selectedGrade] && window.CBENexusFifthFiveBanks["Norway"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isomanNational) { const gradeBank = window.CBENexusFifthFiveBanks && window.CBENexusFifthFiveBanks["Oman"] && window.CBENexusFifthFiveBanks["Oman"].banks && window.CBENexusFifthFiveBanks["Oman"].banks[selectedGrade] && window.CBENexusFifthFiveBanks["Oman"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (ispakistanNational) { const gradeBank = window.CBENexusFifthFiveBanks && window.CBENexusFifthFiveBanks["Pakistan"] && window.CBENexusFifthFiveBanks["Pakistan"].banks && window.CBENexusFifthFiveBanks["Pakistan"].banks[selectedGrade] && window.CBENexusFifthFiveBanks["Pakistan"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (ispalauNational) { const gradeBank = window.CBENexusFifthFiveBanks && window.CBENexusFifthFiveBanks["Palau"] && window.CBENexusFifthFiveBanks["Palau"].banks && window.CBENexusFifthFiveBanks["Palau"].banks[selectedGrade] && window.CBENexusFifthFiveBanks["Palau"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (ispanamaNational) { const gradeBank = window.CBENexusFifthFiveBanks && window.CBENexusFifthFiveBanks["Panama"] && window.CBENexusFifthFiveBanks["Panama"].banks && window.CBENexusFifthFiveBanks["Panama"].banks[selectedGrade] && window.CBENexusFifthFiveBanks["Panama"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
 
     return [];
   }
@@ -1003,6 +1020,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isnigerNational = selectedCountry === "niger" && selectedCurriculum === "niger general secondary education / second cycle (lycée) — official programme reference";
     const isnorthkoreaNational = selectedCountry === "north korea" && selectedCurriculum === "dpr korea 12-year compulsory education / lower secondary year 3 — supplementary";
     const isnorthmacedoniaNational = selectedCountry === "north macedonia" && selectedCurriculum === "north macedonia primary education concept / grade ix — supplementary subject starters";
+    const isnorwayNational = selectedCountry.toLowerCase() === "norway" && selectedCurriculum.toLowerCase() === "norway national curriculum / kunnskapsløftet 2020 (lk20) / year 10";
+    const isomanNational = selectedCountry.toLowerCase() === "oman" && selectedCurriculum.toLowerCase() === "oman ministry of education curriculum frameworks 2026 / grade 10";
+    const ispakistanNational = selectedCountry.toLowerCase() === "pakistan" && selectedCurriculum.toLowerCase() === "pakistan national curriculum 2026 (ncp-2026) / grade 9 — federal & ict scope";
+    const ispalauNational = selectedCountry.toLowerCase() === "palau" && selectedCurriculum.toLowerCase() === "palau ministry of education curriculum frameworks / grade 9 — supplementary";
+    const ispanamaNational = selectedCountry.toLowerCase() === "panama" && selectedCurriculum.toLowerCase() === "panama meduca educación básica general / premedia 9°";
     const nigeriaSubjects = isNigeriaNERDC && window.CBENexusNigeriaBanks && window.CBENexusNigeriaBanks.banks &&
       window.CBENexusNigeriaBanks.banks[grade.value] ? Object.keys(window.CBENexusNigeriaBanks.banks[grade.value]) : [];
     const tanzaniaSubjects = isTanzaniaTIE && window.CBENexusTanzaniaBanks && window.CBENexusTanzaniaBanks.banks && window.CBENexusTanzaniaBanks.banks[grade.value] ? Object.keys(window.CBENexusTanzaniaBanks.banks[grade.value]) : [];
@@ -1032,7 +1054,17 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const subjectsniger = isnigerNational && window.CBENexusFourthFiveBanks && window.CBENexusFourthFiveBanks["Niger"] && window.CBENexusFourthFiveBanks["Niger"].banks && window.CBENexusFourthFiveBanks["Niger"].banks[grade.value] ? Object.keys(window.CBENexusFourthFiveBanks["Niger"].banks[grade.value]) : [];
     const subjectsnorthkorea = isnorthkoreaNational && window.CBENexusFourthFiveBanks && window.CBENexusFourthFiveBanks["North Korea"] && window.CBENexusFourthFiveBanks["North Korea"].banks && window.CBENexusFourthFiveBanks["North Korea"].banks[grade.value] ? Object.keys(window.CBENexusFourthFiveBanks["North Korea"].banks[grade.value]) : [];
     const subjectsnorthmacedonia = isnorthmacedoniaNational && window.CBENexusFourthFiveBanks && window.CBENexusFourthFiveBanks["North Macedonia"] && window.CBENexusFourthFiveBanks["North Macedonia"].banks && window.CBENexusFourthFiveBanks["North Macedonia"].banks[grade.value] ? Object.keys(window.CBENexusFourthFiveBanks["North Macedonia"].banks[grade.value]) : [];
-    const baseList = isKenyaCbc ? subjectsForGrade(grade.value) : (isNigeriaNERDC ? nigeriaSubjects : (isTanzaniaTIE ? tanzaniaSubjects : (isEstoniaNational ? estoniaSubjects : (isLatviaNational ? latviaSubjects : (isLithuaniaNational ? lithuaniaSubjects : (isLuxembourgESC ? luxembourgSubjects : (isMaltaNational ? maltaSubjects : (isMauritaniaNational ? subjectsMauritania : (isMexicoNational ? subjectsMexico : (isMicronesiaNational ? subjectsMicronesia : (isMoldovaNational ? subjectsMoldova : (ismarshallislandsNational ? subjectsmarshallislands : (ismongoliaNational ? subjectsmongolia : (ismontenegroNational ? subjectsmontenegro : (ismoroccoNational ? subjectsmorocco : (ismozambiqueNational ? subjectsmozambique : (ismyanmarNational ? subjectsmyanmar : (isnamibiaNational ? subjectsnamibia : (isnauruNational ? subjectsnauru : (isnepalNational ? subjectsnepal : (isnetherlandsNational ? subjectsnetherlands : (isnewzealandNational ? subjectsnewzealand : (isnicaraguaNational ? subjectsnicaragua : (isnigerNational ? subjectsniger : (isnorthkoreaNational ? subjectsnorthkorea : (isnorthmacedoniaNational ? subjectsnorthmacedonia : (isMonacoNational ? subjectsMonaco : mauritiusSubjects)))))))))))))))))))))))))));
+    const subjectsnorway = isnorwayNational && window.CBENexusFifthFiveBanks && window.CBENexusFifthFiveBanks["Norway"] && window.CBENexusFifthFiveBanks["Norway"].banks && window.CBENexusFifthFiveBanks["Norway"].banks[grade.value] ? Object.keys(window.CBENexusFifthFiveBanks["Norway"].banks[grade.value]) : [];
+    const subjectsoman = isomanNational && window.CBENexusFifthFiveBanks && window.CBENexusFifthFiveBanks["Oman"] && window.CBENexusFifthFiveBanks["Oman"].banks && window.CBENexusFifthFiveBanks["Oman"].banks[grade.value] ? Object.keys(window.CBENexusFifthFiveBanks["Oman"].banks[grade.value]) : [];
+    const subjectspakistan = ispakistanNational && window.CBENexusFifthFiveBanks && window.CBENexusFifthFiveBanks["Pakistan"] && window.CBENexusFifthFiveBanks["Pakistan"].banks && window.CBENexusFifthFiveBanks["Pakistan"].banks[grade.value] ? Object.keys(window.CBENexusFifthFiveBanks["Pakistan"].banks[grade.value]) : [];
+    const subjectspalau = ispalauNational && window.CBENexusFifthFiveBanks && window.CBENexusFifthFiveBanks["Palau"] && window.CBENexusFifthFiveBanks["Palau"].banks && window.CBENexusFifthFiveBanks["Palau"].banks[grade.value] ? Object.keys(window.CBENexusFifthFiveBanks["Palau"].banks[grade.value]) : [];
+    const subjectspanama = ispanamaNational && window.CBENexusFifthFiveBanks && window.CBENexusFifthFiveBanks["Panama"] && window.CBENexusFifthFiveBanks["Panama"].banks && window.CBENexusFifthFiveBanks["Panama"].banks[grade.value] ? Object.keys(window.CBENexusFifthFiveBanks["Panama"].banks[grade.value]) : [];
+    let baseList = isKenyaCbc ? subjectsForGrade(grade.value) : (isNigeriaNERDC ? nigeriaSubjects : (isTanzaniaTIE ? tanzaniaSubjects : (isEstoniaNational ? estoniaSubjects : (isLatviaNational ? latviaSubjects : (isLithuaniaNational ? lithuaniaSubjects : (isLuxembourgESC ? luxembourgSubjects : (isMaltaNational ? maltaSubjects : (isMauritaniaNational ? subjectsMauritania : (isMexicoNational ? subjectsMexico : (isMicronesiaNational ? subjectsMicronesia : (isMoldovaNational ? subjectsMoldova : (ismarshallislandsNational ? subjectsmarshallislands : (ismongoliaNational ? subjectsmongolia : (ismontenegroNational ? subjectsmontenegro : (ismoroccoNational ? subjectsmorocco : (ismozambiqueNational ? subjectsmozambique : (ismyanmarNational ? subjectsmyanmar : (isnamibiaNational ? subjectsnamibia : (isnauruNational ? subjectsnauru : (isnepalNational ? subjectsnepal : (isnetherlandsNational ? subjectsnetherlands : (isnewzealandNational ? subjectsnewzealand : (isnicaraguaNational ? subjectsnicaragua : (isnigerNational ? subjectsniger : (isnorthkoreaNational ? subjectsnorthkorea : (isnorthmacedoniaNational ? subjectsnorthmacedonia : (isMonacoNational ? subjectsMonaco : mauritiusSubjects)))))))))))))))))))))))))));
+    if (isnorwayNational) baseList = subjectsnorway;
+    if (isomanNational) baseList = subjectsoman;
+    if (ispakistanNational) baseList = subjectspakistan;
+    if (ispalauNational) baseList = subjectspalau;
+    if (ispanamaNational) baseList = subjectspanama;
     // Include every subject that has published Admin Dashboard questions for this grade.
     // This changes only discoverability/filtering; saved question text and answers are untouched.
     const adminSubjects = (Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [])
@@ -1120,6 +1152,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isnigerNational = selectedCountry.toLowerCase() === "niger" && selectedCurriculum.toLowerCase() === "niger general secondary education / second cycle (lycée) — official programme reference";
     const isnorthkoreaNational = selectedCountry.toLowerCase() === "north korea" && selectedCurriculum.toLowerCase() === "dpr korea 12-year compulsory education / lower secondary year 3 — supplementary";
     const isnorthmacedoniaNational = selectedCountry.toLowerCase() === "north macedonia" && selectedCurriculum.toLowerCase() === "north macedonia primary education concept / grade ix — supplementary subject starters";
+    const isnorwayNational = selectedCountry.toLowerCase() === "norway" && selectedCurriculum.toLowerCase() === "norway national curriculum / kunnskapsløftet 2020 (lk20) / year 10";
+    const isomanNational = selectedCountry.toLowerCase() === "oman" && selectedCurriculum.toLowerCase() === "oman ministry of education curriculum frameworks 2026 / grade 10";
+    const ispakistanNational = selectedCountry.toLowerCase() === "pakistan" && selectedCurriculum.toLowerCase() === "pakistan national curriculum 2026 (ncp-2026) / grade 9 — federal & ict scope";
+    const ispalauNational = selectedCountry.toLowerCase() === "palau" && selectedCurriculum.toLowerCase() === "palau ministry of education curriculum frameworks / grade 9 — supplementary";
+    const ispanamaNational = selectedCountry.toLowerCase() === "panama" && selectedCurriculum.toLowerCase() === "panama meduca educación básica general / premedia 9°";
     const gradeBank = isKenyaCbc && window.CBENexusCBCBanks &&
       window.CBENexusCBCBanks.banks && window.CBENexusCBCBanks.banks[selectedGrade] && window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject] ||
       isNigeriaNERDC && window.CBENexusNigeriaBanks &&
@@ -1151,6 +1188,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       isnigerNational && window.CBENexusFourthFiveBanks && window.CBENexusFourthFiveBanks["Niger"] && window.CBENexusFourthFiveBanks["Niger"].banks && window.CBENexusFourthFiveBanks["Niger"].banks[selectedGrade] && window.CBENexusFourthFiveBanks["Niger"].banks[selectedGrade][selectedSubject] ||
       isnorthkoreaNational && window.CBENexusFourthFiveBanks && window.CBENexusFourthFiveBanks["North Korea"] && window.CBENexusFourthFiveBanks["North Korea"].banks && window.CBENexusFourthFiveBanks["North Korea"].banks[selectedGrade] && window.CBENexusFourthFiveBanks["North Korea"].banks[selectedGrade][selectedSubject] ||
       isnorthmacedoniaNational && window.CBENexusFourthFiveBanks && window.CBENexusFourthFiveBanks["North Macedonia"] && window.CBENexusFourthFiveBanks["North Macedonia"].banks && window.CBENexusFourthFiveBanks["North Macedonia"].banks[selectedGrade] && window.CBENexusFourthFiveBanks["North Macedonia"].banks[selectedGrade][selectedSubject] ||
+      isnorwayNational && window.CBENexusFifthFiveBanks && window.CBENexusFifthFiveBanks["Norway"] && window.CBENexusFifthFiveBanks["Norway"].banks && window.CBENexusFifthFiveBanks["Norway"].banks[selectedGrade] && window.CBENexusFifthFiveBanks["Norway"].banks[selectedGrade][selectedSubject] ||
+      isomanNational && window.CBENexusFifthFiveBanks && window.CBENexusFifthFiveBanks["Oman"] && window.CBENexusFifthFiveBanks["Oman"].banks && window.CBENexusFifthFiveBanks["Oman"].banks[selectedGrade] && window.CBENexusFifthFiveBanks["Oman"].banks[selectedGrade][selectedSubject] ||
+      ispakistanNational && window.CBENexusFifthFiveBanks && window.CBENexusFifthFiveBanks["Pakistan"] && window.CBENexusFifthFiveBanks["Pakistan"].banks && window.CBENexusFifthFiveBanks["Pakistan"].banks[selectedGrade] && window.CBENexusFifthFiveBanks["Pakistan"].banks[selectedGrade][selectedSubject] ||
+      ispalauNational && window.CBENexusFifthFiveBanks && window.CBENexusFifthFiveBanks["Palau"] && window.CBENexusFifthFiveBanks["Palau"].banks && window.CBENexusFifthFiveBanks["Palau"].banks[selectedGrade] && window.CBENexusFifthFiveBanks["Palau"].banks[selectedGrade][selectedSubject] ||
+      ispanamaNational && window.CBENexusFifthFiveBanks && window.CBENexusFifthFiveBanks["Panama"] && window.CBENexusFifthFiveBanks["Panama"].banks && window.CBENexusFifthFiveBanks["Panama"].banks[selectedGrade] && window.CBENexusFifthFiveBanks["Panama"].banks[selectedGrade][selectedSubject] ||
       null;
 
     const adminQuestions = Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [];
