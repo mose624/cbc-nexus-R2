@@ -644,6 +644,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     if (isTanzaniaTIE) { const gradeBank = window.CBENexusTanzaniaBanks && window.CBENexusTanzaniaBanks.banks && window.CBENexusTanzaniaBanks.banks[selectedGrade] && window.CBENexusTanzaniaBanks.banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     if (isEthiopiaMoE) { const gradeBank = window.CBENexusEthiopiaBanks && window.CBENexusEthiopiaBanks.banks && window.CBENexusEthiopiaBanks.banks[selectedGrade] && window.CBENexusEthiopiaBanks.banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     if (isEritreaMoE) { const gradeBank = window.CBENexusEritreaBanks && window.CBENexusEritreaBanks.banks && window.CBENexusEritreaBanks.banks[selectedGrade] && window.CBENexusEritreaBanks.banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isMauritiusNational) { const gradeBank = window.CBENexusMauritiusBanks && window.CBENexusMauritiusBanks.banks && window.CBENexusMauritiusBanks.banks[selectedGrade] && window.CBENexusMauritiusBanks.banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     return [];
   }
 
@@ -979,6 +980,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isLithuaniaNational = selectedCountry.toLowerCase() === "lithuania" && selectedCurriculum.toLowerCase() === "lithuanian national curriculum / general programmes (v-1269)";
     const isLuxembourgESC = selectedCountry.toLowerCase() === "luxembourg" && selectedCurriculum.toLowerCase() === "luxembourg national curriculum / classical secondary education (esc)";
     const isMaltaNational = selectedCountry.toLowerCase() === "malta" && selectedCurriculum.toLowerCase() === "malta national curriculum framework / learning outcomes framework / secondary year 9";
+    const isMauritiusNational = selectedCountry.toLowerCase() === "mauritius" && selectedCurriculum.toLowerCase() === "mauritius national curriculum framework grades 7–9 / national certificate of education (nce)";
     const gradeBank = isKenyaCbc && window.CBENexusCBCBanks &&
       window.CBENexusCBCBanks.banks && window.CBENexusCBCBanks.banks[selectedGrade] && window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject] ||
       isNigeriaNERDC && window.CBENexusNigeriaBanks &&
