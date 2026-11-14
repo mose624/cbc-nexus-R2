@@ -750,6 +750,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const issanmarinoNational = selectedCountry.toLowerCase() === "san marino" && selectedCurriculum.toLowerCase() === "san marino scuola media / classe terza";
     const issaotomeNational = selectedCountry.toLowerCase() === "sao tome and principe" && selectedCurriculum.toLowerCase() === "sao tome and principe national curriculum / 9ª classe / ensino básico 7ª–9ª";
     const isNinthsaudiarabia = selectedCountry.toLowerCase() === "saudi arabia" && selectedCurriculum.toLowerCase() === "saudi ministry of education curriculum / intermediate grade 9 / third intermediate";
+    const isTenthsingapore = selectedCountry.toLowerCase() === "singapore" && selectedCurriculum.toLowerCase() === "singapore moe lower secondary curriculum / secondary 2 / g2-g3";
+    const isTenthslovakia = selectedCountry.toLowerCase() === "slovakia" && selectedCurriculum.toLowerCase() === "slovakia state educational programme for basic education / 9th grade";
+    const isTenthslovenia = selectedCountry.toLowerCase() === "slovenia" && selectedCurriculum.toLowerCase() === "slovenia basic school national curriculum / 9th grade";
+    const isTenthsolomonislands = selectedCountry.toLowerCase() === "solomon islands" && selectedCurriculum.toLowerCase() === "solomon islands national curriculum / junior secondary year 9 / form 3";
+    const isTenthsomalia = selectedCountry.toLowerCase() === "somalia" && selectedCurriculum.toLowerCase() === "somalia national education curriculum / secondary form 1 (grade 9)";
     const isNinthsenegal = selectedCountry.toLowerCase() === "senegal" && selectedCurriculum.toLowerCase() === "senegal national curriculum / collège / troisième (3e)";
     const isNinthserbia = selectedCountry.toLowerCase() === "serbia" && selectedCurriculum.toLowerCase() === "serbia national curriculum / primary education / grade 8";
     const isNinthseychelles = selectedCountry.toLowerCase() === "seychelles" && selectedCurriculum.toLowerCase() === "seychelles national curriculum framework / secondary 3 (s3)";
