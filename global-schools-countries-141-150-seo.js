@@ -26,29 +26,6 @@ Object.assign(d,{
       }
     ]
   },
-  "rwanda": {
-    "seoHeading": "Rwanda Education System, Competence-Based Curriculum & National Examinations",
-    "seoTitle": "Rwanda Education System, CBC Curriculum, REB & National Exams | CBE Nexus",
-    "seoDescription": "Explore Rwanda's competence-based curriculum, basic and secondary education, languages of instruction and national examinations.",
-    "seoIntro": "Rwanda's education system is guided by the Ministry of Education and the Rwanda Basic Education Board (REB). The competence-based curriculum emphasises learner competencies, practical application and continuous assessment. Basic education and upper-secondary pathways include general, technical and vocational options. Kinyarwanda is widely used in society; English is an important language of instruction, alongside French and Kiswahili in the national language context. National examinations and assessment arrangements are administered under current national policy. Use the grade, subject, pathway and language of delivery to select appropriate learning resources.",
-    "seoTopics": [
-      "Rwanda competence based curriculum",
-      "Rwanda REB syllabus",
-      "Rwanda primary lower secondary upper secondary",
-      "Rwanda national examinations",
-      "Rwanda English French Kinyarwanda education"
-    ],
-    "seoFaqs": [
-      {
-        "question": "What curriculum does Rwanda use?",
-        "answer": "Rwanda uses a competence-based curriculum focused on applying knowledge, skills and attitudes."
-      },
-      {
-        "question": "What languages are used in Rwandan schools?",
-        "answer": "Language use depends on policy and school context; Kinyarwanda, English, French and Kiswahili are part of Rwanda's language environment."
-      }
-    ]
-  },
   "samoa": {
     "seoHeading": "Samoa Education System, National Curriculum & Pacific School Qualifications",
     "seoTitle": "Samoa Education System, Curriculum, PSSC & School Resources | CBE Nexus",
@@ -118,29 +95,6 @@ Object.assign(d,{
       }
     ]
   },
-  "senegal": {
-    "seoHeading": "Senegal Education System, Curriculum & Baccalauréat",
-    "seoTitle": "Senegal Education System, Curriculum, BFEM & Baccalauréat | CBE Nexus",
-    "seoDescription": "Explore Senegal's education system, French-language curriculum, BFEM lower-secondary examination and Baccalauréat pathways.",
-    "seoIntro": "Senegal's education system is overseen by the Ministry of National Education and includes elementary, middle and secondary education, alongside technical and vocational pathways. French is the principal language of formal instruction, while national languages such as Wolof and others are important in communities and in language-in-education initiatives. The BFEM is a key examination at the end of lower-secondary education, and the Baccalauréat is the major upper-secondary leaving qualification. Curriculum and examination requirements should be checked against current ministry and examination authority guidance.",
-    "seoTopics": [
-      "Senegal national education curriculum",
-      "Senegal elementary middle secondary school",
-      "Senegal BFEM examination",
-      "Senegal Baccalauréat exam",
-      "Senegal French national languages education"
-    ],
-    "seoFaqs": [
-      {
-        "question": "What is the BFEM?",
-        "answer": "The BFEM is an examination associated with completion of lower-secondary education."
-      },
-      {
-        "question": "What is the main language of instruction?",
-        "answer": "French is the principal formal language of instruction, while national languages are important in communities and education initiatives."
-      }
-    ]
-  },
   "serbia": {
     "seoHeading": "Serbia Education System, National Curriculum & Matura Examinations",
     "seoTitle": "Serbia Education System, Curriculum, Secondary Matura & School Resources | CBE Nexus",
@@ -161,52 +115,6 @@ Object.assign(d,{
       {
         "question": "What is the matura examination?",
         "answer": "Matura arrangements relate to completion of secondary education and vary by programme and current regulations."
-      }
-    ]
-  },
-  "seychelles": {
-    "seoHeading": "Seychelles Education System, National Curriculum & IGCSE/Secondary Qualifications",
-    "seoTitle": "Seychelles Education System, Curriculum, National Exams & School Resources | CBE Nexus",
-    "seoDescription": "Explore Seychelles' education system, Creole, English and French language context, national assessments and secondary qualifications.",
-    "seoIntro": "Seychelles' education system is overseen by the Ministry of Education and includes early childhood, primary and secondary schooling. Seychellois Creole, English and French are important in the country's multilingual education context; the language used for instruction varies by subject and stage. Schools follow national curriculum and assessment requirements, while some secondary qualifications and school programmes may involve Cambridge or other internationally recognised examinations. Confirm current subject offerings, examination routes and assessment policies with the Ministry and the individual school.",
-    "seoTopics": [
-      "Seychelles national curriculum",
-      "Seychelles primary secondary education",
-      "Seychelles national examinations",
-      "Seychelles Cambridge IGCSE qualifications",
-      "Seychelles Creole English French education"
-    ],
-    "seoFaqs": [
-      {
-        "question": "Which languages are important in Seychelles education?",
-        "answer": "Seychellois Creole, English and French are important, with instructional use varying by subject and stage."
-      },
-      {
-        "question": "Where can curriculum details be confirmed?",
-        "answer": "Use current Ministry of Education publications and school-level curriculum information."
-      }
-    ]
-  },
-  "sierra-leone": {
-    "seoHeading": "Sierra Leone Education System, Free Quality School Education & WASSCE",
-    "seoTitle": "Sierra Leone Education System, Curriculum, BECE & WASSCE | CBE Nexus",
-    "seoDescription": "Explore Sierra Leone's national curriculum, basic and senior secondary pathways, BECE and WASSCE examinations.",
-    "seoIntro": "Sierra Leone's education system is overseen by the Ministry of Basic and Senior Secondary Education. The Free Quality School Education programme supports access to schooling, while national curriculum and assessment policy cover basic and senior secondary stages. English is the principal language of formal instruction, and Krio and other local languages are widely used in communities. Key examinations include the Basic Education Certificate Examination (BECE) and the West African Senior School Certificate Examination (WASSCE). Confirm current syllabuses, candidate requirements and examination timetables with the ministry and WAEC.",
-    "seoTopics": [
-      "Sierra Leone national curriculum",
-      "Sierra Leone Free Quality School Education",
-      "Sierra Leone BECE examination",
-      "Sierra Leone WASSCE examination",
-      "Sierra Leone English Krio school resources"
-    ],
-    "seoFaqs": [
-      {
-        "question": "What is the BECE?",
-        "answer": "The BECE is an examination taken at the end of the basic education cycle."
-      },
-      {
-        "question": "Which language is used in formal instruction?",
-        "answer": "English is the principal language of formal instruction, while Krio and other local languages are widely used."
       }
     ]
   },
