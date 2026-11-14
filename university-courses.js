@@ -27,14 +27,14 @@
   async function findCourses(name){
     const requests=[];
     if(["public","private","specialized","colleges","interim"].includes(type)){
-      requests.push(async()=>{const d=await getJson("/api/cue/programmes?institution="+encodeURIComponent(name));return {items:d.programmes||[],source:"CUE",date:d.sourceDate||"latest available",url:"https://www.cue.or.ke/index.php?Itemid=253&id=22&option=com_content&view=article"}});
-      requests.push(async()=>{const d=await getJson("/api/kuccps/university-programmes?institution="+encodeURIComponent(name));return {items:d.programmes||[],source:"KUCCPS",date:d.cycle||"current placement cycle",url:d.sourceUrl||"https://students.kuccps.net/institutions/"}});
+      requests.push(async()=>{const d=await getJson("/api/cue/programmes?institution="+encodeURIComponent(name));return {items:d.programmes||[],source:"CUE",date:d.sourceDate||"latest available",url:""}});
+      requests.push(async()=>{const d=await getJson("/api/kuccps/university-programmes?institution="+encodeURIComponent(name));return {items:d.programmes||[],source:"KUCCPS",date:d.cycle||"current placement cycle",url:""}});
     }else if(type==="tvet"||type==="technical"){
-      requests.push(async()=>{const d=await getJson("/api/tveta/institution?institution="+encodeURIComponent(name));return {items:d.courses||[],source:"TVETA",date:d.fetchedAt||"",url:d.sourceUrl||"https://www.tveta.go.ke/accredited-tvet-institutions/"}});
+      requests.push(async()=>{const d=await getJson("/api/tveta/institution?institution="+encodeURIComponent(name));return {items:d.courses||[],source:"TVETA",date:d.fetchedAt||"",url:""}});
       requests.push(async()=>{const d=await getJson("/api/kuccps/university-programmes?institution="+encodeURIComponent(name));return {items:d.programmes||[],source:"KUCCPS",date:d.cycle||"",url:d.sourceUrl||"https://students.kuccps.net/institutions/"}});
     }else{
       requests.push(async()=>{const d=await getJson("/api/kuccps/university-programmes?institution="+encodeURIComponent(name));return {items:d.programmes||[],source:"KUCCPS",date:d.cycle||"current placement cycle",url:d.sourceUrl||"https://students.kuccps.net/institutions/"}});
-      if(type==="kmtc")requests.push(async()=>{const d=await getJson("/api/tveta/institution?institution="+encodeURIComponent(name.replace(/^KMTC\s*[-–]\s*/i,"Kenya Medical Training College")));return {items:d.courses||[],source:"TVETA",date:d.fetchedAt||"",url:d.sourceUrl||"https://www.tveta.go.ke/accredited-tvet-institutions/"}});
+      if(type==="kmtc")requests.push(async()=>{const d=await getJson("/api/tveta/institution?institution="+encodeURIComponent(name.replace(/^KMTC\s*[-–]\s*/i,"Kenya Medical Training College")));return {items:d.courses||[],source:"TVETA",date:d.fetchedAt||"",url:""}});
     }
     for(const request of requests){try{const result=await request();if(result.items.length)return result}catch(e){}}
     return {items:[],source:"",date:"",url:""};
@@ -49,7 +49,7 @@
     try{
       const data=await findCourses(name);
       if(!data.items.length){
-        box.innerHTML="<strong style='color:#075985'>🎓 Courses / programmes</strong><p style='font-size:.8rem;color:#475569;margin:7px 0'>No institution-specific course rows were returned by the connected official registers. This is not confirmation that the institution has no courses. Check its current prospectus or admissions office.</p><a href='"+esc(type==="tvet"||type==="technical"?"https://www.tveta.go.ke/tvet-courses/":type==="kmtc"?"https://kmtc.ac.ke/study/academic-programmes":"https://students.kuccps.net/institutions/")+"' target='_blank' rel='noopener' style='font-size:.78rem;font-weight:800'>Open official course register ↗</a>";
+        box.innerHTML="<strong style='color:#075985'>🎓 Courses / programmes</strong><p style='font-size:.8rem;color:#475569;margin:7px 0'>No matching institution-specific programme records were returned in the connected dataset yet. This does not mean the institution has no courses.</p>";
         return;
       }
       card.dataset.courseItems=JSON.stringify(data.items);
@@ -65,12 +65,23 @@
     let items=[];try{items=JSON.parse(card.dataset.courseItems||"[]")}catch{}
     const shown=items.filter(matchLevel);
     const title=data?.source||card.dataset.courseSource||"Official register";
-    const sourceUrl=data?.url||card.dataset.courseUrl||"https://www.cue.or.ke/";
+    const sourceUrl="";
     const courseName=x=>x.programmeName||x.name||x.courseName||"";
-    const courseLevel=x=>x.qualificationLevel||x.level||"Level not stated";
-    const tags=shown.slice(0,8).map(x=>"<li style='font-size:.76rem;color:#334155;margin:3px 0'>"+esc(courseName(x))+" <span style='color:#64748b'>("+esc(courseLevel(x))+")</span></li>").join("");
-    const more=shown.length>8?"<details style='margin-top:7px'><summary style='cursor:pointer;font-size:.78rem;font-weight:800;color:#075985'>View all "+shown.length+" programmes</summary><ul style='padding-left:18px;margin:7px 0'>"+shown.slice(8).map(x=>"<li style='font-size:.76rem;margin:3px 0'>"+esc(courseName(x))+" <span style='color:#64748b'>("+esc(courseLevel(x))+")</span></li>").join("")+"</ul></details>":"";
-    box.innerHTML="<strong style='color:#166534'>🎓 "+esc(shown.length)+" programme(s) listed by "+esc(title)+"</strong>"+(shown.length?"<ul style='padding-left:18px;margin:8px 0'>"+tags+"</ul>"+more:"<p style='font-size:.8rem;color:#64748b'>No programmes match the selected qualification level.</p>")+"<p style='font-size:.7rem;color:#64748b;margin:8px 0'>Source: "+esc(title)+(data?.date?" • "+esc(data.date):"")+". Published course lists and campus availability may change; confirm the exact intake and campus with the institution.</p><a href='"+esc(sourceUrl)+"' target='_blank' rel='noopener' style='font-size:.75rem;font-weight:800'>Verify on official register ↗</a>";
+    const courseLevel=x=>x.qualificationLevel||x.level||"Award level not stated";
+    const entryRequirement=x=>{
+      const cuts=[["2025",x.cutoff2025],["2024",x.cutoff2024],["2023",x.cutoff2023]].filter(v=>v[1]&&v[1]!=="-"&&v[1]!=="—");
+      if(cuts.length)return "KUCCPS placement cut-off: "+cuts.map(v=>v[0]+" "+v[1]).join("; ")+" points (historical reference, not a guaranteed current cut-off)";
+      const level=courseLevel(x).toLowerCase();
+      if(/master|postgraduate diploma/.test(level))return "Relevant prior bachelor’s degree; exact class and subject requirements are programme-specific";
+      if(/phd|doctor/.test(level))return "Relevant prior master’s degree; exact discipline and research requirements are programme-specific";
+      if(/bachelor|degree/.test(level))return "KCSE qualification; minimum grade and required subject grades are programme-specific and are not included in this register";
+      if(/diploma/.test(level))return "KCSE or equivalent; minimum grade and subject requirements vary by programme";
+      if(/certificate/.test(level))return "KCSE or equivalent; minimum grade varies by programme";
+      return "Exact admission threshold is not supplied in this record";
+    };
+    const tags=shown.slice(0,8).map(x=>"<li style='font-size:.76rem;color:#334155;margin:7px 0'><strong>"+esc(courseName(x))+"</strong><br><span style='color:#64748b'>Award: "+esc(courseLevel(x))+"</span><br><span style='color:#475569'>Entry qualification: "+esc(entryRequirement(x))+"</span></li>").join("");
+    const more=shown.length>8?"<details style='margin-top:7px'><summary style='cursor:pointer;font-size:.78rem;font-weight:800;color:#075985'>View all "+shown.length+" programmes</summary><ul style='padding-left:18px;margin:7px 0'>"+shown.slice(8).map(x=>"<li style='font-size:.76rem;margin:7px 0'><strong>"+esc(courseName(x))+"</strong> — "+esc(courseLevel(x))+"<br><span style='color:#475569'>Entry qualification: "+esc(entryRequirement(x))+"</span></li>").join("")+"</ul></details>":"";
+    box.innerHTML="<strong style='color:#166534'>🎓 "+esc(shown.length)+" programme(s) listed by "+esc(title)+"</strong>"+(shown.length?"<ul style='padding-left:18px;margin:8px 0'>"+tags+"</ul>"+more:"<p style='font-size:.8rem;color:#64748b'>No programmes match the selected qualification level.</p>")+"<p style='font-size:.7rem;color:#64748b;margin:8px 0'>Programme data source: "+esc(title)+(data?.date?" • "+esc(data.date):"")+". Entry thresholds and campus/intake availability can change. Historical KUCCPS cut-offs are reference points, not guaranteed current admission grades.</p>";
   }
   function scan(){
     list.querySelectorAll(".inst-card").forEach(card=>{
