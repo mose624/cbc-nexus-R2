@@ -106,6 +106,7 @@
   "Qatar":["Qatar National Curriculum","British Curriculum","American Curriculum","IB"],
   "Egypt":["Egypt Ministry of Education Curriculum / Thanaweya Amma","IGCSE","IB"],
   "Ethiopia":["Ethiopia Ministry of Education Curriculum / Ethiopian General School Leaving Examination"],
+  "Eritrea":["Eritrea Ministry of Education National Curriculum / Secondary Education Certificate Examination (ESECE)"],
   "Ireland":["Irish Primary Curriculum / Junior Cycle / Leaving Certificate","Cambridge International","IB"],
   "France":["French National Curriculum / Baccalauréat","Cambridge International","IB"],
   "Germany":["German Länder Curriculum / Abitur","Cambridge International","IB"],
@@ -137,6 +138,7 @@
 };
 
 const nationalLevelStructures = {
+  "Eritrea": ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Kenya": ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Uganda": ["Primary 1","Primary 2","Primary 3","Primary 4","Primary 5","Primary 6","Primary 7","Senior 1","Senior 2","Senior 3","Senior 4","Senior 5","Senior 6"],
   "Tanzania": ["Standard I","Standard II","Standard III","Standard IV","Standard V","Standard VI","Standard VII","Form I","Form II","Form III","Form IV","Form V","Form VI"],
@@ -600,6 +602,9 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     if (selectedCountry === "ethiopia" && selectedCurriculum === "ethiopia ministry of education curriculum / ethiopian general school leaving examination" && n === 9) {
       return ["Biology","Chemistry","Mathematics","Physics"];
     }
+    if (selectedCountry === "eritrea" && selectedCurriculum === "eritrea ministry of education national curriculum / secondary education certificate examination (esece)" && n === 9) {
+      return ["Biology","Chemistry","Mathematics","Physics","English Language"];
+    }
     return n <= 3 ? gradeSubjects.lower : n <= 6 ? gradeSubjects.upper : n <= 9 ? gradeSubjects.junior : gradeSubjects.senior;
   }
 
@@ -610,6 +615,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isNigeriaNERDC = selectedCountry === "nigeria" && selectedCurriculum === "nigeria nerdc curriculum / waec / neco";
     const isTanzaniaTIE = selectedCountry === "tanzania" && selectedCurriculum === "tanzania tie curriculum / necta";
     const isEthiopiaMoE = selectedCountry === "ethiopia" && selectedCurriculum === "ethiopia ministry of education curriculum / ethiopian general school leaving examination";
+    const isEritreaMoE = selectedCountry === "eritrea" && selectedCurriculum === "eritrea ministry of education national curriculum / secondary education certificate examination (esece)";
     if (isKenyaCbc) {
       const gradeBank = window.CBENexusCBCBanks && window.CBENexusCBCBanks.banks && window.CBENexusCBCBanks.banks[selectedGrade] && window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject];
       return Array.isArray(gradeBank) ? gradeBank.slice() : [];
@@ -620,6 +626,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     }
     if (isTanzaniaTIE) { const gradeBank = window.CBENexusTanzaniaBanks && window.CBENexusTanzaniaBanks.banks && window.CBENexusTanzaniaBanks.banks[selectedGrade] && window.CBENexusTanzaniaBanks.banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     if (isEthiopiaMoE) { const gradeBank = window.CBENexusEthiopiaBanks && window.CBENexusEthiopiaBanks.banks && window.CBENexusEthiopiaBanks.banks[selectedGrade] && window.CBENexusEthiopiaBanks.banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isEritreaMoE) { const gradeBank = window.CBENexusEritreaBanks && window.CBENexusEritreaBanks.banks && window.CBENexusEritreaBanks.banks[selectedGrade] && window.CBENexusEritreaBanks.banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     return [];
   }
 
