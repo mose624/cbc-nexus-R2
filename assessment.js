@@ -162,6 +162,9 @@
   "Norway":["Norway National Curriculum / Kunnskapsløftet 2020 (LK20) / Year 10"],
   "Palau":["Palau Ministry of Education Curriculum Frameworks / Grade 9 — supplementary"],
   "Panama":["Panama MEDUCA Educación Básica General / Premedia 9°"],
+  "Paraguay":["Paraguay Educación Escolar Básica / Tercer Ciclo / 9° Grado"],
+  "Peru":["Perú Currículo Nacional de la Educación Básica / Educación Secundaria / 3°"],
+  "Poland":["Poland Podstawa programowa / Szkoła Podstawowa / Klasa VIII"],
 };
 
 const nationalLevelStructures = {
@@ -233,6 +236,10 @@ const nationalLevelStructures = {
   "Oman": ["Grade 10"],
   "Palau": ["Grade 9"],
   "Panama": ["9°"],
+  "Papua New Guinea": ["Grade 10"],
+  "Paraguay": ["9° Grado"],
+  "Peru": ["3° Secundaria"],
+  "Poland": ["Klasa VIII"],
 };
 function levelOptionsFor(countryName, curriculumName){
   const c=(curriculumName||"").toLowerCase();
@@ -701,6 +708,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const ispakistanNational = selectedCountry.toLowerCase() === "pakistan" && selectedCurriculum.toLowerCase() === "pakistan national curriculum 2026 (ncp-2026) / grade 9 — federal & ict scope";
     const ispalauNational = selectedCountry.toLowerCase() === "palau" && selectedCurriculum.toLowerCase() === "palau ministry of education curriculum frameworks / grade 9 — supplementary";
     const ispanamaNational = selectedCountry.toLowerCase() === "panama" && selectedCurriculum.toLowerCase() === "panama meduca educación básica general / premedia 9°";
+    const ispapuanewguineaNational = selectedCountry.toLowerCase() === "papua new guinea" && selectedCurriculum.toLowerCase() === "png national curriculum / grade 10 & 12 national examinations";
+    const isparaguayNational = selectedCountry.toLowerCase() === "paraguay" && selectedCurriculum.toLowerCase() === "paraguay educación escolar básica / tercer ciclo / 9° grado";
+    const isperuNational = selectedCountry.toLowerCase() === "peru" && selectedCurriculum.toLowerCase() === "perú currículo nacional de la educación básica / educación secundaria / 3°";
+    const isphilippinesNational = selectedCountry.toLowerCase() === "philippines" && selectedCurriculum.toLowerCase() === "philippines deped k to 12 / matatag";
+    const ispolandNational = selectedCountry.toLowerCase() === "poland" && selectedCurriculum.toLowerCase() === "poland podstawa programowa / szkoła podstawowa / klasa viii";
     const isEthiopiaMoE = selectedCountry === "ethiopia" && selectedCurriculum === "ethiopia ministry of education curriculum / ethiopian general school leaving examination";
     const isEritreaMoE = selectedCountry === "eritrea" && selectedCurriculum === "eritrea ministry of education national curriculum / secondary education certificate examination (esece)";
     if (isKenyaCbc) {
@@ -740,6 +752,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     if (ispakistanNational) { const gradeBank = window.CBENexusFifthFiveBanks && window.CBENexusFifthFiveBanks["Pakistan"] && window.CBENexusFifthFiveBanks["Pakistan"].banks && window.CBENexusFifthFiveBanks["Pakistan"].banks[selectedGrade] && window.CBENexusFifthFiveBanks["Pakistan"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     if (ispalauNational) { const gradeBank = window.CBENexusFifthFiveBanks && window.CBENexusFifthFiveBanks["Palau"] && window.CBENexusFifthFiveBanks["Palau"].banks && window.CBENexusFifthFiveBanks["Palau"].banks[selectedGrade] && window.CBENexusFifthFiveBanks["Palau"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     if (ispanamaNational) { const gradeBank = window.CBENexusFifthFiveBanks && window.CBENexusFifthFiveBanks["Panama"] && window.CBENexusFifthFiveBanks["Panama"].banks && window.CBENexusFifthFiveBanks["Panama"].banks[selectedGrade] && window.CBENexusFifthFiveBanks["Panama"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (ispapuanewguineaNational) { const gradeBank = window.CBENexusSixthFiveBanks && window.CBENexusSixthFiveBanks["Papua New Guinea"] && window.CBENexusSixthFiveBanks["Papua New Guinea"].banks && window.CBENexusSixthFiveBanks["Papua New Guinea"].banks[selectedGrade] && window.CBENexusSixthFiveBanks["Papua New Guinea"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isparaguayNational) { const gradeBank = window.CBENexusSixthFiveBanks && window.CBENexusSixthFiveBanks["Paraguay"] && window.CBENexusSixthFiveBanks["Paraguay"].banks && window.CBENexusSixthFiveBanks["Paraguay"].banks[selectedGrade] && window.CBENexusSixthFiveBanks["Paraguay"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isperuNational) { const gradeBank = window.CBENexusSixthFiveBanks && window.CBENexusSixthFiveBanks["Peru"] && window.CBENexusSixthFiveBanks["Peru"].banks && window.CBENexusSixthFiveBanks["Peru"].banks[selectedGrade] && window.CBENexusSixthFiveBanks["Peru"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isphilippinesNational) { const gradeBank = window.CBENexusSixthFiveBanks && window.CBENexusSixthFiveBanks["Philippines"] && window.CBENexusSixthFiveBanks["Philippines"].banks && window.CBENexusSixthFiveBanks["Philippines"].banks[selectedGrade] && window.CBENexusSixthFiveBanks["Philippines"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (ispolandNational) { const gradeBank = window.CBENexusSixthFiveBanks && window.CBENexusSixthFiveBanks["Poland"] && window.CBENexusSixthFiveBanks["Poland"].banks && window.CBENexusSixthFiveBanks["Poland"].banks[selectedGrade] && window.CBENexusSixthFiveBanks["Poland"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
 
     return [];
   }
@@ -1025,6 +1042,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const ispakistanNational = selectedCountry.toLowerCase() === "pakistan" && selectedCurriculum.toLowerCase() === "pakistan national curriculum 2026 (ncp-2026) / grade 9 — federal & ict scope";
     const ispalauNational = selectedCountry.toLowerCase() === "palau" && selectedCurriculum.toLowerCase() === "palau ministry of education curriculum frameworks / grade 9 — supplementary";
     const ispanamaNational = selectedCountry.toLowerCase() === "panama" && selectedCurriculum.toLowerCase() === "panama meduca educación básica general / premedia 9°";
+    const ispapuanewguineaNational = selectedCountry.toLowerCase() === "papua new guinea" && selectedCurriculum.toLowerCase() === "png national curriculum / grade 10 & 12 national examinations";
+    const isparaguayNational = selectedCountry.toLowerCase() === "paraguay" && selectedCurriculum.toLowerCase() === "paraguay educación escolar básica / tercer ciclo / 9° grado";
+    const isperuNational = selectedCountry.toLowerCase() === "peru" && selectedCurriculum.toLowerCase() === "perú currículo nacional de la educación básica / educación secundaria / 3°";
+    const isphilippinesNational = selectedCountry.toLowerCase() === "philippines" && selectedCurriculum.toLowerCase() === "philippines deped k to 12 / matatag";
+    const ispolandNational = selectedCountry.toLowerCase() === "poland" && selectedCurriculum.toLowerCase() === "poland podstawa programowa / szkoła podstawowa / klasa viii";
     const nigeriaSubjects = isNigeriaNERDC && window.CBENexusNigeriaBanks && window.CBENexusNigeriaBanks.banks &&
       window.CBENexusNigeriaBanks.banks[grade.value] ? Object.keys(window.CBENexusNigeriaBanks.banks[grade.value]) : [];
     const tanzaniaSubjects = isTanzaniaTIE && window.CBENexusTanzaniaBanks && window.CBENexusTanzaniaBanks.banks && window.CBENexusTanzaniaBanks.banks[grade.value] ? Object.keys(window.CBENexusTanzaniaBanks.banks[grade.value]) : [];
@@ -1059,7 +1081,17 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const subjectspakistan = ispakistanNational && window.CBENexusFifthFiveBanks && window.CBENexusFifthFiveBanks["Pakistan"] && window.CBENexusFifthFiveBanks["Pakistan"].banks && window.CBENexusFifthFiveBanks["Pakistan"].banks[grade.value] ? Object.keys(window.CBENexusFifthFiveBanks["Pakistan"].banks[grade.value]) : [];
     const subjectspalau = ispalauNational && window.CBENexusFifthFiveBanks && window.CBENexusFifthFiveBanks["Palau"] && window.CBENexusFifthFiveBanks["Palau"].banks && window.CBENexusFifthFiveBanks["Palau"].banks[grade.value] ? Object.keys(window.CBENexusFifthFiveBanks["Palau"].banks[grade.value]) : [];
     const subjectspanama = ispanamaNational && window.CBENexusFifthFiveBanks && window.CBENexusFifthFiveBanks["Panama"] && window.CBENexusFifthFiveBanks["Panama"].banks && window.CBENexusFifthFiveBanks["Panama"].banks[grade.value] ? Object.keys(window.CBENexusFifthFiveBanks["Panama"].banks[grade.value]) : [];
+    const subjectspapuanewguinea = ispapuanewguineaNational && window.CBENexusSixthFiveBanks && window.CBENexusSixthFiveBanks["Papua New Guinea"] && window.CBENexusSixthFiveBanks["Papua New Guinea"].banks && window.CBENexusSixthFiveBanks["Papua New Guinea"].banks[grade.value] ? Object.keys(window.CBENexusSixthFiveBanks["Papua New Guinea"].banks[grade.value]) : [];
+    const subjectsparaguay = isparaguayNational && window.CBENexusSixthFiveBanks && window.CBENexusSixthFiveBanks["Paraguay"] && window.CBENexusSixthFiveBanks["Paraguay"].banks && window.CBENexusSixthFiveBanks["Paraguay"].banks[grade.value] ? Object.keys(window.CBENexusSixthFiveBanks["Paraguay"].banks[grade.value]) : [];
+    const subjectsperu = isperuNational && window.CBENexusSixthFiveBanks && window.CBENexusSixthFiveBanks["Peru"] && window.CBENexusSixthFiveBanks["Peru"].banks && window.CBENexusSixthFiveBanks["Peru"].banks[grade.value] ? Object.keys(window.CBENexusSixthFiveBanks["Peru"].banks[grade.value]) : [];
+    const subjectsphilippines = isphilippinesNational && window.CBENexusSixthFiveBanks && window.CBENexusSixthFiveBanks["Philippines"] && window.CBENexusSixthFiveBanks["Philippines"].banks && window.CBENexusSixthFiveBanks["Philippines"].banks[grade.value] ? Object.keys(window.CBENexusSixthFiveBanks["Philippines"].banks[grade.value]) : [];
+    const subjectspoland = ispolandNational && window.CBENexusSixthFiveBanks && window.CBENexusSixthFiveBanks["Poland"] && window.CBENexusSixthFiveBanks["Poland"].banks && window.CBENexusSixthFiveBanks["Poland"].banks[grade.value] ? Object.keys(window.CBENexusSixthFiveBanks["Poland"].banks[grade.value]) : [];
     let baseList = isKenyaCbc ? subjectsForGrade(grade.value) : (isNigeriaNERDC ? nigeriaSubjects : (isTanzaniaTIE ? tanzaniaSubjects : (isEstoniaNational ? estoniaSubjects : (isLatviaNational ? latviaSubjects : (isLithuaniaNational ? lithuaniaSubjects : (isLuxembourgESC ? luxembourgSubjects : (isMaltaNational ? maltaSubjects : (isMauritaniaNational ? subjectsMauritania : (isMexicoNational ? subjectsMexico : (isMicronesiaNational ? subjectsMicronesia : (isMoldovaNational ? subjectsMoldova : (ismarshallislandsNational ? subjectsmarshallislands : (ismongoliaNational ? subjectsmongolia : (ismontenegroNational ? subjectsmontenegro : (ismoroccoNational ? subjectsmorocco : (ismozambiqueNational ? subjectsmozambique : (ismyanmarNational ? subjectsmyanmar : (isnamibiaNational ? subjectsnamibia : (isnauruNational ? subjectsnauru : (isnepalNational ? subjectsnepal : (isnetherlandsNational ? subjectsnetherlands : (isnewzealandNational ? subjectsnewzealand : (isnicaraguaNational ? subjectsnicaragua : (isnigerNational ? subjectsniger : (isnorthkoreaNational ? subjectsnorthkorea : (isnorthmacedoniaNational ? subjectsnorthmacedonia : (isMonacoNational ? subjectsMonaco : mauritiusSubjects)))))))))))))))))))))))))));
+    if (ispapuanewguineaNational) baseList = subjectspapuanewguinea;
+    if (isparaguayNational) baseList = subjectsparaguay;
+    if (isperuNational) baseList = subjectsperu;
+    if (isphilippinesNational) baseList = subjectsphilippines;
+    if (ispolandNational) baseList = subjectspoland;
     if (isnorwayNational) baseList = subjectsnorway;
     if (isomanNational) baseList = subjectsoman;
     if (ispakistanNational) baseList = subjectspakistan;
@@ -1157,6 +1189,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const ispakistanNational = selectedCountry.toLowerCase() === "pakistan" && selectedCurriculum.toLowerCase() === "pakistan national curriculum 2026 (ncp-2026) / grade 9 — federal & ict scope";
     const ispalauNational = selectedCountry.toLowerCase() === "palau" && selectedCurriculum.toLowerCase() === "palau ministry of education curriculum frameworks / grade 9 — supplementary";
     const ispanamaNational = selectedCountry.toLowerCase() === "panama" && selectedCurriculum.toLowerCase() === "panama meduca educación básica general / premedia 9°";
+    const ispapuanewguineaNational = selectedCountry.toLowerCase() === "papua new guinea" && selectedCurriculum.toLowerCase() === "png national curriculum / grade 10 & 12 national examinations";
+    const isparaguayNational = selectedCountry.toLowerCase() === "paraguay" && selectedCurriculum.toLowerCase() === "paraguay educación escolar básica / tercer ciclo / 9° grado";
+    const isperuNational = selectedCountry.toLowerCase() === "peru" && selectedCurriculum.toLowerCase() === "perú currículo nacional de la educación básica / educación secundaria / 3°";
+    const isphilippinesNational = selectedCountry.toLowerCase() === "philippines" && selectedCurriculum.toLowerCase() === "philippines deped k to 12 / matatag";
+    const ispolandNational = selectedCountry.toLowerCase() === "poland" && selectedCurriculum.toLowerCase() === "poland podstawa programowa / szkoła podstawowa / klasa viii";
     const gradeBank = isKenyaCbc && window.CBENexusCBCBanks &&
       window.CBENexusCBCBanks.banks && window.CBENexusCBCBanks.banks[selectedGrade] && window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject] ||
       isNigeriaNERDC && window.CBENexusNigeriaBanks &&
@@ -1193,6 +1230,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       ispakistanNational && window.CBENexusFifthFiveBanks && window.CBENexusFifthFiveBanks["Pakistan"] && window.CBENexusFifthFiveBanks["Pakistan"].banks && window.CBENexusFifthFiveBanks["Pakistan"].banks[selectedGrade] && window.CBENexusFifthFiveBanks["Pakistan"].banks[selectedGrade][selectedSubject] ||
       ispalauNational && window.CBENexusFifthFiveBanks && window.CBENexusFifthFiveBanks["Palau"] && window.CBENexusFifthFiveBanks["Palau"].banks && window.CBENexusFifthFiveBanks["Palau"].banks[selectedGrade] && window.CBENexusFifthFiveBanks["Palau"].banks[selectedGrade][selectedSubject] ||
       ispanamaNational && window.CBENexusFifthFiveBanks && window.CBENexusFifthFiveBanks["Panama"] && window.CBENexusFifthFiveBanks["Panama"].banks && window.CBENexusFifthFiveBanks["Panama"].banks[selectedGrade] && window.CBENexusFifthFiveBanks["Panama"].banks[selectedGrade][selectedSubject] ||
+      ispapuanewguineaNational && window.CBENexusSixthFiveBanks && window.CBENexusSixthFiveBanks["Papua New Guinea"] && window.CBENexusSixthFiveBanks["Papua New Guinea"].banks && window.CBENexusSixthFiveBanks["Papua New Guinea"].banks[selectedGrade] && window.CBENexusSixthFiveBanks["Papua New Guinea"].banks[selectedGrade][selectedSubject] ||
+      isparaguayNational && window.CBENexusSixthFiveBanks && window.CBENexusSixthFiveBanks["Paraguay"] && window.CBENexusSixthFiveBanks["Paraguay"].banks && window.CBENexusSixthFiveBanks["Paraguay"].banks[selectedGrade] && window.CBENexusSixthFiveBanks["Paraguay"].banks[selectedGrade][selectedSubject] ||
+      isperuNational && window.CBENexusSixthFiveBanks && window.CBENexusSixthFiveBanks["Peru"] && window.CBENexusSixthFiveBanks["Peru"].banks && window.CBENexusSixthFiveBanks["Peru"].banks[selectedGrade] && window.CBENexusSixthFiveBanks["Peru"].banks[selectedGrade][selectedSubject] ||
+      isphilippinesNational && window.CBENexusSixthFiveBanks && window.CBENexusSixthFiveBanks["Philippines"] && window.CBENexusSixthFiveBanks["Philippines"].banks && window.CBENexusSixthFiveBanks["Philippines"].banks[selectedGrade] && window.CBENexusSixthFiveBanks["Philippines"].banks[selectedGrade][selectedSubject] ||
+      ispolandNational && window.CBENexusSixthFiveBanks && window.CBENexusSixthFiveBanks["Poland"] && window.CBENexusSixthFiveBanks["Poland"].banks && window.CBENexusSixthFiveBanks["Poland"].banks[selectedGrade] && window.CBENexusSixthFiveBanks["Poland"].banks[selectedGrade][selectedSubject] ||
       null;
 
     const adminQuestions = Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [];
