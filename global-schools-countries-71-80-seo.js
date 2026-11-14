@@ -127,6 +127,6 @@ const profiles={
   ]
  }
 };
-Object.keys(profiles).forEach(slug=>{if(d[slug])Object.assign(d[slug],profiles[slug]);});
+Object.assign(d,profiles);
 window.CBE_COUNTRY_SEO_71_80=true;
 })();
