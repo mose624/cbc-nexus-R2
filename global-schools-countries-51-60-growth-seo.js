@@ -17,7 +17,7 @@ const $=id=>document.getElementById(id);
 const el=(tag,cls,txt)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=txt;return n;};
 const addMeta=(selector,attr,key,value)=>{let m=document.querySelector(selector);if(!m){m=document.createElement("meta");m.setAttribute(attr,key);document.head.appendChild(m);}m.content=value;};
 function build(){
- const match=location.pathname.match(/^\\/global-schools\\/([^/]+)\\/?$/);if(!match)return;
+ const match=location.pathname.match(/^\/global-schools\/([^/]+)\/?$/);if(!match)return;
  const slug=decodeURIComponent(match[1]).toLowerCase(),c=countries[slug];if(!c)return;
  const country=encodeURIComponent(c.name);
  const title=c.name+" Education, National Exams, Teaching Jobs & Online Tutors | CBE Nexus";
