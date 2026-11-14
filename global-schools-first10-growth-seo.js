@@ -20,7 +20,7 @@ function build(){
  const slug=decodeURIComponent(match[1]).toLowerCase(),c=countries[slug];if(!c)return;
  const country=encodeURIComponent(c.name),cityNames=c.cities.join(", ");
  const title=c.name==="Ghana"?"Ghana NaCCA Curriculum, BECE & WASSCE Resources | CBE Nexus":c.name+" Education, Exams, Teaching Jobs & Online Tutors | CBE Nexus";
- const description="Find "+c.name+" "+c.curriculum+", free "+c.exams+", worked-example notes and interactive questions. Explore teaching jobs, affordable online tutors, teacher resource sales, international curricula, CV writing and free AI training.";
+ const description=c.name==="Ghana"?"Explore Ghana’s NaCCA primary, JHS and SHS pathways, BECE and WASSCE guidance, free online notes, worked examples and interactive revision quizzes.":"Find "+c.name+" "+c.curriculum+", free "+c.exams+", worked-example notes and interactive questions. Explore teaching jobs, affordable online tutors, teacher resource sales, international curricula, CV writing and free AI training.";
  document.title=title;
  addMeta('meta[name="description"]',"name","description",description);
  addMeta('meta[name="keywords"]',"name","keywords",[c.name+" education resources",c.name+" teaching jobs",c.name+" online tutors",c.name+" national examinations",c.name+" free exam revision",c.name+" worked examples",c.name+" interactive questions",c.name+" teacher marketplace",c.name+" sell notes online",c.name+" international curriculum",c.name+" IGCSE Cambridge Pearson Edexcel IB",c.name+" teacher CV writing",c.name+" free AI training",...c.cities.map(x=>"education resources "+x),...c.cities.map(x=>"online tutors "+x)].join(", "));
