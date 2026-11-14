@@ -262,13 +262,13 @@ function renderCountry(){
  const leftColumn=node("div","gs-country-learning-left");
  const resourceGrid=node("div","gs-learning-grid");
  const resourceItems=[
-  {icon:"∑",tone:"teal",title:"Mathematics Notes",desc:"Country curriculum lessons, worked examples and practice",type:"subject-notes",subject:"Mathematics"},
-  {icon:"⚗",tone:"green",title:"Chemistry Notes",desc:"Illustrated chemistry lessons and revision questions",type:"subject-notes",subject:"Chemistry"},
-  {icon:"🧬",tone:"purple",title:"Biology Notes",desc:"Biology explanations, diagrams and practice questions",type:"subject-notes",subject:"Biology"},
-  {icon:"⚛",tone:"blue",title:"Physics Notes",desc:"Physics concepts, diagrams and worked calculations",type:"subject-notes",subject:"Physics"},
+  {icon:"∑",tone:"teal",title:"Mathematics Notes",desc:"Free online lessons, worked examples and chapter practice",type:"subject-notes",subject:"Mathematics"},
+  {icon:"⚗",tone:"green",title:"Chemistry Notes",desc:"Free chemistry notes, worked calculations and revision questions",type:"subject-notes",subject:"Chemistry"},
+  {icon:"🧬",tone:"purple",title:"Biology Notes",desc:"Free biology notes, labelled diagrams and practice questions",type:"subject-notes",subject:"Biology"},
+  {icon:"⚛",tone:"blue",title:"Physics Notes",desc:"Free physics notes, diagrams and worked calculations",type:"subject-notes",subject:"Physics"},
   {icon:"▤",tone:"gold",title:"Past Papers",desc:"Past examination papers and revision resources",type:"past-papers"},
   {icon:"☑",tone:"red",title:"Mock Exams",desc:"Practise with examination-style tasks",type:"mock-exams"},
-  {icon:"⚡",tone:"blue",title:"Interactive Quizzes",desc:"Test understanding with self-check questions",type:"quizzes"},
+  {icon:"⚡",tone:"blue",title:"Interactive Quizzes",desc:"Free country-selected quizzes, self-check questions and explanations",type:"quizzes"},
   {icon:"x²",tone:"purple",title:"Worked Examples",desc:"Step-by-step solutions and explanations",type:"worked-examples"},
   {icon:"⚗",tone:"green",title:"Science Practicals",desc:"Investigations, experiments and lab guidance",type:"practicals"},
   {icon:"▶",tone:"orange",title:"Video Lessons",desc:"Visual explanations and topic demonstrations",type:"video-lessons"},
@@ -276,8 +276,6 @@ function renderCountry(){
   {icon:"🏛",tone:"blue",title:"National Exam Resources",desc:"Explore this country's examinations and revision-paper links",type:"exam-resources"},
   {icon:"▦",tone:"teal",title:"Curriculum & Syllabuses",desc:"Explore national curriculum and school programmes",type:"curriculum"}
  ];
- const notesRolloutCountries=["Kenya","Ghana","Nigeria","Uganda","Tanzania","South Africa"];
- if(!notesRolloutCountries.includes(c.name))resourceItems.splice(0,4,{icon:"▤",tone:"teal",title:"Online Notes",desc:"Country-specific Mathematics and science notes are being prepared. Current rollout: Kenya, Ghana, Nigeria, Uganda, Tanzania and South Africa.",type:"notes"});
  resourceItems.forEach(item=>{
   const card=node("a","gs-learning-card");
   card.href=item.type==="subject-notes"?"/country-online-notes.html?country="+countryQuery+"&subject="+encodeURIComponent(item.subject):
