@@ -165,6 +165,11 @@
   "Paraguay":["Paraguay Educación Escolar Básica / Tercer Ciclo / 9° Grado"],
   "Peru":["Perú Currículo Nacional de la Educación Básica / Educación Secundaria / 3°"],
   "Poland":["Poland Podstawa programowa / Szkoła Podstawowa / Klasa VIII"],
+  "Portugal":["Portugal Aprendizagens Essenciais / 3.º Ciclo / 9.º Ano"],
+  "Qatar":["Qatar National Curriculum / Preparatory Stage / Grade 9"],
+  "Romania":["Romania National Curriculum / Gimnaziu / Grade VIII"],
+  "Russia":["Russian Federal State Educational Standards / Basic General Education / Grade 9"],
+  "Saint Kitts and Nevis":["Saint Kitts and Nevis Secondary Education / Form 3 / CSEC preparation pathway"],
 };
 
 const nationalLevelStructures = {
@@ -194,6 +199,11 @@ const nationalLevelStructures = {
   "Niger": ["Second Cycle (Lycée)"],
   "North Korea": ["Lower Secondary Year 3"],
   "North Macedonia": ["Grade IX"],
+  "Portugal":["9.º Ano"],
+  "Qatar":["Grade 9"],
+  "Romania":["Grade VIII"],
+  "Russia":["Grade 9"],
+  "Saint Kitts and Nevis":["Form 3"],
   "Kenya": ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Uganda": ["Primary 1","Primary 2","Primary 3","Primary 4","Primary 5","Primary 6","Primary 7","Senior 1","Senior 2","Senior 3","Senior 4","Senior 5","Senior 6"],
   "Tanzania": ["Standard I","Standard II","Standard III","Standard IV","Standard V","Standard VI","Standard VII","Form I","Form II","Form III","Form IV","Form V","Form VI"],
@@ -713,6 +723,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isperuNational = selectedCountry.toLowerCase() === "peru" && selectedCurriculum.toLowerCase() === "perú currículo nacional de la educación básica / educación secundaria / 3°";
     const isphilippinesNational = selectedCountry.toLowerCase() === "philippines" && selectedCurriculum.toLowerCase() === "philippines deped k to 12 / matatag";
     const ispolandNational = selectedCountry.toLowerCase() === "poland" && selectedCurriculum.toLowerCase() === "poland podstawa programowa / szkoła podstawowa / klasa viii";
+    const isportugalNational = selectedCountry.toLowerCase() === "portugal" && selectedCurriculum.toLowerCase() === "portugal aprendizagens essenciais / 3.º ciclo / 9.º ano";
+    const isqatarNational = selectedCountry.toLowerCase() === "qatar" && selectedCurriculum.toLowerCase() === "qatar national curriculum / preparatory stage / grade 9";
+    const isromaniaNational = selectedCountry.toLowerCase() === "romania" && selectedCurriculum.toLowerCase() === "romania national curriculum / gimnaziu / grade viii";
+    const isrussiaNational = selectedCountry.toLowerCase() === "russia" && selectedCurriculum.toLowerCase() === "russian federal state educational standards / basic general education / grade 9";
+    const issaintkittsNational = selectedCountry.toLowerCase() === "saint kitts and nevis" && selectedCurriculum.toLowerCase() === "saint kitts and nevis secondary education / form 3 / csec preparation pathway";
     const isEthiopiaMoE = selectedCountry === "ethiopia" && selectedCurriculum === "ethiopia ministry of education curriculum / ethiopian general school leaving examination";
     const isEritreaMoE = selectedCountry === "eritrea" && selectedCurriculum === "eritrea ministry of education national curriculum / secondary education certificate examination (esece)";
     if (isKenyaCbc) {
@@ -757,6 +772,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     if (isperuNational) { const gradeBank = window.CBENexusSixthFiveBanks && window.CBENexusSixthFiveBanks["Peru"] && window.CBENexusSixthFiveBanks["Peru"].banks && window.CBENexusSixthFiveBanks["Peru"].banks[selectedGrade] && window.CBENexusSixthFiveBanks["Peru"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     if (isphilippinesNational) { const gradeBank = window.CBENexusSixthFiveBanks && window.CBENexusSixthFiveBanks["Philippines"] && window.CBENexusSixthFiveBanks["Philippines"].banks && window.CBENexusSixthFiveBanks["Philippines"].banks[selectedGrade] && window.CBENexusSixthFiveBanks["Philippines"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     if (ispolandNational) { const gradeBank = window.CBENexusSixthFiveBanks && window.CBENexusSixthFiveBanks["Poland"] && window.CBENexusSixthFiveBanks["Poland"].banks && window.CBENexusSixthFiveBanks["Poland"].banks[selectedGrade] && window.CBENexusSixthFiveBanks["Poland"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isportugalNational) { const gradeBank = window.CBENexusSeventhFiveBanks && window.CBENexusSeventhFiveBanks["Portugal"] && window.CBENexusSeventhFiveBanks["Portugal"].banks && window.CBENexusSeventhFiveBanks["Portugal"].banks[selectedGrade] && window.CBENexusSeventhFiveBanks["Portugal"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isqatarNational) { const gradeBank = window.CBENexusSeventhFiveBanks && window.CBENexusSeventhFiveBanks["Qatar"] && window.CBENexusSeventhFiveBanks["Qatar"].banks && window.CBENexusSeventhFiveBanks["Qatar"].banks[selectedGrade] && window.CBENexusSeventhFiveBanks["Qatar"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isromaniaNational) { const gradeBank = window.CBENexusSeventhFiveBanks && window.CBENexusSeventhFiveBanks["Romania"] && window.CBENexusSeventhFiveBanks["Romania"].banks && window.CBENexusSeventhFiveBanks["Romania"].banks[selectedGrade] && window.CBENexusSeventhFiveBanks["Romania"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isrussiaNational) { const gradeBank = window.CBENexusSeventhFiveBanks && window.CBENexusSeventhFiveBanks["Russia"] && window.CBENexusSeventhFiveBanks["Russia"].banks && window.CBENexusSeventhFiveBanks["Russia"].banks[selectedGrade] && window.CBENexusSeventhFiveBanks["Russia"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (issaintkittsNational) { const gradeBank = window.CBENexusSeventhFiveBanks && window.CBENexusSeventhFiveBanks["Saint Kitts and Nevis"] && window.CBENexusSeventhFiveBanks["Saint Kitts and Nevis"].banks && window.CBENexusSeventhFiveBanks["Saint Kitts and Nevis"].banks[selectedGrade] && window.CBENexusSeventhFiveBanks["Saint Kitts and Nevis"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
 
     return [];
   }
@@ -1092,6 +1112,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     if (isperuNational) baseList = subjectsperu;
     if (isphilippinesNational) baseList = subjectsphilippines;
     if (ispolandNational) baseList = subjectspoland;
+    if (isportugalNational) baseList = (window.CBENexusSeventhFiveBanks && window.CBENexusSeventhFiveBanks["Portugal"] && window.CBENexusSeventhFiveBanks["Portugal"].banks && window.CBENexusSeventhFiveBanks["Portugal"].banks[grade.value]) ? Object.keys(window.CBENexusSeventhFiveBanks["Portugal"].banks[grade.value]) : [];
+    if (isqatarNational) baseList = (window.CBENexusSeventhFiveBanks && window.CBENexusSeventhFiveBanks["Qatar"] && window.CBENexusSeventhFiveBanks["Qatar"].banks && window.CBENexusSeventhFiveBanks["Qatar"].banks[grade.value]) ? Object.keys(window.CBENexusSeventhFiveBanks["Qatar"].banks[grade.value]) : [];
+    if (isromaniaNational) baseList = (window.CBENexusSeventhFiveBanks && window.CBENexusSeventhFiveBanks["Romania"] && window.CBENexusSeventhFiveBanks["Romania"].banks && window.CBENexusSeventhFiveBanks["Romania"].banks[grade.value]) ? Object.keys(window.CBENexusSeventhFiveBanks["Romania"].banks[grade.value]) : [];
+    if (isrussiaNational) baseList = (window.CBENexusSeventhFiveBanks && window.CBENexusSeventhFiveBanks["Russia"] && window.CBENexusSeventhFiveBanks["Russia"].banks && window.CBENexusSeventhFiveBanks["Russia"].banks[grade.value]) ? Object.keys(window.CBENexusSeventhFiveBanks["Russia"].banks[grade.value]) : [];
+    if (issaintkittsNational) baseList = (window.CBENexusSeventhFiveBanks && window.CBENexusSeventhFiveBanks["Saint Kitts and Nevis"] && window.CBENexusSeventhFiveBanks["Saint Kitts and Nevis"].banks && window.CBENexusSeventhFiveBanks["Saint Kitts and Nevis"].banks[grade.value]) ? Object.keys(window.CBENexusSeventhFiveBanks["Saint Kitts and Nevis"].banks[grade.value]) : [];
     if (isnorwayNational) baseList = subjectsnorway;
     if (isomanNational) baseList = subjectsoman;
     if (ispakistanNational) baseList = subjectspakistan;
