@@ -20,9 +20,9 @@
   meta('meta[name="keywords"]',"name","keywords",["Nigeria curriculum notes","NERDC curriculum","Nigeria JHS notes","Nigeria SHS notes",s,l,"Nigeria Biology","Nigeria Chemistry","Nigeria Core Mathematics","Nigeria Physics","Nigeria English Language","BECE revision","WASSCE preparation","free worked examples","online revision questions"].filter(Boolean).join(", "));
   link("canonical",canonical);
   const faqs=[
-   {q:"Which Nigeria curriculum levels are covered in these notes?",a:"The Nigeria notes library separates Basic 7, Basic 8 and Basic 9 in the NERDC Common Core Programme from SHS Year 1 subject support. Select the level and subject that match your school programme."},
-   {q:"Are these official NERDC or WAEC examination questions?",a:"No. The explanations, worked examples and practice questions are original supplementary CBE Nexus learning materials. They are not official NERDC textbooks, BECE papers or WASSCE papers."},
-   {q:"Where can I check Nigeria's official curriculum?",a:"Use the National Council for Curriculum and Assessment (NERDC) curriculum pages and the current subject curriculum supplied by your school."}
+   {q:"Which Nigeria curriculum levels are covered in these notes?",a:"The Nigeria notes library separates JSS 1, JSS 2 and JSS 3 Basic Education from SS 1 senior-secondary subject support. Select the level and subject that match your school programme."},
+   {q:"Are these official NERDC or WAEC examination questions?",a:"No. The explanations, worked examples and practice questions are original supplementary CBE Nexus learning materials. They are not official NERDC textbooks, BECE papers, WAEC WASSCE papers or NECO SSCE papers."},
+   {q:"Where can I check Nigeria's official curriculum?",a:"Use the Nigerian Educational Research and Development Council (NERDC) curriculum pages and the current subject curriculum supplied by your school."}
   ];
   const graph={"@context":"https://schema.org","@graph":[
    {"@type":"WebPage","name":title,"description":short,"url":canonical,"isPartOf":{"@type":"WebSite","name":"CBE Nexus","url":"https://cbenexus.com/"},"about":[{"@type":"Country","name":"Nigeria"},{"@type":"Thing","name":s||"Nigeria national curriculum"}]},
