@@ -2542,9 +2542,33 @@ function getAdSenseConfig(){
   return {enabled,publisherId};
 }
 function isAdExcludedPath(pathname){
-  const p=String(pathname||"/").toLowerCase();
-  // Keep ads off utility, navigation, account, legal and transaction screens; serve them on substantive learning content instead.
-  return p === "/" || p === "/index.html" || p === "/resource-category.html" || p === "/resources.html" || p === "/free-resources.html" || p === "/quizzes.html" || p === "/interactive-questions.html" || p === "/subscriptions.html" || p === "/contact.html" || p === "/privacy-policy.html" || p === "/terms-and-conditions.html" || p.startsWith("/api/") || p.includes("/admin") || p.startsWith("/admin-") || p.includes("admin-") || p.includes("login") || p.includes("checkout") || p.includes("payment") || p.includes("upload") || p.includes("dashboard") || p.includes("seller-marketplace") || p.includes("teacher-board") || p.includes("online-teaching");
+  const p=String(pathname||"/").toLowerCase().split("?")[0].replace(/\\/+$/,"")||"/";
+  // Exclude pages whose primary purpose is navigation, browsing, search, account access,
+  // administration or transactions. Ads must not resemble menu items, directory cards,
+  // resource links, download controls or other actions visitors use to navigate.
+  const navigationPages=new Set([
+    "/","/index.html",
+    "/schools-institutions.html","/global-schools.html",
+    "/kenya-universities-colleges.html","/public-universities.html",
+    "/private-universities.html","/specialized-universities.html",
+    "/university-constituent-colleges.html","/interim-universities.html",
+    "/tvet-colleges.html","/teacher-training-colleges.html",
+    "/kmtc.html","/technical-institutions.html",
+    "/international-teaching-jobs.html","/scholarships-opportunities.html",
+    "/blog.html","/resource-category.html","/resources.html",
+    "/free-resources.html","/quizzes.html","/interactive-questions.html",
+    "/subscriptions.html","/contact.html","/privacy-policy.html",
+    "/terms-and-conditions.html","/search.html"
+  ]);
+  return navigationPages.has(p)
+    || p === "/global-schools"
+    || p.startsWith("/api/")
+    || p.includes("/admin") || p.startsWith("/admin-") || p.includes("admin-")
+    || p.includes("login") || p.includes("checkout") || p.includes("payment")
+    || p.includes("upload") || p.includes("dashboard")
+    || p.includes("seller-marketplace") || p.includes("teacher-board")
+    || p.includes("online-teaching") || p.includes("directory")
+    || p.includes("search-results");
 }
 function optimizeHtmlForAds(html){
   let out=String(html||"");
