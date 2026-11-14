@@ -55,7 +55,7 @@
    "Mathematics":[
     Q("Find the mean of 5, 7, 9 and 11.",["7","8","9","10"],1,"Statistics","The sum is 32; 32 ÷ 4 = 8."),
     Q("A fair die is rolled. What is the probability of getting an even number?",["1/6","1/3","1/2","2/3"],2,"Probability","Three of six outcomes are even: 3/6 = 1/2."),
-    Q("If y = 3x − 2, find y when x = 5.",["10","11","13","15"],1,"Linear graphs","y = 3(5) − 2 = 13. Correction: the correct option is 13.",),
+    Q("If y = 3x − 2, find y when x = 5.",["10","11","13","15"],2,"Linear graphs","y = 3(5) − 2 = 13."),
     Q("Find the range of 4, 12, 7, 9 and 15.",["8","9","11","15"],2,"Statistics","Range = maximum − minimum = 15 − 4 = 11."),
     Q("A bag contains 3 red and 5 blue counters. What is P(red)?",["3/5","5/8","3/8","1/3"],2,"Probability","There are 3 red counters among 8 counters in total.")
    ],
