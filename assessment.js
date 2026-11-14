@@ -595,6 +595,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
 
   function subjectsForGrade(gradeValue) {
     const n = Number(String(gradeValue).replace(/[^0-9]/g, "")) || 7;
+    const selectedCountry = String(country && country.value || "").trim().toLowerCase();
+    const selectedCurriculum = String(curriculum && curriculum.value || "").trim().toLowerCase();
+    if (selectedCountry === "ethiopia" && selectedCurriculum === "ethiopia ministry of education curriculum / ethiopian general school leaving examination" && n === 9) {
+      return ["Biology","Chemistry","Mathematics","Physics"];
+    }
     return n <= 3 ? gradeSubjects.lower : n <= 6 ? gradeSubjects.upper : n <= 9 ? gradeSubjects.junior : gradeSubjects.senior;
   }
 
@@ -604,6 +609,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isKenyaCbc = selectedCountry === "kenya" && selectedCurriculum === "kenya cbc/cbe";
     const isNigeriaNERDC = selectedCountry === "nigeria" && selectedCurriculum === "nigeria nerdc curriculum / waec / neco";
     const isTanzaniaTIE = selectedCountry === "tanzania" && selectedCurriculum === "tanzania tie curriculum / necta";
+    const isEthiopiaMoE = selectedCountry === "ethiopia" && selectedCurriculum === "ethiopia ministry of education curriculum / ethiopian general school leaving examination";
     if (isKenyaCbc) {
       const gradeBank = window.CBENexusCBCBanks && window.CBENexusCBCBanks.banks && window.CBENexusCBCBanks.banks[selectedGrade] && window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject];
       return Array.isArray(gradeBank) ? gradeBank.slice() : [];
@@ -613,6 +619,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       return Array.isArray(gradeBank) ? gradeBank.slice() : [];
     }
     if (isTanzaniaTIE) { const gradeBank = window.CBENexusTanzaniaBanks && window.CBENexusTanzaniaBanks.banks && window.CBENexusTanzaniaBanks.banks[selectedGrade] && window.CBENexusTanzaniaBanks.banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isEthiopiaMoE) { const gradeBank = window.CBENexusEthiopiaBanks && window.CBENexusEthiopiaBanks.banks && window.CBENexusEthiopiaBanks.banks[selectedGrade] && window.CBENexusEthiopiaBanks.banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     return [];
   }
 
