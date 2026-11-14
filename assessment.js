@@ -896,6 +896,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const normalizeSubject = (value) => String(value || "").toLowerCase().replace(/[^a-z0-9]/g, "");
     const selectedCountry = String(country && country.value || "Kenya").trim().toLowerCase();
     const selectedCurriculum = String(curriculum && curriculum.value || "Kenya CBC/CBE").trim().toLowerCase();
+    const isMarshallIslandsPSS = selectedCountry === "marshall islands" && selectedCurriculum === "marshall islands public school system (pss) curriculum / misat / marshallese studies";
     const isKenyaCbc = selectedCountry === "kenya" && selectedCurriculum === "kenya cbc/cbe";
     const isNigeriaNERDC = selectedCountry === "nigeria" && selectedCurriculum === "nigeria nerdc curriculum / waec / neco";
     const isTanzaniaTIE = selectedCountry === "tanzania" && selectedCurriculum === "tanzania tie curriculum / necta";
