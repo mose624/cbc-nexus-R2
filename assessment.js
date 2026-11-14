@@ -146,19 +146,9 @@
   "Montenegro":["Montenegro Publicly Valid Nine-Year Basic Education Programme / Grade IX"],
   "Morocco":["Morocco National Curriculum / Common Core Secondary (Tronc commun scientifique) — supplementary"],
   "Mozambique":["Mozambique Secondary Education Curriculum Plan / 10th Class (2nd Cycle)"],
-  "Marshall Islands":["Marshall Islands Public School System Curriculum / MISAT Grade 8"],
-  "Mongolia":["Mongolia National Core Curriculum for Basic Education (2019) / Grade 9"],
-  "Montenegro":["Montenegro Publicly Valid Nine-Year Basic Education Programme / Grade IX"],
-  "Morocco":["Morocco National Curriculum / Common Core Secondary (Tronc commun scientifique) — supplementary"],
-  "Mozambique":["Mozambique Secondary Education Curriculum Plan / 10th Class (2nd Cycle)"],
   "Micronesia":["Federated States of Micronesia National Curriculum Standards and Benchmarks / Secondary supplementary"],
   "Moldova":["Moldova National Curriculum / Gymnasium (Grades V–IX)"],
   "Monaco":["Monaco National Education Programme / French National Programmes with Monaco-specific History"],
-  "Marshall Islands":["Marshall Islands Public School System Curriculum / MISAT Grade 8"],
-  "Mongolia":["Mongolia National Core Curriculum for Basic Education (2019) / Grade 9"],
-  "Montenegro":["Montenegro Publicly Valid Nine-Year Basic Education Programme / Grade IX"],
-  "Morocco":["Morocco National Curriculum / Common Core Secondary (Tronc commun scientifique) — supplementary"],
-  "Mozambique":["Mozambique Secondary Education Curriculum Plan / 10th Class (2nd Cycle)"],
   "Seychelles":["Seychelles National Curriculum / IGCSE","Cambridge International"]
 };
 
@@ -671,11 +661,6 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const ismontenegroNational = selectedCountry === "montenegro" && selectedCurriculum === "montenegro publicly valid nine-year basic education programme / grade ix";
     const ismoroccoNational = selectedCountry === "morocco" && selectedCurriculum === "morocco national curriculum / common core secondary (tronc commun scientifique) — supplementary";
     const ismozambiqueNational = selectedCountry === "mozambique" && selectedCurriculum === "mozambique secondary education curriculum plan / 10th class (2nd cycle)";
-    const ismarshallislandsNational = selectedCountry === "marshall islands" && selectedCurriculum === "marshall islands public school system curriculum / misat grade 8";
-    const ismongoliaNational = selectedCountry === "mongolia" && selectedCurriculum === "mongolia national core curriculum for basic education (2019) / grade 9";
-    const ismontenegroNational = selectedCountry === "montenegro" && selectedCurriculum === "montenegro publicly valid nine-year basic education programme / grade ix";
-    const ismoroccoNational = selectedCountry === "morocco" && selectedCurriculum === "morocco national curriculum / common core secondary (tronc commun scientifique) — supplementary";
-    const ismozambiqueNational = selectedCountry === "mozambique" && selectedCurriculum === "mozambique secondary education curriculum plan / 10th class (2nd cycle)";
     const isEthiopiaMoE = selectedCountry === "ethiopia" && selectedCurriculum === "ethiopia ministry of education curriculum / ethiopian general school leaving examination";
     const isEritreaMoE = selectedCountry === "eritrea" && selectedCurriculum === "eritrea ministry of education national curriculum / secondary education certificate examination (esece)";
     if (isKenyaCbc) {
@@ -964,6 +949,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isMicronesiaNational = selectedCountry === "micronesia" && selectedCurriculum === "federated states of micronesia national curriculum standards and benchmarks / secondary supplementary";
     const isMoldovaNational = selectedCountry === "moldova" && selectedCurriculum === "moldova national curriculum / gymnasium (grades v–ix)";
     const isMonacoNational = selectedCountry === "monaco" && selectedCurriculum === "monaco national education programme / french national programmes with monaco-specific history";
+    const ismarshallislandsNational = selectedCountry === "marshall islands" && selectedCurriculum === "marshall islands public school system curriculum / misat grade 8";
+    const ismongoliaNational = selectedCountry === "mongolia" && selectedCurriculum === "mongolia national core curriculum for basic education (2019) / grade 9";
+    const ismontenegroNational = selectedCountry === "montenegro" && selectedCurriculum === "montenegro publicly valid nine-year basic education programme / grade ix";
+    const ismoroccoNational = selectedCountry === "morocco" && selectedCurriculum === "morocco national curriculum / common core secondary (tronc commun scientifique) — supplementary";
+    const ismozambiqueNational = selectedCountry === "mozambique" && selectedCurriculum === "mozambique secondary education curriculum plan / 10th class (2nd cycle)";
     const nigeriaSubjects = isNigeriaNERDC && window.CBENexusNigeriaBanks && window.CBENexusNigeriaBanks.banks &&
       window.CBENexusNigeriaBanks.banks[grade.value] ? Object.keys(window.CBENexusNigeriaBanks.banks[grade.value]) : [];
     const tanzaniaSubjects = isTanzaniaTIE && window.CBENexusTanzaniaBanks && window.CBENexusTanzaniaBanks.banks && window.CBENexusTanzaniaBanks.banks[grade.value] ? Object.keys(window.CBENexusTanzaniaBanks.banks[grade.value]) : [];
