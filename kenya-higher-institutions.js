@@ -161,7 +161,7 @@ function render(){const type=currentType;const q=(document.querySelector("#instS
 // Make the whole institution card open its CBE Nexus course profile.
 function profileLink(card){return card?.querySelector('a.inst-btn[href^="university-profile.html"]')?.href||"";}
 const instList=document.querySelector("#instList");
-function makeCardsAccessible(){instList?.querySelectorAll(".inst-card").forEach(card=>{card.tabIndex=0;card.setAttribute("role","link");card.setAttribute("aria-label","View courses and entry qualifications for "+(card.querySelector("h2")?.textContent||"this institution"));card.style.cursor="pointer";});}
+function makeCardsAccessible(){instList?.querySelectorAll(".inst-card").forEach(card=>{card.tabIndex=0;card.setAttribute("role","group");card.setAttribute("aria-label","View courses and entry qualifications for "+(card.querySelector("h2")?.textContent||"this institution"));card.style.cursor="pointer";});}
 const cardObserver=instList?new MutationObserver(makeCardsAccessible):null;
 cardObserver?.observe(instList,{childList:true});
 makeCardsAccessible();
