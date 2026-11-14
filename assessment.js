@@ -165,6 +165,11 @@
   "Paraguay":["Paraguay Educación Escolar Básica / Tercer Ciclo / 9° Grado"],
   "Peru":["Perú Currículo Nacional de la Educación Básica / Educación Secundaria / 3°"],
   "Poland":["Poland Podstawa programowa / Szkoła Podstawowa / Klasa VIII"],
+  "Saint Lucia":["Saint Lucia National Curriculum / Lower Secondary / Form 3"],
+  "Saint Vincent and the Grenadines":["Saint Vincent and the Grenadines National Curriculum / Secondary Form 3 / CSEC pathway"],
+  "Samoa":["Samoa National Curriculum / Secondary Year 9"],
+  "San Marino":["San Marino Scuola Media / Classe Terza"],
+  "Sao Tome and Principe":["Sao Tome and Principe National Curriculum / 9ª Classe / Ensino Básico 7ª–9ª"],
   "Portugal":["Portugal Aprendizagens Essenciais / 3.º Ciclo / 9.º Ano"],
   "Romania":["Romania National Curriculum / Gimnaziu / Grade VIII"],
   "Saint Kitts and Nevis":["Saint Kitts and Nevis Secondary Education / Form 3 / CSEC preparation pathway"],
@@ -197,6 +202,11 @@ const nationalLevelStructures = {
   "Niger": ["Second Cycle (Lycée)"],
   "North Korea": ["Lower Secondary Year 3"],
   "North Macedonia": ["Grade IX"],
+  "Saint Lucia":["Form 3"],
+  "Saint Vincent and the Grenadines":["Form 3"],
+  "Samoa":["Year 9"],
+  "San Marino":["Classe III"],
+  "Sao Tome and Principe":["9ª Classe"],
   "Portugal":["9.º Ano"],
   "Romania":["Grade VIII"],
   "Russia":["Grade 9"],
@@ -725,6 +735,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isromaniaNational = selectedCountry.toLowerCase() === "romania" && selectedCurriculum.toLowerCase() === "romania national curriculum / gimnaziu / grade viii";
     const isrussiaNational = selectedCountry.toLowerCase() === "russia" && selectedCurriculum.toLowerCase() === "russian federal state educational standards / basic general education / grade 9";
     const issaintkittsNational = selectedCountry.toLowerCase() === "saint kitts and nevis" && selectedCurriculum.toLowerCase() === "saint kitts and nevis secondary education / form 3 / csec preparation pathway";
+    const issaintluciaNational = selectedCountry.toLowerCase() === "saint lucia" && selectedCurriculum.toLowerCase() === "saint lucia national curriculum / lower secondary / form 3";
+    const issaintvincentNational = selectedCountry.toLowerCase() === "saint vincent and the grenadines" && selectedCurriculum.toLowerCase() === "saint vincent and the grenadines national curriculum / secondary form 3 / csec pathway";
+    const issamoaNational = selectedCountry.toLowerCase() === "samoa" && selectedCurriculum.toLowerCase() === "samoa national curriculum / secondary year 9";
+    const issanmarinoNational = selectedCountry.toLowerCase() === "san marino" && selectedCurriculum.toLowerCase() === "san marino scuola media / classe terza";
+    const issaotomeNational = selectedCountry.toLowerCase() === "sao tome and principe" && selectedCurriculum.toLowerCase() === "sao tome and principe national curriculum / 9ª classe / ensino básico 7ª–9ª";
     const isEthiopiaMoE = selectedCountry === "ethiopia" && selectedCurriculum === "ethiopia ministry of education curriculum / ethiopian general school leaving examination";
     const isEritreaMoE = selectedCountry === "eritrea" && selectedCurriculum === "eritrea ministry of education national curriculum / secondary education certificate examination (esece)";
     if (isKenyaCbc) {
@@ -1069,6 +1084,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isromaniaNational = selectedCountry.toLowerCase() === "romania" && selectedCurriculum.toLowerCase() === "romania national curriculum / gimnaziu / grade viii";
     const isrussiaNational = selectedCountry.toLowerCase() === "russia" && selectedCurriculum.toLowerCase() === "russian federal state educational standards / basic general education / grade 9";
     const issaintkittsNational = selectedCountry.toLowerCase() === "saint kitts and nevis" && selectedCurriculum.toLowerCase() === "saint kitts and nevis secondary education / form 3 / csec preparation pathway";
+    const issaintluciaNational = selectedCountry.toLowerCase() === "saint lucia" && selectedCurriculum.toLowerCase() === "saint lucia national curriculum / lower secondary / form 3";
+    const issaintvincentNational = selectedCountry.toLowerCase() === "saint vincent and the grenadines" && selectedCurriculum.toLowerCase() === "saint vincent and the grenadines national curriculum / secondary form 3 / csec pathway";
+    const issamoaNational = selectedCountry.toLowerCase() === "samoa" && selectedCurriculum.toLowerCase() === "samoa national curriculum / secondary year 9";
+    const issanmarinoNational = selectedCountry.toLowerCase() === "san marino" && selectedCurriculum.toLowerCase() === "san marino scuola media / classe terza";
+    const issaotomeNational = selectedCountry.toLowerCase() === "sao tome and principe" && selectedCurriculum.toLowerCase() === "sao tome and principe national curriculum / 9ª classe / ensino básico 7ª–9ª";
     const nigeriaSubjects = isNigeriaNERDC && window.CBENexusNigeriaBanks && window.CBENexusNigeriaBanks.banks &&
       window.CBENexusNigeriaBanks.banks[grade.value] ? Object.keys(window.CBENexusNigeriaBanks.banks[grade.value]) : [];
     const tanzaniaSubjects = isTanzaniaTIE && window.CBENexusTanzaniaBanks && window.CBENexusTanzaniaBanks.banks && window.CBENexusTanzaniaBanks.banks[grade.value] ? Object.keys(window.CBENexusTanzaniaBanks.banks[grade.value]) : [];
@@ -1108,12 +1128,22 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const subjectsperu = isperuNational && window.CBENexusSixthFiveBanks && window.CBENexusSixthFiveBanks["Peru"] && window.CBENexusSixthFiveBanks["Peru"].banks && window.CBENexusSixthFiveBanks["Peru"].banks[grade.value] ? Object.keys(window.CBENexusSixthFiveBanks["Peru"].banks[grade.value]) : [];
     const subjectsphilippines = isphilippinesNational && window.CBENexusSixthFiveBanks && window.CBENexusSixthFiveBanks["Philippines"] && window.CBENexusSixthFiveBanks["Philippines"].banks && window.CBENexusSixthFiveBanks["Philippines"].banks[grade.value] ? Object.keys(window.CBENexusSixthFiveBanks["Philippines"].banks[grade.value]) : [];
     const subjectspoland = ispolandNational && window.CBENexusSixthFiveBanks && window.CBENexusSixthFiveBanks["Poland"] && window.CBENexusSixthFiveBanks["Poland"].banks && window.CBENexusSixthFiveBanks["Poland"].banks[grade.value] ? Object.keys(window.CBENexusSixthFiveBanks["Poland"].banks[grade.value]) : [];
+    const subjectssaintlucia = issaintluciaNational && window.CBENexusEighthFiveBanks && window.CBENexusEighthFiveBanks["Saint Lucia"] && window.CBENexusEighthFiveBanks["Saint Lucia"].banks && window.CBENexusEighthFiveBanks["Saint Lucia"].banks[grade.value] ? Object.keys(window.CBENexusEighthFiveBanks["Saint Lucia"].banks[grade.value]) : [];
+    const subjectssaintvincent = issaintvincentNational && window.CBENexusEighthFiveBanks && window.CBENexusEighthFiveBanks["Saint Vincent and the Grenadines"] && window.CBENexusEighthFiveBanks["Saint Vincent and the Grenadines"].banks && window.CBENexusEighthFiveBanks["Saint Vincent and the Grenadines"].banks[grade.value] ? Object.keys(window.CBENexusEighthFiveBanks["Saint Vincent and the Grenadines"].banks[grade.value]) : [];
+    const subjectssamoa = issamoaNational && window.CBENexusEighthFiveBanks && window.CBENexusEighthFiveBanks["Samoa"] && window.CBENexusEighthFiveBanks["Samoa"].banks && window.CBENexusEighthFiveBanks["Samoa"].banks[grade.value] ? Object.keys(window.CBENexusEighthFiveBanks["Samoa"].banks[grade.value]) : [];
+    const subjectssanmarino = issanmarinoNational && window.CBENexusEighthFiveBanks && window.CBENexusEighthFiveBanks["San Marino"] && window.CBENexusEighthFiveBanks["San Marino"].banks && window.CBENexusEighthFiveBanks["San Marino"].banks[grade.value] ? Object.keys(window.CBENexusEighthFiveBanks["San Marino"].banks[grade.value]) : [];
+    const subjectssaotome = issaotomeNational && window.CBENexusEighthFiveBanks && window.CBENexusEighthFiveBanks["Sao Tome and Principe"] && window.CBENexusEighthFiveBanks["Sao Tome and Principe"].banks && window.CBENexusEighthFiveBanks["Sao Tome and Principe"].banks[grade.value] ? Object.keys(window.CBENexusEighthFiveBanks["Sao Tome and Principe"].banks[grade.value]) : [];
     let baseList = isKenyaCbc ? subjectsForGrade(grade.value) : (isNigeriaNERDC ? nigeriaSubjects : (isTanzaniaTIE ? tanzaniaSubjects : (isEstoniaNational ? estoniaSubjects : (isLatviaNational ? latviaSubjects : (isLithuaniaNational ? lithuaniaSubjects : (isLuxembourgESC ? luxembourgSubjects : (isMaltaNational ? maltaSubjects : (isMauritaniaNational ? subjectsMauritania : (isMexicoNational ? subjectsMexico : (isMicronesiaNational ? subjectsMicronesia : (isMoldovaNational ? subjectsMoldova : (ismarshallislandsNational ? subjectsmarshallislands : (ismongoliaNational ? subjectsmongolia : (ismontenegroNational ? subjectsmontenegro : (ismoroccoNational ? subjectsmorocco : (ismozambiqueNational ? subjectsmozambique : (ismyanmarNational ? subjectsmyanmar : (isnamibiaNational ? subjectsnamibia : (isnauruNational ? subjectsnauru : (isnepalNational ? subjectsnepal : (isnetherlandsNational ? subjectsnetherlands : (isnewzealandNational ? subjectsnewzealand : (isnicaraguaNational ? subjectsnicaragua : (isnigerNational ? subjectsniger : (isnorthkoreaNational ? subjectsnorthkorea : (isnorthmacedoniaNational ? subjectsnorthmacedonia : (isMonacoNational ? subjectsMonaco : mauritiusSubjects)))))))))))))))))))))))))));
     if (ispapuanewguineaNational) baseList = subjectspapuanewguinea;
     if (isparaguayNational) baseList = subjectsparaguay;
     if (isperuNational) baseList = subjectsperu;
     if (isphilippinesNational) baseList = subjectsphilippines;
     if (ispolandNational) baseList = subjectspoland;
+    if (issaintluciaNational) baseList = subjectssaintlucia;
+    if (issaintvincentNational) baseList = subjectssaintvincent;
+    if (issamoaNational) baseList = subjectssamoa;
+    if (issanmarinoNational) baseList = subjectssanmarino;
+    if (issaotomeNational) baseList = subjectssaotome;
     if (isportugalNational) baseList = (window.CBENexusSeventhFiveBanks && window.CBENexusSeventhFiveBanks["Portugal"] && window.CBENexusSeventhFiveBanks["Portugal"].banks && window.CBENexusSeventhFiveBanks["Portugal"].banks[grade.value]) ? Object.keys(window.CBENexusSeventhFiveBanks["Portugal"].banks[grade.value]) : [];
     if (isqatarNational) baseList = (window.CBENexusSeventhFiveBanks && window.CBENexusSeventhFiveBanks["Qatar"] && window.CBENexusSeventhFiveBanks["Qatar"].banks && window.CBENexusSeventhFiveBanks["Qatar"].banks[grade.value]) ? Object.keys(window.CBENexusSeventhFiveBanks["Qatar"].banks[grade.value]) : [];
     if (isromaniaNational) baseList = (window.CBENexusSeventhFiveBanks && window.CBENexusSeventhFiveBanks["Romania"] && window.CBENexusSeventhFiveBanks["Romania"].banks && window.CBENexusSeventhFiveBanks["Romania"].banks[grade.value]) ? Object.keys(window.CBENexusSeventhFiveBanks["Romania"].banks[grade.value]) : [];
@@ -1226,6 +1256,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isromaniaNational = selectedCountry.toLowerCase() === "romania" && selectedCurriculum.toLowerCase() === "romania national curriculum / gimnaziu / grade viii";
     const isrussiaNational = selectedCountry.toLowerCase() === "russia" && selectedCurriculum.toLowerCase() === "russian federal state educational standards / basic general education / grade 9";
     const issaintkittsNational = selectedCountry.toLowerCase() === "saint kitts and nevis" && selectedCurriculum.toLowerCase() === "saint kitts and nevis secondary education / form 3 / csec preparation pathway";
+    const issaintluciaNational = selectedCountry.toLowerCase() === "saint lucia" && selectedCurriculum.toLowerCase() === "saint lucia national curriculum / lower secondary / form 3";
+    const issaintvincentNational = selectedCountry.toLowerCase() === "saint vincent and the grenadines" && selectedCurriculum.toLowerCase() === "saint vincent and the grenadines national curriculum / secondary form 3 / csec pathway";
+    const issamoaNational = selectedCountry.toLowerCase() === "samoa" && selectedCurriculum.toLowerCase() === "samoa national curriculum / secondary year 9";
+    const issanmarinoNational = selectedCountry.toLowerCase() === "san marino" && selectedCurriculum.toLowerCase() === "san marino scuola media / classe terza";
+    const issaotomeNational = selectedCountry.toLowerCase() === "sao tome and principe" && selectedCurriculum.toLowerCase() === "sao tome and principe national curriculum / 9ª classe / ensino básico 7ª–9ª";
     const gradeBank = isKenyaCbc && window.CBENexusCBCBanks &&
       window.CBENexusCBCBanks.banks && window.CBENexusCBCBanks.banks[selectedGrade] && window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject] ||
       isNigeriaNERDC && window.CBENexusNigeriaBanks &&
@@ -1273,6 +1308,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       isromaniaNational && window.CBENexusSeventhFiveBanks && window.CBENexusSeventhFiveBanks["Romania"] && window.CBENexusSeventhFiveBanks["Romania"].banks && window.CBENexusSeventhFiveBanks["Romania"].banks[selectedGrade] && window.CBENexusSeventhFiveBanks["Romania"].banks[selectedGrade][selectedSubject] ||
       isrussiaNational && window.CBENexusSeventhFiveBanks && window.CBENexusSeventhFiveBanks["Russia"] && window.CBENexusSeventhFiveBanks["Russia"].banks && window.CBENexusSeventhFiveBanks["Russia"].banks[selectedGrade] && window.CBENexusSeventhFiveBanks["Russia"].banks[selectedGrade][selectedSubject] ||
       issaintkittsNational && window.CBENexusSeventhFiveBanks && window.CBENexusSeventhFiveBanks["Saint Kitts and Nevis"] && window.CBENexusSeventhFiveBanks["Saint Kitts and Nevis"].banks && window.CBENexusSeventhFiveBanks["Saint Kitts and Nevis"].banks[selectedGrade] && window.CBENexusSeventhFiveBanks["Saint Kitts and Nevis"].banks[selectedGrade][selectedSubject] ||
+      issaintluciaNational && window.CBENexusEighthFiveBanks && window.CBENexusEighthFiveBanks["Saint Lucia"] && window.CBENexusEighthFiveBanks["Saint Lucia"].banks && window.CBENexusEighthFiveBanks["Saint Lucia"].banks[selectedGrade] && window.CBENexusEighthFiveBanks["Saint Lucia"].banks[selectedGrade][selectedSubject] ||
+      issaintvincentNational && window.CBENexusEighthFiveBanks && window.CBENexusEighthFiveBanks["Saint Vincent and the Grenadines"] && window.CBENexusEighthFiveBanks["Saint Vincent and the Grenadines"].banks && window.CBENexusEighthFiveBanks["Saint Vincent and the Grenadines"].banks[selectedGrade] && window.CBENexusEighthFiveBanks["Saint Vincent and the Grenadines"].banks[selectedGrade][selectedSubject] ||
+      issamoaNational && window.CBENexusEighthFiveBanks && window.CBENexusEighthFiveBanks["Samoa"] && window.CBENexusEighthFiveBanks["Samoa"].banks && window.CBENexusEighthFiveBanks["Samoa"].banks[selectedGrade] && window.CBENexusEighthFiveBanks["Samoa"].banks[selectedGrade][selectedSubject] ||
+      issanmarinoNational && window.CBENexusEighthFiveBanks && window.CBENexusEighthFiveBanks["San Marino"] && window.CBENexusEighthFiveBanks["San Marino"].banks && window.CBENexusEighthFiveBanks["San Marino"].banks[selectedGrade] && window.CBENexusEighthFiveBanks["San Marino"].banks[selectedGrade][selectedSubject] ||
+      issaotomeNational && window.CBENexusEighthFiveBanks && window.CBENexusEighthFiveBanks["Sao Tome and Principe"] && window.CBENexusEighthFiveBanks["Sao Tome and Principe"].banks && window.CBENexusEighthFiveBanks["Sao Tome and Principe"].banks[selectedGrade] && window.CBENexusEighthFiveBanks["Sao Tome and Principe"].banks[selectedGrade][selectedSubject] ||
       null;
 
     const adminQuestions = Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [];
