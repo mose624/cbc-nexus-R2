@@ -20,11 +20,12 @@ function build(){
  const match=location.pathname.match(/^\/global-schools\/([^/]+)\/?$/);if(!match)return;
  const slug=decodeURIComponent(match[1]).toLowerCase(),c=countries[slug];if(!c)return;
  const country=encodeURIComponent(c.name);
- const title=c.name+" Education, National Exams, Teaching Jobs & Online Tutors | CBE Nexus";
- const description="Explore "+c.name+" education and curriculum guidance, "+c.exams+", revision notes with worked examples, interactive questions, teaching opportunities, online tutors, teacher resource selling, international curricula, CV writing and free AI training.";
+ const profile=window.CBE_GLOBAL_COUNTRY_DATA?.[slug]||{};
+ const title=profile.seoTitle||c.name+" Education, National Exams, Teaching Jobs & Online Tutors | CBE Nexus";
+ const description=profile.seoDescription||("Explore "+c.name+" education and curriculum guidance, "+c.exams+", revision notes with worked examples, interactive questions, teaching opportunities, online tutors, teacher resource selling, international curricula, CV writing and free AI training.");
  document.title=title;
  addMeta('meta[name="description"]',"name","description",description);
- addMeta('meta[name="keywords"]',"name","keywords",[c.name+" education resources",c.name+" curriculum",c.name+" national examinations",c.name+" past papers",c.name+" free revision",c.name+" worked examples",c.name+" interactive questions",c.name+" teaching jobs",c.name+" online tutors",c.name+" sell notes online",c.name+" teacher marketplace",c.name+" Cambridge IGCSE Pearson Edexcel IB",c.name+" teacher CV",c.name+" free AI training",...c.cities.map(x=>x+" education resources"),...c.cities.map(x=>"online tutors "+x)].join(", "));
+ addMeta('meta[name="keywords"]',"name","keywords",[c.name+" education resources",c.name+" curriculum",c.name+" national examinations",c.name+" past papers",c.name+" free revision",c.name+" worked examples",c.name+" interactive questions",c.name+" teaching jobs",c.name+" online tutors",c.name+" sell notes online",c.name+" teacher marketplace",c.name+" Cambridge IGCSE Pearson Edexcel IB",c.name+" teacher CV",c.name+" free AI training",...c.cities.map(x=>x+" education resources"),...c.cities.map(x=>"online tutors "+x),...(profile.seoTopics||[])].join(", "));
  addMeta('meta[property="og:title"]',"property","og:title",title);
  addMeta('meta[property="og:description"]',"property","og:description",description);
  const canonical="https://cbenexus.com/global-schools/"+slug;
