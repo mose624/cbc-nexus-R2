@@ -41,5 +41,12 @@
    "Physics":[lesson("ng-ss1-physics-motion","Measurement, motion and forces",["Use SI units and distinguish scalar and vector quantities.","Calculate speed and acceleration from data.","Apply Newton's laws to simple situations."],["Physical quantities are measured using standard units. Length is measured in metres, mass in kilograms and time in seconds. Scalars have magnitude only; vectors have magnitude and direction. Displacement and velocity are vectors, while distance and speed are scalars.","Average speed equals total distance divided by total time. Acceleration is the rate of change of velocity. On a distance–time graph, gradient represents speed; on a velocity–time graph, gradient represents acceleration and area under the graph represents displacement.","A resultant force changes an object's motion. Newton's second law states that resultant force equals mass multiplied by acceleration. Weight is the gravitational force on a mass and is calculated using W = mg near Earth's surface."],"A cyclist covers 120 m in 10 s. Average speed = 120 ÷ 10 = 12 m/s.","Time a small trolley over a measured distance using safe classroom equipment. Repeat trials, calculate average speed and discuss sources of error.",["Use SI units consistently.","Speed = distance ÷ time.","Acceleration is change in velocity per unit time.","Resultant force = mass × acceleration."],[["What is the SI unit of force?","Newton","The newton (N) is the SI unit of force."],["A runner covers 150 m in 10 s. Find average speed.","15 m/s","Speed = 150 ÷ 10 = 15 m/s."],["A 2 kg object accelerates at 3 m/s². Find the resultant force.","6 N","F = ma = 2 × 3 = 6 N."],["Which is a vector quantity?","Displacement","Displacement has magnitude and direction."],["What does the gradient of a distance–time graph represent?","Speed","Gradient is change in distance divided by change in time."]],"NERDC Revised Senior Secondary Education Curriculum, SS 1 Physics.")],
   }
  };
- Object.keys(levels).forEach(level=>{record.levels[level]=levels[level];});
+ Object.keys(levels).forEach(level=>{
+  record.levels[level]=record.levels[level]||{};
+  Object.entries(levels[level]).forEach(([subject,items])=>{
+   const existing=Array.isArray(record.levels[level][subject])?record.levels[level][subject]:[];
+   const newIds=new Set(items.map(item=>item.id));
+   record.levels[level][subject]=[...existing.filter(item=>!newIds.has(item.id)),...items];
+  });
+ });
 })();
