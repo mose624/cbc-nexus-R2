@@ -155,6 +155,10 @@
   "Moldova":["Moldova National Curriculum / Gymnasium (Grades V–IX)"],
   "Monaco":["Monaco National Education Programme / French National Programmes with Monaco-specific History"],
   "Seychelles":["Seychelles National Curriculum / IGCSE","Cambridge International"]
+  "Nicaragua":["Nicaragua Regular Secondary Education / 9° (Fourth Cycle)"],
+  "Niger":["Niger General Secondary Education / Second Cycle (Lycée) — Official Programme Reference"],
+  "North Korea":["DPR Korea 12-Year Compulsory Education / Lower Secondary Year 3 — Supplementary"],
+  "North Macedonia":["North Macedonia Primary Education Concept / Grade IX — Supplementary Subject Starters"],
 };
 
 const nationalLevelStructures = {
@@ -401,11 +405,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
         ["Which action keeps you safe when crossing a road?",["Look both ways","Close your eyes","Run without looking","Play on the road"],0,"Safety","Looking both ways helps you check for traffic."],
         ["Sharing materials shows:",["Cooperation","Anger","Carelessness","Silence"],0,"Collaboration","Sharing can support cooperation with others."],
         ["What should you do when you make a mistake?",["Learn and try again","Give up","Hide it","Blame everyone"],0,"Growth Mindset","Mistakes can help us learn and improve."],
-        ["Which habit keeps the classroom clean?",["Putting rubbish in a bin","Dropping litter","Breaking desks","Spilling water"],0,"Res
-  "Nicaragua":["Nicaragua Regular Secondary Education / 9° (Fourth Cycle)"],
-  "Niger":["Niger General Secondary Education / Second Cycle (Lycée) — official programme reference"],
-  "North Korea":["DPR Korea 12-Year Compulsory Education / Lower Secondary Year 3 — supplementary"],
-  "North Macedonia":["North Macedonia Primary Education Concept / Grade IX — supplementary subject starters"],ponsibility","Using a bin helps keep the classroom clean."]
+        ["Which habit keeps the classroom clean?",["Putting rubbish in a bin","Dropping litter","Breaking desks","Spilling water"],0,"Responsibility","Using a bin helps keep the classroom clean."]
       ]
     }
   };
