@@ -146,6 +146,11 @@
   "Montenegro":["Montenegro Publicly Valid Nine-Year Basic Education Programme / Grade IX"],
   "Morocco":["Morocco National Curriculum / Common Core Secondary (Tronc commun scientifique) — supplementary"],
   "Mozambique":["Mozambique Secondary Education Curriculum Plan / 10th Class (2nd Cycle)"],
+  "Myanmar":["Myanmar Basic Education Curriculum / Grade 9 — supplementary pathway"],
+  "Namibia":["Namibia National Curriculum for Basic Education / Junior Secondary Grade 9"],
+  "Nauru":["Nauru National Curriculum / Year 10 — supplementary learning strands"],
+  "Nepal":["Nepal Secondary Education Curriculum 2078 / Grade 9 — compulsory subjects"],
+  "Netherlands":["Netherlands SLO Core Objectives / Lower Secondary (VO onderbouw) — supplementary"],
   "Micronesia":["Federated States of Micronesia National Curriculum Standards and Benchmarks / Secondary supplementary"],
   "Moldova":["Moldova National Curriculum / Gymnasium (Grades V–IX)"],
   "Monaco":["Monaco National Education Programme / French National Programmes with Monaco-specific History"],
@@ -170,6 +175,11 @@ const nationalLevelStructures = {
   "Montenegro": ["Grade IX"],
   "Morocco": ["Tronc commun"],
   "Mozambique": ["10th Class"],
+  "Myanmar": ["Grade 9"],
+  "Namibia": ["Grade 9"],
+  "Nauru": ["Year 10"],
+  "Nepal": ["Grade 9"],
+  "Netherlands": ["VO onderbouw (Year 2)"],
   "Kenya": ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Uganda": ["Primary 1","Primary 2","Primary 3","Primary 4","Primary 5","Primary 6","Primary 7","Senior 1","Senior 2","Senior 3","Senior 4","Senior 5","Senior 6"],
   "Tanzania": ["Standard I","Standard II","Standard III","Standard IV","Standard V","Standard VI","Standard VII","Form I","Form II","Form III","Form IV","Form V","Form VI"],
@@ -661,6 +671,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const ismontenegroNational = selectedCountry === "montenegro" && selectedCurriculum === "montenegro publicly valid nine-year basic education programme / grade ix";
     const ismoroccoNational = selectedCountry === "morocco" && selectedCurriculum === "morocco national curriculum / common core secondary (tronc commun scientifique) — supplementary";
     const ismozambiqueNational = selectedCountry === "mozambique" && selectedCurriculum === "mozambique secondary education curriculum plan / 10th class (2nd cycle)";
+    const ismyanmarNational = selectedCountry === "myanmar" && selectedCurriculum === "myanmar basic education curriculum / grade 9 — supplementary pathway";
+    const isnamibiaNational = selectedCountry === "namibia" && selectedCurriculum === "namibia national curriculum for basic education / junior secondary grade 9";
+    const isnauruNational = selectedCountry === "nauru" && selectedCurriculum === "nauru national curriculum / year 10 — supplementary learning strands";
+    const isnepalNational = selectedCountry === "nepal" && selectedCurriculum === "nepal secondary education curriculum 2078 / grade 9 — compulsory subjects";
+    const isnetherlandsNational = selectedCountry === "netherlands" && selectedCurriculum === "netherlands slo core objectives / lower secondary (vo onderbouw) — supplementary";
     const isEthiopiaMoE = selectedCountry === "ethiopia" && selectedCurriculum === "ethiopia ministry of education curriculum / ethiopian general school leaving examination";
     const isEritreaMoE = selectedCountry === "eritrea" && selectedCurriculum === "eritrea ministry of education national curriculum / secondary education certificate examination (esece)";
     if (isKenyaCbc) {
@@ -685,6 +700,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     if (ismontenegroNational) { const gradeBank = window.CBENexusNextFiveBanks && window.CBENexusNextFiveBanks["Montenegro"] && window.CBENexusNextFiveBanks["Montenegro"].banks && window.CBENexusNextFiveBanks["Montenegro"].banks[selectedGrade] && window.CBENexusNextFiveBanks["Montenegro"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     if (ismoroccoNational) { const gradeBank = window.CBENexusNextFiveBanks && window.CBENexusNextFiveBanks["Morocco"] && window.CBENexusNextFiveBanks["Morocco"].banks && window.CBENexusNextFiveBanks["Morocco"].banks[selectedGrade] && window.CBENexusNextFiveBanks["Morocco"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     if (ismozambiqueNational) { const gradeBank = window.CBENexusNextFiveBanks && window.CBENexusNextFiveBanks["Mozambique"] && window.CBENexusNextFiveBanks["Mozambique"].banks && window.CBENexusNextFiveBanks["Mozambique"].banks[selectedGrade] && window.CBENexusNextFiveBanks["Mozambique"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (ismyanmarNational) { const gradeBank = window.CBENexusThirdFiveBanks && window.CBENexusThirdFiveBanks["Myanmar"] && window.CBENexusThirdFiveBanks["Myanmar"].banks && window.CBENexusThirdFiveBanks["Myanmar"].banks[selectedGrade] && window.CBENexusThirdFiveBanks["Myanmar"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isnamibiaNational) { const gradeBank = window.CBENexusThirdFiveBanks && window.CBENexusThirdFiveBanks["Namibia"] && window.CBENexusThirdFiveBanks["Namibia"].banks && window.CBENexusThirdFiveBanks["Namibia"].banks[selectedGrade] && window.CBENexusThirdFiveBanks["Namibia"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isnauruNational) { const gradeBank = window.CBENexusThirdFiveBanks && window.CBENexusThirdFiveBanks["Nauru"] && window.CBENexusThirdFiveBanks["Nauru"].banks && window.CBENexusThirdFiveBanks["Nauru"].banks[selectedGrade] && window.CBENexusThirdFiveBanks["Nauru"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isnepalNational) { const gradeBank = window.CBENexusThirdFiveBanks && window.CBENexusThirdFiveBanks["Nepal"] && window.CBENexusThirdFiveBanks["Nepal"].banks && window.CBENexusThirdFiveBanks["Nepal"].banks[selectedGrade] && window.CBENexusThirdFiveBanks["Nepal"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isnetherlandsNational) { const gradeBank = window.CBENexusThirdFiveBanks && window.CBENexusThirdFiveBanks["Netherlands"] && window.CBENexusThirdFiveBanks["Netherlands"].banks && window.CBENexusThirdFiveBanks["Netherlands"].banks[selectedGrade] && window.CBENexusThirdFiveBanks["Netherlands"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     return [];
   }
 
@@ -954,6 +974,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const ismontenegroNational = selectedCountry === "montenegro" && selectedCurriculum === "montenegro publicly valid nine-year basic education programme / grade ix";
     const ismoroccoNational = selectedCountry === "morocco" && selectedCurriculum === "morocco national curriculum / common core secondary (tronc commun scientifique) — supplementary";
     const ismozambiqueNational = selectedCountry === "mozambique" && selectedCurriculum === "mozambique secondary education curriculum plan / 10th class (2nd cycle)";
+    const ismyanmarNational = selectedCountry === "myanmar" && selectedCurriculum === "myanmar basic education curriculum / grade 9 — supplementary pathway";
+    const isnamibiaNational = selectedCountry === "namibia" && selectedCurriculum === "namibia national curriculum for basic education / junior secondary grade 9";
+    const isnauruNational = selectedCountry === "nauru" && selectedCurriculum === "nauru national curriculum / year 10 — supplementary learning strands";
+    const isnepalNational = selectedCountry === "nepal" && selectedCurriculum === "nepal secondary education curriculum 2078 / grade 9 — compulsory subjects";
+    const isnetherlandsNational = selectedCountry === "netherlands" && selectedCurriculum === "netherlands slo core objectives / lower secondary (vo onderbouw) — supplementary";
     const nigeriaSubjects = isNigeriaNERDC && window.CBENexusNigeriaBanks && window.CBENexusNigeriaBanks.banks &&
       window.CBENexusNigeriaBanks.banks[grade.value] ? Object.keys(window.CBENexusNigeriaBanks.banks[grade.value]) : [];
     const tanzaniaSubjects = isTanzaniaTIE && window.CBENexusTanzaniaBanks && window.CBENexusTanzaniaBanks.banks && window.CBENexusTanzaniaBanks.banks[grade.value] ? Object.keys(window.CBENexusTanzaniaBanks.banks[grade.value]) : [];
@@ -973,7 +998,12 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const subjectsmontenegro = ismontenegroNational && window.CBENexusNextFiveBanks && window.CBENexusNextFiveBanks["Montenegro"] && window.CBENexusNextFiveBanks["Montenegro"].banks && window.CBENexusNextFiveBanks["Montenegro"].banks[grade.value] ? Object.keys(window.CBENexusNextFiveBanks["Montenegro"].banks[grade.value]) : [];
     const subjectsmorocco = ismoroccoNational && window.CBENexusNextFiveBanks && window.CBENexusNextFiveBanks["Morocco"] && window.CBENexusNextFiveBanks["Morocco"].banks && window.CBENexusNextFiveBanks["Morocco"].banks[grade.value] ? Object.keys(window.CBENexusNextFiveBanks["Morocco"].banks[grade.value]) : [];
     const subjectsmozambique = ismozambiqueNational && window.CBENexusNextFiveBanks && window.CBENexusNextFiveBanks["Mozambique"] && window.CBENexusNextFiveBanks["Mozambique"].banks && window.CBENexusNextFiveBanks["Mozambique"].banks[grade.value] ? Object.keys(window.CBENexusNextFiveBanks["Mozambique"].banks[grade.value]) : [];
-    const baseList = isKenyaCbc ? subjectsForGrade(grade.value) : (isNigeriaNERDC ? nigeriaSubjects : (isTanzaniaTIE ? tanzaniaSubjects : (isEstoniaNational ? estoniaSubjects : (isLatviaNational ? latviaSubjects : (isLithuaniaNational ? lithuaniaSubjects : (isLuxembourgESC ? luxembourgSubjects : (isMaltaNational ? maltaSubjects : (isMauritaniaNational ? subjectsMauritania : (isMexicoNational ? subjectsMexico : (isMicronesiaNational ? subjectsMicronesia : (isMoldovaNational ? subjectsMoldova : (ismarshallislandsNational ? subjectsmarshallislands : (ismongoliaNational ? subjectsmongolia : (ismontenegroNational ? subjectsmontenegro : (ismoroccoNational ? subjectsmorocco : (ismozambiqueNational ? subjectsmozambique : (isMonacoNational ? subjectsMonaco : mauritiusSubjects)))))))))))))))));
+    const subjectsmyanmar = ismyanmarNational && window.CBENexusThirdFiveBanks && window.CBENexusThirdFiveBanks["Myanmar"] && window.CBENexusThirdFiveBanks["Myanmar"].banks && window.CBENexusThirdFiveBanks["Myanmar"].banks[grade.value] ? Object.keys(window.CBENexusThirdFiveBanks["Myanmar"].banks[grade.value]) : [];
+    const subjectsnamibia = isnamibiaNational && window.CBENexusThirdFiveBanks && window.CBENexusThirdFiveBanks["Namibia"] && window.CBENexusThirdFiveBanks["Namibia"].banks && window.CBENexusThirdFiveBanks["Namibia"].banks[grade.value] ? Object.keys(window.CBENexusThirdFiveBanks["Namibia"].banks[grade.value]) : [];
+    const subjectsnauru = isnauruNational && window.CBENexusThirdFiveBanks && window.CBENexusThirdFiveBanks["Nauru"] && window.CBENexusThirdFiveBanks["Nauru"].banks && window.CBENexusThirdFiveBanks["Nauru"].banks[grade.value] ? Object.keys(window.CBENexusThirdFiveBanks["Nauru"].banks[grade.value]) : [];
+    const subjectsnepal = isnepalNational && window.CBENexusThirdFiveBanks && window.CBENexusThirdFiveBanks["Nepal"] && window.CBENexusThirdFiveBanks["Nepal"].banks && window.CBENexusThirdFiveBanks["Nepal"].banks[grade.value] ? Object.keys(window.CBENexusThirdFiveBanks["Nepal"].banks[grade.value]) : [];
+    const subjectsnetherlands = isnetherlandsNational && window.CBENexusThirdFiveBanks && window.CBENexusThirdFiveBanks["Netherlands"] && window.CBENexusThirdFiveBanks["Netherlands"].banks && window.CBENexusThirdFiveBanks["Netherlands"].banks[grade.value] ? Object.keys(window.CBENexusThirdFiveBanks["Netherlands"].banks[grade.value]) : [];
+    const baseList = isKenyaCbc ? subjectsForGrade(grade.value) : (isNigeriaNERDC ? nigeriaSubjects : (isTanzaniaTIE ? tanzaniaSubjects : (isEstoniaNational ? estoniaSubjects : (isLatviaNational ? latviaSubjects : (isLithuaniaNational ? lithuaniaSubjects : (isLuxembourgESC ? luxembourgSubjects : (isMaltaNational ? maltaSubjects : (isMauritaniaNational ? subjectsMauritania : (isMexicoNational ? subjectsMexico : (isMicronesiaNational ? subjectsMicronesia : (isMoldovaNational ? subjectsMoldova : (ismarshallislandsNational ? subjectsmarshallislands : (ismongoliaNational ? subjectsmongolia : (ismontenegroNational ? subjectsmontenegro : (ismoroccoNational ? subjectsmorocco : (ismozambiqueNational ? subjectsmozambique : (ismyanmarNational ? subjectsmyanmar : (isnamibiaNational ? subjectsnamibia : (isnauruNational ? subjectsnauru : (isnepalNational ? subjectsnepal : (isnetherlandsNational ? subjectsnetherlands : (isMonacoNational ? subjectsMonaco : mauritiusSubjects))))))))))))))))))))));
     // Include every subject that has published Admin Dashboard questions for this grade.
     // This changes only discoverability/filtering; saved question text and answers are untouched.
     const adminSubjects = (Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [])
@@ -1051,6 +1081,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const ismontenegroNational = selectedCountry.toLowerCase() === "montenegro" && selectedCurriculum.toLowerCase() === "montenegro publicly valid nine-year basic education programme / grade ix";
     const ismoroccoNational = selectedCountry.toLowerCase() === "morocco" && selectedCurriculum.toLowerCase() === "morocco national curriculum / common core secondary (tronc commun scientifique) — supplementary";
     const ismozambiqueNational = selectedCountry.toLowerCase() === "mozambique" && selectedCurriculum.toLowerCase() === "mozambique secondary education curriculum plan / 10th class (2nd cycle)";
+    const ismyanmarNational = selectedCountry.toLowerCase() === "myanmar" && selectedCurriculum.toLowerCase() === "myanmar basic education curriculum / grade 9 — supplementary pathway";
+    const isnamibiaNational = selectedCountry.toLowerCase() === "namibia" && selectedCurriculum.toLowerCase() === "namibia national curriculum for basic education / junior secondary grade 9";
+    const isnauruNational = selectedCountry.toLowerCase() === "nauru" && selectedCurriculum.toLowerCase() === "nauru national curriculum / year 10 — supplementary learning strands";
+    const isnepalNational = selectedCountry.toLowerCase() === "nepal" && selectedCurriculum.toLowerCase() === "nepal secondary education curriculum 2078 / grade 9 — compulsory subjects";
+    const isnetherlandsNational = selectedCountry.toLowerCase() === "netherlands" && selectedCurriculum.toLowerCase() === "netherlands slo core objectives / lower secondary (vo onderbouw) — supplementary";
     const gradeBank = isKenyaCbc && window.CBENexusCBCBanks &&
       window.CBENexusCBCBanks.banks && window.CBENexusCBCBanks.banks[selectedGrade] && window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject] ||
       isNigeriaNERDC && window.CBENexusNigeriaBanks &&
@@ -1072,6 +1107,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       ismontenegroNational && window.CBENexusNextFiveBanks && window.CBENexusNextFiveBanks["Montenegro"] && window.CBENexusNextFiveBanks["Montenegro"].banks && window.CBENexusNextFiveBanks["Montenegro"].banks[selectedGrade] && window.CBENexusNextFiveBanks["Montenegro"].banks[selectedGrade][selectedSubject] ||
       ismoroccoNational && window.CBENexusNextFiveBanks && window.CBENexusNextFiveBanks["Morocco"] && window.CBENexusNextFiveBanks["Morocco"].banks && window.CBENexusNextFiveBanks["Morocco"].banks[selectedGrade] && window.CBENexusNextFiveBanks["Morocco"].banks[selectedGrade][selectedSubject] ||
       ismozambiqueNational && window.CBENexusNextFiveBanks && window.CBENexusNextFiveBanks["Mozambique"] && window.CBENexusNextFiveBanks["Mozambique"].banks && window.CBENexusNextFiveBanks["Mozambique"].banks[selectedGrade] && window.CBENexusNextFiveBanks["Mozambique"].banks[selectedGrade][selectedSubject] ||
+      ismyanmarNational && window.CBENexusThirdFiveBanks && window.CBENexusThirdFiveBanks["Myanmar"] && window.CBENexusThirdFiveBanks["Myanmar"].banks && window.CBENexusThirdFiveBanks["Myanmar"].banks[selectedGrade] && window.CBENexusThirdFiveBanks["Myanmar"].banks[selectedGrade][selectedSubject] ||
+      isnamibiaNational && window.CBENexusThirdFiveBanks && window.CBENexusThirdFiveBanks["Namibia"] && window.CBENexusThirdFiveBanks["Namibia"].banks && window.CBENexusThirdFiveBanks["Namibia"].banks[selectedGrade] && window.CBENexusThirdFiveBanks["Namibia"].banks[selectedGrade][selectedSubject] ||
+      isnauruNational && window.CBENexusThirdFiveBanks && window.CBENexusThirdFiveBanks["Nauru"] && window.CBENexusThirdFiveBanks["Nauru"].banks && window.CBENexusThirdFiveBanks["Nauru"].banks[selectedGrade] && window.CBENexusThirdFiveBanks["Nauru"].banks[selectedGrade][selectedSubject] ||
+      isnepalNational && window.CBENexusThirdFiveBanks && window.CBENexusThirdFiveBanks["Nepal"] && window.CBENexusThirdFiveBanks["Nepal"].banks && window.CBENexusThirdFiveBanks["Nepal"].banks[selectedGrade] && window.CBENexusThirdFiveBanks["Nepal"].banks[selectedGrade][selectedSubject] ||
+      isnetherlandsNational && window.CBENexusThirdFiveBanks && window.CBENexusThirdFiveBanks["Netherlands"] && window.CBENexusThirdFiveBanks["Netherlands"].banks && window.CBENexusThirdFiveBanks["Netherlands"].banks[selectedGrade] && window.CBENexusThirdFiveBanks["Netherlands"].banks[selectedGrade][selectedSubject] ||
       null;
 
     const adminQuestions = Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [];
