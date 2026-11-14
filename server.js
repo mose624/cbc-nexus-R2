@@ -2295,7 +2295,7 @@ async function getTvetaCourses(){
       sendJson(res,data.ok?200:404,data);
     }catch(error){
       console.error("KUCCPS programme lookup error:",error);
-      sendJson(res,502,{ok:false,institutionName,programmes:[],error:"KUCCPS programme data could not be loaded right now. Use the official KUCCPS link below."});
+      sendJson(res,502,{ok:false,institutionName,programmes:[],error:"Programme data could not be loaded right now. Please retry later."});
     }
     return true;
   }
