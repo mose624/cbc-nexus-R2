@@ -945,11 +945,13 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isKenyaCbc = selectedCountry.toLowerCase() === "kenya" && selectedCurriculum.toLowerCase() === "kenya cbc/cbe";
     const isNigeriaNERDC = selectedCountry.toLowerCase() === "nigeria" && selectedCurriculum.toLowerCase() === "nigeria nerdc curriculum / waec / neco";
     const isTanzaniaTIE = selectedCountry.toLowerCase() === "tanzania" && selectedCurriculum.toLowerCase() === "tanzania tie curriculum / necta";
+    const isEstoniaNational = selectedCountry.toLowerCase() === "estonia" && selectedCurriculum.toLowerCase() === "estonia national curriculum (basic school) / harno";
     const gradeBank = isKenyaCbc && window.CBENexusCBCBanks &&
       window.CBENexusCBCBanks.banks && window.CBENexusCBCBanks.banks[selectedGrade] && window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject] ||
       isNigeriaNERDC && window.CBENexusNigeriaBanks &&
       window.CBENexusNigeriaBanks.banks && window.CBENexusNigeriaBanks.banks[selectedGrade] && window.CBENexusNigeriaBanks.banks[selectedGrade][selectedSubject] ||
-      isTanzaniaTIE && window.CBENexusTanzaniaBanks && window.CBENexusTanzaniaBanks.banks && window.CBENexusTanzaniaBanks.banks[selectedGrade] && window.CBENexusTanzaniaBanks.banks[selectedGrade][selectedSubject];
+      isTanzaniaTIE && window.CBENexusTanzaniaBanks && window.CBENexusTanzaniaBanks.banks && window.CBENexusTanzaniaBanks.banks[selectedGrade] && window.CBENexusTanzaniaBanks.banks[selectedGrade][selectedSubject] ||
+      isEstoniaNational && window.CBENexusEstoniaBanks && window.CBENexusEstoniaBanks.banks && window.CBENexusEstoniaBanks.banks[selectedGrade] && window.CBENexusEstoniaBanks.banks[selectedGrade][selectedSubject];
 
     const adminQuestions = Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [];
     const publishedSource = adminQuestions.filter((item) =>
