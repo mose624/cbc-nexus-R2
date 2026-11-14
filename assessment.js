@@ -168,6 +168,9 @@
   "Greece":["Greece National Curriculum / Gymnasio / Year 3 (Grade 9)"],
   "Hungary":["Hungary National Core Curriculum (NAT 2020) / General School / Grade 8"],
   "Iceland":["Iceland National Curriculum Guide for Compulsory Schools / Grade 10"],
+  "Italy":["Italy National Guidelines 2025 / First Cycle / Lower Secondary Year 3"],
+  "Kiribati":["Kiribati National Curriculum and Assessment Framework / Junior Secondary / Year 3"],
+  "Liechtenstein":["Liechtenstein Curriculum (LiLe) / Cycle 3 / Grades 7–9"],
   "Estonia":["Estonia National Curriculum (Basic School) / Harno"],
   "Latvia":["Latvia National Basic Education Standard / Skola2030"],
   "Lithuania":["Lithuanian National Curriculum / General Programmes (V-1269)"],
@@ -186,7 +189,7 @@
   "Nepal":["Nepal CDC Curriculum / NEB","Cambridge International"],
   "Myanmar":["Myanmar Basic Education Curriculum / Matriculation","Cambridge International"],
   "Oman":["Oman Ministry of Education Curriculum","British Curriculum","IB","Oman Ministry of Education Curriculum Frameworks 2026 / Grade 10"],
-  "Kuwait":["Kuwait Ministry of Education Curriculum","British Curriculum","American Curriculum","IB"],
+  "Kuwait":["Kuwait Ministry of Education Curriculum","British Curriculum","American Curriculum","IB","Kuwait National Curriculum / Intermediate Education / Grade 9"],
   "Bahrain":["Bahrain Ministry of Education Curriculum","British Curriculum","American Curriculum","IB"],
   "Jordan":["Jordan National Curriculum / Tawjihi","Cambridge International","IB"],
   "Israel":["Israel Ministry of Education / Bagrut","IB"],
@@ -194,7 +197,7 @@
   "Türkiye":["Türkiye Ministry of National Education / YKS","Cambridge International","IB"],
   "Russia":["Russian Federal State Educational Standards / EGE","Russian Federal State Educational Standards / Basic General Education / Grade 9","IB"],
   "Ukraine":["Ukraine State Standard / NMT","IB"],
-  "Jamaica":["Jamaica National Standards Curriculum / CSEC / CAPE","Cambridge International"],
+  "Jamaica":["Jamaica National Standards Curriculum / CSEC / CAPE","Cambridge International","Jamaica National Standards Curriculum / Grade 9 / Secondary Level"],
   "Trinidad and Tobago":["Trinidad and Tobago National Curriculum / CSEC / CAPE","Cambridge International"],
   "Barbados":["Barbados National Curriculum / CSEC / CAPE","Cambridge International"],
   "Fiji":["Fiji National Curriculum / FSLC","Cambridge International"],
@@ -858,6 +861,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isTwentyFirsthungary = selectedCountry.toLowerCase() === "hungary" && selectedCurriculum.toLowerCase() === "hungary national core curriculum (nat 2020) / general school / grade 8";
     const isTwentyFirsticeland = selectedCountry.toLowerCase() === "iceland" && selectedCurriculum.toLowerCase() === "iceland national curriculum guide for compulsory schools / grade 10";
     const isTwentyFirstireland = selectedCountry.toLowerCase() === "ireland" && selectedCurriculum.toLowerCase() === "ireland junior cycle framework / third year / science, mathematics and english";
+    const isTwentySeconditaly = selectedCountry.toLowerCase() === "italy" && selectedCurriculum.toLowerCase() === "italy national guidelines 2025 / first cycle / lower secondary year 3";
+    const isTwentySecondjamaica = selectedCountry.toLowerCase() === "jamaica" && selectedCurriculum.toLowerCase() === "jamaica national standards curriculum / grade 9 / secondary level";
+    const isTwentySecondkiribati = selectedCountry.toLowerCase() === "kiribati" && selectedCurriculum.toLowerCase() === "kiribati national curriculum and assessment framework / junior secondary / year 3";
+    const isTwentySecondkuwait = selectedCountry.toLowerCase() === "kuwait" && selectedCurriculum.toLowerCase() === "kuwait national curriculum / intermediate education / grade 9";
+    const isTwentySecondliechtenstein = selectedCountry.toLowerCase() === "liechtenstein" && selectedCurriculum.toLowerCase() === "liechtenstein curriculum (lile) / cycle 3 / grades 7–9";
     const isFourteenthcambodia = selectedCountry.toLowerCase() === "cambodia" && selectedCurriculum.toLowerCase() === "cambodia moeys general education curriculum framework / lower secondary / grade 9";
     const isFourteenthchina = selectedCountry.toLowerCase() === "china" && selectedCurriculum.toLowerCase() === "china ministry of education compulsory education curriculum standards (2022) / grade 9";
     const isFourteenthindonesia = selectedCountry.toLowerCase() === "indonesia" && selectedCurriculum.toLowerCase() === "indonesia national curriculum / grade ix (kelas ix) / kurikulum merdeka and transition provisions";
@@ -879,6 +887,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isNineteenthFiveNational = isNineteenthbelgium || isNineteenthbosniaandherzegovina || isNineteenthbulgaria || isNineteenthcroatia || isNineteenthcyprus;
     const isTwentiethFiveNational = isTwentiethczechia || isTwentiethdenmark || isTwentiethfinland || isTwentiethfrance || isTwentiethgeorgia;
     const isTwentyFirstFiveNational = isTwentyFirstgermany || isTwentyFirstgreece || isTwentyFirsthungary || isTwentyFirsticeland || isTwentyFirstireland;
+    const isTwentySecondFiveNational = isTwentySeconditaly || isTwentySecondjamaica || isTwentySecondkiribati || isTwentySecondkuwait || isTwentySecondliechtenstein;
     const isEthiopiaMoE = selectedCountry === "ethiopia" && selectedCurriculum === "ethiopia ministry of education curriculum / ethiopian general school leaving examination";
     const isEritreaMoE = selectedCountry === "eritrea" && selectedCurriculum === "eritrea ministry of education national curriculum / secondary education certificate examination (esece)";
     if (isKenyaCbc) {
@@ -994,6 +1003,12 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     if (isTwentyFirsthungary) { const gradeBank = window.CBENexusTwentyFirstFiveBanks && window.CBENexusTwentyFirstFiveBanks["Hungary"] && window.CBENexusTwentyFirstFiveBanks["Hungary"].banks && window.CBENexusTwentyFirstFiveBanks["Hungary"].banks[selectedGrade] && window.CBENexusTwentyFirstFiveBanks["Hungary"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     if (isTwentyFirsticeland) { const gradeBank = window.CBENexusTwentyFirstFiveBanks && window.CBENexusTwentyFirstFiveBanks["Iceland"] && window.CBENexusTwentyFirstFiveBanks["Iceland"].banks && window.CBENexusTwentyFirstFiveBanks["Iceland"].banks[selectedGrade] && window.CBENexusTwentyFirstFiveBanks["Iceland"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     if (isTwentyFirstireland) { const gradeBank = window.CBENexusTwentyFirstFiveBanks && window.CBENexusTwentyFirstFiveBanks["Ireland"] && window.CBENexusTwentyFirstFiveBanks["Ireland"].banks && window.CBENexusTwentyFirstFiveBanks["Ireland"].banks[selectedGrade] && window.CBENexusTwentyFirstFiveBanks["Ireland"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isTwentySeconditaly) { const gradeBank = window.CBENexusTwentySecondFiveBanks && window.CBENexusTwentySecondFiveBanks["Italy"] && window.CBENexusTwentySecondFiveBanks["Italy"].banks && window.CBENexusTwentySecondFiveBanks["Italy"].banks[selectedGrade] && window.CBENexusTwentySecondFiveBanks["Italy"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isTwentySecondjamaica) { const gradeBank = window.CBENexusTwentySecondFiveBanks && window.CBENexusTwentySecondFiveBanks["Jamaica"] && window.CBENexusTwentySecondFiveBanks["Jamaica"].banks && window.CBENexusTwentySecondFiveBanks["Jamaica"].banks[selectedGrade] && window.CBENexusTwentySecondFiveBanks["Jamaica"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isTwentySecondkiribati) { const gradeBank = window.CBENexusTwentySecondFiveBanks && window.CBENexusTwentySecondFiveBanks["Kiribati"] && window.CBENexusTwentySecondFiveBanks["Kiribati"].banks && window.CBENexusTwentySecondFiveBanks["Kiribati"].banks[selectedGrade] && window.CBENexusTwentySecondFiveBanks["Kiribati"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isTwentySecondkuwait) { const gradeBank = window.CBENexusTwentySecondFiveBanks && window.CBENexusTwentySecondFiveBanks["Kuwait"] && window.CBENexusTwentySecondFiveBanks["Kuwait"].banks && window.CBENexusTwentySecondFiveBanks["Kuwait"].banks[selectedGrade] && window.CBENexusTwentySecondFiveBanks["Kuwait"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isTwentySecondliechtenstein) { const gradeBank = window.CBENexusTwentySecondFiveBanks && window.CBENexusTwentySecondFiveBanks["Liechtenstein"] && window.CBENexusTwentySecondFiveBanks["Liechtenstein"].banks && window.CBENexusTwentySecondFiveBanks["Liechtenstein"].banks[selectedGrade] && window.CBENexusTwentySecondFiveBanks["Liechtenstein"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+
 
 
 
@@ -1352,6 +1367,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isTwentyFirsthungary = selectedCountry.toLowerCase() === "hungary" && selectedCurriculum.toLowerCase() === "hungary national core curriculum (nat 2020) / general school / grade 8";
     const isTwentyFirsticeland = selectedCountry.toLowerCase() === "iceland" && selectedCurriculum.toLowerCase() === "iceland national curriculum guide for compulsory schools / grade 10";
     const isTwentyFirstireland = selectedCountry.toLowerCase() === "ireland" && selectedCurriculum.toLowerCase() === "ireland junior cycle framework / third year / science, mathematics and english";
+    const isTwentySeconditaly = selectedCountry.toLowerCase() === "italy" && selectedCurriculum.toLowerCase() === "italy national guidelines 2025 / first cycle / lower secondary year 3";
+    const isTwentySecondjamaica = selectedCountry.toLowerCase() === "jamaica" && selectedCurriculum.toLowerCase() === "jamaica national standards curriculum / grade 9 / secondary level";
+    const isTwentySecondkiribati = selectedCountry.toLowerCase() === "kiribati" && selectedCurriculum.toLowerCase() === "kiribati national curriculum and assessment framework / junior secondary / year 3";
+    const isTwentySecondkuwait = selectedCountry.toLowerCase() === "kuwait" && selectedCurriculum.toLowerCase() === "kuwait national curriculum / intermediate education / grade 9";
+    const isTwentySecondliechtenstein = selectedCountry.toLowerCase() === "liechtenstein" && selectedCurriculum.toLowerCase() === "liechtenstein curriculum (lile) / cycle 3 / grades 7–9";
     const isFourteenthcambodia = selectedCountry.toLowerCase() === "cambodia" && selectedCurriculum.toLowerCase() === "cambodia moeys general education curriculum framework / lower secondary / grade 9";
     const isFourteenthchina = selectedCountry.toLowerCase() === "china" && selectedCurriculum.toLowerCase() === "china ministry of education compulsory education curriculum standards (2022) / grade 9";
     const isFourteenthindonesia = selectedCountry.toLowerCase() === "indonesia" && selectedCurriculum.toLowerCase() === "indonesia national curriculum / grade ix (kelas ix) / kurikulum merdeka and transition provisions";
@@ -1469,6 +1489,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const subjectsTwentyFirsthungary = isTwentyFirsthungary && window.CBENexusTwentyFirstFiveBanks && window.CBENexusTwentyFirstFiveBanks["Hungary"] && window.CBENexusTwentyFirstFiveBanks["Hungary"].banks && window.CBENexusTwentyFirstFiveBanks["Hungary"].banks[grade.value] ? Object.keys(window.CBENexusTwentyFirstFiveBanks["Hungary"].banks[grade.value]) : [];
     const subjectsTwentyFirsticeland = isTwentyFirsticeland && window.CBENexusTwentyFirstFiveBanks && window.CBENexusTwentyFirstFiveBanks["Iceland"] && window.CBENexusTwentyFirstFiveBanks["Iceland"].banks && window.CBENexusTwentyFirstFiveBanks["Iceland"].banks[grade.value] ? Object.keys(window.CBENexusTwentyFirstFiveBanks["Iceland"].banks[grade.value]) : [];
     const subjectsTwentyFirstireland = isTwentyFirstireland && window.CBENexusTwentyFirstFiveBanks && window.CBENexusTwentyFirstFiveBanks["Ireland"] && window.CBENexusTwentyFirstFiveBanks["Ireland"].banks && window.CBENexusTwentyFirstFiveBanks["Ireland"].banks[grade.value] ? Object.keys(window.CBENexusTwentyFirstFiveBanks["Ireland"].banks[grade.value]) : [];
+    const subjectsTwentySeconditaly = isTwentySeconditaly && window.CBENexusTwentySecondFiveBanks && window.CBENexusTwentySecondFiveBanks["Italy"] && window.CBENexusTwentySecondFiveBanks["Italy"].banks && window.CBENexusTwentySecondFiveBanks["Italy"].banks[grade.value] ? Object.keys(window.CBENexusTwentySecondFiveBanks["Italy"].banks[grade.value]) : [];
+    const subjectsTwentySecondjamaica = isTwentySecondjamaica && window.CBENexusTwentySecondFiveBanks && window.CBENexusTwentySecondFiveBanks["Jamaica"] && window.CBENexusTwentySecondFiveBanks["Jamaica"].banks && window.CBENexusTwentySecondFiveBanks["Jamaica"].banks[grade.value] ? Object.keys(window.CBENexusTwentySecondFiveBanks["Jamaica"].banks[grade.value]) : [];
+    const subjectsTwentySecondkiribati = isTwentySecondkiribati && window.CBENexusTwentySecondFiveBanks && window.CBENexusTwentySecondFiveBanks["Kiribati"] && window.CBENexusTwentySecondFiveBanks["Kiribati"].banks && window.CBENexusTwentySecondFiveBanks["Kiribati"].banks[grade.value] ? Object.keys(window.CBENexusTwentySecondFiveBanks["Kiribati"].banks[grade.value]) : [];
+    const subjectsTwentySecondkuwait = isTwentySecondkuwait && window.CBENexusTwentySecondFiveBanks && window.CBENexusTwentySecondFiveBanks["Kuwait"] && window.CBENexusTwentySecondFiveBanks["Kuwait"].banks && window.CBENexusTwentySecondFiveBanks["Kuwait"].banks[grade.value] ? Object.keys(window.CBENexusTwentySecondFiveBanks["Kuwait"].banks[grade.value]) : [];
+    const subjectsTwentySecondliechtenstein = isTwentySecondliechtenstein && window.CBENexusTwentySecondFiveBanks && window.CBENexusTwentySecondFiveBanks["Liechtenstein"] && window.CBENexusTwentySecondFiveBanks["Liechtenstein"].banks && window.CBENexusTwentySecondFiveBanks["Liechtenstein"].banks[grade.value] ? Object.keys(window.CBENexusTwentySecondFiveBanks["Liechtenstein"].banks[grade.value]) : [];
     const subjectsFourteenthcambodia = isFourteenthcambodia && window.CBENexusFourteenthFiveBanks && window.CBENexusFourteenthFiveBanks["Cambodia"] && window.CBENexusFourteenthFiveBanks["Cambodia"].banks && window.CBENexusFourteenthFiveBanks["Cambodia"].banks[grade.value] ? Object.keys(window.CBENexusFourteenthFiveBanks["Cambodia"].banks[grade.value]) : [];
     const subjectsFourteenthchina = isFourteenthchina && window.CBENexusFourteenthFiveBanks && window.CBENexusFourteenthFiveBanks["China"] && window.CBENexusFourteenthFiveBanks["China"].banks && window.CBENexusFourteenthFiveBanks["China"].banks[grade.value] ? Object.keys(window.CBENexusFourteenthFiveBanks["China"].banks[grade.value]) : [];
     const subjectsFourteenthindonesia = isFourteenthindonesia && window.CBENexusFourteenthFiveBanks && window.CBENexusFourteenthFiveBanks["Indonesia"] && window.CBENexusFourteenthFiveBanks["Indonesia"].banks && window.CBENexusFourteenthFiveBanks["Indonesia"].banks[grade.value] ? Object.keys(window.CBENexusFourteenthFiveBanks["Indonesia"].banks[grade.value]) : [];
@@ -1477,6 +1502,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     if (isNineteenthFiveNational) baseList = (isNineteenthbelgium ? subjectsNineteenthbelgium : (isNineteenthbosniaandherzegovina ? subjectsNineteenthbosniaandherzegovina : (isNineteenthbulgaria ? subjectsNineteenthbulgaria : (isNineteenthcroatia ? subjectsNineteenthcroatia : (isNineteenthcyprus ? subjectsNineteenthcyprus : [])))));
     if (isTwentiethFiveNational) baseList = (isTwentiethczechia ? subjectsTwentiethczechia : (isTwentiethdenmark ? subjectsTwentiethdenmark : (isTwentiethfinland ? subjectsTwentiethfinland : (isTwentiethfrance ? subjectsTwentiethfrance : (isTwentiethgeorgia ? subjectsTwentiethgeorgia : [])))));
     if (isTwentyFirstFiveNational) baseList = (isTwentyFirstgermany ? subjectsTwentyFirstgermany : (isTwentyFirstgreece ? subjectsTwentyFirstgreece : (isTwentyFirsthungary ? subjectsTwentyFirsthungary : (isTwentyFirsticeland ? subjectsTwentyFirsticeland : (isTwentyFirstireland ? subjectsTwentyFirstireland : [])))));
+    if (isTwentySecondFiveNational) baseList = (isTwentySeconditaly ? subjectsTwentySeconditaly : (isTwentySecondjamaica ? subjectsTwentySecondjamaica : (isTwentySecondkiribati ? subjectsTwentySecondkiribati : (isTwentySecondkuwait ? subjectsTwentySecondkuwait : (isTwentySecondliechtenstein ? subjectsTwentySecondliechtenstein : [])))));
     if (isEighteenthFiveNational) baseList = (isEighteenthyemen ? subjectsEighteenthyemen : (isEighteenthalbania ? subjectsEighteenthalbania : (isEighteenthandorra ? subjectsEighteenthandorra : (isEighteenthaustria ? subjectsEighteenthaustria : (isEighteenthbelarus ? subjectsEighteenthbelarus : [])))));
     if (isSeventeenthFiveNational) baseList = (isSeventeenthuzbekistan ? subjectsSeventeenthuzbekistan : (isSeventeenthiran ? subjectsSeventeenthiran : (isSeventeenthiraq ? subjectsSeventeenthiraq : (isSeventeenthlebanon ? subjectsSeventeenthlebanon : (isSeventeenthpalestine ? subjectsSeventeenthpalestine : [])))));
     if (isSixteenthFiveNational) baseList = (isSixteenthvietnam ? subjectsSixteenthvietnam : (isSixteenthbrunei ? subjectsSixteenthbrunei : (isSixteenthkazakhstan ? subjectsSixteenthkazakhstan : (isSixteenthkyrgyzstan ? subjectsSixteenthkyrgyzstan : (isSixteenthturkmenistan ? subjectsSixteenthturkmenistan : [])))));
@@ -1691,6 +1717,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isTwentyFirsthungary = selectedCountry.toLowerCase() === "hungary" && selectedCurriculum.toLowerCase() === "hungary national core curriculum (nat 2020) / general school / grade 8";
     const isTwentyFirsticeland = selectedCountry.toLowerCase() === "iceland" && selectedCurriculum.toLowerCase() === "iceland national curriculum guide for compulsory schools / grade 10";
     const isTwentyFirstireland = selectedCountry.toLowerCase() === "ireland" && selectedCurriculum.toLowerCase() === "ireland junior cycle framework / third year / science, mathematics and english";
+    const isTwentySeconditaly = selectedCountry.toLowerCase() === "italy" && selectedCurriculum.toLowerCase() === "italy national guidelines 2025 / first cycle / lower secondary year 3";
+    const isTwentySecondjamaica = selectedCountry.toLowerCase() === "jamaica" && selectedCurriculum.toLowerCase() === "jamaica national standards curriculum / grade 9 / secondary level";
+    const isTwentySecondkiribati = selectedCountry.toLowerCase() === "kiribati" && selectedCurriculum.toLowerCase() === "kiribati national curriculum and assessment framework / junior secondary / year 3";
+    const isTwentySecondkuwait = selectedCountry.toLowerCase() === "kuwait" && selectedCurriculum.toLowerCase() === "kuwait national curriculum / intermediate education / grade 9";
+    const isTwentySecondliechtenstein = selectedCountry.toLowerCase() === "liechtenstein" && selectedCurriculum.toLowerCase() === "liechtenstein curriculum (lile) / cycle 3 / grades 7–9";
     const isFourteenthcambodia = selectedCountry.toLowerCase() === "cambodia" && selectedCurriculum.toLowerCase() === "cambodia moeys general education curriculum framework / lower secondary / grade 9";
     const isFourteenthchina = selectedCountry.toLowerCase() === "china" && selectedCurriculum.toLowerCase() === "china ministry of education compulsory education curriculum standards (2022) / grade 9";
     const isFourteenthindonesia = selectedCountry.toLowerCase() === "indonesia" && selectedCurriculum.toLowerCase() === "indonesia national curriculum / grade ix (kelas ix) / kurikulum merdeka and transition provisions";
