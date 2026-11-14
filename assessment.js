@@ -108,6 +108,7 @@
   "Ethiopia":["Ethiopia Ministry of Education Curriculum / Ethiopian General School Leaving Examination"],
   "Eritrea":["Eritrea Ministry of Education National Curriculum / Secondary Education Certificate Examination (ESECE)"],
   "Estonia":["Estonia National Curriculum (Basic School) / Harno"],
+  "Latvia":["Latvia National Basic Education Standard / Skola2030"],
   "Ireland":["Irish Primary Curriculum / Junior Cycle / Leaving Certificate","Cambridge International","IB"],
   "France":["French National Curriculum / Baccalauréat","Cambridge International","IB"],
   "Germany":["German Länder Curriculum / Abitur","Cambridge International","IB"],
@@ -141,6 +142,7 @@
 const nationalLevelStructures = {
   "Eritrea": ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Estonia": ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
+  "Latvia": ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Kenya": ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Uganda": ["Primary 1","Primary 2","Primary 3","Primary 4","Primary 5","Primary 6","Primary 7","Senior 1","Senior 2","Senior 3","Senior 4","Senior 5","Senior 6"],
   "Tanzania": ["Standard I","Standard II","Standard III","Standard IV","Standard V","Standard VI","Standard VII","Form I","Form II","Form III","Form IV","Form V","Form VI"],
@@ -617,6 +619,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isNigeriaNERDC = selectedCountry === "nigeria" && selectedCurriculum === "nigeria nerdc curriculum / waec / neco";
     const isTanzaniaTIE = selectedCountry === "tanzania" && selectedCurriculum === "tanzania tie curriculum / necta";
     const isEstoniaNational = selectedCountry === "estonia" && selectedCurriculum === "estonia national curriculum (basic school) / harno";
+    const isLatviaNational = selectedCountry === "latvia" && selectedCurriculum === "latvia national basic education standard / skola2030";
     const isEthiopiaMoE = selectedCountry === "ethiopia" && selectedCurriculum === "ethiopia ministry of education curriculum / ethiopian general school leaving examination";
     const isEritreaMoE = selectedCountry === "eritrea" && selectedCurriculum === "eritrea ministry of education national curriculum / secondary education certificate examination (esece)";
     if (isKenyaCbc) {
@@ -887,7 +890,8 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       window.CBENexusNigeriaBanks.banks[grade.value] ? Object.keys(window.CBENexusNigeriaBanks.banks[grade.value]) : [];
     const tanzaniaSubjects = isTanzaniaTIE && window.CBENexusTanzaniaBanks && window.CBENexusTanzaniaBanks.banks && window.CBENexusTanzaniaBanks.banks[grade.value] ? Object.keys(window.CBENexusTanzaniaBanks.banks[grade.value]) : [];
     const estoniaSubjects = isEstoniaNational && window.CBENexusEstoniaBanks && window.CBENexusEstoniaBanks.banks && window.CBENexusEstoniaBanks.banks[grade.value] ? Object.keys(window.CBENexusEstoniaBanks.banks[grade.value]) : [];
-    const baseList = isKenyaCbc ? subjectsForGrade(grade.value) : (isNigeriaNERDC ? nigeriaSubjects : (isTanzaniaTIE ? tanzaniaSubjects : estoniaSubjects));
+    const latviaSubjects = isLatviaNational && window.CBENexusLatviaBanks && window.CBENexusLatviaBanks.banks && window.CBENexusLatviaBanks.banks[grade.value] ? Object.keys(window.CBENexusLatviaBanks.banks[grade.value]) : [];
+    const baseList = isKenyaCbc ? subjectsForGrade(grade.value) : (isNigeriaNERDC ? nigeriaSubjects : (isTanzaniaTIE ? tanzaniaSubjects : (isEstoniaNational ? estoniaSubjects : latviaSubjects)));
     // Include every subject that has published Admin Dashboard questions for this grade.
     // This changes only discoverability/filtering; saved question text and answers are untouched.
     const adminSubjects = (Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [])
@@ -950,12 +954,14 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isNigeriaNERDC = selectedCountry.toLowerCase() === "nigeria" && selectedCurriculum.toLowerCase() === "nigeria nerdc curriculum / waec / neco";
     const isTanzaniaTIE = selectedCountry.toLowerCase() === "tanzania" && selectedCurriculum.toLowerCase() === "tanzania tie curriculum / necta";
     const isEstoniaNational = selectedCountry.toLowerCase() === "estonia" && selectedCurriculum.toLowerCase() === "estonia national curriculum (basic school) / harno";
+    const isLatviaNational = selectedCountry.toLowerCase() === "latvia" && selectedCurriculum.toLowerCase() === "latvia national basic education standard / skola2030";
     const gradeBank = isKenyaCbc && window.CBENexusCBCBanks &&
       window.CBENexusCBCBanks.banks && window.CBENexusCBCBanks.banks[selectedGrade] && window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject] ||
       isNigeriaNERDC && window.CBENexusNigeriaBanks &&
       window.CBENexusNigeriaBanks.banks && window.CBENexusNigeriaBanks.banks[selectedGrade] && window.CBENexusNigeriaBanks.banks[selectedGrade][selectedSubject] ||
       isTanzaniaTIE && window.CBENexusTanzaniaBanks && window.CBENexusTanzaniaBanks.banks && window.CBENexusTanzaniaBanks.banks[selectedGrade] && window.CBENexusTanzaniaBanks.banks[selectedGrade][selectedSubject] ||
-      isEstoniaNational && window.CBENexusEstoniaBanks && window.CBENexusEstoniaBanks.banks && window.CBENexusEstoniaBanks.banks[selectedGrade] && window.CBENexusEstoniaBanks.banks[selectedGrade][selectedSubject];
+      isEstoniaNational && window.CBENexusEstoniaBanks && window.CBENexusEstoniaBanks.banks && window.CBENexusEstoniaBanks.banks[selectedGrade] && window.CBENexusEstoniaBanks.banks[selectedGrade][selectedSubject] ||
+      isLatviaNational && window.CBENexusLatviaBanks && window.CBENexusLatviaBanks.banks && window.CBENexusLatviaBanks.banks[selectedGrade] && window.CBENexusLatviaBanks.banks[selectedGrade][selectedSubject];
 
     const adminQuestions = Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [];
     const publishedSource = adminQuestions.filter((item) =>
