@@ -2117,9 +2117,11 @@ function parseKuccpsProgrammes(html){
         const key=code+"|"+name;
         if(!seen.has(key) && !/^programme name$/i.test(name) && !/^programmes? on offer/i.test(name)){
           seen.add(key);
+          const detailMatch=tr[1].match(/href=["'][^"']*\/programmes\/detail\/(\d+)\/?[^"']*["']/i);
           rows.push({
             code,
             name,
+            programmeId:detailMatch?detailMatch[1]:"",
             institutionType:cells[codeIndex+2]||"",
             cutoff2025:cells[codeIndex+3]||"-",
             cutoff2024:cells[codeIndex+4]||"-",
@@ -2142,6 +2144,33 @@ async function getKuccpsProgrammes(institutionName){
   const programmes=parseKuccpsProgrammes(html);
   const value={ok:true,institutionName:found.name||institutionName,institutionId:found.id,programmes,sourceUrl,cycle:"2026/2027",source:"KUCCPS"};
   kuccpsProgrammeCache.set(key,{at:Date.now(),value});
+  return value;
+}
+const kuccpsRequirementCache=new Map();
+function parseKuccpsRequirementTable(html,label){
+  const lower=String(html||"").toLowerCase(),at=lower.indexOf(label.toLowerCase());
+  if(at<0)return [];
+  const tail=String(html).slice(at),tableAt=tail.toLowerCase().indexOf("<table");
+  if(tableAt<0)return [];
+  const end=tail.toLowerCase().indexOf("</table>",tableAt);
+  if(end<0)return [];
+  const table=tail.slice(tableAt,end+8),rows=[],trRe=/<tr[^>]*>([\s\S]*?)<\/tr>/gi;
+  let tr;
+  while((tr=trRe.exec(table))){
+    const cells=[],cellRe=/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi;let cell;
+    while((cell=cellRe.exec(tr[1]))){const value=htmlText(cell[1]);if(value)cells.push(value);}
+    if(cells.length)rows.push(cells);
+  }
+  return rows;
+}
+async function getKuccpsProgrammeRequirements(programmeId){
+  const id=String(programmeId||"").trim();
+  if(!/^\d{1,8}$/.test(id))throw new Error("A valid programme ID is required.");
+  const cached=kuccpsRequirementCache.get(id);
+  if(cached&&Date.now()-cached.at<24*60*60*1000)return cached.value;
+  const html=await kuccpsHttpGet("https://students.kuccps.net/programmes/detail/"+id+"/");
+  const value={ok:true,programmeId:id,minimumEntryRequirements:parseKuccpsRequirementTable(html,"Minimum Entry Requirements"),minimumSubjectRequirements:parseKuccpsRequirementTable(html,"Minimum Subject Requirements"),source:"KUCCPS",cycle:"2026/2027"};
+  kuccpsRequirementCache.set(id,{at:Date.now(),value});
   return value;
 }
 
@@ -2266,8 +2295,15 @@ async function getTvetaCourses(){
       sendJson(res,data.ok?200:404,data);
     }catch(error){
       console.error("KUCCPS programme lookup error:",error);
-      sendJson(res,502,{ok:false,institutionName,programmes:[],error:"KUCCPS programme data could not be loaded right now. Use the official KUCCPS link below."});
+      sendJson(res,502,{ok:false,institutionName,programmes:[],error:"Programme data could not be loaded right now. Please retry later."});
     }
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/kuccps/programme-requirements"){
+    const programmeId=String(url.searchParams.get("id")||"").trim();
+    if(!/^\d{1,8}$/.test(programmeId)){sendJson(res,400,{ok:false,error:"A valid programme ID is required."});return true;}
+    try{const data=await getKuccpsProgrammeRequirements(programmeId);sendJson(res,200,data);}
+    catch(error){console.error("KUCCPS programme requirements lookup error:",error);sendJson(res,502,{ok:false,programmeId,error:"The programme-specific subject requirements could not be loaded right now."});}
     return true;
   }
   if(req.method==="POST"&&url.pathname==="/api/quizzes"){
