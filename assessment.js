@@ -603,18 +603,17 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const selectedCurriculum = String(curriculum && curriculum.value || "Kenya CBC/CBE").trim().toLowerCase();
     const isKenyaCbc = selectedCountry === "kenya" && selectedCurriculum === "kenya cbc/cbe";
     const isGhanaNaCCA = selectedCountry === "ghana" && selectedCurriculum === "ghana nacca curriculum / wassce";
+    const isNigeriaNERDC = selectedCountry === "nigeria" && selectedCurriculum === "nigeria nerdc curriculum / waec / neco";
     if (isKenyaCbc) {
-      const gradeBank = window.CBENexusCBCBanks &&
-        window.CBENexusCBCBanks.banks &&
-        window.CBENexusCBCBanks.banks[selectedGrade] &&
-        window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject];
+      const gradeBank = window.CBENexusCBCBanks && window.CBENexusCBCBanks.banks && window.CBENexusCBCBanks.banks[selectedGrade] && window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject];
       return Array.isArray(gradeBank) ? gradeBank.slice() : [];
     }
     if (isGhanaNaCCA) {
-      const gradeBank = window.CBENexusGhanaBanks &&
-        window.CBENexusGhanaBanks.banks &&
-        window.CBENexusGhanaBanks.banks[selectedGrade] &&
-        window.CBENexusGhanaBanks.banks[selectedGrade][selectedSubject];
+      const gradeBank = window.CBENexusGhanaBanks && window.CBENexusGhanaBanks.banks && window.CBENexusGhanaBanks.banks[selectedGrade] && window.CBENexusGhanaBanks.banks[selectedGrade][selectedSubject];
+      return Array.isArray(gradeBank) ? gradeBank.slice() : [];
+    }
+    if (isNigeriaNERDC) {
+      const gradeBank = window.CBENexusNigeriaBanks && window.CBENexusNigeriaBanks.banks && window.CBENexusNigeriaBanks.banks[selectedGrade] && window.CBENexusNigeriaBanks.banks[selectedGrade][selectedSubject];
       return Array.isArray(gradeBank) ? gradeBank.slice() : [];
     }
     return [];
@@ -869,9 +868,12 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const selectedCurriculum = String(curriculum && curriculum.value || "Kenya CBC/CBE").trim().toLowerCase();
     const isKenyaCbc = selectedCountry === "kenya" && selectedCurriculum === "kenya cbc/cbe";
     const isGhanaNaCCA = selectedCountry === "ghana" && selectedCurriculum === "ghana nacca curriculum / wassce";
+    const isNigeriaNERDC = selectedCountry === "nigeria" && selectedCurriculum === "nigeria nerdc curriculum / waec / neco";
     const ghanaSubjects = isGhanaNaCCA && window.CBENexusGhanaBanks && window.CBENexusGhanaBanks.banks &&
       window.CBENexusGhanaBanks.banks[grade.value] ? Object.keys(window.CBENexusGhanaBanks.banks[grade.value]) : [];
-    const baseList = isKenyaCbc ? subjectsForGrade(grade.value) : ghanaSubjects;
+    const nigeriaSubjects = isNigeriaNERDC && window.CBENexusNigeriaBanks && window.CBENexusNigeriaBanks.banks &&
+      window.CBENexusNigeriaBanks.banks[grade.value] ? Object.keys(window.CBENexusNigeriaBanks.banks[grade.value]) : [];
+    const baseList = isKenyaCbc ? subjectsForGrade(grade.value) : (isGhanaNaCCA ? ghanaSubjects : nigeriaSubjects);
     // Include every subject that has published Admin Dashboard questions for this grade.
     // This changes only discoverability/filtering; saved question text and answers are untouched.
     const adminSubjects = (Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [])
@@ -932,14 +934,13 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const selectedCurriculum = String(curriculum && curriculum.value || "Kenya CBC/CBE").trim();
     const isKenyaCbc = selectedCountry.toLowerCase() === "kenya" && selectedCurriculum.toLowerCase() === "kenya cbc/cbe";
     const isGhanaNaCCA = selectedCountry.toLowerCase() === "ghana" && selectedCurriculum.toLowerCase() === "ghana nacca curriculum / wassce";
+    const isNigeriaNERDC = selectedCountry.toLowerCase() === "nigeria" && selectedCurriculum.toLowerCase() === "nigeria nerdc curriculum / waec / neco";
     const gradeBank = isKenyaCbc && window.CBENexusCBCBanks &&
-      window.CBENexusCBCBanks.banks &&
-      window.CBENexusCBCBanks.banks[selectedGrade] &&
-      window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject] ||
+      window.CBENexusCBCBanks.banks && window.CBENexusCBCBanks.banks[selectedGrade] && window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject] ||
       isGhanaNaCCA && window.CBENexusGhanaBanks &&
-      window.CBENexusGhanaBanks.banks &&
-      window.CBENexusGhanaBanks.banks[selectedGrade] &&
-      window.CBENexusGhanaBanks.banks[selectedGrade][selectedSubject];
+      window.CBENexusGhanaBanks.banks && window.CBENexusGhanaBanks.banks[selectedGrade] && window.CBENexusGhanaBanks.banks[selectedGrade][selectedSubject] ||
+      isNigeriaNERDC && window.CBENexusNigeriaBanks &&
+      window.CBENexusNigeriaBanks.banks && window.CBENexusNigeriaBanks.banks[selectedGrade] && window.CBENexusNigeriaBanks.banks[selectedGrade][selectedSubject];
 
     const adminQuestions = Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [];
     const publishedSource = adminQuestions.filter((item) =>
