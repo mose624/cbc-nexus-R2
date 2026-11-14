@@ -6,7 +6,7 @@
   <title>Maths Competition for Learners | CBE Nexus</title>
   <meta name="description" content="Give your child a chance to sharpen problem-solving, confidence and mathematical thinking with CBE Nexus Maths Competition updates for learners and parents in Kenya.">
   <meta name="keywords" content="maths competition Kenya, mathematics competition for learners, holiday maths challenge, CBE Nexus maths competition, primary school maths challenge, junior school mathematics">
-  <link rel="canonical" href="https://cbenexus.co.ke/math-competition.html">
+  <link rel="canonical" href="https://cbenexus.com/math-competition.html">
   <link rel="stylesheet" href="styles.css">
   <style>
     .math-hero{padding:clamp(30px,7vw,76px) clamp(18px,5vw,64px);background:linear-gradient(135deg,#fff1f7,#fce7f3 48%,#eff6ff);text-align:center}
@@ -139,7 +139,7 @@
           const result=await response.json().catch(()=>({}));
           if(!response.ok||!result.ok)throw new Error(result.error||"M-Pesa payment could not be started.");
           paymentStatus.textContent="STK Push sent for KSh 200. Complete the prompt on your phone. Registration is not confirmed until payment is verified.";
-        }catch(error){paymentStatus.textContent=error.message||"Payment could not be started. Please try again or contact info@cbenexus.co.ke."}
+        }catch(error){paymentStatus.textContent=error.message||"Payment could not be started. Please try again or contact info@cbenexus.com."}
         finally{payButton.disabled=false}
       });
     })();
