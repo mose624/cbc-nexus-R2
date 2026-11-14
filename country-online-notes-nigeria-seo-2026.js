@@ -10,7 +10,8 @@
   const l=level.value,s=subject.value,base="https://cbenexus.com/country-online-notes.html",params=new URLSearchParams({country:"Nigeria"});
   if(l)params.set("level",l);if(s)params.set("subject",s);
   const canonical=base+"?"+params.toString();
-  const title="Nigeria "+(s||"Curriculum Study Notes")+(l?" "+l:"")+" | Free Notes & Practice | CBE Nexus";
+  const subjectLabel=s==="Basic Science and Technology"?"BST":s;
+  const title="Nigeria "+(subjectLabel||"Curriculum")+" Notes"+(l?" "+l:"")+" | CBE Nexus";
   const description=(s?("Read free Nigeria "+s+" notes"): "Read free Nigeria curriculum notes")+" "+(l?("for "+l):"for JHS and SHS learners")+". Study worked examples, revision questions and explanations aligned to NERDC learning pathways.";
   const short=description.length>158?description.slice(0,157).replace(/\s+\S*$/,"").replace(/[,:;—-]+$/,"")+"…":description;
   document.title=title;meta('meta[name="description"]',"name","description",short);
