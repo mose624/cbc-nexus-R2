@@ -1,0 +1,69 @@
+/* CBE Nexus country-specific SEO, education services and location hubs: countries 21–30. */
+(function(){
+"use strict";
+const countries={
+"sierra-leone":{name:"Sierra Leone",cities:["Freetown","Bo","Kenema","Makeni","Koidu","Port Loko"],exams:"NPSE, BECE and WASSCE examination pathways",curriculum:"Sierra Leone national school curriculum"},
+"liberia":{name:"Liberia",cities:["Monrovia","Gbarnga","Buchanan","Kakata","Zwedru","Harper"],exams:"WAEC WASSCE and national primary and junior secondary assessment pathways",curriculum:"Liberia national curriculum"},
+"gambia":{name:"The Gambia",cities:["Banjul","Serekunda","Brikama","Bakau","Farafenni","Basse Santa Su"],exams:"GABECE and WASSCE examination pathways",curriculum:"The Gambia national curriculum"},
+"senegal":{name:"Senegal",cities:["Dakar","Touba","Thiès","Saint-Louis","Kaolack","Ziguinchor"],exams:"CFEE, BFEM and Baccalauréat examinations",curriculum:"Senegal national curriculum"},
+"cote-divoire":{name:"Côte d’Ivoire",cities:["Abidjan","Bouaké","Yamoussoukro","Daloa","San-Pédro","Korhogo"],exams:"CEPE, BEPC and Baccalauréat examinations",curriculum:"Côte d’Ivoire national curriculum"},
+"cameroon":{name:"Cameroon",cities:["Yaoundé","Douala","Bamenda","Bafoussam","Garoua","Maroua"],exams:"GCE O Level and A Level, BEPC, Probatoire and Baccalauréat pathways",curriculum:"Cameroon bilingual national curriculum"},
+"guinea":{name:"Guinea",cities:["Conakry","Kankan","Labé","Nzérékoré","Kindia","Mamou"],exams:"CEE, BEPC and Baccalauréat examinations",curriculum:"Guinea national curriculum"},
+"guinea-bissau":{name:"Guinea-Bissau",cities:["Bissau","Bafatá","Gabú","Cacheu","Canchungo","Bissorã"],exams:"National basic and secondary school assessment pathways",curriculum:"Guinea-Bissau national curriculum"},
+"cabo-verde":{name:"Cabo Verde",cities:["Praia","Mindelo","Santa Maria","Assomada","Espargos","Porto Novo"],exams:"National basic and secondary education assessments and completion examinations",curriculum:"Cabo Verde national curriculum"},
+"benin":{name:"Benin",cities:["Cotonou","Porto-Novo","Parakou","Abomey","Bohicon","Natitingou"],exams:"CEP, BEPC and Baccalauréat examinations",curriculum:"Benin national curriculum"}
+};
+const $=id=>document.getElementById(id);
+const el=(tag,cls,txt)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=txt;return n;};
+const addMeta=(selector,attr,key,value)=>{let m=document.querySelector(selector);if(!m){m=document.createElement("meta");m.setAttribute(attr,key);document.head.appendChild(m);}m.content=value;};
+function build(){
+ const match=location.pathname.match(/^\/global-schools\/([^/]+)\/?$/);if(!match)return;
+ const slug=decodeURIComponent(match[1]).toLowerCase(),c=countries[slug];if(!c)return;
+ const country=encodeURIComponent(c.name);
+ const title=c.name+" Education, National Exams, Teaching Jobs & Online Tutors | CBE Nexus";
+ const description="Explore "+c.name+" education and curriculum guidance, free "+c.exams+", revision notes with worked examples, interactive questions, teaching opportunities, affordable online tutors, teacher resource selling, international curricula, CV writing and free AI training.";
+ document.title=title;
+ addMeta('meta[name="description"]',"name","description",description);
+ addMeta('meta[name="keywords"]',"name","keywords",[c.name+" education resources",c.name+" curriculum",c.name+" national examinations",c.name+" past papers",c.name+" free revision",c.name+" worked examples",c.name+" interactive questions",c.name+" teaching jobs",c.name+" online tutors",c.name+" sell notes online",c.name+" teacher marketplace",c.name+" Cambridge IGCSE Pearson Edexcel IB",c.name+" teacher CV",c.name+" free AI training",...c.cities.map(x=>x+" education resources"),...c.cities.map(x=>"online tutors "+x)].join(", "));
+ addMeta('meta[property="og:title"]',"property","og:title",title);
+ addMeta('meta[property="og:description"]',"property","og:description",description);
+ const canonical="https://cbenexus.com/global-schools/"+slug;
+ let link=document.querySelector('link[rel="canonical"]');if(!link){link=document.createElement("link");link.rel="canonical";document.head.appendChild(link);}link.href=canonical;
+ const root=$("gsCountry");if(!root||document.getElementById("country-service-growth-hub"))return;
+ const hub=el("section","gs-panel gs-section");hub.id="country-service-growth-hub";
+ hub.append(el("h2",null,c.name+" Education, Teaching & Career Services"),el("p","gs-muted","A country-focused guide for learners, parents, teachers and schools in "+c.name+". Explore national curriculum and examination pathways, international learning programmes and online education services. Confirm current examination rules, job adverts, tutor credentials, fees and visa requirements with the relevant authority or provider."));
+ const grid=el("div","cbe-country-growth-grid");
+ const services=[
+ ["🧑‍🏫","International & local teaching jobs","Explore local school recruitment and international teaching opportunities, including employer requirements and work-permit guidance. Verify each vacancy and deadline.","/international-teaching-jobs.html?country="+country],
+ ["📝","Free national examination revision","Find revision guidance for "+c.exams+". Check current syllabuses, registration rules and examination dates with the relevant examining authority.","/resources.html?country="+country+"&type=past-papers"],
+ ["📘","Free notes with worked examples","Explore "+c.curriculum+" support with topic explanations, diagrams, step-by-step worked examples, calculations and revision activities where available.","/country-online-notes.html?country="+country],
+ ["🎯","Free interactive questions","Practise subject knowledge with online quizzes and self-check questions for different grades and examination pathways.","/interactive-questions.html?country="+country],
+ ["💚","Earn online teaching and selling resources","Teachers can apply to provide online lessons or submit original or properly licensed notes, mock examinations and revision materials for admin approval. Eligible approved resource sales carry the published 70% teacher share, subject to seller terms and payout conditions.","/seller-marketplace.html?country="+country],
+ ["👨‍👩‍👧","Find affordable qualified teachers","Parents and learners can request online tuition by subject, grade, curriculum and timetable. Confirm teacher qualifications, availability and fees before booking.","/online-teaching.html?country="+country],
+ ["🌍","International curricula: IGCSE, Cambridge, Pearson & IB","Explore Cambridge, IGCSE, Pearson Edexcel, International A Level and IB pathways, with subject notes and worked examples where available.","/international-curriculum.html?country="+country],
+ ["📄","Professional teacher CV writing","Prepare an ATS-friendly CV for local and international education roles, highlighting qualifications, subject specialisms, experience and references.","/professional-cv-writing.html?country="+country],
+ ["🤖","Free AI training and certification","Explore AI literacy and digital-skills training for teachers, learners and schools. Certificate availability and eligibility depend on each course provider.","/ai-training.html?country="+country]
+ ];
+ services.forEach(([icon,titleText,body,url])=>{const card=el("article","cbe-country-growth-card");card.append(el("div","cbe-growth-icon",icon),el("h3",null,titleText),el("p",null,body));const a=el("a","cbe-growth-link","Explore "+titleText+" →");a.href=url;card.append(a);grid.append(card);});
+ hub.append(grid);
+ const loc=el("section","cbe-country-location-panel");loc.append(el("h3",null,"Location-focused education searches in "+c.name),el("p","gs-muted","City hubs link visitors to relevant education, tutoring and teaching-opportunity pages by location. A location link does not imply that a particular school, vacancy or tutor has been verified there."));
+ const cityGrid=el("div","cbe-country-city-grid");
+ c.cities.forEach(city=>{const item=el("div","cbe-country-city");item.append(el("strong",null,city));const links=el("div","cbe-city-links");[["Find online tutors","/online-teaching.html?country="+country+"&city="+encodeURIComponent(city)],["Search teaching jobs","/international-teaching-jobs.html?country="+country+"&city="+encodeURIComponent(city)],["Browse learning resources","/resources.html?country="+country+"&city="+encodeURIComponent(city)]].forEach(([label,url])=>{const a=el("a",null,label);a.href=url;links.append(a);});item.append(links);cityGrid.append(item);});loc.append(cityGrid);hub.append(loc);
+ const faq=el("section","cbe-country-growth-faq");faq.append(el("h3",null,"Frequently asked questions — "+c.name));
+ const questions=[
+ ["Where can I find "+c.name+" national examination revision?","Use the examination and revision links on this page, then confirm the current syllabus, candidate guidance and examination dates with the relevant national authority."],
+ ["Can learners find online teachers in "+c.name+"?","Learners and parents can submit a tuition request with the country, city, grade, subject, curriculum, preferred timetable and budget. Confirm availability and credentials before lessons begin."],
+ ["Can teachers earn by selling learning resources?","Teachers may apply to become sellers and submit original or properly licensed resources for administrative review. The stated 70% share applies to eligible approved sales under the published seller and payout terms."],
+ ["Does CBE Nexus cover Cambridge, IGCSE, Pearson Edexcel and IB?","The international curriculum area links to these pathways. Check each subject and level page for the syllabus, topic coverage and resources currently available."],
+ ["Is AI training free?","Free AI and digital-skills training opportunities are listed on the AI training page. Course access and certificate conditions are set by the relevant provider."]
+ ];
+ const faqList=el("div","cbe-growth-faq-list");questions.forEach(([q,a])=>{const d=el("details","cbe-growth-faq-item");d.append(el("summary",null,q),el("p",null,a));faqList.append(d);});faq.append(faqList);hub.append(faq);
+ const style=el("style");style.textContent="#country-service-growth-hub{margin:20px 0;padding:clamp(16px,2vw,26px);border:1px solid #d7e5ef;border-radius:16px;background:linear-gradient(145deg,#f7fcff,#fff)}.cbe-country-growth-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:18px 0}.cbe-country-growth-card{display:flex;flex-direction:column;min-width:0;padding:17px;border:1px solid #dbe7ef;border-radius:13px;background:#fff;box-shadow:0 3px 12px #0f355010}.cbe-growth-icon{font-size:27px}.cbe-country-growth-card h3{margin:9px 0;color:#075080;font-size:16px;line-height:1.3}.cbe-country-growth-card p{margin:0 0 14px;color:#526477;font-size:13px;line-height:1.6;flex:1}.cbe-growth-link{display:inline-flex;align-self:flex-start;padding:9px 12px;border-radius:8px;background:#e0f2fe;color:#075080!important;font-size:12px;font-weight:850;text-decoration:none}.cbe-growth-link:hover{background:#cceafa}.cbe-country-location-panel{margin:20px 0;padding:16px;border-radius:13px;background:#eff8ff;border:1px solid #cde7f8}.cbe-country-location-panel h3,.cbe-country-growth-faq h3{margin:0 0 8px;color:#075080}.cbe-country-city-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}.cbe-country-city{padding:12px;background:#fff;border:1px solid #dbe7ef;border-radius:10px}.cbe-country-city strong{display:block;margin-bottom:8px;color:#163b58}.cbe-city-links{display:grid;gap:6px}.cbe-city-links a{color:#075080!important;font-size:12px;font-weight:750;text-decoration:underline}.cbe-country-growth-faq{margin-top:20px}.cbe-growth-faq-list{display:grid;gap:8px;margin-top:10px}.cbe-growth-faq-item{padding:12px 14px;border:1px solid #dbe7ef;border-radius:10px;background:#fff}.cbe-growth-faq-item summary{cursor:pointer;color:#075080;font-weight:800}.cbe-growth-faq-item p{margin:9px 0 0;color:#475569;line-height:1.6;font-size:13px}@media(max-width:850px){.cbe-country-growth-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cbe-country-city-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.cbe-country-growth-grid,.cbe-country-city-grid{grid-template-columns:1fr}.cbe-country-growth-card{padding:14px}}";
+ document.head.append(style);
+ const dashboard=document.getElementById("country-learning-hub");if(dashboard&&dashboard.parentElement)dashboard.parentElement.insertBefore(hub,dashboard.nextSibling);else root.prepend(hub);
+ const serviceItems=services.map(([ico,nm,body,url],i)=>({"@type":"ListItem","position":i+1,"name":nm,"url":"https://cbenexus.com"+url.split("?")[0]}));
+ const graph={"@context":"https://schema.org","@graph":[{"@type":"WebPage","name":title,"description":description,"url":canonical,"inLanguage":"en","about":[{"@type":"Country","name":c.name}],"keywords":[c.name+" education",c.name+" national exams",c.name+" teaching jobs",c.name+" online tutoring",c.name+" revision",c.name+" international curriculum",...c.cities.map(x=>x+" education and tutoring")].join(", ")},{"@type":"ItemList","name":c.name+" education and career services","itemListElement":serviceItems},{"@type":"FAQPage","mainEntity":questions.map(([q,a])=>({"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}}))}]};
+ let schema=document.getElementById("country-growth-seo-jsonld");if(!schema){schema=document.createElement("script");schema.id="country-growth-seo-jsonld";schema.type="application/ld+json";document.head.append(schema);}schema.textContent=JSON.stringify(graph);
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",build,{once:true});else build();
+})();
