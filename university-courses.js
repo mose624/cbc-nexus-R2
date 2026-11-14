@@ -26,7 +26,7 @@
   function cardName(card){return card.querySelector("h2")?.textContent?.trim()||""}
   async function getJson(url){const r=await fetch(url,{cache:"no-store"});const d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||"Programme record unavailable");return d}
   const norm=s=>String(s||"").toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]+/g," ").trim().replace(/\s+/g," ");
-  function normaliseKuccps(x){return {code:x.code||"",name:x.name||x.programmeName||"",level:x.level||"Bachelor's Degree",cutoff2025:x.cutoff2025||"",cutoff2024:x.cutoff2024||"",cutoff2023:x.cutoff2023||"",source:"KUCCPS"}}
+  function normaliseKuccps(x){return {code:x.code||"",programmeId:x.programmeId||"",name:x.name||x.programmeName||"",level:x.level||"Bachelor's Degree",cutoff2025:x.cutoff2025||"",cutoff2024:x.cutoff2024||"",cutoff2023:x.cutoff2023||"",source:"KUCCPS"}}
   function normaliseCue(x){return {code:x.programmeCode||"",name:x.programmeName||"",level:x.qualificationLevel||"Award level not stated",cutoff2025:"",cutoff2024:"",cutoff2023:"",source:"CUE"}}
   async function findCourses(name){
     const university=["public","private","specialized","colleges","interim"].includes(type);
@@ -88,7 +88,7 @@
     const shown=items.filter(matchLevel),title=data?.source||card.dataset.courseSource||"Published programme records";
     const courseName=x=>x.name||x.programmeName||x.courseName||"";
     const courseLevel=x=>x.level||x.qualificationLevel||"Award level not stated";
-    const itemHtml=x=>"<li style='font-size:.76rem;color:#334155;margin:8px 0'><strong>"+esc(courseName(x))+"</strong><br><span style='color:#64748b'>Award: "+esc(courseLevel(x))+"</span><br><span style='color:#475569'>Entry qualification: "+esc(entryRequirement(x))+"</span></li>";
+    const itemHtml=x=>"<li><strong>"+esc(courseName(x))+"</strong><br><span>Award: "+esc(courseLevel(x))+"</span><br><span>Entry qualification: "+esc(entryRequirement(x))+"</span>"+(x.programmeId?"<details class='cbe-req-details' data-programme-id='"+esc(x.programmeId)+"'><summary>View exact KCSE subject requirements</summary><div class='cbe-req-content'>Open to load the published subject cluster and minimum grades.</div></details>":"")+"</li>";
     const tags=shown.slice(0,8).map(itemHtml).join("");
     const more=shown.length>8?"<details style='margin-top:7px'><summary style='cursor:pointer;font-size:.78rem;font-weight:800;color:#075985'>View all "+shown.length+" programmes</summary><ul style='padding-left:18px;margin:7px 0'>"+shown.slice(8).map(itemHtml).join("")+"</ul></details>":"";
     box.innerHTML="<strong style='color:#166534'>🎓 "+esc(shown.length)+" course(s) and programme(s)</strong>"+(shown.length?"<ul style='padding-left:18px;margin:8px 0'>"+tags+"</ul>"+more:"<p style='font-size:.8rem;color:#64748b'>No courses match the selected qualification level.</p>")+"<p style='font-size:.7rem;color:#64748b;margin:8px 0'>Compiled from published "+esc(title)+" programme records"+(data?.date?" • Data cycle/date: "+esc(data.date):"")+". Placement cut-offs are historical comparisons, not guaranteed admission grades. Exact current subject clusters and entry thresholds are not assumed where the source does not publish them.</p>";
@@ -96,5 +96,6 @@
   function scan(){list.querySelectorAll(".inst-card").forEach(card=>{if(loaded.has(card))return;if(observer)observer.observe(card);else loadCard(card);});}
   const mutation=new MutationObserver(scan);mutation.observe(list,{childList:true,subtree:true});
   levelEl?.addEventListener("change",()=>list.querySelectorAll(".inst-card").forEach(card=>{const box=card.querySelector(".cbe-course-box");if(box&&card.dataset.courseItems)renderCard(card,box,{source:card.dataset.courseSource,date:card.dataset.courseDate});}));
+  list.addEventListener("toggle",async event=>{const details=event.target;if(!details.matches?.(".cbe-req-details")||!details.open||details.dataset.loaded)return;details.dataset.loaded="1";const target=details.querySelector(".cbe-req-content");try{const d=await getJson("/api/kuccps/programme-requirements?id="+encodeURIComponent(details.dataset.programmeId));const renderRows=(heading,rows)=>"<p><strong>"+heading+"</strong></p>"+(rows?.length?"<ul>"+rows.map(row=>"<li>"+row.map(esc).join(" — ")+"</li>").join("")+"</ul>":"<p>Not published in the available programme record.</p>");target.innerHTML=renderRows("Minimum entry requirements",d.minimumEntryRequirements)+renderRows("Minimum subject grades",d.minimumSubjectRequirements);}catch(e){target.textContent="Detailed subject requirements are temporarily unavailable.";delete details.dataset.loaded;}},true);
   scan();
 })();
