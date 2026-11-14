@@ -16,7 +16,9 @@
     if(wanted==="masters")return /master/.test(v+" "+n);
     if(wanted==="phd")return /phd|doctor/.test(v+" "+n);
     if(wanted==="postgraduate diploma")return /postgraduate diploma/.test(v+" "+n);
-    if(wanted==="diploma")return /diploma/.test(v+" "+n);
+    if(wanted==="higher diploma")return /higher diploma/.test(v+" "+n);
+    if(wanted==="short")return /short/.test(v+" "+n);
+    if(wanted==="diploma")return /diploma/.test(v+" "+n)&&!/higher diploma/.test(v+" "+n);
     if(wanted==="certificate")return /certificate/.test(v+" "+n);
     return true;
   }
