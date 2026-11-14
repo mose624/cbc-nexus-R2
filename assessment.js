@@ -631,12 +631,6 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isLuxembourgESC = selectedCountry === "luxembourg" && selectedCurriculum === "luxembourg national curriculum / classical secondary education (esc)";
     const isMaltaNational = selectedCountry === "malta" && selectedCurriculum === "malta national curriculum framework / learning outcomes framework / secondary year 9";
     const isMauritiusNational = selectedCountry === "mauritius" && selectedCurriculum === "mauritius national curriculum framework grades 7–9 / national certificate of education (nce)";
-    const isEstoniaNational = selectedCountry === "estonia" && selectedCurriculum === "estonia national curriculum (basic school) / harno";
-    const isLatviaNational = selectedCountry === "latvia" && selectedCurriculum === "latvia national basic education standard / skola2030";
-    const isLithuaniaNational = selectedCountry === "lithuania" && selectedCurriculum === "lithuanian national curriculum / general programmes (v-1269)";
-    const isLuxembourgESC = selectedCountry === "luxembourg" && selectedCurriculum === "luxembourg national curriculum / classical secondary education (esc)";
-    const isMaltaNational = selectedCountry === "malta" && selectedCurriculum === "malta national curriculum framework / learning outcomes framework / secondary year 9";
-    const isMauritiusNational = selectedCountry === "mauritius" && selectedCurriculum === "mauritius national curriculum framework grades 7–9 / national certificate of education (nce)";
     const isEthiopiaMoE = selectedCountry === "ethiopia" && selectedCurriculum === "ethiopia ministry of education curriculum / ethiopian general school leaving examination";
     const isEritreaMoE = selectedCountry === "eritrea" && selectedCurriculum === "eritrea ministry of education national curriculum / secondary education certificate examination (esece)";
     if (isKenyaCbc) {
@@ -903,6 +897,12 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isKenyaCbc = selectedCountry === "kenya" && selectedCurriculum === "kenya cbc/cbe";
     const isNigeriaNERDC = selectedCountry === "nigeria" && selectedCurriculum === "nigeria nerdc curriculum / waec / neco";
     const isTanzaniaTIE = selectedCountry === "tanzania" && selectedCurriculum === "tanzania tie curriculum / necta";
+    const isEstoniaNational = selectedCountry === "estonia" && selectedCurriculum === "estonia national curriculum (basic school) / harno";
+    const isLatviaNational = selectedCountry === "latvia" && selectedCurriculum === "latvia national basic education standard / skola2030";
+    const isLithuaniaNational = selectedCountry === "lithuania" && selectedCurriculum === "lithuanian national curriculum / general programmes (v-1269)";
+    const isLuxembourgESC = selectedCountry === "luxembourg" && selectedCurriculum === "luxembourg national curriculum / classical secondary education (esc)";
+    const isMaltaNational = selectedCountry === "malta" && selectedCurriculum === "malta national curriculum framework / learning outcomes framework / secondary year 9";
+    const isMauritiusNational = selectedCountry === "mauritius" && selectedCurriculum === "mauritius national curriculum framework grades 7–9 / national certificate of education (nce)";
     const nigeriaSubjects = isNigeriaNERDC && window.CBENexusNigeriaBanks && window.CBENexusNigeriaBanks.banks &&
       window.CBENexusNigeriaBanks.banks[grade.value] ? Object.keys(window.CBENexusNigeriaBanks.banks[grade.value]) : [];
     const tanzaniaSubjects = isTanzaniaTIE && window.CBENexusTanzaniaBanks && window.CBENexusTanzaniaBanks.banks && window.CBENexusTanzaniaBanks.banks[grade.value] ? Object.keys(window.CBENexusTanzaniaBanks.banks[grade.value]) : [];
