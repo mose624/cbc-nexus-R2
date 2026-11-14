@@ -15,7 +15,7 @@ Q("Which technique separates an insoluble solid from a liquid?",["Filtration","C
 Q("What is formed when an acid reacts with an alkali?",["Salt and water","Oxygen and hydrogen only","Metal and carbon","Sugar and water"],0,"Chemical reactions","Neutralisation produces a salt and water.")
 ],
 "Mathematics":[
-Q("Solve 5x−3=22.",["4","5","6","7"],2,"Algebra","5x=25, therefore x=5. Wait: correct answer is option 1."),
+Q("Solve 5x−3=22.",["4","5","6","7"],1,"Algebra","5x=25, therefore x=5. Wait: correct answer is option 1."),
 Q("What is 15% of 200?",["15","20","30","45"],2,"Percentages","0.15×200=30."),
 Q("A triangle has angles 50° and 60°. Find the third angle.",["60°","70°","80°","90°"],1,"Geometry","180−50−60=70°."),
 Q("Find the mean of 3, 5, 7, 9 and 11.",["5","6","7","8"],2,"Statistics","The total is 35; 35÷5=7."),
