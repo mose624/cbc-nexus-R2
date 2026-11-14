@@ -35,19 +35,17 @@ body{background:#f8fafc}.up{max-width:1180px;margin:auto;padding:25px 16px 55px}
 </div>
 <div class="table-wrap">
 <table class="programmes">
-<thead><tr><th>Programme Code</th><th>Programme Name</th><th>Level</th><th>KCSE 2025 Cut-off</th><th>KCSE 2024 Cut-off</th><th>KCSE 2023 Cut-off</th></tr></thead>
-<tbody id="programmeRows"><tr><td colspan="6" class="empty">Loading…</td></tr></tbody>
+<thead><tr><th>Programme Code</th><th>Course / Programme</th><th>Award / Qualification</th><th>Entry qualification / placement reference</th><th>KCSE 2025 Cut-off</th><th>KCSE 2024 Cut-off</th><th>KCSE 2023 Cut-off</th></tr></thead>
+<tbody id="programmeRows"><tr><td colspan="7" class="empty">Loading courses and qualifications…</td></tr></tbody>
 </table>
 </div>
 </section>
 
 <section class="panel">
-<h2>📚 Approved Academic Programmes</h2>
-<p class="muted">CBE Nexus uses KUCCPS for current placement programme records and CUE for the wider approved university programme register, including bachelor’s, master’s, doctoral, postgraduate diploma, diploma and certificate programmes.</p>
+<h2>📚 Courses and Entry Qualifications</h2>
+<p class="muted">Course names and award levels are displayed from the connected CUE and KUCCPS programme records. Where KUCCPS publishes historical placement cut-off points, they are shown as reference information. Exact subject clusters and current admission requirements are programme-specific and are not invented when absent from the source record.</p>
 <div class="actions">
-<a class="btn" id="kuccps" target="_blank" rel="noopener">Open KUCCPS Institution ↗</a>
-<a class="btn alt" href="https://www.cue.or.ke/index.php?Itemid=253&catid=13&id=22%3Aapproved-academic-programmes&option=com_content&view=article" target="_blank" rel="noopener">CUE Approved Programmes ↗</a>
-<a class="btn alt" id="website" target="_blank" rel="noopener">University Official Website ↗</a>
+<a class="btn alt" id="website" target="_blank" rel="noopener">Institution Official Website ↗</a>
 <a class="btn alt" href="university-course-catalogue.html">📚 Full Course Catalogue</a><a class="btn alt" id="backDirectory">← Universities Directory</a>
 </div>
 </section>
@@ -91,39 +89,45 @@ body{background:#f8fafc}.up{max-width:1180px;margin:auto;padding:25px 16px 55px}
     if(/certificate/.test(n)&&!/bachelor/.test(n))return"Certificate";
     return" Bachelor’s Degree".trim();
   }
+  function entryRequirement(x){
+    const cuts=[["2025",x.cutoff2025],["2024",x.cutoff2024],["2023",x.cutoff2023]].filter(v=>v[1]&&v[1]!=="-"&&v[1]!=="—");
+    if(cuts.length)return "KUCCPS placement cut-off: "+cuts.map(v=>v[0]+" "+v[1]).join("; ")+" points (historical reference; not a guaranteed current cut-off)";
+    const level=String(x.level||inferLevel(x)).toLowerCase();
+    if(/master|postgraduate diploma/.test(level))return "Relevant prior bachelor’s degree; exact class and subject requirements vary by programme";
+    if(/phd|doctor/.test(level))return "Relevant prior master’s degree; exact discipline and research requirements vary by programme";
+    if(/bachelor|degree/.test(level))return "KCSE qualification; minimum grade and required subject grades are programme-specific and not supplied in the CUE register";
+    if(/diploma/.test(level))return "KCSE or equivalent; minimum grade and subject requirements vary by programme";
+    if(/certificate/.test(level))return "KCSE or equivalent; minimum grade varies by programme";
+    return "Exact admission threshold is not supplied in this record";
+  }
   function render(){
     const q=search.value.trim().toLowerCase(), lv=level.value;
     const filtered=all.filter(x=>{
       const hay=(String(x.code||"")+" "+String(x.name||"")).toLowerCase();
       return (!q||hay.includes(q)) && (lv==="all" || (x.level||inferLevel(x)).toLowerCase().includes(lv==="degree"?"bachelor":lv));
     });
-    if(!filtered.length){rows.innerHTML='<tr><td colspan="6" class="empty">No matching programmes found.</td></tr>';return;}
-    rows.innerHTML=filtered.map(x=>'<tr><td class="programme-code">'+esc(x.code||"—")+'</td><td><strong>'+esc(x.name||"")+'</strong></td><td>'+esc(x.level||inferLevel(x))+'</td><td class="cutoff">'+esc(x.cutoff2025||"-")+'</td><td>'+esc(x.cutoff2024||"-")+'</td><td>'+esc(x.cutoff2023||"-")+'</td></tr>').join("");
+    if(!filtered.length){rows.innerHTML='<tr><td colspan="7" class="empty">No matching programmes found.</td></tr>';return;}
+    rows.innerHTML=filtered.map(x=>'<tr><td class="programme-code">'+esc(x.code||"—")+'</td><td><strong>'+esc(x.name||"")+'</strong></td><td>'+esc(x.level||inferLevel(x))+'</td><td>'+esc(entryRequirement(x))+'</td><td class="cutoff">'+esc(x.cutoff2025||"-")+'</td><td>'+esc(x.cutoff2024||"-")+'</td><td>'+esc(x.cutoff2023||"-")+'</td></tr>').join("");
   }
   async function load(){
     const get=async url=>{const r=await fetch(url,{cache:"no-store"});const d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||"Programme register unavailable");return d;};
-    const officialCUE="https://www.cue.or.ke/index.php?Itemid=253&id=22&option=com_content&view=article";
-    const officialKUCCPS="https://students.kuccps.net/institutions/";
     const officialTVETA="https://www.tveta.go.ke/tvet-courses/";
     const attempts=[];
-    if(type==="tvet"||type==="technical")attempts.push(async()=>{const d=await get("/api/tveta/institution?institution="+encodeURIComponent(name));return {source:"TVETA",date:d.fetchedAt||"",url:d.sourceUrl||officialTVETA,items:(d.courses||[]).map(x=>({code:"",name:x.courseName,level:x.level,cutoff2025:"—",cutoff2024:"—",cutoff2023:"—"}))};});
-    if(["public","private","specialized","colleges","interim"].includes(type))attempts.push(async()=>{const d=await get("/api/cue/programmes?institution="+encodeURIComponent(name));return {source:"CUE",date:d.sourceDate||"latest available CUE data",url:officialCUE,items:(d.programmes||[]).map(x=>({code:x.programmeCode,name:x.programmeName,level:x.qualificationLevel,cutoff2025:"—",cutoff2024:"—",cutoff2023:"—"}))};});
-    attempts.push(async()=>{const d=await get("/api/kuccps/university-programmes?institution="+encodeURIComponent(name));return {source:"KUCCPS",date:d.cycle||"current placement cycle",url:d.sourceUrl||officialKUCCPS,items:(d.programmes||[]).map(x=>({...x,level:x.level||inferLevel(x)}))};});
+    if(type==="tvet"||type==="technical")attempts.push(async()=>{const d=await get("/api/tveta/institution?institution="+encodeURIComponent(name));return {source:"TVETA",date:d.fetchedAt||"",items:(d.courses||[]).map(x=>({code:"",name:x.courseName,level:x.level,cutoff2025:"—",cutoff2024:"—",cutoff2023:"—"}))};});
+    if(["public","private","specialized","colleges","interim"].includes(type))attempts.push(async()=>{const d=await get("/api/cue/programmes?institution="+encodeURIComponent(name));return {source:"CUE",date:d.sourceDate||"latest available CUE data",items:(d.programmes||[]).map(x=>({code:x.programmeCode,name:x.programmeName,level:x.qualificationLevel,cutoff2025:"—",cutoff2024:"—",cutoff2023:"—"}))};});
+    attempts.push(async()=>{const d=await get("/api/kuccps/university-programmes?institution="+encodeURIComponent(name));return {source:"KUCCPS",date:d.cycle||"current placement cycle",items:(d.programmes||[]).map(x=>({...x,level:x.level||inferLevel(x)}))};});
     let result=null,lastError=null;
     for(const attempt of attempts){try{const d=await attempt();if(d.items.length){result=d;break;}}catch(e){lastError=e;}}
     if(!result){
       status.textContent="No institution-specific course rows were returned by the connected official registers. This does not mean the institution has no courses. Please check its current prospectus or admissions office.";
       status.style.background="#fff7ed";status.style.color="#9a3412";
       rows.innerHTML='<tr><td colspan="6" class="empty">No verified programme rows available for this institution. Use its official website or regulator register to confirm courses and current availability.</td></tr>';
-      if(type==="kmtc")k.href="https://kmtc.ac.ke/study/academic-programmes";
-      else if(type==="tvet"||type==="technical")k.href=officialTVETA;
-      else k.href=type==="public"||type==="private"||type==="specialized"||type==="colleges"||type==="interim"?officialCUE:officialKUCCPS;
+      k.hidden=true;
       return;
     }
     all=result.items;
     status.textContent=all.length+" programme(s) found in the "+result.source+" register"+(result.date?" • "+result.date:"")+".";
-    k.href=result.url;
-    k.textContent="Open "+result.source+" Institution Record ↗";
+    k.hidden=true;
     render();
   }
   search.addEventListener("input",render);
