@@ -516,6 +516,12 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     }
   };
 
+  curriculumByCountry["Antigua and Barbuda"] = ["Antigua and Barbuda National Curriculum / Lower Secondary Form 3"];
+  curriculumByCountry["Argentina"] = ["Argentina Núcleos de Aprendizajes Prioritarios (NAP) / Educación Secundaria / Ciclo Básico"];
+  curriculumByCountry["Armenia"] = ["Armenia State General Education Standard / Grade 9"];
+  curriculumByCountry["Australia"] = ["Australian Curriculum Version 9.0 / Year 9 (ACARA)", "Australian Curriculum / ACARA", "NSW NESA", "VCE (Victoria)", "QCE (Queensland)", "WACE (Western Australia)", "IB"];
+  curriculumByCountry["Azerbaijan"] = ["Azerbaijan National Curriculum / State General Education Standards / Grade 9"];
+
   const bandQuestions = {
     primaryUpper: {
       Mathematics: [
