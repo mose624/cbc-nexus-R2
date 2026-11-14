@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>University Course Profile | CBE Nexus</title>
+<title>Institution Courses & Programme Profile | CBE Nexus</title>
 <link rel="stylesheet" href="styles.css?v=20261004-compact2">
 <style>
 body{background:#f8fafc}.up{max-width:1180px;margin:auto;padding:25px 16px 55px}
@@ -101,25 +101,30 @@ body{background:#f8fafc}.up{max-width:1180px;margin:auto;padding:25px 16px 55px}
     rows.innerHTML=filtered.map(x=>'<tr><td class="programme-code">'+esc(x.code||"—")+'</td><td><strong>'+esc(x.name||"")+'</strong></td><td>'+esc(x.level||inferLevel(x))+'</td><td class="cutoff">'+esc(x.cutoff2025||"-")+'</td><td>'+esc(x.cutoff2024||"-")+'</td><td>'+esc(x.cutoff2023||"-")+'</td></tr>').join("");
   }
   async function load(){
-    try{
-      const r=await fetch("/api/kuccps/university-programmes?institution="+encodeURIComponent(name),{cache:"no-store"});
-      const d=await r.json();
-      if(!r.ok||!d.ok){
-        status.textContent=d.error||"KUCCPS programme data could not be loaded.";
-        status.style.background="#fff7ed";status.style.color="#9a3412";
-        rows.innerHTML='<tr><td colspan="6" class="empty">Use the official KUCCPS institution link above to view the current programme record.</td></tr>';
-        if(d.sourceUrl)k.href=d.sourceUrl;
-        return;
-      }
-      all=(d.programmes||[]).map(x=>({...x,level:x.level||inferLevel(x)}));
-      status.textContent=all.length+" KUCCPS programme(s) found for the 2026/2027 cycle.";
-      if(d.sourceUrl)k.href=d.sourceUrl;
-      render();
-    }catch(e){
-      status.textContent="Unable to reach the live KUCCPS programme service. Please use the official KUCCPS link below.";
+    const get=async url=>{const r=await fetch(url,{cache:"no-store"});const d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||"Programme register unavailable");return d;};
+    const officialCUE="https://www.cue.or.ke/index.php?Itemid=253&id=22&option=com_content&view=article";
+    const officialKUCCPS="https://students.kuccps.net/institutions/";
+    const officialTVETA="https://www.tveta.go.ke/tvet-courses/";
+    const attempts=[];
+    if(type==="tvet"||type==="technical")attempts.push(async()=>{const d=await get("/api/tveta/institution?institution="+encodeURIComponent(name));return {source:"TVETA",date:d.fetchedAt||"",url:d.sourceUrl||officialTVETA,items:(d.courses||[]).map(x=>({code:"",name:x.courseName,level:x.level,cutoff2025:"—",cutoff2024:"—",cutoff2023:"—"}))};});
+    if(["public","private","specialized","colleges","interim"].includes(type))attempts.push(async()=>{const d=await get("/api/cue/programmes?institution="+encodeURIComponent(name));return {source:"CUE",date:d.sourceDate||"latest available CUE data",url:officialCUE,items:(d.programmes||[]).map(x=>({code:x.programmeCode,name:x.programmeName,level:x.qualificationLevel,cutoff2025:"—",cutoff2024:"—",cutoff2023:"—"}))};});
+    attempts.push(async()=>{const d=await get("/api/kuccps/university-programmes?institution="+encodeURIComponent(name));return {source:"KUCCPS",date:d.cycle||"current placement cycle",url:d.sourceUrl||officialKUCCPS,items:(d.programmes||[]).map(x=>({...x,level:x.level||inferLevel(x)}))};});
+    let result=null,lastError=null;
+    for(const attempt of attempts){try{const d=await attempt();if(d.items.length){result=d;break;}}catch(e){lastError=e;}}
+    if(!result){
+      status.textContent="No institution-specific course rows were returned by the connected official registers. This does not mean the institution has no courses. Please check its current prospectus or admissions office.";
       status.style.background="#fff7ed";status.style.color="#9a3412";
-      rows.innerHTML='<tr><td colspan="6" class="empty">Live programme data is temporarily unavailable.</td></tr>';
+      rows.innerHTML='<tr><td colspan="6" class="empty">No verified programme rows available for this institution. Use its official website or regulator register to confirm courses and current availability.</td></tr>';
+      if(type==="kmtc")k.href="https://kmtc.ac.ke/study/academic-programmes";
+      else if(type==="tvet"||type==="technical")k.href=officialTVETA;
+      else k.href=type==="public"||type==="private"||type==="specialized"||type==="colleges"||type==="interim"?officialCUE:officialKUCCPS;
+      return;
     }
+    all=result.items;
+    status.textContent=all.length+" programme(s) found in the "+result.source+" register"+(result.date?" • "+result.date:"")+".";
+    k.href=result.url;
+    k.textContent="Open "+result.source+" Institution Record ↗";
+    render();
   }
   search.addEventListener("input",render);
   level.addEventListener("change",render);
