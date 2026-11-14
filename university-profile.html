@@ -71,9 +71,7 @@ body{background:#f8fafc}.up{max-width:1180px;margin:auto;padding:25px 16px 55px}
   const back=document.querySelector("#backDirectory");
   const dirs={private:"private-universities.html",specialized:"specialized-universities.html",colleges:"university-constituent-colleges.html",interim:"interim-universities.html",public:"public-universities.html"};
   back.href=dirs[type]||"kenya-universities-colleges.html";
-  const k=document.querySelector("#kuccps");
-  if(legacyId)k.href="https://students.kuccps.net/institutions/"+encodeURIComponent(legacyId)+"/";
-  else k.href="https://students.kuccps.net/institutions/";
+  // Regulator data is presented inside this profile; learners are not redirected away.
 
   let all=[];
   const status=document.querySelector("#status");
@@ -119,15 +117,13 @@ body{background:#f8fafc}.up{max-width:1180px;margin:auto;padding:25px 16px 55px}
     let result=null,lastError=null;
     for(const attempt of attempts){try{const d=await attempt();if(d.items.length){result=d;break;}}catch(e){lastError=e;}}
     if(!result){
-      status.textContent="No institution-specific course rows were returned by the connected official registers. This does not mean the institution has no courses. Please check its current prospectus or admissions office.";
+      status.textContent="No institution-specific course records were returned in the connected dataset for this institution yet. This does not mean the institution has no courses.";
       status.style.background="#fff7ed";status.style.color="#9a3412";
-      rows.innerHTML='<tr><td colspan="6" class="empty">No verified programme rows available for this institution. Use its official website or regulator register to confirm courses and current availability.</td></tr>';
-      k.hidden=true;
+      rows.innerHTML='<tr><td colspan="7" class="empty">No matching programme rows are available in the connected dataset yet.</td></tr>';
       return;
     }
     all=result.items;
     status.textContent=all.length+" programme(s) found in the "+result.source+" register"+(result.date?" • "+result.date:"")+".";
-    k.hidden=true;
     render();
   }
   search.addEventListener("input",render);
