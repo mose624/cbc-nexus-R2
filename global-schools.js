@@ -514,7 +514,7 @@ function renderCountry(){
  setSeoMeta('meta[name="twitter:description"]',"name",metaDesc);
  let canonical=document.querySelector('link[rel="canonical"]');if(canonical)canonical.href=canonicalUrl;
  const seoGraph={"@context":"https://schema.org","@graph":[
-  {"@type":"WebPage","name":document.title,"description":desc,"url":canonicalUrl,"keywords":Array.isArray(d.seoTopics)?d.seoTopics.join(", "):undefined,"isPartOf":{"@type":"WebSite","name":"CBE Nexus","url":"https://cbenexus.com"},"about":[{"@type":"Country","name":c.name},...examTitleNames.map(name=>({"@type":"Thing","name":name})),...(d.curriculum?[{"@type":"Thing","name":d.curriculum}]:[])]},
+  {"@type":"WebPage","name":document.title,"description":metaDesc,"url":canonicalUrl,"keywords":Array.isArray(d.seoTopics)?d.seoTopics.join(", "):undefined,"isPartOf":{"@type":"WebSite","name":"CBE Nexus","url":"https://cbenexus.com"},"about":[{"@type":"Country","name":c.name},...examTitleNames.map(name=>({"@type":"Thing","name":name})),...(d.curriculum?[{"@type":"Thing","name":d.curriculum}]:[])]},
   {"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"CBE Nexus","item":"https://cbenexus.com/"},{"@type":"ListItem","position":2,"name":"Global Schools Directory","item":"https://cbenexus.com/global-schools"},{"@type":"ListItem","position":3,"name":c.name,"item":canonicalUrl}]}
  ]};
  const faqRecords=Array.isArray(d.seoFaqs)?d.seoFaqs.filter(x=>x&&x.question&&x.answer):[];
