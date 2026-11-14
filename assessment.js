@@ -860,17 +860,27 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const baseList = isKenyaCbc ? subjectsForGrade(grade.value) : [];
     // Include every subject that has published Admin Dashboard questions for this grade.
     // This changes only discoverability/filtering; saved question text and answers are untouched.
+    const selectedCountry = String(country && country.value || "Kenya").trim().toLowerCase();
+    const selectedCurriculum = String(curriculum && curriculum.value || "Kenya CBC/CBE").trim().toLowerCase();
+    const matchesSelection = (item) =>
+      item &&
+      String(item.country || "Kenya").trim().toLowerCase() === selectedCountry &&
+      String(item.curriculum || "Kenya CBC/CBE").trim().toLowerCase() === selectedCurriculum &&
+      gradeNumber(item.grade) === gradeNumber(grade.value) &&
+      String(item.subject || "").trim() &&
+      String(item.question || "").trim() &&
+      Array.isArray(item.options) && item.options.length >= 4;
     const adminSubjects = (Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [])
-      .filter((item) => item && item.published !== false &&
-        String(item.country || "Kenya").toLowerCase() === String(country && country.value || "Kenya").trim().toLowerCase() &&
-        String(item.curriculum || "Kenya CBC/CBE").toLowerCase() === String(curriculum && curriculum.value || "Kenya CBC/CBE").trim().toLowerCase() &&
-        gradeNumber(item.grade) === gradeNumber(grade.value) &&
-        String(item.subject || "").trim() &&
-        String(item.question || "").trim() &&
-        Array.isArray(item.options) && item.options.length >= 4)
+      .filter((item) => item.published !== false && matchesSelection(item))
+      .map((item) => String(item.subject).trim());
+    // Browser-local questions are also curriculum-scoped. Include their subjects
+    // only for the exact country, board and level so learners can actually select
+    // locally authored packs without exposing another system's subjects.
+    const localSubjects = readCustomQuestions()
+      .filter(matchesSelection)
       .map((item) => String(item.subject).trim());
     const seen = new Set();
-    const list = [...baseList, ...adminSubjects].filter((name) => {
+    const list = [...baseList, ...adminSubjects, ...localSubjects].filter((name) => {
       const key = normalizeSubject(name);
       if (!key || seen.has(key)) return false;
       seen.add(key);
