@@ -80,7 +80,7 @@
   ];
 
   // CORE MATHEMATICS — the Grade 10 Core Mathematics design uses three main strands.
-  curriculum.Mathematics = [
+  curriculum["Core Mathematics"] = [
     strand("1.0","1.0 Numbers and Algebra",[
       sub("1.1","1.1 Real Numbers",["Classify real numbers and use reciprocals."],["Whole numbers; odd, even, prime and composite numbers; rational and irrational numbers"]),
       sub("1.2","1.2 Indices and Logarithms",["Apply laws of indices and logarithms."],["Indices; logarithms; common logarithms"]),
@@ -97,7 +97,7 @@
       sub("3.2","3.2 Probability",["Apply experimental and theoretical probability."],["Probability; sample spaces; mutually exclusive and independent events"])
     ])
   ];
-  grade.Mathematics = [
+  grade["Core Mathematics"] = [
     q("1.0","1.1","1.1 Real Numbers","Which of the following is irrational?",["0.25","√2","3/5","0.125"],1,"√2 cannot be expressed as a ratio of two integers; the other choices are rational.","Classify real numbers as rational or irrational.","Rational and irrational numbers."),
     q("1.0","1.2","1.2 Indices and Logarithms","Evaluate 2³ × 2⁴.",["2⁷","2¹²","2¹","4⁷"],0,"For the same base, add exponents: 2³ × 2⁴ = 2⁷.","Apply laws of indices.","Multiplication of powers with the same base."),
     q("1.0","1.3","1.3 Quadratic Expressions and Equations","Solve x² − 5x + 6 = 0.",["x = 1 or 6","x = 2 or 3","x = −2 or −3","x = 0 or 6"],1,"Factorise: (x − 2)(x − 3) = 0, so x = 2 or x = 3.","Solve a quadratic equation by factorisation.","Quadratic equations."),
