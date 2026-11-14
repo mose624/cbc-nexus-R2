@@ -20,11 +20,12 @@ function build(){
  const match=location.pathname.match(/^\/global-schools\/([^/]+)\/?$/);if(!match)return;
  const slug=decodeURIComponent(match[1]).toLowerCase(),c=countries[slug];if(!c)return;
  const country=encodeURIComponent(c.name);
- const title=c.name+" Education, National Exams, Teaching Jobs & Online Tutors | CBE Nexus";
- const description="Explore "+c.name+" education and curriculum guidance, "+c.exams+", revision notes with worked examples, interactive questions, teaching opportunities, online tutors, teacher resource selling, international curricula, CV writing and free AI training.";
+ const profile=window.CBE_GLOBAL_COUNTRY_DATA?.[slug]||{};
+ const title=profile.seoTitle||c.name+" Education, National Exams, Teaching Jobs & Online Tutors | CBE Nexus";
+ const description=profile.seoDescription||("Explore "+c.name+" education and curriculum guidance, "+c.exams+", revision notes with worked examples, interactive questions, teaching opportunities, online tutors, teacher resource selling, international curricula, CV writing and free AI training.");
  document.title=title;
  addMeta('meta[name="description"]',"name","description",description);
- addMeta('meta[name="keywords"]',"name","keywords",[c.name+" education resources",c.name+" curriculum",c.name+" national examinations",c.name+" past papers",c.name+" free revision",c.name+" worked examples",c.name+" interactive questions",c.name+" teaching jobs",c.name+" online tutors",c.name+" sell notes online",c.name+" teacher marketplace",c.name+" Cambridge IGCSE Pearson Edexcel IB",c.name+" teacher CV",c.name+" free AI training",...c.cities.map(x=>x+" education resources"),...c.cities.map(x=>"online tutors "+x)].join(", "));
+ addMeta('meta[name="keywords"]',"name","keywords",[c.name+" education resources",c.name+" curriculum",c.name+" national examinations",c.name+" past papers",c.name+" free revision",c.name+" worked examples",c.name+" interactive questions",c.name+" teaching jobs",c.name+" online tutors",c.name+" sell notes online",c.name+" teacher marketplace",c.name+" Cambridge IGCSE Pearson Edexcel IB",c.name+" teacher CV",c.name+" free AI training",...c.cities.map(x=>x+" education resources"),...c.cities.map(x=>"online tutors "+x),...(profile.seoTopics||[])].join(", "));
  addMeta('meta[property="og:title"]',"property","og:title",title);
  addMeta('meta[property="og:description"]',"property","og:description",description);
  const canonical="https://cbenexus.com/global-schools/"+slug;
@@ -62,7 +63,7 @@ function build(){
  document.head.append(style);
  const dashboard=document.getElementById("country-learning-hub");if(dashboard&&dashboard.parentElement)dashboard.parentElement.insertBefore(hub,dashboard.nextSibling);else root.prepend(hub);
  const serviceItems=services.map(([ico,nm,body,url],i)=>({"@type":"ListItem","position":i+1,"name":nm,"url":"https://cbenexus.com"+url.split("?")[0]}));
- const graph={"@context":"https://schema.org","@graph":[{"@type":"WebPage","name":title,"description":description,"url":canonical,"inLanguage":"en","about":[{"@type":"Country","name":c.name}],"keywords":[c.name+" education",c.name+" national exams",c.name+" teaching jobs",c.name+" online tutoring",c.name+" revision",c.name+" international curriculum",...c.cities.map(x=>x+" education and tutoring")].join(", ")},{"@type":"ItemList","name":c.name+" education and career services","itemListElement":serviceItems},{"@type":"FAQPage","mainEntity":questions.map(([q,a])=>({"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}}))}]};
+ const graph={"@context":"https://schema.org","@graph":[{"@type":"WebPage","name":title,"description":description,"url":canonical,"inLanguage":({"Algeria":"ar","Egypt":"ar","Libya":"ar","Morocco":"ar","Tunisia":"ar","Sudan":"ar","South Sudan":"en","Somalia":"en","Eritrea":"en","Djibouti":"fr"}[c.name]||"en"),"about":[{"@type":"Country","name":c.name}],"keywords":[c.name+" education",c.name+" national exams",c.name+" teaching jobs",c.name+" online tutoring",c.name+" revision",c.name+" international curriculum",...c.cities.map(x=>x+" education and tutoring")].join(", ")},{"@type":"ItemList","name":c.name+" education and career services","itemListElement":serviceItems},{"@type":"FAQPage","mainEntity":questions.map(([q,a])=>({"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}}))}]};
  let schema=document.getElementById("country-growth-seo-jsonld");if(!schema){schema=document.createElement("script");schema.id="country-growth-seo-jsonld";schema.type="application/ld+json";document.head.append(schema);}schema.textContent=JSON.stringify(graph);
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",build,{once:true});else build();
