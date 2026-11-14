@@ -169,7 +169,7 @@
       }
     ]
   },
-  "republic-of-the-congo": {
+  "congo": {
     "seoHeading": "Republic of the Congo Education, CEPE, BEPC & Baccalauréat",
     "seoTitle": "Republic of the Congo Education, CEPE, BEPC & Baccalauréat | CBE Nexus",
     "seoDescription": "Congo-Brazzaville school pathways, CEPE, BEPC and Baccalauréat examinations and French-language curriculum resources.",
