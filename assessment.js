@@ -138,7 +138,7 @@
   "Barbados":["Barbados National Curriculum / CSEC / CAPE","Cambridge International"],
   "Fiji":["Fiji National Curriculum / FSLC","Cambridge International"],
   "Papua New Guinea":["PNG National Curriculum / Grade 10 & 12 National Examinations"],
-  "Mauritius":["Mauritius National Curriculum / NCE / SC / HSC","Cambridge International"],
+  "Mauritius":["Mauritius National Curriculum Framework Grades 7–9 / National Certificate of Education (NCE)","Cambridge GCE O Level (Mauritius Grades 10–11)","Cambridge International","Pearson Edexcel","IB"],
   "Seychelles":["Seychelles National Curriculum / IGCSE","Cambridge International"]
 };
 
@@ -149,6 +149,7 @@ const nationalLevelStructures = {
   "Lithuania": ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Luxembourg": ["7e","6e","5e","4e","3e","2e","1re"],
   "Malta": ["Year 7","Year 8","Year 9","Year 10","Year 11"],
+  "Mauritius": ["Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12","Grade 13"],
   "Kenya": ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Uganda": ["Primary 1","Primary 2","Primary 3","Primary 4","Primary 5","Primary 6","Primary 7","Senior 1","Senior 2","Senior 3","Senior 4","Senior 5","Senior 6"],
   "Tanzania": ["Standard I","Standard II","Standard III","Standard IV","Standard V","Standard VI","Standard VII","Form I","Form II","Form III","Form IV","Form V","Form VI"],
@@ -629,6 +630,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isLithuaniaNational = selectedCountry === "lithuania" && selectedCurriculum === "lithuanian national curriculum / general programmes (v-1269)";
     const isLuxembourgESC = selectedCountry === "luxembourg" && selectedCurriculum === "luxembourg national curriculum / classical secondary education (esc)";
     const isMaltaNational = selectedCountry === "malta" && selectedCurriculum === "malta national curriculum framework / learning outcomes framework / secondary year 9";
+    const isMauritiusNational = selectedCountry === "mauritius" && selectedCurriculum === "mauritius national curriculum framework grades 7–9 / national certificate of education (nce)";
     const isEthiopiaMoE = selectedCountry === "ethiopia" && selectedCurriculum === "ethiopia ministry of education curriculum / ethiopian general school leaving examination";
     const isEritreaMoE = selectedCountry === "eritrea" && selectedCurriculum === "eritrea ministry of education national curriculum / secondary education certificate examination (esece)";
     if (isKenyaCbc) {
@@ -903,7 +905,8 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const lithuaniaSubjects = isLithuaniaNational && window.CBENexusLithuaniaBanks && window.CBENexusLithuaniaBanks.banks && window.CBENexusLithuaniaBanks.banks[grade.value] ? Object.keys(window.CBENexusLithuaniaBanks.banks[grade.value]) : [];
     const luxembourgSubjects = isLuxembourgESC && window.CBENexusLuxembourgBanks && window.CBENexusLuxembourgBanks.banks && window.CBENexusLuxembourgBanks.banks[grade.value] ? Object.keys(window.CBENexusLuxembourgBanks.banks[grade.value]) : [];
     const maltaSubjects = isMaltaNational && window.CBENexusMaltaBanks && window.CBENexusMaltaBanks.banks && window.CBENexusMaltaBanks.banks[grade.value] ? Object.keys(window.CBENexusMaltaBanks.banks[grade.value]) : [];
-    const baseList = isKenyaCbc ? subjectsForGrade(grade.value) : (isNigeriaNERDC ? nigeriaSubjects : (isTanzaniaTIE ? tanzaniaSubjects : (isEstoniaNational ? estoniaSubjects : (isLatviaNational ? latviaSubjects : (isLithuaniaNational ? lithuaniaSubjects : (isLuxembourgESC ? luxembourgSubjects : maltaSubjects))))));
+    const mauritiusSubjects = isMauritiusNational && window.CBENexusMauritiusBanks && window.CBENexusMauritiusBanks.banks && window.CBENexusMauritiusBanks.banks[grade.value] ? Object.keys(window.CBENexusMauritiusBanks.banks[grade.value]) : [];
+    const baseList = isKenyaCbc ? subjectsForGrade(grade.value) : (isNigeriaNERDC ? nigeriaSubjects : (isTanzaniaTIE ? tanzaniaSubjects : (isEstoniaNational ? estoniaSubjects : (isLatviaNational ? latviaSubjects : (isLithuaniaNational ? lithuaniaSubjects : (isLuxembourgESC ? luxembourgSubjects : (isMaltaNational ? maltaSubjects : mauritiusSubjects)))))));
     // Include every subject that has published Admin Dashboard questions for this grade.
     // This changes only discoverability/filtering; saved question text and answers are untouched.
     const adminSubjects = (Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [])
@@ -979,7 +982,8 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       isLatviaNational && window.CBENexusLatviaBanks && window.CBENexusLatviaBanks.banks && window.CBENexusLatviaBanks.banks[selectedGrade] && window.CBENexusLatviaBanks.banks[selectedGrade][selectedSubject] ||
       isLithuaniaNational && window.CBENexusLithuaniaBanks && window.CBENexusLithuaniaBanks.banks && window.CBENexusLithuaniaBanks.banks[selectedGrade] && window.CBENexusLithuaniaBanks.banks[selectedGrade][selectedSubject] ||
       isLuxembourgESC && window.CBENexusLuxembourgBanks && window.CBENexusLuxembourgBanks.banks && window.CBENexusLuxembourgBanks.banks[selectedGrade] && window.CBENexusLuxembourgBanks.banks[selectedGrade][selectedSubject] ||
-      isMaltaNational && window.CBENexusMaltaBanks && window.CBENexusMaltaBanks.banks && window.CBENexusMaltaBanks.banks[selectedGrade] && window.CBENexusMaltaBanks.banks[selectedGrade][selectedSubject];
+      isMaltaNational && window.CBENexusMaltaBanks && window.CBENexusMaltaBanks.banks && window.CBENexusMaltaBanks.banks[selectedGrade] && window.CBENexusMaltaBanks.banks[selectedGrade][selectedSubject] ||
+      isMauritiusNational && window.CBENexusMauritiusBanks && window.CBENexusMauritiusBanks.banks && window.CBENexusMauritiusBanks.banks[selectedGrade] && window.CBENexusMauritiusBanks.banks[selectedGrade][selectedSubject];
 
     const adminQuestions = Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [];
     const publishedSource = adminQuestions.filter((item) =>
