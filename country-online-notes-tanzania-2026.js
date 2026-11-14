@@ -89,6 +89,10 @@
    }));
   });
  });
+ record.officialCurriculum="https://www.tie.go.tz/uploads/documents/sw-1771484295-CURRICULUM%20FOR%20SECONDARY%20EDUCATION%20FORM%20I-IV%20-CORRECTED%20%202026.pdf";
+ record.advancedCurriculum="https://www.tie.go.tz/uploads/files/Curriculum%20For%20Secondary%20Education%20Form%20V%20-%20VI.pdf";
+ record.cseeSource="https://www.necta.go.tz/pages/csee";
+ record.acseeSource="https://www.necta.go.tz/pages/acsee";
  record.levels=levels;
  record.subjects=Object.keys(topics["Form I"]);
  record.levelRange="Form I–IV";
