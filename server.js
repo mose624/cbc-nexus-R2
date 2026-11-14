@@ -2154,10 +2154,10 @@ function parseKuccpsRequirementTable(html,label){
   if(tableAt<0)return [];
   const end=tail.toLowerCase().indexOf("</table>",tableAt);
   if(end<0)return [];
-  const table=tail.slice(tableAt,end+8),rows=[],trRe=/<tr[^>]*>([\\s\\S]*?)<\\/tr>/gi;
+  const table=tail.slice(tableAt,end+8),rows=[],trRe=/<tr[^>]*>([\s\S]*?)<\/tr>/gi;
   let tr;
   while((tr=trRe.exec(table))){
-    const cells=[],cellRe=/<t[dh][^>]*>([\\s\\S]*?)<\\/t[dh]>/gi;let cell;
+    const cells=[],cellRe=/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi;let cell;
     while((cell=cellRe.exec(tr[1]))){const value=htmlText(cell[1]);if(value)cells.push(value);}
     if(cells.length)rows.push(cells);
   }
