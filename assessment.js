@@ -184,7 +184,6 @@ const nationalLevelStructures = {
   "Nauru": ["Year 10"],
   "Nepal": ["Grade 9"],
   "Netherlands": ["VO onderbouw (Year 2)"],
-  "New Zealand": ["Year 10"],
   "Nicaragua": ["9°"],
   "Niger": ["Second Cycle (Lycée)"],
   "North Korea": ["Lower Secondary Year 3"],
