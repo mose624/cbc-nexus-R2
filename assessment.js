@@ -1100,6 +1100,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isrussiaNational = selectedCountry.toLowerCase() === "russia" && selectedCurriculum.toLowerCase() === "russian federal state educational standards / basic general education / grade 9";
     const issaintkittsNational = selectedCountry.toLowerCase() === "saint kitts and nevis" && selectedCurriculum.toLowerCase() === "saint kitts and nevis secondary education / form 3 / csec preparation pathway";
     const issaintluciaNational = selectedCountry.toLowerCase() === "saint lucia" && selectedCurriculum.toLowerCase() === "saint lucia national curriculum / lower secondary / form 3";
+    const isNinthsaudiarabia = selectedCountry.toLowerCase() === "saudi arabia" && selectedCurriculum.toLowerCase() === "saudi ministry of education curriculum / intermediate grade 9 / third intermediate";
+    const isNinthsenegal = selectedCountry.toLowerCase() === "senegal" && selectedCurriculum.toLowerCase() === "senegal national curriculum / collège / troisième (3e)";
+    const isNinthserbia = selectedCountry.toLowerCase() === "serbia" && selectedCurriculum.toLowerCase() === "serbia national curriculum / primary education / grade 8";
+    const isNinthseychelles = selectedCountry.toLowerCase() === "seychelles" && selectedCurriculum.toLowerCase() === "seychelles national curriculum framework / secondary 3 (s3)";
+    const isNinthsierraleone = selectedCountry.toLowerCase() === "sierra leone" && selectedCurriculum.toLowerCase() === "sierra leone mbsse national senior secondary curriculum framework / sss 1 / sciences and technologies";
     const issaintvincentNational = selectedCountry.toLowerCase() === "saint vincent and the grenadines" && selectedCurriculum.toLowerCase() === "saint vincent and the grenadines national curriculum / secondary form 3 / csec pathway";
     const issamoaNational = selectedCountry.toLowerCase() === "samoa" && selectedCurriculum.toLowerCase() === "samoa national curriculum / secondary year 9";
     const issanmarinoNational = selectedCountry.toLowerCase() === "san marino" && selectedCurriculum.toLowerCase() === "san marino scuola media / classe terza";
@@ -1282,6 +1287,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isrussiaNational = selectedCountry.toLowerCase() === "russia" && selectedCurriculum.toLowerCase() === "russian federal state educational standards / basic general education / grade 9";
     const issaintkittsNational = selectedCountry.toLowerCase() === "saint kitts and nevis" && selectedCurriculum.toLowerCase() === "saint kitts and nevis secondary education / form 3 / csec preparation pathway";
     const issaintluciaNational = selectedCountry.toLowerCase() === "saint lucia" && selectedCurriculum.toLowerCase() === "saint lucia national curriculum / lower secondary / form 3";
+    const isNinthsaudiarabia = selectedCountry.toLowerCase() === "saudi arabia" && selectedCurriculum.toLowerCase() === "saudi ministry of education curriculum / intermediate grade 9 / third intermediate";
+    const isNinthsenegal = selectedCountry.toLowerCase() === "senegal" && selectedCurriculum.toLowerCase() === "senegal national curriculum / collège / troisième (3e)";
+    const isNinthserbia = selectedCountry.toLowerCase() === "serbia" && selectedCurriculum.toLowerCase() === "serbia national curriculum / primary education / grade 8";
+    const isNinthseychelles = selectedCountry.toLowerCase() === "seychelles" && selectedCurriculum.toLowerCase() === "seychelles national curriculum framework / secondary 3 (s3)";
+    const isNinthsierraleone = selectedCountry.toLowerCase() === "sierra leone" && selectedCurriculum.toLowerCase() === "sierra leone mbsse national senior secondary curriculum framework / sss 1 / sciences and technologies";
     const issaintvincentNational = selectedCountry.toLowerCase() === "saint vincent and the grenadines" && selectedCurriculum.toLowerCase() === "saint vincent and the grenadines national curriculum / secondary form 3 / csec pathway";
     const issamoaNational = selectedCountry.toLowerCase() === "samoa" && selectedCurriculum.toLowerCase() === "samoa national curriculum / secondary year 9";
     const issanmarinoNational = selectedCountry.toLowerCase() === "san marino" && selectedCurriculum.toLowerCase() === "san marino scuola media / classe terza";
