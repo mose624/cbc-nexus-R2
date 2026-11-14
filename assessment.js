@@ -122,6 +122,11 @@
   "Thailand":["Thailand Basic Education Core Curriculum B.E. 2551 (2008), revised 2017 / Matthayom 3"],
   "Timor-Leste":["Timor-Leste National Basic Education Curriculum / Third Cycle / Grade 9 (2024 revised framework)"],
   "Togo":["Togo National Curriculum / Collège / Classe de Troisième (3e)"],
+  "Benin":["Benin National Curriculum / Enseignement secondaire général / Classe de Troisième (3e)"],
+  "Cambodia":["Cambodia MoEYS General Education Curriculum Framework / Lower Secondary / Grade 9"],
+  "China":["China Ministry of Education Compulsory Education Curriculum Standards (2022) / Grade 9"],
+  "Indonesia":["Indonesia National Curriculum / Grade IX (Kelas IX) / Kurikulum Merdeka and transition provisions"],
+  "Japan":["Japan MEXT Courses of Study / Lower Secondary School / Year 3 (Grade 9)"],
   "Saudi Arabia":["Saudi Ministry of Education Curriculum / Intermediate Grade 9 / Third Intermediate"],
   "Senegal":["Senegal National Curriculum / Collège / Troisième (3e)"],
   "Serbia":["Serbia National Curriculum / Primary Education / Grade 8"],
@@ -785,6 +790,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isThirteenththailand = selectedCountry.toLowerCase() === "thailand" && selectedCurriculum.toLowerCase() === "thailand basic education core curriculum b.e. 2551 (2008), revised 2017 / matthayom 3";
     const isThirteenthtimorleste = selectedCountry.toLowerCase() === "timor-leste" && selectedCurriculum.toLowerCase() === "timor-leste national basic education curriculum / third cycle / grade 9 (2024 revised framework)";
     const isThirteenthtogo = selectedCountry.toLowerCase() === "togo" && selectedCurriculum.toLowerCase() === "togo national curriculum / collège / classe de troisième (3e)";
+    const isFourteenthbenin = selectedCountry.toLowerCase() === "benin" && selectedCurriculum.toLowerCase() === "benin national curriculum / enseignement secondaire général / classe de troisième (3e)";
+    const isFourteenthcambodia = selectedCountry.toLowerCase() === "cambodia" && selectedCurriculum.toLowerCase() === "cambodia moeys general education curriculum framework / lower secondary / grade 9";
+    const isFourteenthchina = selectedCountry.toLowerCase() === "china" && selectedCurriculum.toLowerCase() === "china ministry of education compulsory education curriculum standards (2022) / grade 9";
+    const isFourteenthindonesia = selectedCountry.toLowerCase() === "indonesia" && selectedCurriculum.toLowerCase() === "indonesia national curriculum / grade ix (kelas ix) / kurikulum merdeka and transition provisions";
+    const isFourteenthjapan = selectedCountry.toLowerCase() === "japan" && selectedCurriculum.toLowerCase() === "japan mext courses of study / lower secondary school / year 3 (grade 9)";
     const isNinthsenegal = selectedCountry.toLowerCase() === "senegal" && selectedCurriculum.toLowerCase() === "senegal national curriculum / collège / troisième (3e)";
     const isNinthserbia = selectedCountry.toLowerCase() === "serbia" && selectedCurriculum.toLowerCase() === "serbia national curriculum / primary education / grade 8";
     const isNinthseychelles = selectedCountry.toLowerCase() === "seychelles" && selectedCurriculum.toLowerCase() === "seychelles national curriculum framework / secondary 3 (s3)";
@@ -794,6 +804,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isEleventhFiveNational = isEleventhsouthafrica || isEleventhsouthkorea || isEleventhsouthsudan || isEleventhspain || isEleventhsrilanka;
     const isTwelfthFiveNational = isTwelfthsudan || isTwelfthsuriname || isTwelfthsweden || isTwelfthswitzerland || isTwelfthsyria;
     const isThirteenthFiveNational = isThirteenthtajikistan || isThirteenthtanzania || isThirteenththailand || isThirteenthtimorleste || isThirteenthtogo;
+    const isFourteenthFiveNational = isFourteenthbenin || isFourteenthcambodia || isFourteenthchina || isFourteenthindonesia || isFourteenthjapan;
     const isEthiopiaMoE = selectedCountry === "ethiopia" && selectedCurriculum === "ethiopia ministry of education curriculum / ethiopian general school leaving examination";
     const isEritreaMoE = selectedCountry === "eritrea" && selectedCurriculum === "eritrea ministry of education national curriculum / secondary education certificate examination (esece)";
     if (isKenyaCbc) {
@@ -869,6 +880,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     if (isThirteenththailand) { const gradeBank = window.CBENexusThirteenthFiveBanks && window.CBENexusThirteenthFiveBanks["Thailand"] && window.CBENexusThirteenthFiveBanks["Thailand"].banks && window.CBENexusThirteenthFiveBanks["Thailand"].banks[selectedGrade] && window.CBENexusThirteenthFiveBanks["Thailand"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     if (isThirteenthtimorleste) { const gradeBank = window.CBENexusThirteenthFiveBanks && window.CBENexusThirteenthFiveBanks["Timor-Leste"] && window.CBENexusThirteenthFiveBanks["Timor-Leste"].banks && window.CBENexusThirteenthFiveBanks["Timor-Leste"].banks[selectedGrade] && window.CBENexusThirteenthFiveBanks["Timor-Leste"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     if (isThirteenthtogo) { const gradeBank = window.CBENexusThirteenthFiveBanks && window.CBENexusThirteenthFiveBanks["Togo"] && window.CBENexusThirteenthFiveBanks["Togo"].banks && window.CBENexusThirteenthFiveBanks["Togo"].banks[selectedGrade] && window.CBENexusThirteenthFiveBanks["Togo"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isFourteenthbenin) { const gradeBank = window.CBENexusFourteenthFiveBanks && window.CBENexusFourteenthFiveBanks["Benin"] && window.CBENexusFourteenthFiveBanks["Benin"].banks && window.CBENexusFourteenthFiveBanks["Benin"].banks[selectedGrade] && window.CBENexusFourteenthFiveBanks["Benin"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isFourteenthcambodia) { const gradeBank = window.CBENexusFourteenthFiveBanks && window.CBENexusFourteenthFiveBanks["Cambodia"] && window.CBENexusFourteenthFiveBanks["Cambodia"].banks && window.CBENexusFourteenthFiveBanks["Cambodia"].banks[selectedGrade] && window.CBENexusFourteenthFiveBanks["Cambodia"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isFourteenthchina) { const gradeBank = window.CBENexusFourteenthFiveBanks && window.CBENexusFourteenthFiveBanks["China"] && window.CBENexusFourteenthFiveBanks["China"].banks && window.CBENexusFourteenthFiveBanks["China"].banks[selectedGrade] && window.CBENexusFourteenthFiveBanks["China"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isFourteenthindonesia) { const gradeBank = window.CBENexusFourteenthFiveBanks && window.CBENexusFourteenthFiveBanks["Indonesia"] && window.CBENexusFourteenthFiveBanks["Indonesia"].banks && window.CBENexusFourteenthFiveBanks["Indonesia"].banks[selectedGrade] && window.CBENexusFourteenthFiveBanks["Indonesia"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
+    if (isFourteenthjapan) { const gradeBank = window.CBENexusFourteenthFiveBanks && window.CBENexusFourteenthFiveBanks["Japan"] && window.CBENexusFourteenthFiveBanks["Japan"].banks && window.CBENexusFourteenthFiveBanks["Japan"].banks[selectedGrade] && window.CBENexusFourteenthFiveBanks["Japan"].banks[selectedGrade][selectedSubject]; return Array.isArray(gradeBank) ? gradeBank.slice() : []; }
     return [];
   }
 
@@ -1185,6 +1201,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isThirteenththailand = selectedCountry.toLowerCase() === "thailand" && selectedCurriculum.toLowerCase() === "thailand basic education core curriculum b.e. 2551 (2008), revised 2017 / matthayom 3";
     const isThirteenthtimorleste = selectedCountry.toLowerCase() === "timor-leste" && selectedCurriculum.toLowerCase() === "timor-leste national basic education curriculum / third cycle / grade 9 (2024 revised framework)";
     const isThirteenthtogo = selectedCountry.toLowerCase() === "togo" && selectedCurriculum.toLowerCase() === "togo national curriculum / collège / classe de troisième (3e)";
+    const isFourteenthbenin = selectedCountry.toLowerCase() === "benin" && selectedCurriculum.toLowerCase() === "benin national curriculum / enseignement secondaire général / classe de troisième (3e)";
+    const isFourteenthcambodia = selectedCountry.toLowerCase() === "cambodia" && selectedCurriculum.toLowerCase() === "cambodia moeys general education curriculum framework / lower secondary / grade 9";
+    const isFourteenthchina = selectedCountry.toLowerCase() === "china" && selectedCurriculum.toLowerCase() === "china ministry of education compulsory education curriculum standards (2022) / grade 9";
+    const isFourteenthindonesia = selectedCountry.toLowerCase() === "indonesia" && selectedCurriculum.toLowerCase() === "indonesia national curriculum / grade ix (kelas ix) / kurikulum merdeka and transition provisions";
+    const isFourteenthjapan = selectedCountry.toLowerCase() === "japan" && selectedCurriculum.toLowerCase() === "japan mext courses of study / lower secondary school / year 3 (grade 9)";
     const isNinthsenegal = selectedCountry.toLowerCase() === "senegal" && selectedCurriculum.toLowerCase() === "senegal national curriculum / collège / troisième (3e)";
     const isNinthserbia = selectedCountry.toLowerCase() === "serbia" && selectedCurriculum.toLowerCase() === "serbia national curriculum / primary education / grade 8";
     const isNinthseychelles = selectedCountry.toLowerCase() === "seychelles" && selectedCurriculum.toLowerCase() === "seychelles national curriculum framework / secondary 3 (s3)";
@@ -1262,6 +1283,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const subjectsThirteenththailand = isThirteenththailand && window.CBENexusThirteenthFiveBanks && window.CBENexusThirteenthFiveBanks["Thailand"] && window.CBENexusThirteenthFiveBanks["Thailand"].banks && window.CBENexusThirteenthFiveBanks["Thailand"].banks[grade.value] ? Object.keys(window.CBENexusThirteenthFiveBanks["Thailand"].banks[grade.value]) : [];
     const subjectsThirteenthtimorleste = isThirteenthtimorleste && window.CBENexusThirteenthFiveBanks && window.CBENexusThirteenthFiveBanks["Timor-Leste"] && window.CBENexusThirteenthFiveBanks["Timor-Leste"].banks && window.CBENexusThirteenthFiveBanks["Timor-Leste"].banks[grade.value] ? Object.keys(window.CBENexusThirteenthFiveBanks["Timor-Leste"].banks[grade.value]) : [];
     const subjectsThirteenthtogo = isThirteenthtogo && window.CBENexusThirteenthFiveBanks && window.CBENexusThirteenthFiveBanks["Togo"] && window.CBENexusThirteenthFiveBanks["Togo"].banks && window.CBENexusThirteenthFiveBanks["Togo"].banks[grade.value] ? Object.keys(window.CBENexusThirteenthFiveBanks["Togo"].banks[grade.value]) : [];
+    const subjectsFourteenthbenin = isFourteenthbenin && window.CBENexusFourteenthFiveBanks && window.CBENexusFourteenthFiveBanks["Benin"] && window.CBENexusFourteenthFiveBanks["Benin"].banks && window.CBENexusFourteenthFiveBanks["Benin"].banks[grade.value] ? Object.keys(window.CBENexusFourteenthFiveBanks["Benin"].banks[grade.value]) : [];
+    const subjectsFourteenthcambodia = isFourteenthcambodia && window.CBENexusFourteenthFiveBanks && window.CBENexusFourteenthFiveBanks["Cambodia"] && window.CBENexusFourteenthFiveBanks["Cambodia"].banks && window.CBENexusFourteenthFiveBanks["Cambodia"].banks[grade.value] ? Object.keys(window.CBENexusFourteenthFiveBanks["Cambodia"].banks[grade.value]) : [];
+    const subjectsFourteenthchina = isFourteenthchina && window.CBENexusFourteenthFiveBanks && window.CBENexusFourteenthFiveBanks["China"] && window.CBENexusFourteenthFiveBanks["China"].banks && window.CBENexusFourteenthFiveBanks["China"].banks[grade.value] ? Object.keys(window.CBENexusFourteenthFiveBanks["China"].banks[grade.value]) : [];
+    const subjectsFourteenthindonesia = isFourteenthindonesia && window.CBENexusFourteenthFiveBanks && window.CBENexusFourteenthFiveBanks["Indonesia"] && window.CBENexusFourteenthFiveBanks["Indonesia"].banks && window.CBENexusFourteenthFiveBanks["Indonesia"].banks[grade.value] ? Object.keys(window.CBENexusFourteenthFiveBanks["Indonesia"].banks[grade.value]) : [];
+    const subjectsFourteenthjapan = isFourteenthjapan && window.CBENexusFourteenthFiveBanks && window.CBENexusFourteenthFiveBanks["Japan"] && window.CBENexusFourteenthFiveBanks["Japan"].banks && window.CBENexusFourteenthFiveBanks["Japan"].banks[grade.value] ? Object.keys(window.CBENexusFourteenthFiveBanks["Japan"].banks[grade.value]) : [];
     let baseList = isKenyaCbc ? subjectsForGrade(grade.value) : (isNigeriaNERDC ? nigeriaSubjects : (isTanzaniaTIE ? tanzaniaSubjects : (isEstoniaNational ? estoniaSubjects : (isLatviaNational ? latviaSubjects : (isLithuaniaNational ? lithuaniaSubjects : (isLuxembourgESC ? luxembourgSubjects : (isMaltaNational ? maltaSubjects : (isMauritaniaNational ? subjectsMauritania : (isMexicoNational ? subjectsMexico : (isMicronesiaNational ? subjectsMicronesia : (isMoldovaNational ? subjectsMoldova : (ismarshallislandsNational ? subjectsmarshallislands : (ismongoliaNational ? subjectsmongolia : (ismontenegroNational ? subjectsmontenegro : (ismoroccoNational ? subjectsmorocco : (ismozambiqueNational ? subjectsmozambique : (ismyanmarNational ? subjectsmyanmar : (isnamibiaNational ? subjectsnamibia : (isnauruNational ? subjectsnauru : (isnepalNational ? subjectsnepal : (isnetherlandsNational ? subjectsnetherlands : (isnewzealandNational ? subjectsnewzealand : (isnicaraguaNational ? subjectsnicaragua : (isnigerNational ? subjectsniger : (isnorthkoreaNational ? subjectsnorthkorea : (isnorthmacedoniaNational ? subjectsnorthmacedonia : (isMonacoNational ? subjectsMonaco : mauritiusSubjects)))))))))))))))))))))))))));
     if (ispapuanewguineaNational) baseList = subjectspapuanewguinea;
     if (isparaguayNational) baseList = subjectsparaguay;
@@ -1308,6 +1334,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     if (isThirteenththailand) baseList = subjectsThirteenththailand;
     if (isThirteenthtimorleste) baseList = subjectsThirteenthtimorleste;
     if (isThirteenthtogo) baseList = subjectsThirteenthtogo;
+    if (isFourteenthbenin) baseList = subjectsFourteenthbenin;
+    if (isFourteenthcambodia) baseList = subjectsFourteenthcambodia;
+    if (isFourteenthchina) baseList = subjectsFourteenthchina;
+    if (isFourteenthindonesia) baseList = subjectsFourteenthindonesia;
+    if (isFourteenthjapan) baseList = subjectsFourteenthjapan;
     // Include every subject that has published Admin Dashboard questions for this grade.
     // This changes only discoverability/filtering; saved question text and answers are untouched.
     const adminSubjects = (Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [])
@@ -1432,6 +1463,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isThirteenththailand = selectedCountry.toLowerCase() === "thailand" && selectedCurriculum.toLowerCase() === "thailand basic education core curriculum b.e. 2551 (2008), revised 2017 / matthayom 3";
     const isThirteenthtimorleste = selectedCountry.toLowerCase() === "timor-leste" && selectedCurriculum.toLowerCase() === "timor-leste national basic education curriculum / third cycle / grade 9 (2024 revised framework)";
     const isThirteenthtogo = selectedCountry.toLowerCase() === "togo" && selectedCurriculum.toLowerCase() === "togo national curriculum / collège / classe de troisième (3e)";
+    const isFourteenthbenin = selectedCountry.toLowerCase() === "benin" && selectedCurriculum.toLowerCase() === "benin national curriculum / enseignement secondaire général / classe de troisième (3e)";
+    const isFourteenthcambodia = selectedCountry.toLowerCase() === "cambodia" && selectedCurriculum.toLowerCase() === "cambodia moeys general education curriculum framework / lower secondary / grade 9";
+    const isFourteenthchina = selectedCountry.toLowerCase() === "china" && selectedCurriculum.toLowerCase() === "china ministry of education compulsory education curriculum standards (2022) / grade 9";
+    const isFourteenthindonesia = selectedCountry.toLowerCase() === "indonesia" && selectedCurriculum.toLowerCase() === "indonesia national curriculum / grade ix (kelas ix) / kurikulum merdeka and transition provisions";
+    const isFourteenthjapan = selectedCountry.toLowerCase() === "japan" && selectedCurriculum.toLowerCase() === "japan mext courses of study / lower secondary school / year 3 (grade 9)";
     const isNinthsenegal = selectedCountry.toLowerCase() === "senegal" && selectedCurriculum.toLowerCase() === "senegal national curriculum / collège / troisième (3e)";
     const isNinthserbia = selectedCountry.toLowerCase() === "serbia" && selectedCurriculum.toLowerCase() === "serbia national curriculum / primary education / grade 8";
     const isNinthseychelles = selectedCountry.toLowerCase() === "seychelles" && selectedCurriculum.toLowerCase() === "seychelles national curriculum framework / secondary 3 (s3)";
