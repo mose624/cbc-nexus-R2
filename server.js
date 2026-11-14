@@ -2939,9 +2939,12 @@ async function serveStatic(req,res,url){
       : "Global Schools Directory by Country | CBE Nexus";
     if(title.length>78&&country)title=country.name+(titleExamNames?" National Exams & Study Resources | CBE Nexus":" Education, Curriculum & Schools | CBE Nexus");
     const examSnippet=examNames.slice(0,3).join(", ");
-    const description=country
-      ? ("Explore "+country.name+(curriculumName?" "+curriculumName+" curriculum,":" education system,")+(examNames.length?" "+examNames.slice(0,3).join(", ")+" examinations,":" national examinations,")+" school directories, study notes and learning resources. Confirm current details with "+(authorityName||"official education authorities")+".").slice(0,300)
-      : "Explore school directories, education systems, national examinations, curricula and online learning resources for countries worldwide on CBE Nexus.";
+    const rawDescription=country
+      ? ("Explore "+country.name+(curriculumName?" "+curriculumName+" curriculum,":" education system,")+(examNames.length?" "+examNames.slice(0,3).join(", ")+" examinations,":" national examinations,")+" school directories, study notes and learning resources. Confirm current details with "+(authorityName||"official education authorities")+".")
+      : "Explore school directories, education systems, national examinations, curricula and online learning resources for countries worldwide on CBE Nexus."; 
+    const description=rawDescription.length>158
+      ? rawDescription.slice(0,157).replace(/\s+\S*$/, "").replace(/[,:;—-]+$/, "")+"…"
+      : rawDescription;
     const escapeHtml=value=>String(value??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
     html=html.replace(/<title>[\s\S]*?<\/title>/i,"<title>"+escapeSeoAttribute(title)+"</title>");
     html=html.replace(/<meta name="description" content="[^"]*">/i,'<meta name="description" content="'+escapeSeoAttribute(description.slice(0,300))+'">');
