@@ -599,16 +599,19 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
   }
 
   function getAvailableQuestions(selectedGrade, selectedSubject) {
-    const isKenyaCbc = String(country && country.value || "Kenya").trim().toLowerCase() === "kenya" && String(curriculum && curriculum.value || "Kenya CBC/CBE").trim().toLowerCase() === "kenya cbc/cbe";
-    if (!isKenyaCbc) return [];
-    const gradeBank = window.CBENexusCBCBanks &&
-      window.CBENexusCBCBanks.banks &&
-      window.CBENexusCBCBanks.banks[selectedGrade] &&
-      window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject];
-
-    // Use only the selected Grade + Subject bank. KICD strand/sub-strand
-    // options are supplied by the curriculum map in assessment-cbc-banks.js.
-    return Array.isArray(gradeBank) ? gradeBank.slice() : [];
+    const selectedCountry = String(country && country.value || "Kenya").trim().toLowerCase();
+    const selectedCurriculum = String(curriculum && curriculum.value || "Kenya CBC/CBE").trim().toLowerCase();
+    const isKenyaCbc = selectedCountry === "kenya" && selectedCurriculum === "kenya cbc/cbe";
+    const isUgandaNcdc = selectedCountry === "uganda" && selectedCurriculum === "uganda ncdc curriculum / uneb";
+    if (isKenyaCbc) {
+      const gradeBank = window.CBENexusCBCBanks && window.CBENexusCBCBanks.banks && window.CBENexusCBCBanks.banks[selectedGrade] && window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject];
+      return Array.isArray(gradeBank) ? gradeBank.slice() : [];
+    }
+    if (isUgandaNcdc) {
+      const gradeBank = window.CBENexusUgandaBanks && window.CBENexusUgandaBanks.banks && window.CBENexusUgandaBanks.banks[selectedGrade] && window.CBENexusUgandaBanks.banks[selectedGrade][selectedSubject];
+      return Array.isArray(gradeBank) ? gradeBank.slice() : [];
+    }
+    return [];
   }
 
   function getCurriculumItems(selectedGrade, selectedSubject) {
@@ -856,8 +859,12 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const current = subject.value;
     const gradeNumber = (value) => String(value == null ? "" : value).toLowerCase().replace(/[^a-z0-9]/g, "");
     const normalizeSubject = (value) => String(value || "").toLowerCase().replace(/[^a-z0-9]/g, "");
-    const isKenyaCbc = String(country && country.value || "Kenya").trim().toLowerCase() === "kenya" && String(curriculum && curriculum.value || "Kenya CBC/CBE").trim().toLowerCase() === "kenya cbc/cbe";
-    const baseList = isKenyaCbc ? subjectsForGrade(grade.value) : [];
+    const selectedCountry = String(country && country.value || "Kenya").trim().toLowerCase();
+    const selectedCurriculum = String(curriculum && curriculum.value || "Kenya CBC/CBE").trim().toLowerCase();
+    const isKenyaCbc = selectedCountry === "kenya" && selectedCurriculum === "kenya cbc/cbe";
+    const isUgandaNcdc = selectedCountry === "uganda" && selectedCurriculum === "uganda ncdc curriculum / uneb";
+    const ugandaSubjects = isUgandaNcdc && window.CBENexusUgandaBanks && window.CBENexusUgandaBanks.banks && window.CBENexusUgandaBanks.banks[grade.value] ? Object.keys(window.CBENexusUgandaBanks.banks[grade.value]) : [];
+    const baseList = isKenyaCbc ? subjectsForGrade(grade.value) : ugandaSubjects;
     // Include every subject that has published Admin Dashboard questions for this grade.
     // This changes only discoverability/filtering; saved question text and answers are untouched.
     const adminSubjects = (Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [])
@@ -916,10 +923,12 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const normalizeSubject = (value) => String(value || "").toLowerCase().replace(/[^a-z0-9]/g, "");
     const selectedCountry = String(country && country.value || "Kenya").trim();
     const selectedCurriculum = String(curriculum && curriculum.value || "Kenya CBC/CBE").trim();
-    const gradeBank = selectedCountry.toLowerCase() === "kenya" && selectedCurriculum.toLowerCase() === "kenya cbc/cbe" && window.CBENexusCBCBanks &&
-      window.CBENexusCBCBanks.banks &&
-      window.CBENexusCBCBanks.banks[selectedGrade] &&
-      window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject];
+    const isKenyaCbc = selectedCountry.toLowerCase() === "kenya" && selectedCurriculum.toLowerCase() === "kenya cbc/cbe";
+    const isUgandaNcdc = selectedCountry.toLowerCase() === "uganda" && selectedCurriculum.toLowerCase() === "uganda ncdc curriculum / uneb";
+    const gradeBank = isKenyaCbc && window.CBENexusCBCBanks &&
+      window.CBENexusCBCBanks.banks && window.CBENexusCBCBanks.banks[selectedGrade] && window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject] ||
+      isUgandaNcdc && window.CBENexusUgandaBanks &&
+      window.CBENexusUgandaBanks.banks && window.CBENexusUgandaBanks.banks[selectedGrade] && window.CBENexusUgandaBanks.banks[selectedGrade][selectedSubject];
 
     const adminQuestions = Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [];
     const publishedSource = adminQuestions.filter((item) =>
