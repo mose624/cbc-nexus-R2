@@ -77,6 +77,20 @@ Object.assign(d,{
    {"question":"Does Guatemala provide multilingual education?","answer":"Yes. Intercultural bilingual education recognises Indigenous languages and the country's cultural and linguistic diversity."}
   ]
  }
+ "kosovo":{
+  "seoHeading":"Kosovo Education System, Curriculum, National Matura & School Resources",
+  "seoTitle":"Kosovo Education System, Curriculum, Matura & Learning Resources | CBE Nexus",
+  "seoDescription":"Explore Kosovo's education system, curriculum framework, national Matura assessment, school pathways, teaching opportunities and learning resources.",
+  "seoIntro":"Kosovo's education system is overseen by the Ministry of Education, Science, Technology and Innovation. The system includes pre-university education and higher education, with curriculum frameworks and subject curricula guiding learning outcomes. Albanian and Serbian are used in education according to community and school context, and other recognised community languages may be supported. The State Matura examination is an important upper-secondary assessment pathway. Learners should check current ministry guidance and school-specific language arrangements when selecting notes, revision materials and examination preparation.",
+  "seoTopics":["Kosovo Ministry of Education curriculum framework","Kosovo State Matura examination guidance","Kosovo primary lower secondary and upper secondary education","Kosovo Albanian and Serbian language education","Kosovo school resources and teacher recruitment"],
+  "seoFaqs":[
+   {"question":"Which authority oversees education in Kosovo?","answer":"The Ministry of Education, Science, Technology and Innovation is the central public authority responsible for education policy and curriculum frameworks."},
+   {"question":"What is the State Matura in Kosovo?","answer":"The State Matura is an upper-secondary examination pathway. Candidates should confirm current subjects, eligibility, registration and schedules with the responsible authority."},
+   {"question":"Which languages are used in Kosovo schools?","answer":"Albanian and Serbian are used in education according to community and school context, with provision for other recognised community languages."},
+   {"question":"Where can learners find Kosovo curriculum resources?","answer":"Use the curriculum and revision links on the country page, and compare topic coverage with current official curriculum documents and school guidance."},
+   {"question":"Can teachers find opportunities in Kosovo?","answer":"Teachers can explore local and international vacancies, but should verify employer requirements, qualifications, language expectations and work authorisation directly."}
+  ]
+ }
 });
 window.CBE_COUNTRY_SEO_191_196=true;
 })();

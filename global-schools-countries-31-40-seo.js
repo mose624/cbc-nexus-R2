@@ -169,34 +169,6 @@
       }
     ]
   },
-  "republic-of-the-congo": {
-    "seoHeading": "Republic of the Congo Education, CEPE, BEPC & Baccalauréat",
-    "seoTitle": "Republic of the Congo Education, CEPE, BEPC & Baccalauréat | CBE Nexus",
-    "seoDescription": "Congo-Brazzaville school pathways, CEPE, BEPC and Baccalauréat examinations and French-language curriculum resources.",
-    "seoIntro": "The Republic of the Congo (Congo-Brazzaville) has a school pathway from primary education to collège and lycée, with technical and vocational options. National examinations include the CEPE, BEPC and Baccalauréat. French is the principal language of formal education, alongside national languages used in daily life.",
-    "seoTopics": [
-      "Republic of the Congo Education, CEPE, BEPC & Baccalauréat",
-      "republic of the congo curriculum",
-      "CEPE at primary completion",
-      "BEPC at lower-secondary completion",
-      "Baccalauréat at upper-secondary level",
-      "French learning resources"
-    ],
-    "seoFaqs": [
-      {
-        "question": "What are the main school examinations?",
-        "answer": "Key examinations include the CEPE at primary completion, the BEPC at the end of lower secondary and the Baccalauréat at upper-secondary level."
-      },
-      {
-        "question": "Is this the same country as DR Congo?",
-        "answer": "No. The Republic of the Congo, with its capital in Brazzaville, is separate from the Democratic Republic of the Congo, whose capital is Kinshasa."
-      },
-      {
-        "question": "Where can teachers find curriculum guidance?",
-        "answer": "Use the ministry responsible for national education and its current curriculum and examination publications."
-      }
-    ]
-  },
   "democratic-republic-of-the-congo": {
     "seoHeading": "DR Congo Education System, TENAFEP, TENASOSP & Examen d'État",
     "seoTitle": "DR Congo Education System, TENAFEP, TENASOSP & Examen d'État | CBE Nexus",

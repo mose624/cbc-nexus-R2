@@ -6,18 +6,6 @@
 "use strict";
 const d=window.CBE_GLOBAL_COUNTRY_DATA;if(!d)return;
 Object.assign(d,{
- "tanzania":{
-  "seoHeading":"Tanzania Education System, National Curriculum & NECTA Examinations",
-  "seoTitle":"Tanzania Education System, TIE Curriculum, NECTA & School Resources | CBE Nexus",
-  "seoDescription":"Explore Tanzania's national curriculum, primary and secondary education pathways, Kiswahili and English learning, and NECTA examinations.",
-  "seoIntro":"Tanzania's education system is guided by the Ministry of Education, Science and Technology and curriculum materials developed by the Tanzania Institute of Education (TIE). The curriculum and language arrangements vary by level and school context: Kiswahili is widely used in public primary education, while English is prominent in secondary education and some other school settings. The National Examinations Council of Tanzania (NECTA) administers national assessments and examinations, including the Primary School Leaving Examination (PSLE), Form Two National Assessment, Certificate of Secondary Education Examination (CSEE) and Advanced Certificate of Secondary Education Examination (ACSEE). Select resources by level, Form or Standard, subject and language of instruction, and check current TIE syllabuses and NECTA formats.",
-  "seoTopics":["Tanzania TIE national curriculum","Tanzania primary education Standard I to VII","Tanzania secondary education Form I to VI","Tanzania NECTA PSLE FTNA CSEE ACSEE examinations","Tanzania Kiswahili and English language of instruction","Tanzania mathematics biology chemistry physics syllabuses"],
-  "seoFaqs":[
-   {"question":"Which authority develops Tanzania's school curriculum?","answer":"The Tanzania Institute of Education develops curriculum frameworks and materials under the Ministry of Education, Science and Technology."},
-   {"question":"Which national examinations does NECTA administer?","answer":"NECTA administers national assessments and examinations including PSLE, Form Two National Assessment, CSEE and ACSEE."},
-   {"question":"Which languages should learning resources use?","answer":"Language depends on the level and school programme. Kiswahili is widely used in public primary education and English is prominent in secondary education; confirm the learner's actual language of instruction."}
-  ]
- },
  "tonga":{
   "seoHeading":"Tonga Education System, National Curriculum Framework & School Certificates",
   "seoTitle":"Tonga Education System, Curriculum, SEE, TFSC & PSSC Resources | CBE Nexus",
@@ -51,18 +39,6 @@ Object.assign(d,{
   "seoFaqs":[
    {"question":"What is the Tuvalu National Curriculum and Policy Framework?","answer":"It is the national framework guiding learning standards, competencies, assessment and reporting from early childhood education through Year 13."},
    {"question":"What themes does Tuvalu's curriculum framework emphasise?","answer":"It highlights cultural identity, inclusive education, sustainability, student competencies and vocational skills."}
-  ]
- },
- "uganda":{
-  "seoHeading":"Uganda Education System, Competence-Based Curriculum & UNEB Examinations",
-  "seoTitle":"Uganda Curriculum, NCDC, UCE, UACE & UNEB Resources | CBE Nexus",
-  "seoDescription":"Explore Uganda's competence-based lower secondary curriculum, NCDC subject syllabuses, UCE and UACE assessment pathways and school resources.",
-  "seoIntro":"Uganda's education system is guided by the Ministry of Education and Sports, with the National Curriculum Development Centre (NCDC) responsible for curriculum development and the Uganda National Examinations Board (UNEB) responsible for national examinations. The revised lower secondary curriculum is competence-based and includes continuous assessment, projects and activities that apply learning to real situations. Lower secondary education leads to the Uganda Certificate of Education (UCE), while the advanced secondary pathway leads to the Uganda Advanced Certificate of Education (UACE). English is widely used as the language of instruction in post-primary education, while local languages have important roles in early learning and community contexts. Choose resources by class, subject, curriculum version and assessment method.",
-  "seoTopics":["Uganda NCDC competence based curriculum","Uganda lower secondary curriculum Senior One to Senior Four","Uganda UCE assessment and UNEB","Uganda UACE advanced secondary education","Uganda continuous assessment and project work","Uganda mathematics physics chemistry biology curriculum"],
-  "seoFaqs":[
-   {"question":"Who develops Uganda's school curriculum?","answer":"The National Curriculum Development Centre develops curriculum frameworks, syllabuses and supporting guidance."},
-   {"question":"What is the focus of Uganda's lower secondary curriculum?","answer":"It is competence-based, emphasising applying knowledge, problem-solving, projects and continuous assessment."},
-   {"question":"Which certificates are associated with secondary education?","answer":"The lower secondary cycle leads to UCE, and the advanced secondary pathway leads to UACE, under current UNEB arrangements."}
   ]
  },
  "ukraine":{

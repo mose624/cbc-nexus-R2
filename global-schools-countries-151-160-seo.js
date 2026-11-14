@@ -29,18 +29,6 @@ Object.assign(d,{
    {"question":"What language is used in Solomon Islands schools?","answer":"English is the formal language of instruction and assessment in many school settings; Pijin and local languages are also important in learners' lives."}
   ]
  },
- "south-africa":{
-  "seoHeading":"South Africa Education System, CAPS Curriculum & National Senior Certificate",
-  "seoTitle":"South Africa CAPS Curriculum, DBE, NSC & School Resources | CBE Nexus",
-  "seoDescription":"Explore South Africa's CAPS curriculum, Foundation to Further Education phases, National Senior Certificate and subject-based study resources.",
-  "seoIntro":"South Africa's basic education system is guided by the Department of Basic Education (DBE). The national Curriculum and Assessment Policy Statements (CAPS) set out subject content and assessment guidance across the Foundation, Intermediate, Senior and Further Education and Training phases. Learners generally complete Grade 12 and may qualify for the National Senior Certificate (NSC), subject to the applicable subject and assessment requirements. Public schooling operates in a multilingual context, with the language of learning and teaching varying by school and phase. Match resources to grade, CAPS subject, assessment format and language of learning and teaching; consult DBE and Umalusi for current policy and certification information.",
-  "seoTopics":["South Africa CAPS curriculum by grade","South Africa DBE curriculum and assessment policy statements","South Africa Foundation Intermediate Senior FET phases","South Africa Grade 12 National Senior Certificate NSC","South Africa school language of learning and teaching","South Africa mathematics physical sciences life sciences accounting resources"],
-  "seoFaqs":[
-   {"question":"What curriculum is used in South African public schools?","answer":"Public schools follow the national curriculum, with subject requirements and assessment guidance set out in Curriculum and Assessment Policy Statements (CAPS)."},
-   {"question":"What is the National Senior Certificate?","answer":"The NSC is the school-leaving certificate generally awarded after successful completion of the Grade 12 assessment requirements."},
-   {"question":"Are South African schools multilingual?","answer":"Yes. South Africa has multiple official languages, and the language of learning and teaching depends on school policy and the relevant education requirements."}
-  ]
- },
  "spain":{
   "seoHeading":"Spain Education System, LOMLOE Curriculum, ESO & Bachillerato",
   "seoTitle":"Spain Education System, LOMLOE, ESO, Bachillerato & EBAU | CBE Nexus",
