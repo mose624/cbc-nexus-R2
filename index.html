@@ -487,35 +487,36 @@
 
 
 <style id="cbe-mobile-navigation-fit-screen">
-/* Compact desktop-style navigation arranged in a screen-fitting grid on phones. */
+/* Nine compact navigation cells: eight menu items plus search, kept on one line. */
 @media screen and (max-width:760px), screen and (max-device-width:760px), screen and (pointer:coarse) and (max-width:1300px) {
   header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav {
-    display:block!important; width:100%!important; max-width:100%!important;
-    min-width:0!important; box-sizing:border-box!important; overflow:visible!important;
-    padding:4px 5px!important;
+    display:grid!important; grid-template-columns:repeat(9,minmax(0,1fr))!important;
+    width:100%!important; max-width:100%!important; min-width:0!important;
+    padding:3px 2px!important; box-sizing:border-box!important; overflow:visible!important;
   }
   header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav > .nav-menu {
-    display:grid!important; grid-template-columns:repeat(3,minmax(0,1fr))!important;
-    grid-auto-flow:row!important; align-items:stretch!important; justify-content:stretch!important;
-    width:100%!important; max-width:100%!important; min-width:0!important;
-    gap:5px!important; margin:0!important; padding:2px!important;
-    overflow:visible!important; box-sizing:border-box!important;
+    display:contents!important;
+  }
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav > .nav-menu > a.nav-link,
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav > .nav-menu > details.nav-dropdown,
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav > .nav-menu > details.nav-dropdown > summary {
+    min-width:0!important; max-width:100%!important; width:100%!important;
+    box-sizing:border-box!important; margin:0!important;
   }
   header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav > .nav-menu > a.nav-link,
   header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav > .nav-menu > details.nav-dropdown > summary {
-    display:flex!important; width:100%!important; min-width:0!important; max-width:100%!important;
-    min-height:34px!important; height:100%!important; box-sizing:border-box!important;
-    align-items:center!important; justify-content:center!important; text-align:center!important;
-    white-space:normal!important; overflow-wrap:anywhere!important; word-break:normal!important;
-    padding:4px 3px!important; margin:0!important; border-radius:10px!important;
-    font-family:Arial,Helvetica,sans-serif!important; font-size:8.5px!important;
-    font-weight:800!important; line-height:1.12!important;
-    border:1px solid #d5e0ea!important; background:#fff!important; color:#123b60!important;
-    box-shadow:0 1px 4px rgba(15,55,90,.10)!important;
+    display:flex!important; min-height:29px!important; height:29px!important;
+    padding:2px 1px!important; align-items:center!important; justify-content:center!important;
+    text-align:center!important; white-space:nowrap!important; overflow:hidden!important;
+    text-overflow:ellipsis!important; overflow-wrap:normal!important;
+    font-family:Arial,Helvetica,sans-serif!important; font-size:clamp(5px,1.65vw,8px)!important;
+    font-weight:800!important; line-height:1!important;
+    border:1px solid #d5e0ea!important; border-radius:6px!important;
+    background:#fff!important; color:#123b60!important;
+    box-shadow:0 1px 3px rgba(15,55,90,.08)!important;
   }
   header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav > .nav-menu > details.nav-dropdown {
-    display:block!important; width:100%!important; min-width:0!important; max-width:100%!important;
-    margin:0!important; position:relative!important;
+    display:block!important; position:relative!important;
   }
   header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav > .nav-menu > details.nav-dropdown > summary {
     list-style:none!important; cursor:pointer!important;
@@ -525,15 +526,17 @@
     background:#08734f!important; color:#fff!important; border-color:#08734f!important;
   }
   header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav .dropdown-panel {
-    position:absolute!important; top:calc(100% + 5px)!important; left:0!important;
-    z-index:10010!important; min-width:190px!important; max-width:88vw!important;
+    position:absolute!important; top:calc(100% + 4px)!important; left:0!important;
+    z-index:10010!important; min-width:170px!important; max-width:88vw!important;
   }
   header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav .cbe-header-search {
-    display:flex!important; width:100%!important; max-width:100%!important; min-width:0!important;
-    margin:5px 0 0!important; box-sizing:border-box!important;
+    display:flex!important; grid-column:auto!important; align-items:center!important;
+    width:100%!important; max-width:100%!important; min-width:0!important;
+    height:29px!important; margin:0!important; padding:1px!important;
+    border:1px solid #d5e0ea!important; border-radius:6px!important; box-sizing:border-box!important;
   }
   header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav .cbe-header-search input {
-    min-width:0!important; width:100%!important; font-size:14px!important;
+    min-width:0!important; width:100%!important; height:22px!important; padding:1px!important; font-size:6px!important;
   }
 }
 </style>
