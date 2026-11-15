@@ -190,7 +190,7 @@
 .site-header .main-nav .international-header-dropdown:not([open])>.dropdown-panel{display:none!important}
 .site-header .main-nav .international-header-dropdown[open]>.dropdown-panel{display:grid!important;position:absolute;top:calc(100% + 5px);left:0;z-index:1201;min-width:230px;max-width:min(300px,90vw);background:#fff;pointer-events:auto}
 .site-header .main-nav .international-header-dropdown>.dropdown-panel>a{display:block;visibility:visible;opacity:1;pointer-events:auto}
-@media(max-width:760px){
+@media (max-width:760px) and (hover:none) and (pointer:coarse){
  /* Mobile navigation scroll/grid containers can clip absolutely-positioned dropdowns.
     Use a fixed, touch-friendly panel so it opens visibly in mobile and desktop-mode browsers. */
  .site-header .main-nav .international-header-dropdown>summary{min-height:32px!important;height:auto!important;touch-action:manipulation;white-space:normal!important}
@@ -1445,7 +1445,7 @@
 <!-- CBE NEXUS HEADER: COMPACT PHONE-ONLY NAVIGATION -->
 <style>
 /* Phone-only compact header controls. Keep labels readable and prevent oversized buttons. */
-@media(max-width:760px){
+@media (max-width:760px) and (hover:none) and (pointer:coarse){
   .site-header .top-strip,
   .site-header .main-nav .nav-menu,
   .site-header .main-nav .nav-actions{
@@ -1535,7 +1535,7 @@
 .cbenexus-search-guide a{color:#9d174d;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;font-weight:600}
 .cbenexus-search-guide a:hover{color:#500724}
 .cbenexus-search-guide h2#about-cbe-nexus{padding-bottom:10px;border-bottom:2px solid #f9a8d4}
-@media(max-width:760px){.cbenexus-search-guide{padding:28px 16px}.cbenexus-search-guide .search-guide-grid{grid-template-columns:1fr}.cbenexus-search-guide .search-guide-card{padding:15px}}
+@media (max-width:760px) and (hover:none) and (pointer:coarse){.cbenexus-search-guide{padding:28px 16px}.cbenexus-search-guide .search-guide-grid{grid-template-columns:1fr}.cbenexus-search-guide .search-guide-card{padding:15px}}
 </style>
 <section class="cbenexus-search-guide" aria-labelledby="about-cbe-nexus">
   <h2 id="about-cbe-nexus">Country-Specific Education Resources and Opportunities</h2>
@@ -1620,7 +1620,7 @@
 
 <!-- CBE NEXUS: polished desktop-style navigation controls -->
 <style id="cbenexus-polished-navigation">
-@media (max-width:760px){
+@media (max-width:760px) and (hover:none) and (pointer:coarse){
   .site-header .main-nav{
     display:flex!important;flex-wrap:nowrap!important;align-items:center!important;
     gap:8px!important;max-width:100%!important;overflow-x:auto!important;
@@ -1693,7 +1693,7 @@
 
 <!-- CBE NEXUS: compact button sizing with complete readable labels -->
 <style id="cbenexus-full-nav-labels">
-@media(max-width:760px){
+@media (max-width:760px) and (hover:none) and (pointer:coarse){
   .site-header .main-nav{
     display:flex!important;flex-wrap:nowrap!important;align-items:center!important;
     gap:5px!important;max-width:100%!important;width:100%!important;
@@ -1745,12 +1745,9 @@
   }
 }
 </style>
-</body>
-</html>
-
 <!-- CBE NEXUS: requested ultra-compact mobile navigation sizing -->
 <style id="cbenexus-mobile-nav-7px-25px">
-@media(max-width:760px){
+@media (max-width:760px) and (hover:none) and (pointer:coarse){
   .site-header .main-nav .nav-link,
   .site-header .main-nav .nav-dropdown>summary,
   .site-header .main-nav .nav-actions a,
@@ -1762,3 +1759,5 @@
   }
 }
 </style>
+</body>
+</html>
