@@ -607,6 +607,99 @@ async function submitSchoolDirectory(payload){
   return {school,vacancy};
 }
 
+
+const EXPLEE_PROJECT_ID = Number(process.env.EXPLEE_PROJECT_ID || 68532);
+const EXPLEE_SYNC_INTERVAL_MS = 10 * 60 * 1000;
+let expleeSyncInProgress = false;
+let expleeSyncTimerStarted = false;
+
+async function syncExpleeHotLeads(){
+  const apiKey=String(process.env.EXPLEE_API_KEY||"").trim();
+  if(!apiKey||!supabaseConfigured)return {ok:false,skipped:true,reason:!apiKey?"EXPLEE_API_KEY is not configured.":"Supabase is not configured."};
+  if(expleeSyncInProgress)return {ok:true,skipped:true,reason:"A sync is already running."};
+  expleeSyncInProgress=true;
+  const stateKey="project-"+EXPLEE_PROJECT_ID+"-agent";
+  try{
+    const {data:state,error:stateReadError}=await supabase.from("explee_hot_lead_sync_state").select("cursor_at").eq("id",stateKey).maybeSingle();
+    if(stateReadError)throw stateReadError;
+    const since=state?.cursor_at||new Date(Date.now()-EXPLEE_SYNC_INTERVAL_MS).toISOString();
+    const all=[];
+    let offset=0;
+    for(let page=0;page<25;page++){
+      const query=new URLSearchParams({project_id:String(EXPLEE_PROJECT_ID),source:"agent",since,limit:"200",offset:String(offset)});
+      const response=await fetch("https://api.explee.com/public/api/v1/autogtm/hot-leads?"+query.toString(),{
+        method:"GET",headers:{"X-API-Key":apiKey,"Accept":"application/json"},signal:AbortSignal.timeout(25000)
+      });
+      const payload=await response.json().catch(()=>({}));
+      if(!response.ok)throw new Error("Explee API returned HTTP "+response.status+": "+String(payload.detail||payload.message||"Request failed").slice(0,500));
+      const leads=Array.isArray(payload.leads)?payload.leads:[];
+      all.push(...leads);
+      if(!payload.has_more||!leads.length)break;
+      offset=Number.isInteger(payload.next_offset)?payload.next_offset:offset+leads.length;
+      if(page===24)throw new Error("Hot-lead feed exceeded the 5,000-record safety page limit; cursor was not advanced.");
+    }
+    const newest=all.reduce((max,lead)=>lead?.became_hot_at&&(!max||Date.parse(lead.became_hot_at)>Date.parse(max))?lead.became_hot_at:max,state?.cursor_at||null);
+    if(all.length){
+      const rows=all.filter(lead=>lead&&lead.person_id).map(lead=>({
+        person_id:String(lead.person_id),campaign_id:Number(lead.campaign_id||0),project_id:EXPLEE_PROJECT_ID,
+        name:lead.erased?null:(lead.name||null),email:lead.erased?null:(lead.email||null),
+        job_title:lead.erased?null:(lead.job_title||null),company_name:lead.erased?null:(lead.company_name||null),
+        company_domain:lead.erased?null:(lead.company_domain||null),linkedin_url:lead.erased?null:(lead.linkedin_url||null),
+        country:lead.erased?null:(lead.country||null),phone:lead.erased?null:(lead.phone||null),
+        why_hot:lead.erased?null:(lead.why_hot||null),became_hot_at:lead.became_hot_at||null,
+        replied_at:lead.replied_at||null,erased:Boolean(lead.erased),raw:lead,updated_at:new Date().toISOString()
+      }));
+      if(rows.length){
+        const {error}=await supabase.from("explee_hot_leads").upsert(rows,{onConflict:"person_id"});
+        if(error)throw error;
+      }
+    }
+    const now=new Date().toISOString();
+    const {error:stateWriteError}=await supabase.from("explee_hot_lead_sync_state").upsert({
+      id:stateKey,cursor_at:newest||state?.cursor_at||since,last_checked_at:now,last_error:null,last_lead_count:all.length
+    },{onConflict:"id"});
+    if(stateWriteError)throw stateWriteError;
+    console.log("Explee hot-lead sync completed:",all.length,"lead record(s).");
+    return {ok:true,count:all.length,cursor:newest||state?.cursor_at||since};
+  }catch(error){
+    console.error("Explee hot-lead sync failed:",error.message||error);
+    try{await supabase.from("explee_hot_lead_sync_state").upsert({
+      id:stateKey,last_checked_at:new Date().toISOString(),last_error:String(error.message||error).slice(0,1000)
+    },{onConflict:"id"});}catch(stateError){console.error("Could not record Explee sync error:",stateError.message||stateError);}
+    return {ok:false,error:String(error.message||error)};
+  }finally{expleeSyncInProgress=false;}
+}
+
+function startExpleeHotLeadSync(){
+  if(expleeSyncTimerStarted)return;
+  expleeSyncTimerStarted=true;
+  if(!String(process.env.EXPLEE_API_KEY||"").trim()){
+    console.log("Explee hot-lead sync is configured in code but waiting for EXPLEE_API_KEY in Render environment variables.");
+    return;
+  }
+  setTimeout(()=>{void syncExpleeHotLeads();},15000).unref?.();
+  setInterval(()=>{void syncExpleeHotLeads();},EXPLEE_SYNC_INTERVAL_MS).unref?.();
+}
+
+
+  if((req.method==="GET"||req.method==="POST")&&url.pathname==="/api/admin/explee-hot-leads"){
+    try{
+      if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Administrator sign-in required."});return true;}
+      if(req.method==="POST"){
+        const result=await syncExpleeHotLeads();
+        if(!result.ok&&!result.skipped){sendJson(res,502,{ok:false,error:result.error||"Hot-lead sync failed."});return true;}
+      }
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Supabase is not configured."});return true;}
+      const stateKey="project-"+EXPLEE_PROJECT_ID+"-agent";
+      const [{data:leads,error:leadsError},{data:syncState,error:syncError}]=await Promise.all([
+        supabase.from("explee_hot_leads").select("person_id,campaign_id,name,email,job_title,company_name,company_domain,linkedin_url,country,phone,why_hot,became_hot_at,replied_at,erased,updated_at").eq("project_id",EXPLEE_PROJECT_ID).order("became_hot_at",{ascending:false}).limit(500),
+        supabase.from("explee_hot_lead_sync_state").select("cursor_at,last_checked_at,last_error,last_lead_count").eq("id",stateKey).maybeSingle()
+      ]);
+      if(leadsError)throw leadsError;if(syncError)throw syncError;
+      sendJson(res,200,{ok:true,leads:leads||[],sync:syncState||null,configured:Boolean(String(process.env.EXPLEE_API_KEY||"").trim())});return true;
+    }catch(error){console.error("Admin Explee hot-lead request failed:",error);sendJson(res,500,{ok:false,error:"Could not load Explee hot leads. Confirm the Explee migration has been applied."});return true;}
+  }
+
 async function handleApi(req,res,url){
   // CBE Nexus Global Online Teaching Marketplace: public approved listings and private applications.
   // Aggregate-only country marketplace counts; never expose learner identities or contact details.
@@ -3206,4 +3299,4 @@ async function seedInteractiveQuestions(){
     console.log("Ensured "+explicit.length+" explicit Grade 10 curriculum questions; added "+additions+" additional starter questions.");
   }catch(error){console.error("Interactive question seed error:",error.message||error);}
 }
-seedInteractiveQuestions().finally(()=>server.listen(PORT,"0.0.0.0",()=>console.log(`CBE website backend running on port ${PORT}`)));
+seedInteractiveQuestions().finally(()=>server.listen(PORT,"0.0.0.0",()=>{console.log(`CBE website backend running on port ${PORT}`);startExpleeHotLeadSync();}));
