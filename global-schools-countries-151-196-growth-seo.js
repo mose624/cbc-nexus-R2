@@ -19,7 +19,7 @@ const $=id=>document.getElementById(id);
 const make=(tag,cls,value)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(value!==undefined)n.textContent=value;return n;};
 function addLink(card,label,url){const a=make("a","cbe-country-growth-link",label+" →");a.href=url;card.append(a);}
 function render(){
- const match=location.pathname.match(/^\\/global-schools\\/([^/]+)\\/?$/);if(!match)return;
+ const match=location.pathname.match(/^\/global-schools\/([^/]+)\/?$/);if(!match)return;
  const slug=decodeURIComponent(match[1]).toLowerCase();if(!targetSlugs.includes(slug))return;
  if(document.getElementById("country-learning-pathways-hub"))return;
  const profile=profiles[slug];if(!profile)return;
@@ -37,7 +37,7 @@ function render(){
   topics.forEach(topic=>topicGrid.append(make("div","cbe-country-topic",topic)));
   topicPanel.append(topicGrid);hub.append(topicPanel);
  }
- const examText=(profile.seoHeading||name+" education pathway").replace(/\\s+/g," ").trim();
+ const examText=(profile.seoHeading||name+" education pathway").replace(/\s+/g," ").trim();
  const services=[
   ["National curriculum notes","Browse online notes and worked examples. Match every resource to the learner's grade, subject, curriculum and language of instruction.","/country-online-notes.html?country="+encodeURIComponent(name)],
   ["Examination revision","Review examination pathways and practice materials. Confirm current syllabus versions, candidate rules and examination dates with the responsible authority.","/resources.html?country="+encodeURIComponent(name)+"&type=past-papers"],
