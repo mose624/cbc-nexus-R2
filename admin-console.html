@@ -1848,6 +1848,7 @@
         const on=tab.getAttribute('data-admin-module')===name;
         tab.classList.toggle('active',on);
         tab.setAttribute('aria-selected',String(on));
+        tab.setAttribute('tabindex',on?'0':'-1');
       });
       panels.forEach(function(panel){
         const on=panel.getAttribute('data-admin-module-panel')===name;
@@ -1874,7 +1875,19 @@
     window.CBENexusOpenAdminModule=openModule;
     tabs.forEach(function(tab){
       tab.onclick=function(e){e.preventDefault();e.stopImmediatePropagation();openModule(tab.getAttribute('data-admin-module'));};
-      tab.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();openModule(tab.getAttribute('data-admin-module'));}};
+      tab.onkeydown=function(e){
+        const index=tabs.indexOf(tab);
+        let next=index;
+        if(e.key==='ArrowRight')next=(index+1)%tabs.length;
+        else if(e.key==='ArrowLeft')next=(index-1+tabs.length)%tabs.length;
+        else if(e.key==='Home')next=0;
+        else if(e.key==='End')next=tabs.length-1;
+        else if(e.key==='Enter'||e.key===' '){e.preventDefault();openModule(tab.getAttribute('data-admin-module'));return;}
+        else return;
+        e.preventDefault();
+        tabs[next].focus();
+        openModule(tabs[next].getAttribute('data-admin-module'));
+      };
     });
     document.addEventListener('click',function(e){
       const tab=e.target.closest('#admin .admin-module-tab[data-admin-module]');
