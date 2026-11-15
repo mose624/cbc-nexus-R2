@@ -195,19 +195,12 @@ function renderCountry(){
  portalNav.classList.add("gs-country-portal-nav");portalNav.setAttribute("aria-label","Country education and career dashboard");portalNav.replaceChildren();
  const countryQuery=encodeURIComponent(c.name);
  const portalItems=[
-  {label:"📘 Notes & Learning Resources",url:"/country-online-notes.html?country="+countryQuery},
-  {label:"💚 Sell Teaching Resources (Earn 70%)",url:"/seller-marketplace.html?country="+countryQuery},
+  {label:"📘 Education Profile",url:"#profile"},
   {label:"🏛️ National Examinations",url:"#exams"},
   {label:"📚 Curriculum & Syllabus",url:"#curriculum"},
-  {label:"📝 Past National Exam Papers",url:"/resources.html?country="+countryQuery+"&type=past-papers"},
-  {label:"🎯 Interactive Questions",url:"/interactive-questions.html?country="+countryQuery},
-  {label:"💼 International & Local Teaching Jobs",url:"#country-teaching-pathways"},
-  {label:"🌍 Online & Remote Teaching",url:"#country-teaching-pathways"},
-  {label:"📜 Teaching Requirements & Certification",url:"#qualification-requirements"},
-  {label:"🌍 Worldwide Teaching Vacancies",url:"/international-teaching-jobs.html"},
-  {label:"🤝 Sponsors & Official Sources",url:"#sources"},
-  {label:"🎓 Scholarships by Country",url:"#further"},
-  {label:"🏫 All Schools",url:"#schools"}
+  {label:"🏫 School Directory",url:"#schools"},
+  {label:"💼 Teaching Opportunities",url:"#country-teaching-pathways"},
+  {label:"🔗 Official Sources",url:"#sources"}
  ];
  portalItems.forEach(item=>{const a=node("a");a.href=item.url;a.textContent=item.label;if(item.url.startsWith("/seller-marketplace.html"))a.classList.add("gs-seller-cta");portalNav.appendChild(a);});
  const portalStyle=node("style");
