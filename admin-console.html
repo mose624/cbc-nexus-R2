@@ -1240,25 +1240,25 @@
           </div>
 
           <div class="admin-module-tabs" role="tablist" aria-label="Admin management modules">
-            <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="resources">Resources <span id="adminResourceBadge">0</span></button>
-            <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="users">Users <span id="adminUserBadge">0</span></button>
-            <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="sales">Sales <span id="adminSalesBadge">0</span></button>
-            <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="cv-writing">CV Writing</button>
-            <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="vacancies">Teaching Jobs</button>
-            <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="higher-education-jobs">🎓 Higher Education Jobs</button>
-          <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="ai-courses">🤖 Free AI Courses</button>
-            <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="scholarships">🎓 Scholarships & Opportunities</button>
-          <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="prices">Prices</button>
-          <button class="admin-module-tab ai-academy-notes-tab" type="button" role="tab" aria-selected="false" data-admin-module="ai-notes">🤖 AI Academy Notes</button>
-          <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="blog">🎓 Education Hub <span id="adminBlogBadge">0</span></button>
-          <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="school-directory">🏫 School Directory</button>
-          <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="analytics">📊 CBE Nexus Analytics</button>
-          <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="seo">SEO Center <span class="admin-seo-badge">Ubersuggest</span></button>
-          <button class="admin-module-tab ad-revenue-tab" type="button" role="tab" aria-selected="false" data-admin-module="ad-revenue">💰 Ad Revenue</button>
-            <button class="admin-module-tab" type="button" role="tab" aria-selected="false" data-admin-module="global-teachers">🌍 Global Teacher Review <span id="globalTeacherBadge">0</span></button>
+            <button id="admin-tab-resources" class="admin-module-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-resources" tabindex="-1" data-admin-module="resources">Resources <span id="adminResourceBadge">0</span></button>
+            <button id="admin-tab-users" class="admin-module-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-users" tabindex="-1" data-admin-module="users">Users <span id="adminUserBadge">0</span></button>
+            <button id="admin-tab-sales" class="admin-module-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-sales" tabindex="-1" data-admin-module="sales">Sales <span id="adminSalesBadge">0</span></button>
+            <button id="admin-tab-cv-writing" class="admin-module-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-cv-writing" tabindex="-1" data-admin-module="cv-writing">CV Writing</button>
+            <button id="admin-tab-vacancies" class="admin-module-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-vacancies" tabindex="-1" data-admin-module="vacancies">Teaching Jobs</button>
+            <button id="admin-tab-higher-education-jobs" class="admin-module-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-higher-education-jobs" tabindex="-1" data-admin-module="higher-education-jobs">🎓 Higher Education Jobs</button>
+          <button id="admin-tab-ai-courses" class="admin-module-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-ai-courses" tabindex="-1" data-admin-module="ai-courses">🤖 Free AI Courses</button>
+            <button id="admin-tab-scholarships" class="admin-module-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-scholarships" tabindex="-1" data-admin-module="scholarships">🎓 Scholarships & Opportunities</button>
+          <button id="admin-tab-prices" class="admin-module-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-prices" tabindex="-1" data-admin-module="prices">Prices</button>
+          <button id="admin-tab-ai-notes" class="admin-module-tab ai-academy-notes-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-ai-notes" tabindex="-1" data-admin-module="ai-notes">🤖 AI Academy Notes</button>
+          <button id="admin-tab-blog" class="admin-module-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-blog" tabindex="-1" data-admin-module="blog">🎓 Education Hub <span id="adminBlogBadge">0</span></button>
+          <button id="admin-tab-school-directory" class="admin-module-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-school-directory" tabindex="-1" data-admin-module="school-directory">🏫 School Directory</button>
+          <button id="admin-tab-analytics" class="admin-module-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-analytics" tabindex="-1" data-admin-module="analytics">📊 CBE Nexus Analytics</button>
+          <button id="admin-tab-seo" class="admin-module-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-seo" tabindex="-1" data-admin-module="seo">SEO Center <span class="admin-seo-badge">Ubersuggest</span></button>
+          <button id="admin-tab-ad-revenue" class="admin-module-tab ad-revenue-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-ad-revenue" tabindex="-1" data-admin-module="ad-revenue">💰 Ad Revenue</button>
+            <button id="admin-tab-global-teachers" class="admin-module-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-global-teachers" tabindex="-1" data-admin-module="global-teachers">🌍 Global Teacher Review <span id="globalTeacherBadge">0</span></button>
           </div>
           <a class="admin-module-tab" href="/admin-assessment-records.html" style="display:inline-flex;align-items:center;text-decoration:none;background:#0284c7!important;color:#fff!important">📋 Learner Assessment Records</a>
-          <div class="admin-module-panel" data-admin-module-panel="global-teachers" hidden>
+          <div id="admin-panel-global-teachers" class="admin-module-panel" role="tabpanel" tabindex="0" aria-labelledby="admin-tab-global-teachers" data-admin-module-panel="global-teachers" hidden>
             <div class="admin-module-heading">
               <div><p class="eyebrow">GLOBAL ONLINE TEACHING MARKETPLACE</p><h3>🌍 Global Teacher Applications</h3><span>Review applicants, check payment status, and control which teacher profiles appear in the public directory.</span></div>
               <button id="globalTeacherRefresh" type="button" class="secondary-button">↻ Refresh applications</button>
@@ -1271,7 +1271,7 @@
             <div id="globalTeacherAdminList" style="display:grid;gap:14px"><p>Open this tab or press Refresh applications to load applications.</p></div>
           </div>
 
-          <div class="admin-module-panel" data-admin-module-panel="analytics">
+          <div id="admin-panel-analytics" class="admin-module-panel" role="tabpanel" tabindex="0" aria-labelledby="admin-tab-analytics" data-admin-module-panel="analytics">
             <div class="admin-module-heading">
               <div><p class="eyebrow">CBE NEXUS ADMIN</p><h3>📊 CBE Nexus Analytics</h3><span>One central analytics page for understanding visitors, engagement, resources, sales and customer behaviour.</span></div>
               <span class="admin-module-summary">Live tracking</span>
@@ -1307,7 +1307,7 @@
             </div>
           </div>
 
-          <div class="admin-module-panel" data-admin-module-panel="ad-revenue">
+          <div id="admin-panel-ad-revenue" class="admin-module-panel" role="tabpanel" tabindex="0" aria-labelledby="admin-tab-ad-revenue" data-admin-module-panel="ad-revenue">
             <div class="admin-module-heading">
               <div><p class="eyebrow">CBE NEXUS MONETIZATION</p><h3>💰 Ad Revenue Dashboard</h3><span>Live advertising performance from GA4. No sample figures are shown as real earnings.</span></div>
               <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span id="arStatus" class="admin-module-summary">Checking…</span><button id="arRefresh" type="button" class="secondary-button">↻ Refresh</button></div>
@@ -1340,7 +1340,7 @@
             <div id="adminResourceManagement" class="admin-management-list"></div>
           </div>
 
-          <div class="admin-module-panel" data-admin-module-panel="users">
+          <div id="admin-panel-users" class="admin-module-panel" role="tabpanel" tabindex="0" aria-labelledby="admin-tab-users" data-admin-module-panel="users">
             <div class="admin-module-heading">
               <div><h3>User management</h3><span>Control customer account access.</span></div>
               <span id="adminUserSummary" class="admin-module-summary"></span>
@@ -1348,14 +1348,14 @@
             <div id="adminUserManagement" class="admin-management-list"></div>
           </div>
 
-          <div class="admin-module-panel" data-admin-module-panel="sales">
+          <div id="admin-panel-sales" class="admin-module-panel" role="tabpanel" tabindex="0" aria-labelledby="admin-tab-sales" data-admin-module-panel="sales">
             <div class="admin-module-heading">
               <div><h3>Sales overview</h3><span>Completed marketplace transactions.</span></div>
               <span id="adminSalesSummary" class="admin-module-summary"></span>
             </div>
             <div id="adminSalesManagement" class="admin-management-list"></div>
           </div>
-          <div class="admin-module-panel" data-admin-module-panel="ai-notes">
+          <div id="admin-panel-ai-notes" class="admin-module-panel" role="tabpanel" tabindex="0" aria-labelledby="admin-tab-ai-notes" data-admin-module-panel="ai-notes">
   <div class="admin-module-heading"><div><h3>🤖 AI Academy Notes Publisher</h3><span>Create, edit, preview and publish comprehensive notes for any of the 23 AI courses.</span></div><span id="aiNotesAdminSummary" class="admin-module-summary"></span></div>
   <div class="ai-academy-integrations" id="aiAcademyIntegrationStatus">
   <div class="integration-card"><strong>🐙 GitHub</strong><span id="aiGithubStatus">Connected source</span><small>main → Render auto-deploy</small></div>
@@ -1391,7 +1391,7 @@
     <div id="aiNotesAdminList" class="admin-management-list"><div class="admin-management-card">Loading published notes...</div></div>
   </div>
 </div>
-<div class="admin-module-panel" data-admin-module-panel="blog">
+<div id="admin-panel-blog" class="admin-module-panel" role="tabpanel" tabindex="0" aria-labelledby="admin-tab-blog" data-admin-module-panel="blog">
   <div class="admin-module-heading">
     <div><h3>🎓 CBE Nexus Education Hub Publishing Centre</h3><span>Create, edit, add featured images, optimize SEO, save drafts and publish education guides directly to the public Education Hub.</span></div>
     <span id="adminBlogSummary" class="admin-module-summary">0 articles</span>
@@ -1438,7 +1438,7 @@
     </div>
   </div>
 </div>
-<div class="admin-module-panel" data-admin-module-panel="seo">
+<div id="admin-panel-seo" class="admin-module-panel" role="tabpanel" tabindex="0" aria-labelledby="admin-tab-seo" data-admin-module-panel="seo">
             <div class="admin-module-heading">
               <div><h3>SEO Center</h3><span>CEO-only SEO workspace for CBE Nexus. Use Ubersuggest for keyword research, competitor analysis, site audits and content opportunities.</span></div>
               <span class="admin-module-summary">CEO</span>
@@ -1474,7 +1474,7 @@
             <div class="admin-seo-note"><strong>Important:</strong> This dashboard does not store or expose an Ubersuggest password/API credential. Ubersuggest is opened securely in its own account session. If Ubersuggest provides an approved API for your plan in future, we can replace these launch links with server-side API data.</div>
           </div>
 
-          <div class="admin-module-panel" data-admin-module-panel="scholarships">
+          <div id="admin-panel-scholarships" class="admin-module-panel" role="tabpanel" tabindex="0" aria-labelledby="admin-tab-scholarships" data-admin-module-panel="scholarships">
             <div class="admin-management-card admin-opportunities-card">
               <div class="admin-management-heading"><div><p class="eyebrow">Opportunities</p><h3>Scholarships & Opportunities</h3><p>Add, edit, publish and remove scholarships, fellowships, grants, internships and other opportunities.</p></div><span id="adminOpportunitySummary" class="admin-module-summary"></span></div>
               <form id="adminOpportunityForm" class="admin-form feature-form">
@@ -1492,7 +1492,7 @@
             </div>
           </div>
 
-          <div class="admin-module-panel" data-admin-module-panel="prices">
+          <div id="admin-panel-prices" class="admin-module-panel" role="tabpanel" tabindex="0" aria-labelledby="admin-tab-prices" data-admin-module-panel="prices">
             <div class="admin-module-heading">
               <div><h3>Price management</h3><span>Review the current marketplace pricing configuration.</span></div>
               <span class="admin-module-summary">KES</span>
@@ -1500,7 +1500,7 @@
             <div id="adminPriceManagement" class="admin-management-list"></div>
           </div>
 
-          <div class="admin-module-panel" data-admin-module-panel="cv-writing">
+          <div id="admin-panel-cv-writing" class="admin-module-panel" role="tabpanel" tabindex="0" aria-labelledby="admin-tab-cv-writing" data-admin-module-panel="cv-writing">
             <div class="admin-module-heading">
               <div><h3>Professional CV Writing</h3><span>Manage and access the international CV service from one place.</span></div>
               <span class="admin-module-summary">SERVICE</span>
@@ -1516,7 +1516,7 @@
             </div>
           </div>
 
-          <div class="admin-module-panel" data-admin-module-panel="ai-courses">
+          <div id="admin-panel-ai-courses" class="admin-module-panel" role="tabpanel" tabindex="0" aria-labelledby="admin-tab-ai-courses" data-admin-module-panel="ai-courses">
             <div class="admin-management-card admin-ai-courses-card">
               <div class="admin-management-heading">
                 <div><p class="eyebrow">AI Academy</p><h3>Free AI Courses</h3><p>Add, edit, publish and share free AI courses. Courses published here appear automatically on the public AI Academy page.</p></div>
@@ -1550,7 +1550,7 @@
             </div>
           </div>
 
-          <div class="admin-module-panel" data-admin-module-panel="school-directory">
+          <div id="admin-panel-school-directory" class="admin-module-panel" role="tabpanel" tabindex="0" aria-labelledby="admin-tab-school-directory" data-admin-module-panel="school-directory">
             <div class="admin-management-card school-directory-admin-card">
               <div class="admin-management-heading"><div><p class="eyebrow">School marketplace moderation</p><h3>🏫 School Directory & Vacancies</h3><p>Review schools and teaching vacancies submitted through the public directory before they appear publicly.</p></div><span class="price-pill" id="schoolDirectoryAdminSummary">0 schools</span></div>
               <div class="school-admin-toolbar"><input id="schoolDirectoryAdminSearch" type="search" placeholder="Search school, country, subject or vacancy..."><select id="schoolDirectoryAdminStatus"><option value="all">All statuses</option><option value="pending">Pending</option><option value="published">Published</option><option value="rejected">Rejected</option></select><button class="ghost-button" type="button" id="refreshSchoolDirectoryAdmin">↻ Refresh</button></div>
@@ -1558,7 +1558,7 @@
               <div id="schoolDirectoryAdminList" class="admin-management-list"></div>
             </div>
           </div>
-          <div class="admin-module-panel" data-admin-module-panel="higher-education-jobs">
+          <div id="admin-panel-higher-education-jobs" class="admin-module-panel" role="tabpanel" tabindex="0" aria-labelledby="admin-tab-higher-education-jobs" data-admin-module-panel="higher-education-jobs">
             <div class="admin-management-card admin-higher-jobs-card">
               <div class="admin-management-heading"><div><p class="eyebrow">Kenya higher education</p><h3>🎓 Higher Education Jobs</h3><p>Publish jobs for universities, TVET colleges, teacher training colleges, KMTC and technical institutions. These appear on the Kenya Higher Education Jobs page.</p></div><span class="price-pill">Admin publishing</span></div>
               <form id="adminHigherJobForm" class="admin-form feature-form">
@@ -1578,7 +1578,7 @@
             </div>
           </div>
 
-          <div class="admin-module-panel" data-admin-module-panel="vacancies">
+          <div id="admin-panel-vacancies" class="admin-module-panel" role="tabpanel" tabindex="0" aria-labelledby="admin-tab-vacancies" data-admin-module-panel="vacancies">
             <div class="admin-management-card admin-vacancies-card">
               <div class="admin-management-heading"><div><p class="eyebrow">International careers</p><h3>Teaching Vacancies Abroad</h3><p>Add and publish overseas teaching opportunities. Published vacancies appear automatically on the International Teaching Jobs page.</p></div><span class="price-pill">Admin publishing</span></div>
               <form id="adminVacancyForm" class="admin-form feature-form">
@@ -1848,6 +1848,7 @@
         const on=tab.getAttribute('data-admin-module')===name;
         tab.classList.toggle('active',on);
         tab.setAttribute('aria-selected',String(on));
+        tab.setAttribute('tabindex',on?'0':'-1');
       });
       panels.forEach(function(panel){
         const on=panel.getAttribute('data-admin-module-panel')===name;
@@ -1874,7 +1875,19 @@
     window.CBENexusOpenAdminModule=openModule;
     tabs.forEach(function(tab){
       tab.onclick=function(e){e.preventDefault();e.stopImmediatePropagation();openModule(tab.getAttribute('data-admin-module'));};
-      tab.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();openModule(tab.getAttribute('data-admin-module'));}};
+      tab.onkeydown=function(e){
+        const index=tabs.indexOf(tab);
+        let next=index;
+        if(e.key==='ArrowRight')next=(index+1)%tabs.length;
+        else if(e.key==='ArrowLeft')next=(index-1+tabs.length)%tabs.length;
+        else if(e.key==='Home')next=0;
+        else if(e.key==='End')next=tabs.length-1;
+        else if(e.key==='Enter'||e.key===' '){e.preventDefault();openModule(tab.getAttribute('data-admin-module'));return;}
+        else return;
+        e.preventDefault();
+        tabs[next].focus();
+        openModule(tabs[next].getAttribute('data-admin-module'));
+      };
     });
     document.addEventListener('click',function(e){
       const tab=e.target.closest('#admin .admin-module-tab[data-admin-module]');

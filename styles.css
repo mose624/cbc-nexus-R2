@@ -5470,3 +5470,27 @@ html { scroll-behavior: auto; }
     scroll-behavior: auto !important;
   }
 }
+
+/* Additional mobile accessibility refinements. */
+#main-content:focus, #main-content:focus-visible { outline: 3px solid #005fcc !important; outline-offset: 4px !important; }
+@media (max-width: 850px) {
+ .site-header a, .site-header summary, .portal-sidebar a, .portal-side-link,
+ .portal-menu-group a, .portal-menu-group button, .grade-toggle,
+ .nexus-quick-link, .admin-resource-quick-actions a, .pagination a, .pagination button { min-height: 44px !important; }
+ .portal-sidebar a, .portal-side-link, .portal-menu-group a, .nexus-quick-link,
+ .admin-resource-quick-actions a { display: inline-flex; align-items: center; padding-top: 9px; padding-bottom: 9px; }
+ .grade-toggle, .portal-menu-group button { padding: 10px 12px; }
+ .eyebrow, .form-status, .section-heading > div > p:not(.eyebrow), .portal-welcome p,
+ .search-guide-card p, .search-guide-card li, .nexus-quick-links-heading p,
+ .footer-description, .muted, .text-muted { color: #4b5563 !important; }
+}
+@media (max-width: 520px) {
+ body { overflow-wrap: anywhere; }
+ .content-band, .urgent-band, .info-band, .promo-band { scroll-margin-top: 12px; }
+ :where(button, a, input, select, textarea, summary) { scroll-margin-block: 8px; }
+}
+@media (forced-colors: active) {
+ :where(a, button, input, select, textarea, summary, [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 3px solid Highlight !important; outline-offset: 3px !important;
+ }
+}
