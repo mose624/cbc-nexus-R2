@@ -701,8 +701,14 @@ async function syncPublicResourcesFromServer() {
     if (!data.ok || !Array.isArray(data.resources)) throw new Error("Invalid resource API response");
 
     // The public API is the single source of truth for published resources.
-    const remote = data.resources
-      .map((r) => normalizeResourceForLibrary({
+    // Process large libraries in small batches so one response cannot monopolize
+    // the main thread and create a long task on mobile devices.
+    const source = Array.isArray(data.resources) ? data.resources : [];
+    const remote = [];
+    const excludedGrades = new Set(["IGCSE","Cambridge International","IB","O Level","A Level","Pearson"]);
+    for (let offset = 0; offset < source.length; offset += 100) {
+      const batch = source.slice(offset, offset + 100);
+      const normalized = batch.map((r) => normalizeResourceForLibrary({
         ...r,
         id: r.id ?? r.resource_id,
         title: r.title || "Untitled resource",
@@ -713,8 +719,10 @@ async function syncPublicResourcesFromServer() {
         fileName: r.fileName || r.filename || "",
         previewKey: r.previewKey || r.preview_key || "",
         file: r.file || (((r.r2Key || r.r2_key) && Number(r.price ?? 0) === 0) ? "/api/r2/direct-download?resourceId=" + encodeURIComponent(r.id ?? r.resource_id ?? "") : "")
-      }))
-      .filter((r) => r.id && r.status === "approved" && !["IGCSE","Cambridge International","IB","O Level","A Level","Pearson"].includes(String(r.grade || "").trim()));
+      })).filter((r) => r.id && r.status === "approved" && !excludedGrades.has(String(r.grade || "").trim()));
+      remote.push(...normalized);
+      if (offset + 100 < source.length) await new Promise((resolve) => window.setTimeout(resolve, 0));
+    }
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(remote));
     renderResources();
@@ -1719,9 +1727,24 @@ renderQuickTypes();
 restoreAdminAccess();
 injectContactInfo();
 renderResources();
-renderTrending();
-loadPublicStats();
-syncPublicResourcesFromServer();
+// Defer non-essential refresh work until after the first render. Local/cached
+// resources and checkout remain available immediately; remote sync and secondary
+// widgets are scheduled in separate tasks to reduce initial Total Blocking Time.
+(function scheduleSecondaryHomepageWork() {
+  const tasks = [renderTrending, loadPublicStats, syncPublicResourcesFromServer];
+  let index = 0;
+  const runNext = () => {
+    if (index >= tasks.length) return;
+    try { tasks[index++](); }
+    catch (error) { console.warn("CBE Nexus secondary startup task failed:", error); }
+    if (index < tasks.length) window.setTimeout(runNext, 100);
+  };
+  if ("requestIdleCallback" in window) {
+    window.requestIdleCallback(runNext, { timeout: 1800 });
+  } else {
+    window.setTimeout(runNext, 1200);
+  }
+})();
 renderCart();
 renderSellerResources();
 // Keep checkout initialization immediate, but move hidden admin-only rendering
