@@ -609,6 +609,34 @@
 }
 </style>
 
+<!-- CBE NEXUS: keep opened navigation dropdowns above the mobile header controls -->
+<style id="cbenexus-dropdown-layering-fix">
+@media screen and (max-width:760px) {
+  header.site-header.cbe-header-v2 { position:relative!important; z-index:20000!important; }
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav { position:relative!important; z-index:20001!important; overflow-x:auto!important; overflow-y:visible!important; }
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav .nav-dropdown[open] { position:static!important; z-index:2147483000!important; }
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav .nav-dropdown[open] > .dropdown-panel {
+    position:fixed!important; top:72px!important; left:8px!important; right:auto!important;
+    z-index:2147483647!important; display:block!important; width:max-content!important;
+    min-width:190px!important; max-width:calc(100vw - 16px)!important;
+    max-height:calc(100dvh - 84px)!important; overflow-x:hidden!important; overflow-y:auto!important;
+    overscroll-behavior:contain!important; background:#fff!important; color:#17324d!important;
+    border:1px solid #cbd5e1!important; border-radius:9px!important;
+    box-shadow:0 12px 32px rgba(0,0,0,.32)!important; isolation:isolate!important;
+  }
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav .nav-dropdown[open] > .dropdown-panel a {
+    position:relative!important; z-index:1!important; display:flex!important;
+    min-height:34px!important; align-items:center!important; background:#fff!important; color:#17324d!important;
+  }
+}
+@media screen and (min-width:761px) {
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav .nav-dropdown[open] { position:relative!important; z-index:2147483000!important; }
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav .nav-dropdown[open] > .dropdown-panel {
+    position:absolute!important; z-index:2147483647!important; isolation:isolate!important;
+    box-shadow:0 12px 32px rgba(0,0,0,.28)!important;
+  }
+}
+</style>
 </head>
   <body>
     <a class="cbe-skip-link" href="#main-content">Skip to main content</a>
