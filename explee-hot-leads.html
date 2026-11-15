@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>CBE Nexus | Explee Hot Leads</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f1f6fb;color:#17324b;font:15px Arial,sans-serif}.wrap{max-width:1250px;margin:auto;padding:22px 16px 60px}.hero,.panel{background:#fff;border:1px solid #dce6ef;border-radius:15px;padding:20px;margin-bottom:16px}.hero{background:linear-gradient(130deg,#073b70,#087da8);color:#fff}.hero a{color:#fff}.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0}.btn{border:0;border-radius:8px;padding:10px 14px;background:#087da8;color:#fff;font-weight:700;cursor:pointer}.btn:disabled{opacity:.55;cursor:wait}.muted{color:#64748b;font-size:13px}.status{white-space:pre-wrap;font-weight:700;margin-top:10px}.kpis{display:flex;gap:12px;flex-wrap:wrap}.kpi{background:#f5faff;border:1px solid #dbeafe;border-radius:10px;padding:13px;min-width:155px}.kpi strong{display:block;color:#075985;font-size:22px;margin-bottom:4px}.lead{background:#fff;border:1px solid #dbe5ef;border-left:5px solid #16a34a;border-radius:12px;padding:16px;margin:12px 0}.lead h3{margin:0 0 7px}.lead p{margin:6px 0;line-height:1.5;overflow-wrap:anywhere}.why{background:#f8fafc;border-radius:8px;padding:11px;margin-top:10px;white-space:pre-wrap}.pill{display:inline-block;background:#dcfce7;color:#166534;border-radius:20px;padding:4px 9px;font-size:12px;font-weight:700}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.grid p{margin:4px 0}@media(max-width:650px){.grid{grid-template-columns:1fr}.wrap{padding:12px 10px 40px}}
+</style>
+</head>
+<body><main class="wrap">
+<section class="hero"><a href="/index.html#dashboard">← Admin Dashboard</a><h1>🔥 Explee Hot Leads</h1><p>New interested B2B contacts are collected automatically from Explee and stored in CBE Nexus.</p></section>
+<section class="panel"><div class="kpis"><div class="kpi"><strong id="total">—</strong>Stored hot leads</div><div class="kpi"><strong id="last">—</strong>Last successful check</div><div class="kpi"><strong id="newest">—</strong>Newest lead date</div></div><div class="toolbar"><button class="btn" id="refresh">Refresh leads</button><button class="btn" id="sync">Sync now</button></div><p class="muted">Automatic sync runs about every 10 minutes once the Explee API key and database migration are configured. Repeated replies update the existing contact using Explee's person ID.</p><p id="status" class="status">Checking access…</p></section>
+<section class="panel"><h2>Hot leads</h2><div id="leads"><p class="muted">Loading…</p></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const date=v=>v?new Date(v).toLocaleString():"—";
+async function load(runSync=false){
+ const status=$("status"),button=runSync?$("sync"):$("refresh");
+ button.disabled=true;status.textContent=runSync?"Syncing Explee hot leads…":"Loading saved hot leads…";
+ try{
+  const response=await fetch("/api/admin/explee-hot-leads"+(runSync?"?sync=1":""),{method:runSync?"POST":"GET",credentials:"same-origin",cache:"no-store"});
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok||!data.ok)throw new Error(data.error||"Could not load hot leads.");
+  const leads=data.leads||[],sync=data.sync||{};
+  $("total").textContent=leads.length;
+  $("last").textContent=date(sync.last_checked_at);
+  $("newest").textContent=date(leads[0]?.became_hot_at);
+  status.textContent=data.configured?"Connected to Explee. "+(sync.last_error?"Latest sync warning: "+sync.last_error:"No sync errors recorded."):"Explee API key is not configured in Render yet.";
+  $("leads").innerHTML=leads.length?leads.map(x=>'<article class="lead"><h3>'+esc(x.name||"Name unavailable")+' <span class="pill">HOT LEAD</span></h3><div class="grid"><p><b>Email:</b> '+(x.email?'<a href="mailto:'+esc(x.email)+'">'+esc(x.email)+'</a>':"—")+'</p><p><b>Job title:</b> '+esc(x.job_title||"—")+'</p><p><b>Company:</b> '+esc(x.company_name||"—")+'</p><p><b>Domain:</b> '+(x.company_domain?'<a target="_blank" rel="noopener" href="https://'+esc(x.company_domain)+'">'+esc(x.company_domain)+'</a>':"—")+'</p><p><b>Country:</b> '+esc(x.country||"—")+'</p><p><b>Phone:</b> '+esc(x.phone||"—")+'</p><p><b>LinkedIn:</b> '+(x.linkedin_url?'<a target="_blank" rel="noopener" href="'+esc(x.linkedin_url)+'">Open profile</a>':"—")+'</p><p><b>Became hot:</b> '+esc(date(x.became_hot_at))+'</p></div><div class="why"><b>Why this lead is hot (original reply):</b><br>'+esc(x.why_hot||"No reply text supplied.")+'</div><p class="muted">Explee person ID: '+esc(x.person_id)+' · Campaign: '+esc(x.campaign_id)+'</p></article>').join(""):"<p>No hot leads have been imported yet.</p>";
+ }catch(error){status.textContent=error.message;$("leads").innerHTML='<p class="muted">Sign in to the CBE Nexus admin dashboard first, then reopen this page.</p>';}
+ finally{button.disabled=false;}
+}
+$("refresh").addEventListener("click",()=>load(false));
+$("sync").addEventListener("click",()=>load(true));
+load(false);
+</script></body></html>
