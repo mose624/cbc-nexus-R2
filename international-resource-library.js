@@ -97,7 +97,7 @@
     status.textContent = "Loading approved resources for "+curriculum+"…";
     grid.innerHTML = '<div class="international-library-loading">Loading resources…</div>';
     try {
-      const response = await fetch("/api/resources?_internationalLibrary="+encodeURIComponent(curriculum)+"&_="+Date.now(), {credentials:"same-origin",cache:"no-store",headers:{"Cache-Control":"no-cache"}});
+      const controller = new AbortController(); const timeoutId = window.setTimeout(() => controller.abort(), 12000); let response; try { response = await fetch("/api/resources?_internationalLibrary="+encodeURIComponent(curriculum)+"&_="+Date.now(), {credentials:"same-origin",cache:"no-store",signal:controller.signal,headers:{"Cache-Control":"no-cache","Accept":"application/json"}}); } finally { window.clearTimeout(timeoutId); }
       const data = await response.json().catch(() => ({}));
       if (!response.ok || !data.ok || !Array.isArray(data.resources)) throw new Error("Library request failed.");
       resources = data.resources.filter(r => String(r.curriculum || r.grade || "").trim().toLowerCase() === curr && String(r.status || "approved").toLowerCase() === "approved");
@@ -105,8 +105,8 @@
       if (requestedSubject && subject) subject.value = [...subject.options].some(o => o.value.toLowerCase() === requestedSubject.toLowerCase()) ? requestedSubject : "";
       status.textContent = resources.length ? "This is the dedicated "+curriculum+" library. CBC/CBE resources remain completely separate." : "No approved "+curriculum+" resources have been published yet.";
       render();
-    } catch {
-      status.textContent = "The dedicated international library could not be loaded right now.";
+    } catch (error) {
+      status.textContent = error && error.name === "AbortError" ? "The resource service took too long to respond. Please retry." : "The dedicated international library could not be loaded right now.";
       grid.innerHTML = '<div class="international-library-empty"><strong>Library temporarily unavailable.</strong><span>Please refresh this page. The main CBE Nexus Resource Library is not affected.</span></div>';
     }
   }
