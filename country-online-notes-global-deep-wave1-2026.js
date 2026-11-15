@@ -84,7 +84,7 @@
    if(list.some(x=>x.id===id))continue;
    list.push({
     id,title:d.title,lessons:"Four-part illustrated study unit • upper-secondary supplementary notes",
-    language:c.name==="Angola"?"pt":c.name==="Argentina"?"es":c.name==="Austria"?"de":"en",
+    language:"en",
     curriculumContext:c.curriculum+" • "+c.authority+". Local application: "+c.context+". This is supplementary CBE Nexus material; verify exact grade placement and topic order against the current national syllabus.",
     curriculumStatus:"supplementary-national-curriculum-support",
     objectives:d.objectives,
