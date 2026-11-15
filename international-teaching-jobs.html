@@ -523,7 +523,7 @@ function calc(){const s=Number(document.getElementById("calcSalary").value||0),l
         try{
           const options={credentials:endpoint.crossOrigin?"omit":"same-origin",cache:"no-store",headers:{"Accept":"application/json"}};
           if(!endpoint.crossOrigin)options.headers["Cache-Control"]="no-cache";
-          const response=await fetch(endpoint.url,options);
+          const controller=new AbortController();const timeoutId=window.setTimeout(()=>controller.abort(),12000);options.signal=controller.signal;let response;try{response=await fetch(endpoint.url,options);}finally{window.clearTimeout(timeoutId);}
           const payload=await response.json().catch(()=>({}));
           if(!response.ok||!payload.ok)throw new Error(payload.error||"Vacancies could not be loaded.");
           d=payload;break;
