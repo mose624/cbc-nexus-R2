@@ -8,6 +8,30 @@ const mammoth = require("mammoth");
 const { supabase, supabaseConfigured } = require("./supabase");
 const seo = require("./seo");
 const globalSchools = require("./global-schools-data.js");
+// Keep server-side country routes aligned with the browser directory fallback.
+let globalCountryRegistryPromise = null;
+async function getGlobalCountryRegistry(){
+  if(!globalCountryRegistryPromise){
+    globalCountryRegistryPromise=(async()=>{
+      const registry=new Map((Array.isArray(globalSchools.countries)?globalSchools.countries:[]).filter(c=>c&&c.slug).map(c=>[String(c.slug).toLowerCase(),c]));
+      try{
+        const source=await fs.readFile(path.join(__dirname,"global-schools-registry-fallback.js"),"utf8");
+        const start=source.indexOf('const rows="');
+        const end=source.indexOf('";\nconst entries=',start);
+        if(start>=0&&end>start){
+          const rows=source.slice(start+'const rows="'.length,end).split("\\n");
+          for(const line of rows){
+            const [name,code,slug]=line.split("|");
+            if(name&&code&&slug&&!registry.has(slug))registry.set(slug,{name,code,slug,url:"/global-schools/"+slug});
+          }
+          if(!registry.has("kosovo"))registry.set("kosovo",{name:"Kosovo",code:"XK",slug:"kosovo",url:"/global-schools/kosovo"});
+        }
+      }catch(error){console.warn("Fallback country registry could not be loaded:",error.message||error);}
+      return [...registry.values()];
+    })().catch(error=>{globalCountryRegistryPromise=null;throw error;});
+  }
+  return globalCountryRegistryPromise;
+}
 const vm = require("vm");
 const countryExamSeoIndex = require("./global-country-examination-index.json");
 let countrySeoProfilesPromise = null;
@@ -2961,7 +2985,8 @@ async function serveStatic(req,res,url){
   const globalSchoolsRoute=url.pathname.match(/^\/global-schools(?:\/([a-z0-9-]+))?\/?$/i);
   if(req.method==="GET"&&globalSchoolsRoute){
     const countrySlug=String(globalSchoolsRoute[1]||"").toLowerCase();
-    const country=countrySlug?(globalSchools.countries||[]).find(c=>c.slug===countrySlug):null;
+    const countryRegistry=await getGlobalCountryRegistry();
+    const country=countrySlug?countryRegistry.find(c=>String(c.slug||"").toLowerCase()===countrySlug):null;
     if(countrySlug&&!country){
       res.writeHead(404,{"Content-Type":"text/plain; charset=utf-8","Cache-Control":"public, max-age=300"});
       res.end("Country not found in the CBE Nexus Global Schools registry.");
