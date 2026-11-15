@@ -728,8 +728,8 @@
             <p>Enter your friend's details below. After recording the referral, one free resource access button is unlocked for testing.</p>
           </div>
           <form id="referForm" class="refer-form">
-            <input id="friendNameInput" required placeholder="Friend's name">
-            <input id="friendPhoneInput" required placeholder="Friend's phone number">
+            <input id="friendNameInput" type="text" autocomplete="name" aria-label="Friend's name" required placeholder="Friend's name">
+            <input id="friendPhoneInput" type="tel" inputmode="tel" autocomplete="tel" aria-label="Friend's phone number" required placeholder="Friend's phone number">
             <button class="primary-button" type="submit">Unlock Free Paper</button>
           </form>
         </div>
