@@ -5494,3 +5494,81 @@ html { scroll-behavior: auto; }
   outline: 3px solid Highlight !important; outline-offset: 3px !important;
  }
 }
+
+
+/* Mobile: keep the six primary destinations in one compact navigation row. */
+@media (max-width: 760px) {
+  .site-header .main-nav.cbe-primary-nav .nav-menu {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: stretch !important;
+    gap: 3px !important;
+    padding: 4px 3px !important;
+    overflow: visible !important;
+  }
+  .site-header .main-nav.cbe-primary-nav .nav-menu > * {
+    order: 20;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+  .site-header .main-nav.cbe-primary-nav .nav-menu > a[href="#dashboard"] {
+    order: 1;
+  }
+  .site-header .main-nav.cbe-primary-nav .nav-menu > a[href="schools-institutions.html"] {
+    order: 2;
+  }
+  .site-header .main-nav.cbe-primary-nav .nav-menu > a[href="/global-schools"] {
+    order: 3;
+  }
+  .site-header .main-nav.cbe-primary-nav .nav-menu > a[href="scholarships-opportunities.html"] {
+    order: 4;
+  }
+  .site-header .main-nav.cbe-primary-nav .nav-menu > details.international-header-dropdown {
+    order: 5;
+  }
+  .site-header .main-nav.cbe-primary-nav .nav-menu > details:nth-of-type(2) {
+    order: 6;
+  }
+  .site-header .main-nav.cbe-primary-nav .nav-menu > a[href="online-teaching.html"] {
+    order: 7;
+  }
+  .site-header .main-nav.cbe-primary-nav .nav-menu > a[href="#dashboard"],
+  .site-header .main-nav.cbe-primary-nav .nav-menu > a[href="schools-institutions.html"],
+  .site-header .main-nav.cbe-primary-nav .nav-menu > a[href="/global-schools"],
+  .site-header .main-nav.cbe-primary-nav .nav-menu > a[href="scholarships-opportunities.html"],
+  .site-header .main-nav.cbe-primary-nav .nav-menu > details.international-header-dropdown,
+  .site-header .main-nav.cbe-primary-nav .nav-menu > details:nth-of-type(2) {
+    flex: 0 0 calc((100% - 15px) / 6) !important;
+    width: calc((100% - 15px) / 6) !important;
+    max-width: calc((100% - 15px) / 6) !important;
+    margin: 0 !important;
+    text-align: center !important;
+  }
+  .site-header .main-nav.cbe-primary-nav .nav-menu > a[href="#dashboard"],
+  .site-header .main-nav.cbe-primary-nav .nav-menu > a[href="schools-institutions.html"],
+  .site-header .main-nav.cbe-primary-nav .nav-menu > a[href="/global-schools"],
+  .site-header .main-nav.cbe-primary-nav .nav-menu > a[href="scholarships-opportunities.html"],
+  .site-header .main-nav.cbe-primary-nav .nav-menu > details.international-header-dropdown > summary,
+  .site-header .main-nav.cbe-primary-nav .nav-menu > details:nth-of-type(2) > summary {
+    min-height: 44px !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 4px 2px !important;
+    border-radius: 8px !important;
+    font-size: 8px !important;
+    line-height: 1.12 !important;
+    font-weight: 700 !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    word-break: normal !important;
+    text-align: center !important;
+  }
+  .site-header .main-nav.cbe-primary-nav .nav-menu > details {
+    position: relative !important;
+  }
+  .site-header .main-nav.cbe-primary-nav .nav-menu > details > summary span {
+    display: none !important;
+  }
+}
