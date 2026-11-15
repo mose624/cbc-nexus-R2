@@ -682,6 +682,8 @@ function startExpleeHotLeadSync(){
 }
 
 
+
+async function handleApi(req,res,url){
   if((req.method==="GET"||req.method==="POST")&&url.pathname==="/api/admin/explee-hot-leads"){
     try{
       if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Administrator sign-in required."});return true;}
@@ -700,7 +702,6 @@ function startExpleeHotLeadSync(){
     }catch(error){console.error("Admin Explee hot-lead request failed:",error);sendJson(res,500,{ok:false,error:"Could not load Explee hot leads. Confirm the Explee migration has been applied."});return true;}
   }
 
-async function handleApi(req,res,url){
   // CBE Nexus Global Online Teaching Marketplace: public approved listings and private applications.
   // Aggregate-only country marketplace counts; never expose learner identities or contact details.
   if(req.method==="GET"&&url.pathname==="/api/global-country-stats"){
