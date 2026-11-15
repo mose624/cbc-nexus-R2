@@ -1690,5 +1690,60 @@
   .site-header .main-nav *{transition:none!important}
 }
 </style>
+
+<!-- CBE NEXUS: compact button sizing with complete readable labels -->
+<style id="cbenexus-full-nav-labels">
+@media(max-width:760px){
+  .site-header .main-nav{
+    display:flex!important;flex-wrap:nowrap!important;align-items:center!important;
+    gap:5px!important;max-width:100%!important;width:100%!important;
+    overflow-x:auto!important;overflow-y:hidden!important;
+    padding:6px 8px!important;box-sizing:border-box!important;
+    -webkit-overflow-scrolling:touch!important;scrollbar-width:thin!important;
+  }
+  .site-header .main-nav .nav-menu,
+  .site-header .main-nav .nav-actions{
+    display:flex!important;flex:0 0 auto!important;flex-wrap:nowrap!important;
+    align-items:center!important;gap:5px!important;width:max-content!important;
+    min-width:max-content!important;overflow:visible!important;
+  }
+  .site-header .main-nav .nav-link,
+  .site-header .main-nav .nav-dropdown>summary,
+  .site-header .main-nav .nav-actions a,
+  .site-header .main-nav .nav-actions button{
+    box-sizing:border-box!important;display:inline-flex!important;
+    flex:0 0 auto!important;align-items:center!important;justify-content:center!important;
+    width:max-content!important;min-width:max-content!important;max-width:none!important;
+    height:32px!important;min-height:32px!important;padding:0 8px!important;margin:0!important;
+    border:1px solid #cbd5e1!important;border-radius:8px!important;
+    background:#fff!important;color:#17324d!important;
+    box-shadow:0 1px 3px rgba(15,23,42,.10)!important;
+    font-size:9px!important;font-weight:700!important;line-height:1.1!important;
+    letter-spacing:0!important;white-space:nowrap!important;
+    text-overflow:clip!important;overflow:visible!important;
+    text-decoration:none!important;
+  }
+  .site-header .main-nav .nav-menu>a[href="#dashboard"]{
+    background:#f8fafc!important;color:#17324d!important;border-color:#cbd5e1!important;
+  }
+  .site-header .main-nav .nav-menu>a[href="schools-institutions.html"]{
+    background:#eaf4ff!important;color:#075985!important;border-color:#93c5fd!important;
+  }
+  .site-header .main-nav .nav-menu>a[href="answer-hub.html"]{
+    background:#15803d!important;color:#fff!important;border-color:#15803d!important;
+  }
+  .site-header .main-nav .nav-menu>.nav-dropdown>summary{
+    background:#fff!important;color:#17324d!important;border-color:#cbd5e1!important;
+  }
+  .site-header .main-nav .nav-actions .nav-cta,
+  .site-header .main-nav .nav-menu a.nav-cta{
+    background:#1d4ed8!important;color:#fff!important;border-color:#1d4ed8!important;
+  }
+  .site-header .main-nav .nav-dropdown{flex:0 0 auto!important}
+  .site-header .main-nav .nav-dropdown[open]>.dropdown-panel{
+    position:absolute!important;z-index:10000!important;max-width:min(90vw,320px)!important;
+  }
+}
+</style>
 </body>
 </html>
