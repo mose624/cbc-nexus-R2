@@ -11,7 +11,7 @@ const targetSlugs=[
 "vanuatu","vatican-city","venezuela","antigua-and-barbuda","argentina","armenia",
 "australia","azerbaijan","bahamas","bahrain","barbados","belize","bolivia","brazil",
 "burundi","canada","chile","colombia","comoros","congo","costa-rica","cuba","dominica",
-"dominican-republic","ecuador","el-salvador","fiji","grenada","guatemala","kosovo"
+"dominican-republic","ecuador","el-salvador","fiji","grenada","guatemala"
 ];
 const profiles=window.CBE_GLOBAL_COUNTRY_DATA||{};
 const registry=window.CBE_GLOBAL_COUNTRIES||[];
@@ -28,16 +28,7 @@ function render(){
  const root=$("gsCountry");if(!root)return;
  const hub=make("section","gs-panel gs-section");hub.id="country-learning-pathways-hub";
  hub.append(make("h2",null,name+" Curriculum, Examination & Learning Pathways"));
- if(profile.seoIntro)hub.append(make("p","gs-muted",profile.seoIntro));
- const topics=(profile.seoTopics||[]).filter(Boolean).slice(0,6);
- if(topics.length){
-  const topicPanel=make("div","cbe-country-topic-panel");
-  topicPanel.append(make("h3",null,"Country-specific curriculum and study focus"));
-  const topicGrid=make("div","cbe-country-topic-grid");
-  topics.forEach(topic=>topicGrid.append(make("div","cbe-country-topic",topic)));
-  topicPanel.append(topicGrid);hub.append(topicPanel);
- }
- const examText=(profile.seoHeading||name+" education pathway").replace(/\s+/g," ").trim();
+ hub.append(make("p","gs-muted","Choose learning materials by the learner’s current grade or year, subject, national or international programme, language of instruction and syllabus version. The country guidance above identifies the relevant education pathway; confirm any recent curriculum or examination changes with the responsible authority before relying on a resource."));
  const services=[
   ["National curriculum notes","Browse online notes and worked examples. Match every resource to the learner's grade, subject, curriculum and language of instruction.","/country-online-notes.html?country="+encodeURIComponent(name)],
   ["Examination revision","Review examination pathways and practice materials. Confirm current syllabus versions, candidate rules and examination dates with the responsible authority.","/resources.html?country="+encodeURIComponent(name)+"&type=past-papers"],
@@ -54,7 +45,7 @@ function render(){
  const anchor=root.querySelector("#sources")||root.lastElementChild;
  if(anchor&&anchor.parentNode===root)root.insertBefore(hub,anchor);else root.append(hub);
 }
-const css=make("style");css.textContent="#country-learning-pathways-hub{padding:clamp(16px,2.5vw,26px);border:1px solid #d7e5ef;border-radius:14px;background:linear-gradient(145deg,#f7fcff,#fff)}#country-learning-pathways-hub h2,#country-learning-pathways-hub h3{color:#075080}.cbe-country-topic-panel{margin:16px 0}.cbe-country-topic-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.cbe-country-topic{padding:11px;border:1px solid #dbe7ef;border-radius:9px;background:#fff;color:#23445e;font-size:13px;line-height:1.5}.cbe-country-pathway-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}.cbe-country-pathway-card{display:flex;flex-direction:column;padding:15px;border:1px solid #dbe7ef;border-radius:11px;background:#fff}.cbe-country-pathway-card h3{margin:0 0 8px;font-size:16px}.cbe-country-pathway-card p{flex:1;margin:0 0 12px;color:#526477;font-size:13px;line-height:1.55}.cbe-country-growth-link{align-self:flex-start;padding:8px 10px;border-radius:8px;background:#e0f2fe;color:#075080!important;font-size:12px;font-weight:850;text-decoration:none}.cbe-country-verification-note{margin-top:15px;padding:12px;border-left:4px solid #d6a83a;background:#fffaf0;color:#65502b;font-size:12px;line-height:1.6}@media(max-width:760px){.cbe-country-pathway-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cbe-country-topic-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){.cbe-country-pathway-grid,.cbe-country-topic-grid{grid-template-columns:1fr}}";
+const css=make("style");css.textContent="#country-learning-pathways-hub{padding:clamp(16px,2.5vw,26px);border:1px solid #d7e5ef;border-radius:14px;background:linear-gradient(145deg,#f7fcff,#fff)}#country-learning-pathways-hub h2,#country-learning-pathways-hub h3{color:#075080}.cbe-country-pathway-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}.cbe-country-pathway-card{display:flex;flex-direction:column;padding:15px;border:1px solid #dbe7ef;border-radius:11px;background:#fff}.cbe-country-pathway-card h3{margin:0 0 8px;font-size:16px}.cbe-country-pathway-card p{flex:1;margin:0 0 12px;color:#526477;font-size:13px;line-height:1.55}.cbe-country-growth-link{align-self:flex-start;padding:8px 10px;border-radius:8px;background:#e0f2fe;color:#075080!important;font-size:12px;font-weight:850;text-decoration:none}.cbe-country-verification-note{margin-top:15px;padding:12px;border-left:4px solid #d6a83a;background:#fffaf0;color:#65502b;font-size:12px;line-height:1.6}@media(max-width:760px){.cbe-country-pathway-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){.cbe-country-pathway-grid{grid-template-columns:1fr}}";
 document.head.append(css);
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",render,{once:true});else render();
 })();
