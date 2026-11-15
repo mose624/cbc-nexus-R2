@@ -425,6 +425,66 @@
 .cbe-learning-example{display:grid;grid-template-columns:1.5fr 1fr;gap:18px;margin-top:18px;padding:22px;background:#fff;border:1px solid #e5d5d8;border-radius:16px}.cbe-learning-example h3{margin:0 0 8px;color:#123b63}.cbe-learning-example ol{padding-left:22px}.cbe-learning-check{padding:17px;background:#fff7ed;border:1px solid #fed7aa;border-radius:12px}.cbe-learning-check details{margin-top:12px}.cbe-learning-check summary{cursor:pointer;color:#9a3412;font-weight:900}.cbe-learning-studio-footer{margin:18px 0 0;text-align:center}
 @media(max-width:850px){.cbe-learning-guide-grid{grid-template-columns:1fr 1fr}.cbe-learning-example{grid-template-columns:1fr}}@media(max-width:560px){.cbe-learning-guide-grid{grid-template-columns:1fr}.cbe-learning-studio{padding:18px}.cbe-learning-guide-card{padding:16px}}
 </style>
+
+<style id="cbe-mobile-navigation-final-override">
+/* Final mobile nav override: this inline block follows all legacy header rules intentionally. */
+@media screen and (max-width: 760px), screen and (max-device-width: 760px), screen and (pointer: coarse) and (max-width: 1300px) {
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav {
+    display:flex!important; flex-direction:row!important; flex-wrap:nowrap!important;
+    align-items:center!important; justify-content:flex-start!important;
+    width:100%!important; min-width:0!important; max-width:100%!important;
+    overflow:hidden!important; gap:0!important; padding:7px 8px!important;
+    box-sizing:border-box!important;
+  }
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav > .nav-menu {
+    display:flex!important; flex:1 1 auto!important; flex-flow:row nowrap!important;
+    align-items:center!important; justify-content:flex-start!important;
+    width:100%!important; min-width:0!important; max-width:100%!important;
+    gap:8px!important; margin:0!important; padding:3px 2px 8px!important;
+    overflow-x:auto!important; overflow-y:hidden!important;
+    -webkit-overflow-scrolling:touch!important; overscroll-behavior-x:contain!important;
+    scrollbar-width:thin!important;
+  }
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav > .nav-menu > a.nav-link,
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav > .nav-menu > details.nav-dropdown > summary {
+    display:inline-flex!important; flex:0 0 auto!important; align-items:center!important;
+    justify-content:center!important; width:auto!important; min-width:max-content!important;
+    max-width:none!important; min-height:42px!important; height:auto!important;
+    margin:0!important; padding:9px 14px!important;
+    border:1px solid #d5e0ea!important; border-radius:999px!important;
+    background:#fff!important; color:#123b60!important;
+    box-shadow:0 2px 7px rgba(15,55,90,.12)!important;
+    font-family:Arial,Helvetica,sans-serif!important; font-size:12px!important;
+    font-weight:800!important; line-height:1.2!important; white-space:nowrap!important;
+    text-align:center!important; text-decoration:none!important;
+  }
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav > .nav-menu > a.nav-link[href="/global-schools"] {
+    background:#08734f!important; color:#fff!important; border-color:#08734f!important;
+  }
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav > .nav-menu > details.nav-dropdown {
+    display:block!important; flex:0 0 auto!important; width:auto!important;
+    min-width:max-content!important; margin:0!important; position:relative!important;
+  }
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav > .nav-menu > details.nav-dropdown > summary {
+    list-style:none!important; cursor:pointer!important;
+  }
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav > .nav-menu > details.nav-dropdown > summary::-webkit-details-marker {
+    display:none!important;
+  }
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav > .nav-menu > details.nav-dropdown > summary span {
+    display:inline!important; margin-left:6px!important;
+  }
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav .dropdown-panel {
+    position:absolute!important; top:calc(100% + 6px)!important; left:0!important;
+    z-index:10010!important; min-width:220px!important; max-width:85vw!important;
+  }
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav .cbe-header-search {
+    flex:0 0 108px!important; width:108px!important; min-width:108px!important;
+    max-width:108px!important; margin:0 0 0 7px!important;
+  }
+}
+</style>
+
 </head>
   <body>
     <a class="cbe-skip-link" href="#main-content">Skip to main content</a>
