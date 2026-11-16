@@ -390,6 +390,9 @@ export const chapterSequenceVerificationBatch01 = {
       officialSources: [
         "https://www.tie.go.tz/uploads/documents/en-1726825742-CURRICULUM%20FOR%20SECONDARY%20EDUCATION%20FORM%20I-IV.pdf",
         "https://www.tie.go.tz/uploads/files/BIOLOGY%20SYLLABUS%20ORDINARY%20SECONDARY%20FINAL%20.pdf",
+        "https://www.tie.go.tz/uploads/documents/sw-1727192894-CHEMISTRY%20O%27LEVEL%20EDUCATION%20FINAL.pdf",
+        "https://www.tie.go.tz/uploads/documents/sw-1727257838-PHYSICS%20FOR%20ORDINARY%20SECONDARY%20EDUCATION%20FINAL.pdf",
+        "https://www.tie.go.tz/uploads/documents/sw-1727256902-MATHEMATICS%20SYLLABUS%20-%20O%20level%20final.pdf",
         "https://www.tie.go.tz/index.php/publications/syllabus-for-lower-secondary-academics?page=1",
         "https://www.tie.go.tz/publications/syllabus-for-lower-secondary-academics?page=2",
         "https://www.tie.go.tz/publications/syllabus-for-lower-secondary-academics?page=3"
@@ -399,39 +402,45 @@ export const chapterSequenceVerificationBatch01 = {
         Biology: {
           officialName: "Biology",
           sourceStatus: "TIE-2023-Form-I-IV-official-syllabus-opened-and-reviewed",
-          sequenceStatus: "official-form-by-form-learning-content-partially-transcribed; retain-as-syllabus-topics-not-textbook-chapters",
+          sequenceStatus: "official-form-by-form-learning-content-partially-transcribed; complete syllabus extraction still required",
           sourceListedTopicRows: null,
           chapterCount: null,
           topicsByForm: {
             FormI: ["Basic concepts, branches, terminology, importance and relationship of Biology to other disciplines", "Cell: meaning, types, structures and functions", "Plant nutrition: photosynthesis, leaf structure and mineral requirements", "Classification: systems, importance and scientific naming", "Major groups of organisms: Monera, Protista, Fungi, Plantae, Animalia and viruses", "Biological investigation skills: observation, measurement and experimentation", "Microscopic observation of cells", "Investigation of conditions necessary for photosynthesis", "Biological investigation reporting"],
-            FormII: ["Nutrition in humans and ruminants: nutrients, digestive systems, digestion, deficiencies and disorders", "Transport in flowering plants: vascular system, absorption, movement of water and mineral salts, transpiration", "Transport in humans: heart, blood vessels, blood and circulation", "Respiration in living organisms: aerobic and anaerobic processes"],
-            FormIII: ["Coordination in plants and animals: tropic responses, nervous coordination, neurones, sense organs and endocrine system", "Excretion in humans: organs, systems and products", "Regulation in humans: temperature, blood glucose and osmoregulation", "Biological investigations and project work"],
-            FormIV: ["Reproduction in plants: asexual and sexual reproduction, pollination and fertilisation", "Reproduction in humans: sexual reproduction, fertilisation, pregnancy and childbirth", "Growth in mammals and flowering plants: mitosis, human development and seed germination"]
+            FormII: ["Nutrition in humans and ruminants", "Transport in flowering plants", "Transport in humans", "Respiration in living organisms"],
+            FormIII: ["Coordination in plants and animals", "Excretion in humans", "Regulation in humans", "Biological investigations and project work"],
+            FormIV: ["Reproduction in plants", "Reproduction in humans", "Growth in mammals and flowering plants"]
           }
         },
         Chemistry: {
           officialName: "Chemistry",
-          sourceStatus: "listed-in-TIE-2023-Ordinary-Secondary-syllabus-catalogue",
-          sequenceStatus: "official-syllabus-PDF-not-yet-opened; do-not-publish-topic-order-until-transcribed",
-          syllabusThemes: [],
-          chapterCount: null
+          sourceStatus: "TIE-2023-Form-I-IV-official-syllabus-opened-and-reviewed",
+          sequenceStatus: "Form-I-learning-content-transcribed; Forms-II-IV detailed extraction pending",
+          chapterCount: null,
+          topicsByForm: {
+            FormI: ["Concept of Chemistry: meaning, branches, applications and relationships with other disciplines", "Contribution of Chemistry to modern society", "Matter: physical and chemical changes", "Chemical elements, compounds and mixtures", "Properties of compounds compared with constituent elements", "Periodic table: first 20 elements, metals and non-metals"]
+          }
         },
         Physics: {
           officialName: "Physics",
-          sourceStatus: "listed-in-TIE-2023-Ordinary-Secondary-syllabus-catalogue",
-          sequenceStatus: "official-syllabus-PDF-not-yet-opened; do-not-publish-topic-order-until-transcribed",
-          syllabusThemes: [],
-          chapterCount: null
+          sourceStatus: "TIE-2023-Form-I-IV-official-syllabus-opened-and-reviewed",
+          sequenceStatus: "Form-I-learning-content-transcribed; Forms-II-IV detailed extraction pending",
+          chapterCount: null,
+          topicsByForm: {
+            FormI: ["Concept of Physics: meaning, branches and connections with other disciplines", "Contribution of Physics to modern society", "Physical quantities: fundamental and derived quantities and SI units", "Linear motion: speed, velocity, acceleration, distance and displacement", "Force, density, pressure, work, power and energy", "Relationship between density, sinking and floating"]
+          }
         },
         Mathematics: {
           officialName: "Mathematics",
-          sourceStatus: "listed-in-TIE-2023-Ordinary-Secondary-syllabus-catalogue; core-subject-in-curriculum-framework",
-          sequenceStatus: "official-syllabus-PDF-not-yet-opened; do-not-publish-topic-order-until-transcribed",
-          syllabusThemes: [],
-          chapterCount: null
+          sourceStatus: "TIE-2023-Form-I-IV-official-syllabus-opened-and-reviewed",
+          sequenceStatus: "Form-I-learning-content-transcribed; Forms-II-IV detailed extraction pending",
+          chapterCount: null,
+          topicsByForm: {
+            FormI: ["Basic concepts of Mathematics: meaning, branches, relationships with other subjects and importance", "Rational, irrational and real numbers", "Recurring decimals and conversion between decimals and fractions", "Representation of rational numbers on a number line", "Inequalities and absolute values of real numbers", "Applications of numbers in real-life situations", "Ratios and proportions"]
+          }
         }
       },
-      status: "TIE-2023-official-Biology-syllabus-reviewed-and-form-by-form-topics-partially-transcribed; Chemistry Physics and Mathematics source PDFs listed in TIE catalogue but sequence extraction pending"
+      status: "All four TIE 2023 Form I-IV official syllabus PDFs opened and verified; Biology has partial Form I-IV topics; Chemistry Physics and Mathematics have Form I topics transcribed; remaining Forms and full topic-by-topic reconciliation pending"
     },
     {
       country: "Albania",
