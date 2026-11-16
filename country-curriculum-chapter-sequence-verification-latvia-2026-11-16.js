@@ -49,3 +49,5 @@ export const countryCurriculumVerification = {
     "Author and verify CBE Nexus chapters only after sequence validation."
   ]
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Latvia", gradeSequenceEvidence: "Skola2030 and the national basic education standard organise learning through subject areas and competency-based outcomes. Extract Mathematics and science progression by grade, including Biology, Chemistry and Physics where separately specified.", textbookEvidence: "Official framework identified; actual adopted textbook contents and chapter counts not inspected.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "https://skola2030.lv/", nextRequiredWork: "Extract the official grade/year/term sequence for Mathematics and integrated or specialist sciences from current national documents; inspect actual approved/adopted student textbook contents pages and record exact chapter titles and counts separately." };
