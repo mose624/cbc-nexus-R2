@@ -51,3 +51,5 @@ export const countryCurriculumVerification = {
     "Author and verify CBE Nexus chapters only after sequence validation."
   ]
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Lesotho", gradeSequenceEvidence: "Basic Education Curriculum Policy distinguishes academic and technical streams. Lower-secondary academic and technical pathways allocate Biology and Physical Science differently; upper-secondary Grade 10–12 specialisation must be mapped by current subject syllabuses.", textbookEvidence: "Existing framework record identified; actual approved student textbook contents and printed chapter counts not inspected.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "Official Ministry curriculum and examination syllabus retrieval outstanding.", nextRequiredWork: "Extract the official grade/year/term sequence for Mathematics and integrated or specialist sciences from current national documents; inspect actual approved/adopted student textbook contents pages and record exact chapter titles and counts separately." };
