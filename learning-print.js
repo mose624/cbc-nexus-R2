@@ -17,10 +17,12 @@ var cleanup=function(){root.remove();window.removeEventListener("afterprint",cle
 function boot(){
 var tag=document.querySelector('script[src*="learning-print.js"]');var selectors=((tag&&tag.getAttribute("data-print-target"))||"#reader").split(",").map(function(s){return s.trim()}).filter(Boolean);
 var nodes=[];selectors.forEach(function(sel){try{document.querySelectorAll(sel).forEach(function(n){if(nodes.indexOf(n)<0)nodes.push(n)})}catch(e){}});
-nodes.forEach(function(node){if(node.dataset.cbePrintReady==="1")return;node.dataset.cbePrintReady="1";
+function attach(){var fresh=[];selectors.forEach(function(sel){try{document.querySelectorAll(sel).forEach(function(n){if(nodes.indexOf(n)<0)nodes.push(n);if(n.dataset.cbePrintReady!=="1"&&fresh.indexOf(n)<0)fresh.push(n)})}catch(e){}});fresh.forEach(function(node){node.dataset.cbePrintReady="1";
 var toolbar=document.createElement("div");toolbar.className="cbe-learning-print-toolbar no-print";var button=document.createElement("button");button.type="button";button.className="cbe-learning-print-btn";button.innerHTML='<span aria-hidden="true">🖨</span> Print / Save as PDF';button.setAttribute("aria-label","Print this chapter, question set or examination paper");toolbar.appendChild(button);
 node.parentNode.insertBefore(toolbar,node);button.addEventListener("click",function(){printNode(node)});
-});
+});}
+attach();
+if(window.MutationObserver){var observer=new MutationObserver(function(){attach()});observer.observe(document.body,{childList:true,subtree:true})}
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot,{once:true});else boot();
 })();
