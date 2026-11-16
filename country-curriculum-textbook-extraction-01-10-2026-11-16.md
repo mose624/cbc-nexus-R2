@@ -807,3 +807,22 @@ The PDF was opened and its book-details page confirms Grade 11, Dari and 1398 SH
 - Remaining Afghanistan work: visually inspect Grade 11 Mathematics contents page; Grade 12 textbooks; current official grade-level syllabus documents and syllabus sequence extraction; verify current editions/adoption.
 - Other nine countries in the first ten remain pending document-level extraction.
 - Canonical country register unchanged.
+
+
+### Correction to Grade 11 Biology chapter enumeration
+
+The Grade 11 Biology contents index lists **12 chapters**, not 10. The chapter sequence is:
+1. Microscopy and study of the cell.
+2. Cell structure: prokaryotic/eukaryotic cells and organelles.
+3. Cell and its environment: passive and active transport.
+4. Photosynthesis.
+5. Cellular respiration.
+6. Cell cycle and cell division.
+7. Classification and characteristics of invertebrate animals.
+8. Comparative systems of invertebrate animals.
+9. Vertebrate animals and their characteristics.
+10. Comparative systems of vertebrates.
+11. Interactions between populations.
+12. Biomes.
+
+The preceding section's prose grouped some of these adjacent chapter headings together under the five printed part headings; this correction supplies the exact twelve-chapter numbering. The cumulative total remains 161 chapters.
