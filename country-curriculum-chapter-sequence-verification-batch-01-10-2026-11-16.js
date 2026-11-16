@@ -411,7 +411,7 @@ export const chapterSequenceVerificationBatch01 = {
         subjectStatus: "framework-competences-verified; these competence statements must not be counted as chapters or assigned to Forms without the subject syllabus"
       },
       syllabusSequenceAudit: {
-        status: "Biology and Mathematics Form I-IV detailed tables reviewed and normalized; Chemistry and Physics still require equivalent row-by-row reconciliation",
+        status: "Biology, Chemistry and Mathematics Form I-IV detailed tables reviewed and normalized; Physics still requires equivalent row-by-row reconciliation",
         officialDocuments: {
           Biology: "https://www.tie.go.tz/uploads/documents/sw-1727192422-BIOLOGY%20SYLLABUS%20ORDINARY%20SECONDARY%20FINAL%20.pdf",
           Chemistry: "https://www.tie.go.tz/uploads/documents/sw-1727192894-CHEMISTRY%20O%27LEVEL%20EDUCATION%20FINAL.pdf",
@@ -441,16 +441,24 @@ export const chapterSequenceVerificationBatch01 = {
         }
         Chemistry: {
           officialName: "Chemistry",
-          sourceStatus: "TIE-2023-Form-I-IV-official-syllabus-opened-and-reviewed",
-          sequenceStatus: "Form-I detailed learning activities confirmed against official PDF; Forms-II-IV summary themes are provisional and not yet line-by-line verified",
+          sourceStatus: "TIE-2023-Form-I-IV-official-syllabus-opened-and-four-form-tables-reviewed",
+          sequenceStatus: "Form-I-IV principal learning-content themes reconciled against the official detailed tables; normalized themes are not official textbook chapter titles",
+          sourceListedTopicRows: null,
           chapterCount: null,
+          officialTablePages: { FormI: 9, FormII: 18, FormIII: 30, FormIV: 45 },
           topicsByForm: {
-            FormI: ["Concept and applications of Chemistry; branches and links to other disciplines", "Chemical materials and their properties", "Matter and changes of state", "Elements, compounds and mixtures", "Separation of mixtures and experimental chemistry"],
-            FormII: ["Modern atomic structure and subatomic particles", "Electronic arrangements of atoms", "Chemical formulae, valency, oxidation states and nomenclature", "Empirical and molecular formulae", "Acids, bases and salts; indicators and reactions"],
-            FormIII: ["Mole concept and molar quantities", "Quantitative chemical calculations", "Ionic theory and electrolysis", "Chemical reactions and their applications", "Acids, bases and salts in practical contexts"],
-            FormIV: ["Oxidation and reduction", "Properties and preparation of compounds of metals", "Volumetric analysis and titration", "Industrial and applied chemical processes"]
-          }
-        },
+            FormI: ["Chemistry: meaning, branches, applications and links with other disciplines", "Chemistry in society and in Tanzanian industry, health, mining and agriculture", "Matter: physical and chemical changes and changes of state", "Chemical elements, symbols, compounds and mixtures", "Solutions and separation of mixtures", "Comparing properties of compounds with those of their constituent elements", "Periodic table foundations: first 20 elements, metals and non-metals", "Chemistry laboratory skills: apparatus, laboratory rules, hazard signs, safety, first aid, fire classes and firefighting"],
+            FormII: ["Modern atomic structure: Dalton's model, subatomic particles and atomic structure models", "Electronic arrangements of atoms in shells", "Atomic number, mass number, protons and neutrons", "Chemical formulae and nomenclature: valency, oxidation states, radicals and IUPAC naming of binary inorganic compounds", "Empirical and molecular formulae and percentage composition", "Chemical bonding: covalent and electrovalent (ionic) bonding", "Acids, bases and indicators: properties, reactions and everyday applications", "Salts: preparation, properties and uses", "Mole concept and molar quantities: relative atomic/molecular mass and calculations"],
+            FormIII: ["Mole calculations and Avogadro's law", "Volumetric analysis: standard-solution preparation, titration principles and quantitative calculations", "Applications of volumetric analysis in food, drinks, medicine and agriculture", "Ionic theory and electrolysis: ions, mechanisms and Faraday-related laws", "Applications of electrolysis in metal extraction, electroplating, purification and corrosion inhibition", "Preparation and properties of selected compounds of non-metals", "Oxidising and displacement properties of non-metal substances and compounds"],
+            FormIV: ["Qualitative analysis: preliminary tests, tests in solution and confirmatory tests for salts", "Organic Chemistry foundations: organic compounds, aliphatic hydrocarbons and alcohols", "Organic structures, formulae and IUPAC naming of hydrocarbons and alcohols", "Preparation and properties of selected compounds of metals, including oxides, hydroxides, carbonates, hydrogen carbonates, nitrates, chlorides and sulphates", "Metal extraction: ores, principles and methods relevant to metals found in Tanzania", "Chemistry practical investigations: qualitative tests, titration, electrolysis, compound preparation and experimental set-up design", "Chemistry research project: investigate water pollution and purification, rusting, fire, pesticides, acid/chemical waste management and related local challenges"]
+          },
+          reconciliationNotes: [
+            "The previous provisional map placed mole concept and quantitative calculations too early: the detailed syllabus places the mole and molar quantities at the end of Form II and develops Avogadro's law and volumetric analysis in Form III.",
+            "The earlier provisional map placed redox and metal compounds as broad Form IV headings. The official tables instead explicitly organize Form III around ionic theory/electrolysis and non-metal compounds, and Form IV around qualitative analysis, organic chemistry, metal compounds/extraction and project work.",
+            "Laboratory safety and foundational practical skills belong in Form I; practical investigation activities are integrated across Forms and should not be counted as separate chapters.",
+            "The official syllabus is a seven-column competency and learning-activity matrix. These concise normalized themes preserve its Form placement without inventing official chapter counts."
+          ]
+        }
         Physics: {
           officialName: "Physics",
           sourceStatus: "TIE-2023-Form-I-IV-official-syllabus-opened-and-reviewed",
