@@ -272,6 +272,7 @@ function renderCountry(){
  resourceItems.forEach(item=>{
   const card=node("a","gs-learning-card");
   card.href=item.type==="subject-notes"?"/country-online-notes.html?country="+countryQuery+"&subject="+encodeURIComponent(item.subject):
+   item.type==="practicals"?"/country-practical-skills.html?country="+countryQuery:
    item.type==="quizzes"?"/interactive-questions.html?country="+countryQuery:
    item.type==="exam-resources"?"#papers":
    item.type==="curriculum"?"#curriculum":
