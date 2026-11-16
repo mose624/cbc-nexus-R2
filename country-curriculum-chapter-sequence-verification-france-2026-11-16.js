@@ -80,14 +80,4 @@ export const countryCurriculumVerification = {
   "overallStatus": "Country record created with official-source leads and conservative subject mapping; detailed programme extraction and textbook chapter verification remain pending."
 };
 
-export const chapterEvidenceReconciliation = {
- reviewedOn: "2026-11-16",
- country: "France",
- gradeSequenceEvidence: "National programmes are organised by cycles: Cycle 3 includes CM1, CM2 and 6e; Cycle 4 covers 5e–3e. At collège, Sciences et technologie, SVT and Physique-Chimie need to be distinguished by current class and transition; lycée general/technological includes Mathematics, SVT and Physics-Chemistry.",
- textbookEvidence: "Official current programmes portal identified; no actual textbook contents or chapter counts inspected.",
- actualTextbookContentsInspected: false,
- officialTextbookChapterCountsVerified: false,
- officialChapterCount: null,
- evidenceSource: "https://www.education.gouv.fr/programmes-scolaires-41483",
- nextRequiredWork: "Retrieve official grade/year/term programmes and extract topics for Mathematics, Biology or integrated Life Science, Chemistry and Physics; inspect approved student textbook contents pages and record printed chapter titles/counts separately. Do not infer textbook chapters from curriculum themes."
-};
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "France", gradeSequenceEvidence: "National programmes are organised by cycles: Cycle 3 includes CM1, CM2 and 6e; Cycle 4 covers 5e–3e. Collège science, SVT and Physics-Chemistry need class-specific distinction; lycée includes Mathematics, SVT and Physics-Chemistry.", textbookEvidence: "Official current programmes portal identified; textbooks not inspected.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "https://www.education.gouv.fr/programmes-scolaires-41483", nextRequiredWork: "Retrieve official grade/year/term programmes and extract Mathematics, Biology or integrated Life Science, Chemistry and Physics topics; inspect approved student textbook contents pages and record printed chapter titles/counts separately." };
