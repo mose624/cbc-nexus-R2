@@ -43,6 +43,16 @@ export const countryCurriculumVerification = {
   "sources": [
     "Official national Ministry / curriculum authority source not yet retrieved; verify before asserting detailed grade sequence"
   ],
+  "reconciliation": {
+    "batch": "173-192",
+    "status": "source-retrieval-required",
+    "evidenceSummary": "Current official programme PDFs and approved textbook contents for SVT, Sciences Physiques and Mathematics have not yet been retrieved. Need distinguish collège and lycée streams and language/edition.",
+    "officialDocuments": [],
+    "gradeByGradeSequenceVerified": false,
+    "actualTextbookContentsInspected": false,
+    "officialTextbookChapterCountsVerified": false,
+    "nextAction": "Extract grade/year/term topic headings from current official programme documents; inspect actual approved learner-textbook contents pages; map every book chapter to the official topic sequence and record discrepancies."
+  },
   "completion": {
     "gradeByGradeTopicSequenceVerified": false,
     "officialTextbookChapterCountsVerified": false,
