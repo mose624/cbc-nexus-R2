@@ -86,6 +86,16 @@ export const countryCurriculumVerification = {
     "https://ncdc.go.ug/wp-content/uploads/2025/05/NCDC-Orange-Book-Final-List_working_Corrected-Updated-02.06.2025_Web-FILE.pdf",
     "https://www.ncdc.go.ug/wp-content/uploads/2024/02/GENERAL-SCIENCE-syllabus.pdf"
   ],
+  "reconciliation": {
+    "batch": "173-192",
+    "status": "biology-sequence-partially-extracted",
+    "evidenceSummary": "Biology S1–S4 programme planner has been extracted in the existing record. NCDC also publishes separate lower-secondary Chemistry and Biology syllabi and an Advanced Secondary programme with Biology/Chemistry/Agriculture and Physics/Mathematics volumes. Chemistry, Physics and Mathematics grade/term sequence extraction and actual S1–S6 textbook contents remain outstanding.",
+    "officialDocuments": ["https://ncdc.go.ug/wp-content/uploads/2024/02/Biology_Syllabus_compressed.pdf","https://ncdc.go.ug/wp-content/uploads/2024/02/CHEMISTRY_SYLLABUS_compressed.pdf","https://ncdc.go.ug/wp-content/uploads/2025/05/Biol-Chem-Agric-Subjects-Final.pdf","https://www.ncdc.go.ug/wp-content/uploads/2024/02/"],
+    "gradeByGradeSequenceVerified": false,
+    "actualTextbookContentsInspected": false,
+    "officialTextbookChapterCountsVerified": false,
+    "nextAction": "Extract grade/year/term topic headings from current official programme documents; inspect actual approved learner-textbook contents pages; map every book chapter to the official topic sequence and record discrepancies."
+  },
   "completion": {
     "gradeByGradeTopicSequenceVerified": false,
     "officialTextbookChapterCountsVerified": false,
