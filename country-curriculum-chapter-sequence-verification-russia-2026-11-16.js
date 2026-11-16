@@ -61,12 +61,12 @@ export const countryCurriculumVerification = {
 
 export const chapterEvidenceReconciliation = {
   reviewedOn: "2026-11-16",
-  country: "Russia",
-  gradeSequenceEvidence: "Federal State Educational Standards and federal basic general education programmes establish national requirements, while approved federal textbook lists and regional adoption need separate checking. Track the updated standards by implementation year.",
-  textbookEvidence: "Curriculum framework or syllabus portal identified; actual adopted textbook contents pages and complete book PDFs were not inspected in this batch.",
+  country: "Russian Federation",
+  gradeSequenceEvidence: "A revised Federal State Educational Standard announced in September 2026 is scheduled for implementation from 1 September 2027. Keep the 2026–27 curriculum separate from the future standard and record federal/regional textbook adoption context.",
+  textbookEvidence: "The referenced material is a curriculum, ministry or examination-framework source, not an opened textbook contents page. Actual adopted textbook contents pages and full book PDFs were not inspected in this batch.",
   actualTextbookContentsInspected: false,
   officialTextbookChapterCountsVerified: false,
   officialChapterCount: null,
   evidenceSource: "https://edu.gov.ru/",
-  nextRequiredWork: "Retrieve current grade-by-grade official syllabus and the exact approved/adopted textbook for each grade and pathway; inspect contents pages; record title, edition, publisher, grade, chapter titles and verified chapter count. Keep CBE Nexus-authored chapters separate."
+  nextRequiredWork: "Retrieve the current approved grade-by-grade syllabus and exact adopted textbook for each relevant grade and track; inspect contents pages; record title, edition, publisher, grade, chapter titles and verified count. Keep CBE Nexus-authored chapters separate."
 };
