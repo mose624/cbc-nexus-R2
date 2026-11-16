@@ -133,3 +133,16 @@ export const country = {
   "cbEnexusLongFormChaptersWritten": false
 },
 };
+
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Belarus",
+  gradeSequenceEvidence: "National state standards and class-specific school subject programmes remain the primary source; this search did not retrieve current official Biology/Chemistry/Physics/Mathematics grade-topic files.",
+  textbookEvidence: "No textbook contents inspected; do not infer chapter counts from programme listings.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "Official jurisdiction-specific syllabus and textbook source retrieval remains outstanding.",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology (or integrated Life Science), Chemistry, Physics and Mathematics; then open approved/adopted student textbooks and record exact printed chapter headings and counts separately. Do not infer textbook chapters from syllabus themes."
+};
