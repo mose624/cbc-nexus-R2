@@ -119,3 +119,16 @@ export const countryCurriculumVerification = {
 },
   textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish actual contents-page chapter sequence." }
 };
+
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Bhutan",
+  gradeSequenceEvidence: "Science Curriculum Framework 2025 is officially listed; Mathematics framework documents are also available. Science is strand-based (working scientifically, life processes, materials, physical processes) across key stages, not four separate lower-school subjects.",
+  textbookEvidence: "Framework strands do not equal textbook chapters; actual books not inspected.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://rec.gov.bt/curriculum-frameworks/",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology (or integrated Life Science), Chemistry, Physics and Mathematics; then open approved/adopted student textbooks and record exact printed chapter headings and counts separately. Do not infer textbook chapters from syllabus themes."
+};
