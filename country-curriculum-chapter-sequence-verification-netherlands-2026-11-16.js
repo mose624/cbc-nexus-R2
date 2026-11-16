@@ -58,3 +58,15 @@ export const countryCurriculumVerification = {
     ]
   }
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Netherlands",
+  gradeSequenceEvidence: "National attainment targets apply in primary education; schools choose teaching materials. Secondary content must be mapped by VMBO, HAVO and VWO pathway rather than one universal grade sequence.",
+  textbookEvidence: "The source identified here is a curriculum/framework source, not an opened textbook contents page. No actual adopted textbook contents pages or full book PDFs were inspected in this batch.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.government.nl/themes/education/primary-education/subjects-and-attainment-targets-in-primary-education",
+  nextRequiredWork: "Retrieve the current official grade-by-grade syllabus and the exact approved/adopted textbook for each relevant grade and jurisdiction; open its contents pages; record the book title, edition, publisher, grade, chapter titles and verified chapter count. Keep CBE Nexus-authored chapters in a separate field."
+};
