@@ -109,3 +109,15 @@ export const countryCurriculumVerification = {
   },
   overallStatus: "Official curriculum structure and subject publications identified; detailed outcome-by-outcome mapping, secondary pathway reconciliation and textbook chapter verification remain pending."
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Croatia",
+  gradeSequenceEvidence: "Croatia uses national subject curricula for Biology, Chemistry, Physics and Mathematics within eight-year osnovna škola and differentiated upper-secondary programmes. Extract class-specific outcomes from each subject curriculum and separate gymnasium/vocational pathways.",
+  textbookEvidence: "No actual textbook contents inspected; approved textbook catalogues must be matched by class and programme.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://mzom.gov.hr/",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology or integrated Life Science, Chemistry, Physics and Mathematics. Then inspect adopted student textbooks and record printed chapter titles and counts separately; do not infer chapters from standards or themes."
+};
