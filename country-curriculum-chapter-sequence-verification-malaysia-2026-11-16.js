@@ -49,3 +49,5 @@ export const countryCurriculumVerification = {
     "Author and verify CBE Nexus chapters only after sequence validation."
   ]
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Malaysia", gradeSequenceEvidence: "KSSM is the national secondary curriculum implemented through DSKP subject documents. Upper-secondary subject packages include specialist science and Mathematics options; map primary KSSR separately and use current DSKP for Form 1–5.", textbookEvidence: "Official KSSM/DSKP requirement confirmed; actual approved textbook contents and chapter counts not inspected.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "https://www.moe.gov.my/", nextRequiredWork: "Extract current official grade/year/term learning outcomes and topic sequences for Mathematics and integrated or specialist sciences. Open approved/adopted student textbook PDFs and contents pages; record exact edition, grade, chapter titles and chapter counts separately. Do not infer textbook chapters from curriculum topics." };
