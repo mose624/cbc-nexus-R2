@@ -133,4 +133,11 @@ export const country = {
     status: "official-programme-authority-and-secondary-subject-structure-verified; 2026-27-programme-and-textbook-sequence-retrieval-pending",
     note: "Map Biology through SVT and Physics/Chemistry through PCT unless an official class/series programme establishes separate subjects. The 2024 textbook order applies to 2024–25 and 2025–26 only. Do not claim it is the current 2026–27 authorised list. No chapter counts or chapter-level sequences are invented."
   }
+
+  evidenceRefresh_2026_11_16: {
+  "status": "existing country source map retained; current official topic documents and actual textbook contents require direct extraction",
+  "sources": [],
+  "finding": "No new verified topic sequence or official textbook chapter count is asserted in this evidence refresh. Preserve any jurisdiction, language, pathway and integrated-science distinctions already recorded in this file."
+},
+  textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish the actual contents-page chapter sequence. Do not invent counts." }
 };
