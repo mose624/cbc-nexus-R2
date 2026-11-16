@@ -49,3 +49,5 @@ export const countryCurriculumVerification = {
     "Author and verify CBE Nexus chapters only after sequence validation."
   ]
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Guyana", gradeSequenceEvidence: "Ministry resource centre lists Nursery–Grade 9 guides, Grade 7–9 Science and Mathematics, revised 2026 enhanced primary NLOs and secondary subject National Schemes. Extract actual grade topics and specialist secondary subjects.", textbookEvidence: "Official resource catalogue identified; student textbook contents not inspected.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "https://education.gov.gy/web2/", nextRequiredWork: "Retrieve official grade/year/term programmes and extract Mathematics, Biology or integrated Life Science, Chemistry and Physics topics; inspect approved student textbook contents pages and record printed chapter titles/counts separately." };
