@@ -48,3 +48,5 @@ export const countryCurriculumVerification = {
     "Author and verify CBE Nexus chapters only after sequence validation."
   ]
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Hungary", gradeSequenceEvidence: "The National Core Curriculum (Nat) is implemented through framework curricula and school programmes. Extract grade/year progression from the applicable framework curriculum; subject pathways and timetables change across lower and upper secondary.", textbookEvidence: "No actual approved textbook contents inspected; framework curricula cannot be converted into textbook chapter counts.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "https://www.oktatas.hu/kozneveles/kerettantervek", nextRequiredWork: "Extract the official grade/year/term sequence for Mathematics and integrated or specialist sciences from the current national documents; inspect actual approved/adopted student textbook contents pages and record exact chapter titles and counts separately." };
