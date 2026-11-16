@@ -69,3 +69,15 @@ export const countryCurriculumVerification = {
   },
   "overallStatus": "Country record created with official-source leads and conservative subject mapping; detailed programme extraction and textbook chapter verification remain pending."
 };
+
+export const chapterEvidenceReconciliation = {
+ reviewedOn: "2026-11-16",
+ country: "Fiji",
+ gradeSequenceEvidence: "Ministry curriculum resources and subject syllabuses need grade-by-grade extraction. Lower levels use integrated Science; specialist Biology, Chemistry, Physics and Mathematics are available in secondary pathways and examination years.",
+ textbookEvidence: "No actual textbook contents inspected; current syllabus and textbook editions require direct confirmation.",
+ actualTextbookContentsInspected: false,
+ officialTextbookChapterCountsVerified: false,
+ officialChapterCount: null,
+ evidenceSource: "Official Ministry subject syllabus portal retrieval outstanding.",
+ nextRequiredWork: "Retrieve official grade/year/term programmes and extract topics for Mathematics, Biology or integrated Life Science, Chemistry and Physics; inspect approved student textbook contents pages and record printed chapter titles/counts separately. Do not infer textbook chapters from curriculum themes."
+};
