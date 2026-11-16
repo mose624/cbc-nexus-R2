@@ -1,0 +1,63 @@
+/* CBE Nexus evidence-led curriculum reconciliation record — 2026-11-16. */
+export const countryCurriculumVerification = {
+  "country": "Zimbabwe",
+  "registrySlug": "zimbabwe",
+  "auditDate": "2026-11-16",
+  "educationFramework": "ZIMSEC provides O-Level and A-Level subject syllabuses; the current edition and implementation by form must be confirmed against the Ministry curriculum framework and actual approved textbook contents.",
+  "subjects": [
+    {
+      "subject": "Biology",
+      "gradeByGradeSequenceVerified": false,
+      "officialChapterCount": null,
+      "actualTextbookContentsInspected": false,
+      "notes": "Do not count syllabus strands or curriculum topics as textbook chapters."
+    },
+    {
+      "subject": "Chemistry",
+      "gradeByGradeSequenceVerified": false,
+      "officialChapterCount": null,
+      "actualTextbookContentsInspected": false,
+      "notes": "Do not count syllabus strands or curriculum topics as textbook chapters."
+    },
+    {
+      "subject": "Physics",
+      "gradeByGradeSequenceVerified": false,
+      "officialChapterCount": null,
+      "actualTextbookContentsInspected": false,
+      "notes": "Do not count syllabus strands or curriculum topics as textbook chapters."
+    },
+    {
+      "subject": "Mathematics",
+      "gradeByGradeSequenceVerified": false,
+      "officialChapterCount": null,
+      "actualTextbookContentsInspected": false,
+      "notes": "Do not count syllabus strands or curriculum topics as textbook chapters."
+    }
+  ],
+  "sources": [
+    "https://www.zimsec.co.zw/"
+  ],
+  "completion": {
+    "gradeByGradeTopicSequenceVerified": false,
+    "officialTextbookChapterCountsVerified": false,
+    "cbeNexusChaptersOver10000WordsVerified": false,
+    "diagramsWorkedExamplesPracticalsVerified": false,
+    "examQuestionsAndMarkingGuidesVerified": false,
+    "nextActions": [
+      "Extract current official grade/year/term topic sequences for all four subjects.",
+      "Identify the precise approved or school-adopted textbook edition for each grade and subject.",
+      "Inspect actual contents pages and map each book chapter to official syllabus topics.",
+      "Record discrepancies, missing topics, duplicated topics and implementation-year changes."
+    ]
+  },
+  "reconciliation": {
+    "batch": "193-196 plus 1-6",
+    "status": "exam-board-and-syllabus-retrieval-required",
+    "evidenceSummary": "ZIMSEC provides O-Level and A-Level subject syllabuses; the current edition and implementation by form must be confirmed against the Ministry curriculum framework and actual approved textbook contents.",
+    "officialDocuments": [
+      "https://www.zimsec.co.zw/"
+    ],
+    "actualTextbookContentsInspected": false,
+    "officialTextbookChapterCountsVerified": false
+  }
+};
