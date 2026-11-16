@@ -48,3 +48,5 @@ export const countryCurriculumVerification = {
     "Author and verify CBE Nexus chapters only after sequence validation."
   ]
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Iran", gradeSequenceEvidence: "National Curriculum framework and Ministry-issued textbooks govern schooling. Early years use integrated Science; upper grades differentiate Physics, Chemistry and Biology. Exact Persian grade-by-grade programme and current textbook edition need direct verification.", textbookEvidence: "No actual textbook contents inspected; no official chapter count verified.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "Official OERP and Ministry curriculum/textbook portals require retrieval.", nextRequiredWork: "Extract the official grade/year/term sequence for Mathematics and integrated or specialist sciences from the current national documents; inspect actual approved/adopted student textbook contents pages and record exact chapter titles and counts separately." };
