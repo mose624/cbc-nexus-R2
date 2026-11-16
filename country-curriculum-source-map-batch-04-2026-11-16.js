@@ -1,0 +1,58 @@
+/* CBE Nexus — national curriculum source map, batch 04.
+ * Countries: Bahamas, Bahrain, Bangladesh, Barbados, Belarus.
+ * Evidence checked 2026-11-16. Chapter sequences are only entered when verified from official documents.
+ */
+(function(root){
+"use strict";
+const subjects=["Biology","Chemistry","Physics","Mathematics"];
+const entry=(country,authority,portal,level,language,assessment,subjectNames,evidenceUrls,evidence,status={})=>({
+ country,authority,officialPortal:portal,curriculumLevel:level,languageOfInstruction:language,assessmentPathway:assessment,
+ subjectNames,evidenceUrls,evidence,
+ subjects:Object.fromEntries(subjects.map(s=>[s,{officialSubjectName:subjectNames[s],sequenceStatus:status[s]||"subject presence identified; current detailed chapter sequence not yet transcribed",chapterCount:null,chapters:[]}]))
+});
+const batch={schemaVersion:"1.0",auditedAt:"2026-11-16",countries:[
+entry("Bahamas","Ministry of Education, Science and Technology; Department of Education","https://www.ministryofeducationbahamas.com/",
+"Pre-primary, primary and secondary stages under the national curriculum. The Education Act 2026 places a statutory duty on the Ministry/Department to develop, review, implement, monitor and evaluate a national curriculum; private schools have a distinct compliance provision.",
+"English.",
+"Bahamas national curriculum and school-level assessment; confirm current national examination and external qualification pathways separately.",
+{Biology:"Science / Biology (subject-specific secondary programme to verify)",Chemistry:"Science / Chemistry (subject-specific secondary programme to verify)",Physics:"Science / Physics (subject-specific secondary programme to verify)",Mathematics:"Mathematics"},
+["https://www.ministryofeducationbahamas.com/","https://laws.bahamas.gov.bs/cms/images/LEGISLATION/PRINCIPAL/2026/2026-0010/2026-0010.pdf"],
+["The official Ministry website identifies the Ministry of Education, Science and Technology as the education authority.","The 2026 Education Act (sections 33–35) requires development and implementation of a national curriculum for pre-primary, primary and secondary education, and expressly identifies Mathematics and English as core subjects.","The Act permits other subjects to be directed by the Minister. Current detailed secondary Biology, Chemistry and Physics programme documents were not retrieved in this audit, so no chapter sequence is inferred."],
+{Mathematics:"core subject confirmed in Education Act 2026; detailed grade sequence pending",Biology:"subject-specific national programme document retrieval pending",Chemistry:"subject-specific national programme document retrieval pending",Physics:"subject-specific national programme document retrieval pending"}),
+entry("Bahrain","Ministry of Education, Kingdom of Bahrain; Education and Training Quality Authority (BQA)","https://moe.gov.bh/en/the-national-curriculum-framework",
+"Basic education grades I–IX; secondary education grades X–XII. Secondary students select academic/technical/religious tracks and course pathways.",
+"Arabic is the main language of public-school national curriculum; English is also taught. Verify the language used in each textbook and programme.",
+"National examinations at Grades 9 and 12 are aligned to national curriculum specifications; secondary completion leads to general, technical or religious secondary certificates.",
+{Biology:"Biology (الأحياء)",Chemistry:"Chemistry (الكيمياء)",Physics:"Physics (الفيزياء)",Mathematics:"Mathematics (الرياضيات)"},
+["https://moe.gov.bh/en/the-national-curriculum-framework","https://moe.gov.bh/en//national-examinations","https://moe.gov.bh/en//moe-educational-resources","https://www.moe.gov.bh/pdf/books/plans2-2022-2023/Science/Science-sec.pdf","https://www.moe.gov.bh/pdf/books/plans2-2024-2025/Science/Science-sec.pdf"],
+["The Ministry's national curriculum framework is published in Arabic and was updated 19 October 2026.","The Ministry states that secondary education covers grades 10–12 and that the system includes academic and technical pathways.","National examinations are prepared against national curriculum specifications and are administered for Grades 9 and 12 in cooperation with BQA.","Official Ministry resources include electronic textbooks, model lessons and previous examination questions. The 2022–23 and 2024–25 science plans provide course-level topic coverage; current course/grade mapping and full chapter sequence extraction remains necessary."],
+{Biology:"official secondary course/textbook resources identified; current grade/course sequence transcription pending",Chemistry:"official course plan PDF located; current grade/course sequence transcription pending",Physics:"secondary subject pathway identified; current grade/course sequence transcription pending",Mathematics:"secondary national subject/examination pathway identified; detailed sequence pending"}),
+entry("Bangladesh","National Curriculum and Textbook Board (NCTB); Ministry of Education","https://nctb.gov.bd/",
+"General secondary grades 9–10 include compulsory core subjects and science-group subjects; higher secondary grades 11–12 have separate subject curricula and board syllabuses. Curriculum reforms and revised examination syllabuses require academic-year tagging.",
+"Bangla; English-version textbooks and materials are also officially published.",
+"Secondary public examinations under education boards (SSC and HSC); subject groups and optional combinations affect Biology and Higher Mathematics.",
+{Biology:"Biology (জীববিজ্ঞান)",Chemistry:"Chemistry (রসায়ন)",Physics:"Physics (পদার্থবিজ্ঞান)",Mathematics:"Mathematics (গণিত); Higher Mathematics (উচ্চতর গণিত)"},
+["https://nctb.gov.bd/","https://nctb.portal.gov.bd/site/page/6d8594f1-23d6-4d8e-af97-e0696f721e90","https://nctb.gov.bd/sites/default/files/files/nctb.portal.gov.bd/files/6d9b9671_f815_460c_b8ef_c58a1b829f55/English.pdf","https://objectstorage.ap-dcc-gazipur-1.oraclecloud15.com/n/axvjbnqprylg/b/V2Ministry/o/office-nctb/2024/12/a513203336f643b1b2630f4980537416.pdf"],
+["NCTB is the national authority publishing textbooks and curriculum resources, including Bangla and English versions.","The NCTB National Curriculum 2012 document gives a specific grades 9–10 general-stream subject framework: Mathematics is compulsory; Physics and Chemistry are compulsory for the Science group; Biology/Higher Mathematics appears in the science-group subject options.","An NCTB-hosted 2024 PDF also provides subject framework and time allocation information. Because the curriculum has undergone revisions and transition announcements, each resource must be tagged by academic year and examination cohort rather than blending 2012, revised and current HSC syllabuses."],
+{Mathematics:"NCTB grades 9–10 subject framework identified; current cohort-specific sequence pending",Biology:"science-group presence confirmed; grade and cohort-specific syllabus sequence pending",Chemistry:"science-group presence confirmed; grade and cohort-specific syllabus sequence pending",Physics:"science-group presence confirmed; grade and cohort-specific syllabus sequence pending"}),
+entry("Barbados","Ministry of Educational Transformation; Caribbean Examinations Council (CXC)","https://education.gov.bb/about/departments/examinations/",
+"Secondary Forms 1–5; CSEC at upper secondary and CAPE for post-CSEC/sixth-form study. Local school curriculum and regional CXC syllabuses must be distinguished.",
+"English.",
+"Local Ministry assessments and regional CXC CSEC/CAPE examinations; the Ministry also administers/coordinates international examinations.",
+{Biology:"CSEC Biology / CAPE Biology",Chemistry:"CSEC Chemistry / CAPE Chemistry",Physics:"CSEC Physics / CAPE Physics",Mathematics:"CSEC Mathematics / CAPE Pure Mathematics and Applied Mathematics"},
+["https://education.gov.bb/about/departments/examinations/","https://www.cxc.org/syllabus-downloads/","https://www.cxc.org/subject/biology-csec/","https://www.cxc.org/subject/chemistry-csec/","https://www.cxc.org/division/syllabus-and-curriculum/"],
+["The Barbados Ministry's Examinations and Assessment Department lists local assessments, CSEC and CAPE, and international examinations; Forms 1–4 are included in local placement assessment.","CXC's official syllabus catalogue lists Biology, Chemistry, Physics and Mathematics subjects and provides current syllabuses and updates.","CXC explains that its syllabuses are a main source for upper-secondary and post-CSEC curricula in participating territories. These are regional syllabuses and should not be represented as a complete Barbados national Forms 1–5 curriculum."],
+{Biology:"CXC CSEC Biology official subject syllabus identified; detailed current topic sequence extraction pending",Chemistry:"CXC CSEC Chemistry official subject syllabus identified; detailed current topic sequence extraction pending",Physics:"CXC CSEC Physics listed in CXC syllabus catalogue; current syllabus sequence pending",Mathematics:"CXC CSEC Mathematics listed in CXC syllabus catalogue; current syllabus sequence pending"}),
+entry("Belarus","Ministry of Education of the Republic of Belarus; National Educational Portal","https://edu.gov.by/",
+"General secondary education has three stages: primary grades I–IV, basic grades V–IX and secondary grades X–XI (some evening routes X–XII). Subject programmes are issued by grade and language of instruction.",
+"Belarusian and Russian are official languages of instruction; minority-language provisions may apply.",
+"School-based final attestation and state examination arrangements; exact grade and year requirements must be checked against current Ministry orders.",
+{Biology:"Биология / Біялогія",Chemistry:"Химия / Хімія",Physics:"Физика / Фізіка",Mathematics:"Математика / Матэматыка"},
+["https://edu.gov.by/","https://adu.by/","https://edumedia-depot.gei.de/server/api/core/bitstreams/28458cdf-75c5-49e4-9da0-0acae10f7883/content","https://gem-report-education-profiles.unesco.org/node/922.html"],
+["Belarus's education framework has three general-secondary stages: grades I–IV, V–IX and X–XI.","The Education Code requires state education standards and approved subject programmes; UNESCO's Education Profiles describes state standards as prescribing programme content, structure and expected outcomes.","A Ministry of Education resolution (29 July 2019, No. 123) explicitly approves grade IX programmes for Biology, Physics and Chemistry, among other subjects. It is an identified historical programme record, not proof that it is the latest replacement version.","The national educational portal is the route to current subject programmes by grade and language. The new 2026 standards and current subject programme files must be checked before using the older 2019 programme as the live sequence."],
+{Biology:"grade IX official programme record identified (2019); verify current 2026 programme before chapter mapping",Chemistry:"grade IX official programme record identified (2019); verify current 2026 programme before chapter mapping",Physics:"grade IX official programme record identified (2019); verify current 2026 programme before chapter mapping",Mathematics:"subject is part of state secondary programme; current grade-specific official programme retrieval pending"})
+],
+completionRules:{doNotInferChapterCounts:true,doNotTreatRegionalCXCAsNationalFullCurriculum:true,doNotMixCurriculumYearsOrCohorts:true,targetWordsPerChapter:10000,minimumDiagramsPerChapter:10,minimumExamQuestionsPerChapter:15}};
+if(typeof module!=="undefined"&&module.exports)module.exports=batch;
+if(root)root.CBE_CURRICULUM_SOURCE_MAP_BATCH_04=batch;
+})(typeof window!=="undefined"?window:globalThis);
