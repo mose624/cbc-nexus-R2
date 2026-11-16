@@ -415,28 +415,37 @@ export const chapterSequenceVerificationBatch01 = {
         Chemistry: {
           officialName: "Chemistry",
           sourceStatus: "TIE-2023-Form-I-IV-official-syllabus-opened-and-reviewed",
-          sequenceStatus: "Form-I-learning-content-transcribed; Forms-II-IV detailed extraction pending",
+          sequenceStatus: "official-form-specific-content-highlights-transcribed; full competency-row reconciliation pending",
           chapterCount: null,
           topicsByForm: {
-            FormI: ["Concept of Chemistry: meaning, branches, applications and relationships with other disciplines", "Contribution of Chemistry to modern society", "Matter: physical and chemical changes", "Chemical elements, compounds and mixtures", "Properties of compounds compared with constituent elements", "Periodic table: first 20 elements, metals and non-metals"]
+            FormI: ["Concept and applications of Chemistry; branches and links to other disciplines", "Chemical materials and their properties", "Matter and changes of state", "Elements, compounds and mixtures", "Separation of mixtures and experimental chemistry"],
+            FormII: ["Modern atomic structure and subatomic particles", "Electronic arrangements of atoms", "Chemical formulae, valency, oxidation states and nomenclature", "Empirical and molecular formulae", "Acids, bases and salts; indicators and reactions"],
+            FormIII: ["Mole concept and molar quantities", "Quantitative chemical calculations", "Ionic theory and electrolysis", "Chemical reactions and their applications", "Acids, bases and salts in practical contexts"],
+            FormIV: ["Oxidation and reduction", "Properties and preparation of compounds of metals", "Volumetric analysis and titration", "Industrial and applied chemical processes"]
           }
         },
         Physics: {
           officialName: "Physics",
           sourceStatus: "TIE-2023-Form-I-IV-official-syllabus-opened-and-reviewed",
-          sequenceStatus: "Form-I-learning-content-transcribed; Forms-II-IV detailed extraction pending",
+          sequenceStatus: "official-form-specific-content-highlights-transcribed; full competency-row reconciliation pending",
           chapterCount: null,
           topicsByForm: {
-            FormI: ["Concept of Physics: meaning, branches and connections with other disciplines", "Contribution of Physics to modern society", "Physical quantities: fundamental and derived quantities and SI units", "Linear motion: speed, velocity, acceleration, distance and displacement", "Force, density, pressure, work, power and energy", "Relationship between density, sinking and floating"]
+            FormI: ["Concept, branches and applications of Physics", "Physical quantities and measurement", "Linear motion: speed, velocity, acceleration, distance and displacement", "Force, density and pressure", "Work, power and energy", "Mechanical properties of matter"],
+            FormII: ["Light: sources, propagation, transmission, image formation, colours and optical instruments", "Magnetism and magnetic fields", "Static electricity and capacitors", "Current electricity and domestic electrical installations", "Experimental investigation and data analysis"],
+            FormIII: ["Waves and motion", "Newton's laws of motion", "Equilibrium: moments and centre of gravity", "Friction", "Simple machines", "Experimental investigations and research project work"],
+            FormIV: ["Heat and thermal energy", "Temperature measurement and thermal expansion", "Transfer and measurement of heat", "Vapour and humidity", "Physics of the atom", "Electronics and renewable energy", "Completion and reporting of research project"]
           }
         },
         Mathematics: {
           officialName: "Mathematics",
           sourceStatus: "TIE-2023-Form-I-IV-official-syllabus-opened-and-reviewed",
-          sequenceStatus: "Form-I-learning-content-transcribed; Forms-II-IV detailed extraction pending",
+          sequenceStatus: "official-form-specific-content-highlights-transcribed; full competency-row reconciliation pending",
           chapterCount: null,
           topicsByForm: {
-            FormI: ["Basic concepts of Mathematics: meaning, branches, relationships with other subjects and importance", "Rational, irrational and real numbers", "Recurring decimals and conversion between decimals and fractions", "Representation of rational numbers on a number line", "Inequalities and absolute values of real numbers", "Applications of numbers in real-life situations", "Ratios and proportions"]
+            FormI: ["Basic concepts, branches and applications of Mathematics", "Rational, irrational and real numbers", "Number operations and numerical skills", "Coordinate geometry and gradient", "Straight-line equations and graphs", "Algebraic expressions, equations and inequalities"],
+            FormII: ["Algebra and simultaneous equations", "Sets: types, operations and Venn diagrams", "Trigonometry and applications", "Coordinate geometry", "Vectors and geometrical reasoning"],
+            FormIII: ["Relations and functions, domain and range", "Quadratic equations and algebraic methods", "Sequences and series: arithmetic and geometric progressions", "Statistics and measures of central tendency", "Probability and applied mathematics"],
+            FormIV: ["Matrices: operations, determinants, inverse and transformations", "Circle geometry and related theorems", "Advanced algebra and functions", "Sequences, series and financial applications", "Statistics and probability"]
           }
         }
       },
