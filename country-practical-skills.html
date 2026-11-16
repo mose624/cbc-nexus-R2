@@ -66,6 +66,16 @@ header p{font-size:13.5px}
 @media(max-width:650px){body{font-size:13.5px}.subject p,.subject li,.subject td,.subject th{font-size:13px}.test-meta{display:block}.exam-paper{padding:11px}}
 @media print{.tabs{display:none}.exam-paper{break-inside:avoid}.diagram{break-inside:avoid}}
 
+
+/* Biology practical visual atlas */
+.biology-visual-atlas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:18px 0 24px}
+.biology-visual-atlas figure{margin:0;background:#f8fbff;border:1px solid #cfe0ef;border-radius:12px;overflow:hidden;box-shadow:0 3px 12px #09234a0b}
+.biology-visual-atlas img{display:block;width:100%;height:220px;object-fit:contain;background:#fff;padding:8px}
+.biology-visual-atlas figcaption{padding:10px 12px;font-size:12px;line-height:1.5;color:#40536a}
+.biology-visual-atlas figcaption strong{display:block;color:#09234a;font-size:13px;margin-bottom:3px}
+.biology-visual-atlas a{color:#075985}
+.biology-visual-note{background:#f0f8fc;border-left:4px solid #0876a9;border-radius:8px;padding:12px 15px;margin:12px 0}
+@media print{.biology-visual-atlas figure{break-inside:avoid}.biology-visual-atlas img{height:190px}}
 </style>
 <style id="practical-print-styles">
 .print-practical-btn{display:inline-flex;align-items:center;gap:7px;margin:8px 0 16px;padding:9px 15px;border:0;border-radius:7px;background:#1685c5;color:#fff;font-size:13px;font-weight:700;cursor:pointer}
@@ -115,6 +125,29 @@ header p{font-size:13.5px}
 <span class="formula">Magnification = Image size ÷ Actual size</span>
 <p>Image size and actual size must be in the same units before division. Convert millimetres to micrometres using 1 mm = 1000 µm.</p>
 <div class="callout"><strong>Biological drawing rules:</strong> use a sharp pencil, large clear outline, no shading, straight label lines that do not cross, and a title. Include magnification or a scale bar when required. Draw relative sizes and proportions accurately.</div>
+
+<h3>Biology practical image atlas: real microscope observations</h3>
+<p>Use these reference photographs to practise identifying visible structures, making accurate biological drawings, comparing tissues and interpreting microscope observations. The photographs are examples; your own specimen may look different because of species, preparation, stain, focus and magnification.</p>
+<div class="biology-visual-atlas" aria-label="Biology practical microscope image gallery">
+<figure>
+<a href="https://commons.wikimedia.org/wiki/File:Onion_Epidermis_Cells_W.M._40x_-_327.jpg" target="_blank" rel="noopener"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Onion_Epidermis_Cells_W.M._40x_-_327.jpg?width=1000" alt="Onion epidermal cells viewed under a microscope at 40 times magnification" loading="lazy"></a>
+<figcaption><strong>1. Onion epidermal cells (40×)</strong>Practise identifying rectangular cells and cell walls. Draw a small representative group with clear boundaries. Photograph: loganrickert, CC BY 2.0, via <a href="https://commons.wikimedia.org/wiki/File:Onion_Epidermis_Cells_W.M._40x_-_327.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>.</figcaption>
+</figure>
+<figure>
+<a href="https://commons.wikimedia.org/wiki/File:Stoma_under_optical_microscope.jpg" target="_blank" rel="noopener"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Stoma_under_optical_microscope.jpg?width=900" alt="Stoma showing paired guard cells and stomatal pore under an optical microscope" loading="lazy"></a>
+<figcaption><strong>2. Stoma under an optical microscope</strong>Identify the two guard cells and the stomatal pore. Compare the shape of guard cells with surrounding epidermal cells. Photograph: Paulssanta02, CC0, via <a href="https://commons.wikimedia.org/wiki/File:Stoma_under_optical_microscope.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>.</figcaption>
+</figure>
+<figure>
+<a href="https://commons.wikimedia.org/wiki/File:Transverse_section_of_xylem.jpg" target="_blank" rel="noopener"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Transverse_section_of_xylem.jpg?width=900" alt="Microscope photograph of a transverse section of xylem tissue" loading="lazy"></a>
+<figcaption><strong>3. Transverse section of xylem</strong>Observe the arrangement and appearance of xylem vessels in cross-section. Explain how vessel structure supports water transport. Photograph: Nbnidhi, CC BY 4.0, via <a href="https://commons.wikimedia.org/wiki/File:Transverse_section_of_xylem.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>.</figcaption>
+</figure>
+<figure>
+<a href="https://commons.wikimedia.org/wiki/File:Stomata_-_Pores_of_a_Plant_Leaf.jpg" target="_blank" rel="noopener"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Stomata_-_Pores_of_a_Plant_Leaf.jpg?width=1000" alt="Microscopic photograph showing two open stomata on a leaf epidermis" loading="lazy"></a>
+<figcaption><strong>4. Open stomata on a leaf epidermis</strong>Compare the open pores and guard cells. Predict how opening and closing affect gas exchange and transpiration. Photograph: Yead Muhammad Ivan, CC BY-SA 4.0, via <a href="https://commons.wikimedia.org/wiki/File:Stomata_-_Pores_of_a_Plant_Leaf.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>.</figcaption>
+</figure>
+</div>
+<div class="biology-visual-note"><strong>Practical questions using the image atlas:</strong> (a) Identify the specimen or tissue shown. (b) State two visible features used in identification. (c) Make a large biological drawing of a selected region and label it. (d) Explain one relationship between structure and function. (e) State why a photograph should not be treated as a substitute for observing the actual specimen.</div>
+
 <h3>3. Sampling organisms using quadrats and transects</h3>
 <p>A quadrat is placed randomly or systematically in a habitat. Count individuals or estimate percentage cover within each sample. Repeat at several locations and calculate a mean. Avoid choosing only places where the target organism is obvious.</p>
 <span class="formula">Mean number per quadrat = Total individuals counted ÷ Number of quadrats</span>
