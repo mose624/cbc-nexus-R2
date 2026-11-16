@@ -64,11 +64,11 @@ export const countryCurriculumVerification = {
 export const chapterEvidenceReconciliation = {
   reviewedOn: "2026-11-16",
   country: "Philippines",
-  gradeSequenceEvidence: "DepEd K–12 curriculum guides specify learning competencies by grade; implementation of MATATAG is phased, so identify the applicable curriculum version and grade cohort before sequencing subjects. Integrated Science in lower grades must be separated from senior high Biology, Chemistry and Physics tracks.",
-  textbookEvidence: "Curriculum framework or syllabus portal identified; actual adopted textbook contents pages and complete book PDFs were not inspected in this batch.",
+  gradeSequenceEvidence: "DepEd K–12 guides place Mathematics and Science across Grades 1–10; senior high STEM has distinct Biology, Chemistry and Physics. Strengthened SHS rollout is phased from SY 2026–27, so Grade 11 and Grade 12 cannot be treated as one unchanged cohort.",
+  textbookEvidence: "The referenced material is a curriculum, ministry or examination-framework source, not an opened textbook contents page. Actual adopted textbook contents pages and full book PDFs were not inspected in this batch.",
   actualTextbookContentsInspected: false,
   officialTextbookChapterCountsVerified: false,
   officialChapterCount: null,
   evidenceSource: "https://www.deped.gov.ph/k-to-12/about/k-to-12-basic-education-curriculum/",
-  nextRequiredWork: "Retrieve current grade-by-grade official syllabus and the exact approved/adopted textbook for each grade and pathway; inspect contents pages; record title, edition, publisher, grade, chapter titles and verified chapter count. Keep CBE Nexus-authored chapters separate."
+  nextRequiredWork: "Retrieve the current approved grade-by-grade syllabus and exact adopted textbook for each relevant grade and track; inspect contents pages; record title, edition, publisher, grade, chapter titles and verified count. Keep CBE Nexus-authored chapters separate."
 };
