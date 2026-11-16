@@ -116,3 +116,15 @@ export const countryCurriculumVerification = {
 },
   textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish actual contents-page chapter sequence." }
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Burkina Faso",
+  gradeSequenceEvidence: "Official MENAPLN portal lists post-primary Mathematics guides, Physics Science guides for 4e–3e and SVT guides for 6e–4e. Preserve SVT and integrated physical sciences terminology.",
+  textbookEvidence: "Official teacher guides are resources, not evidence of approved textbook chapter counts; sequence extraction still needed.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.education.gov.bf/accueil",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology (or integrated Life Science), Chemistry, Physics and Mathematics; then open approved/adopted student textbooks and record exact printed chapter headings and counts separately. Do not infer textbook chapters from syllabus themes."
+};
