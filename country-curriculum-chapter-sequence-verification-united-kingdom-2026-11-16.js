@@ -43,6 +43,16 @@ export const countryCurriculumVerification = {
   "sources": [
     "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study/national-curriculum-in-england-science-programmes-of-study"
   ],
+  "reconciliation": {
+    "batch": "173-192",
+    "status": "england-official-programmes-identified-other-jurisdictions-pending",
+    "evidenceSummary": "Split into four jurisdiction audits, not one UK sequence. England: Science and Mathematics statutory programmes cover KS1–KS4; science content names Biology, Chemistry and Physics, while Mathematics is year-by-year at KS1–KS2 and key-stage programmes at KS3–KS4. Scotland, Wales and Northern Ireland require separate extraction. Textbooks are publisher/school-selected, not one national approved book.",
+    "officialDocuments": ["https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study/national-curriculum-in-england-science-programmes-of-study","https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study"],
+    "gradeByGradeSequenceVerified": false,
+    "actualTextbookContentsInspected": false,
+    "officialTextbookChapterCountsVerified": false,
+    "nextAction": "Extract grade/year/term topic headings from current official programme documents; inspect actual approved learner-textbook contents pages; map every book chapter to the official topic sequence and record discrepancies."
+  },
   "completion": {
     "gradeByGradeTopicSequenceVerified": false,
     "officialTextbookChapterCountsVerified": false,
