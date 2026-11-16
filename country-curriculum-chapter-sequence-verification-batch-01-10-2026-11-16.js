@@ -54,66 +54,65 @@ export const chapterSequenceVerificationBatch01 = {
         },
         Chemistry: {
           officialName: "Chemistry",
-          sourceStatus: "official-grade-10-document-identified; detailed-2025-PDF-extraction-pending",
-          sequenceStatus: "10-provisional-CBE-Nexus-chapters-added; not-yet-verified-against-KICD-detailed-sequence",
-          chapterCount: 10,
-          chapterStatus: "provisional-teaching-map",
+          sourceStatus: "KICD-Grade-10-2025-curriculum-design-content-opened",
+          sequenceStatus: "7-official-sub-strands-transcribed; Organic-Chemistry-strand-listed-but-detailed-sub-strands-not-yet-extracted",
+          chapterCount: 7,
+          chapterStatus: "official-sub-strand-sequence-transcribed",
           chapters: [
-            { number: 1, title: "Introduction to Chemistry and Laboratory Safety", topics: ["Chemistry in everyday life", "Laboratory rules and hazard symbols", "Apparatus and safe handling", "Observation, measurement and recording"] },
-            { number: 2, title: "Measurement and Physical Properties of Matter", topics: ["Physical quantities and SI units", "Mass, volume and density", "States and properties of matter", "Changes of state"] },
-            { number: 3, title: "The Particulate Nature of Matter", topics: ["Particles in solids, liquids and gases", "Diffusion", "Kinetic particle model", "Heating and cooling curves"] },
-            { number: 4, title: "Atomic Structure and the Periodic Table", topics: ["Protons, neutrons and electrons", "Atomic and mass numbers", "Isotopes", "Arrangement of elements and periodic trends"] },
-            { number: 5, title: "Chemical Bonding and Structure", topics: ["Ionic bonding", "Covalent bonding", "Metallic bonding", "Properties of ionic, molecular and metallic substances"] },
-            { number: 6, title: "Chemical Formulae, Equations and the Mole", topics: ["Valency and formula writing", "Word and symbol equations", "Balancing equations", "Relative masses and introductory mole calculations"] },
-            { number: 7, title: "Acids, Bases and Salts", topics: ["Indicators and pH", "Properties of acids and bases", "Neutralization", "Preparation and uses of salts"] },
-            { number: 8, title: "Types of Chemical Reactions", topics: ["Combination and decomposition", "Displacement", "Precipitation", "Oxidation and reduction at an introductory level"] },
-            { number: 9, title: "Metals, Non-metals and Their Compounds", topics: ["Physical and chemical properties", "Reactivity patterns", "Extraction and uses", "Corrosion and prevention"] },
-            { number: 10, title: "Air, Water and Environmental Chemistry", topics: ["Composition of air", "Water treatment and testing", "Combustion and pollution", "Responsible chemical use and environmental protection"] }
+            { number: "1.1", title: "Introduction to Chemistry", strand: "Inorganic Chemistry", topics: ["Definition and branches of Chemistry", "Careers in Chemistry", "Chemistry in everyday life", "Safe and healthy learning environment"] },
+            { number: "1.2", title: "The Atom", strand: "Inorganic Chemistry", topics: ["Atomic structure", "Energy levels and orbitals", "Isotopes and relative atomic mass", "s and p orbital electron arrangements for the first 20 elements"] },
+            { number: "1.3", title: "The Periodic Table", strand: "Inorganic Chemistry", topics: ["Periodic table organisation", "Groups and periods", "Element classification", "Using periodic position to understand properties"] },
+            { number: "1.4", title: "Chemical Bonding", strand: "Inorganic Chemistry", topics: ["Ionic bonding", "Covalent bonding", "Metallic bonding", "Bonding and properties of substances"] },
+            { number: "1.5", title: "Periodicity", strand: "Inorganic Chemistry", topics: ["Periodic trends", "Variation of properties across periods and down groups", "Explaining trends using atomic structure"] },
+            { number: "2.1", title: "Acids and Bases", strand: "Physical Chemistry", topics: ["Properties of acids and bases", "Indicators and pH", "Neutralisation", "Safe handling and applications"] },
+            { number: "2.2", title: "Introduction to Salts", strand: "Physical Chemistry", topics: ["Types of salts", "Preparation of salts", "Properties and uses of salts", "Relevant practical investigations"] }
           ],
-          note: "These are CBE Nexus draft teaching chapters, not a claim about the official KICD chapter count or exact sequence. Reconcile titles and order against the July 2025 KICD Chemistry design before marking curriculum-verified."
+          additionalStrandNote: "The 2025 KICD summary also lists Strand 3.0 Organic Chemistry, but the extracted summary does not expose a numbered sub-strand title. Inspect the detailed section before adding it; do not invent a chapter title.",
+          note: "Titles and order follow the 2025 KICD Grade 10 Chemistry summary. Detailed learning outcomes and the Organic Chemistry strand still require further extraction."
         },
         Physics: {
           officialName: "Physics",
-          sourceStatus: "official-grade-10-document-identified; detailed-2025-PDF-extraction-pending",
-          sequenceStatus: "10-provisional-CBE-Nexus-chapters-added; not-yet-verified-against-KICD-detailed-sequence",
-          chapterCount: 10,
-          chapterStatus: "provisional-teaching-map",
+          sourceStatus: "KICD-Grade-10-2025-curriculum-design-content-opened",
+          sequenceStatus: "13-official-sub-strands-transcribed",
+          chapterCount: 13,
+          chapterStatus: "official-sub-strand-sequence-transcribed",
           chapters: [
-            { number: 1, title: "Introduction to Physics and Scientific Measurement", topics: ["Physics in society and technology", "Laboratory safety", "Physical quantities and SI units", "Accuracy, precision and significant figures"] },
-            { number: 2, title: "Measurement of Length, Time, Mass and Volume", topics: ["Measuring instruments", "Errors and uncertainty", "Area and volume", "Density and practical investigations"] },
-            { number: 3, title: "Motion in One Dimension", topics: ["Distance and displacement", "Speed and velocity", "Acceleration", "Distance-time and velocity-time graphs"] },
-            { number: 4, title: "Force and Newton's Laws of Motion", topics: ["Types of forces", "Resultant force", "Newton's laws", "Friction, mass and weight"] },
-            { number: 5, title: "Work, Energy and Power", topics: ["Work done", "Kinetic and potential energy", "Conservation and transformation of energy", "Power and efficiency"] },
-            { number: 6, title: "Pressure in Solids, Liquids and Gases", topics: ["Pressure and area", "Pressure in liquids", "Atmospheric pressure", "Applications of pressure"] },
-            { number: 7, title: "Thermal Physics", topics: ["Temperature and thermometers", "Thermal expansion", "Heat capacity and specific heat capacity", "Transfer of heat"] },
-            { number: 8, title: "Waves and Sound", topics: ["Wave properties", "Transverse and longitudinal waves", "Sound production and propagation", "Reflection and applications of sound"] },
-            { number: 9, title: "Light and Geometrical Optics", topics: ["Reflection of light", "Refraction", "Lenses and image formation", "Optical instruments"] },
-            { number: 10, title: "Electricity and Magnetism", topics: ["Charge and electric circuits", "Current, voltage and resistance", "Series and parallel circuits", "Magnets and electromagnets"] }
+            { number: "1.1", title: "Introduction to Physics", strand: "Mechanics and Thermal Physics", topics: ["Meaning and branches of Physics", "Importance in day-to-day life", "Relationship with other fields", "Career opportunities"] },
+            { number: "1.2", title: "Pressure", strand: "Mechanics and Thermal Physics", topics: ["Pressure in solids", "Pressure in liquids", "Atmospheric pressure", "Applications and investigations"] },
+            { number: "1.3", title: "Mechanical Properties of Materials", strand: "Mechanics and Thermal Physics", topics: ["Mechanical behaviour of materials", "Elasticity and deformation", "Material properties and practical investigations"] },
+            { number: "1.4", title: "Temperature and Thermal Expansion", strand: "Mechanics and Thermal Physics", topics: ["Temperature measurement", "Thermal expansion", "Applications of expansion"] },
+            { number: "1.5", title: "Moments and Equilibrium", strand: "Mechanics and Thermal Physics", topics: ["Moment of a force", "Principle of moments", "Conditions for equilibrium", "Practical applications"] },
+            { number: "1.6", title: "Energy, Work, Power and Machines", strand: "Mechanics and Thermal Physics", topics: ["Work and energy", "Power", "Mechanical advantage and efficiency", "Simple machines"] },
+            { number: "2.1", title: "Properties of Waves", strand: "Waves and Optics", topics: ["Wave characteristics", "Wave types", "Wave speed, frequency and wavelength", "Wave behaviour and applications"] },
+            { number: "2.2", title: "Radioactivity and Stability of Isotopes", strand: "Waves and Optics", topics: ["Radioactive emissions", "Nuclear stability", "Radioactive decay", "Applications and safety"] },
+            { number: "3.1", title: "Electrostatics", strand: "Electricity and Magnetism", topics: ["Electric charge", "Charging and discharging", "Electrostatic forces", "Applications and safety"] },
+            { number: "3.2", title: "Current Electricity", strand: "Electricity and Magnetism", topics: ["Electric current", "Potential difference and resistance", "Electrical circuits", "Electrical measurements and safety"] },
+            { number: "3.3", title: "Introduction to Electronics", strand: "Electricity and Magnetism", topics: ["Basic electronic components", "Semiconductor concepts", "Simple electronic circuits", "Applications of electronics"] },
+            { number: "4.1", title: "Greenhouse Effect and Climate Change", strand: "Environmental and Space Physics", topics: ["Greenhouse effect", "Greenhouse gases", "Climate change evidence and impacts", "Mitigation and adaptation"] },
+            { number: "4.2", title: "Introduction to Space Physics", strand: "Environmental and Space Physics", topics: ["Earth and its place in space", "Solar system and celestial objects", "Basic space science and applications"] }
           ],
-          note: "These are CBE Nexus draft teaching chapters, not a claim about the official KICD chapter count or exact sequence. Reconcile titles and order against the July 2025 KICD Physics design before marking curriculum-verified."
+          note: "Titles and order follow the 2025 KICD Grade 10 Physics summary. Detailed outcomes and learning experiences still require page-by-page extraction."
         },
         Mathematics: {
           officialName: "Core Mathematics",
-          sourceStatus: "official-grade-10-document-identified; detailed-2025-PDF-extraction-pending",
-          sequenceStatus: "10-provisional-CBE-Nexus-chapters-added; not-yet-verified-against-KICD-detailed-sequence",
-          chapterCount: 10,
-          chapterStatus: "provisional-teaching-map",
+          sourceStatus: "KICD-Grade-10-2025-curriculum-design-content-opened",
+          sequenceStatus: "9-official-sub-strands-transcribed-from-2025-design",
+          chapterCount: 9,
+          chapterStatus: "official-sub-strand-sequence-transcribed",
           chapters: [
-            { number: 1, title: "Number Systems and Computation", topics: ["Integers, fractions and decimals", "Rational and irrational numbers", "Indices and standard form", "Estimation and approximation"] },
-            { number: 2, title: "Sets, Logic and Number Patterns", topics: ["Set notation and representation", "Subsets and set operations", "Venn diagrams", "Sequences and patterns"] },
-            { number: 3, title: "Ratio, Rate, Proportion and Percentages", topics: ["Ratios and rates", "Direct and inverse proportion", "Percentages and percentage change", "Financial and consumer arithmetic"] },
-            { number: 4, title: "Algebraic Expressions and Formulae", topics: ["Terms and coefficients", "Expansion and factorization", "Algebraic fractions", "Substitution and changing the subject of a formula"] },
-            { number: 5, title: "Linear Equations and Inequalities", topics: ["Solving linear equations", "Simultaneous linear equations", "Linear inequalities", "Forming equations from word problems"] },
-            { number: 6, title: "Relations, Functions and Graphs", topics: ["Coordinates and relations", "Function notation", "Linear graphs", "Interpreting gradients and intercepts"] },
-            { number: 7, title: "Geometry and Geometrical Reasoning", topics: ["Angles and parallel lines", "Properties of triangles and polygons", "Congruence and similarity", "Geometrical constructions and reasoning"] },
-            { number: 8, title: "Measurement, Mensuration and Scale", topics: ["Perimeter and area", "Surface area and volume", "Units and conversions", "Scale drawings and practical measurement"] },
-            { number: 9, title: "Trigonometry and Vectors", topics: ["Right-angled triangle ratios", "Angles of elevation and depression", "Bearings", "Introduction to vectors and their operations"] },
-            { number: 10, title: "Statistics and Probability", topics: ["Data collection and presentation", "Measures of central tendency", "Measures of dispersion", "Basic probability and interpretation"] }
+            { number: "1.1", title: "Real Numbers", strand: "Numbers and Algebra", topics: ["Classification of whole numbers", "Rational and irrational numbers", "Reciprocals of real numbers", "Applications in computation"] },
+            { number: "1.2", title: "Indices and Logarithms", strand: "Numbers and Algebra", topics: ["Index notation and laws of indices", "Common logarithms to base 10", "Logarithm tables and calculators", "Applications of indices and logarithms"] },
+            { number: "1.3", title: "Quadratic Expressions and Equations 1", strand: "Numbers and Algebra", topics: ["Quadratic expressions", "Quadratic identities", "Factorisation", "Formation and solution of quadratic equations", "Real-life applications"] },
+            { number: "2.1", title: "Similarity and Enlargement", strand: "Measurements and Geometry", topics: ["Similar figures", "Scale factors", "Enlargement", "Applications of similarity"] },
+            { number: "2.2", title: "Reflection and Congruence", strand: "Measurements and Geometry", topics: ["Reflection transformations", "Congruent figures", "Properties and applications"] },
+            { number: "2.3", title: "Rotation", strand: "Measurements and Geometry", topics: ["Rotation about a centre", "Angles and direction of rotation", "Images under rotation"] },
+            { number: "2.4", title: "Trigonometry 1", strand: "Measurements and Geometry", topics: ["Right-triangle trigonometric ratios", "Applications to heights and distances", "Problem solving"] },
+            { number: "3.1", title: "Statistics I", strand: "Statistics and Probability", topics: ["Collection and organisation of data", "Representation and interpretation", "Statistical measures specified in the detailed design"] },
+            { number: "3.2", title: "Probability 1", strand: "Statistics and Probability", topics: ["Basic probability concepts", "Probability of simple events", "Experimental and theoretical probability"] }
           ],
-          note: "These are CBE Nexus draft teaching chapters, not a claim about the official KICD chapter count or exact sequence. Reconcile titles and order against the July 2025 KICD Core Mathematics design before marking curriculum-verified."
-        }
-      },
-      status: "Biology has 10 KICD sub-strands transcribed; Chemistry, Physics and Core Mathematics each have 10 provisional CBE Nexus chapters awaiting exact KICD PDF sequence reconciliation"
+          note: "The 2025 KICD Core Mathematics summary has 9 sub-strands. An earlier June 2024 draft listed additional geometry sub-strands; it is not used as the 2025 sequence."
+        },
+      status: "Biology 10, Chemistry 7 and Physics 13 KICD sub-strands transcribed; Core Mathematics 9 sub-strands transcribed from the 2025 design. Chemistry Organic Chemistry detailed sub-strands still need extraction."
     },
     {
       country: "Ghana",
