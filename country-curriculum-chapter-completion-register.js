@@ -31,7 +31,27 @@
  }
 
  root.CBE_CURRICULUM_COMPLETION_REGISTER={
-  version:"2026-11-16-v1",
+  version:"2026-11-16-v2-country-reconciled",
+  /* Canonicalise starter-file labels to the country names used by this register.
+     Do not rename live country routes or merge distinct education jurisdictions. */
+  countryNameAliases:{
+   "Brunei Darussalam":"Brunei",
+   "Republic of the Congo":"Congo",
+   "The Gambia":"Gambia",
+   "São Tomé and Príncipe":"Sao Tome and Principe",
+   "Turkey":"Türkiye"
+  },
+  countryCoverageReconciliation:{
+   mainStarterGroups:{africaBatchFiles:10,africaCountryEntries:50,asiaBatchFiles:10,asiaCountryEntries:50,globalRemainingEntries:94,totalEntries:194},
+   mainStarterGroupCoverage:{canonicalRegisterCountriesRepresented:192,registerCountriesNotInTheseThreeGroups:["Kenya","Rwanda","Tanzania","Uganda"],additionalNonRegisterEducationJurisdictions:["Taiwan"],duplicateAliasEntry:"Turkey / Türkiye"},
+   additionalCountryFiles:{
+    "Kenya":"country-online-notes-data.js; country-online-notes-country-expansion.js",
+    "Rwanda":"country-online-notes-rwanda-reb.js",
+    "Tanzania":"country-online-notes-international-country-expansion.js",
+    "Uganda":"country-online-notes-international-country-expansion.js"
+   },
+   reconciliationNote:"The three main starter groups contain 194 rows, representing 192 distinct countries in this 196-entry register after canonical name matching. Taiwan is an additional education jurisdiction outside the register. Kenya, Rwanda, Tanzania and Uganda have separate country-specific files and are not missing from the repository; their detailed subject/chapter completeness still requires audit."
+  },
   targetCountryCount:196,
   registeredCountryCount:countries.length,
   targetWordsPerChapter:TARGET_WORDS_PER_CHAPTER,
