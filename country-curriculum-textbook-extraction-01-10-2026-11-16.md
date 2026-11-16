@@ -441,3 +441,91 @@ Official Ministry notice: https://moe.gov.af/en/node/8486
 **Official grade-by-grade syllabus topic sequences independently transcribed:** 0. The book contents pages are textbook evidence, not an independently published syllabus.
 
 **Remaining Afghanistan work:** locate and inspect Grade 9 Mathematics and the Ministry's Grade 9 Science/subject materials; verify whether Grade 9 is organised as integrated Science in the current curriculum; inspect Grade 9 Pashto Biology contents page if a bilingual comparison is needed; obtain the final approved 2026 Grades 7–9 syllabus/textbook documents. Other nine countries in the first batch remain pending. Canonical register remains unchanged.
+
+
+---
+
+# Afghanistan Grade 9 continuation — Mathematics (Pashto) and Science (religious schools)
+
+**Inspection date:** 16 November 2026  
+**Critical pathway distinction:** The Grade 9 Science book inspected below explicitly says it is for religious schools (مدارس دینی). It must not be treated as the general-school Grade 9 Science book or substituted for the general-school separate Biology, Chemistry and Physics sequence.
+
+## E. Grade 9 Mathematics — Pashto edition, 1398 SH
+
+**Official Ministry PDF:** https://moe.gov.af/sites/default/files/2020-03/G9-Ps-Math.pdf  
+**Book details:** Mathematics; Grade 9; Pashto; Ministry of Education; Kabul; 1398 SH. The PDF's formal book-details section identifies the subject, grade, language, Ministry directorate and publication year (PDF lines 115–140). The actual contents pages were inspected at PDF lines 161–233.
+
+### Actual contents-page transcription
+
+| Chapter | Chapter title (English working translation) | Contents-page topics | Printed start page |
+|---|---|---|---:|
+| 1 | Circle | Elements of a circle; positions of lines relative to circles; angles in/around a circle; properties of chords and radii; inscribed and tangent angles | 1 |
+| 2 | Relations in a circle | Power of a point; tangent line; interior and exterior angles; inscribed/circumscribed circles; properties of cyclic quadrilaterals; construction, perimeter and area of regular polygons | 27 |
+| 3 | Analytic geometry | Distance between two points; coordinates of a line segment's midpoint; slope; parallel and perpendicular line slopes; equations of straight lines; systems of linear equations and solution methods; translations, reflections and rotations | 55 |
+| 4 | Trigonometry | Thales' theorem in a triangle; sine, cosine and tangent of acute angles; ratios of special angles; relationship of slope and tangent; trigonometric tables; solving right triangles; trigonometric equations | 95 |
+| 5 | Polynomials | Factorisation; multiplication of algebraic expressions; sum and difference of cubes; least common multiple; division of algebraic expressions; order of operations | 127 |
+| 6 | Inequalities | Solving linear inequalities; intervals; sign analysis of rational expressions; rational inequalities; two-variable linear inequalities; systems of inequalities | 151 |
+| 7 | Quadratic equations in one unknown | Solving quadratic equations; nonlinear relations; geometric/completing-the-square solution method associated in the text with Muhammad ibn Musa al-Khwarizmi | 175 |
+| 8 | Statistics | Classification of data; discrete and continuous data; mean; rectangular and circular graphs; median; range; mean deviation | 195 |
+| 9 | Probability | Union and intersection of events; sample space and complement; constructing models with sets; counting principles | 221 |
+
+**Language/edition note:** This is the Pashto edition. A Dari Grade 9 Mathematics book is also indexed by Ministry-linked catalogue/mirror sources, but the direct Ministry-hosted Dari PDF timed out in this retrieval attempt. The Pashto contents page is counted as one actual Ministry PDF contents-page extraction; no Dari contents page is counted.
+
+## F. Grade 9 Science — Dari edition for religious schools only, 1398 SH
+
+**Official Ministry PDF:** https://moe.gov.af/sites/default/files/2020-02/G9-IS-Dr-Science.pdf  
+**Book metadata:** Science; Grade 9; Dari; explicitly “for religious schools”; Ministry of Education; publication 1398 SH (PDF lines 0–13). The preface says the integrated Science book includes introductory Physics, Chemistry, Biology and Geology concepts for religious-school learners (PDF lines 91–99).
+
+### Actual contents-page transcription
+
+The actual contents page was inspected at PDF lines 103–173. It lists eleven chapters:
+
+| Chapter | Chapter title (English working translation) | Contents-page topics / subtopics |
+|---|---|---|
+| 1 | One-dimensional motion | Position; change of position/displacement; speed; velocity; uniform rectilinear motion; average velocity |
+| 2 | Vibrations and waves | Vibration; types and characteristics of vibrations; waves; wave production; wave characteristics |
+| 3 | Electric current | Direct current; electric circuit; measuring current; potential difference and its measurement; electrical resistance; ohmmeter; electrical safety |
+| 4 | Magnetic effects of current in a wire | Magnetic effect of electric current; field around a current-carrying wire; force on a current-carrying wire; direction of magnetic force; galvanometer |
+| 5 | Organic compounds | Definition of organic compounds; chemical relationships/reactions in organic compounds |
+| 6 | Hydrocarbons | Alkanes and methane family; cycloalkanes; unsaturated hydrocarbons; aromatic hydrocarbons |
+| 7 | Functional groups | Alcohols; ethers; aldehydes; ketones; organic acids; esters; soap and its manufacture; carbohydrates; polysaccharides |
+| 8 | Reactions of organic compounds | Reactions of organic compounds |
+| 9 | Classification of living things | History of classification; classification levels; six-kingdom classification |
+| 10 | Classification of plants | Plant characteristics; plant classification; ovary-bearing plants |
+| 11 | Classification of animals | Animal characteristics; invertebrates; vertebrates |
+
+**Pathway warning:** This is not evidence that Afghanistan's general-school Grade 9 curriculum uses one integrated Science book. The title page explicitly limits this book to religious schools. The general-school curriculum books index lists Mathematics, Physics, Chemistry and Biology separately for Grades 7–9. The integrated religious-school Science book is therefore recorded in its own pathway, not merged into the general-school sequence.
+
+## Official general-school Grade 9 subject structure — correction and clarification
+
+The Ministry's curriculum books index for general schools lists Mathematics, Physics, Chemistry and Biology in the Grade 7–9 columns. It also lists other subjects and changes subject offerings by stage. This is the relevant evidence for the general-school structure:
+https://www.moe.gov.af/index.php/en/node/450
+
+The separate Grade 9 Science PDF at https://moe.gov.af/sites/default/files/2020-02/G9-IS-Dr-Science.pdf is explicitly for religious schools. The existence of that book must not be used to claim that general schools have replaced separate Biology, Chemistry and Physics with integrated Science.
+
+## Updated Grade 9 Afghanistan extraction status
+
+| Book/pathway | Contents page inspected | Chapters transcribed |
+|---|---:|---:|
+| General-school Biology, Dari | Yes | 9 |
+| General-school Mathematics, Pashto | Yes | 9 |
+| General-school Chemistry | Not yet inspected | 0 |
+| General-school Physics | Not yet inspected | 0 |
+| Religious-school integrated Science, Dari | Yes | 11 |
+| General-school Mathematics, Dari | Direct Ministry PDF retrieval timed out; no contents counted | 0 |
+
+**Grade 9 new additions in this continuation:** 2 actual contents pages; 20 chapters transcribed (9 Mathematics + 11 religious-school Science).
+
+## Updated Afghanistan cumulative totals
+- Grade 7 general-school books: 4 contents pages; 27 chapters.
+- Grade 8 general-school books: 4 contents pages; 30 chapters.
+- Grade 9 general-school Biology: 1 contents page; 9 chapters.
+- Grade 9 general-school Mathematics (Pashto): 1 contents page; 9 chapters.
+- Grade 9 religious-school integrated Science: 1 contents page; 11 chapters.
+- **Cumulative:** 11 actual textbook contents pages; **86 chapters transcribed**.
+- An additional Grade 9 Biology Pashto PDF has been located and its metadata inspected, but its contents page has not been transcribed and is not counted.
+- Complete official grade-by-grade syllabus topic sequences independently transcribed: **0**.
+- Current final adoption status of the 1398–1399 SH textbooks in November 2026: **not established**. The Ministry's July 2026 consultation notice concerns draft review, not proof of final adoption.
+- Remaining Afghanistan work: general-school Grade 9 Chemistry and Physics, Grade 9 Mathematics Dari contents, the current approved Grades 7–9 syllabus, and edition/adoption verification.
+- Other nine countries in the first ten remain pending document-level extraction.
+- Canonical register remains unchanged.
