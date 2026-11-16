@@ -99,4 +99,13 @@ export const countryCurriculumVerification = {
     subjectRecordsWithDetailedGradeByGradeSequenceReconciled: 0,
     claimOf10000WordChapters: false
   }
+
+  evidenceRefresh_2026_11_16: {
+  "status": "official SPN21 structure confirmed; detailed syllabuses and textbook contents pending",
+  "sources": [
+    "https://planipolis.iiep.unesco.org/sites/default/files/ressources/brunei_darussalam_spn21english.pdf"
+  ],
+  "finding": "SPN21 makes Mathematics and Science compulsory in Years 7–8; Years 9–10 General Education includes Mathematics, Science and Physics/Chemistry/Biology/Combined Science options. This is pathway structure, not topic order."
+},
+  textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish actual contents-page chapter sequence." }
 };
