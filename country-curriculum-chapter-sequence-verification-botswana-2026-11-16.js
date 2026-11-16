@@ -109,4 +109,13 @@ export const countryCurriculumVerification = {
     subjectRecordsWithCompleteGradeByGradeSequenceReconciled: 0,
     claimOf10000WordChapters: false
   }
+
+  evidenceRefresh_2026_11_16: {
+  "status": "official BGCSE syllabus catalogue confirmed; syllabus contents not extracted",
+  "sources": [
+    "https://www.bec.co.bw/index.php/qualifications-programmes/bgcse-products/bgcse-assesssment/bgcse-syllabi"
+  ],
+  "finding": "Botswana Examinations Council lists Mathematics, Biology, Chemistry, Physics and single/double-award Science syllabuses. This establishes examination subjects, not national grade-by-grade topic sequence or textbook chapter count."
+},
+  textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish actual contents-page chapter sequence." }
 };
