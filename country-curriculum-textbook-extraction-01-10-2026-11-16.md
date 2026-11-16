@@ -157,3 +157,91 @@ Extract Version 9.0 Science and Mathematics content descriptions year by year fr
 
 ## Next extraction queue
 Continue with the remaining Grade 7 Afghanistan science/mathematics books and syllabus documents where available, while retrieving official syllabus PDFs for Albania, Algeria, Andorra, Angola, Antigua and Barbuda, Argentina, Armenia, Australia and Austria. Add each new contents-page transcription as a distinct grade/subject/edition record. Do not mark a country complete merely because one textbook has been inspected.
+
+
+---
+
+# Afghanistan continuation — Grade 7 Chemistry, Physics and Mathematics
+**Document inspection date:** 16 November 2026  
+**Primary publisher:** Afghanistan Ministry of Education, General Directorate of Curriculum Development and Textbook Authoring  
+**Language:** Dari  
+**Important currency caveat:** These are official Ministry-hosted textbook editions from 1398–1399 SH (approximately 2019–2021). A Ministry notice dated 26 July 2026 reports a consultation/review programme for draft Science and Mathematics textbooks for Grades 7–9. That notice means the older books must not automatically be described as the current final editions. The 2026 draft review is not itself a published final replacement syllabus or textbook.
+
+## A. Grade 7 Chemistry — actual contents page inspected
+
+**Official PDF:** https://www.moe.gov.af/sites/default/files/2020-03/G7-Dr-Chemistry.pdf  
+**Book metadata:** Grade 7; Dari; printed in Kabul; Ministry of Education; 1398 SH. The PDF's contents page appears in the front matter at lines 64–93 of the extracted PDF text.
+
+| Chapter | Original chapter heading (English working translation) | Contents-page topics | Printed start pages |
+|---|---|---|---:|
+| 1 | Matter and its properties | Matter; particles of matter—atoms and molecules; arrangement of particles and physical states; states of matter and heat; three states of water; effect of heat on volume; properties of matter | 1 |
+| 2 | Types of matter | Mixtures; conservation of mass in forming solutions; solubility; pure substances | 21 |
+| 3 | Chemical interactions and equations | Chemical equations; chemical reactions and formation of compounds; balancing chemical equations | 37 |
+| 4 | Important elements in our lives | Hydrogen; oxygen; nitrogen; carbon | 57 |
+
+The contents page lists chapter summaries and exercises after each chapter. The four chapters and their topic order are directly transcribed from the book's contents page. The book introduction independently describes the same four-chapter structure and identifies Chemistry as a separate subject beginning in Grade 7 in the general-school curriculum.
+
+**Extraction status:** One actual official contents page inspected; four chapter headings transcribed.
+
+## B. Grade 7 Physics — actual contents page inspected
+
+**Official PDF:** https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Physic.pdf  
+**Book metadata:** Grade 7; Dari; Ministry of Education. The front matter contains inconsistent year references: the cover-area text includes 1390 SH, while the formal book information at lines 45–55 states 1399 SH. Retain this discrepancy for bibliographic verification rather than silently selecting one date.
+
+| Chapter | Chapter heading | Contents-page topics | Printed start pages |
+|---|---|---|---:|
+| 1 | Measurement | Concept and importance of measurement; fundamental and derived quantities; instruments and methods; measuring length, time and mass; measurement accuracy | 1 |
+| 2 | Force | Effects of force; unit and measurement of force; force meter; characteristics and vector nature of force | 17 |
+| 3 | Work, energy and power | What work is; what energy is; relationship between energy and work; power | 26 |
+| 4 | Pressure | Definition and effects of pressure; atmospheric pressure; liquid pressure and Pascal's law; buoyant force and Archimedes' principle | 40 |
+| 5 | Properties of light | Light and vision; rectilinear propagation; shadows and eclipses; luminous and non-luminous objects; transparent, translucent and opaque materials | 53 |
+| 6 | Reflection of light | Interaction of light with matter; law of reflection; plane mirrors and image properties; image distance; uses of plane mirrors; spherical, concave and convex mirrors; focal point and applications | 63 |
+| 7 | Refraction of light | Refraction; prism; concave lenses; locating lens focus; eye and vision defects; microscope | 77 |
+
+The textbook preface itself says Grade 7 Physics contains seven chapters covering measurement, force, work, energy, power, pressure, properties of light, reflection and refraction.
+
+**Extraction status:** One actual official contents page inspected; seven chapter headings transcribed.
+
+## C. Grade 7 Mathematics — actual contents page inspected
+
+**Official PDF:** https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Math.pdf  
+**Book metadata:** Grade 7; Dari; Ministry of Education; Kabul; 1398 SH. The contents page is in the front matter at extracted PDF text lines 68–147.
+
+| Chapter | Chapter heading | Contents-page topics | Printed start pages |
+|---|---|---|---:|
+| 1 | Sets | Concept and representation of sets; equal and equivalent sets; subsets; intersection and union; difference; universal set and complement; finite and infinite sets | 3 |
+| 2 | Natural numbers | Divisibility and factorisation; powers and laws of exponents; scientific notation; greatest common divisor; least common multiple and applications; relation between GCD and LCM; square roots and cube roots | 27 |
+| 3 | Integers | Positive and negative integers; ordering and number-line representation; absolute value; addition, subtraction, multiplication and division; order of operations; properties of operations | 71 |
+| 4 | Rational numbers | Rational numbers; comparison; four operations; properties of operations; conversion to decimals | 97 |
+| 5 | Triangles and polygons | Classification of triangles; median, altitude and angle bisector; interior and exterior angle sums; side relationships; polygons; congruent figures and triangle congruence | 119 |
+| 6 | Parallel and perpendicular lines | Alternate interior/exterior angles; corresponding angles; co-interior angles; quadrilaterals (parallelogram, rectangle, square, rhombus and trapezium); opposite angles; exterior angles; diagonal properties | 157 |
+| 7 | Statistics / data handling (contents heading is rendered as “probabilities” in the source) | Data collection; population and sample; random sample; random variable and types; frequency table; pictograph; mode; mean | 187 |
+| 8 | Probability | Chance; probability; experiment; random experiment; sample space; theoretical probability | 211 |
+
+**Terminology caution:** The Dari contents page labels Chapter 7 with the same word rendered as “probabilities” in the extracted text, but its listed contents are clearly descriptive statistics/data handling (population, sample, frequency, pictograph, mode and mean). Preserve the source heading in the source-language record and use “Statistics / data handling” as a qualified English working translation. Do not merge Chapter 7 with Chapter 8.
+
+**Extraction status:** One actual official contents page inspected; eight chapter headings transcribed.
+
+## D. Official status and curriculum transition warning
+
+The Ministry of Education published a notice dated 26 July 2026 describing a six-day academic consultation to review and strengthen draft general-education Science and Mathematics textbooks for Grades 7–9. The event included curriculum and teacher professional-development officials, textbook authors, university lecturers and Academy of Sciences representatives. This confirms that draft materials were under review; it does **not** establish that new books were finally approved, distributed or adopted.
+
+Official notice: https://moe.gov.af/index.php/en/node/8486
+
+Therefore:
+- The three Grade 7 books above are genuine Ministry-hosted books with inspected contents pages.
+- They are historical/official editions, not automatically verified as the editions in current use in November 2026.
+- The 2026 review notice is a transition flag requiring follow-up with the Ministry's final approved syllabus and textbook release.
+- No grade-by-grade official syllabus PDF sequence has yet been independently transcribed in this pass. Textbook contents are not to be relabelled as the official syllabus.
+
+## Updated Afghanistan extraction count
+
+| Grade 7 subject | Official book PDF opened | Contents-page chapters transcribed |
+|---|---:|---:|
+| Biology | Yes | 8 |
+| Chemistry | Yes | 4 |
+| Physics | Yes | 7 |
+| Mathematics | Yes | 8 |
+| **Total** | **4 books** | **27 chapters** |
+
+The first-batch total is now **4 actual textbook contents pages** and **27 textbook chapters** transcribed, all for Afghanistan Grade 7. Complete official grade-by-grade syllabus sequences transcribed remain **0**. The other nine countries in the first batch remain pending document-level extraction. The canonical register remains unchanged until syllabus topic sequences and edition status are reconciled.
