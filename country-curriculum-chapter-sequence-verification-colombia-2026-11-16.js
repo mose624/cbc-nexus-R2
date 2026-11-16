@@ -177,3 +177,15 @@ export const countryCurriculumVerification = {
     "Create CBE Nexus chapter sequences only after the national learning expectations and textbook editions are reconciled."
   ]
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Colombia",
+  gradeSequenceEvidence: "The Ministry published updated curriculum guidelines in 2026; Colombia's reference standards and institutional PEI/study plans mean a single mandated national textbook chapter order should not be asserted. Extract grade-cycle standards and school-plan variation.",
+  textbookEvidence: "No textbook contents inspected; do not treat national learning standards as a single prescribed book sequence.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.mineducacion.gov.co/portal/Preescolar-basica-y-media/Referentes-de-calidad/339975:Lineamientos-curriculares",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology or integrated Life Science, Chemistry, Physics and Mathematics. Then inspect adopted student textbooks and record printed chapter titles and counts separately; do not infer chapters from standards or themes."
+};
