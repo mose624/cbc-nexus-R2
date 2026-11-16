@@ -118,4 +118,11 @@ export const country = {
     status: "2026-national-standard-and-subject-scope-verified; textbook-sequence-extraction-pending",
     note: "The legal standard lists required subjects but delegates exact class placement and weekly hours to Ministry standard plans. The advanced Grade 8 pilot is experimental. Do not infer chapter counts or detailed sequences from subject presence alone."
   }
+
+  evidenceRefresh_2026_11_16: {
+  "status": "existing country source map retained; current official topic documents and actual textbook contents require direct extraction",
+  "sources": [],
+  "finding": "No new verified topic sequence or official textbook chapter count is asserted in this evidence refresh. Preserve any jurisdiction, language, pathway and integrated-science distinctions already recorded in this file."
+},
+  textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish the actual contents-page chapter sequence. Do not invent counts." }
 };
