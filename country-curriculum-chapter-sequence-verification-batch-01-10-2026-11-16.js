@@ -209,16 +209,19 @@ export const chapterSequenceVerificationBatch01 = {
       officialSources: [
         "https://www.nerdc.gov.ng/content_manager/new_senior_curriculum_home.html",
         "https://lmis.nerdcportals.com.ng/s1_science",
-        "https://lmis.nerdcportals.com.ng/s1_core"
+        "https://lmis.nerdcportals.com.ng/s1_core",
+        "https://lmis.nerdcportals.com.ng/s2_science",
+        "https://lmis.nerdcportals.com.ng/s2_core",
+        "https://lmis.nerdcportals.com.ng/sss_1/necurrdc/viewer.html?file=6.pdf"
       ],
-      curriculumStructure: "NERDC separates SSS 1, SSS 2 and SSS 3. The SSS 1 science portal lists Biology, Chemistry and Physics; the core portal separately lists General Mathematics. Viewer links were identified, but their embedded curriculum PDF contents were not machine-readable in this pass.",
+      curriculumStructure: "The October 2025 revised Senior Secondary Curriculum is organised by SSS 1, SSS 2 and SSS 3. NERDC's SSS 1 science portal lists Biology, Chemistry and Physics; its core portal lists General Mathematics. SSS 2 portals confirm the same science/core subject groupings. The Biology SSS 1 viewer document is identified as the October 2025 revised curriculum, but its embedded viewer did not expose readable chapter contents in this audit. Do not use older e-Curriculum topics as substitutes for the revised 2025 sequence.",
       subjects: {
-        Biology: { officialName: "Biology", sourceStatus: "official-SSS1-subject-listed", sequenceStatus: "viewer-document-extraction-pending", syllabusThemes: [], chapterCount: null },
-        Chemistry: { officialName: "Chemistry", sourceStatus: "official-SSS1-subject-listed", sequenceStatus: "viewer-document-extraction-pending", syllabusThemes: [], chapterCount: null },
-        Physics: { officialName: "Physics", sourceStatus: "official-SSS1-subject-listed", sequenceStatus: "viewer-document-extraction-pending", syllabusThemes: [], chapterCount: null },
-        Mathematics: { officialName: "General Mathematics", sourceStatus: "official-core-SSS1-subject-listed", sequenceStatus: "viewer-document-extraction-pending", syllabusThemes: [], chapterCount: null }
+        Biology: { officialName: "Biology", sourceStatus: "October-2025-revised-SSS1-document-identified; viewer-content-not-extracted", sequenceStatus: "chapter-sequence-extraction-pending", syllabusThemes: [], chapterCount: null, sourceDocument: "https://lmis.nerdcportals.com.ng/sss_1/necurrdc/viewer.html?file=6.pdf" },
+        Chemistry: { officialName: "Chemistry", sourceStatus: "official-revised-SSS1-and-SSS2-subject-listings-verified", sequenceStatus: "revised-document-retrieval-and-chapter-extraction-pending", syllabusThemes: [], chapterCount: null },
+        Physics: { officialName: "Physics", sourceStatus: "official-revised-SSS1-and-SSS2-subject-listings-verified", sequenceStatus: "revised-document-retrieval-and-chapter-extraction-pending", syllabusThemes: [], chapterCount: null },
+        Mathematics: { officialName: "General Mathematics", sourceStatus: "official-revised-core-SSS1-and-SSS2-subject-listings-verified", sequenceStatus: "revised-document-retrieval-and-chapter-extraction-pending", syllabusThemes: [], chapterCount: null }
       },
-      status: "revised-official-curriculum-and-subject-listings-verified; chapter sequence extraction pending"
+      status: "October-2025 revised curriculum subject listings verified for SSS1 and SSS2; Biology SSS1 document identified; full chapter sequences for all four subjects still pending viewer/PDF content extraction"
     },
     {
       country: "Uganda",
