@@ -49,3 +49,5 @@ export const countryCurriculumVerification = {
     "Author and verify CBE Nexus chapters only after sequence validation."
   ]
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Lebanon", gradeSequenceEvidence: "CRDP administers national curriculum programmes and textbooks. Extract Mathematics and Life Sciences/Physics/Chemistry by grade and distinguish official national programmes from private/international curricula.", textbookEvidence: "No actual textbook contents inspected; current official editions and contents pages outstanding.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "Official CRDP curriculum and textbook portal retrieval outstanding.", nextRequiredWork: "Extract the official grade/year/term sequence for Mathematics and integrated or specialist sciences from current national documents; inspect actual approved/adopted student textbook contents pages and record exact chapter titles and counts separately." };
