@@ -116,3 +116,15 @@ export const countryCurriculumVerification = {
   },
   overallStatus: "Official programme framework identified; detailed topic-by-topic reconciliation and textbook chapter verification remain pending."
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Costa Rica",
+  gradeSequenceEvidence: "MEP programme portal lists I, II and III cycles and diversified education. In diversified education, Biology, Chemistry, Physics and Mathematics have separate programmes; primary and lower-secondary Science is integrated. The current programme page identifies downloadable specialist programmes.",
+  textbookEvidence: "Official programme downloads identified; actual student textbook contents and chapter counts not inspected.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.mep.go.cr/programas-estudio?academico=8083&texto-programas-academicos=",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology or integrated Life Science, Chemistry, Physics and Mathematics. Then inspect adopted student textbooks and record printed chapter titles and counts separately; do not infer chapters from standards or themes."
+};
