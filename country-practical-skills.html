@@ -1341,6 +1341,231 @@ header p{font-size:13.5px}
 </ul>
 </section>
 
+
+<style>
+/* Compact study layout for dense practical reference material */
+body{font-size:14px;line-height:1.58}
+.subject{padding:clamp(15px,2.4vw,24px)}
+.subject h2{font-size:1.55rem}.subject h3{font-size:1.18rem}.subject h4{font-size:1rem}
+table{font-size:.84rem}th,td{padding:7px 8px}
+.point-list li,.subject li{margin:5px 0}
+.practical-card{border:1px solid #cbddea;border-radius:11px;padding:15px;margin:16px 0;background:#fff}
+.practical-card h4{margin-top:0}
+.data-table td{height:35px;min-width:72px}
+.reference-table th{background:#e6f4ee}
+.graph-frame{border:1px solid #b8cad8;background:#fbfdff;border-radius:9px;padding:10px;margin:12px 0;overflow-x:auto}
+.graph-frame svg{display:block;max-width:100%;height:auto;margin:auto}
+.safety-note{background:#fff5ee;border-left:4px solid #d97706;border-radius:7px;padding:10px 13px;margin:12px 0}
+</style>
+<section class="subject" id="data-recording-and-graphing">
+<h2>Practical Investigation Skills: Recording, Processing, Analysing and Presenting Data</h2>
+<p>Every investigation should produce a traceable record. A good practical answer shows what was measured, how it was measured, the units, how the readings were processed and what the evidence means.</p>
+<h3>1. Preparing a results table</h3>
+<ul class="point-list">
+<li>Give the table a short title that identifies the investigation.</li>
+<li>Put the independent variable in the first column and the dependent variable in the next column.</li>
+<li>Write the quantity and unit in every heading, for example <em>Time / s</em>, <em>Current / A</em>, <em>Temperature / °C</em> or <em>Length / cm</em>.</li>
+<li>Do not write units after every value when the unit is already in the heading.</li>
+<li>Use consistent decimal places that match the measuring instrument's resolution.</li>
+<li>Record raw readings immediately. Do not alter a reading to make it fit the expected pattern.</li>
+<li>Repeat measurements where practical, then calculate a mean. Keep raw readings visible alongside the mean.</li>
+<li>Identify an anomalous value and investigate its cause; do not silently delete it.</li>
+</ul>
+<h4>Blank results table: independent and dependent variables</h4>
+<table class="data-table"><thead><tr><th>Trial</th><th>Independent variable / unit</th><th>Dependent reading 1 / unit</th><th>Dependent reading 2 / unit</th><th>Dependent reading 3 / unit</th><th>Mean / unit</th></tr></thead><tbody>
+<tr><td>1</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>2</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>3</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>4</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>5</td><td></td><td></td><td></td><td></td><td></td></tr>
+</tbody></table>
+<h3>2. Processing and analysing results</h3>
+<ul class="point-list">
+<li><strong>Mean:</strong> add repeat readings and divide by the number of readings.</li>
+<li><strong>Range:</strong> highest reading minus lowest reading; this gives a simple indication of spread.</li>
+<li><strong>Rate:</strong> change in measured quantity divided by elapsed time.</li>
+<li><strong>Gradient:</strong> change in vertical-axis quantity divided by change in horizontal-axis quantity.</li>
+<li><strong>Percentage error:</strong> absolute uncertainty divided by measured value, multiplied by 100%, where the uncertainty is known.</li>
+<li><strong>Percentage change:</strong> (final value − initial value) ÷ initial value × 100%.</li>
+<li>Compare the pattern with the prediction. Quote at least two relevant values from the table or graph.</li>
+<li>Separate observation from explanation: first state the trend, then explain it using scientific principles.</li>
+<li>Discuss reliability, accuracy, precision, validity and limitations as distinct ideas.</li>
+</ul>
+<h3>3. Drawing and interpreting graphs</h3>
+<ul class="point-list">
+<li>Use a sharp pencil, ruler and a sensible scale that uses most of the graph grid.</li>
+<li>Plot the independent variable on the horizontal x-axis and the dependent variable on the vertical y-axis, unless the question specifies otherwise.</li>
+<li>Label both axes with the quantity and unit.</li>
+<li>Choose a uniform scale, such as 1 large square = 2 units. Avoid awkward scales when a simple scale is possible.</li>
+<li>Plot each point accurately with a small cross or dot in a circle.</li>
+<li>Draw a smooth curve or a straight best-fit line. Do not join points dot-to-dot unless instructed.</li>
+<li>Circle any anomalous point only if it is justified and explain its treatment.</li>
+<li>Calculate a gradient using a large triangle on the best-fit line, not two points close together.</li>
+<li>State the meaning and unit of the gradient. For a distance-time graph, gradient represents speed; for a voltage-current graph, gradient may represent resistance depending on the axes.</li>
+</ul>
+<div class="graph-frame"><strong>Example of a labelled graph layout (illustrative only)</strong>
+<svg viewBox="0 0 620 340" role="img" aria-label="Illustrative graph with labelled horizontal and vertical axes, grid and best-fit line">
+<defs><pattern id="grid-prac" width="42" height="35" patternUnits="userSpaceOnUse"><path d="M42 0H0V35" fill="none" stroke="#dce6ef" stroke-width="1"/></pattern></defs>
+<rect x="66" y="22" width="500" height="260" fill="url(#grid-prac)" stroke="#8ca3b8"/>
+<path d="M66 22V282H566" fill="none" stroke="#20384f" stroke-width="2"/>
+<path d="M66 282L530 55" fill="none" stroke="#16845b" stroke-width="3"/>
+<g fill="#20384f" font-size="12"><text x="315" y="325" text-anchor="middle">Independent variable / unit</text><text transform="translate(18 155) rotate(-90)" text-anchor="middle">Dependent variable / unit</text><text x="60" y="298">0</text><text x="565" y="298">X</text><text x="49" y="25">Y</text></g>
+<g fill="#0876a9"><circle cx="150" cy="241" r="4"/><circle cx="234" cy="200" r="4"/><circle cx="318" cy="160" r="4"/><circle cx="402" cy="117" r="4"/><circle cx="486" cy="76" r="4"/></g>
+</svg>
+<p class="caption">Replace the illustrative labels and points with the actual variables and measured data from your experiment.</p></div>
+<h3>4. Writing a scientific conclusion and evaluation</h3>
+<ul class="point-list">
+<li>Conclusion: answer the aim directly and state the relationship observed.</li>
+<li>Evidence: quote values, a mean, a percentage change or a graph gradient.</li>
+<li>Scientific explanation: link the trend to the relevant law, model or chemical/biological process.</li>
+<li>Evaluation: identify a specific limitation, explain its effect on the results and give a practical improvement.</li>
+<li>Improvements should be realistic: use a more precise instrument, repeat readings, control temperature, reduce heat loss, improve alignment or increase the range of values tested.</li>
+</ul>
+</section>
+
+<section class="subject" id="chemistry-organic-practicals">
+<h2>Chemistry Practical: Organic Chemistry Tests and Preparations</h2>
+<p>Organic chemistry practicals investigate functional groups, physical properties, reactions and separation. The table below is a study reference: the exact reagents and required tests vary by syllabus. Use only school-approved microscale procedures.</p>
+<h3>1. Organic functional-group reference table</h3>
+<table class="reference-table"><thead><tr><th>Substance / group</th><th>Test or reagent (school-lab method)</th><th>Positive observation</th><th>Inference / interpretation</th><th>Important caution</th></tr></thead><tbody>
+<tr><td>Alkene (C=C)</td><td>Bromine water, where included in the syllabus</td><td>Orange/brown colour is decolourised</td><td>Evidence consistent with carbon-carbon unsaturation</td><td>Use dilute reagent in a small quantity; avoid skin and eye contact.</td></tr>
+<tr><td>Carboxylic acid</td><td>Blue litmus or approved carbonate test</td><td>Blue litmus turns red; carbonate may produce effervescence</td><td>Acidic functional group; carbon dioxide may be released with carbonate</td><td>Confirm gas identity using the approved gas test, not by smell.</td></tr>
+<tr><td>Alcohol</td><td>Physical properties and syllabus-specified oxidation test</td><td>Observation depends on the alcohol and oxidising reagent used</td><td>Do not identify an alcohol from one non-specific observation</td><td>Oxidising agents can be corrosive; follow the teacher's exact method.</td></tr>
+<tr><td>Aldehyde</td><td>Approved aldehyde test such as Tollens' or Fehling's reagent, where taught</td><td>Silver mirror/grey silver deposit with Tollens'; brick-red precipitate with Fehling's under specified conditions</td><td>Positive result supports an aldehyde under the test conditions</td><td>Tollens' reagent must be freshly prepared and disposed of immediately by the teacher; never store residues.</td></tr>
+<tr><td>Ketone</td><td>Compare with the aldehyde test and use syllabus-approved confirmatory tests</td><td>Common aldehyde reagents generally give no positive aldehyde result with simple ketones</td><td>Distinguish from aldehydes using a full test sequence</td><td>A negative test alone does not prove a ketone.</td></tr>
+<tr><td>Starch / polysaccharide</td><td>Iodine solution</td><td>Blue-black colour</td><td>Starch present</td><td>Use a clean spotting tile and separate droppers.</td></tr>
+<tr><td>Reducing sugar</td><td>Benedict's solution with controlled heating, where taught</td><td>Blue may change through green/yellow/orange to a brick-red precipitate depending on amount</td><td>Reducing sugar may be present</td><td>Use a water bath, not direct flame; hot glassware can cause burns.</td></tr>
+<tr><td>Protein</td><td>Biuret reagents</td><td>Blue changes to lilac/purple</td><td>Peptide bonds / protein present</td><td>Reagents may be alkaline or irritant; use eye protection.</td></tr>
+<tr><td>Unsaturated oil / fat</td><td>Approved unsaturation test or iodine value method if specified</td><td>Decolourisation under the prescribed conditions</td><td>Unsaturation may be present</td><td>Do not generalise from an uncontrolled colour test.</td></tr>
+</tbody></table>
+<h3>2. Practical A: comparing an alkane and an alkene using bromine water</h3>
+<p><strong>Aim:</strong> compare the reaction of a saturated hydrocarbon with an unsaturated hydrocarbon using the prescribed test.</p>
+<p><strong>Apparatus and materials:</strong> labelled sample containers supplied by the teacher, small stoppered test tubes, dropping pipettes, bromine water, rack, goggles and suitable gloves.</p>
+<ol class="point-list">
+<li>Wear eye protection and work in the location specified by the teacher's risk assessment.</li>
+<li>Label two clean test tubes A and B. Add the same small measured volume of the supplied sample to each as instructed.</li>
+<li>Add the same small number or volume of bromine-water drops to each tube using separate clean droppers.</li>
+<li>Stopper if directed, mix gently using the approved technique and observe against a white background.</li>
+<li>Record the initial and final colour immediately. Do not infer from a sample whose identity is unknown.</li>
+<li>Dispose of all mixtures in the designated chemical waste container.</li>
+</ol>
+<table class="data-table"><thead><tr><th>Tube</th><th>Sample label</th><th>Initial bromine-water colour</th><th>Final observation</th><th>Inference</th></tr></thead><tbody><tr><td>A</td><td></td><td></td><td></td><td></td></tr><tr><td>B</td><td></td><td></td><td></td><td></td></tr></tbody></table>
+<p><strong>Analysis:</strong> identify which sample decolourised the reagent and explain why addition across a carbon-carbon double bond can occur. State why the test is evidence of unsaturation rather than proof of the complete molecular identity.</p>
+<h3>3. Practical B: testing for aldehydes and reducing sugars</h3>
+<p><strong>Aim:</strong> use an approved reagent to distinguish samples that reduce the test reagent from those that do not.</p>
+<ol class="point-list">
+<li>Label clean test tubes with sample codes and place equal measured amounts of the supplied samples in them.</li>
+<li>Add equal volumes of the teacher-prepared test reagent using clean apparatus.</li>
+<li>For a heated test, place tubes in the specified hot-water bath for the same time and at the same controlled temperature.</li>
+<li>Record colour changes and precipitate formation. Do not heat a closed tube.</li>
+<li>Compare each result with a known positive control and a negative control if supplied.</li>
+<li>Dispose of reagents as instructed. Tollens' residues require immediate teacher-managed disposal and must never be stored.</li>
+</ol>
+<table class="data-table"><thead><tr><th>Sample code</th><th>Reagent used</th><th>Heating conditions</th><th>Colour / precipitate observed</th><th>Conclusion</th></tr></thead><tbody><tr><td>Known positive</td><td></td><td></td><td></td><td></td></tr><tr><td>Known negative</td><td></td><td></td><td></td><td></td></tr><tr><td>Unknown A</td><td></td><td></td><td></td><td></td></tr><tr><td>Unknown B</td><td></td><td></td><td></td><td></td></tr></tbody></table>
+<h3>4. Practical C: ester preparation (teacher demonstration / approved microscale)</h3>
+<p><strong>Aim:</strong> prepare a small ester sample and relate its formation to a carboxylic acid and an alcohol.</p>
+<div class="safety-note"><strong>Safety:</strong> many alcohols and esters are volatile and flammable; concentrated acids are corrosive. Heating and reagent quantities must follow the institution's written risk assessment. This is not a home experiment. Do not smell products directly; wafting is only permitted if the teacher explicitly authorises it.</div>
+<ol class="point-list">
+<li>Identify the acid and alcohol supplied by the teacher and write their names and formulae in the planning record.</li>
+<li>Use only the small measured quantities specified by the teacher in a suitable reaction vessel.</li>
+<li>Add the catalyst only as directed, keeping the container away from skin and eyes.</li>
+<li>Warm using the approved water bath or heating arrangement; keep all ignition sources away.</li>
+<li>Allow the mixture to cool and carry out the teacher-directed separation or neutralisation step if required.</li>
+<li>Record the physical observations and the evidence used to support ester formation. Do not identify a compound by odour alone.</li>
+</ol>
+<table class="data-table"><thead><tr><th>Starting acid</th><th>Starting alcohol</th><th>Catalyst / conditions</th><th>Observations during reaction</th><th>Product evidence / conclusion</th></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>
+<p><strong>Reaction pattern:</strong> carboxylic acid + alcohol ⇌ ester + water. Write a balanced equation for the actual substances used in your course.</p>
+<h3>5. Practical D: chromatography of inks or plant pigments</h3>
+<ol class="point-list">
+<li>Draw a pencil baseline near the bottom of chromatography paper. Mark the sample positions.</li>
+<li>Apply a small concentrated spot and allow it to dry; repeat application if instructed to make a compact spot.</li>
+<li>Place the paper in a covered container with solvent below the baseline.</li>
+<li>Allow the solvent to rise. Remove the paper before the solvent reaches the top and mark the solvent front immediately.</li>
+<li>Measure from the baseline to the centre of each separated spot and from baseline to solvent front.</li>
+<li>Calculate the retention factor: Rf = distance travelled by spot ÷ distance travelled by solvent front.</li>
+</ol>
+<table class="data-table"><thead><tr><th>Sample / band</th><th>Distance moved by spot / cm</th><th>Distance moved by solvent / cm</th><th>Rf value</th><th>Colour / observation</th></tr></thead><tbody><tr><td>1</td><td></td><td></td><td></td><td></td></tr><tr><td>2</td><td></td><td></td><td></td><td></td></tr><tr><td>3</td><td></td><td></td><td></td><td></td></tr></tbody></table>
+<h3>6. Organic practical questions</h3>
+<ol class="point-list"><li>State two differences between a saturated and an unsaturated hydrocarbon. (2 marks)</li><li>Describe the observation expected when a sample containing a carbon-carbon double bond is tested with bromine water. (2 marks)</li><li>Explain why a positive aldehyde test should be compared with a negative control. (2 marks)</li><li>State two precautions when carrying out an organic reaction involving a volatile, flammable liquid. (2 marks)</li><li>In chromatography, a spot moves 3.2 cm and the solvent front moves 8.0 cm. Calculate its Rf value. (2 marks)</li></ol>
+</section>
+
+<section class="subject" id="chemistry-thermal-physical">
+<h2>Chemistry Practical: Thermal Chemistry and Physical Chemistry</h2>
+<h3>1. Temperature measurement and thermometer technique</h3>
+<ul class="point-list"><li>Read the thermometer at eye level to avoid parallax error.</li><li>Keep the bulb or probe immersed in the liquid but do not allow it to touch the beaker base or sides.</li><li>Stir gently and consistently where appropriate so that the temperature is uniform.</li><li>Record the initial temperature before mixing or heating and use a consistent time interval for later readings.</li><li>State the thermometer resolution and uncertainty where requested.</li></ul>
+<h3>2. Practical A: temperature-time curve during heating and cooling</h3>
+<p><strong>Aim:</strong> record how temperature changes with time during a controlled heating or cooling process, and identify any plateau or change in gradient.</p>
+<p><strong>Apparatus:</strong> teacher-approved liquid or phase-change sample, thermometer or temperature probe, stopwatch, beaker, controlled heater or cooling arrangement, stirrer, heatproof mat and eye protection.</p>
+<ol class="point-list"><li>Set up the apparatus as demonstrated and record the starting temperature.</li><li>Start the stopwatch at the agreed point and take readings at equal time intervals, for example every 30 seconds.</li><li>Keep the probe in the same position and stir consistently if the method requires it.</li><li>Continue until the required temperature range has been recorded. Switch off the heater before dismantling.</li><li>Plot temperature (°C) on the y-axis against time (s) on the x-axis.</li><li>Describe the gradient in each region and explain any plateau using the energy changes involved.</li></ol>
+<table class="data-table"><thead><tr><th>Time / s</th><th>Temperature / °C</th><th>State / visible observation</th></tr></thead><tbody><tr><td>0</td><td></td><td></td></tr><tr><td>30</td><td></td><td></td></tr><tr><td>60</td><td></td><td></td></tr><tr><td>90</td><td></td><td></td></tr><tr><td>120</td><td></td><td></td></tr><tr><td>150</td><td></td><td></td></tr><tr><td>180</td><td></td><td></td></tr><tr><td>210</td><td></td><td></td></tr></tbody></table>
+<h3>3. Practical B: heat of neutralisation / solution calorimetry</h3>
+<p><strong>Aim:</strong> estimate the temperature change when measured quantities of acid and alkali react.</p>
+<div class="safety-note">Use only dilute, teacher-prepared solutions and the specified volumes. Wear goggles. Neutralisation can release heat; avoid splashes and follow the school's chemical disposal procedure.</div>
+<ol class="point-list"><li>Measure the specified volume of acid into an insulated cup and record its temperature.</li><li>Measure the specified volume of alkali and record its temperature. If the method requires it, allow both solutions to reach the same starting temperature.</li><li>Combine the solutions, cover the cup, stir gently and record the highest temperature reached at fixed short intervals.</li><li>Calculate ΔT = maximum temperature − initial temperature.</li><li>If required, estimate heat energy using q = mcΔT, stating the assumptions for mass and specific heat capacity.</li><li>Compare trials and discuss heat lost to surroundings and the heat capacity of the cup.</li></ol>
+<table class="data-table"><thead><tr><th>Trial</th><th>Acid volume / cm³</th><th>Alkali volume / cm³</th><th>Initial temperature / °C</th><th>Maximum temperature / °C</th><th>ΔT / °C</th></tr></thead><tbody><tr><td>1</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>2</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>3</td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>
+<h3>4. Practical C: effect of concentration on rate of reaction</h3>
+<p><strong>Aim:</strong> investigate how changing concentration affects the rate of a suitable teacher-approved reaction.</p>
+<ol class="point-list"><li>Prepare or obtain the range of concentrations specified by the teacher.</li><li>Keep total volume, temperature, mass or surface area of solid reactant and apparatus constant.</li><li>Start the stopwatch at the same defined point when reactants are mixed.</li><li>Measure the chosen endpoint consistently, such as time to a specified visible change or gas volume at fixed intervals.</li><li>Repeat each concentration and calculate a mean. If using time to a fixed endpoint as a rate proxy, compare 1/time and explain the limitation.</li><li>Plot concentration against the chosen rate measure and describe the pattern.</li></ol>
+<table class="data-table"><thead><tr><th>Concentration / mol dm⁻³</th><th>Time 1 / s</th><th>Time 2 / s</th><th>Time 3 / s</th><th>Mean time / s</th><th>1/mean time / s⁻¹</th></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>
+<h3>5. Practical D: equilibrium and reversible change (data interpretation)</h3>
+<ul class="point-list"><li>Use only the teacher's prepared equilibrium demonstration and prescribed reagents; do not improvise chemical mixtures.</li><li>Change one condition at a time, such as temperature or concentration, and record the colour or other measurable change.</li><li>Allow the system to reach a steady state before recording the final observation.</li><li>Explain the shift using the principle that an equilibrium system responds to an imposed change in a way that partially opposes it.</li><li>Distinguish the position of equilibrium from the rate at which equilibrium is reached.</li></ul>
+<table class="data-table"><thead><tr><th>Condition changed</th><th>Initial observation</th><th>Final observation</th><th>Direction of shift / change</th><th>Explanation</th></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>
+<h3>6. Physical chemistry calculation and graph checklist</h3>
+<ul class="point-list"><li>For reaction-rate data, state whether rate is measured directly or estimated from 1/time.</li><li>For calorimetry, write the equation, substitute values with units and state assumptions.</li><li>For concentration, convert cm³ to dm³ when using mol dm⁻³ calculations.</li><li>For titration, use concordant titres, calculate the mean titre and show the mole ratio from the balanced equation.</li><li>For pH investigations, calibrate the pH meter as instructed, rinse the electrode between samples and record temperature if relevant.</li></ul>
+</section>
+
+<section class="subject" id="physics-measurements-instruments">
+<h2>Physics Practical: Measurements, Instruments, Electricity and Oscillations</h2>
+<h3>1. Measurement with metre rule</h3>
+<ul class="point-list"><li>Check the zero mark and note the smallest scale division (commonly 1 mm, but inspect the actual instrument).</li><li>Place the object parallel to the scale and read at eye level to avoid parallax.</li><li>For a length between two marks, subtract the initial reading from the final reading.</li><li>For diameter or thickness, take several readings at different positions and calculate a mean.</li><li>Record the value in SI units where required: convert cm to m by dividing by 100 and mm to m by dividing by 1000.</li></ul>
+<table class="data-table"><thead><tr><th>Object / position</th><th>Initial reading / cm</th><th>Final reading / cm</th><th>Length / cm</th><th>Length / m</th></tr></thead><tbody><tr><td>1</td><td></td><td></td><td></td><td></td></tr><tr><td>2</td><td></td><td></td><td></td><td></td></tr><tr><td>3</td><td></td><td></td><td></td><td></td></tr></tbody></table>
+<h3>2. Measurement with vernier callipers</h3>
+<ul class="point-list"><li>Inspect the instrument and close the jaws gently to check for zero error.</li><li>Place the object between the external jaws for external diameter/thickness, or use the internal jaws for an internal diameter.</li><li>Read the main scale just before the vernier zero.</li><li>Find the vernier division that aligns exactly with a main-scale mark.</li><li>Vernier reading = main-scale reading + (coinciding vernier division × least count).</li><li>Apply zero correction: corrected reading = observed reading − zero error (using the signed zero error).</li><li>Take readings in different orientations and calculate a mean where appropriate.</li></ul>
+<table class="reference-table"><thead><tr><th>Instrument part</th><th>Purpose</th><th>Reading / check</th></tr></thead><tbody><tr><td>Outside jaws</td><td>External diameter or thickness</td><td></td></tr><tr><td>Inside jaws</td><td>Internal diameter</td><td></td></tr><tr><td>Depth rod</td><td>Depth of a hole or container</td><td></td></tr><tr><td>Vernier scale</td><td>Fractional part of main-scale reading</td><td></td></tr></tbody></table>
+<table class="data-table"><thead><tr><th>Trial</th><th>Main scale / mm</th><th>Coinciding division</th><th>Least count / mm</th><th>Observed reading / mm</th><th>Zero-corrected reading / mm</th></tr></thead><tbody><tr><td>1</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>2</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>3</td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>
+<h3>3. Measurement with micrometer screw gauge</h3>
+<ul class="point-list"><li>Check the zero reading with the anvil and spindle gently closed; do not force the ratchet.</li><li>Place the wire or thin object between anvil and spindle.</li><li>Turn the ratchet until it clicks or slips as designed, giving consistent contact pressure.</li><li>Read the sleeve (main scale) and thimble scale. Add the thimble reading multiplied by the instrument's least count.</li><li>Apply the zero correction and repeat at several points or orientations.</li><li>Use the ratchet rather than tightening the thimble by force; excessive pressure can compress or damage the object.</li></ul>
+<table class="data-table"><thead><tr><th>Trial</th><th>Sleeve reading / mm</th><th>Thimble division</th><th>Least count / mm</th><th>Observed diameter / mm</th><th>Corrected diameter / mm</th></tr></thead><tbody><tr><td>1</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>2</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>3</td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>
+<h3>4. Measuring current and voltage in a circuit</h3>
+<ul class="point-list"><li>Switch off the supply before changing circuit connections.</li><li>Connect an ammeter in series with the component so the same current passes through the meter.</li><li>Connect a voltmeter in parallel across the component whose potential difference is being measured.</li><li>Observe meter polarity and select a suitable range before switching on. Begin with a higher range if the value is unknown.</li><li>Close the switch only while taking readings. Avoid short-circuiting a cell or power supply.</li><li>Vary the potential difference or resistance only as specified and record corresponding current and voltage values.</li><li>Plot V against I; the gradient gives resistance for an ohmic conductor when V is on the y-axis and I on the x-axis.</li></ul>
+<div class="graph-frame"><strong>Correct meter connection (schematic)</strong>
+<svg viewBox="0 0 620 250" role="img" aria-label="Circuit schematic with ammeter in series and voltmeter in parallel across a resistor">
+<g fill="none" stroke="#24435d" stroke-width="3"><path d="M95 80H205M265 80H385M445 80H525V190H95V80"/><path d="M205 80a30 30 0 1 0 60 0a30 30 0 1 0 -60 0"/><path d="M385 80h60"/><rect x="245" y="170" width="90" height="12" rx="2"/><path d="M290 80V170M245 176H160V125M335 176H420V125"/></g>
+<g fill="#0876a9" font-size="16" font-weight="bold"><text x="235" y="85" text-anchor="middle">A</text><text x="290" y="160" text-anchor="middle">R</text><text x="290" y="120" text-anchor="middle">V</text></g>
+<g fill="#24435d" font-size="12"><text x="70" y="65">Supply</text><text x="470" y="65">Series path</text><text x="350" y="220">Voltmeter connected across R</text></g>
+</svg>
+<p class="caption">Conceptual schematic: ammeter A is in series; voltmeter V is in parallel across resistor R. Follow the exact circuit diagram supplied in your practical.</p></div>
+<table class="data-table"><thead><tr><th>Trial</th><th>Potential difference / V</th><th>Current / A</th><th>Resistance V/I / Ω</th><th>Power VI / W</th></tr></thead><tbody><tr><td>1</td><td></td><td></td><td></td><td></td></tr><tr><td>2</td><td></td><td></td><td></td><td></td></tr><tr><td>3</td><td></td><td></td><td></td><td></td></tr><tr><td>4</td><td></td><td></td><td></td><td></td></tr><tr><td>5</td><td></td><td></td><td></td><td></td></tr></tbody></table>
+<h3>5. Stopwatch measurements: oscillations of a pendulum</h3>
+<p><strong>Aim:</strong> investigate the relationship between pendulum length and period.</p>
+<ol class="point-list"><li>Set up a small-angle pendulum using a secure support and a suitable bob.</li><li>Measure length from the point of suspension to the centre of the bob.</li><li>Displace the bob through a small angle and release without pushing it.</li><li>Use a stopwatch to time 10 or 20 complete oscillations, starting and stopping as the bob passes a fixed reference point in the same direction.</li><li>Repeat at least three times for each length and calculate the mean time.</li><li>Period T = mean time for N oscillations ÷ N. Calculate T² if testing T² against length.</li><li>Change only the length between sets. Keep the bob and release angle approximately constant.</li><li>Plot T² against length. A straight-line relationship supports T² proportional to length for small oscillations.</li></ol>
+<table class="data-table"><thead><tr><th>Length / m</th><th>Time for 10 oscillations 1 / s</th><th>Time 2 / s</th><th>Time 3 / s</th><th>Mean time / s</th><th>Period T / s</th><th>T² / s²</th></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>
+<h3>6. Stopwatch measurements: oscillations of a loaded spring</h3>
+<ol class="point-list"><li>Hang a suitable spring securely from a clamp stand and attach the specified small mass.</li><li>Displace the mass slightly and release it gently so it oscillates vertically.</li><li>Time a large number of complete oscillations, using the same reference point and direction.</li><li>Repeat the timing and calculate the mean period.</li><li>Change the mass in the approved range while keeping the spring and amplitude conditions consistent.</li><li>Plot period squared against mass if required and interpret the relationship.</li></ol>
+<table class="data-table"><thead><tr><th>Mass / kg</th><th>Time for 10 oscillations 1 / s</th><th>Time 2 / s</th><th>Mean time / s</th><th>Period T / s</th><th>T² / s²</th></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>
+<h3>7. Physics measurement questions</h3>
+<ol class="point-list"><li>Explain why a voltmeter is connected in parallel and an ammeter in series. (4 marks)</li><li>State two precautions when using a micrometer screw gauge. (2 marks)</li><li>A student times 20 oscillations in 32.4 s. Calculate the period. (2 marks)</li><li>Explain how to correct a vernier calliper reading for zero error. (2 marks)</li><li>Describe how to obtain a reliable value for the diameter of a thin wire. (2 marks)</li><li>State the quantities plotted to test whether pendulum T² is proportional to length. (2 marks)</li></ol>
+</section>
+
+<section class="subject" id="practical-marking-and-reporting">
+<h2>Practical Report Checklist and Data-Analysis Answer Frame</h2>
+<table><thead><tr><th>Report section</th><th>What a complete answer should contain</th></tr></thead><tbody>
+<tr><td>Aim</td><td>One clear sentence stating what is investigated.</td></tr>
+<tr><td>Variables</td><td>Independent, dependent and controlled variables, with units where relevant.</td></tr>
+<tr><td>Apparatus and diagram</td><td>Correct equipment, labelled arrangement, meter connections and measurement points.</td></tr>
+<tr><td>Method</td><td>Numbered, repeatable steps with quantities, timing and safety controls.</td></tr>
+<tr><td>Results</td><td>Headings with units, raw readings, repeats and appropriate precision.</td></tr>
+<tr><td>Processing</td><td>Formula, substitution, working, answer and unit.</td></tr>
+<tr><td>Graph</td><td>Title, labelled axes, suitable scale, accurate points, best-fit line/curve and gradient where requested.</td></tr>
+<tr><td>Analysis</td><td>Describe the trend and support it with numerical evidence.</td></tr>
+<tr><td>Conclusion</td><td>Answer the aim and relate the result to the scientific principle.</td></tr>
+<tr><td>Evaluation</td><td>Specific limitation, its effect and a realistic improvement.</td></tr>
+</tbody></table>
+<h3>Data analysis practice: answer frame</h3>
+<p><strong>1. Trend:</strong> As __________________ increases, __________________ increases / decreases / remains constant.</p>
+<p><strong>2. Evidence:</strong> When __________________ was __________ (unit), the measured value was __________ (unit); when it was __________, the value was __________.</p>
+<p><strong>3. Relationship:</strong> The graph is linear / curved / shows a plateau, suggesting __________________.</p>
+<p><strong>4. Scientific explanation:</strong> This occurs because __________________.</p>
+<p><strong>5. Reliability:</strong> Repeated readings were __________________; a possible source of random error was __________________.</p>
+<p><strong>6. Improvement:</strong> I would __________________, which would reduce __________________.</p>
+</section>
+
 </main><footer><p>CBE Nexus · Connecting learners to excellence</p><p><a href="/global-schools.html">Global Schools</a> · <a href="/country-online-notes.html">Country Online Notes</a> · <a href="/">Home</a></p></footer>
 <script>
 (function(){const p=new URLSearchParams(location.search);const raw=p.get("country")||"";const known={"afghanistan":"Afghanistan","albania":"Albania","algeria":"Algeria","andorra":"Andorra","angola":"Angola","antigua-and-barbuda":"Antigua and Barbuda","argentina":"Argentina","armenia":"Armenia","australia":"Australia","austria":"Austria","kenya":"Kenya"};const name=known[raw.toLowerCase()]||raw.replace(/[-_]+/g," ").replace(/\b\w/g,x=>x.toUpperCase());if(name){document.getElementById("countryName").textContent=name;document.getElementById("countryIntro").textContent="Biology, Chemistry and Physics practical-skills notes for learners studying in "+name+". Check your national curriculum and examination-board requirements for grade-specific practicals.";const back="/global-schools/"+raw.toLowerCase().replace(/[^a-z0-9-]/g,"");document.getElementById("countryBack").href=back;document.title="Science Practical Skills in "+name+" | CBE Nexus";const md=document.querySelector('meta[name="description"]');md.content="Online Biology, Chemistry and Physics practical skills notes for "+name+": apparatus, measurements, accuracy, graphs, experimental procedures and laboratory safety.";}})();
