@@ -127,3 +127,15 @@ export default {
   "cbEnexusLongFormChaptersWritten": false
 },
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Cambodia",
+  gradeSequenceEvidence: "The 2016 General Education and Technical Education Curriculum Framework treats Mathematics and Science as distinct subject areas; grade syllabuses are approved separately by the Ministry.",
+  textbookEvidence: "Framework gives subject objectives, not actual chapter sequence; textbook contents not inspected.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://nepcambodia.org/wp-content/uploads/2024/09/Curriculum-Framework-of-General-Education-and-Teachnical-Education_january-2016.pdf",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology (or integrated Life Science), Chemistry, Physics and Mathematics; then open approved/adopted student textbooks and record exact printed chapter headings and counts separately. Do not infer textbook chapters from syllabus themes."
+};
