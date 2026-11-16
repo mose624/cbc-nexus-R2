@@ -80,3 +80,15 @@ export const countryCurriculumVerification = {
   },
   "overallStatus": "Country record created with official-source leads and conservative subject mapping; full grade-by-grade programme extraction and textbook chapter verification remain pending."
 };
+
+export const chapterEvidenceReconciliation = {
+ reviewedOn: "2026-11-16",
+ country: "Ethiopia",
+ gradeSequenceEvidence: "The national KG–Grade 12 framework identifies Biology, Chemistry and Physics as general education subjects in Grades 9–10 and specialisation subjects in Grades 11–12. Mathematics sequence must be extracted separately from grade-specific syllabus documents.",
+ textbookEvidence: "Framework confirms subject pathway, not textbook chapter count; no student textbook contents inspected.",
+ actualTextbookContentsInspected: false,
+ officialTextbookChapterCountsVerified: false,
+ officialChapterCount: null,
+ evidenceSource: "https://moe.gov.et/storage/Books/Curriculum%20Framework%20for%20Ethiopian%20Education%20%28KG%20%E2%80%93%20Grade%2012%29.pdf",
+ nextRequiredWork: "Retrieve official grade/year/term programmes and extract topics for Mathematics, Biology or integrated Life Science, Chemistry and Physics; inspect approved student textbook contents pages and record printed chapter titles/counts separately. Do not infer textbook chapters from curriculum themes."
+};
