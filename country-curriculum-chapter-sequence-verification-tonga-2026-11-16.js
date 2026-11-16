@@ -43,6 +43,16 @@ export const countryCurriculumVerification = {
   "sources": [
     "Official national Ministry / curriculum authority source not yet retrieved; verify before asserting detailed grade sequence"
   ],
+  "reconciliation": {
+    "batch": "173-192",
+    "status": "textbook-titles-and-forms-identified",
+    "evidenceSummary": "2025 Minimum Service Standards appendix identifies secondary Form 3–7 textbooks/study guides by subject, including Biology, Chemistry, Physics and Mathematics. It does not expose chapter contents; retrieve the listed subject syllabuses and actual books.",
+    "officialDocuments": ["https://www.education.gov.to/media/attachments/2026/04/30/met-2025-minimum-service-standards-final-final.pdf"],
+    "gradeByGradeSequenceVerified": false,
+    "actualTextbookContentsInspected": false,
+    "officialTextbookChapterCountsVerified": false,
+    "nextAction": "Extract grade/year/term topic headings from current official programme documents; inspect actual approved learner-textbook contents pages; map every book chapter to the official topic sequence and record discrepancies."
+  },
   "completion": {
     "gradeByGradeTopicSequenceVerified": false,
     "officialTextbookChapterCountsVerified": false,
