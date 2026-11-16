@@ -274,6 +274,7 @@ function renderCountry(){
   card.href=item.type==="subject-notes"?"/country-online-notes.html?country="+countryQuery+"&subject="+encodeURIComponent(item.subject):
    item.type==="practicals"?"/country-practical-skills.html?country="+encodeURIComponent(countryQuery):
    item.type==="quizzes"?"/interactive-questions.html?country="+countryQuery:
+   item.type==="scholarships"?"/scholarships-opportunities.html?country="+countryQuery:
    item.type==="exam-resources"?"#papers":
    item.type==="curriculum"?"#curriculum":
    item.type==="worked-examples"?"/global-mathematics.html?country="+countryQuery:
