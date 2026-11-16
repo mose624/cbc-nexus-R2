@@ -80,3 +80,15 @@ export const countryCurriculumVerification = {
   },
   "overallStatus": "Country record created with official-source leads and conservative subject mapping; full grade-by-grade programme extraction and textbook chapter verification remain pending."
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "El Salvador",
+  gradeSequenceEvidence: "Basic education integrates science within Ciencia y Tecnología and has separate Mathematics programmes (ESMATE). Upper-secondary subject separation and current transformation materials must be mapped by grade/pathway rather than projecting four independent subjects across all levels.",
+  textbookEvidence: "No actual textbook contents inspected; current ESMATE and science books require contents-page inspection.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.mined.gob.sv/",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology or integrated Life Science, Chemistry, Physics and Mathematics. Then inspect adopted student textbooks and record printed chapter titles and counts separately; do not infer chapters from standards or themes."
+};
