@@ -14,11 +14,37 @@
  };
  const ghanaDocuments={
   "Biology":"https://nacca.gov.gh/wp-content/uploads/2025/04/Biology-Curriculum.pdf",
-  "Chemistry":"https://nacca.gov.gh/secondary-education-curriculum/",
+  "Chemistry":"https://nacca.gov.gh/wp-content/uploads/2025/04/Chemistry-Curriculum.pdf",
   "Physics":"https://nacca.gov.gh/wp-content/uploads/2025/04/Physics-Curriculum.pdf",
   "Mathematics":"https://nacca.gov.gh/wp-content/uploads/2025/04/Mathematics-Curriculum.pdf",
   "Curriculum portal":"https://nacca.gov.gh/secondary-education-curriculum/",
   "Subject combinations and WASSCE":"https://nacca.gov.gh/subject-combination-guidelines-secondary-education/"
+ };
+ const ghanaScope={
+  "Biology":{
+   "SHS1":["Exploring Biology in Society","Life in the Fundamental Unit","Diversity of Living Things and Their Environment","Systems of Life"],
+   "SHS2":["Exploring Biology in Society","Life in the Fundamental Unit","Diversity of Living Things and Their Environment","Systems of Life"],
+   "SHS3":["Exploring Biology in Society","Life in the Fundamental Unit","Diversity of Living Things and Their Environment","Systems of Life"],
+   "scopeNote":"Four recurring strands across SHS 1–3; sub-strands, content standards and learning indicators must be extracted by year before defining individual chapters."
+  },
+  "Physics":{
+   "SHS1":["Mechanics and Matter","Energy","Electric Field, Magnetic Field and Electronics","Atomic and Nuclear Physics"],
+   "SHS2":["Mechanics and Matter","Energy","Electric Field, Magnetic Field and Electronics","Atomic and Nuclear Physics"],
+   "SHS3":["Mechanics and Matter","Energy","Electric Field, Magnetic Field and Electronics","Atomic and Nuclear Physics"],
+   "scopeNote":"Four recurring strands across SHS 1–3; detailed year-level sub-strands and learning indicators remain to be transcribed."
+  },
+  "Mathematics":{
+   "SHS1":["Numbers for Everyday Life","Algebraic Thinking","Geometry Around Us","Making Sense of and Using Data"],
+   "SHS2":["Numbers for Everyday Life","Algebraic Thinking","Geometry Around Us","Making Sense of and Using Data"],
+   "SHS3":["Numbers for Everyday Life","Algebraic Thinking","Geometry Around Us","Making Sense of and Using Data"],
+   "scopeNote":"NaCCA scope-and-sequence summary reports 40 content standards, 42 learning outcomes and 108 learning indicators across SHS 1–3. These are not 108 chapters."
+  },
+  "Chemistry":{
+   "SHS1":["Physical Chemistry","Systematic Chemistry of the Elements","Chemistry of Carbon Compounds"],
+   "SHS2":["Physical Chemistry","Systematic Chemistry of the Elements","Chemistry of Carbon Compounds"],
+   "SHS3":["Physical Chemistry","Systematic Chemistry of the Elements","Chemistry of Carbon Compounds"],
+   "scopeNote":"The curriculum uses three broad strands; the official PDF's year-specific sub-strands, content standards and learning indicators still need full extraction."
+  }
  };
  const ghana={
   "Mathematics":[
@@ -64,7 +90,7 @@
   ]
  };
  const sourceText={
-  Ghana:"NaCCA Senior High School curriculum (September 2023). Official separate Biology, Chemistry, Physics and Mathematics curriculum documents cover SHS 1–3. The curriculum portal also publishes subject-combination guidance for WASSCE. Detailed topic-by-topic and year-level learning-indicator extraction remains pending; the existing headings are provisional and are not an exhaustive chapter register.",
+  Ghana:"NaCCA Senior High School curriculum (September 2023). Official separate Biology, Chemistry, Physics and Mathematics curriculum documents cover SHS 1–3. The strand-level scope is now recorded by subject and year. Detailed sub-strands, content standards, learning outcomes and indicators still require extraction from the official PDFs before the chapter register can be called complete.",
    Nigeria:"NERDC New Revised Senior Secondary Education Curriculum (2025 implementation cycle). The national portal separates SSS 1, SSS 2 and SSS 3; the science offering includes Biology, Chemistry and Physics, with General Mathematics as a core subject. Each subject and year must be mapped from its own current curriculum document; older topic lists must not be assumed current.",
   Uganda:"NCDC curriculum framework and subject syllabi. Lower Secondary runs Senior 1–4 and includes Mathematics, Biology, Chemistry and Physics as separate subjects; General Science is an alternative for some learners with special educational needs. Advanced Secondary has separate aligned syllabi, so level must be identified before topics are mapped.",
   Tanzania:"Tanzania Institute of Education (TIE) publishes separate Ordinary Secondary Education syllabi for Forms I–IV and Advanced Secondary Education syllabi for Forms V–VI. Subject and level must be matched to the correct current syllabus; never substitute an Advanced Form V–VI sequence for Ordinary Form I.",
@@ -78,9 +104,10 @@
   record.curriculumSource=refs[country]||record.source;
   if(country==="Ghana"){
    record.curriculumDocuments=ghanaDocuments;
+   record.curriculumScopeBySubject=ghanaScope;
    record.curriculumLevelScope="Senior High School (SHS 1–3), September 2023 curriculum; do not merge with Junior High School Common Core Programme (JHS 1–3 Integrated Science and Mathematics).";
    record.assessmentContext="WASSCE subject combinations follow NaCCA's current secondary subject-combination guidelines; school subject offering and learner combination can vary.";
-   record.curriculumAuditStatus="official-documents-identified-topic-by-topic-audit-pending";
+   record.curriculumAuditStatus="official-documents-and-strand-scope-identified-substrand-indicator-audit-pending";
   }
   record.curriculumAuditStatus=country==="Ghana"?"partial-official-sequence-verified":"official-source-identified-sequence-audit-pending";
   record.verifiedCurriculumSequence=verified;
