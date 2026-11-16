@@ -52,3 +52,5 @@ export const countryCurriculumVerification = {
     "Author and verify CBE Nexus chapters only after sequence validation."
   ]
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Kyrgyzstan", gradeSequenceEvidence: "The 2025 State General Education Standard specifies Biology Grades 6–11, Physics and Astronomy Grades 7–11, Chemistry Grades 8–11 and Mathematics across the school sequence. Confirm implementation grades and transition arrangements.", textbookEvidence: "Standard subject-grade allocations identified; no actual textbook contents or printed chapter counts inspected.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "Official Ministry 2025 State General Education Standard and subject programmes retrieval outstanding.", nextRequiredWork: "Extract the official grade/year/term sequence for Mathematics and integrated or specialist sciences from current national documents; inspect actual approved/adopted student textbook contents pages and record exact chapter titles and counts separately." };
