@@ -48,3 +48,5 @@ export const countryCurriculumVerification = {
     "Author and verify CBE Nexus chapters only after sequence validation."
   ]
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Kuwait", gradeSequenceEvidence: "Ministry of Education national curriculum and grade-specific textbooks are the reference. Separate public national schools from private/international programmes; extract grade sequence for Mathematics and integrated/specialist sciences from current Ministry documents.", textbookEvidence: "No actual textbook contents inspected; approved national textbook editions and contents pages outstanding.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "Official Kuwait Ministry curriculum/textbook portal retrieval outstanding.", nextRequiredWork: "Extract the official grade/year/term sequence for Mathematics and integrated or specialist sciences from current national documents; inspect actual approved/adopted student textbook contents pages and record exact chapter titles and counts separately." };
