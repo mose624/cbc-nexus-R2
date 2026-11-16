@@ -43,6 +43,16 @@ export const countryCurriculumVerification = {
   "sources": [
     "https://turkmenistan.gov.tm/en/post/98238/biology-textbook-11th-grade-students-has-been-published"
   ],
+  "reconciliation": {
+    "batch": "173-192",
+    "status": "one-textbook-title-verified",
+    "evidenceSummary": "Official report identifies a Ministry-recommended Grade 11 General Biology textbook (2025). It describes three thematic parts and a laboratory workshop, not a verified chapter count. Obtain actual textbook contents and current syllabi for all four subjects.",
+    "officialDocuments": ["https://turkmenistan.gov.tm/en/post/98238/biology-textbook-11th-grade-students-has-been-published"],
+    "gradeByGradeSequenceVerified": false,
+    "actualTextbookContentsInspected": false,
+    "officialTextbookChapterCountsVerified": false,
+    "nextAction": "Extract grade/year/term topic headings from current official programme documents; inspect actual approved learner-textbook contents pages; map every book chapter to the official topic sequence and record discrepancies."
+  },
   "completion": {
     "gradeByGradeTopicSequenceVerified": false,
     "officialTextbookChapterCountsVerified": false,
