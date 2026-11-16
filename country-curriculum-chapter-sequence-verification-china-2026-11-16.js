@@ -181,3 +181,15 @@ export const countryCurriculumVerification = {
     "Separate vocational-secondary, Hong Kong SAR, Macao SAR, Taiwan and international curriculum records."
   ]
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "China",
+  gradeSequenceEvidence: "The Ministry of Education's 2022 compulsory-education standards explicitly publish separate standards for Mathematics, Science, Physics, Chemistry and Biology. These are standards, not necessarily a linear grade-by-grade textbook chapter sequence; upper-secondary standards and province/school implementation must be treated separately.",
+  textbookEvidence: "Official curriculum standards verified; no actual textbook contents pages inspected. Mainland PRC only; Hong Kong, Macao and Taiwan excluded from this record.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.moe.gov.cn/srcsite/A26/s8001/202204/t20220420_619921.html",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology or integrated Life Science, Chemistry, Physics and Mathematics. Then inspect adopted student textbooks and record printed chapter titles and counts separately; do not infer chapters from standards or themes."
+};
