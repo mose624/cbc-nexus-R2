@@ -62,11 +62,11 @@ export const countryCurriculumVerification = {
 export const chapterEvidenceReconciliation = {
   reviewedOn: "2026-11-16",
   country: "Senegal",
-  gradeSequenceEvidence: "French-language national programmes organise science through grade- and cycle-specific disciplines, including SVT and Physique-Chimie in relevant stages. Do not split combined disciplines or infer textbook chapters without official programmes and book contents.",
-  textbookEvidence: "Curriculum framework or syllabus portal identified; actual adopted textbook contents pages and complete book PDFs were not inspected in this batch.",
+  gradeSequenceEvidence: "French-language science commonly uses SVT and Physique-Chimie, with Mathematics distinct. Preserve the combined subject names until current official grade-level programmes show where any specialist separation occurs.",
+  textbookEvidence: "The referenced material is a curriculum, ministry or examination-framework source, not an opened textbook contents page. Actual adopted textbook contents pages and full book PDFs were not inspected in this batch.",
   actualTextbookContentsInspected: false,
   officialTextbookChapterCountsVerified: false,
   officialChapterCount: null,
-  evidenceSource: "https://www.education.sn/",
-  nextRequiredWork: "Retrieve current grade-by-grade official syllabus and the exact approved/adopted textbook for each grade and pathway; inspect contents pages; record title, edition, publisher, grade, chapter titles and verified chapter count. Keep CBE Nexus-authored chapters separate."
+  evidenceSource: "https://www.education.gouv.sn/",
+  nextRequiredWork: "Retrieve the current approved grade-by-grade syllabus and exact adopted textbook for each relevant grade and track; inspect contents pages; record title, edition, publisher, grade, chapter titles and verified count. Keep CBE Nexus-authored chapters separate."
 };
