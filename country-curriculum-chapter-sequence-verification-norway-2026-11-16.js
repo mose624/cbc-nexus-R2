@@ -60,3 +60,15 @@ export const countryCurriculumVerification = {
     ]
   }
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Norway",
+  gradeSequenceEvidence: "LK20 Natural Science NAT01-05 is in force from 1 August 2026; competence aims are specified for Years 2, 4, 7, 10 and Vg1 pathways. Specialist upper-secondary subjects require separate mapping.",
+  textbookEvidence: "The source identified here is a curriculum/framework source, not an opened textbook contents page. No actual adopted textbook contents pages or full book PDFs were inspected in this batch.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.udir.no/lk20/nat01-05/gyldighet-og-innfoering?lang=eng",
+  nextRequiredWork: "Retrieve the current official grade-by-grade syllabus and the exact approved/adopted textbook for each relevant grade and jurisdiction; open its contents pages; record book title, edition, publisher, grade, chapter titles and verified chapter count. Keep CBE Nexus-authored chapters in a separate field."
+};
