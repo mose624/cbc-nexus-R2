@@ -75,3 +75,15 @@ export const countryCurriculumVerification = {
   },
   "overallStatus": "Country record created with official-source leads and conservative subject mapping; full grade-by-grade programme extraction and textbook chapter verification remain pending."
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Equatorial Guinea",
+  gradeSequenceEvidence: "Publicly accessible consolidated current national programmes for all four requested subjects were not located in this audit. Spanish is the principal curriculum-administration language; verify official grade structure, specialist science subjects and any French-language pathways before building a sequence.",
+  textbookEvidence: "No actual textbook contents inspected; no official chapter counts verified.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "Official national programme and textbook source retrieval remains outstanding.",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology or integrated Life Science, Chemistry, Physics and Mathematics. Then inspect adopted student textbooks and record printed chapter titles and counts separately; do not infer chapters from standards or themes."
+};
