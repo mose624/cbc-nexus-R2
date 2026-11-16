@@ -81,14 +81,4 @@ export const countryCurriculumVerification = {
   "overallStatus": "Country record created with official-source leads and conservative subject mapping; full grade-by-grade programme extraction and textbook chapter verification remain pending."
 };
 
-export const chapterEvidenceReconciliation = {
- reviewedOn: "2026-11-16",
- country: "Estonia",
- gradeSequenceEvidence: "The national curriculum distinguishes Mathematics, Nature Studies and separate Biology, Physics and Chemistry in basic education; upper secondary has narrow/extensive Mathematics and subject syllabi. Use the national curriculum annexes for grade/topic extraction.",
- textbookEvidence: "Legal curriculum subject structure verified; actual adopted textbook contents and chapter counts not inspected.",
- actualTextbookContentsInspected: false,
- officialTextbookChapterCountsVerified: false,
- officialChapterCount: null,
- evidenceSource: "https://www.riigiteataja.ee/en/akt/519012026006",
- nextRequiredWork: "Retrieve official grade/year/term programmes and extract topics for Mathematics, Biology or integrated Life Science, Chemistry and Physics; inspect approved student textbook contents pages and record printed chapter titles/counts separately. Do not infer textbook chapters from curriculum themes."
-};
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Estonia", gradeSequenceEvidence: "National curriculum distinguishes Mathematics, Nature Studies and separate Biology, Physics and Chemistry in basic education; upper secondary has narrow/extensive Mathematics and subject syllabi.", textbookEvidence: "Legal curriculum subject structure verified; textbooks not inspected.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "https://www.riigiteataja.ee/en/akt/519012026006", nextRequiredWork: "Retrieve official grade/year/term programmes and extract Mathematics, Biology or integrated Life Science, Chemistry and Physics topics; inspect approved student textbook contents pages and record printed chapter titles/counts separately." };
