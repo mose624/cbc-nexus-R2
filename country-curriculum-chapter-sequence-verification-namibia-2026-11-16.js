@@ -58,3 +58,15 @@ export const countryCurriculumVerification = {
     ]
   }
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Namibia",
+  gradeSequenceEvidence: "National Curriculum for Basic Education and NIED syllabuses govern Grades 1–12; integrated Natural Science at lower levels must be distinguished from senior Biology, Chemistry and Physics.",
+  textbookEvidence: "The source identified here is a curriculum/framework source, not an opened textbook contents page. No actual adopted textbook contents pages or full book PDFs were inspected in this batch.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.nied.edu.na/",
+  nextRequiredWork: "Retrieve the current official grade-by-grade syllabus and the exact approved/adopted textbook for each relevant grade and jurisdiction; open its contents pages; record the book title, edition, publisher, grade, chapter titles and verified chapter count. Keep CBE Nexus-authored chapters in a separate field."
+};
