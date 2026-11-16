@@ -48,7 +48,16 @@ export const countryCurriculumVerification = {
     "status": "textbook-titles-and-forms-identified",
     "evidenceSummary": "2025 Minimum Service Standards appendix identifies secondary Form 3–7 textbooks/study guides by subject, including Biology, Chemistry, Physics and Mathematics. It does not expose chapter contents; retrieve the listed subject syllabuses and actual books.",
     "officialDocuments": ["https://www.education.gov.to/media/attachments/2026/04/30/met-2025-minimum-service-standards-final-final.pdf"],
-    "gradeByGradeSequenceVerified": false,
+"textbookCatalogueEvidence": {
+      "source": "Tonga Ministry of Education and Training, Minimum Service Standards 2025, Annex 3 (p.60)",
+      "forms": ["Form 3", "Form 4", "Form 5", "Form 6", "Form 7"],
+      "subjects": ["Mathematics", "Science", "Biology", "Chemistry", "Physics"],
+      "namedMaterials": "Form 3 syllabus/CDU study guide; Form 4–7 subject syllabuses and ESA publications/study guides as listed in the annex.",
+      "contentsPagesInspected": false,
+      "officialChapterCountVerified": false,
+      "nextAction": "Retrieve the named form-specific syllabuses and books; inspect contents pages for each form and subject before counting chapters."
+    },
+        "gradeByGradeSequenceVerified": false,
     "actualTextbookContentsInspected": false,
     "officialTextbookChapterCountsVerified": false,
     "nextAction": "Extract grade/year/term topic headings from current official programme documents; inspect actual approved learner-textbook contents pages; map every book chapter to the official topic sequence and record discrepancies."
