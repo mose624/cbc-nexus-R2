@@ -34,23 +34,23 @@ export const chapterSequenceVerificationBatch01 = {
       subjects: {
         Biology: {
           officialName: "Biology",
-          sourceStatus: "KICD-Grade-10-curriculum-design-content-opened",
-          sequenceStatus: "10-official-sub-strands-transcribed; one summary-table discrepancy flagged for source-page review",
-          chapterCount: 10,
-          chapters: [
-            { number: "1.1", title: "Introduction to Biology", strand: "Cell Biology and Biodiversity", suggestedLessons: 6, officialContent: ["Applications of Biology", "Fields of study and careers related to Biology"] },
-            { number: "1.2", title: "Specimen Collection and Preservation", strand: "Cell Biology and Biodiversity", suggestedLessons: 14, officialContent: ["Apparatus for collecting specimens", "Collecting, processing and preserving specimens", "Biological specimen collection and preservation project"], verificationNote: "The summary table labels 1.2 Scientific investigations in Biology, but the detailed syllabus pages label 1.2 Specimen Collection and Preservation. Use the detailed teaching pages and flag the inconsistency rather than silently choosing the summary label." },
-            { number: "1.3", title: "Cell Structure and Specialization", strand: "Cell Biology and Biodiversity", suggestedLessons: 20, officialContent: ["Microscopy and cell-size estimation", "Plant and animal cell structure", "Specialized cells and adaptations", "Levels of cell organization"] },
-            { number: "1.4", title: "Chemicals of Life", strand: "Cell Biology and Biodiversity", suggestedLessons: 24, officialContent: ["Carbohydrates, lipids, proteins and vitamins", "Enzymes and factors affecting enzyme activity", "Water and mineral salts", "Food tests and enzyme investigations"] },
-            { number: "2.1", title: "Plant Nutrition", strand: "Anatomy and Physiology of Plants", suggestedLessons: 12, officialContent: ["Plant nutrition"] },
-            { number: "2.2", title: "Transport in Plants", strand: "Anatomy and Physiology of Plants", suggestedLessons: 22, officialContent: ["Transport in plants"] },
-            { number: "2.3", title: "Gaseous Exchange and Respiration in Plants", strand: "Anatomy and Physiology of Plants", suggestedLessons: 22, officialContent: ["Gaseous exchange", "Respiration"] },
-            { number: "3.1", title: "Animal Nutrition", strand: "Anatomy and Physiology of Animals", suggestedLessons: 12, officialContent: ["Animal nutrition"] },
-            { number: "3.2", title: "Transport in Animals", strand: "Anatomy and Physiology of Animals", suggestedLessons: 24, officialContent: ["Transport in animals"] },
-            { number: "3.3", title: "Gaseous Exchange and Respiration in Animals", strand: "Anatomy and Physiology of Animals", suggestedLessons: 24, officialContent: ["Gaseous exchange", "Respiration"] }
-          ],
-          suggestedLessonTotal: 180,
-          note: "The chapter titles follow the KICD sub-strand structure. CBE Nexus can expand each sub-strand into detailed lessons and sections, but should not split it into extra curriculum chapters without a documented reason."
+          sourceStatus: "TIE-2023-Form-I-IV-official-syllabus-opened-and-four-form-tables-reviewed",
+          sequenceStatus: "Form-I-IV principal learning-content themes reconciled; practical investigation activities recorded separately from conceptual themes",
+          sourceListedTopicRows: null,
+          chapterCount: null,
+          officialTablePages: { FormI: 9, FormII: 17, FormIII: 26, FormIV: 31 },
+          topicsByForm: {
+            FormI: ["Biology: meaning, branches, terminology, importance and links to other disciplines", "Cell biology: cell meaning, types, structures and functions", "Plant nutrition: leaf structure, photosynthesis and mineral requirements", "Classification: systems, importance and scientific naming", "Major groups of organisms: Monera, Protista, Fungi, Plantae, Animalia and viruses", "Biological investigation foundations: observation, measurement and experimentation", "Microscopic observation of plant and animal cells", "Investigation of plant nutrition and photosynthesis-related processes"],
+            FormII: ["Nutrition in humans and ruminants: nutrients, digestion, deficiency and digestive disorders", "Transport in flowering plants: vascular tissues, water and mineral uptake, movement and transpiration", "Transport in humans: circulatory system and pulse-related processes", "Respiration and gaseous exchange in living organisms, including plants", "Practical investigations: food tests, transport in plants and pulse-rate experiments"],
+            FormIII: ["Coordination in plants and animals: tropic responses, nervous coordination, sense organs and endocrine control", "Excretion in humans: excretory organs, products and urinary system", "Regulation in humans: temperature, blood glucose and osmoregulation", "Biological investigations of nervous coordination and plant tropic responses", "Biological project and investigation reporting"],
+            FormIV: ["Reproduction in plants: asexual and sexual reproduction, pollination and fertilisation", "Human reproduction: reproductive systems, fertilisation, pregnancy and childbirth", "Growth in mammals and flowering plants: mitosis, developmental stages and seed germination", "Reproductive health themes appearing in the syllabus activities, including family planning, contraception and reproductive-system disorders"]
+          },
+          reconciliationNotes: [
+            "The Form II table includes practical investigation activities in addition to the conceptual topics; these are recorded as practical work, not counted as separate textbook chapters.",
+            "The Form III table includes investigation work on nervous coordination and plant tropic responses; the earlier short summary omitted these practical strands.",
+            "The Form IV table covers reproduction in plants and humans and growth in mammals and flowering plants; family-planning and contraception appear within the human-reproduction learning activities.",
+            "The official syllabus presents learning content in competency matrices; normalized themes are not an official TIE chapter count."
+          ]
         },
         Chemistry: {
           officialName: "Chemistry",
@@ -411,7 +411,7 @@ export const chapterSequenceVerificationBatch01 = {
         subjectStatus: "framework-competences-verified; these competence statements must not be counted as chapters or assigned to Forms without the subject syllabus"
       },
       syllabusSequenceAudit: {
-        status: "Mathematics Form I-IV detailed tables reviewed and normalized; Biology, Chemistry and Physics still require equivalent row-by-row reconciliation",
+        status: "Biology and Mathematics Form I-IV detailed tables reviewed and normalized; Chemistry and Physics still require equivalent row-by-row reconciliation",
         officialDocuments: {
           Biology: "https://www.tie.go.tz/uploads/documents/sw-1727192422-BIOLOGY%20SYLLABUS%20ORDINARY%20SECONDARY%20FINAL%20.pdf",
           Chemistry: "https://www.tie.go.tz/uploads/documents/sw-1727192894-CHEMISTRY%20O%27LEVEL%20EDUCATION%20FINAL.pdf",
@@ -419,7 +419,7 @@ export const chapterSequenceVerificationBatch01 = {
           Mathematics: "https://www.tie.go.tz/uploads/documents/sw-1727256902-MATHEMATICS%20SYLLABUS%20-%20O%20level%20final.pdf"
         },
         confirmedTableOfContents: {
-          Biology: { FormI: 9, FormII: 17, FormIII: 26, FormIV: 31 },
+          Biology: { FormI: 9, FormII: 17, FormIII: 26, FormIV: 31, allFourDetailedTablesReviewed: true },
           Chemistry: { FormI: 9, FormII: 18, FormIII: 30, FormIV: 45 },
           Physics: { FormI: 9, FormII: 25, FormIII: 37, FormIV: 46 },
           Mathematics: {
