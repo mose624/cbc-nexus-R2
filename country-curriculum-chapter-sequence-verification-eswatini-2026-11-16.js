@@ -76,14 +76,4 @@ export const countryCurriculumVerification = {
   "overallStatus": "Country record created with official-source leads and conservative subject mapping; full grade-by-grade programme extraction and textbook chapter verification remain pending."
 };
 
-export const chapterEvidenceReconciliation = {
- reviewedOn: "2026-11-16",
- country: "Eswatini",
- gradeSequenceEvidence: "EGCSE and national curriculum pathways include Mathematics and science subjects, but current Ministry-approved grade-by-grade programmes and subject allocation require direct retrieval. Do not use Cambridge/IGCSE syllabi as if they were the national curriculum.",
- textbookEvidence: "No actual student textbook contents inspected; official book list and contents pages outstanding.",
- actualTextbookContentsInspected: false,
- officialTextbookChapterCountsVerified: false,
- officialChapterCount: null,
- evidenceSource: "Official Ministry curriculum and examination syllabus retrieval outstanding.",
- nextRequiredWork: "Retrieve official grade/year/term programmes and extract topics for Mathematics, Biology or integrated Life Science, Chemistry and Physics; inspect approved student textbook contents pages and record printed chapter titles/counts separately. Do not infer textbook chapters from curriculum themes."
-};
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Eswatini", gradeSequenceEvidence: "EGCSE and national pathways include Mathematics and sciences, but current Ministry-approved grade-by-grade programmes and subject allocations require retrieval. Do not treat Cambridge syllabi as national curriculum.", textbookEvidence: "No student textbook contents inspected.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "Official Ministry curriculum retrieval outstanding.", nextRequiredWork: "Retrieve official grade/year/term programmes and extract Mathematics, Biology or integrated Life Science, Chemistry and Physics topics; inspect approved student textbook contents pages and record printed chapter titles/counts separately." };
