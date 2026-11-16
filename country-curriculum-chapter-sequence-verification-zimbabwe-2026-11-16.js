@@ -61,3 +61,15 @@ export const countryCurriculumVerification = {
     "officialTextbookChapterCountsVerified": false
   }
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Zimbabwe",
+  gradeSequenceEvidence: "The Heritage-Based Curriculum Framework 2024–2030 and subject syllabuses need grade-by-grade extraction; distinguish framework themes from actual adopted textbook chapter titles and counts.",
+  textbookEvidence: "The referenced material is an official ministry or curriculum-authority source, or an explicit special-scope note; no adopted textbook contents page or full book PDF was inspected in this batch.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.mopse.gov.zw/",
+  nextRequiredWork: "Retrieve the current approved grade-by-grade syllabus and exact adopted textbook for each relevant grade and track; inspect contents pages; record title, edition, publisher, grade, chapter titles and verified count. Keep CBE Nexus-authored chapters separate."
+};
