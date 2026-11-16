@@ -50,3 +50,5 @@ export const countryCurriculumVerification = {
     "Author and verify CBE Nexus chapters only after sequence validation."
   ]
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Indonesia", gradeSequenceEvidence: "Kurikulum Merdeka distinguishes integrated IPAS at primary level and IPA at lower secondary, with upper-secondary subject selection including Biology, Chemistry, Physics and Mathematics. Verify current implementation phase and grade learning outcomes.", textbookEvidence: "No actual approved textbook contents inspected; textbook availability and chapter counts vary by grade and edition.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "Official Ministry Kurikulum Merdeka and Capaian Pembelajaran sources require direct grade-level extraction.", nextRequiredWork: "Extract the official grade/year/term sequence for Mathematics and integrated or specialist sciences from the current national documents; inspect actual approved/adopted student textbook contents pages and record exact chapter titles and counts separately." };
