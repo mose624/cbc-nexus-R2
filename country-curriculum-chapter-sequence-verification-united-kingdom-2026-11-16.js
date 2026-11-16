@@ -48,7 +48,24 @@ export const countryCurriculumVerification = {
     "status": "england-official-programmes-identified-other-jurisdictions-pending",
     "evidenceSummary": "Split into four jurisdiction audits, not one UK sequence. England: Science and Mathematics statutory programmes cover KS1–KS4; science content names Biology, Chemistry and Physics, while Mathematics is year-by-year at KS1–KS2 and key-stage programmes at KS3–KS4. Scotland, Wales and Northern Ireland require separate extraction. Textbooks are publisher/school-selected, not one national approved book.",
     "officialDocuments": ["https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study/national-curriculum-in-england-science-programmes-of-study","https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study"],
-    "gradeByGradeSequenceVerified": false,
+"sequenceExtracted": {
+      "jurisdiction": "England only; not UK-wide",
+      "science": {
+        "Years 1-2": ["Plants", "Animals including humans", "Everyday materials", "Seasonal changes (Year 1); living things and habitats, uses of everyday materials and additional life/material topics continue in Year 2"],
+        "Years 3-4": ["Plants", "Animals including humans", "Rocks", "Light", "Forces and magnets", "Living things and their habitats", "States of matter", "Sound", "Electricity"],
+        "Years 5-6": ["Living things and their habitats", "Animals including humans", "Properties and changes of materials", "Earth and space", "Forces", "Evolution and inheritance", "Electricity", "Light"],
+        "Years 7-9 (KS3)": ["Biology, Chemistry and Physics disciplines; topic sequence is specified across key stage rather than fixed nationally by individual year"],
+        "Years 10-11 (KS4)": ["Biology, Chemistry and Physics; approximately equal proportions required"]
+      },
+      "mathematics": {
+        "Years 1-2": ["Number and place value", "Addition and subtraction", "Multiplication and division", "Fractions", "Measurement", "Geometry", "Statistics (as age-appropriate)"],
+        "Years 3-6": ["Number and place value; four operations; fractions/decimals/percentages; measurement; geometry; statistics; algebra introduced in Year 6"],
+        "Years 7-9": ["Number, algebra, ratio/proportion, geometry/measures, probability, statistics"],
+        "Years 10-11": ["Builds on KS3 with number, algebra, ratio/proportion, geometry/measures, probability, statistics and problem solving"]
+      },
+      "sourceCaveat": "For Science, Years 1–6 are statutory year-by-year but schools have flexibility to sequence within the key stage; KS3/KS4 content is specified by key stage. Mathematics Years 1–6 is year-by-year; KS3/KS4 by key stage."
+    },
+        "gradeByGradeSequenceVerified": false,
     "actualTextbookContentsInspected": false,
     "officialTextbookChapterCountsVerified": false,
     "nextAction": "Extract grade/year/term topic headings from current official programme documents; inspect actual approved learner-textbook contents pages; map every book chapter to the official topic sequence and record discrepancies."
