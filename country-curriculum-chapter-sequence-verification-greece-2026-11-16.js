@@ -69,3 +69,5 @@ export const countryCurriculumVerification = {
   },
   "overallStatus": "Country record created with official-source leads and conservative subject mapping; detailed programme extraction and textbook chapter verification remain pending."
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Greece", gradeSequenceEvidence: "Primary science begins through Environmental Studies; Gymnasio includes Mathematics and natural sciences, while upper-secondary pathways differentiate specialist sciences and Mathematics. Current IEP class programmes need extraction.", textbookEvidence: "No textbook contents inspected; official school book catalogue needs class/pathway matching.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "Official Institute of Educational Policy retrieval outstanding.", nextRequiredWork: "Retrieve official grade/year/term programmes and extract Mathematics, Biology or integrated Life Science, Chemistry and Physics topics; inspect approved student textbook contents pages and record printed chapter titles/counts separately." };
