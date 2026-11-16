@@ -44,6 +44,16 @@ export const countryCurriculumVerification = {
     "https://tymm.meb.gov.tr/brosurler",
     "https://tymm.meb.gov.tr/ogretim-programlari/ortaogretim"
   ],
+  "reconciliation": {
+    "batch": "173-192",
+    "status": "current-implementation-and-subject-plans-verified",
+    "evidenceSummary": "MEB's 2026–27 annual draft plans list Biology, Physics, Chemistry and Mathematics. TYMM implementation in secondary continues in preparatory, Grades 9–10 and starts Grade 11 in 2026–27; other grades retain previous programmes. Need download each annual-plan ZIP and compare with approved textbook contents.",
+    "officialDocuments": ["https://tymm.meb.gov.tr/taslak-cerceve-planlari/ortaogretim","https://ttkb.meb.gov.tr/www/ders-kitaplari-ve-egitim-araclari-e-icerik-tablosu-guncellendi/icerik/931/tr"],
+    "gradeByGradeSequenceVerified": false,
+    "actualTextbookContentsInspected": false,
+    "officialTextbookChapterCountsVerified": false,
+    "nextAction": "Extract grade/year/term topic headings from current official programme documents; inspect actual approved learner-textbook contents pages; map every book chapter to the official topic sequence and record discrepancies."
+  },
   "completion": {
     "gradeByGradeTopicSequenceVerified": false,
     "officialTextbookChapterCountsVerified": false,
