@@ -646,11 +646,23 @@ export const chapterSequenceVerificationBatch01 = {
   batchSummary: {
     countriesReviewed: 10,
     subjectRecordsReviewed: 40,
-    officialProgrammeDocumentsOpened: 8,
-    countriesWithAtLeastOneDetailedSyllabusSequenceTranscribed: 4,
-    countriesWithAllFourSubjectSequencesVerified: 1,
-    countriesRequiringAdditionalOfficialDocumentRetrieval: ["Kenya", "Ghana", "Nigeria", "Uganda", "Algeria", "Andorra", "Angola", "Antigua and Barbuda"],
-    note: "Tanzania now has all four TIE 2023 Ordinary Secondary Form I-IV subject tables reviewed and normalized for Biology, Chemistry, Physics and Mathematics; these are syllabus-theme maps, not official chapter counts or proof of 10,000-word chapter content. Albania has four Grade X theme sequences transcribed; Antigua and Barbuda has CXC regional syllabus section/module structures, not a national grade sequence. Kenya has Grade 10 Biology sub-strands and provisional Chemistry, Physics and Core Mathematics maps; exact KICD topic-order reconciliation remains pending. The remaining country sequences still need extraction. This does not falsely mark all 40 subject sequences as complete."
+    countriesWithAtLeastOneSubjectSequenceOrOfficialThemeMapRecorded: 9,
+    countriesWithAllFourSubjectSequencesReconciledAtTheReviewedLevel: 1,
+    countryWithFourSubjectSequencesReconciledAtReviewedLevel: "Tanzania",
+    countriesWithOutstandingScopeOrTopicReconciliation: ["Kenya", "Ghana", "Nigeria", "Uganda", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda"],
+    coverageNotes: {
+      Kenya: "Grade 10 Biology 10, Chemistry 7, Physics 13 and Core Mathematics 9 sub-strands recorded; Chemistry Organic Chemistry detailed sub-strands and the Biology 1.2 summary-versus-detailed-page title discrepancy remain to be resolved.",
+      Ghana: "SHS Biology 9, Physics 17 and Mathematics 8 sub-strands recorded; Chemistry official PDF and sequence extraction remain outstanding.",
+      Nigeria: "SSS1 Biology 20 source records/19 normalized themes, Chemistry 18 provisional entries, Physics 30 source records and General Mathematics 12 headings recorded from reproduced documents; all four require primary NERDC source verification, and Chemistry's count discrepancy remains unresolved.",
+      Uganda: "Advanced Secondary 2025 S5-S6 sequences recorded for Biology 9, Chemistry 13, Physics 33 and Principal Mathematics 27. Lower Secondary S1-S4 subject presence is verified, but its detailed topic sequences remain pending. Keep the two stages separate.",
+      Tanzania: "All four TIE 2023 Ordinary Secondary Form I-IV syllabuses and detailed subject tables reviewed; Biology, Chemistry, Physics and Mathematics themes reconciled. These are normalized learning-content themes, not official textbook chapter counts or evidence of 10,000-word chapter content.",
+      Albania: "Four ASCAP 2026 language-oriented programme structures recorded; Biology, Chemistry and Physics are Grade X, while Mathematics is a combined Grade X-XI programme. Detailed learning-outcome extraction and year allocation remain pending.",
+      Algeria: "Official secondary stream structure and 2026-2027 transition evidence recorded; legacy third-year Biology and integrated Physics-Chemistry documents retrieved. Current year-by-year subject sequences and Mathematics programme remain outstanding.",
+      Andorra: "Integrated Second Education science and Mathematics blocks, plus General Batxillerat Biology, Chemistry, Physics and scientific-technical Mathematics resource blocks recorded. Separate Physics-hours option, applied-social Mathematics and IB pathways remain outstanding.",
+      Angola: "Official legal structure and examination-subject evidence recorded, but INADE's inspected curriculum-materials pages showed no downloadable files for Classes 7-12; all four detailed subject sequences remain pending.",
+      "Antigua and Barbuda": "CXC regional CSEC Biology, Chemistry, Physics and Mathematics structures recorded; revised Mathematics applies from May/June 2027. These are regional examination syllabuses, not an Antigua national grade-by-grade sequence; local grade mapping and detailed outcome extraction remain pending."
+    },
+    note: "The register contains 40 subject records across 10 countries, but these records are at different evidence levels: national curriculum topic sequences, normalized syllabus themes, integrated resource blocks, legacy programme descriptions, and regional examination sections/modules. Only Tanzania currently has all four subjects reconciled across the reviewed national Form I-IV syllabuses at the level claimed in this batch. No metric in this summary asserts that all 40 subject sequences are complete, that official chapter counts exist for every country, or that any chapter already meets the 10,000-word content target."
   },
   qualityRules: {
     neverInventChapterTitlesOrCounts: true,
