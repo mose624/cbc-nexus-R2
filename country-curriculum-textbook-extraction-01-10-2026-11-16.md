@@ -529,3 +529,71 @@ The separate Grade 9 Science PDF at https://moe.gov.af/sites/default/files/2020-
 - Remaining Afghanistan work: general-school Grade 9 Chemistry and Physics, Grade 9 Mathematics Dari contents, the current approved Grades 7–9 syllabus, and edition/adoption verification.
 - Other nine countries in the first ten remain pending document-level extraction.
 - Canonical register remains unchanged.
+
+
+---
+
+# Afghanistan Grade 9 continuation — general-school Chemistry and Physics (Dari)
+
+**Inspection date:** 16 November 2026  
+**Pathway:** General-school Grade 9; separate subject textbooks, not the religious-school integrated Science pathway.
+
+## G. Grade 9 Chemistry — Dari, 1399 SH
+
+**Official Ministry PDF:** https://moe.gov.af/sites/default/files/2020-03/G9-Dr-Chemistry.pdf  
+**Metadata evidence:** Ministry textbook; Chemistry; Grade 9; Dari; curriculum development directorate; 1399 SH (PDF lines 74–87). The cover repeats Grade 9 and 1399 SH (lines 0–15).
+
+### Actual contents-page transcription
+
+The contents page at PDF lines 110–140 lists four chapters:
+
+1. **Organic compounds** — introduction/definition of organic compounds; chemical relationships in organic compounds; chapter summary and exercises.
+2. **Hydrocarbons** — alkanes/methane family; methane; cycloalkanes; unsaturated hydrocarbons; aromatic hydrocarbons; chapter summary and exercises.
+3. **Functional groups in organic compounds** — alcohols; ethers; aldehydes; ketones; organic acids; esters; soap; carbohydrates; polysaccharides; chapter summary and exercises.
+4. **Reactions of organic compounds** — types of reactions of organic compounds; chapter summary and exercises.
+
+The contents page's numbered entries are a mixture of chapter headings and subheadings. The four top-level chapter headings, rather than every numbered subheading, are counted as chapters. The book's introduction independently describes the same four-chapter progression (PDF lines 143–153).
+
+## H. Grade 9 Physics — Dari, 1399 SH
+
+**Official Ministry PDF:** https://www.moe.gov.af/sites/default/files/2020-03/G9-Dr-Physic.pdf  
+**Metadata evidence:** Ministry textbook; Physics; Grade 9; Dari; curriculum development directorate; Kabul; 1399 SH (PDF lines 45–56). The cover confirms Grade 9 and 1399 SH (lines 0–6).
+
+### Actual contents-page transcription
+
+The contents page at PDF lines 92–123 lists four chapters:
+
+1. **One-dimensional motion** — position; average speed/velocity; acceleration; chapter summary and questions.
+2. **Vibrations, waves and sound** — vibration; waves; wave speed; sound; chapter summary and questions.
+3. **Electric current** — electric current; potential difference; electrical resistance; Ohm's law; applications of Ohm's law; resistor combinations; battery; electrical safety; chapter summary and questions.
+4. **Electromagnetism** — magnetic effect of electric current; galvanometer; electromagnetic induction; electromagnet; how magnetism works; chapter summary and questions.
+
+The Physics book's preface also says the year's material is arranged in these four chapters (PDF lines 81–88). The PDF is in Dari, despite its filename's English transliteration.
+
+## Grade 9 general-school reconciliation
+
+The general-school textbooks now inspected directly are:
+- Biology, Dari: 9 chapters.
+- Chemistry, Dari: 4 chapters.
+- Physics, Dari: 4 chapters.
+- Mathematics, Pashto: 9 chapters.
+
+The Ministry curriculum books index identifies Grade 9 as having separate Biology, Chemistry, Physics and Mathematics subject books in the general-school sequence. The Grade 9 integrated Science PDF documented earlier is for religious schools and remains a separate pathway. A Dari Mathematics Grade 9 PDF URL was attempted but timed out; no Dari Mathematics contents page is counted.
+
+## Updated Afghanistan cumulative totals
+
+- Grade 7 general-school books: 4 contents pages; 27 chapters.
+- Grade 8 general-school books: 4 contents pages; 30 chapters.
+- Grade 9 general-school Biology: 1 contents page; 9 chapters.
+- Grade 9 general-school Mathematics (Pashto): 1 contents page; 9 chapters.
+- Grade 9 general-school Chemistry (Dari): 1 contents page; 4 chapters.
+- Grade 9 general-school Physics (Dari): 1 contents page; 4 chapters.
+- Grade 9 religious-school integrated Science (Dari): 1 contents page; 11 chapters.
+- **Cumulative:** 13 actual textbook contents pages; **94 chapters transcribed**.
+- Grade 9 Biology Pashto parallel edition: located and metadata inspected; contents not transcribed and not counted.
+- Grade 9 Mathematics Dari: official Ministry URL attempt timed out; contents not inspected or counted.
+- Complete official grade-by-grade syllabus topic sequences independently transcribed: **0**. Textbook contents pages are not being mislabelled as syllabus sequences.
+- Current final adoption status of the 1398–1399 SH books in November 2026: not established.
+- Remaining Afghanistan work: Grade 9 Mathematics Dari contents; current approved official syllabus topic sequences; textbook adoption/edition verification; proceed to Grade 10 only with actual Ministry PDFs and inspected contents pages.
+- Other nine countries in the first ten remain pending document-level extraction.
+- Canonical country register unchanged.
