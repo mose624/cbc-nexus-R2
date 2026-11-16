@@ -132,4 +132,11 @@ export const country = {
     status: "national-framework-and-secondary-structure-verified; current-secondary-rollout-and-unit-sequence-extraction-pending",
     note: "The 2022 framework is an overarching framework and the Ministry transformation page reports lower-secondary piloting. Do not claim the full secondary competency-based curriculum is implemented in all schools in 2026/27 without current grade-level evidence. Keep integrated lower-secondary Science distinct from upper-secondary CSEC Biology, Chemistry and Physics."
   }
+
+  evidenceRefresh_2026_11_16: {
+  "status": "existing country source map retained; current official topic documents and actual textbook contents require direct extraction",
+  "sources": [],
+  "finding": "No new verified topic sequence or official textbook chapter count is asserted in this evidence refresh. Preserve any jurisdiction, language, pathway and integrated-science distinctions already recorded in this file."
+},
+  textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish the actual contents-page chapter sequence. Do not invent counts." }
 };
