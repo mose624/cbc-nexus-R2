@@ -49,3 +49,5 @@ export const countryCurriculumVerification = {
     "Author and verify CBE Nexus chapters only after sequence validation."
   ]
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Luxembourg", gradeSequenceEvidence: "National curriculum varies across fundamental education and secondary pathways, including classical and general secondary education. Languages and pathway differences must be preserved; extract subject-specific grade sequences from current Ministry programmes.", textbookEvidence: "No actual student textbook contents or official chapter counts inspected.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "Official Ministry education curriculum portal retrieval outstanding.", nextRequiredWork: "Extract current official grade/year/term learning outcomes and topic sequences for Mathematics and integrated or specialist sciences. Open approved/adopted student textbook PDFs and contents pages; record exact edition, grade, chapter titles and chapter counts separately. Do not infer textbook chapters from curriculum topics." };
