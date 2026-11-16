@@ -49,3 +49,5 @@ export const countryCurriculumVerification = {
     "Author and verify CBE Nexus chapters only after sequence validation."
   ]
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Laos", gradeSequenceEvidence: "Ministry of Education and Sports administers the national curriculum across primary and secondary levels. Current official grade-level programmes for Mathematics and integrated/natural sciences need retrieval before subject sequencing is asserted.", textbookEvidence: "No actual textbook contents or official chapter counts verified.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "Official Ministry curriculum and textbook portal retrieval outstanding.", nextRequiredWork: "Extract the official grade/year/term sequence for Mathematics and integrated or specialist sciences from current national documents; inspect actual approved/adopted student textbook contents pages and record exact chapter titles and counts separately." };
