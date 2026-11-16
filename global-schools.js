@@ -276,7 +276,7 @@ function renderCountry(){
    item.type==="quizzes"?"/interactive-questions.html?country="+countryQuery:
    item.type==="exam-resources"?"#papers":
    item.type==="curriculum"?"#curriculum":
-   item.type==="worked-examples"?"/country-online-notes.html?country="+countryQuery+"&subject=Mathematics&focus=worked-examples":
+   item.type==="worked-examples"?"/global-mathematics.html?country="+countryQuery+"#early-childhood":
    item.type==="notes"?"/country-online-notes.html?country="+countryQuery:
    "/resource-category.html?type="+encodeURIComponent(item.type)+"&country="+countryQuery;
   if(item.type==="practicals"){card.setAttribute("aria-label","Open online Biology, Chemistry and Physics practical notes for "+c.name);card.addEventListener("click",event=>{event.stopPropagation();});}
