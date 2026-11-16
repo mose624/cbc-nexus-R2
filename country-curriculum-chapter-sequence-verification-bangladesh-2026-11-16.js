@@ -122,4 +122,14 @@ export const country = {
     status: "framework-and-2026-subject-structure-reconciled-at-high-level; textbook-sequence-extraction-pending",
     note: "The 2021 framework's integrated Science structure and the 2026 Grades 9–10 separate Biology/Chemistry/Physics books represent different curriculum structures or implementation stages. Keep the sources and academic years distinct. Do not invent chapter counts or claim detailed chapter completion."
   }
+
+  evidenceRefresh_2026_11_16: {
+  "status": "official NCTB portal and textbook listing confirmed; actual subject book contents not inspected",
+  "sources": [
+    "https://nctb.portal.gov.bd/site/page/6d8594f1-23d6-4d8e-af97-e0696f721e90",
+    "https://nctb.gov.bd/"
+  ],
+  "finding": "NCTB portal lists Mathematics and Science among textbooks. Reconcile curriculum transition and separate Biology/Chemistry/Physics offerings by current class and year before asserting sequence."
+},
+  textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish the actual contents-page chapter sequence. Do not invent counts." }
 };
