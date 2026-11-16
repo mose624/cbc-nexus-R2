@@ -60,3 +60,15 @@ export const countryCurriculumVerification = {
     ]
   }
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Philippines",
+  gradeSequenceEvidence: "DepEd K–12 curriculum guides specify learning competencies by grade; implementation of MATATAG is phased, so identify the applicable curriculum version and grade cohort before sequencing subjects. Integrated Science in lower grades must be separated from senior high Biology, Chemistry and Physics tracks.",
+  textbookEvidence: "Curriculum framework or syllabus portal identified; actual adopted textbook contents pages and complete book PDFs were not inspected in this batch.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.deped.gov.ph/k-to-12/about/k-to-12-basic-education-curriculum/",
+  nextRequiredWork: "Retrieve current grade-by-grade official syllabus and the exact approved/adopted textbook for each grade and pathway; inspect contents pages; record title, edition, publisher, grade, chapter titles and verified chapter count. Keep CBE Nexus-authored chapters separate."
+};
