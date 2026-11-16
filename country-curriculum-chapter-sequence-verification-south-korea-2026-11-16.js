@@ -61,7 +61,7 @@ export const countryCurriculumVerification = {
 
 export const chapterEvidenceReconciliation = {
   reviewedOn: "2026-11-16",
-  country: "Republic of Korea",
+  country: "South Korea",
   gradeSequenceEvidence: "The 2022 Revised National Curriculum has elementary, middle and high-school subject standards; integrated Science in earlier stages and elective/specialised high-school Biology, Chemistry and Physics require grade/course-level mapping.",
   textbookEvidence: "The referenced material is an official curriculum, ministry or national curriculum authority source, not an opened adopted textbook contents page. Actual textbook contents pages and full book PDFs were not inspected in this batch.",
   actualTextbookContentsInspected: false,
