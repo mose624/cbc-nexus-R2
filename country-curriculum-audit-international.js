@@ -12,6 +12,14 @@
   Tanzania:"https://www.tie.go.tz/index.php/publications/syllabus-for-lower-secondary-academics",
   "South Africa":"https://www.education.gov.za/Curriculum/NCSGradesR12/CAPSFET.aspx"
  };
+ const ghanaDocuments={
+  "Biology":"https://nacca.gov.gh/wp-content/uploads/2025/04/Biology-Curriculum.pdf",
+  "Chemistry":"https://nacca.gov.gh/secondary-education-curriculum/",
+  "Physics":"https://nacca.gov.gh/wp-content/uploads/2025/04/Physics-Curriculum.pdf",
+  "Mathematics":"https://nacca.gov.gh/wp-content/uploads/2025/04/Mathematics-Curriculum.pdf",
+  "Curriculum portal":"https://nacca.gov.gh/secondary-education-curriculum/",
+  "Subject combinations and WASSCE":"https://nacca.gov.gh/subject-combination-guidelines-secondary-education/"
+ };
  const ghana={
   "Mathematics":[
    "Strand 1 — Numbers for Everyday Life: Real Number System",
@@ -56,7 +64,7 @@
   ]
  };
  const sourceText={
-  Ghana:"NaCCA Senior High School curriculum (September 2023). The official curriculum portal publishes separate Biology, Chemistry, Physics and Mathematics curriculum documents for SHS 1–3. The headings stored here are a partial sequence check and must be expanded against each subject PDF and year-level learning indicator before any chapter is marked core or complete.",
+  Ghana:"NaCCA Senior High School curriculum (September 2023). Official separate Biology, Chemistry, Physics and Mathematics curriculum documents cover SHS 1–3. The curriculum portal also publishes subject-combination guidance for WASSCE. Detailed topic-by-topic and year-level learning-indicator extraction remains pending; the existing headings are provisional and are not an exhaustive chapter register.",
    Nigeria:"NERDC New Revised Senior Secondary Education Curriculum (2025 implementation cycle). The national portal separates SSS 1, SSS 2 and SSS 3; the science offering includes Biology, Chemistry and Physics, with General Mathematics as a core subject. Each subject and year must be mapped from its own current curriculum document; older topic lists must not be assumed current.",
   Uganda:"NCDC curriculum framework and subject syllabi. Lower Secondary runs Senior 1–4 and includes Mathematics, Biology, Chemistry and Physics as separate subjects; General Science is an alternative for some learners with special educational needs. Advanced Secondary has separate aligned syllabi, so level must be identified before topics are mapped.",
   Tanzania:"Tanzania Institute of Education (TIE) publishes separate Ordinary Secondary Education syllabi for Forms I–IV and Advanced Secondary Education syllabi for Forms V–VI. Subject and level must be matched to the correct current syllabus; never substitute an Advanced Form V–VI sequence for Ordinary Form I.",
@@ -68,6 +76,12 @@
   const subjects=record.levels?.[levelName]||{};
   const verified=country==="Ghana"?ghana:{};
   record.curriculumSource=refs[country]||record.source;
+  if(country==="Ghana"){
+   record.curriculumDocuments=ghanaDocuments;
+   record.curriculumLevelScope="Senior High School (SHS 1–3), September 2023 curriculum; do not merge with Junior High School Common Core Programme (JHS 1–3 Integrated Science and Mathematics).";
+   record.assessmentContext="WASSCE subject combinations follow NaCCA's current secondary subject-combination guidelines; school subject offering and learner combination can vary.";
+   record.curriculumAuditStatus="official-documents-identified-topic-by-topic-audit-pending";
+  }
   record.curriculumAuditStatus=country==="Ghana"?"partial-official-sequence-verified":"official-source-identified-sequence-audit-pending";
   record.verifiedCurriculumSequence=verified;
   record.notice=(sourceText[country]||"Official curriculum sequence audit pending.")+
