@@ -89,7 +89,8 @@
   record.notice="Original supplementary learning notes. Confirm the current grade-specific syllabus, sequence and assessment requirements with the national authority linked below."+(c.pathwayNotice?" "+c.pathwayNotice:"");
   record.levels=record.levels||{};
   const level=record.levels[c.level]||(record.levels[c.level]={});
-  for(const subject of ["Biology","Chemistry","Physics","Mathematics"]){
+  const subjectPathways=c.name==="Andorra"?["Mathematics"]:c.name==="Belize"?["Mathematics"]:["Biology","Chemistry","Physics","Mathematics"];
+  for(const subject of subjectPathways){
    const d=lessons[subject];
    const list=level[subject]||(level[subject]=[]);
    const id="global-deep-wave1-"+c.name.toLowerCase().replace(/[^a-z0-9]+/g,"-")+"-"+subject.toLowerCase();
