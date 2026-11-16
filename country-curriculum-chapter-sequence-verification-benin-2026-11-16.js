@@ -148,3 +148,16 @@ export const country = {
   "cbEnexusLongFormChaptersWritten": false
 },
 };
+
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Benin",
+  gradeSequenceEvidence: "Secondary mapping should preserve SVT and PCT integration; official Ministry programme/book lists are needed before splitting Biology, Chemistry and Physics into standalone sequences.",
+  textbookEvidence: "Third-party chapter counts must not be treated as official textbook chapter counts; no official book contents inspected.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.education.gov.bf/accueil",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology (or integrated Life Science), Chemistry, Physics and Mathematics; then open approved/adopted student textbooks and record exact printed chapter headings and counts separately. Do not infer textbook chapters from syllabus themes."
+};
