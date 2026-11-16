@@ -826,3 +826,104 @@ The Grade 11 Biology contents index lists **12 chapters**, not 10. The chapter s
 12. Biomes.
 
 The preceding section's prose grouped some of these adjacent chapter headings together under the five printed part headings; this correction supplies the exact twelve-chapter numbering. The cumulative total remains 161 chapters.
+
+
+---
+
+# Afghanistan Grade 12 — three general-school textbook contents pages transcribed
+
+**Inspection date:** 16 November 2026  
+**Pathway:** General-school Grade 12, Dari. Official Ministry PDFs were opened and their contents/index pages inspected. These are textbook chapter sequences, not independently transcribed syllabus sequences.
+
+## Q. Chemistry — Grade 12, Dari, 1399 SH
+
+**Official Ministry PDF:** https://moe.gov.af/sites/default/files/2020-03/G12-Dr-Chemistry.pdf  
+**Metadata:** Chemistry; Grade 12; Dari; Ministry of Education; 1399 SH (PDF lines 31–49). The book is titled Chemistry on the title page; the cover also contains a prominent Organic Chemistry descriptor.  
+**Contents index:** PDF lines 78–207.
+
+Thirteen chapters, in printed order:
+
+1. **Formation of chemical bonds in organic compounds** — carbon electron structure and energy levels; carbon valence and bond formation; hybridisation.
+2. **Molecular structure** — molecular formulae; structural formulae; writing structural formulae; isomers.
+3. **Classification of organic compounds** — classification of hydrocarbons; functional groups in hydrocarbons; homologous series of alkanes; organic compounds and functional groups/derivatives.
+4. **Alkanes and cycloalkanes** — alkanes; cyclic compounds/cycloalkanes.
+5. **Alkenes and alkynes** — alkenes; alkynes; acetylene.
+6. **Aromatic compounds (arenes)** — benzene structure; nomenclature of aromatic compounds; reactions of aromatic hydrocarbons.
+7. **Alkyl halides** — alkyl halides.
+8. **Alcohols and ethers** — alcohols; ethers.
+9. **Aldehydes and ketones** — carbonyl compounds; aldehydes; ketones.
+10. **Organic acids (carboxylic acids)** — organic acids; selected important carboxylic acids.
+11. **Amines** — structure and classification of amines; amides.
+12. **Natural polymers** — classification of natural polymers; sugars; proteins; DNA and RNA.
+13. **Synthetic polymers** — addition polymers; condensation polymers; science, technology and society; environmental pollution from use of synthetic polymers.
+
+**Contents-page note:** The printed index has a repeated subsection number in Chapter 9 (the aldehyde entry appears as 9-1 and ketone as 9-2). This is preserved as a source numbering irregularity, not silently corrected.
+
+## R. Physics — Grade 12, Dari, 1398 SH
+
+**Official Ministry PDF:** https://moe.gov.af/sites/default/files/2020-03/G12-Dr-Physic.pdf  
+**Metadata:** Physics; Grade 12; Dari; Ministry of Education; Kabul; 1398 SH (PDF lines 103–124).  
+**Contents index:** PDF lines 161–259.
+
+Six chapters, in printed order:
+
+1. **Oscillations and simple harmonic motion** — complete oscillation and simple pendulum; frequency in simple harmonic motion; equation of simple harmonic motion; relation between circular motion and simple harmonic motion.
+2. **Waves and their motion** — mechanical waves and properties; reflection and refraction of mechanical waves; interference; sound waves, speed and intensity; electromagnetic waves; interference pattern of light; diffraction; polarisation.
+3. **Mechanical properties of matter** — states of matter; density; elasticity; stress; strain and pressure.
+4. **Thermal properties of materials** — heat transfer by conduction, convection and radiation; temperature scales; thermal expansion; temperature gradient; blackbody radiation; Wien's law; Stefan–Boltzmann law.
+5. **Atomic physics** — blackbody radiation; atomic and absorption spectra; Thomson and Rutherford models; Planck theory; photoelectric effect; Bohr model; X-rays; quantum theory; wave-particle duality; de Broglie waves; Heisenberg uncertainty principle.
+6. **Nuclear physics** — nuclear size and structure; isotopes; nuclear stability and energy levels; natural and artificial radioactivity; alpha, beta and gamma decay; half-life; nuclear fission; uranium enrichment; chain reactions; fusion; nuclear reactors; nuclear bombs and reactor applications.
+
+The contents index ends at Chapter 6, Nuclear Physics. No additional Chapter 7 or Chapter 8 is listed in the inspected index.
+
+## S. Mathematics — Grade 12, Dari, 1398 SH
+
+**Official Ministry PDF:** https://moe.gov.af/sites/default/files/2020-03/G12-Dr-Math.pdf  
+**Metadata:** Mathematics; Grade 12; Dari; Ministry of Education; Kabul; 1398 SH (PDF lines 43–68).  
+**Contents index:** PDF lines 94–183.
+
+Eight chapters, in printed order:
+
+1. **Limits** — concept of limits; left- and right-hand limits; limit properties; rational and trigonometric limits; indeterminate forms; continuity and properties of continuous functions.
+2. **Differentiation** — derivative of a function; geometric interpretation; differentiation rules; chain rule; trigonometric derivatives; implicit differentiation; higher-order derivatives.
+3. **Applications of derivatives** — critical points and maxima/minima; inflection points; behaviour of quadratic functions; graph asymptotes; curve/function graphing; Rolle's theorem; L'Hôpital's rule; critical-point applications.
+4. **Integrals** — Riemann sums; definite and indefinite integrals; integral properties; fundamental theorems of calculus; substitution and integration by parts.
+5. **Differentiation and integration of logarithmic and exponential functions** — derivatives of exponential/logarithmic and inverse functions; inverse trigonometric derivatives; partial fractions; exponential and logarithmic integrals.
+6. **Applications of integration** — area bounded by one or two curves; volumes of solids of revolution; arc length.
+7. **Statistics** — probability distribution functions; Bernoulli trials and binomial distribution; Poisson distribution; normal distribution and standardisation; sampling; sampling distribution of the mean and proportion; central limit theorem.
+8. **Probability** — discrete and continuous sample spaces; equally likely events; probability in continuous spaces; conditional probability; multiplication principle; independence of events.
+
+**Pagination anomaly:** The contents index prints Chapter 4 as pages 172–193, Chapter 5 as 198–222 and Chapter 6 as 199–222. The overlap between Chapters 5 and 6 is preserved as printed and should be checked against the page images before any pagination is used in downstream content.
+
+## Grade 12 Biology — official PDF located; contents transcription deferred
+
+**Official Ministry PDF:** https://www.moe.gov.af/sites/default/files/2020-03/G12-Dr-Biology.pdf  
+The PDF was opened. Its metadata confirms Biology, Grade 12, Dari, Ministry of Education, publication year 1398 SH (PDF lines 90–104). The contents/index page appears in the PDF text extraction around lines 165–167, but the text is severely character-corrupted. A screenshot attempt for the contents page timed out. No chapter names or count are asserted and this book is **not counted** until the contents page can be visually inspected reliably.
+
+A Pashto Grade 12 Biology PDF is also indexed by the Ministry site, but it has not been opened/inspected and is not counted:
+https://moe.gov.af/sites/default/files/2020-03/G12-Ps-Biology.pdf
+
+## General-school versus religious-school pathway
+
+The Ministry's general curriculum-books index lists Grade 12 Mathematics, Biology, Chemistry and Physics separately. The Grade 12 integrated Science books found during search explicitly state that they are for religious schools. They are not merged into the general-school pathway. Official catalogue:
+https://www.moe.gov.af/index.php/en/node/450
+
+## Updated Afghanistan cumulative totals
+
+- Grade 7: 4 actual contents pages; 27 chapters.
+- Grade 8: 4 actual contents pages; 30 chapters.
+- Grade 9 general-school books: 4 contents pages; 26 chapters.
+- Grade 9 religious-school integrated Science: 1 contents page; 11 chapters.
+- Grade 10: 4 contents pages; 36 chapters.
+- Grade 11 Biology, Chemistry and Physics: 3 contents pages; 31 chapters.
+- Grade 12 Chemistry, Physics and Mathematics: 3 contents pages; 27 chapters.
+- **Cumulative:** **23 actual textbook contents pages; 188 chapters transcribed.**
+- Grade 11 Mathematics Dari PDF: opened; contents transcription deferred due to corrupted text extraction; not counted.
+- Grade 12 Biology Dari PDF: opened; contents transcription deferred due to corrupted text extraction and failed screenshot retrieval; not counted.
+- Grade 9 Biology Pashto parallel edition: located and metadata inspected; contents not transcribed and not counted.
+- Grade 9 Mathematics Dari and Grade 10 Mathematics Dari parallel editions: not inspected.
+- Complete official grade-by-grade syllabus topic sequences independently transcribed: **0**. Counted material remains actual textbook contents-page evidence only.
+- Current adoption status of the 1398–1399 SH books in November 2026 remains unverified. The July 2026 Ministry notice records a consultation/review of draft Grade 7–9 Science and Mathematics books, not final approval/adoption.
+- Remaining Afghanistan work: visually inspect Grade 11 Mathematics and Grade 12 Biology contents pages; locate and inspect Grade 12 Pashto parallel Biology if relevant; obtain current official grade-level syllabus documents and transcribe them separately; verify current editions/adoption.
+- After closing Afghanistan's outstanding evidence gaps, continue Albania and the other countries in the first ten.
+- Canonical country register unchanged.
