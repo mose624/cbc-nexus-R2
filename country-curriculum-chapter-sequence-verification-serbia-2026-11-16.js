@@ -58,3 +58,15 @@ export const countryCurriculumVerification = {
     ]
   }
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Serbia",
+  gradeSequenceEvidence: "National curricula and teaching-and-learning programmes are grade-specific, with revised programmes of instruction and learning outcomes. Separate early integrated World Around Us/Nature and Society from later Biology, Chemistry, Physics and Mathematics.",
+  textbookEvidence: "Curriculum framework or syllabus portal identified; actual adopted textbook contents pages and complete book PDFs were not inspected in this batch.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://zuov.gov.rs/",
+  nextRequiredWork: "Retrieve current grade-by-grade official syllabus and the exact approved/adopted textbook for each grade and pathway; inspect contents pages; record title, edition, publisher, grade, chapter titles and verified chapter count. Keep CBE Nexus-authored chapters separate."
+};
