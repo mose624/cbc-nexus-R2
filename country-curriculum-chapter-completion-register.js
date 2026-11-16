@@ -10,7 +10,8362 @@
  const TARGET_WORDS_PER_CHAPTER=10000;
  const MIN_DIAGRAMS_PER_CHAPTER=10;
  const MIN_EXAM_QUESTIONS_PER_CHAPTER=15;
- const countries=[{"country":"Afghanistan","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Albania","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Algeria","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Andorra","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Angola","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Antigua and Barbuda","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Argentina","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Armenia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Australia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Austria","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Azerbaijan","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Bahamas","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Bahrain","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Bangladesh","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Barbados","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Belarus","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Belgium","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Belize","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Benin","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Bhutan","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Bolivia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Bosnia and Herzegovina","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Botswana","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Brazil","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Brunei","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Bulgaria","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Burkina Faso","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Burundi","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Cabo Verde","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Cambodia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Cameroon","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Canada","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Central African Republic","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Chad","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Chile","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"China","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Colombia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Comoros","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Congo","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Costa Rica","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Côte d’Ivoire","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Croatia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Cuba","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Cyprus","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Czechia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Democratic Republic of the Congo","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Denmark","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Djibouti","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Dominica","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Dominican Republic","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Ecuador","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Egypt","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"El Salvador","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Equatorial Guinea","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Eritrea","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Estonia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Eswatini","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Ethiopia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Fiji","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Finland","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"France","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Gabon","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Gambia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Georgia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Germany","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Ghana","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Greece","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Grenada","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Guatemala","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Guinea","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Guinea-Bissau","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Guyana","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Haiti","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Honduras","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Hungary","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Iceland","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"India","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Indonesia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Iran","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Iraq","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Ireland","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Israel","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Italy","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Jamaica","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Japan","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Jordan","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Kazakhstan","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Kenya","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Kiribati","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Kuwait","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Kyrgyzstan","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Laos","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Latvia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Lebanon","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Lesotho","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Liberia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Libya","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Liechtenstein","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Lithuania","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Luxembourg","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Madagascar","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Malawi","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Malaysia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Maldives","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Mali","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Malta","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Marshall Islands","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Mauritania","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Mauritius","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Mexico","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Micronesia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Moldova","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Monaco","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Mongolia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Montenegro","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Morocco","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Mozambique","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Myanmar","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Namibia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Nauru","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Nepal","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Netherlands","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"New Zealand","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Nicaragua","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Niger","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Nigeria","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"North Korea","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"North Macedonia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Norway","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Oman","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Pakistan","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Palau","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Palestine","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Panama","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Papua New Guinea","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Paraguay","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Peru","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Philippines","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Poland","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Portugal","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Qatar","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Romania","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Russia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Rwanda","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Saint Kitts and Nevis","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Saint Lucia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Saint Vincent and the Grenadines","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Samoa","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"San Marino","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Sao Tome and Principe","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Saudi Arabia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Senegal","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Serbia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Seychelles","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Sierra Leone","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Singapore","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Slovakia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Slovenia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Solomon Islands","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Somalia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"South Africa","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"South Korea","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"South Sudan","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Spain","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Sri Lanka","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Sudan","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Suriname","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Sweden","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Switzerland","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Syria","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Tajikistan","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Tanzania","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Thailand","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Timor-Leste","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Togo","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Tonga","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Trinidad and Tobago","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Tunisia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Türkiye","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Turkmenistan","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Tuvalu","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Uganda","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Ukraine","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"United Arab Emirates","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"United Kingdom","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"United States","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Uruguay","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Uzbekistan","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Vanuatu","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Vatican City","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Venezuela","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Vietnam","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Yemen","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Zambia","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Zimbabwe","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}},{"country":"Kosovo","subjects":{"Biology":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Chemistry":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Physics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"},"Mathematics":{"officialAuthority":null,"officialSyllabusUrl":null,"examBoard":null,"languageOfInstruction":null,"chapterCount":null,"chapters":[],"status":"curriculum-mapping-required"}}}];
+ const countries=[
+  {
+    "country": "Afghanistan",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": "Afghanistan Ministry of Education",
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": 8,
+        "chapters": [
+          {
+            "id": "biology-g7-ch1",
+            "title": "Cell: structure and function",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 1,
+            "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Biology.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          },
+          {
+            "id": "biology-g7-ch2",
+            "title": "Cellular organization: tissues, organs, systems and organisms",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 11,
+            "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Biology.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          },
+          {
+            "id": "biology-g7-ch3",
+            "title": "Cell processes: transport, diffusion, osmosis, photosynthesis and cellular respiration",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 19,
+            "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Biology.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          },
+          {
+            "id": "biology-g7-ch4",
+            "title": "Cell division: amitosis, mitosis and meiosis",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 29,
+            "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Biology.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          },
+          {
+            "id": "biology-g7-ch5",
+            "title": "Seed-bearing plants: types, roots, stems, growth and leaves",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 37,
+            "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Biology.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          },
+          {
+            "id": "biology-g7-ch6",
+            "title": "Reproduction in seed-bearing plants: flowers, fruits, pollination and asexual reproduction",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 49,
+            "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Biology.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          },
+          {
+            "id": "biology-g7-ch7",
+            "title": "Ecology: ecosystems and biotic/abiotic factors",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 63,
+            "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Biology.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          },
+          {
+            "id": "biology-g7-ch8",
+            "title": "Cycles in ecosystems: energy transfer and water/carbon cycles",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 71,
+            "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Biology.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          }
+        ],
+        "status": "textbook-contents-verified-syllabus-pending",
+        "level": "Grade 7 textbook contents extracted only",
+        "chapterInventoryStatus": "verified-from-ministry-hosted-grade-7-textbook-contents-page",
+        "textbookEvidence": {
+          "title": "Biology Grade 7",
+          "grade": 7,
+          "language": "Dari",
+          "publicationYear": "1398",
+          "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Biology.pdf",
+          "sourceType": "Ministry-hosted student textbook PDF; contents page inspected",
+          "currentApprovalStatus": "historical edition; 2026 replacement/revision status not resolved"
+        }
+      },
+      "Chemistry": {
+        "officialAuthority": "Afghanistan Ministry of Education",
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": 4,
+        "chapters": [
+          {
+            "id": "chemistry-g7-ch1",
+            "title": "Matter and its properties",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 1,
+            "sourceUrl": "https://www.moe.gov.af/sites/default/files/2020-03/G7-Dr-Chemistry.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          },
+          {
+            "id": "chemistry-g7-ch2",
+            "title": "Types of matter: mixtures, conservation of mass in solutions, solubility and pure substances",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 21,
+            "sourceUrl": "https://www.moe.gov.af/sites/default/files/2020-03/G7-Dr-Chemistry.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          },
+          {
+            "id": "chemistry-g7-ch3",
+            "title": "Chemical reactions and equations: reactions, compound formation and balancing equations",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 37,
+            "sourceUrl": "https://www.moe.gov.af/sites/default/files/2020-03/G7-Dr-Chemistry.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          },
+          {
+            "id": "chemistry-g7-ch4",
+            "title": "Important elements in life: hydrogen, oxygen, nitrogen and carbon",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 57,
+            "sourceUrl": "https://www.moe.gov.af/sites/default/files/2020-03/G7-Dr-Chemistry.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          }
+        ],
+        "status": "textbook-contents-verified-syllabus-pending",
+        "level": "Grade 7 textbook contents extracted only",
+        "chapterInventoryStatus": "verified-from-ministry-hosted-grade-7-textbook-contents-page",
+        "textbookEvidence": {
+          "title": "Chemistry Grade 7",
+          "grade": 7,
+          "language": "Dari",
+          "publicationYear": "1398",
+          "sourceUrl": "https://www.moe.gov.af/sites/default/files/2020-03/G7-Dr-Chemistry.pdf",
+          "sourceType": "Ministry-hosted student textbook PDF; contents page inspected",
+          "currentApprovalStatus": "historical edition; 2026 replacement/revision status not resolved"
+        }
+      },
+      "Physics": {
+        "officialAuthority": "Afghanistan Ministry of Education",
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": 7,
+        "chapters": [
+          {
+            "id": "physics-g7-ch1",
+            "title": "Measurement: quantities, instruments, length, time, mass and accuracy",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 1,
+            "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Physic.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          },
+          {
+            "id": "physics-g7-ch2",
+            "title": "Force: effects, units, measurement and vector properties",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 17,
+            "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Physic.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          },
+          {
+            "id": "physics-g7-ch3",
+            "title": "Work, energy and power",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 26,
+            "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Physic.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          },
+          {
+            "id": "physics-g7-ch4",
+            "title": "Pressure: atmospheric and liquid pressure, Pascal's law and Archimedes' principle",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 40,
+            "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Physic.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          },
+          {
+            "id": "physics-g7-ch5",
+            "title": "Properties of light: vision, rectilinear propagation, shadows and transparent materials",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 53,
+            "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Physic.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          },
+          {
+            "id": "physics-g7-ch6",
+            "title": "Reflection of light: laws, plane and spherical mirrors",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 63,
+            "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Physic.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          },
+          {
+            "id": "physics-g7-ch7",
+            "title": "Refraction of light: prisms, lenses, eye and microscope",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 77,
+            "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Physic.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          }
+        ],
+        "status": "textbook-contents-verified-syllabus-pending",
+        "level": "Grade 7 textbook contents extracted only",
+        "chapterInventoryStatus": "verified-from-ministry-hosted-grade-7-textbook-contents-page",
+        "textbookEvidence": {
+          "title": "Physics Grade 7",
+          "grade": 7,
+          "language": "Dari",
+          "publicationYear": "1398 cover / 1399 metadata conflict",
+          "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Physic.pdf",
+          "sourceType": "Ministry-hosted student textbook PDF; contents page inspected",
+          "currentApprovalStatus": "historical edition; 2026 replacement/revision status not resolved"
+        }
+      },
+      "Mathematics": {
+        "officialAuthority": "Afghanistan Ministry of Education",
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": 8,
+        "chapters": [
+          {
+            "id": "math-g7-ch1",
+            "title": "Sets",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 3,
+            "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Math.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          },
+          {
+            "id": "math-g7-ch2",
+            "title": "Natural numbers",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 27,
+            "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Math.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          },
+          {
+            "id": "math-g7-ch3",
+            "title": "Integers (positive and negative numbers)",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 71,
+            "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Math.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          },
+          {
+            "id": "math-g7-ch4",
+            "title": "Rational numbers",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 97,
+            "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Math.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          },
+          {
+            "id": "math-g7-ch5",
+            "title": "Triangles and polygons",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 119,
+            "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Math.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          },
+          {
+            "id": "math-g7-ch6",
+            "title": "Parallel and perpendicular lines",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 157,
+            "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Math.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          },
+          {
+            "id": "math-g7-ch7",
+            "title": "Statistics and data handling",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 187,
+            "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Math.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          },
+          {
+            "id": "math-g7-ch8",
+            "title": "Probability",
+            "grade": 7,
+            "bookLanguage": "Dari",
+            "contentsPage": 211,
+            "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Math.pdf",
+            "sourceType": "official-textbook-table-of-contents",
+            "curriculumVerified": false
+          }
+        ],
+        "status": "textbook-contents-verified-syllabus-pending",
+        "level": "Grade 7 textbook contents extracted only",
+        "chapterInventoryStatus": "verified-from-ministry-hosted-grade-7-textbook-contents-page",
+        "textbookEvidence": {
+          "title": "Mathematics Grade 7",
+          "grade": 7,
+          "language": "Dari",
+          "publicationYear": "1398",
+          "sourceUrl": "https://moe.gov.af/sites/default/files/2020-03/G7-Dr-Math.pdf",
+          "sourceType": "Ministry-hosted student textbook PDF; contents page inspected",
+          "currentApprovalStatus": "historical edition; 2026 replacement/revision status not resolved"
+        }
+      }
+    }
+  },
+  {
+    "country": "Albania",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Algeria",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Andorra",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Angola",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Antigua and Barbuda",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Argentina",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Armenia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Australia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Austria",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Azerbaijan",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Bahamas",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Bahrain",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Bangladesh",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Barbados",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Belarus",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Belgium",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Belize",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Benin",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Bhutan",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Bolivia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Bosnia and Herzegovina",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Botswana",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Brazil",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Brunei",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Bulgaria",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Burkina Faso",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Burundi",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Cabo Verde",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Cambodia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Cameroon",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Canada",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Central African Republic",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Chad",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Chile",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "China",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Colombia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Comoros",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Congo",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Costa Rica",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Côte d’Ivoire",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Croatia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Cuba",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Cyprus",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Czechia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Democratic Republic of the Congo",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Denmark",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Djibouti",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Dominica",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Dominican Republic",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Ecuador",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Egypt",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "El Salvador",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Equatorial Guinea",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Eritrea",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Estonia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Eswatini",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Ethiopia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Fiji",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Finland",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "France",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Gabon",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Gambia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Georgia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Germany",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Ghana",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Greece",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Grenada",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Guatemala",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Guinea",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Guinea-Bissau",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Guyana",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Haiti",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Honduras",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Hungary",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Iceland",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "India",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Indonesia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Iran",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Iraq",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Ireland",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Israel",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Italy",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Jamaica",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Japan",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Jordan",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Kazakhstan",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Kenya",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Kiribati",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Kuwait",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Kyrgyzstan",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Laos",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Latvia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Lebanon",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Lesotho",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Liberia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Libya",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Liechtenstein",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Lithuania",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Luxembourg",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Madagascar",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Malawi",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Malaysia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Maldives",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Mali",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Malta",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Marshall Islands",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Mauritania",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Mauritius",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Mexico",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Micronesia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Moldova",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Monaco",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Mongolia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Montenegro",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Morocco",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Mozambique",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Myanmar",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Namibia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Nauru",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Nepal",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Netherlands",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "New Zealand",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Nicaragua",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Niger",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Nigeria",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "North Korea",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "North Macedonia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Norway",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Oman",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Pakistan",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Palau",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Palestine",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Panama",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Papua New Guinea",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Paraguay",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Peru",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Philippines",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Poland",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Portugal",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Qatar",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Romania",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Russia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Rwanda",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Saint Kitts and Nevis",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Saint Lucia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Saint Vincent and the Grenadines",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Samoa",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "San Marino",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Sao Tome and Principe",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Saudi Arabia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Senegal",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Serbia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Seychelles",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Sierra Leone",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Singapore",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Slovakia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Slovenia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Solomon Islands",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Somalia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "South Africa",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "South Korea",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "South Sudan",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Spain",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Sri Lanka",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Sudan",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Suriname",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Sweden",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Switzerland",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Syria",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Tajikistan",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Tanzania",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Thailand",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Timor-Leste",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Togo",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Tonga",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Trinidad and Tobago",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Tunisia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Türkiye",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Turkmenistan",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Tuvalu",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Uganda",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Ukraine",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "United Arab Emirates",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "United Kingdom",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "United States",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Uruguay",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Uzbekistan",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Vanuatu",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Vatican City",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Venezuela",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Vietnam",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Yemen",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Zambia",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Zimbabwe",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  },
+  {
+    "country": "Kosovo",
+    "subjects": {
+      "Biology": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Chemistry": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Physics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      },
+      "Mathematics": {
+        "officialAuthority": null,
+        "officialSyllabusUrl": null,
+        "examBoard": null,
+        "languageOfInstruction": null,
+        "chapterCount": null,
+        "chapters": [],
+        "status": "curriculum-mapping-required"
+      }
+    }
+  }
+];
  // Seed only the Kenya Biology chapter titles already present in the current Grade 10 notes data.
  // This is explicitly a partial inventory, not a claim that the national syllabus has only four chapters.
  const kenya=countries.find(x=>x.country==="Kenya");
