@@ -60,3 +60,5 @@ export const countryCurriculumVerification = {
     ]
   }
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Moldova", gradeSequenceEvidence: "Ministry National Curriculum portal lists 2026–27 framework plans and separate Biology, Chemistry, Physics and Mathematics curricula for Gymnasium and Lyceum, in Romanian and Russian versions.", textbookEvidence: "Official subject curricula and framework plans identified; actual student textbook contents and printed chapter counts not inspected.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "https://mec.gov.md/ro/content/curriculumul-national", nextRequiredWork: "Extract current official grade/year/term learning outcomes and topic sequences for Mathematics and integrated or specialist sciences. Open approved/adopted student textbook PDFs and contents pages; record exact edition, grade, chapter titles and chapter counts separately. Do not infer textbook chapters from curriculum topics." };
