@@ -43,6 +43,16 @@ export const countryCurriculumVerification = {
   "sources": [
     "https://www.anep.edu.uy/documentos-curriculares/ems/programas-primer-grado"
   ],
+  "reconciliation": {
+    "batch": "173-192",
+    "status": "official-programme-area-identified",
+    "evidenceSummary": "ANEP official EMS programmes identify Biology, Physics, Chemistry and Mathematics as distinct upper-secondary programme areas. Download each programme and extract units/topics; separately identify actual adopted textbooks because programme headings are not book chapters.",
+    "officialDocuments": ["https://www.anep.edu.uy/documentos-curriculares/ems/programas-primer-grado"],
+    "gradeByGradeSequenceVerified": false,
+    "actualTextbookContentsInspected": false,
+    "officialTextbookChapterCountsVerified": false,
+    "nextAction": "Extract grade/year/term topic headings from current official programme documents; inspect actual approved learner-textbook contents pages; map every book chapter to the official topic sequence and record discrepancies."
+  },
   "completion": {
     "gradeByGradeTopicSequenceVerified": false,
     "officialTextbookChapterCountsVerified": false,
