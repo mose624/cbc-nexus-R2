@@ -69,3 +69,5 @@ export const countryCurriculumVerification = {
   },
   "overallStatus": "Country record created with official-source leads and conservative subject mapping; detailed programme extraction and textbook chapter verification remain pending."
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Grenada", gradeSequenceEvidence: "Primary Science and Mathematics must be separated from secondary CSEC/CAPE syllabuses. CXC Biology, Chemistry, Physics and Mathematics are examination pathways, not the full national grade sequence.", textbookEvidence: "No textbook contents inspected; local approved texts not checked.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "Official Ministry curriculum retrieval outstanding.", nextRequiredWork: "Retrieve official grade/year/term programmes and extract Mathematics, Biology or integrated Life Science, Chemistry and Physics topics; inspect approved student textbook contents pages and record printed chapter titles/counts separately." };
