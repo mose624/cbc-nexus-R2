@@ -2,14 +2,18 @@
  const apps=(item.realLifeApplications||item.applications||[]).map(x=>'<li>'+esc(typeof x==="string"?x:(x.text||x.application||""))+'</li>').join("");
  const acts=(item.practicalActivities||item.activities||[]).map(x=>'<li><strong>'+esc(x.title||"Practical activity")+'</strong>: '+esc(x.description||x.method||x)+'</li>').join("");
  const myths=(item.commonMisconceptions||item.misconceptions||[]).map(x=>'<li><strong>'+esc(x.misconception||x.claim||"Misconception")+'</strong><p>'+esc(x.correction||x.explanation||"")+'</p></li>').join("");
- const diagrams=(item.diagramGallery||[]).length+(item.diagramHtml?1:0)+(item.diagram?1:0);
+ const diagrams=(item.diagramGallery||[]).length;
+ const objectives=(item.objectives||[]).length;
+ const sections=(item.sections||[]).length;
+ const examples=(item.sections||[]).reduce((n,x)=>n+((x.workedExamples||[]).length),0)+(item.example?1:0);
+ const summary=(item.summary||[]).length;
  const qs=item.questions||[];
  const marks=qs.reduce((n,q)=>n+(Number(q.marks)||1),0);
  let out='';
  if(apps)out+='<h3>Real-life applications</h3><ul>'+apps+'</ul>';
  if(acts)out+='<h3>Practical activities and investigations</h3><ul>'+acts+'</ul>';
  if(myths)out+='<h3>Common misconceptions and corrections</h3><ul>'+myths+'</ul>';
- out+='<section class="chapter-standard"><h3>Learning Studio quality checklist</h3><p>'+diagrams+' of 10 requested diagrams currently attached • '+qs.length+' examination questions available. Missing elements remain marked for editorial completion.</p></section>';
+ out+='<section class="chapter-standard"><h3>Learning Studio quality checklist</h3><ul><li>Learning objectives: '+objectives+'</li><li>Detailed explanation sections: '+sections+'</li><li>Coloured labelled diagrams: '+diagrams+' / 10</li><li>Real-life applications: '+(item.realLifeApplications||item.applications||[]).length+'</li><li>Worked examples: '+examples+'</li><li>Practical activities: '+((item.practicalActivities||item.activities||[]).length+(item.activity?1:0))+'</li><li>Common misconceptions: '+(item.commonMisconceptions||item.misconceptions||[]).length+'</li><li>Examination questions: '+qs.length+' / 15 minimum</li><li>Revision summary points: '+summary+'</li></ul><p>Missing elements remain identified for editorial completion; incomplete content is not labelled complete.</p></section>';
  if(qs.length>=15){
   out+='<section class="complete-paper"><h3>Complete chapter practice examination paper</h3><p><strong>Time allowed:</strong> '+esc(item.paperDuration||"60 minutes")+' • <strong>Total marks:</strong> '+marks+' • <strong>Questions:</strong> '+qs.length+'</p><p>Answer all questions. Show working for calculations, include units and use clear scientific language. This is an original CBE Nexus practice paper, not an official national examination paper.</p><button type="button" class="paper-print">Print examination paper</button><div class="paper-questions">'+qs.map((q,i)=>'<article class="paper-question"><p><strong>Question '+(i+1)+' ('+(Number(q.marks)||1)+' marks)</strong></p><p>'+esc(q.q)+'</p></article>').join("")+'</div><details class="paper-marking"><summary>Open complete marking guide and model answers</summary>'+qs.map((q,i)=>'<article><p><strong>Question '+(i+1)+':</strong> '+esc(q.a)+'</p>'+(Array.isArray(q.markingPoints)?'<ul>'+q.markingPoints.map(p=>'<li>'+esc(p)+'</li>').join("")+'</ul>':"")+'</article>').join("")+'</details></section>';
  }
