@@ -75,3 +75,15 @@ export const countryCurriculumVerification = {
   },
   "overallStatus": "Country record created with official-source leads and conservative subject mapping; full grade-by-grade programme extraction and textbook chapter verification remain pending."
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Egypt",
+  gradeSequenceEvidence: "Pre-university programmes differ across primary, preparatory and secondary stages and are undergoing reform. The Egyptian Baccalaureate pathway is being phased for 2026/27; do not treat its new subject combinations as the universal current textbook structure for all students.",
+  textbookEvidence: "No actual textbook contents inspected; obtain the 2026/27 ministry textbook catalogue and current grade-specific subject books.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://moe.gov.eg/",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology or integrated Life Science, Chemistry, Physics and Mathematics. Then inspect adopted student textbooks and record printed chapter titles and counts separately; do not infer chapters from standards or themes."
+};
