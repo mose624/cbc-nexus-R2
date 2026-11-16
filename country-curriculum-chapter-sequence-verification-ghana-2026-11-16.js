@@ -65,3 +65,5 @@ export const countryCurriculumVerification = {
     "officialTextbookChapterCountsVerified": false
   }
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Ghana", gradeSequenceEvidence: "NaCCA defines KG, B1–B6, JHS1–3 and SHS1–3 phases. Primary/JHS Science and Mathematics are core; SHS publishes separate Biology, Chemistry, Physics and Mathematics curricula.", textbookEvidence: "Official subject curricula verified; actual approved student textbook contents and chapter counts not inspected.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "https://nacca.gov.gh/secondary-education-curriculum/", nextRequiredWork: "Retrieve official grade/year/term programmes and extract Mathematics, Biology or integrated Life Science, Chemistry and Physics topics; inspect approved student textbook contents pages and record printed chapter titles/counts separately." };
