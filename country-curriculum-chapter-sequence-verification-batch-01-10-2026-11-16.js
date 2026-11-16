@@ -396,12 +396,42 @@ export const chapterSequenceVerificationBatch01 = {
       ],
       curriculumStructure: "The 2023 Form I–IV curriculum is Ministry-approved. The official Biology syllabus is organized by Form I, II, III and IV. The Biology Form I document explicitly includes basic Biology concepts, cells, plant nutrition and classification among its learning content. The curriculum framework identifies Biology, Chemistry and Physics as elective/stream subjects and Mathematics as a core subject. The TIE catalogue lists subject-specific Biology, Chemistry, Physics and Mathematics syllabuses; only Biology detailed content was opened in this pass.",
       subjects: {
-        Biology: { officialName: "Biology", sourceStatus: "2023-Form-I-IV-syllabus-opened", sequenceStatus: "partial-official-topic-sequence-transcribed", syllabusThemes: ["Basic concepts and branches of Biology", "Cell: types, structures and functions", "Plant nutrition: photosynthesis, leaf structure and mineral requirements", "Classification and scientific naming of organisms", "Form II: nutrition in humans and ruminants"], chapterCount: null },
-        Chemistry: { officialName: "Chemistry", sourceStatus: "official-Form-I-IV-syllabus-listed", sequenceStatus: "full-syllabus-transcription-pending", syllabusThemes: ["Basic concepts, theories and principles", "Periodic-table properties of elements", "IUPAC nomenclature", "Chemical symbols, formulae and equations", "Chemical experiments", "Extraction of metals", "Chemistry project"], chapterCount: null },
-        Physics: { officialName: "Physics", sourceStatus: "official-Form-I-IV-syllabus-listed", sequenceStatus: "full-syllabus-transcription-pending", syllabusThemes: ["Basic concepts, theories, principles, terminology and measurement", "Mathematics in physical explanations", "Experimental skills and data analysis", "Physics project"], chapterCount: null },
-        Mathematics: { officialName: "Mathematics", sourceStatus: "official-Form-I-IV-syllabus-listed-as-core", sequenceStatus: "full-syllabus-transcription-pending", syllabusThemes: [], chapterCount: null }
+        Biology: {
+          officialName: "Biology",
+          sourceStatus: "TIE-2023-Form-I-IV-official-syllabus-opened-and-reviewed",
+          sequenceStatus: "official-form-by-form-learning-content-partially-transcribed; retain-as-syllabus-topics-not-textbook-chapters",
+          sourceListedTopicRows: null,
+          chapterCount: null,
+          topicsByForm: {
+            FormI: ["Basic concepts, branches, terminology, importance and relationship of Biology to other disciplines", "Cell: meaning, types, structures and functions", "Plant nutrition: photosynthesis, leaf structure and mineral requirements", "Classification: systems, importance and scientific naming", "Major groups of organisms: Monera, Protista, Fungi, Plantae, Animalia and viruses", "Biological investigation skills: observation, measurement and experimentation", "Microscopic observation of cells", "Investigation of conditions necessary for photosynthesis", "Biological investigation reporting"],
+            FormII: ["Nutrition in humans and ruminants: nutrients, digestive systems, digestion, deficiencies and disorders", "Transport in flowering plants: vascular system, absorption, movement of water and mineral salts, transpiration", "Transport in humans: heart, blood vessels, blood and circulation", "Respiration in living organisms: aerobic and anaerobic processes"],
+            FormIII: ["Coordination in plants and animals: tropic responses, nervous coordination, neurones, sense organs and endocrine system", "Excretion in humans: organs, systems and products", "Regulation in humans: temperature, blood glucose and osmoregulation", "Biological investigations and project work"],
+            FormIV: ["Reproduction in plants: asexual and sexual reproduction, pollination and fertilisation", "Reproduction in humans: sexual reproduction, fertilisation, pregnancy and childbirth", "Growth in mammals and flowering plants: mitosis, human development and seed germination"]
+          }
+        },
+        Chemistry: {
+          officialName: "Chemistry",
+          sourceStatus: "listed-in-TIE-2023-Ordinary-Secondary-syllabus-catalogue",
+          sequenceStatus: "official-syllabus-PDF-not-yet-opened; do-not-publish-topic-order-until-transcribed",
+          syllabusThemes: [],
+          chapterCount: null
+        },
+        Physics: {
+          officialName: "Physics",
+          sourceStatus: "listed-in-TIE-2023-Ordinary-Secondary-syllabus-catalogue",
+          sequenceStatus: "official-syllabus-PDF-not-yet-opened; do-not-publish-topic-order-until-transcribed",
+          syllabusThemes: [],
+          chapterCount: null
+        },
+        Mathematics: {
+          officialName: "Mathematics",
+          sourceStatus: "listed-in-TIE-2023-Ordinary-Secondary-syllabus-catalogue; core-subject-in-curriculum-framework",
+          sequenceStatus: "official-syllabus-PDF-not-yet-opened; do-not-publish-topic-order-until-transcribed",
+          syllabusThemes: [],
+          chapterCount: null
+        }
       },
-      status: "official-framework-and-Biology-topics-partially-transcribed; three other subject sequences pending"
+      status: "TIE-2023-official-Biology-syllabus-reviewed-and-form-by-form-topics-partially-transcribed; Chemistry Physics and Mathematics source PDFs listed in TIE catalogue but sequence extraction pending"
     },
     {
       country: "Albania",
