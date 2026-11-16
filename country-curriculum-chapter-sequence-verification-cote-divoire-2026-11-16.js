@@ -112,3 +112,15 @@ export const countryCurriculumVerification = {
   },
   overallStatus: "Official 2026–2027 programme and progression sources identified; 2025–2026 pilot reform scope distinguished; detailed topic and textbook chapter reconciliation remains pending."
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Côte d’Ivoire",
+  gradeSequenceEvidence: "DPFC/MENETFP publishes official programmes by discipline and class. Preserve SVT, Physique-Chimie and Mathematics structures and upper-secondary series C/D distinctions; do not force four independent subject streams in every class.",
+  textbookEvidence: "Official programme portal identified; textbook contents and chapter counts remain to be inspected.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://dpfc-ci.net/",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology or integrated Life Science, Chemistry, Physics and Mathematics. Then inspect adopted student textbooks and record printed chapter titles and counts separately; do not infer chapters from standards or themes."
+};
