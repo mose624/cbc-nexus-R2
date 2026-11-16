@@ -143,3 +143,16 @@ export const country = {
 },
   textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish actual contents-page chapter sequence." }
 };
+
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Bangladesh",
+  gradeSequenceEvidence: "NCTB current 2026 textbook catalogue distinguishes integrated Science in some lower-secondary structures from separate Biology, Chemistry and Physics at upper-secondary/SSC pathway levels; verify each current edition and class separately.",
+  textbookEvidence: "The official catalogue confirms textbook availability but no chapter contents were inspected in this batch.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://nctb.portal.gov.bd/site/page/6d8594f1-23d6-4d8e-af97-e0696f721e90",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology (or integrated Life Science), Chemistry, Physics and Mathematics; then open approved/adopted student textbooks and record exact printed chapter headings and counts separately. Do not infer textbook chapters from syllabus themes."
+};
