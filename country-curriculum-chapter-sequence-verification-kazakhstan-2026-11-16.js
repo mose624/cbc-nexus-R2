@@ -48,3 +48,5 @@ export const countryCurriculumVerification = {
     "Author and verify CBE Nexus chapters only after sequence validation."
   ]
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Kazakhstan", gradeSequenceEvidence: "State Compulsory Education Standards and model curricula define grade content. Biology, Chemistry, Physics and Mathematics have grade-specific progression; confirm current standard version and language-medium variants.", textbookEvidence: "No actual approved textbook contents inspected; chapter counts remain unverified.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "Official Ministry and National Academy of Education model curricula retrieval outstanding.", nextRequiredWork: "Extract the official grade/year/term sequence for Mathematics and integrated or specialist sciences from current national documents; inspect actual approved/adopted student textbook contents pages and record exact chapter titles and counts separately." };
