@@ -927,3 +927,114 @@ https://www.moe.gov.af/index.php/en/node/450
 - Remaining Afghanistan work: visually inspect Grade 11 Mathematics and Grade 12 Biology contents pages; locate and inspect Grade 12 Pashto parallel Biology if relevant; obtain current official grade-level syllabus documents and transcribe them separately; verify current editions/adoption.
 - After closing Afghanistan's outstanding evidence gaps, continue Albania and the other countries in the first ten.
 - Canonical country register unchanged.
+
+
+---
+
+# Albania — official Biology syllabus extraction (Classes 10–11), 2025 approved programme
+
+**Inspection date:** 16 November 2026  
+**Country:** Albania (Republic of Albania)  
+**Authority:** Ministry of Education; ASCAP (Agency for Quality Assurance in Pre-University Education)  
+**Document:** Order No. 556, dated 28 October 2025, approving upper-secondary core and elective subject programmes. Annex 14: Biology, upper-secondary education, Classes 10–11, updated programme, 2025.  
+**Official PDF:** https://arsimi.gov.al/wp-content/uploads/2025/12/Urdhri-nr.556-date-28.10.2025-Per-miratimin-e-programeve-mesimore-te-disa-lendeve-te-kurrikules-berthame-te-disa-klasave-te-arsimit-te-mesem-te-larte.pdf  
+**Language:** Albanian (the official programme language; English topic descriptions below are working translations).  
+**Evidence:** The signed order and subject scope appear at PDF lines 6–40 and 20373–20408; Biology teaching content and outcomes at PDF lines 20804–21380.
+
+## Adoption and implementation status
+
+Order No. 556 approves the updated Biology programme for Classes 10–11 as part of Annex 14. The order specifies:
+- Class 10 programmes enter into force and begin implementation in school year 2026–2027.
+- Class 11 programmes enter into force and begin implementation in school year 2027–2028.
+- Class 12 programmes enter into force and begin implementation in school year 2028–2029 (for the relevant programmes in the order).
+
+The Ministry's 16 February 2026 announcement says the updated programmes for Classes 1, 6 and 10 were completed in 2025, textbooks were then being updated, and implementation would begin in September 2026. It describes 171 textbooks in the update list (140 print, 31 digital). It also says only Civic Education for Classes 1, 6 and 10 and Albanian Language for Class 10 would undergo a new textbook competition, while other books would be revised/updated. Therefore, this programme is approved and in force for Class 10 from 2026–27, but this document alone is not evidence that a newly printed Biology textbook has already been published or adopted.
+
+## Programme architecture and time allocation
+
+The programme is organised around four Biology content themes:
+1. Diversity and classification of living organisms.
+2. Structure and functioning of living organisms.
+3. Heredity and evolution.
+4. Interdependence.
+
+It allocates 144 teaching hours across Classes 10 and 11 (36 weeks × one 45-minute lesson per week per class; 72 hours per class). The suggested thematic distribution is:
+
+| Class | Structure and function | Interdependence | Diversity/classification | Heredity/evolution | Total |
+|---|---:|---:|---:|---:|---:|
+| 10 | 62 h | — | 10 h | — | 72 h |
+| 11 | 18 h | 27 h | — | 27 h | 72 h |
+
+**Critical ordering note:** The programme explicitly says the thematic order does not prescribe the order in which the annual content must be taught. Teachers and textbook authors may combine concepts and skills into learning situations, chapters or units and determine their sequence. Accordingly, the following is a transcription of the official theme structure and listed knowledge topics, not a fabricated chapter-by-chapter sequence.
+
+## Class 10–11 official Biology topic content
+
+### Theme 1 — Diversity and classification of living organisms
+Knowledge headings and listed scope:
+- Characteristics and classification of living organisms; uses of classification systems.
+- Characteristics used to distinguish the five kingdoms: Monera, Protista, Fungi, Plants and Animals.
+- Main vertebrate groups: mammals, birds, reptiles, amphibians and fish.
+- Main arthropod groups: myriapods, insects, arachnids and crustaceans.
+- Main plant groups covered: ferns and flowering plants (dicotyledons and monocotyledons).
+- Viruses: protein coat and genetic material.
+- Evolutionary relationships and classification; DNA base sequences as evidence for relatedness.
+- Biodiversity: methods for investigating biodiversity in an ecosystem; identifying species and estimating abundance/distribution.
+- Human impacts on ecosystems and biodiversity; food security pressures; possible biotechnology/agricultural solutions; conservation benefits and challenges; sustainable living and environmental impact.
+
+### Theme 2 — Structure and functioning of living organisms
+Knowledge headings and listed scope:
+- **Cell structure and organisation:** plant and animal cells; prokaryotic and eukaryotic cells; nucleus/genetic material, cell membrane, mitochondria, chloroplasts and plasmids; microscopy and preparation/observation of cell slides.
+- **Cell transport:** diffusion, osmosis and active transport; selectively permeable membranes; effects of different solution concentrations on plant tissues and animal cells; turgor and water potential.
+- **Cell growth and development:** cell cycle; mitosis and its stages; meiosis; cell differentiation; stem cells in animals and meristematic cells in plants; cancer and uncontrolled cell division; stem-cell use and ethical/risk considerations.
+- **Cell metabolism:** enzymes and active sites; factors affecting enzyme reaction rate; aerobic and anaerobic respiration; cellular respiration as an exothermic process; seed respiration investigations; biological molecules (sugars, amino acids, fatty acids and glycerol) and organic-food tests.
+- **Human nervous coordination and control:** central and peripheral nervous systems; sensory and motor neurones/receptors; brain, spinal cord, reflex arcs; eye structure, function and common defects; treatment of brain injuries.
+- **Human hormonal coordination and control:** endocrine coordination; negative feedback; thyroxine and adrenaline; reproductive hormones; menstrual cycle; FSH, LH, oestrogen and progesterone; hormonal and non-hormonal contraception; infertility treatment.
+- **Plant hormones:** auxins, gibberellins and ethylene; phototropism and gravitropism; plant growth and responses to stimuli.
+- **Plant nutrition:** photosynthesis and its endothermic nature; limiting factors (light intensity, temperature, carbon dioxide concentration); mineral salts; photosynthesis experiments and importance to life.
+- **Human nutrition:** balanced diet, malnutrition, digestive system; mechanical and chemical digestion; absorption; roles of teeth, liver, pancreas, amylase, protease and lipase.
+- **Transport in multicellular organisms:** exchange surfaces and surface-area-to-volume ratio; transport of oxygen, carbon dioxide, water, dissolved nutrients, mineral ions and urea.
+- **Human circulatory system:** heart, blood vessels and blood; double circulation; blood cells, platelets and plasma; pulse-rate investigation; cardiovascular disease.
+- **Plant transport:** xylem and phloem; water and ion uptake; root hairs; transpiration and translocation; stomata; potometer investigations; environmental factors affecting water uptake.
+- **Excretion:** kidney structure and function; urinary system; urea; dialysis.
+- **Homeostasis:** stable internal environment; skin and temperature regulation; blood-glucose regulation by insulin and glucagon; Type 1 and Type 2 diabetes; water balance and osmotic pressure.
+- **Health and disease:** communicable and non-communicable diseases; pathogen transmission; non-specific barriers and immune system; monoclonal antibodies; plant defences and plant disease; vaccines and medicines; preclinical and clinical testing; lifestyle-related non-communicable diseases.
+- **Reproduction:** sexual and asexual reproduction; fertilisation; plant reproduction, pollination, fruit formation and seed germination; natural/artificial vegetative propagation; human reproductive systems; placenta and amniotic fluid; oestrogen and testosterone.
+- **Human respiration:** respiratory system structure; larynx, trachea, bronchi, bronchioles, alveoli and capillaries; thorax; ventilation; diaphragm/intercostal muscles; gas exchange; smoking impacts.
+
+### Theme 3 — Heredity and evolution
+Knowledge headings and listed scope:
+- **Genome and gene expression:** DNA structure; genome; protein biosynthesis; gametes, chromosomes, genes, alleles, dominant/recessive, homozygous/heterozygous, genotype and phenotype; gene–environment interaction; genetic diagnosis and medical applications.
+- **Inheritance:** monogenic inheritance; single-gene crosses; polygenic inheritance; human sex determination; Mendel's contribution.
+- **Variation and evolution:** mutations and phenotypic effects; genetic variation; natural selection; evolution and speciation; fossil evidence; antibiotic resistance; Darwin and Wallace.
+- **Selective breeding and gene technology:** plant/animal selective breeding; genetic engineering and genome modification; process steps; agricultural and medical benefits/risks; ethical and social issues.
+
+### Theme 4 — Interdependence
+Knowledge headings and listed scope:
+- Biomass pyramids and transfer through trophic levels; biomass loss and transfer efficiency.
+- Ecosystems and levels of organisation: organism, population, community and ecosystem.
+- Abiotic and biotic factors; interactions and competition within communities.
+- Recycling of matter: carbon and water cycles; microorganisms in nutrient cycling; physical factors affecting decomposition under aerobic and anaerobic conditions.
+
+## Grade allocation caution
+
+The approved programme's time-allocation table places:
+- Class 10: 62 hours in structure/function and 10 hours in diversity/classification.
+- Class 11: 18 hours in structure/function, 27 hours in interdependence and 27 hours in heredity/evolution.
+
+The full theme tables are presented for the combined Classes 10–11 programme. Where the document does not explicitly tag an individual knowledge bullet to one specific class in the extracted table, this ledger does not invent a per-class topic split. The time allocation is explicit; a chapter-by-chapter split is not.
+
+## Textbook evidence status — Albania Biology
+
+- Official approved syllabus/programme: opened and transcribed above.
+- Actual approved Biology textbook contents page: **not yet inspected**.
+- Official textbook title, publisher, edition, ISBN, grade-specific contents and page sequence: **not yet established**.
+- Do not use the syllabus themes as a textbook contents list.
+- Grade 12 Biology: this 2025 order does not contain the Class 12 Biology programme; it is specifically a Class 10–11 Biology annex. A separate approved Class 12 elective Biology programme must be located.
+
+## Albania country register status
+
+- First document-level syllabus source inspected: Ministry Order No. 556 (2025), Annex 14 Biology Classes 10–11.
+- Official syllabus topic content transcribed: 4 themes and the knowledge topic headings above.
+- Official textbook contents pages inspected for Albania in this pass: 0.
+- Additional Albania work: inspect official Chemistry, Physics and Mathematics programmes; locate and open approved textbooks and transcribe actual contents pages; locate the Class 12 elective Biology programme; map any curriculum pathways and implementation years carefully.
+- This Albania source is a separate new-country entry; Afghanistan's 23 contents-page/188-chapter textbook total is unchanged.
