@@ -63,11 +63,11 @@ export const countryCurriculumVerification = {
 export const chapterEvidenceReconciliation = {
   reviewedOn: "2026-11-16",
   country: "Slovakia",
-  gradeSequenceEvidence: "The consolidated State Educational Programme and ongoing curriculum reform require cohort/version mapping. Early primary integrated learning differs from later separate Biology, Chemistry, Physics and Mathematics; inspect official subject standards by grade.",
-  textbookEvidence: "Curriculum framework or syllabus portal identified; actual adopted textbook contents pages and complete book PDFs were not inspected in this batch.",
+  gradeSequenceEvidence: "The June 2026 consolidated State Educational Programme is a reform baseline; map staged implementation and actual grade allocations for Mathematics and science/nature learning areas before importing legacy subject sequences.",
+  textbookEvidence: "The referenced material is a curriculum, ministry or examination-framework source, not an opened textbook contents page. Actual adopted textbook contents pages and full book PDFs were not inspected in this batch.",
   actualTextbookContentsInspected: false,
   officialTextbookChapterCountsVerified: false,
   officialChapterCount: null,
-  evidenceSource: "https://www.minedu.sk/statny-vzdelavaci-program/",
-  nextRequiredWork: "Retrieve current grade-by-grade official syllabus and the exact approved/adopted textbook for each grade and pathway; inspect contents pages; record title, edition, publisher, grade, chapter titles and verified chapter count. Keep CBE Nexus-authored chapters separate."
+  evidenceSource: "https://www.statpedu.sk/",
+  nextRequiredWork: "Retrieve the current approved grade-by-grade syllabus and exact adopted textbook for each relevant grade and track; inspect contents pages; record title, edition, publisher, grade, chapter titles and verified count. Keep CBE Nexus-authored chapters separate."
 };
