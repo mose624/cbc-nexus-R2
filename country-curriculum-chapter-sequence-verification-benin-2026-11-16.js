@@ -140,4 +140,11 @@ export const country = {
   "finding": "No new verified topic sequence or official textbook chapter count is asserted in this evidence refresh. Preserve any jurisdiction, language, pathway and integrated-science distinctions already recorded in this file."
 },
   textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish the actual contents-page chapter sequence. Do not invent counts." }
+  evidenceRefresh_2026_11_16: {
+  "status": "existing country source map retained; official grade/topic documents and actual textbook contents still require direct extraction",
+  "finding": "This refresh does not assert a new verified topic sequence or official textbook chapter count. Preserve jurisdiction, language, pathway and integrated-science distinctions already documented.",
+  "actualTextbookContentsInspected": false,
+  "officialTextbookChapterCountsVerified": false,
+  "cbEnexusLongFormChaptersWritten": false
+},
 };
