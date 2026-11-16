@@ -397,6 +397,19 @@ export const chapterSequenceVerificationBatch01 = {
         "https://www.tie.go.tz/publications/syllabus-for-lower-secondary-academics?page=2",
         "https://www.tie.go.tz/publications/syllabus-for-lower-secondary-academics?page=3"
       ],
+      correctedFramework2026: {
+        authority: "Tanzania Institute of Education (TIE), Ministry of Education, Science and Technology",
+        source: "https://www.tie.go.tz/uploads/documents/sw-1770991250-CURRICULUM%20FOR%20SECONDARY%20EDUCATION%20FORM%20I-IV%20-CORRECTED%20%20FEB%202026.pdf",
+        sourceStatus: "official-corrected-February-2026-curriculum-framework-opened-and-reviewed",
+        note: "The PDF is a corrected February 2026 version of the 2023 Form I-IV curriculum framework; its approval certificate identifies the original 9 August 2023 approval. It is a framework with main/specific competences, not a replacement subject syllabus with a Form-by-Form chapter sequence.",
+        verifiedCompetences: {
+          Biology: ["11.1 Master concepts, principles and processes of Biology; specific competence covers physiological, anatomical and ecological processes of living organisms (the PDF displays a likely numbering typo '14.4.1')", "11.2 Communicate using scientific biological terminology", "11.3 Conduct biological investigations, present results and carry out a biological project"],
+          Chemistry: ["12.1 Master concepts, theories and principles; understand periodic trends in physical and chemical properties of elements", "12.2 Use IUPAC nomenclature, chemical symbols, formulae and equations", "12.3 Conduct Chemistry experiments", "12.4 Understand principles of metal extraction", "12.5 Conduct a Chemistry project"],
+          Physics: ["13.1 Apply Physics concepts, theories, principles, terminology, measurements and symbols; use mathematics to explain physical phenomena", "13.2 Conduct Physics experiments and analyse, present and report data", "13.3 Evaluate and use physical information, collect and relate data, and carry out a Physics project"],
+          Mathematics: ["15.1 Use numerical skills, ratios, profit and loss, rates and variation", "15.2 Apply geometry, approximations, relations, functions, algebra, matrices, sets, sequences and series", "15.3 Apply coordinate geometry, trigonometry, circles, vectors, probability and statistics"]
+        },
+        subjectStatus: "framework-competences-verified; these competence statements must not be counted as chapters or assigned to Forms without the subject syllabus"
+      },
       curriculumStructure: "The 2023 Form I–IV curriculum is Ministry-approved. The official Biology syllabus is organized by Form I, II, III and IV. The Biology Form I document explicitly includes basic Biology concepts, cells, plant nutrition and classification among its learning content. The curriculum framework identifies Biology, Chemistry and Physics as elective/stream subjects and Mathematics as a core subject. The TIE catalogue lists subject-specific Biology, Chemistry, Physics and Mathematics syllabuses; only Biology detailed content was opened in this pass.",
       subjects: {
         Biology: {
