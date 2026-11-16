@@ -148,3 +148,16 @@ export const country = {
 },
   textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish actual contents-page chapter sequence." }
 };
+
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Bahrain",
+  gradeSequenceEvidence: "National Curriculum Framework and 2026–27 prescribed textbook catalogues are available; Arabic curriculum and actual book contents pages still need extraction.",
+  textbookEvidence: "Ministry framework/catalogue verifies official framework and prescribed-book listings, not chapter sequence.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://moe.gov.bh/en//the-national-curriculum-framework",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology (or integrated Life Science), Chemistry, Physics and Mathematics; then open approved/adopted student textbooks and record exact printed chapter headings and counts separately. Do not infer textbook chapters from syllabus themes."
+};
