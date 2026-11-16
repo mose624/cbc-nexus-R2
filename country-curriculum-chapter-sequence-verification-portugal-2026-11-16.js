@@ -60,3 +60,15 @@ export const countryCurriculumVerification = {
     ]
   }
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Portugal",
+  gradeSequenceEvidence: "DGE Aprendizagens Essenciais provides subject documents by grade and cycle. Map Ciências Naturais/Estudo do Meio in earlier years separately from upper-secondary Biology and Geology, Physics and Chemistry, and Mathematics pathways.",
+  textbookEvidence: "Curriculum framework or syllabus portal identified; actual adopted textbook contents pages and complete book PDFs were not inspected in this batch.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.dge.mec.pt/aprendizagens-essenciais-ensino-basico",
+  nextRequiredWork: "Retrieve current grade-by-grade official syllabus and the exact approved/adopted textbook for each grade and pathway; inspect contents pages; record title, edition, publisher, grade, chapter titles and verified chapter count. Keep CBE Nexus-authored chapters separate."
+};
