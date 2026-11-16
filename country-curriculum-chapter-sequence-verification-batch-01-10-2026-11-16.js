@@ -315,7 +315,7 @@ export const chapterSequenceVerificationBatch01 = {
           Biology: {
             officialName: "Biology",
             sequenceStatus: "official-NCDC-S1-S4-programme-planner-transcribed",
-            sourceListedTopicRows: 29,
+            sourceListedTopicRows: 31,
             chapterCount: null,
             topicsByLevel: {
               S1: ["Introduction to Biology", "Cells", "Classification", "Classification", "Insects", "Flowering plants"],
@@ -339,7 +339,7 @@ export const chapterSequenceVerificationBatch01 = {
           Physics: {
             officialName: "Physics",
             sequenceStatus: "official-NCDC-S1-S4-programme-planner-transcribed",
-            sourceListedTopicRows: 30,
+            sourceListedTopicRows: 31,
             chapterCount: null,
             topicsByLevel: {
               S1: ["Introduction to Physics", "Measurements in Physics", "States of matter", "Effects of forces", "Temperature measurements", "Heat transfer", "Expansion of solids, liquids, and gases", "Nature of light; reflection of light at plane surfaces"],
@@ -351,7 +351,7 @@ export const chapterSequenceVerificationBatch01 = {
           Mathematics: {
             officialName: "Mathematics",
             sequenceStatus: "official-NCDC-S1-S4-programme-planner-transcribed",
-            sourceListedTopicRows: 45,
+            sourceListedTopicRows: 46,
             chapterCount: null,
             topicsByLevel: {
               S1: ["Number Bases", "Working with Integers", "Fractions, Percentages and Decimals", "Rectangular Cartesian Coordinates in 2-Dimensions", "Geometric Constructions Skills", "Sequence and patterns", "Bearings", "General and angle properties of geometric figures", "Data collection and presentation", "Reflection", "Equation of lines and curves", "Algebra 1", "Business arithmetic", "Time and time tables"],
