@@ -49,3 +49,5 @@ export const countryCurriculumVerification = {
     "Author and verify CBE Nexus chapters only after sequence validation."
   ]
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Madagascar", gradeSequenceEvidence: "French-language national programmes use SVT, Physique-Chimie and Mathematics across relevant secondary levels; exact current class-by-class programmes and language/track variants need direct official extraction.", textbookEvidence: "No approved textbook contents pages or official chapter counts inspected.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "Official Ministry curriculum documents not retrieved.", nextRequiredWork: "Extract current official grade/year/term learning outcomes and topic sequences for Mathematics and integrated or specialist sciences. Open approved/adopted student textbook PDFs and contents pages; record exact edition, grade, chapter titles and chapter counts separately. Do not infer textbook chapters from curriculum topics." };
