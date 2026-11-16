@@ -604,9 +604,9 @@ export const chapterSequenceVerificationBatch01 = {
     subjectRecordsReviewed: 40,
     officialProgrammeDocumentsOpened: 8,
     countriesWithAtLeastOneDetailedSyllabusSequenceTranscribed: 4,
-    countriesWithAllFourSubjectSequencesVerified: 0,
-    countriesRequiringAdditionalOfficialDocumentRetrieval: ["Kenya", "Ghana", "Nigeria", "Uganda", "Tanzania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda"],
-    note: "Kenya now has 10 Grade 10 Biology sub-strands transcribed from the KICD curriculum design. Albania has four Grade X theme sequences transcribed; Tanzania has a partial Biology sequence; Antigua and Barbuda has CXC syllabus section/module structures. Kenya Chemistry, Physics and Core Mathematics now have provisional chapter maps; their official KICD topic order still needs exact PDF reconciliation. The other country sequences still need extraction. This does not falsely mark all 40 subject sequences as complete."
+    countriesWithAllFourSubjectSequencesVerified: 1,
+    countriesRequiringAdditionalOfficialDocumentRetrieval: ["Kenya", "Ghana", "Nigeria", "Uganda", "Algeria", "Andorra", "Angola", "Antigua and Barbuda"],
+    note: "Tanzania now has all four TIE 2023 Ordinary Secondary Form I-IV subject tables reviewed and normalized for Biology, Chemistry, Physics and Mathematics; these are syllabus-theme maps, not official chapter counts or proof of 10,000-word chapter content. Albania has four Grade X theme sequences transcribed; Antigua and Barbuda has CXC regional syllabus section/module structures, not a national grade sequence. Kenya has Grade 10 Biology sub-strands and provisional Chemistry, Physics and Core Mathematics maps; exact KICD topic-order reconciliation remains pending. The remaining country sequences still need extraction. This does not falsely mark all 40 subject sequences as complete."
   },
   qualityRules: {
     neverInventChapterTitlesOrCounts: true,
