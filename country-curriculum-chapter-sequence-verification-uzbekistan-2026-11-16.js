@@ -44,6 +44,16 @@ export const countryCurriculumVerification = {
     "https://www.unicef.org/uzbekistan/en/press-releases/national-education-milestone-new-national-curriculum-launched-achieve-world-class",
     "https://gov.uz/en/uzbmb/news/view/240212"
   ],
+  "reconciliation": {
+    "batch": "173-192",
+    "status": "framework-change-identified",
+    "evidenceSummary": "New National Curriculum Framework launched in August 2026. Official Biology, Chemistry, Physics and Mathematics subject standards/programmes and current textbook contents still need grade-by-grade extraction; certificate examination subjects alone do not establish grade sequence.",
+    "officialDocuments": ["https://www.unicef.org/uzbekistan/en/press-releases/national-education-milestone-new-national-curriculum-launched-achieve-world-class"],
+    "gradeByGradeSequenceVerified": false,
+    "actualTextbookContentsInspected": false,
+    "officialTextbookChapterCountsVerified": false,
+    "nextAction": "Extract grade/year/term topic headings from current official programme documents; inspect actual approved learner-textbook contents pages; map every book chapter to the official topic sequence and record discrepancies."
+  },
   "completion": {
     "gradeByGradeTopicSequenceVerified": false,
     "officialTextbookChapterCountsVerified": false,
