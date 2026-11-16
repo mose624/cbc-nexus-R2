@@ -165,4 +165,11 @@ export const country = {
     status: "CXC-secondary-exam-frameworks-mapped-at-section-or-module-level; national-grade-sequence-and-final-reform-guides-pending",
     note: "Do not claim CXC topic sections/modules are official textbook chapters. Keep CSEC and CAPE separate from the national curriculum and record the 2026/27 reform transition accurately."
   }
+
+  evidenceRefresh_2026_11_16: {
+  "status": "existing country source map retained; current official topic documents and actual textbook contents require direct extraction",
+  "sources": [],
+  "finding": "No new verified topic sequence or official textbook chapter count is asserted in this evidence refresh. Preserve any jurisdiction, language, pathway and integrated-science distinctions already recorded in this file."
+},
+  textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish the actual contents-page chapter sequence. Do not invent counts." }
 };
