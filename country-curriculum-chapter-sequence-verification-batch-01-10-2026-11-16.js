@@ -410,12 +410,29 @@ export const chapterSequenceVerificationBatch01 = {
         },
         subjectStatus: "framework-competences-verified; these competence statements must not be counted as chapters or assigned to Forms without the subject syllabus"
       },
+      syllabusSequenceAudit: {
+        status: "source documents and form sections verified; complete exact-topic extraction is still in progress",
+        officialDocuments: {
+          Biology: "https://www.tie.go.tz/uploads/documents/sw-1727192422-BIOLOGY%20SYLLABUS%20ORDINARY%20SECONDARY%20FINAL%20.pdf",
+          Chemistry: "https://www.tie.go.tz/uploads/documents/sw-1727192894-CHEMISTRY%20O%27LEVEL%20EDUCATION%20FINAL.pdf",
+          Physics: "https://www.tie.go.tz/uploads/documents/sw-1727257838-PHYSICS%20FOR%20ORDINARY%20SECONDARY%20EDUCATION%20FINAL.pdf",
+          Mathematics: "https://www.tie.go.tz/uploads/documents/sw-1727256902-MATHEMATICS%20SYLLABUS%20-%20O%20level%20final.pdf"
+        },
+        confirmedTableOfContents: {
+          Biology: { FormI: 9, FormII: 17, FormIII: 26, FormIV: 31 },
+          Chemistry: { FormI: 9, FormII: 18, FormIII: 30, FormIV: 45 },
+          Physics: { FormI: 9, FormII: 25, FormIII: 37, FormIV: 46 },
+          Mathematics: { sourcePdfOpened: true, tableOfContentsAndFormSectionPagesRequireFullExtraction: true }
+        },
+        extractionRule: "The syllabuses present detailed contents as competency/activity matrices rather than textbook chapter lists. Extract each distinct learning-content item from the correct Form table; do not convert broad competence labels, activities or assessment criteria into chapter titles. Do not claim a complete topic count until all rows have been checked.",
+        corrected2026FrameworkRule: "Use the corrected February 2026 framework for current structure and competence alignment, while retaining the 2023 subject syllabuses as the detailed Form I-IV teaching-content sources unless TIE publishes replacement subject syllabuses."
+      },
       curriculumStructure: "The 2023 Form I–IV curriculum is Ministry-approved. The official Biology syllabus is organized by Form I, II, III and IV. The Biology Form I document explicitly includes basic Biology concepts, cells, plant nutrition and classification among its learning content. The curriculum framework identifies Biology, Chemistry and Physics as elective/stream subjects and Mathematics as a core subject. The TIE catalogue lists subject-specific Biology, Chemistry, Physics and Mathematics syllabuses; only Biology detailed content was opened in this pass.",
       subjects: {
         Biology: {
           officialName: "Biology",
           sourceStatus: "TIE-2023-Form-I-IV-official-syllabus-opened-and-reviewed",
-          sequenceStatus: "official-form-by-form-learning-content-partially-transcribed; complete syllabus extraction still required",
+          sequenceStatus: "Form-I-IV table sections confirmed in official PDF; listed topic summaries are provisional pending full table-by-table transcription",
           sourceListedTopicRows: null,
           chapterCount: null,
           topicsByForm: {
@@ -428,7 +445,7 @@ export const chapterSequenceVerificationBatch01 = {
         Chemistry: {
           officialName: "Chemistry",
           sourceStatus: "TIE-2023-Form-I-IV-official-syllabus-opened-and-reviewed",
-          sequenceStatus: "official-form-specific-content-highlights-transcribed; full competency-row reconciliation pending",
+          sequenceStatus: "Form-I detailed learning activities confirmed against official PDF; Forms-II-IV summary themes are provisional and not yet line-by-line verified",
           chapterCount: null,
           topicsByForm: {
             FormI: ["Concept and applications of Chemistry; branches and links to other disciplines", "Chemical materials and their properties", "Matter and changes of state", "Elements, compounds and mixtures", "Separation of mixtures and experimental chemistry"],
@@ -440,7 +457,7 @@ export const chapterSequenceVerificationBatch01 = {
         Physics: {
           officialName: "Physics",
           sourceStatus: "TIE-2023-Form-I-IV-official-syllabus-opened-and-reviewed",
-          sequenceStatus: "official-form-specific-content-highlights-transcribed; full competency-row reconciliation pending",
+          sequenceStatus: "Form-I detailed learning activities confirmed against official PDF; Forms-II-IV summary themes are provisional and not yet line-by-line verified",
           chapterCount: null,
           topicsByForm: {
             FormI: ["Concept, branches and applications of Physics", "Physical quantities and measurement", "Linear motion: speed, velocity, acceleration, distance and displacement", "Force, density and pressure", "Work, power and energy", "Mechanical properties of matter"],
