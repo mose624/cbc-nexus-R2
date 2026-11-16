@@ -300,7 +300,23 @@ export const chapterSequenceVerificationBatch01 = {
         Physics: { officialName: "Physics", sourceStatus: "official-subject-presence-verified", sequenceStatus: "subject-syllabus-topic-transcription-pending", syllabusThemes: [], chapterCount: null },
         Mathematics: { officialName: "Mathematics", sourceStatus: "official-subject-presence-verified", sequenceStatus: "subject-syllabus-topic-transcription-pending", syllabusThemes: [], chapterCount: null }
       },
-      status: "framework-and-subject-presence-verified; individual subject chapter sequences pending"
+      advancedSecondaryCurriculum2025: {
+        authority: "National Curriculum Development Centre (NCDC), Ministry of Education and Sports",
+        implementationNote: "Separate Senior Five and Senior Six Advanced Secondary curriculum introduced from 2025. These A-Level syllabuses are recorded separately from the existing Lower Secondary S1-S4/UCE records; Principal Mathematics is not the same subject as Lower Secondary Mathematics.",
+        officialSources: [
+          "https://ncdc.go.ug/wp-content/uploads/2025/03/Biology.pdf",
+          "https://ncdc.go.ug/wp-content/uploads/2025/03/CHEMISTRY.pdf",
+          "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+          "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf"
+        ],
+        subjects: {
+          Biology: { officialName: "Biology", level: "Senior Five-Six", sequenceStatus: "official-NCDC-2025-contents-transcribed", chapterCount: 9, chapters: ["Cell Biology", "Nutrition", "Transport", "Respiration", "Homeostasis", "Coordination", "Inheritance and Evolution", "Growth and Development", "Ecology"] },
+          Chemistry: { officialName: "Chemistry", level: "Senior Five-Six", sequenceStatus: "official-NCDC-2025-contents-transcribed", chapterCount: 13, chapters: ["Moles and Equations", "Atomic and Electronic Structure", "Bonding and Structure", "Periodicity I", "Thermochemistry", "Organic Chemistry I", "Equilibria I", "Equilibria II", "Organic Chemistry II", "Electrochemistry", "Periodicity II", "Organic Chemistry III", "Reaction Kinetics"] },
+          Physics: { officialName: "Physics", level: "Senior Five-Six", sequenceStatus: "official-NCDC-2025-contents-transcribed", chapterCount: 33, chapters: ["Measurement and Dimensions of Physical Quantities", "Statics", "Linear Motion", "Motion Under Gravity", "Work, Energy and Power", "Solid Friction", "Fluid Mechanics", "Mechanical Properties of Matter", "Thermometry", "Heat Quantities", "Transfer of Heat", "Behaviour of Gases", "Thermodynamics", "Reflection of Light", "Refraction of Light", "Optical Instruments", "Electrostatics", "Capacitors", "Digital Electronics", "Circular Motion", "Simple Harmonic Motion", "Gravitation", "Progressive Waves", "Stationary Waves", "Sound Waves", "Current Electricity", "Magnetism in Matter", "Magnetic Effect of an Electric Current", "Electromagnetic Induction", "A.C. Circuits", "Atomic Particles", "Quantum Theory", "Nuclear Processes"] },
+          PrincipalMathematics: { officialName: "Principal Mathematics", level: "Senior Five-Six", sequenceStatus: "official-NCDC-2025-contents-transcribed", chapterCount: 27, chapters: ["Numerical Concepts", "Equations and Inequalities", "Coordinate Geometry 1", "Partial Fractions", "Trigonometry", "Descriptive Statistics", "Scatter Diagrams and Correlations", "Dynamics 1", "Probability Theory", "Differentiation 1", "Integration 1", "Permutations and Combinations", "Series", "Random Variables", "Probability Distributions", "Error Analysis", "Vectors", "Differentiation 2", "Integration 2", "Dynamics 2", "Trapezium Rule", "Sampling Distribution", "Iterative Methods", "Coordinate Geometry 2", "Complex Numbers", "Differential Equations", "Flow Charts"] }
+        }
+      },
+      status: "Lower Secondary framework and subject presence verified; 2025 Advanced Secondary S5-S6 official chapter sequences transcribed for Biology (9), Chemistry (13), Physics (33) and Principal Mathematics (27); Lower Secondary S1-S4 subject chapter sequences still pending"
     },
     {
       country: "Tanzania",
