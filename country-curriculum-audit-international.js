@@ -14,7 +14,7 @@
  };
  const ghanaDocuments={
   "Biology":"https://nacca.gov.gh/wp-content/uploads/2025/04/Biology-Curriculum.pdf",
-  "Chemistry":"https://nacca.gov.gh/wp-content/uploads/2025/04/Chemistry-Curriculum.pdf",
+  "Chemistry":"https://nacca.gov.gh/secondary-education-curriculum/",
   "Physics":"https://nacca.gov.gh/wp-content/uploads/2025/04/Physics-Curriculum.pdf",
   "Mathematics":"https://nacca.gov.gh/wp-content/uploads/2025/04/Mathematics-Curriculum.pdf",
   "Curriculum portal":"https://nacca.gov.gh/secondary-education-curriculum/",
@@ -35,7 +35,14 @@
   },
   "Chemistry":{
    "SHS1to3BroadStrands":["Physical Chemistry","Systematic Chemistry of the Elements","Chemistry of Carbon Compounds"],
-   "scopeNote":"The curriculum uses three broad strands; the official PDF's year-specific sub-strands, content standards and learning indicators still need full extraction."
+   "subStrands":["Matter and its Properties","Equilibria","Periodicity","Bonding","Characterisation of Organic Compounds","Organic Functional Groups"],
+   "yearByYear":{
+    "SHS1":{"Matter and its Properties":{"contentStandards":3,"learningOutcomes":4,"learningIndicators":22},"Equilibria":{"contentStandards":1,"learningOutcomes":1,"learningIndicators":3},"Periodicity":{"contentStandards":1,"learningOutcomes":1,"learningIndicators":2},"Bonding":{"contentStandards":2,"learningOutcomes":2,"learningIndicators":5},"Characterisation of Organic Compounds":{"contentStandards":1,"learningOutcomes":1,"learningIndicators":2},"Organic Functional Groups":{"contentStandards":1,"learningOutcomes":1,"learningIndicators":2},"totals":{"contentStandards":9,"learningOutcomes":10,"learningIndicators":36}},
+    "SHS2":{"Matter and its Properties":{"contentStandards":1,"learningOutcomes":2,"learningIndicators":8},"Equilibria":{"contentStandards":2,"learningOutcomes":2,"learningIndicators":9},"Periodicity":{"contentStandards":2,"learningOutcomes":2,"learningIndicators":4},"Bonding":{"contentStandards":1,"learningOutcomes":1,"learningIndicators":2},"Characterisation of Organic Compounds":{"contentStandards":1,"learningOutcomes":1,"learningIndicators":1},"Organic Functional Groups":{"contentStandards":1,"learningOutcomes":1,"learningIndicators":5},"totals":{"contentStandards":8,"learningOutcomes":9,"learningIndicators":29}},
+    "SHS3":{"Equilibria":{"contentStandards":4,"learningOutcomes":4,"learningIndicators":10},"Periodicity":{"contentStandards":1,"learningOutcomes":1,"learningIndicators":2},"Organic Functional Groups":{"contentStandards":2,"learningOutcomes":2,"learningIndicators":4},"totals":{"contentStandards":7,"learningOutcomes":7,"learningIndicators":16}}
+   },
+   "overallTotals":{"contentStandards":24,"learningOutcomes":26,"learningIndicators":81},
+   "scopeNote":"Year-by-year sub-strand counts transcribed from the NaCCA Chemistry SHS 1–3 scope-and-sequence table. Counts are standards, outcomes and indicators, not chapter counts; individual learning indicators still need full transcription and lesson mapping."
   }
  };
  const ghana={
@@ -82,7 +89,7 @@
   ]
  };
  const sourceText={
-  Ghana:"NaCCA Senior High School curriculum (September 2023). Official separate Biology, Chemistry, Physics and Mathematics curriculum documents cover SHS 1–3. Broad subject strands and a partial set of sequence headings are recorded. They are not a year-by-year chapter map. Detailed SHS 1, SHS 2 and SHS 3 sub-strands, content standards, learning outcomes and indicators still require extraction from the official PDFs before the chapter register can be called complete.",
+  Ghana:"NaCCA Senior High School curriculum (September 2023). Official separate Biology, Chemistry, Physics and Mathematics curriculum documents cover SHS 1–3. Broad subject strands are recorded. Chemistry now includes year-by-year sub-strands and official scope-and-sequence counts; its individual learning indicators still need transcription. Other subjects remain at strand-level scope until their year-level tables and indicators are extracted. This is not yet a complete chapter register.",
    Nigeria:"NERDC New Revised Senior Secondary Education Curriculum (2025 implementation cycle). The national portal separates SSS 1, SSS 2 and SSS 3; the science offering includes Biology, Chemistry and Physics, with General Mathematics as a core subject. Each subject and year must be mapped from its own current curriculum document; older topic lists must not be assumed current.",
   Uganda:"NCDC curriculum framework and subject syllabi. Lower Secondary runs Senior 1–4 and includes Mathematics, Biology, Chemistry and Physics as separate subjects; General Science is an alternative for some learners with special educational needs. Advanced Secondary has separate aligned syllabi, so level must be identified before topics are mapped.",
   Tanzania:"Tanzania Institute of Education (TIE) publishes separate Ordinary Secondary Education syllabi for Forms I–IV and Advanced Secondary Education syllabi for Forms V–VI. Subject and level must be matched to the correct current syllabus; never substitute an Advanced Form V–VI sequence for Ordinary Form I.",
@@ -101,7 +108,7 @@
    record.assessmentContext="WASSCE subject combinations follow NaCCA's current secondary subject-combination guidelines; school subject offering and learner combination can vary.";
    record.curriculumAuditStatus="official-documents-and-strand-scope-identified-substrand-indicator-audit-pending";
   }
-  record.curriculumAuditStatus=country==="Ghana"?"official-documents-and-partial-strand-headings-identified-year-level-substrand-audit-pending":"official-source-identified-sequence-audit-pending";
+  record.curriculumAuditStatus=country==="Ghana"?"official-documents-and-chemistry-year-level-scope-counts-recorded-detailed-indicator-mapping-pending":"official-source-identified-sequence-audit-pending";
   record.verifiedCurriculumSequence=verified;
   record.notice=(sourceText[country]||"Official curriculum sequence audit pending.")+
    " Existing generic starter lessons are explicitly labelled SUPPLEMENTARY until their exact position and scope are verified. They are not presented as the national syllabus.";
