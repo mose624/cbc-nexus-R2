@@ -69,3 +69,15 @@ export const countryCurriculumVerification = {
   },
   "overallStatus": "Country record created with official-source leads and conservative subject mapping; detailed programme extraction and textbook chapter verification remain pending."
 };
+
+export const chapterEvidenceReconciliation = {
+ reviewedOn: "2026-11-16",
+ country: "Gabon",
+ gradeSequenceEvidence: "Secondary curriculum architecture uses SVT, Physique-Chimie and Mathématiques; current official programmes by class/series and adopted books need retrieval before exact topic sequencing.",
+ textbookEvidence: "No actual textbook contents inspected; no official chapter counts verified.",
+ actualTextbookContentsInspected: false,
+ officialTextbookChapterCountsVerified: false,
+ officialChapterCount: null,
+ evidenceSource: "Official Ministry current programme and textbook sources not retrieved.",
+ nextRequiredWork: "Retrieve official grade/year/term programmes and extract topics for Mathematics, Biology or integrated Life Science, Chemistry and Physics; inspect approved student textbook contents pages and record printed chapter titles/counts separately. Do not infer textbook chapters from curriculum themes."
+};
