@@ -43,6 +43,16 @@ export const countryCurriculumVerification = {
   "sources": [
     "Official national Ministry / curriculum authority source not yet retrieved; verify before asserting detailed grade sequence"
   ],
+  "reconciliation": {
+    "batch": "173-192",
+    "status": "source-retrieval-required",
+    "evidenceSummary": "Current Ministry curriculum edition and approved textbook catalogues for secondary Biology, Chemistry, Physics and Mathematics not retrieved. Historical programmes must not be treated as current without adoption/implementation evidence.",
+    "officialDocuments": [],
+    "gradeByGradeSequenceVerified": false,
+    "actualTextbookContentsInspected": false,
+    "officialTextbookChapterCountsVerified": false,
+    "nextAction": "Extract grade/year/term topic headings from current official programme documents; inspect actual approved learner-textbook contents pages; map every book chapter to the official topic sequence and record discrepancies."
+  },
   "completion": {
     "gradeByGradeTopicSequenceVerified": false,
     "officialTextbookChapterCountsVerified": false,
