@@ -123,3 +123,15 @@ export default {
 },
   textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish actual contents-page chapter sequence." }
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Cameroon",
+  gradeSequenceEvidence: "MINESEC publishes separate official programmes for Francophone and Anglophone subsystems. Francophone Bac Series C/D combine Mathematics with physical sciences or life/earth sciences; English subsystem subjects differ. A 2025 decree formalises official curriculum/programme development.",
+  textbookEvidence: "Official programme portals identified; actual PDFs and textbook contents need grade-by-grade extraction.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.minesec.gov.cm/web/index.php/fr/systeme-educatif/progammes-officiels",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology (or integrated Life Science), Chemistry, Physics and Mathematics; then open approved/adopted student textbooks and record exact printed chapter headings and counts separately. Do not infer textbook chapters from syllabus themes."
+};
