@@ -58,3 +58,5 @@ export const countryCurriculumVerification = {
     ]
   }
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Montenegro", gradeSequenceEvidence: "National subject curricula and standards define primary and secondary progression; map Mathematics and Natural Sciences by grade and distinguish Biology, Chemistry and Physics as specialist subjects in later grades and gymnasium/vocational tracks.", textbookEvidence: "No actual approved student textbook contents or printed chapter counts inspected.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "Official Ministry of Education and Bureau for Education Services curriculum sources require retrieval.", nextRequiredWork: "Extract current official grade/year/term learning outcomes and topic sequences for Mathematics and integrated or specialist sciences. Open approved/adopted student textbook PDFs and contents pages; record exact edition, grade, chapter titles and chapter counts separately. Do not infer textbook chapters from curriculum topics." };
