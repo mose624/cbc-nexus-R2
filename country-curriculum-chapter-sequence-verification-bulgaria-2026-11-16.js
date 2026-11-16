@@ -103,4 +103,13 @@ export const countryCurriculumVerification = {
     subjectRecordsWithDetailedGradeByGradeSequenceReconciled: 0,
     claimOf10000WordChapters: false
   }
+
+  evidenceRefresh_2026_11_16: {
+  "status": "official Grade VII programme catalogue confirmed; topic extraction pending",
+  "sources": [
+    "https://www.mon.bg/obshto-obrazovanie/uchebni-planove-i-programi-2/uchebni-programi/uchebni-programi-za-obsthoobrazovatelna-podgotovka/vii-klas/"
+  ],
+  "finding": "Ministry Grade VII programmes list Mathematics, Biology and Health Education, Physics and Astronomy, and Chemistry and Environmental Protection as distinct subjects. Individual programme documents still need topic extraction."
+},
+  textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish actual contents-page chapter sequence." }
 };
