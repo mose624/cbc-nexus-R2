@@ -59,3 +59,15 @@ export const countryCurriculumVerification = {
     ]
   }
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Slovakia",
+  gradeSequenceEvidence: "The consolidated State Educational Programme and ongoing curriculum reform require cohort/version mapping. Early primary integrated learning differs from later separate Biology, Chemistry, Physics and Mathematics; inspect official subject standards by grade.",
+  textbookEvidence: "Curriculum framework or syllabus portal identified; actual adopted textbook contents pages and complete book PDFs were not inspected in this batch.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.minedu.sk/statny-vzdelavaci-program/",
+  nextRequiredWork: "Retrieve current grade-by-grade official syllabus and the exact approved/adopted textbook for each grade and pathway; inspect contents pages; record title, edition, publisher, grade, chapter titles and verified chapter count. Keep CBE Nexus-authored chapters separate."
+};
