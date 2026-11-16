@@ -118,3 +118,15 @@ export default {
     status: "SOURCE MAP CREATED — extract the current Ministry middle/secondary programmes and validated PRET primary files before finalising grade sequences."
   }
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Chad",
+  gradeSequenceEvidence: "Fundamental/middle programmes identify Mathematics, Physics-Chemistry and SVT; upper-secondary series A4, C, D, E and G differ. Primary curriculum rewriting under PRET 2025–2029 has reached validation milestones, but validated programmes must be distinguished from nationwide implementation.",
+  textbookEvidence: "The referenced material is an official ministry or curriculum-authority source, or an explicit source-gap note; no adopted textbook contents page or full book PDF was inspected in this batch.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.education.gouv.td/",
+  nextRequiredWork: "Retrieve the current approved grade-by-grade syllabus and exact adopted textbook for each relevant grade and track; inspect contents pages; record title, edition, publisher, grade, chapter titles and verified count. Keep CBE Nexus-authored chapters separate."
+};
