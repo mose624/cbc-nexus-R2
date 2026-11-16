@@ -43,6 +43,16 @@ export const countryCurriculumVerification = {
   "sources": [
     "https://moe.gov.ae/en/guides/Documents/Study%20Plan%20for%20the%202026-2027%20Academic%20Year%20%28Ministry%20Curriculum%29/Study%20Plan%20for%20the%202026-2027%20Academic%20Year%20%28Ministry%20Curriculum%29%20EN.pdf"
   ],
+  "reconciliation": {
+    "batch": "173-192",
+    "status": "current-stream-rules-verified",
+    "evidenceSummary": "MOE 2026–27 study-plan FAQ specifies General Grade 9–10 Science covering Physics, Chemistry and Biology; Grade 11 Biology, Chemistry and Physics become fixed compulsory subjects in both General and Advanced streams. Grade 12 carries forward selected Grade 11 scenarios. Mathematics and actual book contents require separate subject plan/book inspection.",
+    "officialDocuments": ["https://www.moe.gov.ae/en/guides/Pages/Study-Plan-for-the-2026-2027-Academic-Year-Ministry-Curriculum.aspx"],
+    "gradeByGradeSequenceVerified": false,
+    "actualTextbookContentsInspected": false,
+    "officialTextbookChapterCountsVerified": false,
+    "nextAction": "Extract grade/year/term topic headings from current official programme documents; inspect actual approved learner-textbook contents pages; map every book chapter to the official topic sequence and record discrepancies."
+  },
   "completion": {
     "gradeByGradeTopicSequenceVerified": false,
     "officialTextbookChapterCountsVerified": false,
