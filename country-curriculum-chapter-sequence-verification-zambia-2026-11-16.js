@@ -61,3 +61,15 @@ export const countryCurriculumVerification = {
     "officialTextbookChapterCountsVerified": false
   }
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Zambia",
+  gradeSequenceEvidence: "The Curriculum Development Centre and Ministry oversee national curriculum frameworks and syllabuses; current revised curriculum implementation and approved textbook editions must be mapped by grade and effective year.",
+  textbookEvidence: "The referenced material is an official ministry or curriculum-authority source, or an explicit special-scope note; no adopted textbook contents page or full book PDF was inspected in this batch.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.edu.gov.zm/",
+  nextRequiredWork: "Retrieve the current approved grade-by-grade syllabus and exact adopted textbook for each relevant grade and track; inspect contents pages; record title, edition, publisher, grade, chapter titles and verified count. Keep CBE Nexus-authored chapters separate."
+};
