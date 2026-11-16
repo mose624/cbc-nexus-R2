@@ -113,3 +113,15 @@ export const countryCurriculumVerification = {
 },
   textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish actual contents-page chapter sequence." }
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Bulgaria",
+  gradeSequenceEvidence: "Ministry class VII programme lists Mathematics, Biology and Health Education, Physics and Astronomy, and Chemistry and Environmental Protection. Class-specific programmes and approved textbook lists are published separately.",
+  textbookEvidence: "The 2026–27 approved textbook catalogue is available; textbook contents/chapter counts not inspected.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.mon.bg/obshtoobrazovanie/uchebni-planove-i-programi-2/uchebni-programi/uchebni-programi-za-obsthoobrazovatelna-podgotovka/vii-klas/",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology (or integrated Life Science), Chemistry, Physics and Mathematics; then open approved/adopted student textbooks and record exact printed chapter headings and counts separately. Do not infer textbook chapters from syllabus themes."
+};
