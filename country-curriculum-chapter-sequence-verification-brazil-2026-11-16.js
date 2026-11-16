@@ -102,3 +102,15 @@ export const countryCurriculumVerification = {
 },
   textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish actual contents-page chapter sequence." }
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Brazil",
+  gradeSequenceEvidence: "BNCC defines national learning rights while local/state systems implement curricula. PNLD distinguishes early-years/primary books and secondary Biology, Chemistry, Physics and Mathematics; current book selection catalogues should be matched to state curriculum.",
+  textbookEvidence: "PNLD listings identify textbook collections but actual contents pages were not inspected.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://basenacionalcomum.mec.gov.br/a-base",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology (or integrated Life Science), Chemistry, Physics and Mathematics; then open approved/adopted student textbooks and record exact printed chapter headings and counts separately. Do not infer textbook chapters from syllabus themes."
+};
