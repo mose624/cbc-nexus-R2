@@ -272,12 +272,13 @@ function renderCountry(){
  resourceItems.forEach(item=>{
   const card=node("a","gs-learning-card");
   card.href=item.type==="subject-notes"?"/country-online-notes.html?country="+countryQuery+"&subject="+encodeURIComponent(item.subject):
-   item.type==="practicals"?"/country-practical-skills.html?country="+countryQuery:
+   item.type==="practicals"?"/country-practical-skills.html?country="+encodeURIComponent(countryQuery):
    item.type==="quizzes"?"/interactive-questions.html?country="+countryQuery:
    item.type==="exam-resources"?"#papers":
    item.type==="curriculum"?"#curriculum":
    item.type==="notes"?"/country-online-notes.html?country="+countryQuery:
    "/resource-category.html?type="+encodeURIComponent(item.type)+"&country="+countryQuery;
+  if(item.type==="practicals"){card.setAttribute("aria-label","Open online Biology, Chemistry and Physics practical notes for "+c.name);card.addEventListener("click",event=>{event.stopPropagation();});}
   const icon=node("span","gs-learning-icon gs-learning-icon-"+item.tone);icon.textContent=item.icon;icon.setAttribute("aria-hidden","true");
   const title=node("strong");title.textContent=item.title;
   const desc=node("span","gs-learning-description");desc.textContent=item.desc;
