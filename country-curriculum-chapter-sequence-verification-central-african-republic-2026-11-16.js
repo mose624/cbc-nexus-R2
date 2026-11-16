@@ -121,3 +121,15 @@ export default {
     status: "SOURCE MAP CREATED — obtain and extract current INRAP class-by-class programmes and Ministry-approved textbooks before writing chapter sequences."
   }
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Central African Republic",
+  gradeSequenceEvidence: "National education structure is 2-6-4-3: Fundamental 1 (CP1–CM2), Fundamental 2 (Sixième–Neuvième) and upper secondary (Seconde–Terminale). SVT, Physics and Mathematics are named disciplines in later stages; current adopted textbook contents and exact chapter order remain unverified.",
+  textbookEvidence: "The referenced material is an official ministry or curriculum-authority source, or an explicit source-gap note; no adopted textbook contents page or full book PDF was inspected in this batch.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.education.gouv.cf/",
+  nextRequiredWork: "Retrieve the current approved grade-by-grade syllabus and exact adopted textbook for each relevant grade and track; inspect contents pages; record title, edition, publisher, grade, chapter titles and verified count. Keep CBE Nexus-authored chapters separate."
+};
