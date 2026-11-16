@@ -43,6 +43,16 @@ export const countryCurriculumVerification = {
   "sources": [
     "Official national Ministry / curriculum authority source not yet retrieved; verify before asserting detailed grade sequence"
   ],
+  "reconciliation": {
+    "batch": "173-192",
+    "status": "programme-and-textbook-title-lists-identified",
+    "evidenceSummary": "MOE lists model programmes and approved textbook titles for Grades 5–9. Grades 5–6 may use integrated natural-science courses; Grades 7–9 include separate Physics, Biology and Chemistry programme options; Mathematics is integrated at 5–6 and may split into Algebra/Geometry at 7–9. The 2024 Profile Secondary Standard takes effect 1 Sep 2027. Actual selected textbook contents must be inspected per approved title.",
+    "officialDocuments": ["https://mon.gov.ua/osvita-2/zagalna-serednya-osvita/osvitni-programi/modelni-navchalni-programi-dlya-5-9-klasiv-novoi-ukrainskoi-shkoli-zaprovadzhuyutsya-poetapno-z-2022-roku","https://mon.gov.ua/osvita-2/zagalna-serednya-osvita/osvitni-programi/tipovi-osvitni-programi-2"],
+    "gradeByGradeSequenceVerified": false,
+    "actualTextbookContentsInspected": false,
+    "officialTextbookChapterCountsVerified": false,
+    "nextAction": "Extract grade/year/term topic headings from current official programme documents; inspect actual approved learner-textbook contents pages; map every book chapter to the official topic sequence and record discrepancies."
+  },
   "completion": {
     "gradeByGradeTopicSequenceVerified": false,
     "officialTextbookChapterCountsVerified": false,
