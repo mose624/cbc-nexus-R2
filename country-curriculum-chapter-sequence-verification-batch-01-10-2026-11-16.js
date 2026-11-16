@@ -596,22 +596,28 @@ export const chapterSequenceVerificationBatch01 = {
     },
     country: "Angola",
       sourceMapBatch: 2,
-      levelReviewed: "General Secondary I Cycle (Classes 7–9) and II Cycle (Classes 10–12)",
-      authority: "Instituto Nacional de Avaliação e Desenvolvimento da Educação (INADE), Ministry of Education",
-      language: "Portuguese",
-      examPathway: "National Examinations; subject availability depends on cycle and implementation phase.",
-      officialSources: ["https://inade.gov.ao/", "https://inade.gov.ao/exames-nacionais"],
-      curriculumStructure: "INADE's official portal confirms curricular materials across school levels. The II Cycle includes a Physical and Biological Sciences area. The portal's current individual subject programme files and exact topic sequences were not retrieved in this audit.",
+      levelReviewed: "General Secondary I Cycle (Classes 7–9) and II Cycle (Classes 10–12); II Cycle science pathway is Ciências Físicas e Biológicas",
+      authority: "Instituto Nacional de Avaliação e Desenvolvimento da Educação (INADE), Ministry of Education; national curriculum and programme approval under the Ministry",
+      language: "Portuguese (official language of instruction and national examination language).",
+      examPathway: "National Examinations (Exames Nacionais). INADE's 2025–2026 portal shows examination subjects by class and implementation phase; for the 12th Class, the current displayed list includes Mathematics, Physics, Biology and Chemistry among other subjects. Do not assume every subject is offered in every cycle or every phase of generalisation.",
+      officialSources: [
+        "https://inade.gov.ao/",
+        "https://inade.gov.ao/Programa/I_ciclo",
+        "https://inade.gov.ao/Programa/II_ciclo",
+        "https://inade.gov.ao/exames-nacionais",
+        "https://lex.ao/docs/presidente-da-republica/2023/decreto-presidencial-n-o-162-23-de-01-de-agosto/",
+        "https://lex.ao/docs/assembleia-nacional/2020/lei-n-o-32-20-de-12-de-agosto/"
+      ],
+      curriculumStructure: "The General Secondary system comprises two cycles of three classes: I Cycle Classes 7–9 and II Cycle Classes 10–12. The II Cycle is organised into four knowledge areas, including Physical and Biological Sciences, Economic and Legal Sciences, Human Sciences and Visual Arts. The legal framework states that national curricula are mandatory while 20% of curriculum content is the responsibility of local implementation. The INADE official curriculum-materials portal currently lists Classes 7, 8, 9, 10, 11 and 12 but displays zero downloadable curricular materials for every class on the pages inspected; therefore it is not yet possible to transcribe official subject chapter sequences from that portal. INADE's 2025–2026 national-examinations page identifies the examined subjects and phased rollout; examination subjects indicate assessment coverage, not a complete syllabus sequence. The 2023 legal framework confirms that programmes and study plans are approved by the education ministry. No chapter titles or counts are invented.",
       subjects: {
-        Biology: { officialName: "Biologia", sourceStatus: "official-materials-portal-identified", sequenceStatus: "current-subject-programme-extraction-pending", syllabusThemes: [], chapterCount: null },
-        Chemistry: { officialName: "Química", sourceStatus: "official-materials-portal-identified", sequenceStatus: "current-subject-programme-extraction-pending", syllabusThemes: [], chapterCount: null },
-        Physics: { officialName: "Física", sourceStatus: "official-materials-portal-identified", sequenceStatus: "current-subject-programme-extraction-pending", syllabusThemes: [], chapterCount: null },
-        Mathematics: { officialName: "Matemática", sourceStatus: "official-materials-portal-identified", sequenceStatus: "current-subject-programme-extraction-pending", syllabusThemes: [], chapterCount: null }
+        Biology: { officialName: "Biologia", sourceStatus: "INADE-official-materials-pages-checked-no-files-current-exam-subject-confirmed", sequenceStatus: "programme-PDF-unavailable-from-current-public-portal; official-topic-sequence-pending", syllabusThemes: [], chapterCount: null, note: "Biology appears in INADE's current 9th- and 12th-Class examination lists in the displayed generalisation phases. Exam inclusion does not supply the syllabus topic order." },
+        Chemistry: { officialName: "Química", sourceStatus: "INADE-official-materials-pages-checked-no-files-current-12th-Class-exam-subject-confirmed", sequenceStatus: "programme-PDF-unavailable-from-current-public-portal; official-topic-sequence-pending", syllabusThemes: [], chapterCount: null, note: "Chemistry appears in the current 9th- and 12th-Class examination lists in the displayed phase. No topic sequence is inferred from examination availability." },
+        Physics: { officialName: "Física", sourceStatus: "INADE-official-materials-pages-checked-no-files-current-9th-and-12th-Class-exam-subject-confirmed", sequenceStatus: "programme-PDF-unavailable-from-current-public-portal; official-topic-sequence-pending", syllabusThemes: [], chapterCount: null, note: "Physics appears in the national examination lists for 9th and 12th Classes; this confirms assessment status, not the detailed programme sequence." },
+        Mathematics: { officialName: "Matemática", sourceStatus: "INADE-official-materials-pages-checked-no-files-current-6th-9th-and-12th-Class-exam-subject-confirmed", sequenceStatus: "programme-PDF-unavailable-from-current-public-portal; official-topic-sequence-pending", syllabusThemes: [], chapterCount: null, note: "Mathematics appears in national examination lists across the displayed stages. Separate current programmes for Classes 7–12 are still required for topic-by-topic mapping." }
       },
-      status: "official-authority-and-materials-portal-verified; exact subject chapter sequences pending"
+      status: "official legal structure, subject pathways and national examination evidence verified; INADE curriculum-materials pages for all six secondary classes currently show zero materials; all four detailed subject sequences remain pending official programme documents; no official chapter counts asserted"
     },
-    {
-      country: "Antigua and Barbuda",
+    country: "Antigua and Barbuda",
       sourceMapBatch: 2,
       levelReviewed: "CSEC secondary examination syllabuses; CAPE is a separate post-CSEC pathway",
       authority: "Caribbean Examinations Council (CXC), with local Ministry/school implementation",
