@@ -1038,3 +1038,43 @@ The full theme tables are presented for the combined Classes 10–11 programme. 
 - Official textbook contents pages inspected for Albania in this pass: 0.
 - Additional Albania work: inspect official Chemistry, Physics and Mathematics programmes; locate and open approved textbooks and transcribe actual contents pages; locate the Class 12 elective Biology programme; map any curriculum pathways and implementation years carefully.
 - This Albania source is a separate new-country entry; Afghanistan's 23 contents-page/188-chapter textbook total is unchanged.
+
+
+## Albania — upper-secondary Mathematics, Physics and Chemistry (official 2025 programmes)
+
+### Primary source and legal status
+- Source: Albania Ministry of Education, Order No. 556 dated 28 October 2025, official consolidated PDF: https://arsimi.gov.al/wp-content/uploads/2025/12/Urdhri-nr.556-date-28.10.2025-Per-miratimin-e-programeve-mesimore-te-disa-lendeve-te-kurrikules-berthame-te-disa-klasave-te-arsimit-te-mesem-te-larte.pdf
+- The signed order explicitly approves updated core-curriculum programmes for Mathematics, Physics and Chemistry for Classes 10–11 (Annexes 11, 12 and 13 respectively), and Biology for Classes 10–11 (Annex 14). The order states implementation for Class 10 in 2026–27 and Class 11 in 2027–28; Class 12 programme implementation is 2028–29. This source is an official subject programme, not a textbook.
+- Source locator: PDF pp. 1–2 and annex starts: Mathematics p. 63 of PDF (Annex 11); Physics after Mathematics (Annex 12); Chemistry (Annex 13); Biology (Annex 14). PDF extraction line references in working notes: order lines 8–35; Mathematics lines 14063–14104; Physics lines 15834–15877; Chemistry lines 18863–18904.
+- Language of instruction/document: Albanian. Level: upper-secondary gymnasium (arsimi i mesëm i lartë). Pathway: core curriculum. Programme year: 2025.
+
+### Mathematics — Classes 10–11 combined programme
+- Actual official programme and contents structure opened. The document treats Classes 10 and 11 together; it does not provide a clean independent grade-by-grade chapter sequence in its contents list. Do not split themes into Grade 10 versus Grade 11 without further grade-specific outcome tables.
+- The programme's five ordered thematic areas are: (1) Number; (2) Measurement; (3) Geometry; (4) Algebra and function; (5) Statistics and probability.
+- The contents list gives the topic sequence and starts: Number (programme p. 21), Measurement (p. 25), Geometry (p. 28), Algebra and function (p. 32), Statistics and probability (p. 38). The document also specifies suggested hours for each theme and learning outcomes.
+- Syllabus evidence only. No Mathematics textbook contents page, textbook title/edition, ISBN, publisher or chapter order inspected. Textbook chapter count: 0.
+
+### Physics — Classes 10–11 combined programme
+- Actual official programme and contents structure opened. The programme is explicitly for Classes X–XI together, in the Natural Sciences field. Do not assign the full combined sequence to one grade.
+- Six ordered thematic areas from the contents page: (1) Motion, forces and energy; (2) Thermal physics / thermodynamics; (3) Electricity, magnetism and electromagnetic induction / fundamentals of electromagnetism; (4) Waves; (5) Atomic and nuclear physics and elementary particles; (6) Space physics.
+- The contents page places these themes from programme pp. 25, 39, 45, 58, 65 and 70 respectively. The programme describes the course as building on lower-secondary Science/Physics and references international English-curriculum standards. Practical work, experiments and data analysis are integral programme features.
+- Syllabus evidence only. No Physics textbook contents page, textbook title/edition, ISBN, publisher or chapter order inspected. Textbook chapter count: 0.
+
+### Chemistry — Classes 10–11 combined programme
+- Actual official programme and contents structure opened. The programme is explicitly for Classes X–XI together, in the Natural Sciences field. Do not infer a grade-specific order from the combined contents page.
+- Three ordered thematic areas: (1) Principles of Chemistry; (2) Inorganic Chemistry; (3) Introduction to Organic Chemistry.
+- The contents page places these themes at programme pp. 23, 35 and 39 respectively. The programme includes the strand “Science in Practice” and practical/experimental skills, including handling variables and laboratory safety.
+- Syllabus evidence only. No Chemistry textbook contents page, textbook title/edition, ISBN, publisher or chapter order inspected. Textbook chapter count: 0.
+
+### Textbook status and limitations
+- The Ministry's official public information states the updated textbook package was still being updated during the 2026 rollout. Therefore, the existence of the 2025 programmes does not by itself identify the final adopted 2026–27 textbook editions. Do not label any older textbook as current without a current official catalogue/adoption record.
+- No actual approved Mathematics, Physics or Chemistry textbook PDF was opened to its contents page in this pass. These three subjects add **three official programme extractions**, **zero textbook contents-page inspections**, and **zero textbook chapters**.
+- Grade 12 Mathematics, Physics and Chemistry programmes are not included in these Annexes 11–13 (which cover Classes 10–11). Grade 12 requires its own authoritative programme source.
+
+### Evidence references used for this pass
+- Ministry Order and scope/implementation dates: official PDF, lines 8–35.
+- Mathematics annex and ordered topic contents: official PDF, lines 14063–14104.
+- Physics annex and ordered topic contents: official PDF, lines 15834–15877.
+- Chemistry annex and ordered topic contents: official PDF, lines 18863–18904.
+- Ministry curriculum rollout and textbook update context: https://arsimi.gov.al/newsroom/arsimi-parauniversitar-drejt-standardeve-europiane-me-kurrikulat-e-reja-mesimore-dhe-trajnimin-per-zhvillimin-profesional-te-mesuesve/
+
