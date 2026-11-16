@@ -153,4 +153,11 @@ export const country = {
     status: "community-governance-and-French-Community-science-themes-mapped; Flemish-and-German-speaking-grade-sequences-pending",
     note: "Belgium is not one national curriculum. French Community Science is integrated at lower-secondary level; Flemish attainment goals and German-speaking Community curricula must be mapped independently. Do not publish a single countrywide grade/chapter sequence until the three Community pathways are reconciled."
   }
+
+  evidenceRefresh_2026_11_16: {
+  "status": "existing country source map retained; current official topic documents and actual textbook contents require direct extraction",
+  "sources": [],
+  "finding": "No new verified topic sequence or official textbook chapter count is asserted in this evidence refresh. Preserve any jurisdiction, language, pathway and integrated-science distinctions already recorded in this file."
+},
+  textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish the actual contents-page chapter sequence. Do not invent counts." }
 };
