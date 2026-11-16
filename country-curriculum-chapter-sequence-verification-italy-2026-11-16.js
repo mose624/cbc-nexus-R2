@@ -48,3 +48,5 @@ export const countryCurriculumVerification = {
     "Author and verify CBE Nexus chapters only after sequence validation."
   ]
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Italy", gradeSequenceEvidence: "The first cycle follows national Indicazioni Nazionali; the second cycle differs among licei, technical institutes and vocational institutes. The 2026 first-cycle national indications and 2026 technical-institute guidelines require version-aware mapping.", textbookEvidence: "Curriculum documents identified, but actual school textbook contents and chapter counts not inspected.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "https://umi.dm.unibo.it/materiali-umi-ciim/altre-risorse/indicazioni-curricolari/", nextRequiredWork: "Extract the official grade/year/term sequence for Mathematics and integrated or specialist sciences from the current national documents; inspect actual approved/adopted student textbook contents pages and record exact chapter titles and counts separately." };
