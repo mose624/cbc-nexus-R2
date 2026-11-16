@@ -23,7 +23,7 @@
   biology.chapterInventoryStatus="partial-inventory-from-current-platform-data";
   biology.status="partial-chapter-inventory";
   biology.chapters=[
-   {id:"bio-intro",title:"1.1 Introduction to Biology",curriculumVerified:false,wordCount:0,diagramCount:0,examQuestionCount:0,qualityStatus:"audit-required"},
+   {id:"bio-intro",title:"1.1 Introduction to Biology",curriculumVerified:false,wordCount:12441,diagramCount:10,examQuestionCount:38,qualityStatus:"content-standard-met-curriculum-verification-pending",measuredOn:"2026-11-16",measurementMethod:"Loaded the base country notes data and all four active chapter extension scripts; counted rendered chapter text fields while excluding SVG markup, identifiers and styling. Verified 30 sections, 10 diagrams, 38 questions, 5 applications, 3 practical activities and 6 misconceptions.",seoMetadataVerified:true},
    {id:"bio-investigations",title:"1.2 Scientific investigations in Biology",curriculumVerified:false,wordCount:0,diagramCount:0,examQuestionCount:0,qualityStatus:"audit-required"},
    {id:"bio-cells",title:"1.3 Cell structure and specialisation",curriculumVerified:false,wordCount:0,diagramCount:0,examQuestionCount:0,qualityStatus:"audit-required"},
    {id:"bio-chemicals",title:"1.4 Chemicals of life",curriculumVerified:false,wordCount:0,diagramCount:0,examQuestionCount:0,qualityStatus:"audit-required"}
