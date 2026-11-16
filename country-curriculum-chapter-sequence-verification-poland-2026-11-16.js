@@ -62,11 +62,11 @@ export const countryCurriculumVerification = {
 export const chapterEvidenceReconciliation = {
   reviewedOn: "2026-11-16",
   country: "Poland",
-  gradeSequenceEvidence: "The 2026 core-curriculum regulation and school-stage structure require version-aware mapping. Distinguish integrated early education from separate Biology, Chemistry, Physics and Mathematics at later grades; inspect the relevant regulation annexes before asserting topic order.",
-  textbookEvidence: "Curriculum framework or syllabus portal identified; actual adopted textbook contents pages and complete book PDFs were not inspected in this batch.",
+  gradeSequenceEvidence: "The 2026 core-programme regulation distinguishes integrated education in Grades I–III from separate Biology, Chemistry, Physics and Mathematics in Grades IV–VIII. Secondary pathways and transition provisions need their own mapping.",
+  textbookEvidence: "The referenced material is a curriculum, ministry or examination-framework source, not an opened textbook contents page. Actual adopted textbook contents pages and full book PDFs were not inspected in this batch.",
   actualTextbookContentsInspected: false,
   officialTextbookChapterCountsVerified: false,
   officialChapterCount: null,
   evidenceSource: "https://www.gov.pl/web/edukacja",
-  nextRequiredWork: "Retrieve current grade-by-grade official syllabus and the exact approved/adopted textbook for each grade and pathway; inspect contents pages; record title, edition, publisher, grade, chapter titles and verified chapter count. Keep CBE Nexus-authored chapters separate."
+  nextRequiredWork: "Retrieve the current approved grade-by-grade syllabus and exact adopted textbook for each relevant grade and track; inspect contents pages; record title, edition, publisher, grade, chapter titles and verified count. Keep CBE Nexus-authored chapters separate."
 };
