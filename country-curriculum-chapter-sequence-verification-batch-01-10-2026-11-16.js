@@ -124,12 +124,80 @@ export const chapterSequenceVerificationBatch01 = {
       officialSources: ["https://nacca.gov.gh/secondary-education-curriculum/"],
       curriculumStructure: "NaCCA's official secondary curriculum portal separately lists Biology, Chemistry, Physics and Mathematics curriculum downloads. This confirms subject-level national curriculum presence but the current downloadable PDFs' full strand/sub-strand sequences were not extracted in this pass.",
       subjects: {
-        Biology: { officialName: "Biology", sourceStatus: "official-curriculum-listed", sequenceStatus: "pdf-strand-and-indicator-extraction-pending", syllabusThemes: [], chapterCount: null },
-        Chemistry: { officialName: "Chemistry", sourceStatus: "official-curriculum-listed", sequenceStatus: "pdf-strand-and-indicator-extraction-pending", syllabusThemes: [], chapterCount: null },
-        Physics: { officialName: "Physics", sourceStatus: "official-curriculum-listed", sequenceStatus: "pdf-strand-and-indicator-extraction-pending", syllabusThemes: [], chapterCount: null },
-        Mathematics: { officialName: "Mathematics", sourceStatus: "official-curriculum-listed", sequenceStatus: "year-level-indicator-extraction-pending", syllabusThemes: [], chapterCount: null }
+        Biology: {
+          officialName: "Biology",
+          sourceStatus: "NaCCA-SHS-1-to-3-September-2023-curriculum-contents-extracted",
+          sequenceStatus: "9-distinct-official-sub-strands-transcribed; year-specific recurrence retained in source document",
+          chapterCount: 9,
+          chapterStatus: "official-sub-strand-titles-transcribed-from-contents",
+          chapters: [
+            { number: 1, title: "Biology as the Science of Life", strand: "Exploring Biology in Society", yearOccurrences: [1, 2], sourcePage: 23 },
+            { number: 2, title: "Biology and Entrepreneurship", strand: "Exploring Biology in Society", yearOccurrences: [1, 2, 3], sourcePages: [31, 65, 88] },
+            { number: 3, title: "Cell Structure and Functions", strand: "Life in the Fundamental Unit", yearOccurrences: [1, 2, 3], sourcePages: [35, 69, 92] },
+            { number: 4, title: "Living Organisms", strand: "Diversity of Living Things and Their Environment", yearOccurrences: [1, 2, 3], sourcePages: [38, 72, 102] },
+            { number: 5, title: "Ecology", strand: "Diversity of Living Things and Their Environment", yearOccurrences: [1, 2, 3], sourcePages: [44, 76, 105] },
+            { number: 6, title: "Diseases and Infections", strand: "Diversity of Living Things and Their Environment", yearOccurrences: [1, 2, 3], sourcePages: [55, 79, 109] },
+            { number: 7, title: "Mammalian Systems", strand: "Systems of Life", yearOccurrences: [1, 2, 3], sourcePages: [57, 81, 112] },
+            { number: 8, title: "Plant Systems", strand: "Systems of Life", yearOccurrences: [1, 2, 3], sourcePages: [59, 84, 116] },
+            { number: 9, title: "Movement of Substances in Living Organisms", strand: "Life in the Fundamental Unit", yearOccurrences: [2], sourcePage: 67 }
+          ],
+          note: "These are distinct sub-strand titles from the NaCCA SHS 1–3 contents. The same sub-strands recur across years; CBE Nexus should preserve year-specific indicators and not duplicate them as unrelated subjects."
+        },
+        Chemistry: {
+          officialName: "Chemistry",
+          sourceStatus: "official-curriculum-listed; official-PDF-link-needs-retrieval",
+          sequenceStatus: "chapter-extraction-pending",
+          syllabusThemes: [],
+          chapterCount: null,
+          note: "NaCCA's official portal lists Chemistry, but the linked PDF was not successfully retrieved in this pass. No chapter titles have been guessed."
+        },
+        Physics: {
+          officialName: "Physics",
+          sourceStatus: "NaCCA-SHS-1-to-3-September-2023-curriculum-contents-extracted",
+          sequenceStatus: "17-distinct-sub-strands-transcribed-from-three-year-contents",
+          chapterCount: 17,
+          chapterStatus: "official-sub-strand-titles-transcribed-from-contents",
+          chapters: [
+            { number: 1, title: "Introduction to Physics", strand: "Mechanics and Matter", yearOccurrences: [1, 2, 3] },
+            { number: 2, title: "Matter", strand: "Mechanics and Matter", yearOccurrences: [1, 2] },
+            { number: 3, title: "Kinematics", strand: "Mechanics and Matter", yearOccurrences: [1, 2, 3] },
+            { number: 4, title: "Dynamics", strand: "Mechanics and Matter", yearOccurrences: [1, 2, 3] },
+            { number: 5, title: "Heat", strand: "Energy", yearOccurrences: [1, 2, 3] },
+            { number: 6, title: "Waves", strand: "Energy", yearOccurrences: [1, 2, 3] },
+            { number: 7, title: "Electrostatics", strand: "Electric Field, Magnetic Field and Electronics", yearOccurrences: [1, 2] },
+            { number: 8, title: "Magnetostatics", strand: "Electric Field, Magnetic Field and Electronics", yearOccurrences: [1] },
+            { number: 9, title: "Analogue Electronics", strand: "Electric Field, Magnetic Field and Electronics", yearOccurrences: [1] },
+            { number: 10, title: "Atomic Physics", strand: "Atomic and Nuclear Physics", yearOccurrences: [1, 2, 3] },
+            { number: 11, title: "Nuclear Physics", strand: "Atomic and Nuclear Physics", yearOccurrences: [1, 2, 3] },
+            { number: 12, title: "Electromagnetism", strand: "Electric Field, Magnetic Field and Electronics", yearOccurrences: [2] },
+            { number: 13, title: "Digital Electronics", strand: "Electric Field, Magnetic Field and Electronics", yearOccurrences: [2] },
+            { number: 14, title: "Direct Current", strand: "Electric Field, Magnetic Field and Electronics", yearOccurrences: [3] },
+            { number: 15, title: "Alternating Current", strand: "Electric Field, Magnetic Field and Electronics", yearOccurrences: [3] },
+            { number: 16, title: "Electromagnetic Induction and Applications", strand: "Electric Field, Magnetic Field and Electronics", yearOccurrences: [3] },
+            { number: 17, title: "Applications of Electronics", strand: "Electric Field, Magnetic Field and Electronics", yearOccurrences: [3] }
+          ],
+          note: "Distinct titles consolidated across the SHS 1, SHS 2 and SHS 3 contents. Year placement is retained in yearOccurrences."
+        },
+        Mathematics: {
+          officialName: "Mathematics",
+          sourceStatus: "NaCCA-SHS-1-to-3-September-2023-scope-and-sequence-extracted",
+          sequenceStatus: "8-official-sub-strands-transcribed",
+          chapterCount: 8,
+          chapterStatus: "official-sub-strand-titles-transcribed-from-scope-and-sequence",
+          chapters: [
+            { number: 1, title: "Real Number and Numeration System", strand: "Numbers for Everyday Life", yearOccurrences: [1, 2] },
+            { number: 2, title: "Proportional Reasoning", strand: "Numbers for Everyday Life", yearOccurrences: [1, 2, 3] },
+            { number: 3, title: "Applications of Expressions, Equations and Inequalities", strand: "Algebraic Thinking", yearOccurrences: [1, 2] },
+            { number: 4, title: "Patterns and Relationships", strand: "Algebraic Thinking", yearOccurrences: [1, 2, 3] },
+            { number: 5, title: "Spatial Sense", strand: "Geometry Around Us", yearOccurrences: [1, 2, 3] },
+            { number: 6, title: "Measurement", strand: "Geometry Around Us", yearOccurrences: [1, 2, 3] },
+            { number: 7, title: "Statistical Reasoning and Its Application in Real Life", strand: "Making Sense of and Using Data", yearOccurrences: [1, 2, 3] },
+            { number: 8, title: "Chance", strand: "Making Sense of and Using Data", yearOccurrences: [1, 2, 3] }
+          ],
+          note: "The eight sub-strands are transcribed from NaCCA's SHS 1–3 scope-and-sequence summary. Year-level content standards, learning outcomes and indicators must be retained when generating lessons."
+        }
       },
-      status: "four-official-subject-documents-identified; chapter sequence extraction pending"
+      status: "Biology 9 and Physics 17 distinct sub-strands, Mathematics 8 sub-strands transcribed; Chemistry PDF retrieval and sequence extraction pending"
     },
     {
       country: "Nigeria",
