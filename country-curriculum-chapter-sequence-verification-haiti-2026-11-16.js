@@ -48,3 +48,5 @@ export const countryCurriculumVerification = {
     "Author and verify CBE Nexus chapters only after sequence validation."
   ]
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Haiti", gradeSequenceEvidence: "MENFP curriculum/reform materials require direct grade-level retrieval. Preserve French/Creole language context and integrated experimental sciences; specialist subject progression remains unverified.", textbookEvidence: "No textbook contents inspected; official chapter counts not verified.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "Official MENFP curriculum retrieval outstanding.", nextRequiredWork: "Retrieve official grade/year/term programmes and extract Mathematics, Biology or integrated Life Science, Chemistry and Physics topics; inspect approved student textbook contents pages and record printed chapter titles/counts separately." };
