@@ -106,3 +106,15 @@ export const countryCurriculumVerification = {
   },
   overallStatus: "Updated national analytical curriculum and public-school subject structure identified; detailed grade-by-grade outcomes, upper-secondary pathways and textbook chapter counts remain pending."
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Cyprus",
+  gradeSequenceEvidence: "MESY curriculum distinguishes primary, Gymnasium and Lyceum/technical pathways. Science is integrated at some stages and specialist Biology, Chemistry, Physics and Mathematics are offered according to grade and pathway; extract current analytical programmes by class.",
+  textbookEvidence: "No actual textbook contents inspected; official analytical programmes and textbook contents remain outstanding.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.moec.gov.cy/",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology or integrated Life Science, Chemistry, Physics and Mathematics. Then inspect adopted student textbooks and record printed chapter titles and counts separately; do not infer chapters from standards or themes."
+};
