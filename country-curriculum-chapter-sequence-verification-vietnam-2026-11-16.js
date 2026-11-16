@@ -83,3 +83,15 @@ export const countryCurriculumVerification = {
     ]
   }
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Vietnam",
+  gradeSequenceEvidence: "The 2018 General Education Programme is implemented progressively by grade; integrated Natural Science in lower secondary must be distinguished from specialist Biology, Chemistry and Physics in upper secondary, with Mathematics separate.",
+  textbookEvidence: "The referenced material is an official ministry or curriculum-authority source, or an explicit special-scope note; no adopted textbook contents page or full book PDF was inspected in this batch.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://moet.gov.vn/",
+  nextRequiredWork: "Retrieve the current approved grade-by-grade syllabus and exact adopted textbook for each relevant grade and track; inspect contents pages; record title, edition, publisher, grade, chapter titles and verified count. Keep CBE Nexus-authored chapters separate."
+};
