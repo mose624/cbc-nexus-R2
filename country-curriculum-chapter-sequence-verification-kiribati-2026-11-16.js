@@ -48,3 +48,5 @@ export const countryCurriculumVerification = {
     "Author and verify CBE Nexus chapters only after sequence validation."
   ]
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Kiribati", gradeSequenceEvidence: "Ministry of Education curriculum and regional secondary examination pathways need direct extraction. Do not assume Fiji or CXC syllabuses are the national curriculum; establish primary, junior-secondary and senior-secondary sequence.", textbookEvidence: "No actual textbook contents or chapter counts verified.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "Official Ministry curriculum and syllabus retrieval outstanding.", nextRequiredWork: "Extract the official grade/year/term sequence for Mathematics and integrated or specialist sciences from current national documents; inspect actual approved/adopted student textbook contents pages and record exact chapter titles and counts separately." };
