@@ -48,7 +48,22 @@ export const countryCurriculumVerification = {
     "status": "integrated-lower-secondary-structure-identified",
     "evidenceSummary": "2018 General Education Programme uses integrated Natural Sciences in Grades 6–9, with Physics, Chemistry and Biology strands within the subject; Grade 10–12 separate subject programmes. Mathematics is separate. A local official school plan confirms 6–9 annual time allocations by strand, but it is not a national textbook contents list.",
     "officialDocuments": ["https://storage-vnportal.vnpt.vn/qnm-ubnd/5968/banner/KEHOACHNHATRUONG/KEHOACHCACHOATDONG/24-%20KH%20GI%C3%81O%20D%E1%BB%A4C%20NH%C3%80%20TR%C6%AF%E1%BB%9CNG%2025-26.pdf"],
-    "gradeByGradeSequenceVerified": false,
+"sequenceEvidence": {
+      "nationalStructure": "2018 General Education Programme: Natural Sciences is integrated in Grades 6–9; Biology, Chemistry and Physics are distinct elective/subject programmes in Grades 10–12; Mathematics is separate.",
+      "gradeAllocationEvidence": {
+        "sourceType": "Local education authority/school-year plan, not a national curriculum document",
+        "grades": ["6", "7", "8", "9"],
+        "naturalScienceAnnualPeriodsByStrand": {
+          "Chemistry": [33,33,45,54],
+          "Physics": [46,41,42,41],
+          "Biology": [53,58,47,37]
+        },
+        "caution": "This verifies a local allocation example only; it does not establish national topic order or textbook chapter counts."
+      },
+      "contentsPagesInspected": false,
+      "nextAction": "Retrieve the national MOET subject programmes and the approved textbook series actually adopted by each school; inspect all four grade-level contents pages."
+    },
+        "gradeByGradeSequenceVerified": false,
     "actualTextbookContentsInspected": false,
     "officialTextbookChapterCountsVerified": false,
     "nextAction": "Extract grade/year/term topic headings from current official programme documents; inspect actual approved learner-textbook contents pages; map every book chapter to the official topic sequence and record discrepancies."
