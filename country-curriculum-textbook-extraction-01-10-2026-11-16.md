@@ -714,3 +714,96 @@ The Chemistry title is independently confirmed as a Grade 10 Ministry textbook b
 - Remaining Afghanistan work: locate and inspect any relevant Dari Mathematics parallel editions; obtain current official grade-level syllabus documents and transcribe their sequence separately; verify current textbook adoption; continue Grades 11–12 only from actual official PDFs.
 - Other nine countries in the first ten remain pending document-level extraction.
 - Canonical country register unchanged.
+
+
+---
+
+# Afghanistan Grade 11 — Biology, Chemistry and Physics contents pages transcribed
+
+**Inspection date:** 16 November 2026  
+**Pathway:** Official Ministry Grade 11 general-secondary textbooks, Dari. The source PDFs were opened and their printed contents/index pages inspected. These are textbook chapter sequences, not independently verified syllabus sequences.
+
+## M. Biology — Grade 11, Dari, 1398 SH
+
+**Official Ministry PDF:** https://moe.gov.af/sites/default/files/2020-03/G11-Dr-Biology.pdf  
+**Metadata:** Grade 11; Biology; Dari; Ministry of Education; 1398 SH (PDF lines 0–7 and 55–80).  
+**Contents page:** PDF lines 102–137.
+
+The printed contents index contains five parts and twelve numbered chapters:
+
+1. **Cell structure, functions and environment** — microscopy and cell study; cell structure; prokaryotic and eukaryotic cells; cell environment; passive and active transport.
+2. **Cell metabolism** — photosynthesis.
+3. **Cell metabolism** — cellular respiration.
+4. **Cell cycle and cell division** — cell cycle and division.
+5. **Invertebrate animals and comparison of their systems** — classification and characteristics of invertebrates.
+6. **Invertebrate animals and comparison of their systems** — comparative systems of invertebrate animals.
+7. **Vertebrate animals and their systems** — vertebrate animals and their characteristics.
+8. **Vertebrate animals and their systems** — comparison of vertebrate systems.
+9. **Ecology: interactions between populations and biomes** — interactions between populations.
+10. **Ecology: interactions between populations and biomes** — biomes.
+
+**Counting correction:** The printed index actually labels the chapters as Chapter 1, 2, 3, then 4, 5, 6, 7, 8, 9, 10, 11 and 12. The contents index lines 107–135 show the 12 numbered chapter headings and summaries. The part headings are not additional chapters. The chapter topics above group the part-level headings with their respective chapters; chapter 1 includes microscopy and cell study, chapter 2 cell structure, chapter 3 transport, chapter 4 photosynthesis, chapter 5 cellular respiration, chapter 6 cell cycle/division, chapters 7–8 invertebrate classification/systems, chapters 9–10 vertebrate characteristics/systems, and chapters 11–12 ecology. **12 chapters counted.**
+
+## N. Chemistry — Grade 11, Dari, 1398 SH
+
+**Official Ministry PDF:** https://www.moe.gov.af/sites/default/files/2020-03/G11-Dr-Chemistry.pdf  
+**Metadata:** Grade 11; Chemistry; Dari; Ministry of Education; 1398 SH (PDF lines 0–44).  
+**Contents pages:** PDF lines 83–197.
+
+Eleven chapters, in printed order:
+
+1. **Concentration of solutions** — mixtures and solution components; solution formation and types; saturated, unsaturated and supersaturated solutions; solute–solvent interactions; ionic solutions; concentration.
+2. **Properties of solutions** — colligative properties; electrolyte and non-electrolyte solutions; strong and weak electrolytes.
+3. **Rates of chemical reactions** — reaction rate and measurement; rate equation and order; factors affecting reaction rate; temperature and Arrhenius equation; collision theory; catalysts and catalyst types.
+4. **Chemical equilibrium** — reversible reactions and equilibrium; law of mass action; Le Chatelier's principle; ionic equilibrium; common-ion effect; equilibrium calculations; industrial ammonia production.
+5. **Aqueous acid and base solutions** — definitions and properties of acids/bases; pH; acid strength; dissociation of weak acids; dissociation/ionisation constants.
+6. **Reactions of acids and bases** — acid–base reactions; neutralisation and salt formation; titration.
+7. **Production of electricity from chemical reactions** — conductors and non-conductors; electrochemical reactions; chemical cells; electromotive force; standard electrode potential; batteries; concentration effects on cell voltage.
+8. **Electrolysis** — electrolytic cells; molten sodium chloride electrolysis; aqueous electrolysis; electrolysis of sodium chloride and sulfuric acid solutions; electroplating/cathodic protection; Faraday's laws; purification/extraction/production of metals.
+9. **Metals** — extraction of metals; Group I metals; Group II alkaline-earth elements; Group III main-group elements; transition metals.
+10. **Non-metals** — properties of non-metallic elements; Group VII, VIA, VA and IVA elements.
+11. **Metalloids** — properties and structure of metalloids; boron and boron compounds; silicon.
+
+The book introduction says it contains eleven chapters (PDF lines 201–207), consistent with the contents index.
+
+## O. Physics — Grade 11, Dari, 1399 SH (metadata discrepancy retained)
+
+**Official Ministry PDF:** https://www.moe.gov.af/sites/default/files/2020-03/G11-Dr-Physic.pdf  
+**Metadata discrepancy:** The cover text states 1399 SH (PDF lines 38–42), while the formal bibliographic metadata block states 1399 SH (lines 46–55); no conflicting year appears in those extracted lines. The contents page is explicit about Grade 11. Record as 1399 SH.
+**Contents pages:** PDF lines 90–161.
+
+Eight chapters, in printed order:
+
+1. **Mechanical equilibrium** — force as a vector; concurrent and non-concurrent forces; equilibrium of a particle; torque; parallel forces; couples; general equilibrium conditions.
+2. **One-dimensional motion** — position and displacement; average speed; position–time graph; acceleration; velocity–time graph; uniform motion; free fall.
+3. **Two-dimensional motion** — displacement and average velocity; average and instantaneous acceleration; projectile motion; oblique projection; circular motion; uniform circular motion and centripetal acceleration.
+4. **Newton's laws of motion** — first, second and third laws; applications; friction; Newton's law of gravitation; lifting/elevator applications; circular orbits of artificial satellites.
+5. **Work, mechanical energy and power** — work and kinetic energy; work done by a spring; conservative and non-conservative forces; conservation of mechanical energy; power.
+6. **Linear momentum and impulse** — rectilinear motion and impulse; momentum; force and momentum; impulse and conservation of linear momentum; elastic and inelastic collisions; centre of gravity.
+7. **Fluid statics** — fluids and fluid pressure; measuring liquid pressure; atmospheric pressure; pressure in enclosed fluids; pressure transmission/hydraulic press; Archimedes' principle.
+8. **Fluid dynamics / ideal fluids** — continuity equation; Bernoulli equation and applications; Venturi tube and flow-speed measurement; atomiser and aircraft wings/lift; viscosity and viscous effects; turbulent flow.
+
+The English working translation of the printed eighth chapter heading is cautious because the PDF's Dari typography/OCR is degraded, but the listed subtopics clearly concern fluid dynamics and ideal-fluid flow.
+
+## P. Mathematics — Grade 11, Dari, 1398 SH: source located, contents transcription deferred
+
+**Official Ministry PDF:** https://www.moe.gov.af/sites/default/files/2020-03/G11-Dr-Math.pdf  
+The PDF was opened and its book-details page confirms Grade 11, Dari and 1398 SH (PDF lines 47–121). The contents/index pages are present at PDF lines 275 onward, but text extraction is severely character-corrupted (encoding/OCR), making reliable chapter-title transcription from the extracted text unsafe. It is therefore **not counted as an inspected contents-page transcription** in this ledger until the page image can be visually checked or a clean text layer is available. The source is located and opened; no chapter count is asserted here.
+
+## Updated Afghanistan cumulative totals
+
+- Grade 7: 4 actual contents pages; 27 chapters.
+- Grade 8: 4 actual contents pages; 30 chapters.
+- Grade 9 general-school books: 4 contents pages; 26 chapters.
+- Grade 9 religious-school integrated Science: 1 contents page; 11 chapters.
+- Grade 10: 4 contents pages; 36 chapters.
+- Grade 11 Biology, Chemistry and Physics: 3 contents pages; 31 chapters.
+- **Cumulative:** **20 actual textbook contents pages; 161 chapters transcribed.**
+- Grade 11 Mathematics Dari PDF located/opened; contents-page transcription deferred due to corrupt text extraction; not counted.
+- Grade 9 Biology Pashto parallel edition located and metadata inspected; contents not transcribed and not counted.
+- Grade 9 Mathematics Dari contents not inspected.
+- Complete official grade-by-grade syllabus topic sequences independently transcribed: **0**. All counted sequences above come from actual textbook contents pages.
+- Current adoption status of the 1398–1399 SH books in November 2026 remains unverified.
+- Remaining Afghanistan work: visually inspect Grade 11 Mathematics contents page; Grade 12 textbooks; current official grade-level syllabus documents and syllabus sequence extraction; verify current editions/adoption.
+- Other nine countries in the first ten remain pending document-level extraction.
+- Canonical country register unchanged.
