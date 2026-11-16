@@ -114,3 +114,15 @@ export const countryCurriculumVerification = {
   },
   overallStatus: "Official programme architecture, basic-education structure and 2026 curriculum-reform milestone verified; detailed grade-by-grade content extraction, pathway reconciliation and textbook chapter counts remain pending."
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Democratic Republic of the Congo",
+  gradeSequenceEvidence: "The official national programmes portal groups the Science Learning Domain into Mathematics, SVT and Physical Sciences/Technology/ICT. Programme matrices and guides are arranged by year beginning at 7e basic education (1ère secondaire), and give essential knowledge, situations and competencies. This integrated structure must be preserved.",
+  textbookEvidence: "Official programme portal identified; textbook chapter contents/counts not inspected.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://edu-nc.gouv.cd/programmes-nationaux",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology or integrated Life Science, Chemistry, Physics and Mathematics. Then inspect adopted student textbooks and record printed chapter titles and counts separately; do not infer chapters from standards or themes."
+};
