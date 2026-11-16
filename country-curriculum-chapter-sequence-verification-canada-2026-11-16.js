@@ -155,4 +155,15 @@ export default {
     longFormCbeNexusChaptersWritten: 0,
     status: "COUNTRY GOVERNANCE MAP CREATED — create and verify separate curriculum sequence records for each province and territory."
   }
+
+  evidenceRefresh_2026_11_16: {
+  "status": "13 provincial/territorial jurisdictions retained; no national sequence or chapter count asserted",
+  "sources": [
+    "https://www.cmec.ca/",
+    "https://www.curriculum.gov.bc.ca/curriculum/science",
+    "https://curriculum.gov.sk.ca/"
+  ],
+  "finding": "Maintain separate province/territory curriculum maps; the existing record correctly treats Canada as decentralized and separates integrated Science from senior specialist courses."
+},
+  textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish actual contents-page chapter sequence." }
 };
