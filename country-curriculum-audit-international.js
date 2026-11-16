@@ -23,11 +23,19 @@
  const ghanaScope={
   "Biology":{
    "SHS1to3BroadStrands":["Exploring Biology in Society","Life in the Fundamental Unit","Diversity of Living Things and Their Environment","Systems of Life"],
-   "scopeNote":"Four recurring strands across SHS 1–3; sub-strands, content standards and learning indicators must be extracted by year before defining individual chapters."
+   "subStrands":["Biology as the Science of Life","Biology and Entrepreneurship","Cell Structure and Functions","Movement of Substances in Living Organisms","Living Organisms","Ecology","Diseases and Infections","Mammalian Systems","Plant Systems"],
+   "yearByYear":{"SHS1":{"Biology as the Science of Life":[4,4,5],"Biology and Entrepreneurship":[1,1,3],"Movement of Substances in Living Organisms":[1,1,3],"Living Organisms":[3,3,3],"Ecology":[5,5,7],"Diseases and Infections":[1,1,1],"Mammalian Systems":[1,1,2],"Plant Systems":[1,1,3],"totals":[17,17,27]},"SHS2":{"Biology as the Science of Life":[1,1,2],"Biology and Entrepreneurship":[1,1,2],"Cell Structure and Functions":[2,2,6],"Living Organisms":[3,4,6],"Ecology":[1,1,2],"Diseases and Infections":[1,1,2],"Mammalian Systems":[1,1,2],"Plant Systems":[1,1,2],"totals":[11,12,24]},"SHS3":{"Biology and Entrepreneurship":[1,1,4],"Cell Structure and Functions":[5,5,7],"Living Organisms":[1,1,2],"Ecology":[2,2,4],"Diseases and Infections":[1,1,2],"Mammalian Systems":[1,1,4],"Plant Systems":[1,1,4],"totals":[13,13,29]}},
+   "countFieldOrder":["contentStandards","learningOutcomes","learningIndicators"],
+   "overallTotals":{"contentStandards":41,"learningOutcomes":42,"learningIndicators":80},
+   "scopeNote":"Year-level sub-strand counts transcribed from the NaCCA Biology SHS 1–3 scope-and-sequence table."
   },
   "Physics":{
-   "SHS1to3BroadStrands":["Mechanics and Matter","Energy","Electric Field, Magnetic Field and Electronics","Atomic and Nuclear Physics"],
-   "scopeNote":"Four recurring strands across SHS 1–3; detailed year-level sub-strands and learning indicators remain to be transcribed."
+   "SHS1to3BroadStrands":["Mechanics and Matter","Energy","Electro-magnetism","Atomic and Nuclear Physics"],
+   "subStrands":["Introduction to Physics","Matter","Kinematics","Dynamics","Heat","Waves","Electrostatics and Direct Current","Magnetostatics and Alternating Current","Analogue Electronics, Electromagnetic Induction and Applications","Applications of Electronics","Atomic Physics","Nuclear Physics"],
+   "yearByYear":{"SHS1":{"Introduction to Physics":[2,2,8],"Matter":[1,1,2],"Kinematics":[1,1,3],"Dynamics":[2,2,6],"Heat":[1,1,4],"Waves":[3,3,10],"Electrostatics and Direct Current":[2,2,7],"Magnetostatics and Alternating Current":[1,1,3],"Analogue Electronics, Electromagnetic Induction and Applications":[3,3,9],"Atomic Physics":[1,1,2],"Nuclear Physics":[1,1,3],"totals":[18,18,57]},"SHS2":{"Introduction to Physics":[3,3,7],"Matter":[1,1,4],"Kinematics":[2,2,7],"Dynamics":[1,1,2],"Heat":[1,1,4],"Waves":[2,2,8],"Electrostatics and Direct Current":[2,2,9],"Magnetostatics and Alternating Current":[3,3,10],"Analogue Electronics, Electromagnetic Induction and Applications":[3,3,9],"Atomic Physics":[1,1,3],"Nuclear Physics":[1,1,3],"totals":[20,20,66]},"SHS3":{"Introduction to Physics":[3,3,13],"Kinematics":[1,1,4],"Dynamics":[1,1,3],"Heat":[1,1,3],"Waves":[2,2,6],"Electrostatics and Direct Current":[3,3,7],"Magnetostatics and Alternating Current":[2,2,6],"Analogue Electronics, Electromagnetic Induction and Applications":[3,3,9],"Applications of Electronics":[3,3,7],"Atomic Physics":[1,1,4],"Nuclear Physics":[1,1,3],"totals":[21,21,65]}},
+   "countFieldOrder":["contentStandards","learningOutcomes","learningIndicators"],
+   "overallTotals":{"contentStandards":59,"learningOutcomes":59,"learningIndicators":188},
+   "scopeNote":"Year-level sub-strand counts transcribed from the NaCCA Physics SHS 1–3 scope-and-sequence table."
   },
   "Mathematics":{
    "SHS1to3BroadStrands":["Numbers for Everyday Life","Algebraic Thinking","Geometry Around Us","Making Sense of and Using Data"],
@@ -89,7 +97,7 @@
   ]
  };
  const sourceText={
-  Ghana:"NaCCA Senior High School curriculum (September 2023). Official separate Biology, Chemistry, Physics and Mathematics curriculum documents cover SHS 1–3. Broad subject strands are recorded. Chemistry now includes year-by-year sub-strands and official scope-and-sequence counts; its individual learning indicators still need transcription. Other subjects remain at strand-level scope until their year-level tables and indicators are extracted. This is not yet a complete chapter register.",
+  Ghana:"NaCCA Senior High School curriculum (September 2023). Official separate Biology, Chemistry, Physics and Mathematics curriculum documents cover SHS 1–3. Biology and Physics now include year-by-year sub-strands and scope-and-sequence counts; Chemistry also has year-level sub-strand counts. Their full learning-indicator statements still need transcription and mapping to lessons. Mathematics remains at strand-level scope until its full year-level table is captured. This is not yet a complete chapter register.",
    Nigeria:"NERDC New Revised Senior Secondary Education Curriculum (2025 implementation cycle). The national portal separates SSS 1, SSS 2 and SSS 3; the science offering includes Biology, Chemistry and Physics, with General Mathematics as a core subject. Each subject and year must be mapped from its own current curriculum document; older topic lists must not be assumed current.",
   Uganda:"NCDC curriculum framework and subject syllabi. Lower Secondary runs Senior 1–4 and includes Mathematics, Biology, Chemistry and Physics as separate subjects; General Science is an alternative for some learners with special educational needs. Advanced Secondary has separate aligned syllabi, so level must be identified before topics are mapped.",
   Tanzania:"Tanzania Institute of Education (TIE) publishes separate Ordinary Secondary Education syllabi for Forms I–IV and Advanced Secondary Education syllabi for Forms V–VI. Subject and level must be matched to the correct current syllabus; never substitute an Advanced Form V–VI sequence for Ordinary Form I.",
@@ -108,7 +116,7 @@
    record.assessmentContext="WASSCE subject combinations follow NaCCA's current secondary subject-combination guidelines; school subject offering and learner combination can vary.";
    record.curriculumAuditStatus="official-documents-and-strand-scope-identified-substrand-indicator-audit-pending";
   }
-  record.curriculumAuditStatus=country==="Ghana"?"official-documents-and-chemistry-year-level-scope-counts-recorded-detailed-indicator-mapping-pending":"official-source-identified-sequence-audit-pending";
+  record.curriculumAuditStatus=country==="Ghana"?"official-documents-and-biology-chemistry-physics-year-level-scope-counts-recorded-indicator-mapping-pending":"official-source-identified-sequence-audit-pending";
   record.verifiedCurriculumSequence=verified;
   record.notice=(sourceText[country]||"Official curriculum sequence audit pending.")+
    " Existing generic starter lessons are explicitly labelled SUPPLEMENTARY until their exact position and scope are verified. They are not presented as the national syllabus.";
