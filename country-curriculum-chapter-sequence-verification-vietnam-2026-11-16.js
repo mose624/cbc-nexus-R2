@@ -43,6 +43,16 @@ export const countryCurriculumVerification = {
   "sources": [
     "Official national Ministry / curriculum authority source not yet retrieved; verify before asserting detailed grade sequence"
   ],
+  "reconciliation": {
+    "batch": "173-192",
+    "status": "integrated-lower-secondary-structure-identified",
+    "evidenceSummary": "2018 General Education Programme uses integrated Natural Sciences in Grades 6–9, with Physics, Chemistry and Biology strands within the subject; Grade 10–12 separate subject programmes. Mathematics is separate. A local official school plan confirms 6–9 annual time allocations by strand, but it is not a national textbook contents list.",
+    "officialDocuments": ["https://storage-vnportal.vnpt.vn/qnm-ubnd/5968/banner/KEHOACHNHATRUONG/KEHOACHCACHOATDONG/24-%20KH%20GI%C3%81O%20D%E1%BB%A4C%20NH%C3%80%20TR%C6%AF%E1%BB%9CNG%2025-26.pdf"],
+    "gradeByGradeSequenceVerified": false,
+    "actualTextbookContentsInspected": false,
+    "officialTextbookChapterCountsVerified": false,
+    "nextAction": "Extract grade/year/term topic headings from current official programme documents; inspect actual approved learner-textbook contents pages; map every book chapter to the official topic sequence and record discrepancies."
+  },
   "completion": {
     "gradeByGradeTopicSequenceVerified": false,
     "officialTextbookChapterCountsVerified": false,
