@@ -133,3 +133,16 @@ export const countryCurriculumVerification = {
   "cbEnexusLongFormChaptersWritten": false
 },
 };
+
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Bosnia and Herzegovina",
+  gradeSequenceEvidence: "The Framework Law requires a common core, but actual school curricula are adopted by Republika Srpska, ten Federation cantons and Brčko District; 12 jurisdictional maps are needed.",
+  textbookEvidence: "National common-core law is not a textbook catalogue; books and contents require jurisdiction-specific inspection.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://aposo.gov.ba/sadrzaj/uploads/Framework-Law.pdf",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology (or integrated Life Science), Chemistry, Physics and Mathematics; then open approved/adopted student textbooks and record exact printed chapter headings and counts separately. Do not infer textbook chapters from syllabus themes."
+};
