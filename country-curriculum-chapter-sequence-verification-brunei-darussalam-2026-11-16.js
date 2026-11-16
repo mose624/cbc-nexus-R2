@@ -109,3 +109,15 @@ export const countryCurriculumVerification = {
 },
   textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish actual contents-page chapter sequence." }
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Brunei Darussalam",
+  gradeSequenceEvidence: "SPN21 places Mathematics and Science in core subjects in Years 7–8; Years 9–10 include Science and separate Physics/Chemistry/Biology options, alongside combined science pathways.",
+  textbookEvidence: "Official SPN21 framework is a pathway/subject map, not a textbook chapter inspection.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://planipolis.iiep.unesco.org/sites/default/files/ressources/brunei_darussalam_spn21english.pdf",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology (or integrated Life Science), Chemistry, Physics and Mathematics; then open approved/adopted student textbooks and record exact printed chapter headings and counts separately. Do not infer textbook chapters from syllabus themes."
+};
