@@ -553,22 +553,48 @@ export const chapterSequenceVerificationBatch01 = {
     },
     country: "Andorra",
       sourceMapBatch: 2,
-      levelReviewed: "Second education and General Baccalaureate; integrated lower-secondary sciences must remain integrated",
-      authority: "Government of Andorra, Ministry responsible for Education and Universities",
-      language: "Catalan, Spanish and French are vehicular languages in compulsory education; programme/school-specific language must be captured.",
-      examPathway: "Andorran school-system and General Baccalaureate pathways; do not substitute Spanish or French national sequences.",
-      officialSources: ["https://www.govern.ad/en/ministeris-i-secretaries-d-estat/ministeri-de-relacions-institucionals-educacio-i-universitats/convenis-i-normativa/legislacio-ordenament-curricular"],
-      curriculumStructure: "Official legislation lists Mathematics and Physical and Natural Sciences for second education, and individual Biology, Chemistry, Physics and Mathematics programmes for the General Baccalaureate. The exact syllabus PDF contents were not extracted in this pass.",
+      levelReviewed: "Andorran education system: Second Education (ages approximately 12–16; two two-year cycles) and General Batxillerat (two-year upper-secondary programme); do not merge with French, Spanish or IB systems",
+      authority: "Government of Andorra, Ministry responsible for Education and Universities; official Portal Educatiu and BOPA legislation",
+      language: "Catalan is the official/first vehicular language in the Andorran school; Spanish, French and English are also learned. General Batxillerat permits Catalan, Spanish and French as vehicular languages, with each centre determining the language of instruction by subject.",
+      examPathway: "Andorran Second Education followed by General Batxillerat. Batxillerat science subjects are selectable pathways/options, including Biology, Chemistry, Physics, scientific-technical Mathematics and applied Mathematics for social sciences. International Baccalaureate equivalents are explicitly identified separately.",
+      officialSources: [
+        "https://www.govern.ad/en/ministeris-i-secretaries-d-estat/ministeri-de-relacions-institucionals-educacio-i-universitats/convenis-i-normativa/legislacio-ordenament-curricular",
+        "https://portaleducatiu.ad/documentacio-oficial/programes-marcs-referencia",
+        "https://www.govern.ad/en/tematiques/educacio-formacio-investigacio-i-divulgacio-del-coneixement/estudiar-a-andorra/sistemes-educatius-a-andorra/sistema-educatiu-andorra/segona-ensenyança",
+        "https://bopa.mca.ad/text/reglament/2026-10-21/reglament-ordenament-nivell-batxillerat-general",
+        "https://portaleducatiu.ad/uploads/PROGRAMA_GV20220922_11_03_53.pdf",
+        "https://portaleducatiu.ad/uploads/PROGRAMA%20MATEMÀTIQUES%202A%20ENSENYANÇA%20EA_GD_2023_07_17_14_22_53.PDF",
+        "https://portaleducatiu.ad/uploads/bio.pdf",
+        "https://portaleducatiu.ad/uploads/quim.pdf",
+        "https://portaleducatiu.ad/uploads/PROGRAMA%20FÍSICA%204%20HORES_GD_2025_07_07_12_19_27.PDF",
+        "https://portaleducatiu.ad/uploads/mates%20cienti.pdf"
+      ],
+      curriculumStructure: "The official Andorran compulsory-education programme places Mathematics and Physical and Natural Sciences in Second Education; sciences are integrated and must not be split into separate Biology, Chemistry and Physics tracks for this stage. Second Education normally covers ages 12–16 in two cycles of two academic years. The retrieved integrated science programme organizes learning into six interdisciplinary science/technology/society themes: universe and Earth; energy and sustainability; materials and environment; genetic revolution; origin/diversity of life; health and wellbeing. The Second Education Mathematics programme has five resource blocks: numbers, relations and operations; space and form; measurement; algebra and functions; statistics and probability. For General Batxillerat, separate Biology, Chemistry, Physics and Mathematics programmes exist. The current General Batxillerat regulation is dated 21 October 2026; the subject programmes are separately published official programme documents. The General Batxillerat subject programmes are resource-block/competency frameworks across the two-year stage, not a prescribed linear textbook chapter order. The eight Chemistry blocks and six Physics blocks must not be represented as grade-specific chapter counts. Scientific-technical Mathematics and applied Mathematics for social sciences are distinct pathways.",
       subjects: {
-        Biology: { officialName: "Biologia", sourceStatus: "official-baccalaureate-programme-listed", sequenceStatus: "programme-document-extraction-pending; not a separate lower-secondary subject assumption", syllabusThemes: [], chapterCount: null },
-        Chemistry: { officialName: "Química", sourceStatus: "official-baccalaureate-programme-listed", sequenceStatus: "programme-document-extraction-pending; not a separate lower-secondary subject assumption", syllabusThemes: [], chapterCount: null },
-        Physics: { officialName: "Física", sourceStatus: "official-baccalaureate-programme-listed", sequenceStatus: "programme-document-extraction-pending; lower-secondary integrated sciences retained", syllabusThemes: [], chapterCount: null },
-        Mathematics: { officialName: "Matemàtiques", sourceStatus: "official-second-education-and-baccalaureate-programme-listed", sequenceStatus: "programme-document-extraction-pending", syllabusThemes: [], chapterCount: null }
+        Biology: { officialName: "Biologia", sourceStatus: "official-General-Batxillerat-programme-PDF-opened", sequenceStatus: "four-official-resource-blocks-transcribed; two-year-programme; not-linear-chapter-order", syllabusThemes: ["Biodiversity: ecosystem biotic/abiotic components, interactions, adaptation, evolution and conservation", "Cells and organisms: cell structure and function, prokaryotic/eukaryotic cells, organelles, enzymes, cellular metabolism, photosynthesis, respiration and multicellular organisation", "Heredity and continuity of life: DNA, genes, mitosis, gene expression, inheritance patterns, genetic variation and biotechnology", "Homeostasis: nervous and hormonal coordination, internal regulation, water balance, responses to environmental change, pathogens, immunity and health"], chapterCount: null, note: "Four resource blocks apply across the General Batxillerat programme. They are not official chapter titles or grade-by-grade sequence." },
+        Chemistry: { officialName: "Química", sourceStatus: "official-General-Batxillerat-programme-PDF-opened", sequenceStatus: "eight-official-resource-blocks-transcribed; two-year-programme; not-linear-chapter-order", syllabusThemes: ["Atomic-molecular model of matter: substances, atoms, molecules, ions, formulae, mole, molar mass, states of matter, gases, solutions and concentration", "Atomic models and chemical bonding", "Chemical reactions: acid-base reactions and redox reactions", "Carbon compounds", "Reaction energy and spontaneity", "Chemical equilibrium and acid-base equilibrium", "Reaction rates and kinetics", "Electrochemistry"], chapterCount: null, note: "The official programme explicitly states that the eight blocks cover both years and teachers may draw on blocks in planning first- and second-year learning units." },
+        Physics: { officialName: "Física (4 hores setmanals)", sourceStatus: "official-General-Batxillerat-2025-programme-PDF-opened", sequenceStatus: "six-official-resource-blocks-transcribed; two-year-programme; not-linear-chapter-order", syllabusThemes: ["Study of light, sound and waves: geometrical optics, reflection, refraction, lenses, vision, wave properties, sound and electromagnetic spectrum", "Study of motion: kinematics, uniform and accelerated motion, circular motion and complex motion", "Study of mechanical interactions: forces, dynamics and gravitational field", "Study of energy: work, energy transfer, conservation and dissipation; mechanical and thermodynamic perspectives", "Study of electromagnetic interactions: electric and magnetic fields and electromagnetic phenomena", "Modern physics: nuclear physics, radioactivity, fission/fusion, relativity and quantum physics"], chapterCount: null, note: "This is the four-hours-per-week General Batxillerat Physics programme. A separate two-hours-per-week Physics programme also exists and must be audited as a separate pathway." },
+        Mathematics: { officialName: "Matemàtiques cientificotècniques; separate Matemàtiques aplicades a les ciències socials option", sourceStatus: "official-General-Batxillerat-2025-scientific-technical-programme-PDF-opened; applied-social programme listed officially but not yet extracted", sequenceStatus: "four-official-resource-blocks-transcribed-for-scientific-technical-pathway; two-year-programme; applied-social pathway extraction pending", syllabusThemes: ["Numbers: real and irrational numbers, numerical operations, polynomials, sequences, limits and arithmetic/geometric progressions", "Geometry and linear algebra", "Calculus: functions, change and calculus methods", "Statistics and probability"], chapterCount: null, note: "The four blocks belong to the scientific-technical Mathematics programme and cover the Batxillerat stage. Do not apply this sequence to the distinct applied Mathematics for social sciences or IB Mathematics programmes without separate extraction." }
       },
-      status: "official-programme-structure-verified; chapter sequence extraction pending"
+      secondEducationIntegratedScience: {
+        officialName: "Ciències físiques i de la natura",
+        sourceStatus: "official-Second-Education-integrated-programme-PDF-opened",
+        sequenceStatus: "six-interdisciplinary-resource-blocks-transcribed; first- and second-cycle progressions explicitly distinguished",
+        syllabusThemes: ["The universe and Earth: universe, Solar System, Earth dynamics, geological processes and physical motion/forces", "Energy and sustainability: energy needs, environmental costs and new energy sources", "Materials and the environment: materials, substances, chemical reactions, production/use and environmental impact", "The genetic revolution: reproduction, genetics, biotechnology and their limits", "Origin and diversity of living things: classification, human origins, adaptation, interactions and evolution", "Living longer and living better: health, disease prevention and care"],
+        chapterCount: null,
+        note: "The programme expressly says the six blocks are interdisciplinary and not divided into isolated Physics, Chemistry, Biology and Geology subjects. Themes recur across both cycles with increasing complexity."
+      },
+      secondEducationMathematics: {
+        officialName: "Matemàtiques de segona ensenyança",
+        sourceStatus: "official-Second-Education-Mathematics-programme-PDF-opened",
+        sequenceStatus: "five-official-resource-blocks-transcribed; cross-block integration required",
+        syllabusThemes: ["Numbers, relations and operations", "Space and form", "Measurement", "Algebra and functions", "Statistics and probability"],
+        chapterCount: null,
+        note: "The official programme states these blocks organize resources across the level and do not require rigid independent teaching sequences."
+      },
+      status: "official Andorran Second Education and General Batxillerat programme documents retrieved; integrated lower-secondary science and five-block Mathematics mapped; upper-secondary Biology four blocks, Chemistry eight blocks, Physics six blocks and scientific-technical Mathematics four blocks recorded; separate two-hour Physics, applied-social Mathematics and IB pathways still require individual extraction; no official chapter counts asserted"
     },
-    {
-      country: "Angola",
+    country: "Angola",
       sourceMapBatch: 2,
       levelReviewed: "General Secondary I Cycle (Classes 7–9) and II Cycle (Classes 10–12)",
       authority: "Instituto Nacional de Avaliação e Desenvolvimento da Educação (INADE), Ministry of Education",
