@@ -43,6 +43,16 @@ export const countryCurriculumVerification = {
   "sources": [
     "https://meys.gov.tv/education/curriculum"
   ],
+  "reconciliation": {
+    "batch": "173-192",
+    "status": "source-retrieval-required",
+    "evidenceSummary": "National curriculum standards and current year-level syllabuses/textbook catalogues not retrieved. Need Ministry primary and secondary learning area documents; do not assign specialist Biology/Chemistry/Physics before syllabus evidence.",
+    "officialDocuments": [],
+    "gradeByGradeSequenceVerified": false,
+    "actualTextbookContentsInspected": false,
+    "officialTextbookChapterCountsVerified": false,
+    "nextAction": "Extract grade/year/term topic headings from current official programme documents; inspect actual approved learner-textbook contents pages; map every book chapter to the official topic sequence and record discrepancies."
+  },
   "completion": {
     "gradeByGradeTopicSequenceVerified": false,
     "officialTextbookChapterCountsVerified": false,
