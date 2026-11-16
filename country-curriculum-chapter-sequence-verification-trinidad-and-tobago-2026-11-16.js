@@ -44,6 +44,16 @@ export const countryCurriculumVerification = {
     "https://www.moe.gov.tt/curriculumguidesforsecondaryschool/",
     "https://www.moe.gov.tt/curriculum-guides/"
   ],
+  "reconciliation": {
+    "batch": "173-192",
+    "status": "official-subject-and-stage-guides-identified",
+    "evidenceSummary": "Ministry primary guides are organised by standard and include Mathematics and Science. Forms 1–3 have compulsory Integrated Science and Mathematics guides. Specialist CSEC/CAPE syllabus and textbook contents need separate mapping.",
+    "officialDocuments": ["https://www.moe.gov.tt/curriculum-guides/","https://www.moe.gov.tt/curriculumguidesforsecondaryschool/"],
+    "gradeByGradeSequenceVerified": false,
+    "actualTextbookContentsInspected": false,
+    "officialTextbookChapterCountsVerified": false,
+    "nextAction": "Extract grade/year/term topic headings from current official programme documents; inspect actual approved learner-textbook contents pages; map every book chapter to the official topic sequence and record discrepancies."
+  },
   "completion": {
     "gradeByGradeTopicSequenceVerified": false,
     "officialTextbookChapterCountsVerified": false,
