@@ -113,3 +113,15 @@ export const countryCurriculumVerification = {
   },
   overallStatus: "Current framework and 2026 transition status verified from official sources; detailed subject outcomes, school-level implementation and textbook chapter counts remain pending."
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Czechia",
+  gradeSequenceEvidence: "The current RVP ZV is the national framework for basic education, with subject areas and school-level ŠVP translating it into local programmes. Separate gymnasium and vocational frameworks apply in upper secondary. Extract current science and mathematics outcomes by stage and distinguish integrated natural science from specialist courses.",
+  textbookEvidence: "RVP framework is not a textbook contents list; no student textbook contents inspected.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://edu.gov.cz/dokumenty/rvp-ramcove-vzdelavaci-programy/rvp-zv-ramcovy-vzdelavaci-program-pro-zakladni-vzdelavani/",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology or integrated Life Science, Chemistry, Physics and Mathematics. Then inspect adopted student textbooks and record printed chapter titles and counts separately; do not infer chapters from standards or themes."
+};
