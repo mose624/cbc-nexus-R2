@@ -43,6 +43,16 @@ export const countryCurriculumVerification = {
   "sources": [
     "https://moe.gov.tl/en/national-curriculum/"
   ],
+  "reconciliation": {
+    "batch": "173-192",
+    "status": "framework-and-stage-structure-verified",
+    "evidenceSummary": "Official Ministry confirms basic cycle grades 1–4, 5–6, 7–9; Grades 10–12 general secondary has science/technology specialisation. Topic-by-topic science/math syllabus and actual learner-textbook contents still required.",
+    "officialDocuments": ["https://moe.gov.tl/en/national-curriculum/","https://moe.gov.tl/en/basic-school/"],
+    "gradeByGradeSequenceVerified": false,
+    "actualTextbookContentsInspected": false,
+    "officialTextbookChapterCountsVerified": false,
+    "nextAction": "Extract grade/year/term topic headings from current official programme documents; inspect actual approved learner-textbook contents pages; map every book chapter to the official topic sequence and record discrepancies."
+  },
   "completion": {
     "gradeByGradeTopicSequenceVerified": false,
     "officialTextbookChapterCountsVerified": false,
