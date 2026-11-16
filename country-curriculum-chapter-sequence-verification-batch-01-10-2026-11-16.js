@@ -32,12 +32,31 @@ export const chapterSequenceVerificationBatch01 = {
       ],
       curriculumStructure: "KICD's Grade 10 Pure Sciences area lists the senior-school design collection. The linked official files are Biology Grade 10, Chemistry Grade 10, Physics Grade 10 and Core Mathematics Grade 10 (July 2025). The web text extraction exposed the file titles but not the PDF contents in this audit.",
       subjects: {
-        Biology: { officialName: "Biology", sourceStatus: "official-grade-10-document-identified", sequenceStatus: "pdf-content-extraction-pending", syllabusThemes: [], chapterCount: null },
+        Biology: {
+          officialName: "Biology",
+          sourceStatus: "KICD-Grade-10-curriculum-design-content-opened",
+          sequenceStatus: "10-official-sub-strands-transcribed; one summary-table discrepancy flagged for source-page review",
+          chapterCount: 10,
+          chapters: [
+            { number: "1.1", title: "Introduction to Biology", strand: "Cell Biology and Biodiversity", suggestedLessons: 6, officialContent: ["Applications of Biology", "Fields of study and careers related to Biology"] },
+            { number: "1.2", title: "Specimen Collection and Preservation", strand: "Cell Biology and Biodiversity", suggestedLessons: 14, officialContent: ["Apparatus for collecting specimens", "Collecting, processing and preserving specimens", "Biological specimen collection and preservation project"], verificationNote: "The summary table labels 1.2 Scientific investigations in Biology, but the detailed syllabus pages label 1.2 Specimen Collection and Preservation. Use the detailed teaching pages and flag the inconsistency rather than silently choosing the summary label." },
+            { number: "1.3", title: "Cell Structure and Specialization", strand: "Cell Biology and Biodiversity", suggestedLessons: 20, officialContent: ["Microscopy and cell-size estimation", "Plant and animal cell structure", "Specialized cells and adaptations", "Levels of cell organization"] },
+            { number: "1.4", title: "Chemicals of Life", strand: "Cell Biology and Biodiversity", suggestedLessons: 24, officialContent: ["Carbohydrates, lipids, proteins and vitamins", "Enzymes and factors affecting enzyme activity", "Water and mineral salts", "Food tests and enzyme investigations"] },
+            { number: "2.1", title: "Plant Nutrition", strand: "Anatomy and Physiology of Plants", suggestedLessons: 12, officialContent: ["Plant nutrition"] },
+            { number: "2.2", title: "Transport in Plants", strand: "Anatomy and Physiology of Plants", suggestedLessons: 22, officialContent: ["Transport in plants"] },
+            { number: "2.3", title: "Gaseous Exchange and Respiration in Plants", strand: "Anatomy and Physiology of Plants", suggestedLessons: 22, officialContent: ["Gaseous exchange", "Respiration"] },
+            { number: "3.1", title: "Animal Nutrition", strand: "Anatomy and Physiology of Animals", suggestedLessons: 12, officialContent: ["Animal nutrition"] },
+            { number: "3.2", title: "Transport in Animals", strand: "Anatomy and Physiology of Animals", suggestedLessons: 24, officialContent: ["Transport in animals"] },
+            { number: "3.3", title: "Gaseous Exchange and Respiration in Animals", strand: "Anatomy and Physiology of Animals", suggestedLessons: 24, officialContent: ["Gaseous exchange", "Respiration"] }
+          ],
+          suggestedLessonTotal: 180,
+          note: "The chapter titles follow the KICD sub-strand structure. CBE Nexus can expand each sub-strand into detailed lessons and sections, but should not split it into extra curriculum chapters without a documented reason."
+        },
         Chemistry: { officialName: "Chemistry", sourceStatus: "official-grade-10-document-identified", sequenceStatus: "pdf-content-extraction-pending", syllabusThemes: [], chapterCount: null },
         Physics: { officialName: "Physics", sourceStatus: "official-grade-10-document-identified", sequenceStatus: "pdf-content-extraction-pending", syllabusThemes: [], chapterCount: null },
         Mathematics: { officialName: "Core Mathematics", sourceStatus: "official-grade-10-document-identified", sequenceStatus: "pdf-content-extraction-pending", syllabusThemes: [], chapterCount: null }
       },
-      status: "official-documents-identified; exact chapter sequences not yet verified"
+      status: "Biology Grade 10 has 10 official sub-strands transcribed; Chemistry, Physics and Core Mathematics chapter sequences still require full PDF extraction"
     },
     {
       country: "Ghana",
@@ -219,10 +238,10 @@ export const chapterSequenceVerificationBatch01 = {
     countriesReviewed: 10,
     subjectRecordsReviewed: 40,
     officialProgrammeDocumentsOpened: 8,
-    countriesWithAtLeastOneDetailedSyllabusSequenceTranscribed: 3,
+    countriesWithAtLeastOneDetailedSyllabusSequenceTranscribed: 4,
     countriesWithAllFourSubjectSequencesVerified: 0,
     countriesRequiringAdditionalOfficialDocumentRetrieval: ["Kenya", "Ghana", "Nigeria", "Uganda", "Tanzania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda"],
-    note: "This is a real 10-country source verification pass. It does not falsely mark all 40 subject sequences as complete. Albania has four Grade X theme sequences transcribed; Tanzania has a partial Biology sequence; Antigua and Barbuda has CXC syllabus section/module structures. Remaining topic extraction is outstanding."
+    note: "Kenya now has 10 Grade 10 Biology sub-strands transcribed from the KICD curriculum design. Albania has four Grade X theme sequences transcribed; Tanzania has a partial Biology sequence; Antigua and Barbuda has CXC syllabus section/module structures. The other Kenya subjects and the remaining country sequences still need exact document extraction. This does not falsely mark all 40 subject sequences as complete."
   },
   qualityRules: {
     neverInventChapterTitlesOrCounts: true,
