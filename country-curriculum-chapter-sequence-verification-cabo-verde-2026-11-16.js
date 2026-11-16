@@ -108,4 +108,11 @@ export const countryCurriculumVerification = {
     subjectRecordsWithDetailedGradeByGradeSequenceReconciled: 0,
     claimOf10000WordChapters: false
   }
+  evidenceRefresh_2026_11_16: {
+  "status": "existing country source map retained; official grade/topic documents and actual textbook contents still require direct extraction",
+  "finding": "This refresh does not assert a new verified topic sequence or official textbook chapter count. Preserve jurisdiction, language, pathway and integrated-science distinctions already documented.",
+  "actualTextbookContentsInspected": false,
+  "officialTextbookChapterCountsVerified": false,
+  "cbEnexusLongFormChaptersWritten": false
+},
 };
