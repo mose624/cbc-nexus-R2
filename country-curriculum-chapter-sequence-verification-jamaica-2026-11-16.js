@@ -48,3 +48,5 @@ export const countryCurriculumVerification = {
     "Author and verify CBE Nexus chapters only after sequence validation."
   ]
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Jamaica", gradeSequenceEvidence: "The National Standards Curriculum structures primary and lower-secondary learning; CSEC/CAPE subject syllabuses shape upper-secondary Biology, Chemistry, Physics and Mathematics. Keep national curriculum and CXC examination syllabuses as distinct layers.", textbookEvidence: "No actual student textbook contents inspected; CXC syllabus topics are not textbook chapter counts.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "https://moey.gov.jm/curriculum/", nextRequiredWork: "Extract the official grade/year/term sequence for Mathematics and integrated or specialist sciences from the current national documents; inspect actual approved/adopted student textbook contents pages and record exact chapter titles and counts separately." };
