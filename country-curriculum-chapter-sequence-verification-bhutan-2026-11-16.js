@@ -98,4 +98,14 @@ export const countryCurriculumVerification = {
     subjectRecordsWithDetailedChapterSequenceReconciled: 0,
     claimOf10000WordChapters: false
   }
+
+  evidenceRefresh_2026_11_16: {
+  "status": "2025 Science Curriculum Framework confirmed; subject sequence extraction pending",
+  "sources": [
+    "https://rec.gov.bt/curriculum-frameworks/",
+    "https://www.sce.edu.bt/wp-content/uploads/2025/03/Status-of-STEM-Education.pdf"
+  ],
+  "finding": "Department of School Education lists a Science Curriculum Framework 2025. Older STEM report describes integrated Science strands in PP–VIII and separate Physics, Chemistry, Biology and Mathematics in IX–X; confirm against 2025 framework before treating as current sequence."
+},
+  textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish the actual contents-page chapter sequence. Do not invent counts." }
 };
