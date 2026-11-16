@@ -58,3 +58,5 @@ export const countryCurriculumVerification = {
     ]
   }
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Monaco", gradeSequenceEvidence: "French-language national education structure follows Monaco's own official programmes and school administration; French national programmes may be a reference but must not be assumed identical without Monaco-specific validation. Extract grade-level science and Mathematics programmes.", textbookEvidence: "No Monaco-approved student textbook contents or chapter counts inspected.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "Official Monaco education authority curriculum retrieval outstanding.", nextRequiredWork: "Extract current official grade/year/term learning outcomes and topic sequences for Mathematics and integrated or specialist sciences. Open approved/adopted student textbook PDFs and contents pages; record exact edition, grade, chapter titles and chapter counts separately. Do not infer textbook chapters from curriculum topics." };
