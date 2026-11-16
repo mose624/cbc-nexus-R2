@@ -9,6 +9,27 @@
   "Uganda":["Senior 1","Lower Secondary","NCDC"],
   "Tanzania":["Form I","Ordinary Secondary","TIE"],
   "South Africa":["Grade 10","CAPS FET","DBE"]
+ ,
+  "Algeria":["1AS","Algerian secondary education curriculum","Ministry of National Education"],
+  "Angola":["10ª Classe","National secondary education curriculum","Ministry of Education"],
+  "Benin":["Seconde","National secondary education curriculum","Ministry of Secondary, Technical Education and Vocational Training"],
+  "Botswana":["Form 4","Senior secondary curriculum","Ministry of Education and Skills Development"],
+  "Burkina Faso":["Seconde","National secondary education curriculum","Ministry of National Education"],
+  "Burundi":["Second cycle secondary","National post-basic secondary curriculum","Ministry of Education"],
+  "Cabo Verde":["10º Ano","National secondary education curriculum","Ministry of Education"],
+  "Cameroon":["Form 5 / Seconde","National secondary curriculum (English and French pathways)","Ministry of Secondary Education"],
+  "Central African Republic":["Seconde","National secondary education curriculum","Ministry of National Education"],
+  "Chad":["Seconde","National secondary education curriculum","Ministry of National Education"],
+  "Comoros":["Seconde","National secondary education curriculum","Ministry of Education"],
+  "Republic of the Congo":["Seconde","National secondary education curriculum","Ministry of Primary, Secondary and Literacy Education"],
+  "Côte d’Ivoire":["Seconde","National secondary education curriculum","Ministry of National Education and Literacy"],
+  "Djibouti":["Seconde","National secondary education curriculum","Ministry of National Education and Vocational Training"],
+  "Democratic Republic of the Congo":["3ème secondaire","National secondary education curriculum","Ministry of Education"],
+  "Egypt":["Grade 10","Egyptian national secondary education curriculum","Ministry of Education and Technical Education"],
+  "Equatorial Guinea":["Bachillerato","National secondary education curriculum","Ministry of Education"],
+  "Eritrea":["Secondary cycle","National secondary education curriculum","Ministry of Education"],
+  "Eswatini":["Form 4","National senior secondary curriculum","Ministry of Education and Training"],
+  "Ethiopia":["Grade 9","General secondary education curriculum","Ministry of Education"]
  };
  const topics={
  Mathematics:[
