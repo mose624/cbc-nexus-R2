@@ -49,3 +49,5 @@ export const countryCurriculumVerification = {
     "Author and verify CBE Nexus chapters only after sequence validation."
   ]
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Israel", gradeSequenceEvidence: "Ministry curriculum uses integrated Science and Technology in elementary and middle school; upper-secondary Biology, Chemistry and Physics are specialist study options. Extract official grade and study-unit specifications by sector and language stream.", textbookEvidence: "No actual textbook contents or official chapter counts inspected; school-sector and language differences need representation.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "Official Ministry of Education curriculum portal retrieval outstanding.", nextRequiredWork: "Extract the official grade/year/term sequence for Mathematics and integrated or specialist sciences from the current national documents; inspect actual approved/adopted student textbook contents pages and record exact chapter titles and counts separately." };
