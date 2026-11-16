@@ -117,3 +117,15 @@ export const countryCurriculumVerification = {
   },
   overallStatus: "Official programme portals and education structure identified; current programme files must be retrieved and reconciled grade by grade before topic sequences or textbook chapter counts can be certified."
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Cuba",
+  gradeSequenceEvidence: "MINED curriculum is organised through primary Grades 1–6, lower-secondary 7–9 and pre-university 10–12. Specialist science and mathematics sequences vary by stage and technical/pre-university pathways; obtain current programme documents before claiming exact topic order.",
+  textbookEvidence: "No actual textbook contents inspected; official programme and book editions need verification.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.mined.gob.cu/",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology or integrated Life Science, Chemistry, Physics and Mathematics. Then inspect adopted student textbooks and record printed chapter titles and counts separately; do not infer chapters from standards or themes."
+};
