@@ -49,3 +49,5 @@ export const countryCurriculumVerification = {
     "Author and verify CBE Nexus chapters only after sequence validation."
   ]
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Japan", gradeSequenceEvidence: "MEXT Courses of Study set national standards. Elementary and lower-secondary Science are integrated; upper-secondary subjects branch into Biology, Chemistry, Physics and related options, alongside Mathematics. Use current MEXT revisions and implementation schedules.", textbookEvidence: "Ministry-approved textbooks are used, but actual contents pages and book-specific chapter counts were not inspected.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "Official MEXT Courses of Study portal retrieval outstanding.", nextRequiredWork: "Extract the official grade/year/term sequence for Mathematics and integrated or specialist sciences from current national documents; inspect actual approved/adopted student textbook contents pages and record exact chapter titles and counts separately." };
