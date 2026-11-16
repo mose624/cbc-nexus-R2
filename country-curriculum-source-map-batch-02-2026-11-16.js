@@ -9,6 +9,8 @@
  const batch={
   schemaVersion:"1.0",
   auditedAt:"2026-11-16",
+  chapterVerificationAudit:"country-curriculum-chapter-sequence-verification-batch-01-10-2026-11-16.js",
+  chapterVerificationScope:"first 10 countries across source-map batches 01 and 02; per-subject completion status is recorded in the linked audit",
   countries:[
    {
     country:"Albania",
