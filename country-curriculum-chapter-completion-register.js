@@ -37,6 +37,96 @@
  const normaliseStarter=function(s){let k=String(s).toLowerCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").replace(/&/g,"and").replace(/[^a-z0-9]/g,"");const a={"bruneidarussalam":"brunei","republicofthecongo":"congo","thegambia":"gambia","turkey":"turkiye"};return a[k]||k;};
  const extraFiles={"Kenya":["country-online-notes-data.js","country-online-notes-country-expansion.js"],"Rwanda":["country-online-notes-rwanda-reb.js"],"Tanzania":["country-online-notes-international-country-expansion.js"],"Uganda":["country-online-notes-international-country-expansion.js"]};
  countries.forEach(function(c){const has=starterSet.has(normaliseStarter(c.country));SUBJECTS.forEach(function(s){const v=c.subjects[s];v.platformInventory=has?{presence:"starter-unit-found",starterUnitCount:1,starterSectionCount:12,diagramCount:10,examQuestionCount:15,wordCount:null,wordTargetStatus:"not-measured; 10,000-word target not certified",curriculumSequenceStatus:"supplementary starter sequence; official national mapping pending"}:{presence:"separate-country-file-found; subject-level inventory pending",sourceFiles:extraFiles[c.country]||[],starterUnitCount:null,starterSectionCount:null,diagramCount:null,examQuestionCount:null,wordCount:null,wordTargetStatus:"not-measured",curriculumSequenceStatus:"requires subject-by-subject file audit"};});});
+
+ // First evidence-backed curriculum mapping batch (2026-11-16).
+ // Profiles identify official authorities and pathways; only publish chapter inventories
+ // where an actual syllabus/topic source has been inspected. Never infer chapter titles.
+ const mappedProfiles={
+  "Kenya":{
+   officialAuthority:"Kenya Institute of Curriculum Development (KICD)",
+   nationalAuthorityUrl:"https://kicd.ac.ke/",
+   officialCurriculumPortal:"https://kicd.ac.ke/cbc-materials/curriculum-designs/sne-curriculum-designs/pi-grade-10/",
+   levelMapped:"Senior School • Grade 10 • Pure Sciences pathway",
+   languageOfInstruction:"English and Kiswahili (school/subject implementation context; confirm individual design)",
+   assessmentAuthority:"Kenya National Examinations Council (KNEC)",
+   subjectSources:{
+    Biology:"https://drive.google.com/file/d/12NjkxPyQ4zrQ9OqMlMsdV1fgydQ_fV6n/preview",
+    Chemistry:"https://drive.google.com/file/d/1Y1QrF91zr4UT_Ag_Dgv5yTTD-T7WkTBm/preview",
+    Mathematics:"https://drive.google.com/file/d/18YmVEbur9jJn2c0_HbJmrc-eTUyNXdOX/preview",
+    Physics:"https://drive.google.com/file/d/1UiHdrEzfQX7e-L4WFycMfDYokm6TEC1S/preview"
+   },
+   mappingStatus:"official-grade-and-subject-designs-located; chapter-sequence-extraction-pending",
+   notes:"KICD lists Grade 10 Biology, Chemistry, Core Mathematics and Physics curriculum designs. These links are official design documents. Exact chapter/topic order must be extracted from the documents before marking subject chapter inventories verified."
+  },
+  "Afghanistan":{
+   officialAuthority:"Ministry of Education — Afghanistan",
+   nationalAuthorityUrl:"https://moe.gov.af/",
+   officialCurriculumUrl:"https://moe.gov.af/index.php/dr/کتب-نصاب-تعلیمی",
+   levelMapped:"Lower secondary • Grades 7–9 (documented pre-August 2021 textbook/curriculum set)",
+   languageOfInstruction:"Dari and Pashto; verify textbook/language by school",
+   mappingStatus:"historical-grade-topic-strands-extracted; current-status-and-chapter-sequence-verification-required",
+   evidenceUrl:"https://www.oise.utoronto.ca/site/sites/default/files/2025-07/Afghanistan_Science-Curriculum-Overview.pdf",
+   topicInventory:{
+    Biology:[
+     {grade:"7",topics:["Ecology","Cells","Life cycle","Cell structure"],status:"topic-list-extracted; not verified chapter titles"},
+     {grade:"8",topics:["Viruses, bacteria, algae and fungi","Plant groups and reproduction","Ecology and ecosystems","Animal groups, reproduction and classification","Vertebrates and invertebrates","Biodiversity"],status:"topic-list-extracted; not verified chapter titles"},
+     {grade:"9",topics:["Systems of the human body","Human health"],status:"topic-list-extracted; not verified chapter titles"}
+    ],
+    Chemistry:[
+     {grade:"7",topics:["Characteristics and types of substances","Parts of substances","Chemical changes and reactions","Important elements of life"],status:"topic-list-extracted; not verified chapter titles"},
+     {grade:"8",topics:["Atoms and electron orbitals","Periodic table","Chemical reactions","Acids and bases","Oxides","Chemical fertilizers","Salts"],status:"topic-list-extracted; not verified chapter titles"},
+     {grade:"9",topics:["Hydrocarbons","Chain reactions","Chemical reactions"],status:"topic-list-extracted; not verified chapter titles"}
+    ],
+    Physics:[
+     {grade:"7",topics:["Measurement","Force","Work","Energy","Power","Pressure","Light","Reflection and refraction","Mirrors"],status:"topic-list-extracted; not verified chapter titles"},
+     {grade:"8",topics:["Temperature","Work and temperature","Magnetism","Electricity","Power and vectors","Machines","Gravity"],status:"topic-list-extracted; not verified chapter titles"},
+     {grade:"9",topics:["Motion","Vibration and sound","Electric current","Measurement","Potential energy","Resistance","Electromagnetism"],status:"topic-list-extracted; not verified chapter titles"}
+    ],
+    Mathematics:[{grade:"6–9",topics:[],status:"separate grade-level mathematics curriculum documents identified; detailed strands not extracted in this batch"}]
+   },
+   notes:"The inspected overview describes textbooks published before August 2021 and explicitly reflects the pre-August-2021 curriculum. Do not present it as confirmation of current policy or current official chapter order."
+  },
+  "Australia":{
+   officialAuthority:"Australian Curriculum, Assessment and Reporting Authority (ACARA); state and territory curriculum/assessment authorities implement senior secondary courses",
+   nationalAuthorityUrl:"https://www.acara.edu.au/",
+   officialCurriculumUrl:"https://www.acara.edu.au/curriculum/senior-secondary",
+   levelMapped:"Foundation–Year 10 national curriculum; senior secondary Years 11–12 with state/territory implementation",
+   languageOfInstruction:"English (mainstream national curriculum; state and school exceptions may apply)",
+   mappingStatus:"national-framework-and-subject-pathways-identified; state-specific-course-sequence-required",
+   subjectSources:{
+    Biology:"https://v8.australiancurriculum.edu.au/senior-secondary-curriculum/science/biology/",
+    Chemistry:"https://v8.australiancurriculum.edu.au/senior-secondary-curriculum/science/chemistry/",
+    Physics:"https://v8.australiancurriculum.edu.au/senior-secondary-curriculum/science/physics/",
+    Mathematics:"https://v8.australiancurriculum.edu.au/senior-secondary-curriculum/mathematics/"
+   },
+   notes:"ACARA identifies senior-secondary Biology, Chemistry, Physics and four mathematics pathways (Essential Mathematics, General Mathematics, Mathematical Methods and Specialist Mathematics). State/territory authorities control course organisation, assessment and certification; select the jurisdiction before final chapter sequencing."
+  }
+ };
+ countries.forEach(function(c){
+  const p=mappedProfiles[c.country];if(!p)return;
+  c.curriculumProfile=p;
+  if(c.country==="Afghanistan"&&p.topicInventory){
+   Object.keys(p.topicInventory).forEach(function(s){
+    c.subjects[s].topicInventory=p.topicInventory[s];
+    c.subjects[s].officialAuthority=p.officialAuthority;
+    c.subjects[s].officialSyllabusUrl=p.evidenceUrl;
+    c.subjects[s].languageOfInstruction=p.languageOfInstruction;
+    c.subjects[s].status="curriculum-mapping-required";
+   });
+  }
+  if(c.country==="Kenya"){
+   ["Biology","Chemistry","Physics","Mathematics"].forEach(function(s){
+    const v=c.subjects[s];v.officialAuthority=p.officialAuthority;v.officialSyllabusUrl=p.subjectSources[s];v.examBoard=p.assessmentAuthority;v.languageOfInstruction=p.languageOfInstruction;
+    if(v.status!=="partial-chapter-inventory")v.status="curriculum-mapping-required";
+   });
+  }
+  if(c.country==="Australia"){
+   ["Biology","Chemistry","Physics","Mathematics"].forEach(function(s){
+    const v=c.subjects[s];v.officialAuthority=p.officialAuthority;v.officialSyllabusUrl=p.subjectSources[s];v.languageOfInstruction=p.languageOfInstruction;v.status="curriculum-mapping-required";
+   });
+  }
+ });
+
  root.CBE_CURRICULUM_COMPLETION_REGISTER={
   version:"2026-11-16-v2-country-reconciled",
   /* Canonicalise starter-file labels to the country names used by this register.
