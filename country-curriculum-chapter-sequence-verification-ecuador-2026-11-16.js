@@ -80,3 +80,15 @@ export const countryCurriculumVerification = {
   },
   "overallStatus": "Country record created with official-source leads and conservative subject mapping; full grade-by-grade programme extraction and textbook chapter verification remain pending."
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Ecuador",
+  gradeSequenceEvidence: "EGB uses integrated Ciencias Naturales and separate Mathematics; Bachillerato subdivides Natural Sciences into Biology, Physics and Chemistry. Extract the current national curriculum by sublevel and year; distinguish ordinary, technical and international pathways.",
+  textbookEvidence: "No actual textbook contents inspected; current Ministry textbook series must be opened by grade.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://educacion.gob.ec/curriculo/",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology or integrated Life Science, Chemistry, Physics and Mathematics. Then inspect adopted student textbooks and record printed chapter titles and counts separately; do not infer chapters from standards or themes."
+};
