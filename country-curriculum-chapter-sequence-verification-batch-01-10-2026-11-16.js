@@ -180,6 +180,250 @@ export const chapterSequenceVerificationBatch01 = {
         },
         Mathematics: {
           officialName: "Mathematics",
+          sourceStatus: "NaCCA-SHS-1-to-3-September-2023-scope-and-sequence-extracted",
+          sequenceStatus: "8-official-sub-strands-transcribed",
+          chapterCount: 8,
+          chapterStatus: "official-sub-strand-titles-transcribed-from-scope-and-sequence",
+          chapters: [
+            { number: 1, title: "Real Number and Numeration System", strand: "Numbers for Everyday Life", yearOccurrences: [1, 2] },
+            { number: 2, title: "Proportional Reasoning", strand: "Numbers for Everyday Life", yearOccurrences: [1, 2, 3] },
+            { number: 3, title: "Applications of Expressions, Equations and Inequalities", strand: "Algebraic Thinking", yearOccurrences: [1, 2] },
+            { number: 4, title: "Patterns and Relationships", strand: "Algebraic Thinking", yearOccurrences: [1, 2, 3] },
+            { number: 5, title: "Spatial Sense", strand: "Geometry Around Us", yearOccurrences: [1, 2, 3] },
+            { number: 6, title: "Measurement", strand: "Geometry Around Us", yearOccurrences: [1, 2, 3] },
+            { number: 7, title: "Statistical Reasoning and Its Application in Real Life", strand: "Making Sense of and Using Data", yearOccurrences: [1, 2, 3] },
+            { number: 8, title: "Chance", strand: "Making Sense of and Using Data", yearOccurrences: [1, 2, 3] }
+          ],
+          note: "The eight sub-strands are transcribed from NaCCA's SHS 1–3 scope-and-sequence summary. Year-level content standards, learning outcomes and indicators must be retained when generating lessons."
+        }
+      },
+      status: "Biology 9 and Physics 17 distinct sub-strands, Mathematics 8 sub-strands transcribed; Chemistry PDF retrieval and sequence extraction pending"
+    },
+    {
+      country: "Nigeria",
+      sourceMapBatch: 1,
+      levelReviewed: "Revised Senior Secondary Curriculum, SSS 1–3; October 2025 subject documents",
+      authority: "Nigerian Educational Research and Development Council (NERDC)",
+      language: "English",
+      examPathway: "WAEC/NECO; assessment alignment must be checked against the current revised curriculum.",
+      officialSources: [
+        "https://www.nerdc.gov.ng/content_manager/new_senior_curriculum_home.html",
+        "https://lmis.nerdcportals.com.ng/s1_science",
+        "https://lmis.nerdcportals.com.ng/s1_core",
+        "https://lmis.nerdcportals.com.ng/s2_science",
+        "https://lmis.nerdcportals.com.ng/s2_core",
+        "https://lmis.nerdcportals.com.ng/sss_1/necurrdc/viewer.html?file=6.pdf"
+      ],
+      curriculumStructure: "The October 2025 revised Senior Secondary Curriculum is organised by SSS 1, SSS 2 and SSS 3. NERDC's SSS 1 science portal lists Biology, Chemistry and Physics; its core portal lists General Mathematics. SSS 2 portals confirm the same science/core subject groupings. The Biology SSS 1 viewer document is identified as the October 2025 revised curriculum, but its embedded viewer did not expose readable chapter contents in this audit. Do not use older e-Curriculum topics as substitutes for the revised 2025 sequence.",
+      subjects: {
+        Biology: {
+          officialName: "Biology",
+          sourceStatus: "October-2025-revised-SSS1-contents-and-focal-competencies-transcribed-from-reproduction",
+          sequenceStatus: "20-source-topic-records-reported; 19-normalized-curriculum-themes-captured; primary-NERDC-file-verification-pending",
+          chapterCount: null,
+          sourceTopicRecordCount: 20,
+          syllabusThemes: ["Biology and Scientific Enquiry", "Laboratory Safety, First Aid and Emergency Response", "Biological Laboratory Equipment and Microscopy", "ICT Tools and Ethical Use in Biology", "Biological Concepts and Characteristics of Living Organisms", "Organization of Life and Biochemical Processes", "Cell Structure, Cell Division, Diffusion and Osmosis", "Ecology and Ecological Factors", "Ecosystem Relationships, Food Chains, Food Webs and Biodiversity", "Agricultural Practices and Crop Yield Improvement", "Organic Manure and Soil Quality", "Pollution: Sources, Effects and Control", "Waste Management, Soil Erosion and Deforestation", "Scientific Misconceptions in Biology", "Bioethics and Biological Research", "Roles of Biology in Food Production, Healthcare and Conservation", "Research Collaboration, Project Work and Scientific Communication", "Microorganisms: Identification and Effects", "Human Diseases, Transmission, Prevention and Zoonoses"],
+          sourceDocument: "https://lmis.nerdcportals.com.ng/sss_1/necurrdc/viewer.html?file=6.pdf",
+          secondaryTranscription: "https://smartest.ng/syllabus/nerdc/ss1/biology/",
+          note: "SmarTest reports 20 source topic records, while the visible contents/focal-competency list contains repeated headings and 19 normalized theme groups. These are curriculum themes/competencies, not 19 confirmed standalone textbook chapters. Verify the original NERDC PDF before assigning chapter numbers."
+        },
+        Chemistry: {
+          officialName: "Chemistry",
+          sourceStatus: "October-2025-NERDC-SSS1-document-contents-transcribed-from-reproduced-copy; official-subject-listing-confirmed",
+          sequenceStatus: "18-SSS1-topics-transcribed-from-document-contents; primary-host-PDF-link-still-to-be-verified",
+          chapterStatus: "provisional-document-topic-sequence; not-yet-primary-source-verified",
+          syllabusThemes: [
+            "The chemical world",
+            "Chemistry and the environment",
+            "The chemistry of life",
+            "Chemistry and industry"
+          ],
+          chapterCount: 18,
+          chapters: [
+            { number: 1, title: "Introductory Concepts", theme: "The Chemical World", sourcePage: 1 },
+            { number: 2, title: "Chemical Industry", theme: "The Chemical World", sourcePage: 2 },
+            { number: 3, title: "Branches of Chemistry", theme: "The Chemical World", sourcePage: 3 },
+            { number: 4, title: "Standard Separation Techniques", theme: "The Chemical World", sourcePage: 4 },
+            { number: 5, title: "Chemical Hazards", theme: "The Chemical World", sourcePage: 5 },
+            { number: 6, title: "Laboratory Safety Rules and Guidelines", theme: "The Chemical World", sourcePage: 6 },
+            { number: 7, title: "Symbols, Formulae and Equations", theme: "The Chemical World", sourcePage: 7 },
+            { number: 8, title: "Elements, Compounds and Mixtures", theme: "The Chemical World", sourcePage: 8 },
+            { number: 9, title: "Particulate Nature of Matter", theme: "The Chemical World", sourcePage: 9 },
+            { number: 10, title: "Atomic Structure", theme: "The Chemical World", sourcePage: 10 },
+            { number: 11, title: "Chemical Combination", theme: "The Chemical World", sourcePage: 11 },
+            { number: 12, title: "Chemical Bonds", theme: "The Chemical World", sourcePage: 12 },
+            { number: 13, title: "Chemical Equilibrium", theme: "The Chemical World", sourcePage: 13 },
+            { number: 14, title: "Gas Laws", theme: "The Chemical World", sourcePage: 14 },
+            { number: 15, title: "Acids, Bases and Salts", theme: "The Chemical World", sourcePage: 15 },
+            { number: 16, title: "Water", theme: "Chemistry and the Environment", sourcePage: 17 },
+            { number: 17, title: "Carbon and its Compounds", theme: "The Chemistry of Life", sourcePage: 18 },
+            { number: 18, title: "Entrepreneurship in Chemistry", theme: "Chemistry and Industry", sourcePage: 19 }
+          ],
+          sourceDocument: "https://www.scribd.com/document/1074176739/Ss-1-Science-Chemistry-2025-Curriculum",
+          note: "The reproduced document identifies itself as the NERDC New Revised Senior Secondary School Curriculum, Chemistry SSS 1, October 2025. The 18 topic titles and order are transcribed from its contents page. Treat this as provisional until the corresponding NERDC-hosted PDF is retrieved and checked."
+        },
+        Physics: {
+          officialName: "Physics",
+          sourceStatus: "October-2025-revised-SSS1-contents-and-focal-competencies-transcribed-from-reproduction",
+          sequenceStatus: "30-source-topic-records-reported; competency themes transcribed; primary-NERDC-file-verification-pending",
+          chapterCount: null,
+          sourceTopicRecordCount: 30,
+          syllabusThemes: ["Interaction of Matter, Space and Time", "Physical Quantities, Fundamental and Derived Units", "Measurement of Length, Mass, Time and Other Quantities", "Position, Distance and Displacement", "Electric Charge: Production, Detection and Storage", "Motion, Forces and Friction", "Speed, Velocity and Distance-Time Graphs", "Acceleration and Velocity-Time Graphs", "Scalars, Vectors and Vector Diagrams", "Surface Tension, Viscosity and Fluid Behaviour", "Atomic Structure and Particulate Nature of Matter", "Work, Energy and Power", "Conservation Principles and Energy Transformation", "Temperature, Heat Transfer and Thermal Expansion", "Gravitational Fields and Acceleration Due to Gravity", "Electric Fields and Electric Field Lines", "Simple Electric Circuits, Current, Voltage and Ohm's Law", "Magnetic Fields, Magnets and Electromagnets", "Electromagnetic Induction: Faraday's and Lenz's Laws", "Construction of Simple Measuring Instruments", "Solar Energy Conversion and Applications", "Solar Heaters, Solar Panels and Heat Collectors", "Sensors and Simple Light-Detection Circuits", "Experimental Data Processing with Spreadsheet Software", "Experimental Data Analysis with Artificial Intelligence Tools", "Physics Laboratory Safety and Emergency Procedures", "Laboratory Equipment Organization and Maintenance", "Biogas Production and Applications of Physics", "Interdisciplinary Links between Physics and Environmental Science", "Interdisciplinary Links between Physics and Chemistry"],
+          secondaryTranscription: "https://smartest.ng/syllabus/nerdc/ss1/physics/",
+          note: "SmarTest reports 30 source topic records but its visible contents list contains repeated competency labels and 40 numbered entries. The 30 themes above are normalized from the page's focal competencies and are not asserted to be a one-to-one copy of the original topic numbering. Verify against the primary NERDC PDF before assigning chapter numbers."
+        },
+        Mathematics: {
+          officialName: "General Mathematics",
+          sourceStatus: "October-2025-revised-SSS1-contents-and-focal-competencies-transcribed-from-reproduction",
+          sequenceStatus: "12-source-topic-records-reported; 12 curriculum topic headings normalized; primary-NERDC-file-verification-pending",
+          chapterCount: null,
+          sourceTopicRecordCount: 12,
+          syllabusThemes: ["Number and Numeration: Number Bases", "Indices and Laws of Indices", "Trigonometric Ratios of Special Angles", "Logarithms and Antilogarithms", "ICT, Binary Numbers and Basic Coding", "Modular Arithmetic", "Sets and Set Operations", "Logical Reasoning and Compound Statements", "Variation and Change of Subject of Formula", "Quadratic Expressions, Equations and Graphs", "Geometry: Circles, Sectors, Solids and Compound Shapes", "Statistics: Data Collection, Tables, Graphs and Interpretation"],
+          secondaryTranscription: "https://smartest.ng/syllabus/nerdc/ss1/mathematics/",
+          note: "The 12 source topic records are normalized from the reproduced October 2025 NERDC curriculum. Competency headings are not automatically textbook chapters; check the primary NERDC document before assigning chapter numbers."
+        }
+      },
+      status: "October-2025 revised curriculum subject listings verified for SSS1 and SSS2; Chemistry has 18 provisional entries pending primary-source reconciliation; Biology (20 source records), Physics (30 source records) and General Mathematics (12 source records) themes transcribed from reproduced curriculum pages; all three require primary NERDC PDF verification before chapter numbering"
+    },
+    {
+      country: "Uganda",
+      sourceMapBatch: 1,
+      levelReviewed: "Lower Secondary S1–S4; Advanced Secondary kept as a separate future mapping",
+      authority: "National Curriculum Development Centre (NCDC)",
+      language: "English at secondary level, subject to official syllabus and school provisions.",
+      examPathway: "Uganda Certificate of Education (UCE); do not merge with A-Level.",
+      officialSources: ["https://ncdc.go.ug/wp-content/uploads/2024/03/Curriculum_Framework.pdf"],
+      curriculumStructure: "The NCDC Lower Secondary Curriculum Framework confirms Mathematics, Biology, Chemistry and Physics in the subject menu. S1–S2 have 11 compulsory subjects plus one elective; S3–S4 have a narrower compulsory core and electives. The framework is not itself a complete chapter list for the four subjects.",
+      subjects: {
+        Biology: { officialName: "Biology", sourceStatus: "official-subject-presence-verified", sequenceStatus: "subject-syllabus-topic-transcription-pending", syllabusThemes: [], chapterCount: null },
+        Chemistry: { officialName: "Chemistry", sourceStatus: "official-subject-presence-verified", sequenceStatus: "subject-syllabus-topic-transcription-pending", syllabusThemes: [], chapterCount: null },
+        Physics: { officialName: "Physics", sourceStatus: "official-subject-presence-verified", sequenceStatus: "subject-syllabus-topic-transcription-pending", syllabusThemes: [], chapterCount: null },
+        Mathematics: { officialName: "Mathematics", sourceStatus: "official-subject-presence-verified", sequenceStatus: "subject-syllabus-topic-transcription-pending", syllabusThemes: [], chapterCount: null }
+      },
+      lowerSecondaryS1S4: {
+        authority: "National Curriculum Development Centre (NCDC), Uganda",
+        curriculumYear: 2019,
+        sourceStatus: "official-NCDC-four-year-syllabus-programme-planners-transcribed",
+        note: "Entries preserve the official Senior 1–4 programme-planner order. These are syllabus topics, not claims about textbook chapter numbering. The Biology planner repeats Classification in S1 across two terms; the repeated row is preserved.",
+        officialSources: {
+          Biology: "https://ncdc.go.ug/wp-content/uploads/2024/02/Biology_Syllabus_compressed.pdf",
+          Chemistry: "https://ncdc.go.ug/wp-content/uploads/2024/03/CHEMISTRY-SYLLABUS_corrected_web-file.pdf",
+          Physics: "https://ncdc.go.ug/wp-content/uploads/2024/02/PHYSICS_Syllabus_compressed.pdf",
+          Mathematics: "https://ncdc.go.ug/wp-content/uploads/2024/02/Mathematics_Syllabus_compressed.pdf"
+        },
+        subjects: {
+          Biology: {
+            officialName: "Biology",
+            sequenceStatus: "official-NCDC-S1-S4-programme-planner-transcribed",
+            sourceListedTopicRows: 31,
+            chapterCount: null,
+            topicsByLevel: {
+              S1: ["Introduction to Biology", "Cells", "Classification", "Classification", "Insects", "Flowering plants"],
+              S2: ["Physical and chemical properties of soil", "Soil erosion and conservation; causes, effects and prevention", "Nutrition types and Nutrient compounds", "Nutrition in green plants", "Nutrition in mammals", "Transport in plants", "Transport in animals"],
+              S3: ["Gaseous exchange", "Aerobic respiration and anaerobic respiration", "Excretion in animals", "Chemical coordination in humans", "Nervous coordination in humans", "Receptor organs in man", "Locomotion in mammals", "Growth in plants and animals", "Development in plants and animals"],
+              S4: ["Asexual reproduction in plants (vegetative reproduction)", "Sexual reproduction in plants", "Sexual reproduction in humans", "Inheritance", "Variation and Selection", "Concept of ecology", "Food chains and food webs", "Associations in biological communities", "Humans and the natural environment"]
+            }
+          },
+          Chemistry: {
+            officialName: "Chemistry",
+            sequenceStatus: "official-NCDC-S1-S4-programme-planner-transcribed",
+            sourceListedTopicRows: 26,
+            chapterCount: null,
+            topicsByLevel: {
+              S1: ["Chemistry and Society", "Experimental Chemistry", "States and changes of states of matter", "Using materials", "Temporary and permanent changes", "Mixtures, Elements, and compounds", "Air", "Water", "Rocks and Minerals"],
+              S2: ["Acids and alkalis", "Salts", "The Periodic Table", "Carbon in the Environment", "The Reactivity Series"],
+              S3: ["Carbon in Life", "Structures and Bonds", "Formulae, Stoichiometry and mole concept", "Properties and Structures of Substances", "Fossil Fuels", "Chemical reactions"],
+              S4: ["Oxidation and Reduction Reactions", "Industrial Processes", "Trends in the Periodic Table", "Energy Changes during Chemical Reactions", "Chemical for Consumers", "Nuclear Processes"]
+            }
+          },
+          Physics: {
+            officialName: "Physics",
+            sequenceStatus: "official-NCDC-S1-S4-programme-planner-transcribed",
+            sourceListedTopicRows: 31,
+            chapterCount: null,
+            topicsByLevel: {
+              S1: ["Introduction to Physics", "Measurements in Physics", "States of matter", "Effects of forces", "Temperature measurements", "Heat transfer", "Expansion of solids, liquids, and gases", "Nature of light; reflection of light at plane surfaces"],
+              S2: ["Work, energy, and power", "Turning effect of forces, centre of gravity, and stability", "Pressure in solids and fluids", "Mechanical properties of Materials and Hooke’s law", "Reflection of light at curved surfaces", "Magnets and magnetic fields", "Electrostatics", "The solar system"],
+              S3: ["Linear and non-linear motion", "Refraction, dispersion, and colour", "Lenses and optical instruments", "General wave properties", "Sound waves", "Heat quantities and vapours", "Stars and galaxies", "Satellites and communication"],
+              S4: ["Introduction to current electricity", "Voltage, resistance and Ohm’s law", "Electromagnetic effects", "Electric energy distribution and consumption", "Atomic models", "Nuclear processes", "Digital electronics"]
+            }
+          },
+          Mathematics: {
+            officialName: "Mathematics",
+            sequenceStatus: "official-NCDC-S1-S4-programme-planner-transcribed",
+            sourceListedTopicRows: 46,
+            chapterCount: null,
+            topicsByLevel: {
+              S1: ["Number Bases", "Working with Integers", "Fractions, Percentages and Decimals", "Rectangular Cartesian Coordinates in 2-Dimensions", "Geometric Constructions Skills", "Sequence and patterns", "Bearings", "General and angle properties of geometric figures", "Data collection and presentation", "Reflection", "Equation of lines and curves", "Algebra 1", "Business arithmetic", "Time and time tables"],
+              S2: ["Mappings and relations", "Vectors and translation", "Graphs", "Numerical concept 1 (indices and logarithms)", "Inequalities and regions", "Algebra 2", "Similarities and enlargement", "Circle", "Rotation", "Length and area properties of two-dimensional geometrical figures", "Nets, areas and volumes of solids", "Numerical concept 2 (indices, logarithms and surds)", "Set theory"],
+              S3: ["Equation of a straight line", "Trigonometry 1", "Data collection /display", "Vectors", "Ratios and proportions", "Business mathematics", "Trigonometry 2", "Matrices", "Matrix transformations", "Simultaneous equations", "Probability", "Quadratic equations", "Circle properties"],
+              S4: ["Composite functions", "Equations and inequalities", "Linear programming", "Loci", "Lines and planes in three dimensions", "Revision"]
+            }
+          }
+        }
+      },
+      advancedSecondaryCurriculum2025: {
+        authority: "National Curriculum Development Centre (NCDC), Ministry of Education and Sports",
+        implementationNote: "Separate Senior Five and Senior Six Advanced Secondary curriculum introduced from 2025. These A-Level syllabuses are recorded separately from the existing Lower Secondary S1-S4/UCE records; Principal Mathematics is not the same subject as Lower Secondary Mathematics.",
+        officialSources: [
+          "https://ncdc.go.ug/wp-content/uploads/2025/03/Biology.pdf",
+          "https://ncdc.go.ug/wp-content/uploads/2025/03/CHEMISTRY.pdf",
+          "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+          "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf"
+        ],
+        subjects: {
+          Biology: { officialName: "Biology", level: "Senior Five-Six", sequenceStatus: "official-NCDC-2025-contents-transcribed", chapterCount: 9, chapters: ["Cell Biology", "Nutrition", "Transport", "Respiration", "Homeostasis", "Coordination", "Inheritance and Evolution", "Growth and Development", "Ecology"] },
+          Chemistry: { officialName: "Chemistry", level: "Senior Five-Six", sequenceStatus: "official-NCDC-2025-contents-transcribed", chapterCount: 13, chapters: ["Moles and Equations", "Atomic and Electronic Structure", "Bonding and Structure", "Periodicity I", "Thermochemistry", "Organic Chemistry I", "Equilibria I", "Equilibria II", "Organic Chemistry II", "Electrochemistry", "Periodicity II", "Organic Chemistry III", "Reaction Kinetics"] },
+          Physics: { officialName: "Physics", level: "Senior Five-Six", sequenceStatus: "official-NCDC-2025-contents-transcribed", chapterCount: 33, chapters: ["Measurement and Dimensions of Physical Quantities", "Statics", "Linear Motion", "Motion Under Gravity", "Work, Energy and Power", "Solid Friction", "Fluid Mechanics", "Mechanical Properties of Matter", "Thermometry", "Heat Quantities", "Transfer of Heat", "Behaviour of Gases", "Thermodynamics", "Reflection of Light", "Refraction of Light", "Optical Instruments", "Electrostatics", "Capacitors", "Digital Electronics", "Circular Motion", "Simple Harmonic Motion", "Gravitation", "Progressive Waves", "Stationary Waves", "Sound Waves", "Current Electricity", "Magnetism in Matter", "Magnetic Effect of an Electric Current", "Electromagnetic Induction", "A.C. Circuits", "Atomic Particles", "Quantum Theory", "Nuclear Processes"] },
+          PrincipalMathematics: { officialName: "Principal Mathematics", level: "Senior Five-Six", sequenceStatus: "official-NCDC-2025-contents-transcribed", chapterCount: 27, chapters: ["Numerical Concepts", "Equations and Inequalities", "Coordinate Geometry 1", "Partial Fractions", "Trigonometry", "Descriptive Statistics", "Scatter Diagrams and Correlations", "Dynamics 1", "Probability Theory", "Differentiation 1", "Integration 1", "Permutations and Combinations", "Series", "Random Variables", "Probability Distributions", "Error Analysis", "Vectors", "Differentiation 2", "Integration 2", "Dynamics 2", "Trapezium Rule", "Sampling Distribution", "Iterative Methods", "Coordinate Geometry 2", "Complex Numbers", "Differential Equations", "Flow Charts"] }
+        }
+      },
+      status: "Lower Secondary framework and subject presence verified; 2025 Advanced Secondary S5-S6 official chapter sequences transcribed for Biology (9), Chemistry (13), Physics (33) and Principal Mathematics (27); Lower Secondary S1-S4 subject chapter sequences still pending"
+    },
+    {
+      country: "Tanzania",
+      sourceMapBatch: 1,
+      levelReviewed: "Ordinary Secondary Education Forms I–IV, 2023 curriculum; Forms V–VI separate",
+      authority: "Tanzania Institute of Education (TIE), Ministry of Education, Science and Technology",
+      language: "English is the language of teaching and learning in secondary education under the 2023 policy direction; subject-language requirements must still be checked.",
+      examPathway: "Certificate of Secondary Education Examination (CSEE); syllabus-specific assessment.",
+      officialSources: [
+        "https://www.tie.go.tz/uploads/documents/en-1726825742-CURRICULUM%20FOR%20SECONDARY%20EDUCATION%20FORM%20I-IV.pdf",
+        "https://www.tie.go.tz/uploads/files/BIOLOGY%20SYLLABUS%20ORDINARY%20SECONDARY%20FINAL%20.pdf",
+        "https://www.tie.go.tz/uploads/documents/sw-1727192894-CHEMISTRY%20O%27LEVEL%20EDUCATION%20FINAL.pdf",
+        "https://www.tie.go.tz/uploads/documents/sw-1727257838-PHYSICS%20FOR%20ORDINARY%20SECONDARY%20EDUCATION%20FINAL.pdf",
+        "https://www.tie.go.tz/uploads/documents/sw-1727256902-MATHEMATICS%20SYLLABUS%20-%20O%20level%20final.pdf",
+        "https://www.tie.go.tz/index.php/publications/syllabus-for-lower-secondary-academics?page=1",
+        "https://www.tie.go.tz/publications/syllabus-for-lower-secondary-academics?page=2",
+        "https://www.tie.go.tz/publications/syllabus-for-lower-secondary-academics?page=3"
+      ],
+      correctedFramework2026: {
+        authority: "Tanzania Institute of Education (TIE), Ministry of Education, Science and Technology",
+        source: "https://www.tie.go.tz/uploads/documents/sw-1770991250-CURRICULUM%20FOR%20SECONDARY%20EDUCATION%20FORM%20I-IV%20-CORRECTED%20%20FEB%202026.pdf",
+        sourceStatus: "official-corrected-February-2026-curriculum-framework-opened-and-reviewed",
+        note: "The PDF is a corrected February 2026 version of the 2023 Form I-IV curriculum framework; its approval certificate identifies the original 9 August 2023 approval. It is a framework with main/specific competences, not a replacement subject syllabus with a Form-by-Form chapter sequence.",
+        verifiedCompetences: {
+          Biology: ["11.1 Master concepts, principles and processes of Biology; specific competence covers physiological, anatomical and ecological processes of living organisms (the PDF displays a likely numbering typo '14.4.1')", "11.2 Communicate using scientific biological terminology", "11.3 Conduct biological investigations, present results and carry out a biological project"],
+          Chemistry: ["12.1 Master concepts, theories and principles; understand periodic trends in physical and chemical properties of elements", "12.2 Use IUPAC nomenclature, chemical symbols, formulae and equations", "12.3 Conduct Chemistry experiments", "12.4 Understand principles of metal extraction", "12.5 Conduct a Chemistry project"],
+          Physics: ["13.1 Apply Physics concepts, theories, principles, terminology, measurements and symbols; use mathematics to explain physical phenomena", "13.2 Conduct Physics experiments and analyse, present and report data", "13.3 Evaluate and use physical information, collect and relate data, and carry out a Physics project"],
+          Mathematics: ["15.1 Use numerical skills, ratios, profit and loss, rates and variation", "15.2 Apply geometry, approximations, relations, functions, algebra, matrices, sets, sequences and series", "15.3 Apply coordinate geometry, trigonometry, circles, vectors, probability and statistics"]
+        },
+        subjectStatus: "framework-competences-verified; these competence statements must not be counted as chapters or assigned to Forms without the subject syllabus"
+      },
+      syllabusSequenceAudit: {
+        status: "Mathematics Form I-IV detailed tables reviewed and normalized; Biology, Chemistry and Physics still require equivalent row-by-row reconciliation",
+        officialDocuments: {
+          Biology: "https://www.tie.go.tz/uploads/documents/sw-1727192422-BIOLOGY%20SYLLABUS%20ORDINARY%20SECONDARY%20FINAL%20.pdf",
+          Chemistry: "https://www.tie.go.tz/uploads/documents/sw-1727192894-CHEMISTRY%20O%27LEVEL%20EDUCATION%20FINAL.pdf",
+          Physics: "https://www.tie.go.tz/uploads/documents/sw-1727257838-PHYSICS%20FOR%20ORDINARY%20SECONDARY%20EDUCATION%20FINAL.pdf",
+          Mathematics: "https://www.tie.go.tz/uploads/documents/sw-1727256902-MATHEMATICS%20SYLLABUS%20-%20O%20level%20final.pdf"
+        },
+        confirmedTableOfContents: {
+          Biology: { FormI: 9, FormII: 17, FormIII: 26, FormIV: 31 },
+          Chemistry: { FormI: 9, FormII: 18, FormIII: 30, FormIV: 45 },
+          Physics: { FormI: 9, FormII: 25, FormIII: 37, FormIV: 46 },
+          Mathematics: {
+          officialName: "Mathematics",
           sourceStatus: "TIE-2023-Form-I-IV-official-syllabus-opened-and-all-four-form-tables-reviewed",
           sequenceStatus: "Form-I-IV learning-content themes reconciled to official detailed tables; concise normalized summaries, not an asserted textbook chapter count",
           sourceListedTopicRows: null,
@@ -196,7 +440,6 @@ export const chapterSequenceVerificationBatch01 = {
             "The syllabus has detailed learning-content activities within competency matrices; the normalized themes above are not a claim that TIE labels each theme as a separate textbook chapter.",
             "The main competence framework broadly aligns with the four Form tables, but framework competence labels must not be mistaken for the detailed teaching sequence."
           ]
-        }
         }
       },
       status: "All four official TIE 2023 subject syllabuses opened; Forms I-IV sections confirmed; exact full topic-row extraction remains in progress; broad Form II-IV topic summaries are explicitly provisional"
