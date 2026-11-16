@@ -597,3 +597,120 @@ The Ministry curriculum books index identifies Grade 9 as having separate Biolog
 - Remaining Afghanistan work: Grade 9 Mathematics Dari contents; current approved official syllabus topic sequences; textbook adoption/edition verification; proceed to Grade 10 only with actual Ministry PDFs and inspected contents pages.
 - Other nine countries in the first ten remain pending document-level extraction.
 - Canonical country register unchanged.
+
+
+---
+
+# Afghanistan Grade 10 — four official Ministry textbook contents pages
+
+**Inspection date:** 16 November 2026  
+**Pathway:** Ministry Grade 10 textbooks, Dari except Mathematics (Pashto). These are textbook contents-page transcriptions, not a substitute for an independently issued official syllabus document. All four books inspected here identify Grade 10 and print year 1398 SH.
+
+## I. Biology — Grade 10, Dari, 1398 SH
+
+**Official Ministry PDF:** https://moe.gov.af/sites/default/files/2020-03/G10-Dr-Biology.pdf  
+**Metadata:** Biology; Grade 10; Dari; Ministry of Education; Kabul; 1398 SH (PDF lines 85–98).  
+**Actual contents page:** PDF lines 130–166.
+
+Nine chapters, in printed order:
+
+1. **Scientific methods** — scientific method and research procedure.
+2. **Metabolism and inorganic compounds** — metabolism; inorganic substances.
+3. **Organic compounds** — organic compounds and their role.
+4. **Diseases and prevention** — human health, disease and prevention.
+5. **Genetics and its importance** — foundations and significance of genetics.
+6. **Hereditary traits** — inheritance and inherited characteristics.
+7. **Applications of genetics** — practical applications of genetic knowledge.
+8. **Ecology and its components** — ecology and ecosystem components.
+9. **Movement of matter and energy in the ecosystem** — matter and energy flow.
+
+The preface independently confirms that the book has nine chapters and names the same progression (PDF lines 167–172). Note a contents-page pagination overlap in the printed chapter 2 summary: it is shown as pages 17–18 while chapter 2 is shown as pages 10–18. Preserve the printed discrepancy rather than correcting it silently.
+
+## J. Physics — Grade 10, Dari, 1398 SH
+
+**Official Ministry PDF:** https://moe.gov.af/sites/default/files/2020-03/G10-Dr-physic.pdf  
+**Metadata:** Physics; Grade 10; Dari; Ministry of Education; Kabul; 1398 SH (PDF lines 39–52).  
+**Actual contents pages:** PDF lines 89–169.
+
+Nine chapters, in printed order:
+
+1. **What is Physics?** — introduction, brief history and language of Physics.
+2. **Measurement** — measurement concepts; SI units; measurement error; dimensional analysis.
+3. **Light and properties of light** — propagation and speed of light; reflection; spherical mirrors; image formation; mirror equations; applications and magnification.
+4. **Refraction** — laws of refraction; light through a parallel-sided slab; critical angle and total internal reflection; prisms; dispersion; rainbow.
+5. **Lenses** — image construction with thin lenses; thin-lens equation and magnification; concave-lens properties; lens power; combinations of thin lenses; human eye and vision; camera; microscope.
+6. **Static electricity** — charging objects; electric force and field; electric potential and potential difference; capacitance; parallel-plate capacitor; capacitor combinations.
+7. **Circuit and current** — electric circuit/current; resistance; resistor combinations; electromotive force; circuit equation; Kirchhoff's laws; magnetism.
+8. **Magnetic forces and fields** — force on current-carrying conductors; torque on a current-carrying coil; magnetic field of a straight conductor and a coil; forces between current-carrying wires.
+9. **Electromagnetic induction and alternating current** — induction; induced electromotive force; RL, RC and LC circuits; mutual induction; transformer; generators.
+
+The contents pages span the continuation across PDF lines 89–169. The text extraction has some OCR/translation irregularities in the wording of chapter 8; the English working title above describes the listed subtopics without claiming a different chapter structure.
+
+## K. Mathematics — Grade 10, Pashto, 1398 SH
+
+**Official Ministry PDF:** https://moe.gov.af/sites/default/files/2020-03/G10-Ps-Math.pdf  
+**Metadata:** Mathematics; Grade 10; Pashto; Ministry of Education; Kabul; 1398 SH (PDF lines 104–129).  
+**Actual contents pages:** PDF lines 150–203.
+
+Nine chapters, in printed order:
+
+1. **Polynomials** — algebraic expressions; degree and types of polynomials; evaluating polynomials and coefficient sums; polynomial operations; remainder and factor theorems; synthetic division.
+2. **Relations** — ordered pairs; Cartesian plane and product; relations and inverse relations; equations/relations.
+3. **Functions** — function notation and values; domain and range; graphs; increasing/decreasing, even/odd functions; graph translations; composition and inverse functions; polynomial, quadratic and rational functions and their graphs/asymptotes.
+4. **Trigonometric functions** — angle measure and standard/terminal angles; trigonometric functions and special-angle ratios; ratios at 0°, 90°, 180°, 270° and 360°; relationships among ratios; graphs.
+5. **Applications of trigonometry** — compound-angle identities; sum/difference and product transformations; arc length; sector and segment areas; triangle area formulae including Heron's formula; circumradius and inradius.
+6. **Complex numbers** — imaginary numbers and operations; addition, subtraction, multiplication and division; conjugate and multiplicative inverse; quadratic equations over complex numbers.
+7. **Analytic geometry** — coordinate system and distance; section formula; slope and line equations; normal/general forms; distances between points and parallel lines; circle equation and line-circle relationships; tangent; triangle area from coordinates.
+8. **Statistics** — frequency polygon; stem-and-leaf plot; quartiles and box plot; normal curve and central measures; quartile deviation; variance; standard deviation.
+9. **Mathematical logic** — intuitive, analogical, inductive and deductive reasoning; mathematical induction; counterexample; indirect proof; mathematical logic and inference.
+
+**Language caution:** The inspected Mathematics volume is the Pashto edition. Do not label this contents extraction as a Dari textbook. A separate Grade 10 Dari Mathematics book has not been inspected in this batch.
+
+## L. Chemistry — Grade 10, Dari, 1398 SH
+
+**Official Ministry PDF:** https://www.moe.gov.af/sites/default/files/2020-03/G10-Dr-Chemistry.pdf  
+**Metadata:** Chemistry; Grade 10; Dari; Ministry of Education; Kabul; 1398 SH (PDF lines 30–46).  
+**Actual contents pages:** PDF lines 81–191.
+
+Nine chapters, in printed order:
+
+1. **Development of atomic theory** — history of atomic theory; atomic structure; atomic spectra; Bohr atomic theory; modern/quantum atomic theory; electron configuration of multi-electron atoms.
+2. **Electron configuration and periodic properties of elements** — history of the periodic table; electron configurations; periodic properties and trends; transition elements.
+3. **Chemical bonds** — characteristics and Lewis symbols; octet rule and Lewis structures; ionic and covalent bonds.
+4. **Molecular structure and polarity** — valence shell of central atoms; linear, trigonal-planar and tetrahedral molecular structures; water and ammonia structures; polar, non-polar and ionic molecules.
+5. **Intermolecular forces** — distinction between chemical bonds and intermolecular forces; types of intermolecular attraction; effects on physical properties.
+6. **States of matter** — solids, liquids and gases; crystal types and solid properties; liquid properties, evaporation and vapour pressure, boiling and freezing; gas properties and gas laws (Boyle, Charles, Avogadro and ideal-gas laws); molar volume at STP.
+7. **Chemical reactions** — chemical equations and types of chemical reactions.
+8. **Oxidation–reduction reactions** — definitions; oxidation numbers; redox types; balancing redox equations in different media and special cases.
+9. **Laws and calculations in Chemistry** — conservation of mass; definite and multiple proportions; volume relationships; Avogadro's law; relative atomic and molecular masses; mole; percentage composition; empirical and molecular formulae.
+
+The textbook introduction (PDF lines 193–219) summarises the same nine-chapter order and notes chapter summaries and practice questions. The contents-page numbering has an apparent skipped subsection number in Chapter 9 (the printed list jumps from 4-9 to 6-9); it is preserved as printed.
+
+## Grade 10 Afghanistan extraction status
+
+| Book | Language | Contents pages inspected | Chapters |
+|---|---|---:|---:|
+| Biology | Dari | 1 | 9 |
+| Chemistry | Dari | 1 | 9 |
+| Physics | Dari | 1 (two-page continuation) | 9 |
+| Mathematics | Pashto | 1 (two-page continuation) | 9 |
+| **Grade 10 subtotal** | | **4** | **36** |
+
+The Chemistry title is independently confirmed as a Grade 10 Ministry textbook by its cover and formal metadata. A Ministry teacher-examination question bank for Grade 10 Chemistry was not used as textbook contents evidence; the official 1398 SH textbook PDF itself was opened and its contents pages transcribed.
+
+## Updated Afghanistan cumulative totals
+
+- Grade 7: 4 contents pages; 27 chapters.
+- Grade 8: 4 contents pages; 30 chapters.
+- Grade 9 general-school Biology, Chemistry, Physics and Mathematics (Pashto): 4 contents pages; 26 chapters.
+- Grade 9 religious-school integrated Science: 1 contents page; 11 chapters.
+- Grade 10: 4 contents pages; 36 chapters.
+- **Cumulative:** **17 actual textbook contents pages; 130 chapters transcribed.**
+- Grade 9 Biology Pashto parallel edition: located and metadata inspected; contents not transcribed and not counted.
+- Grade 9 Mathematics Dari: not inspected; no contents page counted.
+- Grade 10 Mathematics Dari: not inspected; no contents page counted.
+- Complete official grade-by-grade syllabus topic sequences independently transcribed: **0**. The work so far is actual textbook contents extraction, not official syllabus transcription.
+- Current final adoption status of the 1398–1399 SH textbooks in November 2026: not established.
+- Remaining Afghanistan work: locate and inspect any relevant Dari Mathematics parallel editions; obtain current official grade-level syllabus documents and transcribe their sequence separately; verify current textbook adoption; continue Grades 11–12 only from actual official PDFs.
+- Other nine countries in the first ten remain pending document-level extraction.
+- Canonical country register unchanged.
