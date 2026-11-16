@@ -137,4 +137,14 @@ export const country = {
   "finding": "Ministry framework is Arabic-only; eduNET lists prescribed Basic and Secondary Education books for 2026–27. Catalogue presence is not chapter-sequence evidence."
 },
   textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish the actual contents-page chapter sequence. Do not invent counts." }
+
+  evidenceRefresh_2026_11_16: {
+  "status": "official framework and 2026–27 textbook catalogue confirmed; actual book contents not inspected",
+  "sources": [
+    "https://moe.gov.bh/en//the-national-curriculum-framework",
+    "https://www.edunet.bh/Econtent/BooksGuide"
+  ],
+  "finding": "Ministry framework is Arabic-only; eduNET lists prescribed Basic and Secondary Education books for 2026–27. Catalogue presence is not chapter-sequence evidence."
+},
+  textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish actual contents-page chapter sequence." }
 };
