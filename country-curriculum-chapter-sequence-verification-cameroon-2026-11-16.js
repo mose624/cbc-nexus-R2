@@ -112,4 +112,14 @@ export default {
     longFormCbeNexusChaptersWritten: 0,
     status: "SOURCE MAP CREATED — extract class-by-class official syllabuses separately for both sub-systems before chapter production."
   }
+
+  evidenceRefresh_2026_11_16: {
+  "status": "two official-language sub-systems and current syllabus families retained; detailed class-by-class topic extraction outstanding",
+  "sources": [
+    "https://www.minesec.gov.cm/web/index.php/en/systeme-educatif-en/progammes-d-etudes-en",
+    "https://spm.gov.cm/site/?q=en/node/1436"
+  ],
+  "finding": "Keep Anglophone and Francophone programmes separate; do not merge grade naming, series or subject sequences. Existing record distinguishes lower-secondary integrated Science and Technology from specialist upper-secondary subjects."
+},
+  textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish actual contents-page chapter sequence." }
 };
