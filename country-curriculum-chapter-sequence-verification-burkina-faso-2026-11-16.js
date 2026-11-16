@@ -105,4 +105,14 @@ export const countryCurriculumVerification = {
     subjectRecordsWithDetailedGradeByGradeSequenceReconciled: 0,
     claimOf10000WordChapters: false
   }
+
+  evidenceRefresh_2026_11_16: {
+  "status": "official ministry teaching guides and programme portal confirmed; complete sequence extraction pending",
+  "sources": [
+    "https://www.education.gov.bf/accueil",
+    "https://www.cursusscolaires.bf/index.php/Programmes.html"
+  ],
+  "finding": "Ministry portal lists Mathematics guides for 4e–6e, Physics guides for 4e–3e and SVT guides for 4e–6e. Official programme portal lists Physics programmes from Quatrième through Terminale C/D/E. Extract each PDF's actual topic order; no textbook chapter count inferred."
+},
+  textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish actual contents-page chapter sequence." }
 };
