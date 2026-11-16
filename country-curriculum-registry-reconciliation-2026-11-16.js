@@ -2,33 +2,47 @@
  * CBE Nexus — Global curriculum registry reconciliation
  * Audit date: 2026-11-16
  *
- * This file records a structural reconciliation of the country register and
- * source-map batch inventory. It does not certify syllabus extraction,
- * chapter completion, or production deployment.
+ * Corrected against the current main-branch source-map files. This file records
+ * country identity and source-map presence only; it does not certify curriculum
+ * extraction, chapter completion, or production deployment.
  */
 export const countryCurriculumRegistryReconciliation = {
   auditDate: "2026-11-16",
-  register: {
-    path: "country-curriculum-chapter-completion-register.js",
-    verifiedRecordCount: 196,
-    verifiedUniqueCountryNames: 196,
-    subjectsPerCountry: ["Biology", "Chemistry", "Physics", "Mathematics"],
-    countrySubjectMaps: 784,
-    note: "The 196 entries are the project's configured register, not a claim that every international dataset uses the same country/territory definition. Keep the register's inclusion policy explicit, especially for disputed or separately administered jurisdictions."
+  canonicalIndex: {
+    path: "country-curriculum-canonical-country-index-2026-11-16.js",
+    identityKey: "ISO 3166-1 alpha-3; project-assigned XKX for Kosovo",
+    projectRegistryCount: 196,
+    note: "The 196-entry register is the project's configured country/jurisdiction scope. It is not identical to the full UN M49 country-or-area list."
   },
   sourceMapInventory: {
-    batches25To27Exist: true,
-    batch25Countries: ["Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands"],
-    batch26Countries: ["New Zealand", "Nicaragua", "Niger", "Democratic People's Republic of Korea", "North Macedonia"],
-    batch27Countries: ["Norway", "Oman", "Pakistan", "Palau", "Palestine"],
-    knownInventoryIssues: [
-      "Batch 20 repeats the country set used in Batch 19 and must not be counted as five additional unique countries.",
-      "Batch 30 is a reconciliation set rather than a strictly sequential alphabetical range; Rwanda already exists in Batch 01, while the remaining entries include Saint Kitts and Nevis, Saint Lucia, Saint Vincent and the Grenadines, and Samoa.",
-      "Country aliases and official naming variants require canonical IDs before calculating country coverage (for example, Democratic People's Republic of Korea versus North Korea; São Tomé and Príncipe diacritics; Türkiye versus Turkey).",
-      "The batch numbering is not a reliable proxy for 196-country coverage because duplicate and reconciliation batches exist."
-    ]
+    existingBatchFiles: 39,
+    batchEntries: 195,
+    canonicalUniqueRegisterCountriesMapped: 191,
+    coveragePercent: 97.45,
+    missingRegisterCountries: [
+      { country: "Afghanistan", isoAlpha3: "AFG" },
+      { country: "Belgium", isoAlpha3: "BEL" },
+      { country: "South Korea", isoAlpha3: "KOR" },
+      { country: "Vatican City", isoAlpha3: "VAT" },
+      { country: "Kosovo", isoAlpha3: "XKX" }
+    ],
+    duplicateCountryRecords: [
+      { country: "Ghana", firstBatch: 1, duplicateBatch: 14 },
+      { country: "Kenya", firstBatch: 1, duplicateBatch: 19 },
+      { country: "Uganda", firstBatch: 1, duplicateBatch: 37 }
+    ],
+    extraJurisdictionsOutsideRegister: [
+      { country: "Taiwan", batch: 35, note: "Keep as a separately identified education jurisdiction; do not silently count it as one of the 196 register entries." }
+    ],
+    correctedFindings: [
+      "Batch 19 and Batch 20 are not duplicates. Batch 19 contains Kenya, Kiribati, Kuwait, Kyrgyzstan and Laos; Batch 20 contains Latvia, Lebanon, Lesotho, Liberia and Libya.",
+      "Batch 30 is a reconciliation set. Rwanda is not present in Batch 01; Batch 01 contains Kenya, Ghana, Nigeria, Uganda and Tanzania. Batch 30 references an existing dedicated Rwanda extension (country-online-notes-rwanda-reb.js), so retain the Rwanda source record and link it to the extension rather than deleting it.",
+      "Canonical matching resolves The Gambia/Gambia, Brunei Darussalam/Brunei, Federated States of Micronesia/Micronesia, Democratic People's Republic of Korea/North Korea, Republic of the Congo/Congo, diacritics in São Tomé and Príncipe, and other documented name variants.",
+      "Batch numbers are not used as a coverage proxy. Coverage is calculated from normalized country identities and the explicit 196-record register."
+    ],
+    coverageRule: "A country counts once only when a source-map name resolves to a canonical register identity. A repeated record does not increase coverage; an extra jurisdiction does not increase the 196-country numerator."
   },
-  baselineChapterAudit: {
+  chapterRegisterBaseline: {
     subjectsPerCountry: 4,
     countrySubjectMaps: 784,
     curriculumMappedSubjects: 0,
@@ -36,18 +50,20 @@ export const countryCurriculumRegistryReconciliation = {
     curriculumVerifiedChapters: 0,
     chaptersMeetingFullStandard: 0,
     targetWordsPerChapter: 10000,
-    status: "The source-map batches add evidence and references; they do not themselves update subject-level curriculum verification or prove that chapters meet the word, diagram, question, and teaching-quality targets."
+    status: "Source-map presence does not update subject-level curriculum verification or prove chapter word, diagram, question, or teaching-quality targets."
   },
-  requiredNextActions: [
-    "Assign a stable canonical country/jurisdiction ID to every register record.",
-    "Build one deduplicated inventory of all source-map files and compare canonical IDs against all 196 register entries.",
-    "Resolve aliases and separately administered jurisdictions under a documented inclusion policy.",
-    "For each country-subject-grade-track record, capture the current official authority, syllabus URL, language, curriculum version, effective cohort, chapter sequence, and evidence date.",
-    "Only after official document extraction, populate chapter counts and mark curriculum verification complete.",
-    "Keep chapter word-count and quality audits separate from curriculum-source mapping and website deployment checks."
+  nextActions: [
+    "Create source maps for Afghanistan, Belgium, South Korea, Vatican City and Kosovo, each with an explicit authority/evidence status.",
+    "Keep the three duplicate source-map records linked to the same canonical identity; do not count them twice.",
+    "Keep Taiwan outside the 196-country numerator unless the project formally changes its register scope.",
+    "Continue country-subject-grade-track mapping from official documents before creating or verifying chapter sequences.",
+    "Keep source mapping, chapter quality audits, and production deployment verification as separate statuses."
   ],
   qualityRules: {
     doNotInferCoverageFromBatchNumbers: true,
+    requireCanonicalIdentityForCoverage: true,
+    countEachCanonicalCountryOnce: true,
+    doNotCountExtraJurisdictionsInRegisterNumerator: true,
     doNotInventChapterCounts: true,
     distinguishCountryAndTerritoryScope: true,
     distinguishIntegratedScienceFromSeparateSubjects: true,
