@@ -1,0 +1,84 @@
+/* CBE Nexus Learning Studio — Ghana SHS Year 1 Mathematics.
+   Original supplementary chapter: geometry, angles, bearings and measurement.
+   Confirm exact topic sequence against the current Ghana NaCCA scheme of learning. */
+(()=> {
+ "use strict";
+ const level=window.CBE_COUNTRY_NOTES?.Ghana?.levels?.["SHS Year 1"];
+ if(!level) return;
+ const list=level.Mathematics||(level.Mathematics=[]);
+ if(list.some(x=>x.id==="gh-shs1-maths-geometry-angles-bearings-studio")) return;
+ const safe=s=>String(s).replace(/[&<>"]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]));
+ const svg=(title,labels,caption)=>{
+  const x=[24,194,364], fills=["#dceeff","#fff0c2","#dcf7e5"], strokes=["#3478a8","#bd8700","#348653"];
+  const boxes=labels.map((v,i)=>'<rect x="'+x[i]+'" y="34" width="132" height="68" rx="11" fill="'+fills[i]+'" stroke="'+strokes[i]+'" stroke-width="2"/><text x="'+(x[i]+66)+'" y="63" text-anchor="middle" font-size="13" font-weight="700" fill="#17324d">'+safe(v)+'</text>');
+  return '<svg viewBox="0 0 520 150" role="img" aria-label="'+safe(title)+'" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="5" width="510" height="140" rx="14" fill="#f7fbff" stroke="#b8cce0"/>'+boxes.join("")+'<path d="M156 68 H192 M326 68 H362" stroke="#2563eb" stroke-width="3"/><path d="M183 61 L193 68 L183 75 M353 61 L363 68 L353 75" fill="none" stroke="#2563eb" stroke-width="3"/><text x="260" y="128" text-anchor="middle" font-size="12" fill="#40566d">'+safe(caption)+'</text></svg>';
+ };
+ const data=[
+ ["Angle types",["Acute","Right","Obtuse"],"Angles are measured from one arm to another"],
+ ["Angles on a line",["x°","180°","(180−x)°"],"Adjacent angles on a straight line sum to 180°"],
+ ["Angles at a point",["90°","180°","360°"],"Angles around a point complete one full turn"],
+ ["Vertically opposite",["a","b","Equal"],"Opposite angles formed by intersecting lines are equal"],
+ ["Parallel lines",["Corresponding","Alternate","Co-interior"],"Parallel lines create equal and supplementary angle pairs"],
+ ["Triangle angles",["A","B","C"],"Interior angles of a triangle sum to 180°"],
+ ["Polygon angles",["Interior","Exterior","n sides"],"Exterior angles of a convex polygon sum to 360°"],
+ ["Circle geometry",["Centre","Radius","Diameter"],"The diameter is twice the radius"],
+ ["Bearing",["North","Clockwise","Bearing"],"Bearings are measured clockwise from north using three digits"],
+ ["Scale drawing",["Map distance","Scale","Ground distance"],"A scale converts measured lengths to real distances"]
+ ];
+ const diagrams=data.map(d=>({title:d[0],svg:svg(d[0],d[1],d[2]),caption:d[2]}));
+ const qs=[
+ ["Convert 2.4 km to metres.","2.4 km = 2.4 × 1000 = 2400 m.",1,["Correct conversion (1)."]],
+ ["Convert 35 cm to metres.","35 cm = 35 ÷ 100 = 0.35 m.",1,["Correct conversion (1)."]],
+ ["Find the complement of 38°.","90° − 38° = 52°.",1,["52° (1)."]],
+ ["Find the supplement of 127°.","180° − 127° = 53°.",1,["53° (1)."]],
+ ["Two angles on a straight line are (3x + 10)° and (2x + 20)°. Find x.","3x + 10 + 2x + 20 = 180; 5x + 30 = 180; x = 30.",3,["Form equation summing to 180° (1); simplify (1); x = 30 (1)."]],
+ ["Vertically opposite angles are (4x − 5)° and (2x + 25)°. Find x and the angle.","4x − 5 = 2x + 25, so 2x = 30 and x = 15. Angle = 4(15) − 5 = 55°.",3,["Equate angles (1); x = 15 (1); angle 55° (1)."]],
+ ["The angles of a triangle are x°, 2x° and 3x°. Find the three angles.","x + 2x + 3x = 180°, so 6x = 180° and x = 30°. The angles are 30°, 60° and 90°.",3,["Angle sum equation (1); x = 30° (1); all angles (1)."]],
+ ["Find each exterior angle of a regular 12-sided polygon.","Exterior angle = 360° ÷ 12 = 30°.",2,["360° total (1); 30° (1)."]],
+ ["Find the sum of the interior angles of a hexagon.","Sum = (n − 2) × 180° = (6 − 2) × 180° = 720°.",2,["Correct formula (1); 720° (1)."]],
+ ["A circle has radius 7 cm. Find its circumference in terms of π.","C = 2πr = 2π × 7 = 14π cm.",2,["Formula (1); 14π cm (1)."]],
+ ["A circle has diameter 10 cm. Find its area in terms of π.","Radius = 5 cm. Area = πr² = 25π cm².",2,["Radius 5 cm (1); area 25π cm² (1)."]],
+ ["A map uses a scale of 1:50 000. What ground distance is represented by 6 cm?","Ground distance = 6 × 50 000 = 300 000 cm = 3000 m = 3 km.",3,["Scale multiplication (1); conversion to metres (1); 3 km (1)."]],
+ ["A bearing is measured from which direction and in which sense?","From north, measured clockwise, and written as a three-figure angle from 000° to 360°.",2,["From north (1); clockwise and three-figure convention (1)."]],
+ ["The bearing of B from A is 065°. Find the reverse bearing of A from B.","065° + 180° = 245°.",2,["Add 180° (1); 245° (1)."]],
+ ["A rectangular field is 24 m long and 15 m wide. Find its perimeter and area.","Perimeter = 2(24 + 15) = 78 m. Area = 24 × 15 = 360 m².",3,["Perimeter method and answer (1); area method (1); 360 m² (1)."]]
+ ];
+ const chapter={
+  id:"gh-shs1-maths-geometry-angles-bearings-studio",
+  title:"Geometry, angles, bearings and measurement",
+  lessons:"Learning Studio chapter • angle rules, parallel lines, triangles, polygons, circles, bearings, scale and mensuration",
+  curriculumContext:"Ghana NaCCA Senior High School Mathematics supplementary material. Original CBE Nexus resource; confirm exact topic sequence with the current scheme of learning.",
+  curriculumStatus:"Supplementary curriculum-aligned learning material",
+  objectives:["Classify angles and use angle facts on lines and around points.","Apply vertically opposite and parallel-line angle properties.","Calculate unknown angles in triangles and polygons.","Use basic circle measures and formulae.","Interpret and calculate three-figure bearings.","Use scale drawings and map scales accurately.","Convert units and calculate perimeter, area and volume in practical contexts."],
+  sections:[
+   {heading:"1. Angles and their measurement",body:"An angle is formed when two rays meet at a common endpoint called the vertex. Angles are measured in degrees (°) or radians in more advanced work. An acute angle is greater than 0° and less than 90°; a right angle is 90°; an obtuse angle is greater than 90° but less than 180°; a straight angle is 180°; a reflex angle is greater than 180° but less than 360°. A full turn is 360°. Use a protractor by aligning its centre with the vertex and its baseline with one arm."},
+   {heading:"2. Complementary, supplementary and angles at a point",body:"Complementary angles add up to 90°. Supplementary angles add up to 180°. Adjacent angles on a straight line therefore sum to 180°, while angles around a point sum to 360°. These facts allow unknown angles to be found by forming simple equations. Always identify the relevant total before calculating, and show the equation clearly in examination answers."},
+   {heading:"3. Vertically opposite angles",body:"When two straight lines intersect, they form two pairs of vertically opposite angles. Each pair is equal. Adjacent angles at the intersection are supplementary because they lie on a straight line. If one angle is known, its vertically opposite angle is equal, and each adjacent angle is found by subtracting from 180°. Algebraic expressions can be equated to solve for an unknown variable."},
+   {heading:"4. Parallel lines and a transversal",body:"A transversal is a line that crosses two or more other lines. When it crosses parallel lines, corresponding angles are equal, alternate interior angles are equal, and co-interior angles on the same side of the transversal sum to 180°. These relationships depend on the lines being parallel. Correctly identify the angle position before selecting a rule; a labelled sketch helps prevent confusing corresponding and alternate pairs."},
+   {heading:"5. Triangles and their properties",body:"The interior angles of every triangle sum to 180°. An equilateral triangle has three equal sides and three 60° angles. An isosceles triangle has two equal sides and equal base angles. A right-angled triangle contains one 90° angle. An exterior angle of a triangle equals the sum of the two opposite interior angles. These properties are useful for finding unknown angles and solving geometric problems."},
+   {heading:"6. Quadrilaterals and polygons",body:"A quadrilateral has four sides and its interior angles sum to 360°. A polygon is a closed plane figure with straight sides. The sum of interior angles of an n-sided polygon is (n − 2) × 180°. For a regular polygon, all sides and interior angles are equal, and each exterior angle is 360° ÷ n. The sum of one exterior angle at each vertex of any convex polygon is 360°. Distinguish the number of sides from the number of diagonals or vertices when applying formulas."},
+   {heading:"7. Circle geometry and measurement",body:"A circle is the set of points in a plane at a fixed distance from a centre. The radius r is the distance from centre to circumference; the diameter d passes through the centre and d = 2r. Circumference C = 2πr = πd, and area A = πr². A chord joins two points on the circumference; the longest chord is the diameter. Use π as instructed or retain answers in terms of π. Include units: cm for length and cm² for area."},
+   {heading:"8. Bearings and direction",body:"A bearing gives direction measured clockwise from north. It is written as a three-figure angle, for example 065°, 120° or 305°. Draw a north line at the starting point, then measure clockwise to the direction of travel. The reverse or back bearing differs by 180°: add 180° when the original bearing is less than 180°, or subtract 180° when it is 180° or greater. Bearings are used in navigation, surveying, mapping and aviation."},
+   {heading:"9. Scale drawings and map scales",body:"A scale drawing represents a real object or distance proportionally. A scale of 1:50 000 means one unit on the map represents 50 000 of the same units on the ground. Keep units consistent before multiplying or dividing. For example, 1 cm on the map represents 50 000 cm, which is 500 m on the ground. A scale bar provides a visual alternative. Label map distances and actual distances clearly to avoid unit errors."},
+   {heading:"10. Perimeter and area of plane shapes",body:"Perimeter is the total distance around a two-dimensional shape. For a rectangle, P = 2(l + w) and A = lw. For a triangle, A = ½bh, where h is perpendicular height. For a parallelogram, A = bh; for a trapezium, A = ½(a + b)h, where a and b are parallel sides. For a circle, circumference and area use π. Area is measured in square units and perimeter in linear units."},
+   {heading:"11. Surface area and volume",body:"Volume measures the space occupied by a three-dimensional solid and is measured in cubic units. A cuboid has volume V = lwh and total surface area 2(lw + lh + wh). A prism has volume equal to cross-sectional area multiplied by length. A cylinder has volume V = πr²h and curved surface area 2πrh. Check whether a question asks for total or curved surface area, and convert all dimensions to the same unit before substitution."},
+   {heading:"12. Accuracy, estimation and practical applications",body:"Measurement should use appropriate instruments and units. A ruler measures length, a protractor measures angles, a tape measure is useful for longer distances and a measuring cylinder measures liquid volume. Record readings at eye level where relevant to reduce parallax error. Estimate a reasonable answer before calculating and check that the final unit matches the quantity. Geometry and measurement support construction, land surveying, map reading, design, tailoring and engineering."}
+  ],
+  diagrams,
+  workedExamples:[
+   {title:"Worked example 1: parallel-line angles",question:"Two parallel lines are crossed by a transversal. One acute angle is 68°. Find the adjacent obtuse angle and the alternate acute angle.",solution:"Adjacent angles on a straight line sum to 180°, so the obtuse angle = 180° − 68° = 112°. Alternate interior angles are equal for parallel lines, so the alternate acute angle = 68°.",answer:"112° and 68°"},
+   {title:"Worked example 2: polygon angles",question:"Find each interior angle of a regular octagon.",solution:"For n = 8, interior angle sum = (8 − 2) × 180° = 1080°. Each interior angle = 1080° ÷ 8 = 135°. Alternatively, exterior angle = 360° ÷ 8 = 45°, so interior = 180° − 45° = 135°.",answer:"135°"},
+   {title:"Worked example 3: bearings and scale",question:"On a map with scale 1:25 000, two points are 8 cm apart. Find the ground distance in kilometres. If the bearing from A to B is 070°, find the reverse bearing.",solution:"Ground distance = 8 × 25 000 = 200 000 cm = 2000 m = 2 km. Reverse bearing = 070° + 180° = 250°.",answer:"2 km; reverse bearing 250°"}
+  ],
+  practicalActivities:[
+   {title:"Angle investigation with parallel lines",steps:["Draw two parallel lines and a transversal using a ruler and set square.","Label corresponding, alternate and co-interior angle pairs.","Measure each angle with a protractor and record the results.","Compare measured values with the parallel-line angle rules and explain small measurement differences."],safety:"Handle sharp compasses and pencils carefully.",evaluation:"Repeat measurements and consider protractor alignment and reading uncertainty."},
+   {title:"Surveying a school-ground distance using bearings",steps:["Choose two visible points in a safe open area and mark the starting point.","Set a compass or bearing instrument at the starting point and align the reference with north.","Measure the clockwise bearing to the second point and record it in three figures.","Measure the distance with a tape or pacing method and compare with a scaled sketch."],safety:"Stay within approved school grounds and away from roads or moving vehicles.",evaluation:"Discuss magnetic north versus true north and sources of measurement error."},
+   {title:"Scale drawing of a classroom",steps:["Measure the classroom length and width using a tape measure.","Choose a convenient scale, such as 1 cm representing 1 m.","Convert all dimensions consistently and draw a labelled plan on graph paper.","Calculate actual floor area and compare it with the drawing's scaled area."],safety:"Keep walkways clear while measuring and avoid climbing on furniture.",evaluation:"Check that the drawing preserves proportions and includes units and a scale statement."}
+  ],
+  misconceptions:["A bearing is measured clockwise from north, not from east or from the direction you are facing without a north reference.","A reverse bearing differs by 180°, then is written using three figures.","Co-interior angles on parallel lines sum to 180°; corresponding and alternate angles are equal.","The interior angle sum formula is (n − 2) × 180°, not n × 180°.","A scale ratio compares like units; convert centimetres, metres and kilometres carefully.","Perimeter uses linear units, area uses square units and volume uses cubic units.","The diameter is twice the radius; do not substitute diameter as radius in πr²."],
+  questions:qs.map(q=>({question:q[0],answer:q[1],marks:q[2],markingGuide:q[3]})),
+  revisionSummary:["Angles on a straight line sum to 180° and angles around a point sum to 360°.","Vertically opposite angles are equal; complementary angles sum to 90° and supplementary angles to 180°.","For parallel lines, corresponding and alternate angles are equal; co-interior angles sum to 180°.","Triangle angle sum is 180°; polygon interior sum is (n − 2) × 180° and exterior sum is 360°.","Circle circumference is 2πr and area is πr².","Bearings are measured clockwise from north and written as three figures; reverse bearings differ by 180°.","Use consistent units for scale, perimeter, area, surface area and volume."],
+  seo:{title:"Geometry, Angles, Bearings and Measurement | Ghana SHS 1 Mathematics",description:"Ghana SHS Year 1 Mathematics notes on angle rules, parallel lines, triangles, polygons, circles, three-figure bearings, scale drawings, perimeter, area and volume. Includes diagrams, worked examples and 15 exam questions.",keywords:["Ghana SHS 1 Mathematics geometry notes","angles on parallel lines questions","triangle and polygon angle rules","bearings mathematics Ghana","scale drawing map scale calculations","area perimeter volume formulas","CBE Nexus Mathematics revision"],faqs:[{question:"What is the sum of angles in a triangle?",answer:"The interior angles of every triangle add up to 180 degrees."},{question:"How are bearings measured?",answer:"Bearings are measured clockwise from north and written as three-figure angles."},{question:"How do you calculate the interior angle sum of a polygon?",answer:"For an n-sided polygon, the interior angle sum is (n − 2) × 180 degrees."},{question:"What is the formula for the area of a circle?",answer:"The area of a circle is πr², where r is the radius."}]}
+ };
+ list.push(chapter);
+})();
