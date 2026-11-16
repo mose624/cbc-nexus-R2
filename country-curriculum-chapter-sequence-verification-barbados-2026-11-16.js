@@ -180,3 +180,16 @@ export const country = {
   "cbEnexusLongFormChaptersWritten": false
 },
 };
+
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Barbados",
+  gradeSequenceEvidence: "Ministry Media Resource Department publishes primary class syllabi including Mathematics; secondary science subject sequences must be separated from CXC CSEC/CAPE examination syllabuses.",
+  textbookEvidence: "Primary syllabus documents are available; textbook contents and chapter counts not inspected.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://mrd.gov.bb/Resources/Primary",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology (or integrated Life Science), Chemistry, Physics and Mathematics; then open approved/adopted student textbooks and record exact printed chapter headings and counts separately. Do not infer textbook chapters from syllabus themes."
+};
