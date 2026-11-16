@@ -111,3 +111,15 @@ export const countryCurriculumVerification = {
   "cbEnexusLongFormChaptersWritten": false
 },
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Burundi",
+  gradeSequenceEvidence: "Fundamental education is organised in integrated cycles; four standalone science subjects should not be forced across all 1ère–9ème years. Need current post-fundamental subject programmes for specialist sequences.",
+  textbookEvidence: "No actual textbook contents inspected.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "Official jurisdiction-specific syllabus and textbook source retrieval remains outstanding.",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology (or integrated Life Science), Chemistry, Physics and Mathematics; then open approved/adopted student textbooks and record exact printed chapter headings and counts separately. Do not infer textbook chapters from syllabus themes."
+};
