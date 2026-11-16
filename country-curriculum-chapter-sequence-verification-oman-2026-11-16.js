@@ -58,3 +58,15 @@ export const countryCurriculumVerification = {
     ]
   }
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Oman",
+  gradeSequenceEvidence: "The Ministry's 2026 library lists Science frameworks for Grades 1–6 and 7–8, and separate Biology, Chemistry and Physics frameworks for Grades 9–10 and 11–12. This confirms transition from integrated to specialist science.",
+  textbookEvidence: "The source identified here is a curriculum/framework source, not an opened textbook contents page. No actual adopted textbook contents pages or full book PDFs were inspected in this batch.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://site.moe.gov.om/library/214",
+  nextRequiredWork: "Retrieve the current official grade-by-grade syllabus and the exact approved/adopted textbook for each relevant grade and jurisdiction; open its contents pages; record book title, edition, publisher, grade, chapter titles and verified chapter count. Keep CBE Nexus-authored chapters in a separate field."
+};
