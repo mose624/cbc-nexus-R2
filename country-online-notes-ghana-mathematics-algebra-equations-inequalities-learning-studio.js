@@ -1,0 +1,76 @@
+/* CBE Nexus Learning Studio — Ghana SHS Year 1 Mathematics: Algebra, equations and inequalities.
+   Original supplementary material; confirm exact sequencing with current Ghana NaCCA scheme of learning. */
+(()=>{"use strict";
+const level=window.CBE_COUNTRY_NOTES?.Ghana?.levels?.["SHS Year 1"];if(!level)return;
+const list=level.Mathematics||(level.Mathematics=[]);if(list.some(x=>x.id==="gh-shs1-maths-algebra-equations-inequalities-studio"))return;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const svg=(title,a,b,c,cap)=>'<svg viewBox="0 0 520 150" role="img" aria-label="'+esc(title)+'" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="5" width="510" height="140" rx="14" fill="#f6fbff" stroke="#b9cde0"/>'+[[24,a,"#dceeff","#3478a8"],[194,b,"#fff0c2","#bd8700"],[364,c,"#dcf7e5","#348653"]].map(v=>'<rect x="'+v[0]+'" y="32" width="132" height="70" rx="11" fill="'+v[2]+'" stroke="'+v[3]+'" stroke-width="2"/><text x="'+(v[0]+66)+'" y="72" text-anchor="middle" font-size="15" font-weight="700" fill="#17324d">'+esc(v[1])+'</text>').join("")+'<path d="M156 67 H192 M326 67 H362" stroke="#2563eb" stroke-width="3"/><path d="M183 60 L193 67 L183 74 M353 60 L363 67 L353 74" fill="none" stroke="#2563eb" stroke-width="3"/><text x="260" y="128" text-anchor="middle" font-size="12" fill="#40566d">'+esc(cap)+'</text></svg>';
+const raw=[
+["Algebraic language", "Variable","Coefficient","Constant","Letters represent unknown or changing values"],
+["Like terms", "3x + 2x","5x","Collect","Only terms with identical variable parts can be combined"],
+["Expanding brackets", "2(x + 3)","2x + 6","Distribute","Multiply every term inside the bracket"],
+["Factorisation", "6x + 12","6(x + 2)","Common factor","Factorisation reverses expansion"],
+["Linear equations", "3x + 5 = 17","3x = 12","x = 4","Perform inverse operations on both sides"],
+["Equations with brackets", "2(x − 3) = 8","2x − 6 = 8","x = 7","Expand first, then isolate the variable"],
+["Unknowns on both sides", "5x + 2 = 2x + 14","3x = 12","x = 4","Collect variable terms on one side"],
+["Inequalities", "x + 3 > 7","x > 4","Open endpoint","The solution is a range of values"],
+["Reversing inequality", "−2x > 6","x < −3","Flip sign","Divide by a negative number and reverse the inequality"],
+["Substitution and formulae", "A = lw","l = 8, w = 5","A = 40","Substitute values with correct units"]
+];
+const diagrams=raw.map(r=>({title:r[0],svg:svg(...r),caption:r[4]}));
+const questions=[
+["Simplify 4a + 7a − 3a.","8a",2,["Correct collection of like terms (1); 8a (1)."]],
+["Simplify 5x + 3 − 2x + 8.","3x + 11",2,["5x − 2x = 3x (1); 3 + 8 = 11 (1)."]],
+["Expand 4(2y − 3).","8y − 12",2,["Multiply 4 by both terms (1); correct expression (1)."]],
+["Expand and simplify 3(x + 2) + 2x.","5x + 6",2,["Expansion (1); collection (1)."]],
+["Factorise 12p + 18.","6(2p + 3)",2,["Highest common factor 6 (1); correct bracket (1)."]],
+["Solve 5x − 7 = 18.","5x = 25, so x = 5.",2,["Add 7 to both sides (1); divide by 5 (1)."]],
+["Solve 3(x − 2) = 15.","x − 2 = 5, hence x = 7.",2,["Divide by 3 or expand correctly (1); x = 7 (1)."]],
+["Solve 7x + 4 = 3x + 20.","4x = 16, so x = 4.",2,["Collect x terms and constants (1); x = 4 (1)."]],
+["Solve x/4 + 3 = 8.","x/4 = 5, so x = 20.",2,["Subtract 3 (1); multiply by 4 (1)."]],
+["Solve 2x − 5 < 9.","2x < 14, so x < 7.",2,["Add 5 (1); divide by positive 2 (1)."]],
+["Solve −3x ≥ 12.","x ≤ −4.",2,["Divide by −3 (1); reverse inequality to ≤ (1)."]],
+["Evaluate 2a² − 3b when a = 3 and b = 4.","2(3²) − 3(4) = 18 − 12 = 6.",2,["Correct substitution (1); answer 6 (1)."]],
+["A number increased by 9 is 23. Form an equation and find the number.","Let the number be n. n + 9 = 23, so n = 14.",3,["Define variable (1); equation (1); solution 14 (1)."]],
+["The perimeter of a rectangle is 34 cm. Its length is x + 3 cm and width is x cm. Find x.","2[(x + 3) + x] = 34; 4x + 6 = 34; x = 7 cm.",3,["Perimeter equation (1); simplify (1); x = 7 (1)."]],
+["Solve 2(3x + 1) = 4x + 14.","6x + 2 = 4x + 14; 2x = 12; x = 6.",3,["Expand (1); collect terms (1); x = 6 (1)."]]
+];
+const chapter={
+id:"gh-shs1-maths-algebra-equations-inequalities-studio",
+title:"Algebra, equations and inequalities",
+lessons:"Learning Studio chapter • algebraic expressions, simplification, expansion, factorisation, equations and inequalities",
+curriculumContext:"Ghana NaCCA Senior High School Mathematics supplementary material. Check exact sequence and depth against the current school scheme of learning.",
+curriculumStatus:"Supplementary curriculum-aligned learning material",
+objectives:["Use variables, coefficients, constants and algebraic terms correctly.","Simplify expressions by collecting like terms.","Expand single brackets using the distributive law.","Factorise expressions using common factors.","Solve linear equations including brackets and variables on both sides.","Form equations from verbal and geometric situations.","Solve and represent linear inequalities, including negative coefficients.","Substitute values into algebraic formulae and interpret answers."],
+sections:[
+{heading:"1. Algebraic notation and vocabulary",body:"Algebra uses letters and symbols to represent numbers and relationships. In 7x + 4, x is the variable, 7 is its coefficient and 4 is a constant. A term is a part of an expression separated by addition or subtraction signs. The expression 3ab contains the variables a and b multiplied together. An expression has no equality sign; an equation states that two expressions are equal."},
+{heading:"2. Terms and like terms",body:"Like terms have exactly the same variable part, including the same powers. Thus 4x and −7x are like terms, while 4x and 4x² are unlike terms. To simplify, add or subtract the coefficients and keep the common variable part: 6m + 2m − 5m = 3m. Constants can be collected with constants. Write the simplified expression clearly and in a consistent order."},
+{heading:"3. The distributive law and expansion",body:"Multiplication distributes over addition and subtraction: a(b + c) = ab + ac. Every term inside the bracket must be multiplied. For example, 3(2x − 5) = 6x − 15. A frequent error is multiplying only the first term. When a negative number is outside a bracket, its sign affects every term: −2(x − 4) = −2x + 8."},
+{heading:"4. Factorisation and common factors",body:"Factorisation expresses an algebraic sum as a product. It reverses expansion. Find the greatest common numerical and variable factor shared by all terms, then place it outside brackets. For example, 15x + 20 = 5(3x + 4). Check by expanding the result. Factorisation is useful for simplifying expressions, solving equations and identifying structure."},
+{heading:"5. Solving one-step and two-step equations",body:"An equation remains balanced when the same operation is performed on both sides. Use inverse operations to isolate the unknown. Addition is undone by subtraction, multiplication by division, and vice versa. For 4x + 3 = 19, subtract 3 from both sides to obtain 4x = 16, then divide by 4 to obtain x = 4. Verify by substituting the answer into the original equation."},
+{heading:"6. Equations involving brackets and fractions",body:"For equations containing brackets, either divide first when every term has a common factor or expand carefully and then collect terms. For equations involving fractions, multiply both sides by a suitable common denominator to clear the fractions. Preserve equality by applying each operation to both sides. Always check the final value in the original equation."},
+{heading:"7. Unknowns on both sides",body:"When the unknown appears on both sides, collect variable terms on one side and constants on the other. For example, 7x + 2 = 4x + 17 becomes 3x + 2 = 17, then 3x = 15 and x = 5. The choice of side is flexible; use operations that keep the arithmetic simple and maintain equality."},
+{heading:"8. Forming equations from words",body:"Translate a statement into symbols by defining the unknown first. 'Five more than twice a number is 19' becomes 2n + 5 = 19. For perimeter problems, use the correct geometric formula and substitute the expressions for lengths. Include units in the final answer and check whether the value is reasonable in the context."},
+{heading:"9. Meaning and notation of inequalities",body:"An inequality compares quantities using <, >, ≤ or ≥. The symbols < and > exclude the endpoint; ≤ and ≥ include it. A solution may be an interval of values rather than one number. On a number line, an open circle represents an excluded endpoint and a filled circle represents an included endpoint. Test values can confirm which side satisfies the inequality."},
+{heading:"10. Solving linear inequalities",body:"Solve inequalities using operations on both sides just as with equations, with one crucial rule: multiplying or dividing both sides by a negative number reverses the inequality sign. For example, −2x > 8 gives x < −4 after division by −2. Adding or subtracting the same value does not reverse the sign. Check a test value in the original inequality."},
+{heading:"11. Substitution, formulae and evaluation",body:"Substitution replaces each variable with its given numerical value. Use brackets around negative values and follow the order of operations: brackets, powers, multiplication and division, then addition and subtraction. For example, if P = 2l + 2w, l = 6 cm and w = 4 cm, then P = 2(6) + 2(4) = 20 cm. State the appropriate unit."},
+{heading:"12. Checking, interpreting and communicating solutions",body:"A reliable solution shows the main algebraic steps, not just the final answer. Keep equality signs aligned and perform equivalent operations on both sides. Substitute a proposed solution into the original equation or inequality. In word problems, interpret the result in context: a length cannot be negative, and a number of people or objects is normally a whole number. Round only when the context requires it."}
+],
+diagramGallery:diagrams,
+realLifeApplications:["A mobile-money budget can be modelled by an equation relating starting balance, transactions and remaining balance.","Transport fares with a fixed charge and a per-kilometre rate can be represented by a linear expression.","Rectangle perimeter problems connect algebra with measurement and design.","Inequalities can represent spending limits, age requirements and minimum examination scores.","Formulae in science and technology use substitution to calculate unknown quantities."],
+workedExamples:[
+{title:"Worked example 1: Simplifying and expanding",question:"Simplify 4(2x − 3) + 3x + 5.",solution:"Expand: 8x − 12 + 3x + 5. Collect like terms: 11x − 7.",marking:"1 mark for correct expansion; 1 mark for collecting x terms and constants."},
+{title:"Worked example 2: Equation with the unknown on both sides",question:"Solve 6x − 4 = 2x + 16.",solution:"Subtract 2x: 4x − 4 = 16. Add 4: 4x = 20. Divide by 4: x = 5. Check: 30 − 4 = 2(5) + 16 = 26.",marking:"1 mark for collecting variables; 1 mark for isolating x; 1 mark for answer/check."},
+{title:"Worked example 3: Inequality with a negative coefficient",question:"Solve −5x + 10 ≤ 25.",solution:"Subtract 10: −5x ≤ 15. Divide by −5 and reverse the sign: x ≥ −3.",marking:"1 mark for subtracting 10; 1 mark for division; 1 mark for reversing the sign."}
+],
+practicalActivities:[
+{title:"Algebra balance investigation",steps:["Use a balance model or drawn balance to represent equality.","Place equal unknown-value units on each side and add or remove the same known units from both sides.","Record each balance state as an equation.","Explain why performing the same operation on both sides preserves equality.","Solve a new equation and verify the answer by substitution."],safety:"If using physical counters or a balance, keep small objects away from young children and handle equipment carefully."},
+{title:"Create and test a real-life linear model",steps:["Choose a simple context such as a fixed service fee plus a cost per unit.","Define a variable for the number of units and write an expression for total cost.","Create two scenarios with equal total costs and form an equation.","Solve the equation and check the result in the original context.","Discuss assumptions and whether the model applies to all values."],safety:"Use fictional or sample prices; do not share personal financial or mobile-money account details."}
+],
+misconceptions:["Only identical variable parts are like terms; x and x² cannot be combined.","In 3(x + 4), the 3 multiplies both x and 4.","A negative sign before a bracket changes the signs of all terms when expanded.","An equation must remain balanced; do not perform an operation on only one side.","The solution of an equation should be checked in the original equation.","When multiplying or dividing an inequality by a negative number, reverse the inequality sign.","A strict inequality such as x > 2 does not include 2.","In substitution, use brackets around negative values and follow the order of operations."],
+summary:["A variable represents a number; a coefficient multiplies a variable.","Collect only like terms.","Expand by multiplying every term inside a bracket.","Factorise by taking out a common factor.","Solve equations by applying equivalent operations to both sides.","Form equations by defining the unknown and translating the statement.","Reverse an inequality sign when multiplying or dividing by a negative number.","Substitute values carefully and interpret the answer with suitable units."],
+questions:questions.map(q=>({question:q[0],answer:q[1],marks:q[2],markingPoints:q[3]})),
+seo:{title:"Ghana SHS Mathematics: Algebra, Equations and Inequalities | CBE Nexus",description:"Study Ghana SHS Mathematics algebra with detailed notes on expressions, like terms, expansion, factorisation, linear equations and inequalities, worked examples, diagrams and 15 exam questions.",keywords:["Ghana SHS Mathematics notes","Ghana NaCCA algebra","simplifying algebraic expressions","expanding and factorising expressions","linear equations worked examples","solving inequalities","algebra exam questions Ghana","CBE Nexus Learning Studio"],faqs:[{question:"What are like terms in algebra?",answer:"Like terms have exactly the same variable part, including the same powers, so their coefficients can be combined."},{question:"How do you expand a bracket?",answer:"Multiply every term inside the bracket by the factor outside it, using the distributive law."},{question:"How do you solve a linear equation?",answer:"Perform equivalent inverse operations on both sides until the unknown is isolated, then check by substitution."},{question:"When do you reverse an inequality sign?",answer:"Reverse the inequality sign when multiplying or dividing both sides by a negative number."},{question:"How can an algebraic answer be checked?",answer:"Substitute the proposed value into the original equation or inequality and verify that the statement is true."}]}
+};
+list.unshift(chapter);
+})();
