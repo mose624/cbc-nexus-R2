@@ -49,7 +49,7 @@
  "The final answer should reflect the precision of the data. If isotope masses are whole numbers and abundances are given to one decimal place, a result to two decimal places is often appropriate unless the question specifies otherwise. Keep extra digits during intermediate calculations and round only at the end.",
  "In experimental work, precision describes the closeness of repeated measurements to one another, while accuracy describes closeness to an accepted value. A result can be precise but inaccurate if a systematic error affects every measurement. In mass spectrometry, calibration, contamination, detector response and sample preparation can affect the quality of the measured isotope abundances."
  ],workedExamples:[
- {question:"An element has isotopes of masses 10, 11 and 12 with abundances 5%, 仮 15% and 80%. Calculate Ar.",solution:"Replace the illustrative abundance with the measured value: for 5%, 15% and 80%, Ar = (10×5 + 11×15 + 12×80) ÷ 100 = 11.75."},
+ {question:"An element has isotopes of masses 10, 11 and 12 with abundances 5%, 15% and 80%. Calculate Ar.",solution:"Ar = (10×5 + 11×15 + 12×80) ÷ 100 = 11.75."},
  {question:"Two isotopes have masses 24 and 26. The relative atomic mass is 24.5. Find the percentage abundance of the isotope of mass 26.",solution:"Let its fraction be x. 24(1−x)+26x=24.5. Thus 24+2x=24.5, x=0.25. The isotope of mass 26 has abundance 25%."}
  ]},
  {heading:"Scientific communication: representing atoms responsibly",paragraphs:[
