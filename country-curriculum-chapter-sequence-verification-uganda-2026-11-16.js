@@ -1,101 +1,44 @@
-/* CBE Nexus curriculum verification record — 2026-11-16.
- * Framework/subject mapping only; not a completed grade-by-grade textbook audit.
- */
+/* CBE Nexus evidence-led curriculum reconciliation record — 2026-11-16. */
 export const countryCurriculumVerification = {
   "country": "Uganda",
   "registrySlug": "uganda",
   "auditDate": "2026-11-16",
-  "educationFramework": "NCDC lower secondary curriculum lists Mathematics, Biology, Chemistry and Physics as separate compulsory subjects in S1–S4, with subject options and different menus by stage. Upper secondary offers all four in subject combinations.",
+  "educationFramework": "NCDC lower secondary S1–S4 syllabuses are subject-specific. Biology sequence has been extracted separately; NCDC Advanced Level publishes Biology/Chemistry/Agriculture and Physics/Mathematics syllabus volumes.",
   "subjects": [
     {
       "subject": "Biology",
-      "officialMapping": "Biology compulsory at S1–S4 and available at higher secondary.",
-      "gradeByGradeSequenceVerified": true,
-      "gradeByGradeSequence": {
-        "source": "NCDC Biology Syllabus (2019), programme planner, pp. 12–14",
-        "Senior 1": {
-          "Term 1": ["Introduction to Biology (8 periods)", "Cells (20 periods)", "Classification (8 periods)"],
-          "Term 2": ["Classification (36 periods)", "Five Kingdoms of Living Organisms (30 periods)", "Viruses (6 periods)"],
-          "Term 3": ["Insects (20 periods)", "Flowering plants (16 periods)"],
-          "annualPeriods": 108
-        },
-        "Senior 2": {
-          "Term 1": ["Physical and chemical properties of soil (20 periods)", "Soil erosion and conservation: causes, effects and prevention (16 periods)"],
-          "Term 2": ["Nutrition types and nutrient compounds (11 periods)", "Nutrition in green plants (10 periods)", "Nutrition in mammals (15 periods)"],
-          "Term 3": ["Transport in plants (18 periods)", "Transport in animals (18 periods)"],
-          "annualPeriods": 108
-        },
-        "Senior 3": {
-          "Term 1": ["Gaseous exchange (14 periods)", "Aerobic and anaerobic respiration (15 periods)", "Excretion in animals (19 periods)"],
-          "Term 2": ["Chemical coordination in humans (18 periods)", "Nervous coordination in humans (22 periods)", "Receptor organs in man (8 periods)"],
-          "Term 3": ["Locomotion in mammals (20 periods)", "Growth in plants and animals (12 periods)", "Development in plants and animals (16 periods)"],
-          "annualPeriods": 144
-        },
-        "Senior 4": {
-          "Term 1": ["Asexual reproduction in plants (vegetative reproduction) (10 periods)", "Sexual reproduction in plants (16 periods)", "Sexual reproduction in humans (22 periods)"],
-          "Term 2": ["Inheritance (20 periods)", "Variation and Selection (13 periods)", "Concept of ecology (3 periods)", "Food chains and food webs (12 periods)", "Associations in biological communities (18 periods)"],
-          "Term 3": ["Humans and the natural environment (20 periods)"],
-          "annualPeriods": 134
-        }
-      },
+      "gradeByGradeSequenceVerified": false,
       "officialChapterCount": null,
-      "textbookEvidence": {
-        "officialCatalogue": "NCDC Orange Book (2024), catalogue record pp. 90–91",
-        "identifiedTitle": "Biology Textbook Senior One: (Prototype) Lower Secondary Curriculum",
-        "authorPublisher": "NCDC",
-        "publicationYear": 2020,
-        "isbn": "Not assigned",
-        "coverageEvidence": "Senior One prototype textbook listed; catalogue summary says it follows the revised Biology syllabus.",
-        "contentsPageInspected": false,
-        "chapterCountVerified": false,
-        "missing": "Obtain actual approved S1–S4 Biology learner textbooks and inspect each contents page; map book chapters to NCDC topic codes."
-      },
-      "officialChapterCount": null,
-      "cbeNexusChaptersWritten": 0,
-      "notes": "Do not infer textbook chapter counts from curriculum areas, learning outcomes, examination units or strands."
+      "actualTextbookContentsInspected": false,
+      "notes": "Do not count syllabus strands or curriculum topics as textbook chapters."
     },
     {
       "subject": "Chemistry",
-      "officialMapping": "Chemistry compulsory at S1–S4 and available at higher secondary.",
       "gradeByGradeSequenceVerified": false,
       "officialChapterCount": null,
-      "cbeNexusChaptersWritten": 0,
-      "notes": "Do not infer textbook chapter counts from curriculum areas, learning outcomes, examination units or strands."
+      "actualTextbookContentsInspected": false,
+      "notes": "Do not count syllabus strands or curriculum topics as textbook chapters."
     },
     {
       "subject": "Physics",
-      "officialMapping": "Physics compulsory at S1–S4; General Science is an alternative in specified special-needs context.",
       "gradeByGradeSequenceVerified": false,
       "officialChapterCount": null,
-      "cbeNexusChaptersWritten": 0,
-      "notes": "Do not infer textbook chapter counts from curriculum areas, learning outcomes, examination units or strands."
+      "actualTextbookContentsInspected": false,
+      "notes": "Do not count syllabus strands or curriculum topics as textbook chapters."
     },
     {
       "subject": "Mathematics",
-      "officialMapping": "Mathematics compulsory at S1–S4 and offered at higher secondary.",
       "gradeByGradeSequenceVerified": false,
       "officialChapterCount": null,
-      "cbeNexusChaptersWritten": 0,
-      "notes": "Do not infer textbook chapter counts from curriculum areas, learning outcomes, examination units or strands."
+      "actualTextbookContentsInspected": false,
+      "notes": "Do not count syllabus strands or curriculum topics as textbook chapters."
     }
   ],
   "sources": [
-    "https://ncdc.go.ug/directorates/",
-    "https://www.ncdc.go.ug/wp-content/uploads/2024/03/Curriculum_Framework.pdf",
     "https://ncdc.go.ug/wp-content/uploads/2024/02/Biology_Syllabus_compressed.pdf",
-    "https://ncdc.go.ug/wp-content/uploads/2025/05/NCDC-Orange-Book-Final-List_working_Corrected-Updated-02.06.2025_Web-FILE.pdf",
-    "https://www.ncdc.go.ug/wp-content/uploads/2024/02/GENERAL-SCIENCE-syllabus.pdf"
+    "https://ncdc.go.ug/wp-content/uploads/2024/02/CHEMISTRY_SYLLABUS_compressed.pdf",
+    "https://ncdc.go.ug/wp-content/uploads/2025/05/Biol-Chem-Agric-Subjects-Final.pdf"
   ],
-  "reconciliation": {
-    "batch": "173-192",
-    "status": "biology-sequence-partially-extracted",
-    "evidenceSummary": "Biology S1–S4 programme planner has been extracted in the existing record. NCDC also publishes separate lower-secondary Chemistry and Biology syllabi and an Advanced Secondary programme with Biology/Chemistry/Agriculture and Physics/Mathematics volumes. Chemistry, Physics and Mathematics grade/term sequence extraction and actual S1–S6 textbook contents remain outstanding.",
-    "officialDocuments": ["https://ncdc.go.ug/wp-content/uploads/2024/02/Biology_Syllabus_compressed.pdf","https://ncdc.go.ug/wp-content/uploads/2024/02/CHEMISTRY_SYLLABUS_compressed.pdf","https://ncdc.go.ug/wp-content/uploads/2025/05/Biol-Chem-Agric-Subjects-Final.pdf","https://www.ncdc.go.ug/wp-content/uploads/2024/02/"],
-    "gradeByGradeSequenceVerified": false,
-    "actualTextbookContentsInspected": false,
-    "officialTextbookChapterCountsVerified": false,
-    "nextAction": "Extract grade/year/term topic headings from current official programme documents; inspect actual approved learner-textbook contents pages; map every book chapter to the official topic sequence and record discrepancies."
-  },
   "completion": {
     "gradeByGradeTopicSequenceVerified": false,
     "officialTextbookChapterCountsVerified": false,
@@ -103,11 +46,22 @@ export const countryCurriculumVerification = {
     "diagramsWorkedExamplesPracticalsVerified": false,
     "examQuestionsAndMarkingGuidesVerified": false,
     "nextActions": [
-      "Retrieve current official framework and subject programmes for every grade.",
-      "Extract official topic headings, learning outcomes, hours and practical requirements.",
-      "Compare each programme with approved textbook tables of contents; count chapters only from actual contents pages.",
-      "Map language, regional, school-track and examination-board variations.",
-      "Write CBE Nexus chapters after sequence validation, then verify word counts, diagrams, worked examples, practicals and assessment."
+      "Extract current official grade/year/term topic sequences for all four subjects.",
+      "Identify the precise approved or school-adopted textbook edition for each grade and subject.",
+      "Inspect actual contents pages and map each book chapter to official syllabus topics.",
+      "Record discrepancies, missing topics, duplicated topics and implementation-year changes."
     ]
+  },
+  "reconciliation": {
+    "batch": "193-196 plus 1-6",
+    "status": "biology-partial-sequence-extracted-other-subjects-pending",
+    "evidenceSummary": "NCDC lower secondary S1–S4 syllabuses are subject-specific. Biology sequence has been extracted separately; NCDC Advanced Level publishes Biology/Chemistry/Agriculture and Physics/Mathematics syllabus volumes.",
+    "officialDocuments": [
+      "https://ncdc.go.ug/wp-content/uploads/2024/02/Biology_Syllabus_compressed.pdf",
+      "https://ncdc.go.ug/wp-content/uploads/2024/02/CHEMISTRY_SYLLABUS_compressed.pdf",
+      "https://ncdc.go.ug/wp-content/uploads/2025/05/Biol-Chem-Agric-Subjects-Final.pdf"
+    ],
+    "actualTextbookContentsInspected": false,
+    "officialTextbookChapterCountsVerified": false
   }
 };
