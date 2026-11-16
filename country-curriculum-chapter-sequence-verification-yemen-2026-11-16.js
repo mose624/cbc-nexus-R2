@@ -43,6 +43,16 @@ export const countryCurriculumVerification = {
   "sources": [
     "Official national Ministry / curriculum authority source not yet retrieved; verify before asserting detailed grade sequence"
   ],
+  "reconciliation": {
+    "batch": "173-192",
+    "status": "jurisdiction-and-source-reconciliation-required",
+    "evidenceSummary": "Current textbook and curriculum implementation must be mapped separately by authority/territory and school administration. No current nationally consistent grade sequence or approved textbook catalogue verified in this pass.",
+    "officialDocuments": [],
+    "gradeByGradeSequenceVerified": false,
+    "actualTextbookContentsInspected": false,
+    "officialTextbookChapterCountsVerified": false,
+    "nextAction": "Extract grade/year/term topic headings from current official programme documents; inspect actual approved learner-textbook contents pages; map every book chapter to the official topic sequence and record discrepancies."
+  },
   "completion": {
     "gradeByGradeTopicSequenceVerified": false,
     "officialTextbookChapterCountsVerified": false,
