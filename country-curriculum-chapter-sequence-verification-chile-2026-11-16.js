@@ -134,3 +134,15 @@ export const countryCurriculumVerification = {
     "Only after source extraction, build CBE Nexus chapter sequences, worked examples, diagrams, practical work and assessment banks."
   ]
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Chile",
+  gradeSequenceEvidence: "Official Currículum Nacional provides course-by-course and subject-by-subject learning objectives, programmes, study plans and guidance from basic to secondary education. Use the course selector to extract Biology/life science, Chemistry, Physics and Mathematics separately; the platform also lists textbook/library resources.",
+  textbookEvidence: "Framework and programme portal identified; no actual textbook contents pages or printed chapter counts inspected.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.curriculumnacional.cl/",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology or integrated Life Science, Chemistry, Physics and Mathematics. Then inspect adopted student textbooks and record printed chapter titles and counts separately; do not infer chapters from standards or themes."
+};
