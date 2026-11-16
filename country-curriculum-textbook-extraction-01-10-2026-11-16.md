@@ -245,3 +245,126 @@ Therefore:
 | **Total** | **4 books** | **27 chapters** |
 
 The first-batch total is now **4 actual textbook contents pages** and **27 textbook chapters** transcribed, all for Afghanistan Grade 7. Complete official grade-by-grade syllabus sequences transcribed remain **0**. The other nine countries in the first batch remain pending document-level extraction. The canonical register remains unchanged until syllabus topic sequences and edition status are reconciled.
+
+
+---
+
+# Afghanistan continuation — Grade 8 textbook contents-page extraction
+**Inspection date:** 16 November 2026  
+**Publisher:** Afghanistan Ministry of Education, General Directorate of Curriculum Development and Textbook Authoring  
+**Important language distinction:** Biology, Chemistry and Mathematics PDFs inspected here are Dari editions. The Physics PDF opened is the Pashto edition. They are not a single language-set.
+
+## A. Grade 8 Biology — Dari edition, 1398 SH
+
+**Official PDF:** https://moe.gov.af/sites/default/files/2020-03/G8-Dr-Biology.pdf  
+**Metadata:** Grade 8; Biology; Dari; Kabul; Ministry of Education; publication 1398 SH. The contents page was inspected at the beginning of the PDF (extracted lines 109–143).
+
+### Actual contents-page transcription
+
+| Chapter | Chapter title (English working translation) | Listed contents-page sections | Printed start page |
+|---|---|---|---:|
+| 1 | Classification of living things | History of classification; classification into six kingdoms | 1 |
+| 2 | From viruses to fungi | Viruses; bacteria; Protista; algae; fungi; lichens | 11 |
+| 3 | Classification of plants | Characteristics of plants; plant classification; ovary-bearing plants | 25 |
+| 4 | Classification of animals | Characteristics of animals; birds and mammals of Afghanistan; economic importance of fish, birds and mammals | 43 |
+| 5 | Natural resources and their conservation | Natural resources; conservation of natural resources | 69 |
+
+The contents page lists summaries and chapter questions as well. The chapter sequence above is a direct transcription of the actual contents page, with English headings as working translations.
+
+**Source evidence:** The PDF identifies the Ministry, Grade 8, Dari language and 1398 SH publication information; the contents page lists five chapters and subtopics. See PDF lines 65–86 and 109–140.
+
+## B. Grade 8 Chemistry — Dari edition, 1399 SH
+
+**Official PDF:** https://moe.gov.af/sites/default/files/2020-03/G8-Dr-Chemistry.pdf  
+**Metadata:** Grade 8; Chemistry; Dari; Ministry of Education; 1399 SH. The contents page is at extracted lines 149–183.
+
+### Actual contents-page transcription
+
+| Chapter | Chapter title (English working translation) | Contents-page sections | Printed start page |
+|---|---|---|---:|
+| 1 | Basic components of the atom | History of the atom; atomic structure and components | 1 |
+| 2 | Arrangement of elements in the periodic table | Periodic table of elements | 11 |
+| 3 | Chemical bonding / chemical relationships | Review of key concepts; symbols, valency, formulae and octet rule | 23 |
+| 4 | Chemical interactions and equations | Chemical reactions; chemical equations; types of reactions | 39 |
+| 5 | Formation and uses of oxides | Oxygen as an oxidising substance; naming oxides; combustion of fuels | 51 |
+| 6 | Important industrial compounds | Fertilisers and plant nutrients; types of fertilisers; chlorine compounds | 61 |
+| 7 | Acids and alkalis | Acids and alkalis; properties, preparation and uses | 73 |
+| 8 | Salts | Salts and their properties; common salts and their importance | 88 |
+
+The textbook introduction also explains the eight-chapter sequence and mentions activities, chapter summaries and unsolved questions.
+
+**Source evidence:** PDF lines 149–183 provide the contents page; lines 190–205 describe the scope of the chapters.
+
+## C. Grade 8 Physics — Pashto edition, 1398 SH
+
+**Official PDF:** https://www.moe.gov.af/sites/default/files/2020-03/G8-Ps-Physic.pdf  
+**Metadata:** Grade 8; Physics; Pashto; Ministry of Education; formal book details state 1398 SH. The cover visual includes a conflicting earlier year label (1396 SH); the formal metadata states 1398 SH. This discrepancy is retained for bibliographic follow-up.
+
+### Actual contents-page transcription
+
+| Chapter | Chapter title (English working translation) | Contents-page topics | Printed start page |
+|---|---|---|---:|
+| 1 | Heat and its effects on materials | Expansion and contraction; states/phases of matter; effects of impurities | 1 |
+| 2 | Transfer of heat | Heat transfer; heat exchange; combustion engines | 25 |
+| 3 | Magnetic fields | Magnetic field; electromagnets | 37 |
+| 4 | Static electricity | Electroscope; electrical induction; electricity in the air (thunder/lightning) | 45 |
+| 5 | Force | Gravity; mass and weight | 57 |
+| 6 | Simple machines | Mechanical advantage of machines | 69 |
+
+The contents page was inspected at extracted lines 77–112 of the PDF. The book's preface explains that Grade 7 had already covered measurement, force, work and energy, pressure, properties of light, reflection and refraction; Grade 8 continues with heat, heat transfer, magnetism, static electricity, forces and simple machines.
+
+**Language warning:** This is the Pashto edition. Do not infer that a matching Dari Physics edition was inspected. The search result and cover visual contain a 1396 SH label, but the formal book metadata inside the PDF states 1398 SH; this discrepancy is recorded rather than hidden.
+
+## D. Grade 8 Mathematics — Dari edition, 1398 SH metadata / 1399 cover label
+
+**Official PDF:** https://www.moe.gov.af/sites/default/files/2020-03/G8-Dr-Math_0.pdf  
+**Metadata:** Grade 8; Mathematics; Dari; Ministry of Education; Kabul. The cover displays 1399 SH, while the formal bibliographic details state 1398 SH. Record both until a definitive edition record is confirmed. Contents page is at extracted lines 75–145.
+
+### Actual contents-page transcription
+
+| Chapter | Chapter title (English working translation) | Contents-page topics | Printed start page |
+|---|---|---|---:|
+| 1 | Real numbers | Properties of real numbers; approximate square roots; operations with surds; laws of exponents; fractional powers and rationalising fractions | 1 |
+| 2 | Financial calculations | Ratios and division into proportional parts; proportion and compound proportion; percentages; simple and compound interest | 37 |
+| 3 | Similarity | Similar figures and polygons; parallel-line theorem and intercept theorem; similarity cases for triangles | 67 |
+| 4 | Transformations / correspondence | Concept of transformation; axial and central transformations | 89 |
+| 5 | Triangle theorems | Isosceles triangle theorems; Pythagorean theorem and converse; right-triangle theorems; angle bisectors, altitudes and medians | 99 |
+| 6 | Areas and volumes | Surface area and volume of cuboids and cubes; prisms and cylinders; pyramids; cones and spheres | 135 |
+| 7 | Algebraic expressions | Variables and algebraic expressions; simplifying; multiplication; identities; factorisation | 157 |
+| 8 | Equations | Meaning of equations; operations on equality; one-variable linear equations; equivalent equations and forming equations | 181 |
+| 9 | Relations and functions | Points and coordinates in the plane; variables; relations; linear relations; functions | 199 |
+| 10 | Statistics | Frequency tables; cumulative and relative frequency; bar and line graphs; mean for ungrouped and grouped data | 219 |
+| 11 | Probability | Relative frequency and probability; equally and unequally likely outcomes; sample spaces and events; probability rules; tree diagrams and multiplication rule | 241 |
+
+**Bibliographic caution:** The cover page shows 1399 SH, but the book-details block says 1398 SH. Both are preserved in the record. The contents page itself is directly inspected.
+
+## Grade 8 extraction totals
+
+| Subject | Actual contents page inspected | Chapters transcribed | Language | Edition information |
+|---|---:|---:|---|---|
+| Biology | Yes | 5 | Dari | 1398 SH |
+| Chemistry | Yes | 8 | Dari | 1399 SH |
+| Physics | Yes | 6 | Pashto | Formal details 1398 SH; cover includes 1396 SH |
+| Mathematics | Yes | 11 | Dari | Cover 1399 SH; book details 1398 SH |
+| **Total** | **4 books** | **30 chapters** | Mixed | Edition discrepancies retained |
+
+## Cross-grade observation — Grade 7 to Grade 8
+These are observations from the two sets of Ministry textbook contents pages, not a substitute for an independently published syllabus:
+- Biology shifts from cell biology, plants and ecology in Grade 7 to classification of organisms and conservation of natural resources in Grade 8.
+- Chemistry moves from matter, mixtures and introductory reactions in Grade 7 to atomic structure, periodic organisation, bonding, oxides, industrial compounds, acids, alkalis and salts in Grade 8.
+- Physics moves from measurement, force, work/energy, pressure and optics in Grade 7 to heat, magnetism, static electricity, force and simple machines in the inspected Grade 8 Pashto book.
+- Mathematics progresses from sets, number systems, introductory geometry, statistics and probability in Grade 7 to real numbers, financial mathematics, similarity, transformations, triangle theorems, mensuration, algebra, equations, functions, statistics and probability in Grade 8.
+
+## Current-status and syllabus caveat
+The books are genuine Ministry-hosted textbook editions, but the contents pages do not prove that these editions remain the currently adopted books in all Afghan schools in November 2026. A Ministry notice in July 2026 described consultation/review of draft Science and Mathematics textbooks for Grades 7–9. A draft-review notice does not prove final approval, adoption or distribution.
+
+The separate University of Toronto OISE Afghanistan science-curriculum overview is a secondary source that summarises broad grade-level coverage and states that the cited student books pre-date August 2021. It can be used as a cross-checking aid, not as a replacement for the Ministry's actual syllabus PDFs.
+
+## Updated running totals for Afghanistan
+- Grade 7: four official Ministry textbook contents pages, 27 chapters transcribed.
+- Grade 8: four official Ministry textbook contents pages, 30 chapters transcribed.
+- **Cumulative:** 8 actual contents pages and 57 textbook chapters transcribed.
+- Complete official grade-by-grade syllabus topic sequences independently transcribed: **0**.
+- Current 2026 final adoption status: **not established**.
+- Other nine countries in the first ten remain pending document-level extraction.
+- Canonical register remains unchanged until official syllabus topic sequences and current edition/adoption status are independently reconciled.
