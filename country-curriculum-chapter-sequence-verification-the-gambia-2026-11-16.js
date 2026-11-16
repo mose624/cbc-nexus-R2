@@ -12,3 +12,5 @@ export const countryCurriculumVerification = {
   nextRequiredWork: "Retrieve official grade/year/term programmes and extract topics for Mathematics, Biology or integrated Life Science, Chemistry and Physics; inspect approved student textbook contents pages and record chapter titles/counts separately."
  }
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "The Gambia", gradeSequenceEvidence: "Separate country record required; current official grade-level curriculum and textbook evidence not retrieved. Obtain Ministry/National Curriculum and Research Centre syllabuses; do not substitute Ghana or CXC.", textbookEvidence: "No textbook contents or chapter counts verified.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "Official Ministry source retrieval outstanding.", nextRequiredWork: "Retrieve official grade/year/term programmes and extract Mathematics, Biology or integrated Life Science, Chemistry and Physics topics; inspect approved student textbook contents pages and record printed chapter titles/counts separately." };
