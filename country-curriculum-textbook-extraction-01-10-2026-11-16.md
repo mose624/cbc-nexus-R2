@@ -1078,3 +1078,10 @@ The full theme tables are presented for the combined Classes 10–11 programme. 
 - Chemistry annex and ordered topic contents: official PDF, lines 18863–18904.
 - Ministry curriculum rollout and textbook update context: https://arsimi.gov.al/newsroom/arsimi-parauniversitar-drejt-standardeve-europiane-me-kurrikulat-e-reja-mesimore-dhe-trajnimin-per-zhvillimin-profesional-te-mesuesve/
 
+
+
+### 2026 textbook-rollout status update (official Ministry evidence; does not establish the three subject editions)
+- A Ministry monitoring report for January–April 2026 states the school-textbook update process for Classes 1, 6 and 10 had been updated; it reports 170 titles in that report, 141 assessed as updated, and the final list forwarded to the Ministry. This differs from the Ministry's other published figure of 171 titles (140 physical + 31 digital). Preserve the discrepancy rather than harmonising the counts.
+- A Ministry newsroom notice dated 3 September 2026 reports distribution of school textbooks for the new school year had begun. The notice specifically highlights new/free primary-school texts; it does not identify the exact updated upper-secondary Mathematics, Physics or Chemistry editions or provide their contents pages.
+- Thus the earlier statement “textbook updating was still in progress” is time-bound to the Ministry's 2025/early-2026 rollout description. By September 2026 distribution had begun, but subject-specific adoption and contents-page evidence for the three upper-secondary books remain unverified.
+- Sources: Ministry monitoring report (January–April 2026), https://arsimi.gov.al/wp-content/uploads/2026/06/Raporti-i-Monitorimit-4-MUJORI-i-pare-2026_Mirela.pdf ; Ministry distribution notice (3 September 2026), https://arsimi.gov.al/en/newsroom/nis-shperndarja-e-teksteve-shkollore-kumbaro-mbeshtetje-per-familjet/ .
