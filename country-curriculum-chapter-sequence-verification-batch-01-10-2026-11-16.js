@@ -300,6 +300,68 @@ export const chapterSequenceVerificationBatch01 = {
         Physics: { officialName: "Physics", sourceStatus: "official-subject-presence-verified", sequenceStatus: "subject-syllabus-topic-transcription-pending", syllabusThemes: [], chapterCount: null },
         Mathematics: { officialName: "Mathematics", sourceStatus: "official-subject-presence-verified", sequenceStatus: "subject-syllabus-topic-transcription-pending", syllabusThemes: [], chapterCount: null }
       },
+      lowerSecondaryS1S4: {
+        authority: "National Curriculum Development Centre (NCDC), Uganda",
+        curriculumYear: 2019,
+        sourceStatus: "official-NCDC-four-year-syllabus-programme-planners-transcribed",
+        note: "Entries preserve the official Senior 1–4 programme-planner order. These are syllabus topics, not claims about textbook chapter numbering. The Biology planner repeats Classification in S1 across two terms; the repeated row is preserved.",
+        officialSources: {
+          Biology: "https://ncdc.go.ug/wp-content/uploads/2024/02/Biology_Syllabus_compressed.pdf",
+          Chemistry: "https://ncdc.go.ug/wp-content/uploads/2024/03/CHEMISTRY-SYLLABUS_corrected_web-file.pdf",
+          Physics: "https://ncdc.go.ug/wp-content/uploads/2024/02/PHYSICS_Syllabus_compressed.pdf",
+          Mathematics: "https://ncdc.go.ug/wp-content/uploads/2024/02/Mathematics_Syllabus_compressed.pdf"
+        },
+        subjects: {
+          Biology: {
+            officialName: "Biology",
+            sequenceStatus: "official-NCDC-S1-S4-programme-planner-transcribed",
+            sourceListedTopicRows: 29,
+            chapterCount: null,
+            topicsByLevel: {
+              S1: ["Introduction to Biology", "Cells", "Classification", "Classification", "Insects", "Flowering plants"],
+              S2: ["Physical and chemical properties of soil", "Soil erosion and conservation; causes, effects and prevention", "Nutrition types and Nutrient compounds", "Nutrition in green plants", "Nutrition in mammals", "Transport in plants", "Transport in animals"],
+              S3: ["Gaseous exchange", "Aerobic respiration and anaerobic respiration", "Excretion in animals", "Chemical coordination in humans", "Nervous coordination in humans", "Receptor organs in man", "Locomotion in mammals", "Growth in plants and animals", "Development in plants and animals"],
+              S4: ["Asexual reproduction in plants (vegetative reproduction)", "Sexual reproduction in plants", "Sexual reproduction in humans", "Inheritance", "Variation and Selection", "Concept of ecology", "Food chains and food webs", "Associations in biological communities", "Humans and the natural environment"]
+            }
+          },
+          Chemistry: {
+            officialName: "Chemistry",
+            sequenceStatus: "official-NCDC-S1-S4-programme-planner-transcribed",
+            sourceListedTopicRows: 26,
+            chapterCount: null,
+            topicsByLevel: {
+              S1: ["Chemistry and Society", "Experimental Chemistry", "States and changes of states of matter", "Using materials", "Temporary and permanent changes", "Mixtures, Elements, and compounds", "Air", "Water", "Rocks and Minerals"],
+              S2: ["Acids and alkalis", "Salts", "The Periodic Table", "Carbon in the Environment", "The Reactivity Series"],
+              S3: ["Carbon in Life", "Structures and Bonds", "Formulae, Stoichiometry and mole concept", "Properties and Structures of Substances", "Fossil Fuels", "Chemical reactions"],
+              S4: ["Oxidation and Reduction Reactions", "Industrial Processes", "Trends in the Periodic Table", "Energy Changes during Chemical Reactions", "Chemical for Consumers", "Nuclear Processes"]
+            }
+          },
+          Physics: {
+            officialName: "Physics",
+            sequenceStatus: "official-NCDC-S1-S4-programme-planner-transcribed",
+            sourceListedTopicRows: 30,
+            chapterCount: null,
+            topicsByLevel: {
+              S1: ["Introduction to Physics", "Measurements in Physics", "States of matter", "Effects of forces", "Temperature measurements", "Heat transfer", "Expansion of solids, liquids, and gases", "Nature of light; reflection of light at plane surfaces"],
+              S2: ["Work, energy, and power", "Turning effect of forces, centre of gravity, and stability", "Pressure in solids and fluids", "Mechanical properties of Materials and Hooke’s law", "Reflection of light at curved surfaces", "Magnets and magnetic fields", "Electrostatics", "The solar system"],
+              S3: ["Linear and non-linear motion", "Refraction, dispersion, and colour", "Lenses and optical instruments", "General wave properties", "Sound waves", "Heat quantities and vapours", "Stars and galaxies", "Satellites and communication"],
+              S4: ["Introduction to current electricity", "Voltage, resistance and Ohm’s law", "Electromagnetic effects", "Electric energy distribution and consumption", "Atomic models", "Nuclear processes", "Digital electronics"]
+            }
+          },
+          Mathematics: {
+            officialName: "Mathematics",
+            sequenceStatus: "official-NCDC-S1-S4-programme-planner-transcribed",
+            sourceListedTopicRows: 45,
+            chapterCount: null,
+            topicsByLevel: {
+              S1: ["Number Bases", "Working with Integers", "Fractions, Percentages and Decimals", "Rectangular Cartesian Coordinates in 2-Dimensions", "Geometric Constructions Skills", "Sequence and patterns", "Bearings", "General and angle properties of geometric figures", "Data collection and presentation", "Reflection", "Equation of lines and curves", "Algebra 1", "Business arithmetic", "Time and time tables"],
+              S2: ["Mappings and relations", "Vectors and translation", "Graphs", "Numerical concept 1 (indices and logarithms)", "Inequalities and regions", "Algebra 2", "Similarities and enlargement", "Circle", "Rotation", "Length and area properties of two-dimensional geometrical figures", "Nets, areas and volumes of solids", "Numerical concept 2 (indices, logarithms and surds)", "Set theory"],
+              S3: ["Equation of a straight line", "Trigonometry 1", "Data collection /display", "Vectors", "Ratios and proportions", "Business mathematics", "Trigonometry 2", "Matrices", "Matrix transformations", "Simultaneous equations", "Probability", "Quadratic equations", "Circle properties"],
+              S4: ["Composite functions", "Equations and inequalities", "Linear programming", "Loci", "Lines and planes in three dimensions", "Revision"]
+            }
+          }
+        }
+      },
       advancedSecondaryCurriculum2025: {
         authority: "National Curriculum Development Centre (NCDC), Ministry of Education and Sports",
         implementationNote: "Separate Senior Five and Senior Six Advanced Secondary curriculum introduced from 2025. These A-Level syllabuses are recorded separately from the existing Lower Secondary S1-S4/UCE records; Principal Mathematics is not the same subject as Lower Secondary Mathematics.",
