@@ -368,3 +368,76 @@ The separate University of Toronto OISE Afghanistan science-curriculum overview 
 - Current 2026 final adoption status: **not established**.
 - Other nine countries in the first ten remain pending document-level extraction.
 - Canonical register remains unchanged until official syllabus topic sequences and current edition/adoption status are independently reconciled.
+
+
+---
+
+# Afghanistan continuation — Grade 9 Biology contents-page extraction
+**Inspection date:** 16 November 2026  
+**Official source:** Afghanistan Ministry of Education, Grade 9 Biology textbook, Dari edition  
+**PDF:** https://www.moe.gov.af/sites/default/files/2020-03/G9-Dr-Biology.pdf  
+**Book details:** Grade 9; Biology; Dari; Kabul; Ministry of Education; 1398 SH (approximately 2019/20). Bibliographic metadata is visible in PDF lines 23–45 and 51–63.
+
+## Actual contents-page transcription — Grade 9 Biology
+
+The PDF contents page was inspected directly (PDF lines 84–118). It lists nine chapters:
+
+| Chapter | Chapter heading (English working translation) | Listed subtopics / contents-page entries | Printed start page |
+|---|---|---|---:|
+| 1 | Digestive system | Structure and functions of the digestive system; digestion in mouth, oesophagus and stomach; digestion and absorption in small and large intestines; digestive-system diseases and hygiene | 1 |
+| 2 | Respiratory system | Structure and functions of respiratory organs; common respiratory-system diseases | 13 |
+| 3 | Circulatory system | Blood and its components; heart and heart chambers/valves; circulation-related problems | 21 |
+| 4 | Excretory system | Cellular wastes; organs of the excretory system; kidney problems and newer treatment methods | 33 |
+| 5 | Skeletal and muscular systems | Skeleton, functions and structure of bones; types of bones, skeletal injuries and diseases; muscles, types of activity and muscle injuries | 43 |
+| 6 | Nervous system and sense organs | Nervous system; sense organs | 57 |
+| 7 | Endocrine system | Endocrine system; insulin and glucagon hormones | 77 |
+| 8 | Reproductive system | Male and female reproductive systems; menstruation, fertilisation and pregnancy; sexually transmitted diseases | 89 |
+| 9 | Environmental problems and their solutions | Environmental problems and their solutions | 103 |
+
+**Transcription notes:** The source contents table contains OCR/text-extraction irregularities in some row numbering, page ranges and spellings. The chapter titles and broad subtopic headings above follow the actual table; ambiguous individual printed page-range details are not silently normalised. The preface independently confirms the nine-chapter structure and identifies the human body systems and environmental problem-solving themes (PDF lines 119–125).
+
+## Parallel Pashto Grade 9 Biology edition located
+
+**Official PDF:** https://moe.gov.af/sites/default/files/2020-03/G9-Ps-Biology.pdf  
+The Ministry-hosted PDF identifies Grade 9 Biology, Pashto language and 1398 SH in its book metadata (PDF lines 57–89). This establishes a parallel-language textbook edition. The Pashto PDF's full contents page has not yet been transcribed in this pass, so it is not counted as a second contents-page extraction.
+
+## Other Grade 9 science and mathematics books — source status
+
+The Ministry's official curriculum-books index lists Grades 7–12 and identifies Mathematics across the grades. Its Grade 9 listing also includes a general “Science” subject rather than proving that all four subjects are separate in every pathway. The catalogue is a locator, not a contents-page transcription:
+https://www.moe.gov.af/dr/%D9%83%D8%AA%D8%A8-%D9%86%D8%B5%D8%A7%D8%A8-%D8%AA%D8%B9%D9%84%D9%8A%D9%85%D9%89
+
+During this pass:
+- Grade 9 Chemistry Dari PDF: not located and opened.
+- Grade 9 Physics Dari PDF: not located and opened.
+- Grade 9 Mathematics Dari PDF: not located and opened.
+- Grade 9 Science integrated/combined book: catalogue indicates Science in Grade 9, but actual book contents not inspected.
+- Grade 9 Biology Dari PDF: opened; nine chapters transcribed.
+- Grade 9 Biology Pashto PDF: located and metadata inspected; contents page not transcribed.
+
+Do not invent Grade 9 Chemistry, Physics or Mathematics sequences by extrapolating from Grades 7–8. A secondary study guide or a copied chapter summary is not a substitute for the Ministry book.
+
+## Curriculum transition warning
+The Ministry's 26 July 2026 notice describes a consultation/review programme for draft Science and Mathematics textbooks for Grades 7–9. This confirms review activity but does not establish final approval, adoption or distribution of replacement books. The 1398 SH Grade 9 Biology textbook is therefore an official Ministry edition with a verified contents page, but its current adoption status in November 2026 remains unconfirmed.
+
+Official Ministry notice: https://moe.gov.af/en/node/8486
+
+## Updated Afghanistan extraction totals
+
+| Grade | Subject | Contents pages inspected | Chapters transcribed |
+|---|---|---:|---:|
+| 7 | Biology | 1 | 8 |
+| 7 | Chemistry | 1 | 4 |
+| 7 | Physics | 1 | 7 |
+| 7 | Mathematics | 1 | 8 |
+| 8 | Biology | 1 | 5 |
+| 8 | Chemistry | 1 | 8 |
+| 8 | Physics | 1 | 6 |
+| 8 | Mathematics | 1 | 11 |
+| 9 | Biology (Dari) | 1 | 9 |
+| **Total** | **9 distinct grade/subject books** | **9** | **66** |
+
+**Additional language edition located but not counted:** Grade 9 Biology, Pashto (contents page not yet transcribed).
+
+**Official grade-by-grade syllabus topic sequences independently transcribed:** 0. The book contents pages are textbook evidence, not an independently published syllabus.
+
+**Remaining Afghanistan work:** locate and inspect Grade 9 Mathematics and the Ministry's Grade 9 Science/subject materials; verify whether Grade 9 is organised as integrated Science in the current curriculum; inspect Grade 9 Pashto Biology contents page if a bilingual comparison is needed; obtain the final approved 2026 Grades 7–9 syllabus/textbook documents. Other nine countries in the first batch remain pending. Canonical register remains unchanged.
