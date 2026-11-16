@@ -101,3 +101,16 @@ export const countryCurriculumVerification = {
   "cbEnexusLongFormChaptersWritten": false
 },
 };
+
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Bolivia",
+  gradeSequenceEvidence: "Official secondary programme documents provide year-by-year bimesters and detailed contents. A 2019 programme PDF includes Biology topics such as cell organisation and energy acquisition, with first-bimester headings.",
+  textbookEvidence: "Programme topic sequence extracted at least in part; textbook contents and chapter counts remain unverified.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.minedu.gob.bo/files/publicaciones/ver/dges/planes-programas/PROGRAMAS-DE-ESTUDIO-2019--SECUNDARIA.pdf",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology (or integrated Life Science), Chemistry, Physics and Mathematics; then open approved/adopted student textbooks and record exact printed chapter headings and counts separately. Do not infer textbook chapters from syllabus themes."
+};
