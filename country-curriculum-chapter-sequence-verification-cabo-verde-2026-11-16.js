@@ -116,3 +116,15 @@ export const countryCurriculumVerification = {
   "cbEnexusLongFormChaptersWritten": false
 },
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Cabo Verde",
+  gradeSequenceEvidence: "Ministry portal lists Mathematics, integrated sciences, Earth and Life Sciences, Physical Chemistry and specialist Biology, Physics, Chemistry by year; examples include Biology and Geology 10th/11th, Physics/Chemistry 11th and separate 12th-grade subjects.",
+  textbookEvidence: "Official school programme files and textbooks are accessible online, but contents pages/chapter counts not inspected in this batch.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://minedu.gov.cv/recursos_educativosprogramas_escolares",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology (or integrated Life Science), Chemistry, Physics and Mathematics; then open approved/adopted student textbooks and record exact printed chapter headings and counts separately. Do not infer textbook chapters from syllabus themes."
+};
