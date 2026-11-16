@@ -81,4 +81,12 @@
  "Scientific evaluation of diet claims requires attention to study design and evidence quality. A correlation between a food and a health outcome does not by itself prove causation. Researchers consider confounding variables, sample size, duration, measurement methods and whether findings are consistent across studies. Students should distinguish established nutritional principles from exaggerated claims in advertising and social media."
  ]}
  ]);
+ add("bio-chemicals","__depthAuditPack2",[
+ {heading:"Mineral ions, vitamins and deficiency evidence",paragraphs:[
+ "Vitamins are organic micronutrients required in small quantities for normal metabolism, growth and health. They do not provide energy directly, but many act as coenzymes or support specialised physiological functions. Vitamin C contributes to collagen formation and helps maintain connective tissue; severe deficiency causes scurvy. Vitamin D supports calcium and phosphate absorption and normal bone mineralisation; deficiency in children can cause rickets. Vitamin A is important for vision and epithelial tissues, while some B-group vitamins are involved in energy metabolism and red blood cell formation.",
+ "Mineral ions are inorganic nutrients with structural and regulatory roles. Calcium is required for bones and teeth, muscle contraction and blood clotting. Iron is needed to form haemoglobin, which transports oxygen in red blood cells. Iodine is required for thyroid hormone synthesis. Sodium and potassium ions contribute to nerve impulses and fluid balance, while phosphate is part of ATP, nucleic acids and phospholipids. The body needs appropriate amounts; both deficiency and excessive intake can be harmful.",
+ "A deficiency disease should not be diagnosed from one symptom alone because different conditions can produce similar signs. Dietary assessment, clinical examination and appropriate laboratory tests may be needed. Food sources also vary by region and availability. A balanced diet can include diverse locally available foods such as vegetables, fruits, legumes, cereals, eggs, fish, dairy products and other protein sources, with choices adapted to age, health and cultural needs. Public-health nutrition advice should rely on current evidence rather than unverified claims."
+ ]}
+ ]);
+
 })();
