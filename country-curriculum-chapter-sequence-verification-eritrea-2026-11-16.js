@@ -75,3 +75,15 @@ export const countryCurriculumVerification = {
   },
   "overallStatus": "Country record created with official-source leads and conservative subject mapping; full grade-by-grade programme extraction and textbook chapter verification remain pending."
 };
+
+export const chapterEvidenceReconciliation = {
+ reviewedOn: "2026-11-16",
+ country: "Eritrea",
+ gradeSequenceEvidence: "Current official subject-by-subject grade programmes and approved book lists were not located in this search. Keep national grade structure provisional and do not import Ethiopian or neighbouring-country sequences.",
+ textbookEvidence: "No verified official textbook contents or chapter counts; ministry programme and textbook retrieval required.",
+ actualTextbookContentsInspected: false,
+ officialTextbookChapterCountsVerified: false,
+ officialChapterCount: null,
+ evidenceSource: "Official current national curriculum documents not retrieved.",
+ nextRequiredWork: "Retrieve official grade/year/term programmes and extract topics for Mathematics, Biology or integrated Life Science, Chemistry and Physics; inspect approved student textbook contents pages and record printed chapter titles/counts separately. Do not infer textbook chapters from curriculum themes."
+};
