@@ -130,3 +130,15 @@ export const countryCurriculumVerification = {
   },
   overallStatus: "Official Folkeskole subject structure, 2025 relaxation of Fælles Mål requirements, 2026 draft reform status and stx subject curricula confirmed; detailed grade-stage outcomes, all upper-secondary pathway mapping and textbook chapter counts remain pending."
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Denmark",
+  gradeSequenceEvidence: "Folkeskole uses national common objectives (Fælles Mål) and subject curricula, with upper-secondary gymnasium programmes separate. Science is integrated in early grades and specialist Biology, Chemistry/Physics-related subjects and Mathematics progress through later grades and upper-secondary pathways.",
+  textbookEvidence: "No actual textbook contents inspected; local school materials and subject plans need matching to official objectives.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.uvm.dk/",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology or integrated Life Science, Chemistry, Physics and Mathematics. Then inspect adopted student textbooks and record printed chapter titles and counts separately; do not infer chapters from standards or themes."
+};
