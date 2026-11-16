@@ -479,7 +479,7 @@ export const chapterSequenceVerificationBatch01 = {
           }
         }
       },
-      status: "All four TIE 2023 Form I-IV official syllabus PDFs opened and verified; Biology has partial Form I-IV topics; Chemistry Physics and Mathematics have Form I topics transcribed; remaining Forms and full topic-by-topic reconciliation pending"
+      status: "All four official TIE 2023 subject syllabuses opened; Forms I-IV sections confirmed; exact full topic-row extraction remains in progress; broad Form II-IV topic summaries are explicitly provisional"
     },
     {
       country: "Albania",
