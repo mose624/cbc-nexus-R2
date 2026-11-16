@@ -75,3 +75,15 @@ export const countryCurriculumVerification = {
   },
   "overallStatus": "Country record created with official-source leads and conservative subject mapping; full grade-by-grade programme extraction and textbook chapter verification remain pending."
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Dominican Republic",
+  gradeSequenceEvidence: "MINERD 2023 curricular adaptations organise Natural Sciences and Mathematics through competency-based primary and secondary documents. Preserve integrated Natural Sciences in basic stages and specialist subject sequences where secondary modality/grade separates Biology, Chemistry and Physics.",
+  textbookEvidence: "Official programme documents and textbook catalogues still require extraction; no contents pages inspected.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.minerd.gob.do/",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology or integrated Life Science, Chemistry, Physics and Mathematics. Then inspect adopted student textbooks and record printed chapter titles and counts separately; do not infer chapters from standards or themes."
+};
