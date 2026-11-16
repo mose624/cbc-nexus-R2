@@ -48,3 +48,5 @@ export const countryCurriculumVerification = {
     "Author and verify CBE Nexus chapters only after sequence validation."
   ]
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Jordan", gradeSequenceEvidence: "National Centre for Curriculum Development and Ministry of Education set national curriculum and textbooks. Map grade-specific Science and Mathematics, then specialist Biology, Chemistry and Physics in upper secondary; verify current reform editions.", textbookEvidence: "No actual textbook contents or official chapter counts inspected.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "Official NCCDS and Ministry curriculum portal retrieval outstanding.", nextRequiredWork: "Extract the official grade/year/term sequence for Mathematics and integrated or specialist sciences from current national documents; inspect actual approved/adopted student textbook contents pages and record exact chapter titles and counts separately." };
