@@ -48,3 +48,5 @@ export const countryCurriculumVerification = {
     "Author and verify CBE Nexus chapters only after sequence validation."
   ]
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Honduras", gradeSequenceEvidence: "Secretaría de Educación's DCNB and level-specific programmes provide the national reference. Extract Ciencias Naturales and Matemáticas by grade, then map upper-secondary Bachillerato modalities and specialist sciences separately.", textbookEvidence: "No textbook contents inspected; official textbook editions and contents pages outstanding.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "Official Secretaría de Educación DCNB retrieval outstanding.", nextRequiredWork: "Retrieve official grade/year/term programmes and extract Mathematics, Biology or integrated Life Science, Chemistry and Physics topics; inspect approved student textbook contents pages and record printed chapter titles/counts separately." };
