@@ -528,22 +528,30 @@ export const chapterSequenceVerificationBatch01 = {
     {
       country: "Algeria",
       sourceMapBatch: 2,
-      levelReviewed: "Secondary education; common core and specialised Baccalauréat streams must be separated",
+      levelReviewed: "Secondary education: 1AS common-core year followed by 2AS–3AS specialised streams; 2026–2027 changes must be tracked separately from legacy subject programmes",
       authority: "Ministry of National Education (Ministère de l'Éducation Nationale)",
       language: "Arabic is principal; Tamazight and French roles vary by programme and context.",
-      examPathway: "Baccalauréat streams; subject weighting and subject combinations differ by stream.",
-      officialSources: ["https://www.education.gov.dz/"],
-      curriculumStructure: "The ministry authority and stream-based secondary structure are identified, but the current official subject programme PDFs and their chapter sequences were not retrieved in this audit. No chapter titles or counts are assigned.",
+      examPathway: "Baccalauréat streams; subject combinations and weighting differ by stream. The official ministry states that the common-core system continues in 2026–2027 and that some subject content is being redistributed between the first and second secondary years.",
+      officialSources: [
+        "https://www.education.gov.dz/",
+        "https://www.education.gov.dz/2026/07/30/وزير-التربية-الوطنية-ينشّط-ندوة-صحفية-يقدّم-فيها-توضيحات-حول-الترتيبات-البيداغوجية-الجديدة-الخاصة-بالدخول-المدرسي/",
+        "https://www.education.gov.dz/2026/09/10/قرار-رقم-36-مؤرخ-في-27-ربيع-الأول-عام-1448-الموافق-9-سبتمبر-سنة-2026-يتضمن-إلغاء-القرار-رقم-20/",
+        "https://education.gov.dz/wp-content/uploads/2015/04/Programme-Sciences-de-la-nature-et-de-la-vie-S.pdf",
+        "https://education.gov.dz/wp-content/uploads/2015/04/Programme-SNV-3AS-MATH.pdf",
+        "https://education.gov.dz/wp-content/uploads/2015/04/Prog-3AS-physique-juillet-2011.pdf",
+        "https://education.gov.dz/wp-content/uploads/2015/04/3-AS-SE-sc-nat.pdf",
+        "https://www.onps.dz/fr/"
+      ],
+      curriculumStructure: "Official Ministry sources confirm a common-core secondary structure followed by specialised streams (including Experimental Sciences, Mathematics, Technical Mathematics, Management and Economics, Letters and Philosophy, and Foreign Languages). The Ministry's 30 July 2026 briefing says the common-core system continues in 2026–2027 and that some subject content is redistributed between years 1 and 2, with greater terminal-year time for specialisation and practical work. A Ministry decree dated 9 September 2026 cancelled the earlier 28 July 2026 decree on secondary-school timetables and coefficients; therefore the July timetable must not be treated as current. Retrieved subject documents include legacy third-year Biology programmes for Experimental Sciences and Mathematics streams and a third-year Physics/Chemistry programme for science/Mathematics/technical-Mathematics streams. These documents are official but dated (2011 programme editions, and 2018 annual progression for Biology); their applicability after 2026–2027 redistribution is not yet established. No complete current 1AS–3AS sequence for all streams is claimed.",
       subjects: {
-        Biology: { officialName: "Sciences naturelles / علوم الطبيعة والحياة", sourceStatus: "authority-only", sequenceStatus: "official-stream-syllabus-retrieval-required", syllabusThemes: [], chapterCount: null },
-        Chemistry: { officialName: "Chimie", sourceStatus: "authority-only", sequenceStatus: "official-stream-syllabus-retrieval-required", syllabusThemes: [], chapterCount: null },
-        Physics: { officialName: "Physique", sourceStatus: "authority-only", sequenceStatus: "official-stream-syllabus-retrieval-required", syllabusThemes: [], chapterCount: null },
-        Mathematics: { officialName: "Mathématiques", sourceStatus: "authority-only", sequenceStatus: "official-stream-syllabus-retrieval-required", syllabusThemes: [], chapterCount: null }
+        Biology: { officialName: "Sciences naturelles / علوم الطبيعة والحياة", sourceStatus: "official-Ministry-legacy-3AS-programmes-retrieved; stream-specific; 2026-27-currentness-unconfirmed", sequenceStatus: "partial-sequence-transcribed-for-3AS-only; not-currently-verified-against-2026-27-redistribution", syllabusThemes: ["Experimental Sciences stream: functional specialisation of proteins (protein synthesis; structure-function relationship; immune defence); human activity and planetary management (air pollution, water pollution, environmental balance).", "Mathematics stream: functional specialisation of proteins (protein synthesis and structure/function)."], chapterCount: null, sourceNotes: "Official programme PDFs are dated June 2011; an official annual progression PDF for Experimental Sciences is dated September 2018. These are not proof of the current redistributed 2026–2027 sequence." },
+        Chemistry: { officialName: "Chimie / الكيمياء (within Sciences physiques in retrieved programme)", sourceStatus: "official-Ministry-3AS-integrated-Physics-Chemistry-programme-retrieved; separate full chemistry sequence not retrieved", sequenceStatus: "broad-domain-description-only; detailed stream/year sequence pending", syllabusThemes: ["General, inorganic/mineral and organic chemistry; quantitative chemical transformations and reaction equations; chemical-system evolution; effects of pressure, volume and temperature; electrochemistry; thermodynamics; analytical-chemistry techniques."], chapterCount: null, sourceNotes: "These are programme-level domains described in the official 3AS Physics/Chemistry programme, not an extracted list of separate Chemistry chapters. Stream-specific and year-specific allocations remain unverified." },
+        Physics: { officialName: "Sciences physiques / الفيزياء", sourceStatus: "official-Ministry-3AS-Physics-Chemistry-programme-retrieved; covers Experimental Sciences, Mathematics and Technical Mathematics streams", sequenceStatus: "programme-scope-confirmed; detailed contents sequence extraction pending; 2026-27-currentness-unconfirmed", syllabusThemes: ["Experimental and model-based study of physical phenomena; measurement and interpretation of data; laboratory experimentation and ICT-supported investigation; mathematical relationships, laws and models."], chapterCount: null, sourceNotes: "The retrieved official programme is a combined Physics/Chemistry programme dated July 2011. Do not infer separate chapter counts from its broad subject description." },
+        Mathematics: { officialName: "Mathématiques / الرياضيات", sourceStatus: "official-authority-and-stream-structure-confirmed; current subject programme PDF not yet retrieved", sequenceStatus: "official-stream-syllabus-retrieval-required", syllabusThemes: [], chapterCount: null, sourceNotes: "A search result for an older Mathematics document was for the lower-secondary/basic-education stage, not the target upper-secondary streams; it was deliberately excluded. Need current official 1AS, 2AS and 3AS programmes by stream." }
       },
-      status: "not-yet-chapter-verified; current official stream documents required"
+      status: "partially verified: official secondary structure and 2026-27 transition notes recorded; legacy 3AS Biology and integrated Physics-Chemistry programme sources retrieved; Mathematics and current year-by-year stream sequences remain outstanding; no official chapter counts asserted"
     },
-    {
-      country: "Andorra",
+    country: "Andorra",
       sourceMapBatch: 2,
       levelReviewed: "Second education and General Baccalaureate; integrated lower-secondary sciences must remain integrated",
       authority: "Government of Andorra, Ministry responsible for Education and Universities",
