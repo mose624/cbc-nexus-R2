@@ -36,7 +36,37 @@ footer{background:#09234a;color:#d8e8f8;padding:25px;text-align:center}footer a{
 .subject li{margin:6px 0}
 .subject svg{height:auto}
 @media(max-width:650px){.tabs a{flex:1 1 100%;text-align:center}.subject h2{font-size:1.45rem}.learning-panel{padding:13px}}
-\n</style></head>
+\n
+/* Compact, ordered study layout */
+body{font-size:14px;line-height:1.58}
+header{padding:20px 16px}
+header p{font-size:13.5px}
+.wrap{max-width:1160px}
+.subject{padding:clamp(15px,2.4vw,24px)}
+.subject p,.subject li,.subject td,.subject th{font-size:13.6px;line-height:1.58}
+.subject h2{font-size:1.55rem}
+.subject h3{font-size:1.16rem;margin-top:22px}
+.subject h4{font-size:1rem}
+.subject ul,.subject ol{padding-left:22px}
+.subject li{margin:4px 0}
+.tabs a{font-size:13px;padding:8px 12px}
+.diagram{background:#f7fbff;border:1px solid #cfe0ef;border-radius:12px;padding:12px;margin:16px 0;overflow-x:auto}
+.diagram svg{display:block;width:100%;height:auto;max-height:420px}
+.diagram figcaption{font-size:12px;color:#526477;margin-top:8px}
+.point-list{padding-left:22px}
+.point-list li{margin:4px 0}
+.exam-paper{border:2px solid #16436b;border-radius:12px;padding:16px;margin:22px 0;background:#fff}
+.exam-paper h3{margin-top:0;background:#eaf5fc;padding:10px;border-radius:8px}
+.mark{float:right;color:#075985;font-weight:800}
+.test-meta{display:flex;gap:18px;flex-wrap:wrap;background:#f1f7fb;padding:10px;border-radius:8px;font-weight:700}
+.question{margin:14px 0;padding-bottom:10px;border-bottom:1px dashed #d7e2eb}
+.question p{margin:5px 0}
+.answer-space{height:24px;border-bottom:1px dotted #63778a;margin:4px 0 10px}
+.key{background:#f0faf5;border-left:4px solid #16845e;padding:12px 15px;border-radius:8px;margin:12px 0}
+@media(max-width:650px){body{font-size:13.5px}.subject p,.subject li,.subject td,.subject th{font-size:13px}.test-meta{display:block}.exam-paper{padding:11px}}
+@media print{.tabs{display:none}.exam-paper{break-inside:avoid}.diagram{break-inside:avoid}}
+
+</style></head>
 <body>
 <header><div class="wrap"><nav><a href="/global-schools.html">← Global Schools</a> · <a id="countryBack" href="/global-schools.html">Country dashboard</a></nav>
 <div style="margin-top:20px;font-size:12px;font-weight:900;letter-spacing:.12em;color:#9ce4ce">CBE NEXUS · ONLINE PRACTICAL NOTES</div>
@@ -44,7 +74,7 @@ footer{background:#09234a;color:#d8e8f8;padding:25px;text-align:center}footer a{
 <p>Country learning page: <strong id="countryName">Global foundation resource</strong></p></div></header>
 <main class="wrap">
 <div class="notice"><strong>Curriculum note:</strong> These are shared foundation practical-skills notes for international learners. Apparatus, safety rules, units, assessment methods and required experiments can differ by country, grade and examination board. Follow the current local curriculum, teacher instructions and laboratory safety rules. This page does not claim that every experiment is prescribed in every country.</div>
-<div class="tabs"><a href="#biology">🧬 Online Biology Practical Notes</a><a href="#chemistry">⚗ Online Chemistry Practical Notes</a><a href="#physics">⚛ Online Physics Practical Notes</a></div>
+<div class="tabs"><a href="#biology">🧬 Online Biology Practical Notes</a><a href="#chemistry">⚗ Online Chemistry Practical Notes</a><a href="#physics">⚛ Online Physics Practical Notes</a><a href="#expanded-practical-handbook">📘 Extra Notes & 5 Tests</a></div>
 <section class="subject" id="biology">
 <h2>🧬 Online Biology Practical Notes</h2>
 <p>Biology practical work involves observing living organisms and biological materials, using instruments to examine structures, sampling populations, carrying out investigations and recording evidence accurately.</p>
@@ -617,6 +647,507 @@ footer{background:#09234a;color:#d8e8f8;padding:25px;text-align:center}footer a{
 <ol><li>Extra decimal places imply a resolution and precision the ruler does not provide; record only justified digits.</li><li>Accuracy is closeness to an accepted value; precision is agreement between repeated readings.</li><li>Rinsing removes residual water or another liquid that could dilute or contaminate the titrant.</li><li>The sample must begin above the solvent so it travels with the rising solvent rather than dissolving directly into the solvent pool.</li><li>Time more oscillations and divide by the number; repeat trials and calculate a mean; use a light gate if available.</li><li>Speed, because gradient is change in distance divided by change in time.</li><li>Bar-chart categories are discrete; histogram bars represent adjoining intervals of a continuous variable.</li><li>Independent: light intensity; dependent: photosynthesis rate; controls may include temperature, carbon dioxide concentration, plant species or leaf area.</li><li>Three quadrats may not represent patchy distribution; increase the number and select positions randomly across the habitat.</li><li>An ammeter measures current through a component and must be in the same current path; a voltmeter measures potential difference across a component.</li><li>Extension = 11.5 − 8.0 = 3.5 cm.</li><li>Use a suitable data logger or gas sensor, or choose a safe method with shorter measurement intervals and suitable apparatus.</li></ol>
 <p><strong>Marking approach:</strong> award credit for the scientific principle, correct apparatus or variable, a specific method detail, correct units or calculation and a relevant safety or evaluation point. Accept equivalent scientifically correct wording; apply the local syllabus or examination-board mark scheme where one is provided.</p>
 </section>
+
+<section class="subject" id="expanded-practical-handbook">
+<h2>Expanded Practical Science Handbook: Additional Topics, Methods and Examination Practice</h2>
+<p><strong>How to use this section:</strong> Work through the points in order. Read the method before attempting an experiment, make a risk assessment with your teacher, record your own observations, then attempt the five 40-mark tests at the end. The tests are original practice assessments, not official examination-board papers.</p>
+
+<div class="learning-panel">
+<h3>Practical skills checklist for every science learner</h3>
+<ul class="point-list">
+<li>Identify the aim and write a testable question.</li><li>State a prediction and give a scientific reason.</li>
+<li>Identify the independent variable, dependent variable and at least three controlled variables where appropriate.</li>
+<li>Select apparatus with a suitable range and resolution.</li><li>Draw a clear, labelled apparatus diagram before starting.</li>
+<li>Write a numbered method that another learner could follow.</li><li>Identify hazards, possible harm and control measures.</li>
+<li>Take readings at eye level and avoid parallax error.</li><li>Record raw results immediately with units and consistent decimal places.</li>
+<li>Repeat readings, calculate means and identify anomalous results.</li><li>Process results using suitable equations and show working.</li>
+<li>Choose an appropriate table, graph or scientific drawing.</li><li>Describe patterns using evidence from the results.</li><li>Explain results using correct scientific principles.</li>
+<li>Evaluate limitations and match each limitation with a realistic improvement.</li>
+</ul>
+</div>
+
+<h3>A. Biology: additional practical topics and methods</h3>
+<h4>A1. Cell structure, tissues and microscopy</h4>
+<ul class="point-list">
+<li><strong>Specimen selection:</strong> choose a thin, representative specimen. Thick specimens overlap and reduce light transmission.</li>
+<li><strong>Slide preparation:</strong> use a clean slide, add a drop of water or approved mounting liquid, position the specimen flat and lower the cover slip gently from one edge.</li>
+<li><strong>Staining:</strong> use only the stain and concentration specified by the teacher. Stains increase contrast but may alter the appearance of living material.</li>
+<li><strong>Focusing:</strong> begin with the lowest-power objective; use coarse focus at low power and fine focus at high power. Centre the object before increasing magnification.</li>
+<li><strong>Field of view:</strong> the visible circular area becomes smaller as magnification increases. If the field diameter is known, estimate the number of cells across it to estimate cell size.</li>
+<li><strong>Drawing:</strong> draw only structures observed. Use a sharp pencil, single clear lines, no shading, a title and straight ruled labels. Do not invent organelles that cannot be seen.</li>
+<li><strong>Magnification:</strong> total magnification is eyepiece power multiplied by objective power. Magnification is image size divided by actual size when both measurements use the same unit.</li>
+<li><strong>Scale bar:</strong> if a scale bar is provided, measure it and the feature on the image, then use the ratio to calculate actual size. State units.</li>
+</ul>
+<figure class="diagram">
+<svg viewBox="0 0 760 310" role="img" aria-label="Coloured labelled light microscope diagram">
+<rect x="12" y="12" width="736" height="286" rx="14" fill="#f7fbff"/>
+<path d="M270 65 Q250 35 290 30 L390 30 Q425 35 405 65 L365 78 L365 120 L315 120 L315 78Z" fill="#73c7e8" stroke="#14527a" stroke-width="4"/>
+<rect x="320" y="118" width="42" height="72" rx="8" fill="#f2c66d" stroke="#8b5b14" stroke-width="3"/>
+<path d="M338 190 L338 212 L220 212 L220 194 L300 194" fill="none" stroke="#14527a" stroke-width="13" stroke-linecap="round"/>
+<path d="M220 210 Q180 230 190 265 L430 265 Q450 235 410 210" fill="#b8e0d0" stroke="#14527a" stroke-width="4"/>
+<rect x="230" y="180" width="210" height="15" rx="5" fill="#8cc6ed" stroke="#14527a" stroke-width="3"/>
+<rect x="270" y="175" width="125" height="6" fill="#fff" stroke="#14527a" stroke-width="2"/>
+<path d="M405 85 Q500 100 480 185 Q470 235 420 245" fill="none" stroke="#14527a" stroke-width="16" stroke-linecap="round"/>
+<circle cx="420" cy="145" r="20" fill="#f2a65a" stroke="#8b4c12" stroke-width="3"/>
+<path d="M410 265 L410 280 L470 280" stroke="#14527a" stroke-width="8" fill="none"/>
+<g font-family="Arial" font-size="15" fill="#14324b" stroke="#14324b" stroke-width="1.5">
+<path d="M390 44 L520 44 L550 28" fill="none"/><text x="558" y="32" stroke="none">Eyepiece</text>
+<path d="M355 143 L540 143 L565 126" fill="none"/><text x="570" y="130" stroke="none">Objective lens</text>
+<path d="M420 188 L535 188 L565 174" fill="none"/><text x="572" y="178" stroke="none">Stage and slide</text>
+<path d="M205 205 L95 205 L65 190" fill="none"/><text x="22" y="184" stroke="none">Stage clips</text>
+<path d="M420 145 L520 230 L560 230" fill="none"/><text x="568" y="235" stroke="none">Coarse/fine focus</text>
+<path d="M280 260 L130 280 L70 280" fill="none"/><text x="22" y="285" stroke="none">Base and light source</text>
+</g></svg>
+<figcaption>Figure A1. Simplified coloured microscope. Learn the function of each labelled part; microscope designs differ between models.</figcaption>
+</figure>
+
+<h4>A2. Nutrition and food tests</h4>
+<ul class="point-list">
+<li><strong>Starch:</strong> add iodine solution to a small sample. A blue-black colour is a positive result; yellow-brown indicates no starch detected.</li>
+<li><strong>Reducing sugar:</strong> add Benedict's solution and heat in a hot-water bath according to the laboratory protocol. Green, yellow, orange or brick-red precipitate indicates reducing sugar, with colour influenced by concentration.</li>
+<li><strong>Protein:</strong> use the Biuret test as instructed. A lilac or purple colour is positive; the reagent remains blue when protein is not detected.</li>
+<li><strong>Lipid:</strong> the ethanol emulsion test produces a cloudy white emulsion when lipid is present. Keep ethanol away from flames because it is flammable.</li>
+<li><strong>Vitamin C:</strong> DCPIP is decolourised by vitamin C. A comparison is meaningful only when sample volumes, reagent concentration and drop size are standardised.</li>
+<li><strong>Controls:</strong> use a known positive and negative sample when available. Use clean apparatus to prevent cross-contamination.</li>
+<li><strong>Recording:</strong> write the sample label, reagent, method, initial appearance, final observation and conclusion in separate columns.</li>
+</ul>
+
+<h4>A3. Transport, osmosis and diffusion investigations</h4>
+<ul class="point-list">
+<li><strong>Osmosis:</strong> movement of water across a partially permeable membrane from higher water potential to lower water potential.</li>
+<li><strong>Plant tissue method:</strong> cut equal-sized pieces, measure initial mass, place in measured solutions for equal times, blot consistently and measure final mass.</li>
+<li><strong>Calculation:</strong> percentage change = (final mass − initial mass) ÷ initial mass × 100%.</li>
+<li><strong>Interpretation:</strong> positive change means mass gain; negative change means mass loss. The zero-change point estimates the isotonic concentration under the conditions used.</li>
+<li><strong>Fair test:</strong> keep tissue type, dimensions, solution volume, temperature, immersion time and blotting method constant.</li>
+<li><strong>Diffusion:</strong> investigate how temperature or surface area affects diffusion using a safe approved model. Define the measured endpoint and keep gel or sample dimensions consistent.</li>
+<li><strong>Evaluation:</strong> use several repeats per concentration, a calibrated balance and a wider range of concentrations around the zero-change point.</li>
+</ul>
+
+<h4>A4. Enzymes, respiration and photosynthesis</h4>
+<ul class="point-list">
+<li><strong>Enzyme rate:</strong> choose a measurable endpoint such as gas volume per minute, time to a colour change or amount of product formed.</li>
+<li><strong>Temperature:</strong> use a water bath to maintain the test temperature. Allow solutions to reach the target temperature before mixing.</li>
+<li><strong>pH:</strong> use buffer solutions to maintain pH. Do not assume adding the same number of drops of acid creates equal pH values.</li>
+<li><strong>Concentration:</strong> change substrate concentration while keeping enzyme concentration, temperature, pH and total volume controlled.</li>
+<li><strong>Respiration:</strong> a respirometer can estimate oxygen uptake by suitable organisms or seeds. Use a control to account for temperature or pressure changes and follow the teacher's approved setup.</li>
+<li><strong>Photosynthesis:</strong> measure oxygen production or another valid proxy while changing one limiting factor. Control temperature, carbon dioxide availability, plant species and exposed leaf area.</li>
+<li><strong>Light intensity:</strong> if using lamp distance as a proxy, measure distance consistently and recognise that distance is not itself a direct measurement of light intensity.</li>
+<li><strong>Germination:</strong> compare conditions such as water, oxygen and temperature using equal numbers of viable seeds and a clearly defined germination criterion.</li>
+</ul>
+
+<h4>A5. Ecology, fieldwork and classification</h4>
+<ul class="point-list">
+<li><strong>Random quadrats:</strong> mark a study area, generate random coordinates, place the quadrat and record the target species without choosing convenient locations.</li>
+<li><strong>Systematic transect:</strong> stretch a tape across an environmental gradient and sample at fixed intervals. Record the distance and abiotic conditions at each point.</li>
+<li><strong>Abundance:</strong> count individuals where individuals can be distinguished. For plants that spread, percentage cover may be more appropriate.</li>
+<li><strong>Frequency:</strong> number of quadrats containing a species divided by total quadrats, multiplied by 100%.</li>
+<li><strong>Density:</strong> total individuals divided by total area sampled. State the area unit.</li>
+<li><strong>Population estimate:</strong> mean density multiplied by the total habitat area, with assumptions and limitations stated.</li>
+<li><strong>Classification:</strong> use observable characteristics and a branching key. Each decision should offer contrasting statements and lead to one group or organism.</li>
+<li><strong>Field ethics:</strong> minimise disturbance, do not remove protected organisms and return safe specimens to their habitat where appropriate.</li>
+</ul>
+
+<h4>A6. Human physiology and organism responses</h4>
+<ul class="point-list">
+<li><strong>Pulse rate:</strong> count beats for a fixed time at rest and after controlled activity. Use the same counting interval and recovery period.</li>
+<li><strong>Breathing rate:</strong> count breaths per minute using a consistent definition of one breath. Avoid asking participants to over-exert themselves.</li>
+<li><strong>Reaction time:</strong> use a ruler-drop test or digital method, repeat trials and calculate a mean. Control the starting position and participant instructions.</li>
+<li><strong>Exercise investigation:</strong> use an appropriate low-risk activity, obtain teacher approval, allow rest and stop if a participant feels unwell.</li>
+<li><strong>Plant responses:</strong> investigate phototropism or germination using matched seedlings, controlled conditions and repeated observations.</li>
+<li><strong>Ethics:</strong> obtain consent, protect privacy and avoid experiments that cause pain, injury or unsafe physiological stress.</li>
+</ul>
+
+<h3>B. Chemistry: additional practical topics and methods</h3>
+<h4>B1. Apparatus, measurements and solution preparation</h4>
+<ul class="point-list">
+<li><strong>Balance:</strong> check zero, use a weighing boat, avoid placing chemicals directly on the pan and record mass to the instrument's justified precision.</li>
+<li><strong>Measuring cylinder:</strong> use for approximate liquid volumes. Read the bottom of the meniscus at eye level for most aqueous liquids.</li>
+<li><strong>Volumetric pipette:</strong> transfers one accurate fixed volume. Use a pipette filler; never pipette by mouth.</li>
+<li><strong>Burette:</strong> delivers a variable accurate volume. Remove the funnel before titration, check the jet is filled and read the scale at eye level.</li>
+<li><strong>Volumetric flask:</strong> prepares a solution to a fixed volume. Dissolve the solute first, transfer quantitatively and make up to the calibration mark.</li>
+<li><strong>Concentration:</strong> concentration in mol dm⁻³ = amount in moles ÷ volume in dm³. Convert cm³ to dm³ by dividing by 1000.</li>
+<li><strong>Mass concentration:</strong> mass concentration = mass of solute ÷ volume of solution, with units such as g dm⁻³.</li>
+<li><strong>Label:</strong> include chemical name, concentration, date and hazard information required by the laboratory.</li>
+</ul>
+
+<figure class="diagram">
+<svg viewBox="0 0 760 330" role="img" aria-label="Coloured labelled acid alkali titration apparatus">
+<rect x="12" y="12" width="736" height="306" rx="14" fill="#f7fbff"/>
+<rect x="300" y="34" width="30" height="180" rx="6" fill="#c8e8fb" stroke="#17547a" stroke-width="3"/>
+<path d="M315 214 L315 245" stroke="#17547a" stroke-width="4"/>
+<path d="M300 245 L330 245 L315 263Z" fill="#e7a44f" stroke="#8a5315" stroke-width="3"/>
+<path d="M315 263 L315 276" stroke="#17547a" stroke-width="3"/>
+<path d="M250 285 Q315 320 380 285 L360 235 L270 235Z" fill="#c4e9dc" stroke="#17644c" stroke-width="4"/>
+<path d="M268 235 L362 235" stroke="#17644c" stroke-width="4"/>
+<path d="M275 250 Q315 265 355 250" stroke="#239a79" stroke-width="4" fill="none"/>
+<path d="M315 22 L315 34" stroke="#17547a" stroke-width="7"/>
+<path d="M260 32 L370 32" stroke="#17547a" stroke-width="8"/>
+<path d="M370 32 L370 285" stroke="#17547a" stroke-width="5"/>
+<path d="M370 285 L420 285" stroke="#17547a" stroke-width="5"/>
+<g font-family="Arial" font-size="15" fill="#14324b" stroke="#14324b" stroke-width="1.5">
+<path d="M330 65 L500 65 L530 48" fill="none"/><text x="538" y="52" stroke="none">Burette with solution</text>
+<path d="M330 245 L500 245 L530 230" fill="none"/><text x="538" y="234" stroke="none">Stopcock / tap</text>
+<path d="M360 282 L500 282 L530 270" fill="none"/><text x="538" y="274" stroke="none">Conical flask + indicator</text>
+<path d="M260 32 L145 32 L110 50" fill="none"/><text x="24" y="54" stroke="none">Clamp and stand</text>
+<path d="M275 250 L145 250 L110 232" fill="none"/><text x="24" y="236" stroke="none">Measured aliquot</text>
+</g></svg>
+<figcaption>Figure B1. Titration arrangement. Keep the flask swirling and add titrant dropwise near the endpoint.</figcaption>
+</figure>
+
+<h4>B2. Titration: accurate technique and calculations</h4>
+<ul class="point-list">
+<li>Rinse the burette with the solution it will contain and the pipette with the solution it will transfer.</li>
+<li>Use a pipette filler and transfer the specified volume to a conical flask.</li>
+<li>Add only the required indicator quantity. Place the flask on a white tile if it helps identify the endpoint.</li>
+<li>Record initial and final burette readings to the appropriate precision; titre = final reading − initial reading.</li>
+<li>Carry out a rough titration if instructed, then repeat carefully to obtain concordant titres.</li>
+<li>Do not average every reading automatically. Follow the stated concordance tolerance and explain which titres are used.</li>
+<li>Use the balanced chemical equation to determine the mole ratio. Calculate moles using n = cV, with V in dm³.</li>
+<li>Use the mole ratio to calculate the unknown amount or concentration. Show units and significant figures.</li>
+<li>Common errors include air bubbles in the jet, parallax, overshooting the endpoint, contaminated glassware and an unwashed flask containing residual reagent.</li>
+</ul>
+
+<h4>B3. Acids, bases, salts and pH</h4>
+<ul class="point-list">
+<li>Use indicators or a calibrated pH meter to compare acidity and alkalinity.</li>
+<li>Strong and weak acids differ in degree of ionisation; concentration and strength are not interchangeable terms.</li>
+<li>Neutralisation involves reaction of hydrogen ions with hydroxide ions to form water.</li>
+<li>Prepare a soluble salt by reacting an appropriate acid with an insoluble base or carbonate, then filter excess solid and crystallise the solution as instructed.</li>
+<li>For an insoluble salt, precipitation can occur when two suitable aqueous solutions are mixed. Filter, wash and dry the precipitate using the approved method.</li>
+<li>Crystallisation: concentrate the solution safely, allow crystals to form, separate them and dry between suitable filter papers or by the prescribed method.</li>
+<li>Never heat a solution to dryness unless the specific procedure requires it and the teacher has approved it.</li>
+</ul>
+
+<h4>B4. Rates of reaction and energetics</h4>
+<ul class="point-list">
+<li>Rate can be measured by gas volume produced, mass lost, colour change or time taken to reach a defined endpoint.</li>
+<li>Change one factor at a time: concentration, temperature, surface area or catalyst presence.</li>
+<li>Keep total volume, reactant amount, apparatus, mixing and measurement interval consistent.</li>
+<li>For gas collection, check the apparatus for leaks and use a suitable gas syringe. Never use a sealed setup where pressure could rise dangerously.</li>
+<li>Plot product volume against time. The gradient represents rate; an initial tangent estimates initial rate.</li>
+<li>For mass-loss methods, use a suitable balance and explain why gas escaping causes mass to decrease.</li>
+<li>For temperature-change experiments, use insulation, a lid and consistent stirring to reduce heat loss and uneven temperature.</li>
+<li>State whether a temperature change is exothermic or endothermic from the system's perspective and support the claim with measured evidence.</li>
+</ul>
+
+<h4>B5. Separation and purification</h4>
+<ul class="point-list">
+<li><strong>Filtration:</strong> separates an insoluble solid from a liquid. The residue remains on the filter paper; the filtrate passes through.</li>
+<li><strong>Evaporation:</strong> removes solvent to concentrate a solution. Use controlled heating and avoid splashing.</li>
+<li><strong>Crystallisation:</strong> forms crystals from a concentrated solution as it cools or evaporates slowly.</li>
+<li><strong>Simple distillation:</strong> separates a solvent from a solution or liquids with sufficiently different boiling points, collecting vapour after condensation.</li>
+<li><strong>Fractional distillation:</strong> separates miscible liquids with closer boiling points using a fractionating column.</li>
+<li><strong>Paper chromatography:</strong> separates components by different partitioning between stationary paper and moving solvent.</li>
+<li><strong>Chromatography method:</strong> draw a pencil baseline, apply a small spot, keep the spot above solvent, cover the container and mark the solvent front immediately after removal.</li>
+<li><strong>Rf:</strong> distance moved by component divided by distance moved by solvent front. Rf has no unit and depends on conditions.</li>
+</ul>
+
+<figure class="diagram">
+<svg viewBox="0 0 760 300" role="img" aria-label="Coloured labelled paper chromatography diagram">
+<rect x="12" y="12" width="736" height="276" rx="14" fill="#f7fbff"/>
+<path d="M260 35 L500 35 L500 250 L260 250Z" fill="#fff" stroke="#18547a" stroke-width="4"/>
+<path d="M265 190 L495 190 L495 245 L265 245Z" fill="#bfe8f3"/>
+<path d="M360 55 L420 55 L420 225 L360 225Z" fill="#f4e8b8" stroke="#a38b3c" stroke-width="2"/>
+<path d="M360 190 L420 190" stroke="#163b5b" stroke-width="3"/>
+<circle cx="390" cy="184" r="6" fill="#7d3c98"/>
+<circle cx="390" cy="130" r="7" fill="#e66a45"/>
+<circle cx="390" cy="92" r="7" fill="#238c77"/>
+<path d="M420 60 L540 60 L570 45" stroke="#163b5b" stroke-width="1.5" fill="none"/>
+<path d="M420 92 L540 92 L570 85" stroke="#163b5b" stroke-width="1.5" fill="none"/>
+<path d="M420 130 L540 130 L570 123" stroke="#163b5b" stroke-width="1.5" fill="none"/>
+<path d="M420 190 L540 190 L570 183" stroke="#163b5b" stroke-width="1.5" fill="none"/>
+<g font-family="Arial" font-size="15" fill="#14324b">
+<text x="578" y="49">Solvent front</text><text x="578" y="89">Separated component</text><text x="578" y="127">Separated component</text><text x="578" y="187">Pencil baseline / origin</text>
+<text x="28" y="90">Paper strip</text><text x="28" y="210">Solvent level</text><text x="275" y="272">Covered container</text>
+</g>
+<path d="M340 80 L205 80 L160 96" stroke="#163b5b" fill="none" stroke-width="1.5"/>
+<path d="M265 220 L205 220 L160 235" stroke="#163b5b" fill="none" stroke-width="1.5"/>
+</svg>
+<figcaption>Figure B2. Paper chromatography. The sample starts on the pencil baseline above the solvent surface.</figcaption>
+</figure>
+
+<h4>B6. Gas tests, ions and chemical observations</h4>
+<ul class="point-list">
+<li>Hydrogen gives a squeaky pop with a lit splint under the approved test conditions.</li>
+<li>Oxygen relights a glowing splint.</li>
+<li>Carbon dioxide turns limewater milky/cloudy.</li>
+<li>Ammonia turns damp red litmus paper blue.</li>
+<li>Chlorine bleaches damp litmus paper; it is toxic and must only be tested using the teacher-approved microscale method and suitable ventilation.</li>
+<li>Flame tests use a clean wire loop and an appropriate flame-test method. Contamination, especially sodium, can mask other colours.</li>
+<li>For aqueous ions, use the specified reagent and record the precipitate colour and whether it dissolves in excess reagent. Do not identify an ion from colour alone if the test is not sufficiently selective.</li>
+<li>Record exact observations before writing an inference. “White precipitate forms” is an observation; “the ion is…” is an inference requiring the complete test pattern.</li>
+</ul>
+
+<h3>C. Physics: additional practical topics and methods</h3>
+<h4>C1. Measurement, motion and forces</h4>
+<ul class="point-list">
+<li><strong>Length:</strong> use a ruler for ordinary lengths, vernier calipers for external/internal diameters and micrometers for small thicknesses. Check zero error.</li>
+<li><strong>Time:</strong> time several cycles or repeated events and divide by the number to reduce reaction-time effects.</li>
+<li><strong>Distance and time:</strong> calculate speed = distance ÷ time. On a distance-time graph, gradient represents speed.</li>
+<li><strong>Velocity-time:</strong> gradient represents acceleration; area under the graph represents displacement for a signed velocity graph.</li>
+<li><strong>Acceleration:</strong> change in velocity divided by time taken. State direction where relevant.</li>
+<li><strong>Force:</strong> use a calibrated spring balance or force sensor within its range. Avoid jerking the instrument.</li>
+<li><strong>Friction:</strong> identify the surface materials, normal contact force and pulling method; repeat measurements and compare like conditions.</li>
+<li><strong>Moments:</strong> balance a metre rule on a pivot and use known weights at measured distances. Moment = force × perpendicular distance from pivot.</li>
+<li><strong>Density:</strong> measure mass and volume. For a regular solid calculate volume from dimensions; for an irregular insoluble object use displacement.</li>
+</ul>
+
+<h4>C2. Hooke's law, springs and pressure</h4>
+<ul class="point-list">
+<li>Measure the original spring length and add known loads in safe steps.</li>
+<li>Allow oscillations to settle before reading the loaded length.</li>
+<li>Calculate extension = loaded length − original length.</li>
+<li>Plot force against extension. In the proportional region, the gradient is the spring constant when extension is in metres.</li>
+<li>Do not exceed the safe load or continue after permanent deformation.</li>
+<li>Pressure = force ÷ area. Use consistent SI units to obtain pascals.</li>
+<li>For liquids, pressure increases with depth and depends on density and gravitational field strength.</li>
+<li>Secure masses and stands; keep feet and hands clear of falling loads.</li>
+</ul>
+
+<h4>C3. Thermal physics</h4>
+<ul class="point-list">
+<li>Use a thermometer or temperature probe with a suitable range and resolution.</li>
+<li>Record the starting temperature before heating or cooling and use equal time intervals.</li>
+<li>Specific heat capacity investigations require mass, energy supplied and temperature change; reduce heat loss with insulation and a lid.</li>
+<li>Energy supplied electrically can be calculated using E = VIt when voltage and current are measured over a known time under suitable conditions.</li>
+<li>Compare insulation by using identical containers, equal volumes, equal starting temperatures and the same measurement intervals.</li>
+<li>Use tongs or heatproof gloves where instructed; do not touch hot apparatus directly.</li>
+<li>For cooling curves, keep the probe position consistent and plot temperature against time.</li>
+<li>Explain conduction, convection and radiation separately and identify which transfer mechanism is being investigated.</li>
+</ul>
+
+<h4>C4. Waves, sound and light</h4>
+<ul class="point-list">
+<li>Wave speed = frequency × wavelength. Measure several wavelengths across a wave pattern and divide to reduce uncertainty.</li>
+<li>In a ripple tank, vary one factor at a time and keep the dipper frequency constant when comparing depth or gap effects.</li>
+<li>Sound experiments should use safe sound levels and a clear measurement method. Echo timing over a known distance can estimate speed of sound.</li>
+<li>For reflection, measure angles from the normal, not from the mirror surface.</li>
+<li>For refraction, trace the incident and refracted rays, draw the normal and measure angles consistently with a protractor.</li>
+<li>For a converging lens, record object distance and image distance only when a clear real image is formed on the screen. Measure from the optical centre as directed.</li>
+<li>Use ray boxes at low voltage and avoid looking directly into intense light sources.</li>
+</ul>
+
+<figure class="diagram">
+<svg viewBox="0 0 760 310" role="img" aria-label="Coloured labelled reflection and refraction ray diagram">
+<rect x="12" y="12" width="736" height="286" rx="14" fill="#f7fbff"/>
+<rect x="360" y="40" width="28" height="225" fill="#bfe4f1" stroke="#17618a" stroke-width="3"/>
+<path d="M120 240 L374 145" stroke="#e34b45" stroke-width="5" fill="none"/>
+<path d="M374 145 L150 55" stroke="#e34b45" stroke-width="5" fill="none"/>
+<path d="M374 145 L600 210" stroke="#16845e" stroke-width="5" fill="none"/>
+<path d="M374 145 L610 260" stroke="#16845e" stroke-width="5" fill="none"/>
+<path d="M374 30 L374 270" stroke="#244c72" stroke-width="2" stroke-dasharray="7 6"/>
+<path d="M350 145 A24 24 0 0 1 355 130" fill="none" stroke="#e3a52c" stroke-width="3"/>
+<path d="M395 145 A24 24 0 0 0 398 157" fill="none" stroke="#e3a52c" stroke-width="3"/>
+<g font-family="Arial" font-size="15" fill="#14324b">
+<text x="40" y="38">Incident ray</text><text x="75" y="280">Reflected ray</text><text x="530" y="190">Refracted ray</text>
+<text x="405" y="45">Normal</text><text x="395" y="285">Transparent block</text><text x="28" y="160">Air</text><text x="520" y="70">Glass / water</text>
+</g>
+</svg>
+<figcaption>Figure C1. Schematic ray paths at a boundary. Measure angles from the normal and use a ruler for ray lines.</figcaption>
+</figure>
+
+<h4>C5. Electricity and magnetism</h4>
+<ul class="point-list">
+<li>Connect an ammeter in series and a voltmeter in parallel across the component.</li>
+<li>Check polarity and meter range before switching on. Begin with a low supply setting.</li>
+<li>Use a variable resistor to obtain a range of readings and record current and potential difference with units.</li>
+<li>Plot current against potential difference or use the axes requested. For an ohmic conductor at constant temperature, current is proportional to potential difference.</li>
+<li>Resistance = potential difference ÷ current. State the unit ohm (Ω).</li>
+<li>Heating can change resistance. Use appropriate current limits and switch off between readings if required.</li>
+<li>For series circuits, current is the same through each component and potential differences add. For parallel branches, potential difference is the same across each branch.</li>
+<li>Investigate magnetic fields using a plotting compass or iron filings only as instructed; keep filings away from eyes and electronic equipment.</li>
+<li>Electromagnetic induction depends on changing magnetic flux. Compare direction and size of induced voltage while changing one factor, such as magnet speed or coil turns.</li>
+<li>Use low-voltage supplies for school investigations and keep liquids away from electrical connections.</li>
+</ul>
+
+<figure class="diagram">
+<svg viewBox="0 0 760 320" role="img" aria-label="Coloured labelled circuit with ammeter in series and voltmeter in parallel">
+<rect x="12" y="12" width="736" height="296" rx="14" fill="#f7fbff"/>
+<path d="M160 90 L300 90 L300 70 L420 70 L420 90 L590 90 L590 245 L160 245Z" fill="none" stroke="#17547a" stroke-width="5"/>
+<rect x="95" y="125" width="65" height="80" rx="8" fill="#f6d27a" stroke="#8c621a" stroke-width="3"/>
+<path d="M115 145 L140 145 M115 160 L140 160 M115 175 L140 175" stroke="#8c621a" stroke-width="3"/>
+<circle cx="300" cy="90" r="22" fill="#d9efff" stroke="#17547a" stroke-width="3"/><text x="292" y="97" font-size="20" fill="#14324b">A</text>
+<rect x="420" y="72" width="90" height="36" rx="6" fill="#bfe8d9" stroke="#17644c" stroke-width="3"/>
+<path d="M465 108 L465 170 L540 170 L540 90" fill="none" stroke="#17644c" stroke-width="4"/>
+<circle cx="465" cy="170" r="22" fill="#f9e4b4" stroke="#8c621a" stroke-width="3"/><text x="457" y="177" font-size="20" fill="#14324b">V</text>
+<g font-family="Arial" font-size="15" fill="#14324b">
+<text x="62" y="115">Cell / supply</text><text x="265" y="45">Ammeter (series)</text><text x="416" y="48">Test resistor</text><text x="495" y="205">Voltmeter (parallel)</text>
+<text x="190" y="278">Connecting wires</text>
+</g>
+</svg>
+<figcaption>Figure C2. Simplified circuit layout. The voltmeter is connected across the test component; the ammeter is in the main circuit path.</figcaption>
+</figure>
+
+<h3>D. Data handling, graphs and scientific communication</h3>
+<h4>D1. Tables and recording</h4>
+<ul class="point-list">
+<li>Write a clear title that identifies the variables being investigated.</li><li>Put the independent variable first and dependent variable next where practical.</li>
+<li>Include quantity and unit in each heading, for example time / s or temperature / °C.</li>
+<li>Keep decimal places consistent with the measuring instrument.</li><li>Record raw readings before calculated values.</li>
+<li>Include repeat readings, means and any rejected anomalous result with an explanation.</li>
+<li>Do not alter readings to make a graph look straight.</li>
+</ul>
+<h4>D2. Graphs and calculations</h4>
+<ul class="point-list">
+<li>Use a line graph for continuous variables and a bar chart for discrete categories.</li><li>Use a histogram for continuous grouped data; bars touch because intervals are continuous.</li>
+<li>Choose a scale that uses most of the graph area and is easy to read.</li><li>Label both axes with quantity and unit.</li><li>Plot points accurately and draw a best-fit line or smooth curve as appropriate.</li>
+<li>Calculate a gradient using two widely separated points on the best-fit line, not two adjacent raw points.</li>
+<li>Show a large gradient triangle and state the gradient unit.</li><li>Use the graph to describe trend, proportionality, maximum/minimum and anomalies.</li>
+<li>Do not claim causation from a pattern alone unless the experimental design supports it.</li>
+</ul>
+<h4>D3. Reliability, accuracy, precision and validity</h4>
+<ul class="point-list">
+<li><strong>Accuracy:</strong> closeness to an accepted or true value.</li><li><strong>Precision:</strong> fineness of measurement or closeness of repeated values, depending on context.</li>
+<li><strong>Reliability:</strong> consistency of results when the method is repeated.</li><li><strong>Validity:</strong> whether the method tests the intended question and controls relevant variables.</li>
+<li><strong>Random error:</strong> unpredictable variation; reduce its effect by repeats and averaging.</li>
+<li><strong>Systematic error:</strong> consistent bias, such as zero error; identify and correct the cause rather than relying on repeats.</li>
+<li><strong>Resolution:</strong> smallest scale interval or change an instrument can display.</li>
+<li><strong>Parallax:</strong> apparent shift caused by viewing a scale from an angle; read at eye level.</li>
+<li><strong>Anomaly:</strong> a result that does not fit the overall pattern; investigate before excluding it.</li>
+</ul>
+
+<h3>E. Laboratory safety and responsible practical work</h3>
+<ul class="point-list">
+<li>Wear eye protection when chemicals, glassware or heating create a risk. Tie back long hair and secure loose clothing.</li>
+<li>Read labels before use. Never taste chemicals or directly smell unknown substances.</li>
+<li>Use a pipette filler; never pipette by mouth.</li>
+<li>Keep flammable solvents away from flames and ignition sources.</li>
+<li>Use tongs or heatproof equipment for hot apparatus. Allow glassware to cool before handling.</li>
+<li>Do not point a heated test tube at anyone. Heat gently and follow the teacher's direction.</li>
+<li>Handle sharp tools on a dissecting tray and cut away from the body.</li>
+<li>Use only approved biological samples and authorised microbiological procedures. Do not culture unknown environmental or body samples outside supervised protocols.</li>
+<li>Keep electrical equipment and hands dry. Switch off before altering a circuit.</li>
+<li>Dispose of chemicals, broken glass and biological materials as instructed. Never pour substances down a drain unless authorised.</li>
+<li>Report spills, breakages, burns, cuts and exposures immediately. Do not attempt an unfamiliar clean-up.</li>
+<li>Use the local risk assessment and safety data for the actual substances and concentrations; generic notes do not replace school rules.</li>
+</ul>
+
+<h3>F. Five original practical examination tests (40 marks each)</h3>
+<p>Each test is worth 40 marks. Attempt the questions under timed conditions, show calculations and use the answer spaces for written responses. The questions assess practical planning, apparatus, observations, data processing, interpretation, safety and evaluation. For practical tasks, record your own measured results; any values supplied in a question are practice data.</p>
+
+<div class="exam-paper" id="practical-test-1">
+<h3>TEST 1 — Biology: Cells, food tests and osmosis <span class="mark">40 marks</span></h3>
+<div class="test-meta"><span>Suggested time: 60 minutes</span><span>Answer all questions</span><span>Total: 40</span></div>
+<div class="question"><p><strong>1.</strong> (a) Name the microscope part used to make a large, initial focus at low power. (1) (b) State the function of the diaphragm or light control. (1) (c) Give two rules for a high-quality biological drawing. (2)</p><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>2.</strong> A learner examines a plant epidermal cell using an eyepiece lens of ×10 and an objective lens of ×40. (a) Calculate total magnification. (2) (b) An image is 24 mm long at ×400. Calculate actual length in µm. Show working. (3)</p><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>3.</strong> Describe a valid procedure for testing a food sample for starch and reducing sugar. Include the reagents, heating requirement and positive observations. (6)</p><div class="answer-space"></div><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>4.</strong> Potato pieces were placed in sucrose solutions. Their percentage mass changes were: 0.0 mol dm⁻³: +18%; 0.2: +9%; 0.4: +1%; 0.6: −8%; 0.8: −16%. (a) Identify the independent variable. (1) (b) Identify the dependent variable. (1) (c) Estimate the concentration at which there is no net mass change. (2) (d) Explain the mass change at 0.0 mol dm⁻³. (2)</p><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>5.</strong> State three variables that should be controlled in the potato osmosis investigation and explain why one of them matters. (4)</p><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>6.</strong> A learner uses only one potato piece at each concentration. Explain two weaknesses and give one improvement. (3)</p><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>7.</strong> Describe how random quadrat sampling can be used to estimate the abundance of a plant species in a field. Include how to avoid bias and one limitation. (4)</p><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>8.</strong> Give two safety or hygiene precautions when preparing biological slides or carrying out food tests. (2)</p><div class="answer-space"></div></div>
+<div class="key"><strong>Marking guide:</strong> Q1 4; Q2 5; Q3 6; Q4 6; Q5 4; Q6 3; Q7 4; Q8 2. Total 34? Add the remaining 6 marks by completing Q9: Explain why repeats improve reliability (2); state two features of a suitable results table (2); distinguish an observation from an inference with one example (2). Total 40.</div>
+<div class="question"><p><strong>9.</strong> Explain why repeats improve reliability (2); state two features of a suitable results table (2); distinguish an observation from an inference with one example (2).</p><div class="answer-space"></div><div class="answer-space"></div></div>
+</div>
+
+<div class="exam-paper" id="practical-test-2">
+<h3>TEST 2 — Chemistry: Titration, separation and identification <span class="mark">40 marks</span></h3>
+<div class="test-meta"><span>Suggested time: 60 minutes</span><span>Answer all questions</span><span>Total: 40</span></div>
+<div class="question"><p><strong>1.</strong> Name the apparatus used to transfer an accurate fixed volume of solution and state the safety device used with it. (2)</p><div class="answer-space"></div></div>
+<div class="question"><p><strong>2.</strong> A burette reading changes from 0.35 cm³ to 24.80 cm³. Calculate the titre. State one reason for reading the burette at eye level. (3)</p><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>3.</strong> Describe the correct sequence for carrying out an acid–alkali titration, from rinsing apparatus to obtaining a concordant titre. (6)</p><div class="answer-space"></div><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>4.</strong> A student separates coloured dyes by paper chromatography. (a) Why is the baseline drawn in pencil? (1) (b) Why must the sample spot begin above the solvent? (2) (c) The dye moves 4.2 cm and the solvent front moves 7.0 cm. Calculate Rf. (2)</p><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>5.</strong> State the test and positive result for each gas: hydrogen, oxygen and carbon dioxide. (6)</p><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>6.</strong> Explain why a conical flask is suitable for titration and why it is rinsed with distilled water rather than the solution being measured. (3)</p><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>7.</strong> Give two safety precautions when heating a sample or handling acid and alkali solutions. (2)</p><div class="answer-space"></div></div>
+<div class="question"><p><strong>8.</strong> A student obtains titres of 23.60, 23.65, 24.40 and 23.60 cm³. Identify the anomalous result and explain why it should not automatically be included in the mean. (3)</p><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>9.</strong> Describe how to obtain a pure, dry sample of a soluble salt from an acid and an insoluble base. (5)</p><div class="answer-space"></div><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>10.</strong> State two ways to improve the reliability or accuracy of a rate-of-reaction experiment. (2)</p><div class="answer-space"></div></div>
+<div class="key"><strong>Marking guide:</strong> Q1 2; Q2 3; Q3 6; Q4 5; Q5 6; Q6 3; Q7 2; Q8 3; Q9 5; Q10 2. Total 37. Add Q11: explain why the solvent front must be marked immediately after removing the chromatography paper (1); state two headings for a suitable rate-results table (2). Total 40.</div>
+<div class="question"><p><strong>11.</strong> Explain why the solvent front must be marked immediately after removing the chromatography paper (1); state two suitable headings for a rate-results table (2).</p><div class="answer-space"></div></div>
+</div>
+
+<div class="exam-paper" id="practical-test-3">
+<h3>TEST 3 — Physics: Measurements, forces, electricity and optics <span class="mark">40 marks</span></h3>
+<div class="test-meta"><span>Suggested time: 60 minutes</span><span>Answer all questions</span><span>Total: 40</span></div>
+<div class="question"><p><strong>1.</strong> State two precautions when measuring the diameter of a small wire using a micrometer. (2)</p><div class="answer-space"></div></div>
+<div class="question"><p><strong>2.</strong> A spring has an original length of 6.4 cm and a loaded length of 9.1 cm. Calculate extension in cm and metres. (3)</p><div class="answer-space"></div></div>
+<div class="question"><p><strong>3.</strong> Describe an experiment to investigate the relationship between force and extension for a spring. Include apparatus, method, results and one safety precaution. (6)</p><div class="answer-space"></div><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>4.</strong> A student measures 2.0 V across a resistor and a current of 0.25 A. Calculate resistance. (2)</p><div class="answer-space"></div></div>
+<div class="question"><p><strong>5.</strong> Explain why an ammeter is connected in series and a voltmeter in parallel. (4)</p><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>6.</strong> State two precautions when investigating current and potential difference in a circuit. (2)</p><div class="answer-space"></div></div>
+<div class="question"><p><strong>7.</strong> Draw a labelled ray diagram showing reflection at a plane mirror. Include the normal, incident ray, reflected ray, angle of incidence and angle of reflection. (5)</p><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>8.</strong> A learner times 20 oscillations of a pendulum as 32 seconds. Calculate the period. State one improvement to reduce timing uncertainty. (3)</p><div class="answer-space"></div></div>
+<div class="question"><p><strong>9.</strong> State the relationship between wave speed, frequency and wavelength. A wave has frequency 5 Hz and wavelength 0.8 m. Calculate its speed. (3)</p><div class="answer-space"></div></div>
+<div class="question"><p><strong>10.</strong> Explain why insulation and a lid improve a specific heat capacity experiment. (3)</p><div class="answer-space"></div></div>
+<div class="question"><p><strong>11.</strong> Give two ways to improve a graph plotted from experimental data. (2)</p><div class="answer-space"></div></div>
+<div class="key"><strong>Marking guide:</strong> Q1 2; Q2 3; Q3 6; Q4 2; Q5 4; Q6 2; Q7 5; Q8 3; Q9 3; Q10 3; Q11 2. Total 35. Add Q12: state the SI unit of resistance (1), define density (2), and give one reason to repeat a measurement (2). Total 40.</div>
+<div class="question"><p><strong>12.</strong> State the SI unit of resistance (1), define density (2), and give one reason to repeat a measurement (2).</p><div class="answer-space"></div></div>
+</div>
+
+<div class="exam-paper" id="practical-test-4">
+<h3>TEST 4 — Integrated practical skills: planning, data and evaluation <span class="mark">40 marks</span></h3>
+<div class="test-meta"><span>Suggested time: 60 minutes</span><span>Answer all questions</span><span>Total: 40</span></div>
+<div class="question"><p><strong>1.</strong> Define independent variable, dependent variable and controlled variable. (3)</p><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>2.</strong> A learner investigates how temperature affects enzyme activity. Identify a suitable dependent variable and state three variables to control. (4)</p><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>3.</strong> Explain the difference between accuracy, precision and reliability. (3)</p><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>4.</strong> A graph has time on the horizontal axis and distance on the vertical axis. Explain what the gradient represents and give its unit if distance is in metres and time in seconds. (3)</p><div class="answer-space"></div></div>
+<div class="question"><p><strong>5.</strong> State four features of a well-presented results table. (4)</p><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>6.</strong> Explain why repeats are important and describe how to treat an anomalous result. (3)</p><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>7.</strong> Give one hazard, possible harm and suitable control measure for each: (a) hot water; (b) glassware; (c) dilute acid. (6)</p><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>8.</strong> A learner records a mass of 12.46 g using a balance that reads only to the nearest 0.1 g. Explain the problem with the recorded precision. (2)</p><div class="answer-space"></div></div>
+<div class="question"><p><strong>9.</strong> Give two specific improvements for an experiment in which reaction time affects stopwatch measurements. (2)</p><div class="answer-space"></div></div>
+<div class="question"><p><strong>10.</strong> Explain the difference between an observation and an inference, using a chemistry or biology example. (2)</p><div class="answer-space"></div></div>
+<div class="question"><p><strong>11.</strong> State three features of a valid conclusion based on experimental evidence. (3)</p><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>12.</strong> State three pieces of information that should appear in a risk assessment. (3)</p><div class="answer-space"></div></div>
+<div class="key"><strong>Marking guide:</strong> Q1 3; Q2 4; Q3 3; Q4 3; Q5 4; Q6 3; Q7 6; Q8 2; Q9 2; Q10 2; Q11 3; Q12 3. Total 38. Add Q13: state two reasons for using a control experiment (2). Total 40.</div>
+<div class="question"><p><strong>13.</strong> State two reasons for using a control experiment. (2)</p><div class="answer-space"></div></div>
+</div>
+
+<div class="exam-paper" id="practical-test-5">
+<h3>TEST 5 — Advanced practical planning and mixed science investigations <span class="mark">40 marks</span></h3>
+<div class="test-meta"><span>Suggested time: 60 minutes</span><span>Answer all questions</span><span>Total: 40</span></div>
+<div class="question"><p><strong>1.</strong> Plan an investigation to compare the effect of two light intensities on photosynthesis. State the aim, independent variable, dependent variable, three controls and a suitable measurement method. (6)</p><div class="answer-space"></div><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>2.</strong> Describe how to determine the density of an irregular solid that does not dissolve in water. Include apparatus, measurements and calculation. (4)</p><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>3.</strong> Describe how to investigate the effect of concentration on reaction rate using gas production. Include a suitable apparatus choice and two controls. (5)</p><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>4.</strong> Explain how to find the spring constant from a force-extension graph and state its unit. (3)</p><div class="answer-space"></div></div>
+<div class="question"><p><strong>5.</strong> A chromatography spot moves 3.0 cm while the solvent front moves 6.0 cm. Calculate Rf and state one limitation of using Rf to identify a substance. (3)</p><div class="answer-space"></div></div>
+<div class="question"><p><strong>6.</strong> Describe how to use a quadrat and transect to investigate how plant distribution changes from a path into a grassy area. (4)</p><div class="answer-space"></div><div class="answer-space"></div></div>
+<div class="question"><p><strong>7.</strong> Explain why the ammeter must have low resistance and the voltmeter high resistance in an ideal circuit measurement. (2)</p><div class="answer-space"></div></div>
+<div class="question"><p><strong>8.</strong> State two ways to reduce heat loss in a thermal experiment and explain one. (3)</p><div class="answer-space"></div></div>
+<div class="question"><p><strong>9.</strong> A learner obtains repeated readings of 10.2, 10.3, 10.2 and 12.8 units. Calculate the mean of the three consistent values and explain the treatment of 12.8. (3)</p><div class="answer-space"></div></div>
+<div class="question"><p><strong>10.</strong> Give two ways to communicate practical findings clearly using a labelled diagram, table or graph. (2)</p><div class="answer-space"></div></div>
+<div class="question"><p><strong>11.</strong> State three principles for safe and ethical fieldwork or biological investigations. (3)</p><div class="answer-space"></div></div>
+<div class="question"><p><strong>12.</strong> Explain why a conclusion should not claim more than the data support. (2)</p><div class="answer-space"></div></div>
+<div class="key"><strong>Marking guide:</strong> Q1 6; Q2 4; Q3 5; Q4 3; Q5 3; Q6 4; Q7 2; Q8 3; Q9 3; Q10 2; Q11 3; Q12 2. Total 40.</div>
+</div>
+
+<h3>G. Consolidated formula sheet for practical examinations</h3>
+<table><thead><tr><th>Quantity</th><th>Relationship</th><th>Typical unit</th></tr></thead><tbody>
+<tr><td>Magnification</td><td>Image size ÷ actual size</td><td>No unit</td></tr>
+<tr><td>Percentage change</td><td>(Final − initial) ÷ initial × 100%</td><td>%</td></tr>
+<tr><td>Mean</td><td>Sum of readings ÷ number of readings</td><td>Same as measured quantity</td></tr>
+<tr><td>Density</td><td>Mass ÷ volume</td><td>kg m⁻³ or g cm⁻³</td></tr>
+<tr><td>Speed</td><td>Distance ÷ time</td><td>m s⁻¹</td></tr>
+<tr><td>Acceleration</td><td>Change in velocity ÷ time</td><td>m s⁻²</td></tr>
+<tr><td>Moment</td><td>Force × perpendicular distance</td><td>N m</td></tr>
+<tr><td>Pressure</td><td>Force ÷ area</td><td>Pa</td></tr>
+<tr><td>Wave speed</td><td>Frequency × wavelength</td><td>m s⁻¹</td></tr>
+<tr><td>Resistance</td><td>Potential difference ÷ current</td><td>Ω</td></tr>
+<tr><td>Electrical energy</td><td>Voltage × current × time</td><td>J</td></tr>
+<tr><td>Titre</td><td>Final burette reading − initial reading</td><td>cm³</td></tr>
+<tr><td>Amount of substance</td><td>Concentration × volume in dm³</td><td>mol</td></tr>
+<tr><td>Chromatography Rf</td><td>Distance moved by component ÷ distance moved by solvent front</td><td>No unit</td></tr>
+<tr><td>Frequency (%)</td><td>Quadrats containing species ÷ total quadrats × 100%</td><td>%</td></tr>
+<tr><tr><td>Rate</td><td>Change in measured quantity ÷ time</td><td>Depends on quantity</td></tr>
+</tbody></table>
+
+<h3>H. Final revision and practical examination readiness</h3>
+<ul class="point-list">
+<li>Revise apparatus names, functions, correct setup and common errors.</li>
+<li>Practise drawing and labelling each apparatus arrangement from memory.</li>
+<li>Learn the standard food tests, gas tests, separation methods and common physics circuit arrangements.</li>
+<li>Practise planning fair tests with independent, dependent and controlled variables.</li>
+<li>Practise reading scales, converting units and recording suitable precision.</li>
+<li>Practise calculations without skipping working or units.</li>
+<li>Practise drawing tables and graphs neatly and selecting the correct graph type.</li>
+<li>Use evidence from results when writing conclusions.</li>
+<li>Evaluate methods by naming a real limitation and giving a directly matched improvement.</li>
+<li>Complete all five 40-mark tests and correct errors using your teacher's syllabus and marking guidance.</li>
+</ul>
+<p><strong>Curriculum reminder:</strong> Practical requirements vary among national curricula and international examination boards. This handbook is a broad science foundation; check the current syllabus, laboratory handbook and assessment specification for the learner's country and level. All diagrams are instructional schematics and are not to scale.</p>
+</section>
+
 </main><footer><p>CBE Nexus · Connecting learners to excellence</p><p><a href="/global-schools.html">Global Schools</a> · <a href="/country-online-notes.html">Country Online Notes</a> · <a href="/">Home</a></p></footer>
 <script>
 (function(){const p=new URLSearchParams(location.search);const raw=p.get("country")||"";const known={"afghanistan":"Afghanistan","albania":"Albania","algeria":"Algeria","andorra":"Andorra","angola":"Angola","antigua-and-barbuda":"Antigua and Barbuda","argentina":"Argentina","armenia":"Armenia","australia":"Australia","austria":"Austria","kenya":"Kenya"};const name=known[raw.toLowerCase()]||raw.replace(/[-_]+/g," ").replace(/\b\w/g,x=>x.toUpperCase());if(name){document.getElementById("countryName").textContent=name;document.getElementById("countryIntro").textContent="Biology, Chemistry and Physics practical-skills notes for learners studying in "+name+". Check your national curriculum and examination-board requirements for grade-specific practicals.";const back="/global-schools/"+raw.toLowerCase().replace(/[^a-z0-9-]/g,"");document.getElementById("countryBack").href=back;document.title="Science Practical Skills in "+name+" | CBE Nexus";const md=document.querySelector('meta[name="description"]');md.content="Online Biology, Chemistry and Physics practical skills notes for "+name+": apparatus, measurements, accuracy, graphs, experimental procedures and laboratory safety.";}})();
