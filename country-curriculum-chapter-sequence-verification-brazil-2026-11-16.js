@@ -90,4 +90,15 @@ export const countryCurriculumVerification = {
     subjectRecordsWithDetailedNationalChapterSequenceReconciled: 0,
     claimOf10000WordChapters: false
   }
+
+  evidenceRefresh_2026_11_16: {
+  "status": "official BNCC framework confirmed; topic mapping and textbooks pending",
+  "sources": [
+    "https://basenacionalcomum.mec.gov.br/",
+    "https://basenacionalcomum.mec.gov.br/a-base",
+    "https://downloadbncc.mec.gov.br/"
+  ],
+  "finding": "BNCC is a normative national reference for essential learning, implemented through state and school-network curricula. Upper-secondary Natural Sciences and Technologies integrates Biology, Physics and Chemistry; Mathematics is a separate knowledge area. BNCC skills are not textbook chapters."
+},
+  textbookVerification_2026_11_16: { actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, cbEnexusLongFormChaptersWritten: false, note: "A syllabus listing, framework, examination subject list or textbook catalogue does not establish actual contents-page chapter sequence." }
 };
