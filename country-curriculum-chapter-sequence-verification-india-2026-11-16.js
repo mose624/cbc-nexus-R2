@@ -49,3 +49,5 @@ export const countryCurriculumVerification = {
     "Author and verify CBE Nexus chapters only after sequence validation."
   ]
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "India", gradeSequenceEvidence: "NEP 2020 and NCF-SE 2023 use a 5+3+3+4 stage structure. India is federal and board-diverse: distinguish NCERT/CBSE from state boards and other national boards. CBSE 2026–27 lists Science and Mathematics in IX–X and Biology, Chemistry, Physics and Mathematics in XI–XII.", textbookEvidence: "NCERT syllabus and CBSE curriculum sources identified; actual textbook contents pages and chapter counts not audited across boards.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "https://ncf.ncert.gov.in/ ; https://cbseacademic.nic.in/curriculum_2027.html", nextRequiredWork: "Extract the official grade/year/term sequence for Mathematics and integrated or specialist sciences from the current national documents; inspect actual approved/adopted student textbook contents pages and record exact chapter titles and counts separately." };
