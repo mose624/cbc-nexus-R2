@@ -216,7 +216,17 @@ export const chapterSequenceVerificationBatch01 = {
       ],
       curriculumStructure: "The October 2025 revised Senior Secondary Curriculum is organised by SSS 1, SSS 2 and SSS 3. NERDC's SSS 1 science portal lists Biology, Chemistry and Physics; its core portal lists General Mathematics. SSS 2 portals confirm the same science/core subject groupings. The Biology SSS 1 viewer document is identified as the October 2025 revised curriculum, but its embedded viewer did not expose readable chapter contents in this audit. Do not use older e-Curriculum topics as substitutes for the revised 2025 sequence.",
       subjects: {
-        Biology: { officialName: "Biology", sourceStatus: "October-2025-revised-SSS1-document-identified; viewer-content-not-extracted", sequenceStatus: "chapter-sequence-extraction-pending", syllabusThemes: [], chapterCount: null, sourceDocument: "https://lmis.nerdcportals.com.ng/sss_1/necurrdc/viewer.html?file=6.pdf" },
+        Biology: {
+          officialName: "Biology",
+          sourceStatus: "October-2025-revised-SSS1-contents-and-focal-competencies-transcribed-from-reproduction",
+          sequenceStatus: "20-source-topic-records-reported; 19-normalized-curriculum-themes-captured; primary-NERDC-file-verification-pending",
+          chapterCount: null,
+          sourceTopicRecordCount: 20,
+          syllabusThemes: ["Biology and Scientific Enquiry", "Laboratory Safety, First Aid and Emergency Response", "Biological Laboratory Equipment and Microscopy", "ICT Tools and Ethical Use in Biology", "Biological Concepts and Characteristics of Living Organisms", "Organization of Life and Biochemical Processes", "Cell Structure, Cell Division, Diffusion and Osmosis", "Ecology and Ecological Factors", "Ecosystem Relationships, Food Chains, Food Webs and Biodiversity", "Agricultural Practices and Crop Yield Improvement", "Organic Manure and Soil Quality", "Pollution: Sources, Effects and Control", "Waste Management, Soil Erosion and Deforestation", "Scientific Misconceptions in Biology", "Bioethics and Biological Research", "Roles of Biology in Food Production, Healthcare and Conservation", "Research Collaboration, Project Work and Scientific Communication", "Microorganisms: Identification and Effects", "Human Diseases, Transmission, Prevention and Zoonoses"],
+          sourceDocument: "https://lmis.nerdcportals.com.ng/sss_1/necurrdc/viewer.html?file=6.pdf",
+          secondaryTranscription: "https://smartest.ng/syllabus/nerdc/ss1/biology/",
+          note: "SmarTest reports 20 source topic records, while the visible contents/focal-competency list contains repeated headings and 19 normalized theme groups. These are curriculum themes/competencies, not 19 confirmed standalone textbook chapters. Verify the original NERDC PDF before assigning chapter numbers."
+        },
         Chemistry: {
           officialName: "Chemistry",
           sourceStatus: "October-2025-NERDC-SSS1-document-contents-transcribed-from-reproduced-copy; official-subject-listing-confirmed",
@@ -252,10 +262,28 @@ export const chapterSequenceVerificationBatch01 = {
           sourceDocument: "https://www.scribd.com/document/1074176739/Ss-1-Science-Chemistry-2025-Curriculum",
           note: "The reproduced document identifies itself as the NERDC New Revised Senior Secondary School Curriculum, Chemistry SSS 1, October 2025. The 18 topic titles and order are transcribed from its contents page. Treat this as provisional until the corresponding NERDC-hosted PDF is retrieved and checked."
         },
-        Physics: { officialName: "Physics", sourceStatus: "official-revised-SSS1-and-SSS2-subject-listings-verified", sequenceStatus: "revised-document-retrieval-and-chapter-extraction-pending", syllabusThemes: [], chapterCount: null },
-        Mathematics: { officialName: "General Mathematics", sourceStatus: "official-revised-core-SSS1-and-SSS2-subject-listings-verified", sequenceStatus: "revised-document-retrieval-and-chapter-extraction-pending", syllabusThemes: [], chapterCount: null }
+        Physics: {
+          officialName: "Physics",
+          sourceStatus: "October-2025-revised-SSS1-contents-and-focal-competencies-transcribed-from-reproduction",
+          sequenceStatus: "30-source-topic-records-reported; competency themes transcribed; primary-NERDC-file-verification-pending",
+          chapterCount: null,
+          sourceTopicRecordCount: 30,
+          syllabusThemes: ["Interaction of Matter, Space and Time", "Physical Quantities, Fundamental and Derived Units", "Measurement of Length, Mass, Time and Other Quantities", "Position, Distance and Displacement", "Electric Charge: Production, Detection and Storage", "Motion, Forces and Friction", "Speed, Velocity and Distance-Time Graphs", "Acceleration and Velocity-Time Graphs", "Scalars, Vectors and Vector Diagrams", "Surface Tension, Viscosity and Fluid Behaviour", "Atomic Structure and Particulate Nature of Matter", "Work, Energy and Power", "Conservation Principles and Energy Transformation", "Temperature, Heat Transfer and Thermal Expansion", "Gravitational Fields and Acceleration Due to Gravity", "Electric Fields and Electric Field Lines", "Simple Electric Circuits, Current, Voltage and Ohm's Law", "Magnetic Fields, Magnets and Electromagnets", "Electromagnetic Induction: Faraday's and Lenz's Laws", "Construction of Simple Measuring Instruments", "Solar Energy Conversion and Applications", "Solar Heaters, Solar Panels and Heat Collectors", "Sensors and Simple Light-Detection Circuits", "Experimental Data Processing with Spreadsheet Software", "Experimental Data Analysis with Artificial Intelligence Tools", "Physics Laboratory Safety and Emergency Procedures", "Laboratory Equipment Organization and Maintenance", "Biogas Production and Applications of Physics", "Interdisciplinary Links between Physics and Environmental Science", "Interdisciplinary Links between Physics and Chemistry"],
+          secondaryTranscription: "https://smartest.ng/syllabus/nerdc/ss1/physics/",
+          note: "SmarTest reports 30 source topic records but its visible contents list contains repeated competency labels and 40 numbered entries. The 30 themes above are normalized from the page's focal competencies and are not asserted to be a one-to-one copy of the original topic numbering. Verify against the primary NERDC PDF before assigning chapter numbers."
+        },
+        Mathematics: {
+          officialName: "General Mathematics",
+          sourceStatus: "October-2025-revised-SSS1-contents-and-focal-competencies-transcribed-from-reproduction",
+          sequenceStatus: "12-source-topic-records-reported; 12 curriculum topic headings normalized; primary-NERDC-file-verification-pending",
+          chapterCount: null,
+          sourceTopicRecordCount: 12,
+          syllabusThemes: ["Number and Numeration: Number Bases", "Indices and Laws of Indices", "Trigonometric Ratios of Special Angles", "Logarithms and Antilogarithms", "ICT, Binary Numbers and Basic Coding", "Modular Arithmetic", "Sets and Set Operations", "Logical Reasoning and Compound Statements", "Variation and Change of Subject of Formula", "Quadratic Expressions, Equations and Graphs", "Geometry: Circles, Sectors, Solids and Compound Shapes", "Statistics: Data Collection, Tables, Graphs and Interpretation"],
+          secondaryTranscription: "https://smartest.ng/syllabus/nerdc/ss1/mathematics/",
+          note: "The 12 source topic records are normalized from the reproduced October 2025 NERDC curriculum. Competency headings are not automatically textbook chapters; check the primary NERDC document before assigning chapter numbers."
+        }
       },
-      status: "October-2025 revised curriculum subject listings verified for SSS1 and SSS2; Chemistry SSS1 has 18 provisional topic entries transcribed from a reproduced NERDC document; Biology, Physics and General Mathematics sequences remain pending primary-document extraction"
+      status: "October-2025 revised curriculum subject listings verified for SSS1 and SSS2; Chemistry has 18 provisional entries pending primary-source reconciliation; Biology (20 source records), Physics (30 source records) and General Mathematics (12 source records) themes transcribed from reproduced curriculum pages; all three require primary NERDC PDF verification before chapter numbering"
     },
     {
       country: "Uganda",
