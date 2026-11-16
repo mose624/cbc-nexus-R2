@@ -120,3 +120,15 @@ export const countryCurriculumVerification = {
   },
   overallStatus: "Official curriculum architecture, competency-based reform, science subject timing and 2026 resource listings verified; detailed grade-by-grade outcomes, secondary series mapping and textbook chapter counts remain pending."
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Djibouti",
+  gradeSequenceEvidence: "Fundamental curriculum revision moved Physique-Chimie to Class 6 and strengthened SVT from Class 6; the new basic curriculum is competency-based across Years 1–9. Official curriculum repository lists Mathematics, Science base, Physique-Chimie, SVT and secondary curricula by level.",
+  textbookEvidence: "Official curriculum repository located; actual textbook contents and chapter counts not inspected.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://sites.google.com/view/igendjibouti/ressources/les-curricula",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology or integrated Life Science, Chemistry, Physics and Mathematics. Then inspect adopted student textbooks and record printed chapter titles and counts separately; do not infer chapters from standards or themes."
+};
