@@ -147,3 +147,16 @@ export const country = {
   "cbEnexusLongFormChaptersWritten": false
 },
 };
+
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Belize",
+  gradeSequenceEvidence: "The July 2022 National Curriculum Framework states subject-specific frameworks and grade syllabi are separate complementary documents; Mathematics and Science/Technology are distinct learning areas.",
+  textbookEvidence: "Framework is not the detailed grade syllabus; no book contents inspected.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "https://www.moecst.gov.bz/wp-content/uploads/2023/07/National-Curriculum-Framework-1_230705_151333.pdf",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology (or integrated Life Science), Chemistry, Physics and Mathematics; then open approved/adopted student textbooks and record exact printed chapter headings and counts separately. Do not infer textbook chapters from syllabus themes."
+};
