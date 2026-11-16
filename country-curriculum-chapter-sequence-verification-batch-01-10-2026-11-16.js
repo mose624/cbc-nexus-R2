@@ -217,11 +217,45 @@ export const chapterSequenceVerificationBatch01 = {
       curriculumStructure: "The October 2025 revised Senior Secondary Curriculum is organised by SSS 1, SSS 2 and SSS 3. NERDC's SSS 1 science portal lists Biology, Chemistry and Physics; its core portal lists General Mathematics. SSS 2 portals confirm the same science/core subject groupings. The Biology SSS 1 viewer document is identified as the October 2025 revised curriculum, but its embedded viewer did not expose readable chapter contents in this audit. Do not use older e-Curriculum topics as substitutes for the revised 2025 sequence.",
       subjects: {
         Biology: { officialName: "Biology", sourceStatus: "October-2025-revised-SSS1-document-identified; viewer-content-not-extracted", sequenceStatus: "chapter-sequence-extraction-pending", syllabusThemes: [], chapterCount: null, sourceDocument: "https://lmis.nerdcportals.com.ng/sss_1/necurrdc/viewer.html?file=6.pdf" },
-        Chemistry: { officialName: "Chemistry", sourceStatus: "official-revised-SSS1-and-SSS2-subject-listings-verified", sequenceStatus: "revised-document-retrieval-and-chapter-extraction-pending", syllabusThemes: [], chapterCount: null },
+        Chemistry: {
+          officialName: "Chemistry",
+          sourceStatus: "October-2025-NERDC-SSS1-document-contents-transcribed-from-reproduced-copy; official-subject-listing-confirmed",
+          sequenceStatus: "18-SSS1-topics-transcribed-from-document-contents; primary-host-PDF-link-still-to-be-verified",
+          chapterStatus: "provisional-document-topic-sequence; not-yet-primary-source-verified",
+          syllabusThemes: [
+            "The chemical world",
+            "Chemistry and the environment",
+            "The chemistry of life",
+            "Chemistry and industry"
+          ],
+          chapterCount: 18,
+          chapters: [
+            { number: 1, title: "Introductory Concepts", theme: "The Chemical World", sourcePage: 1 },
+            { number: 2, title: "Chemical Industry", theme: "The Chemical World", sourcePage: 2 },
+            { number: 3, title: "Branches of Chemistry", theme: "The Chemical World", sourcePage: 3 },
+            { number: 4, title: "Standard Separation Techniques", theme: "The Chemical World", sourcePage: 4 },
+            { number: 5, title: "Chemical Hazards", theme: "The Chemical World", sourcePage: 5 },
+            { number: 6, title: "Laboratory Safety Rules and Guidelines", theme: "The Chemical World", sourcePage: 6 },
+            { number: 7, title: "Symbols, Formulae and Equations", theme: "The Chemical World", sourcePage: 7 },
+            { number: 8, title: "Elements, Compounds and Mixtures", theme: "The Chemical World", sourcePage: 8 },
+            { number: 9, title: "Particulate Nature of Matter", theme: "The Chemical World", sourcePage: 9 },
+            { number: 10, title: "Atomic Structure", theme: "The Chemical World", sourcePage: 10 },
+            { number: 11, title: "Chemical Combination", theme: "The Chemical World", sourcePage: 11 },
+            { number: 12, title: "Chemical Bonds", theme: "The Chemical World", sourcePage: 12 },
+            { number: 13, title: "Chemical Equilibrium", theme: "The Chemical World", sourcePage: 13 },
+            { number: 14, title: "Gas Laws", theme: "The Chemical World", sourcePage: 14 },
+            { number: 15, title: "Acids, Bases and Salts", theme: "The Chemical World", sourcePage: 15 },
+            { number: 16, title: "Water", theme: "Chemistry and the Environment", sourcePage: 17 },
+            { number: 17, title: "Carbon and its Compounds", theme: "The Chemistry of Life", sourcePage: 18 },
+            { number: 18, title: "Entrepreneurship in Chemistry", theme: "Chemistry and Industry", sourcePage: 19 }
+          ],
+          sourceDocument: "https://www.scribd.com/document/1074176739/Ss-1-Science-Chemistry-2025-Curriculum",
+          note: "The reproduced document identifies itself as the NERDC New Revised Senior Secondary School Curriculum, Chemistry SSS 1, October 2025. The 18 topic titles and order are transcribed from its contents page. Treat this as provisional until the corresponding NERDC-hosted PDF is retrieved and checked."
+        },
         Physics: { officialName: "Physics", sourceStatus: "official-revised-SSS1-and-SSS2-subject-listings-verified", sequenceStatus: "revised-document-retrieval-and-chapter-extraction-pending", syllabusThemes: [], chapterCount: null },
         Mathematics: { officialName: "General Mathematics", sourceStatus: "official-revised-core-SSS1-and-SSS2-subject-listings-verified", sequenceStatus: "revised-document-retrieval-and-chapter-extraction-pending", syllabusThemes: [], chapterCount: null }
       },
-      status: "October-2025 revised curriculum subject listings verified for SSS1 and SSS2; Biology SSS1 document identified; full chapter sequences for all four subjects still pending viewer/PDF content extraction"
+      status: "October-2025 revised curriculum subject listings verified for SSS1 and SSS2; Chemistry SSS1 has 18 provisional topic entries transcribed from a reproduced NERDC document; Biology, Physics and General Mathematics sequences remain pending primary-document extraction"
     },
     {
       country: "Uganda",
