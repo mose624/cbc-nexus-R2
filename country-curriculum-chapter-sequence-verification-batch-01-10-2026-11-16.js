@@ -462,23 +462,24 @@ export const chapterSequenceVerificationBatch01 = {
         Physics: {
           officialName: "Physics",
           sourceStatus: "TIE-2023-Form-I-IV-official-syllabus-opened-and-four-form-tables-reviewed",
-          sequenceStatus: "Form-I-IV principal learning-content themes reconciled against official detailed tables; normalized themes are not official textbook chapter titles",
+          sequenceStatus: "Form-I-IV learning-content themes reconciled against official detailed tables; Form II/III/IV placement corrections applied; normalized themes are not official textbook chapter titles",
           sourceListedTopicRows: null,
           chapterCount: null,
           officialTablePages: { FormI: 9, FormII: 25, FormIII: 37, FormIV: 46 },
           topicsByForm: {
             FormI: ["Physics: meaning, branches, applications and connections with other disciplines", "Physical quantities: fundamental and derived quantities and SI units", "Linear motion: distance, displacement, speed, velocity and acceleration", "Force and its applications", "Density, pressure, sinking and floating", "Work, power and energy", "Mechanical properties of matter and their relation to force and energy", "Practical measurement, investigation and development of simple prototype devices using Form I concepts"],
-            FormII: ["Light: sources, propagation, transmission, image formation, colours and optical instruments", "Magnetism: magnetic fields, magnetisation and demagnetisation", "Static electricity and electric charge", "Current electricity: electromotive force, potential difference, resistance, effects of current and domestic electrical installation", "Mathematical relationships applied to light and current electricity", "Waves and laws of motion, including Newton's laws and linear momentum", "Practical investigations in light, magnetism, static electricity, current electricity, waves and motion"],
-            FormIII: ["Equilibrium: moment of force, centre of gravity and types of equilibrium", "Friction: types and laws of friction", "Simple machines: levers, pulleys, inclined planes and related mechanical principles", "Scientific investigations and data analysis in waves, motion, equilibrium, friction and simple machines", "Scientific reporting and research project work initiated in Form III"],
-            FormIV: ["Heat and thermal physics: temperature measurement, thermal expansion, thermal energy and heat transfer", "Measurement of thermal energy, vapour and humidity in relation to air temperature", "Physics of the atom: atomic and nuclear structure, radioactivity, nuclear radiations, nuclear processes and thermionic emission", "Electronics: semiconductors, diodes, transistors and amplifiers", "Renewable energy: solar, hydropower, wind and geothermal energy", "Experimental investigation, mathematical applications, data analysis and completion of the Form III research project"]
+            FormII: ["Light: sources, propagation and transmission, image formation, colours and optical instruments", "Magnetism: magnetisation, demagnetisation and magnetic fields", "Static electricity: detection and types of charge, materials, capacitors, charge distribution and lightning conductors", "Current electricity: electromotive force, potential difference, resistance, effects and laws of current, and domestic electrical installations", "Mathematical relationships applied to light and current electricity", "Practical experiments and data processing for light, magnetism, static electricity and current electricity, including spreadsheet use and graph-based analysis", "Physics project: develop prototype devices using concepts from light, magnetism and electricity"],
+            FormIII: ["Waves and laws of motion: waves, Newton's laws of motion and linear momentum", "Equilibrium: moment of force, centre of gravity and types of equilibrium", "Friction: types and laws of friction", "Simple machines: levers, pulleys, inclined planes, screw jacks, wheel and axle, and hydraulic press", "Heat: temperature measurement, thermal expansion, thermal energy and heat transfer", "Thermal measurements: measurement of thermal energy, vapour and humidity in relation to air temperature", "Scientific investigation, data analysis and development of the Physics research project"],
+            FormIV: ["Physics of the atom: atomic and nuclear structure, radioactivity, nuclear radiations, nuclear processes and thermionic emission", "Electronics: semiconductors, diodes, transistors and amplifiers", "Renewable energy sources and applications", "Analyse and interpret experimental data related to atomic physics, electronics and renewable energy", "Complete and submit the research-project report started in Form III"]
           },
           reconciliationNotes: [
-            "The earlier provisional map placed waves and Newton's laws in Form III. The detailed TIE table places waves, Newton's laws and linear momentum in Form II; Form III then develops equilibrium, friction and simple machines.",
-            "Form II also explicitly includes mathematical relationships and practical investigations related to light, magnetism, static electricity and current electricity.",
-            "Form IV heat, physics of the atom, electronics and renewable energy are confirmed in the detailed table. The project report is continued and completed in Form IV, not treated as a new standalone theory chapter.",
+            "The earlier map incorrectly assigned waves and Newton's laws to Form II. The official detailed table places them at the beginning of Form III, alongside linear momentum.",
+            "Form II is the light, magnetism, static electricity and current electricity sequence. Its mathematics, experiments, data processing and prototype development are attached learning activities/competences, not additional theory chapters.",
+            "Heat, thermal expansion, heat transfer, vapour and humidity are in the Form III table, not Form IV. This was corrected.",
+            "Form IV covers physics of the atom, electronics and renewable energy, plus analysis of experimental data and submission of the project report started in Form III.",
             "The syllabus is organized as competency and learning-activity matrices. Normalized themes preserve the official Form placement but do not assert an official textbook chapter count."
           ]
-        }
+        },
         Mathematics: {
           officialName: "Mathematics",
           sourceStatus: "TIE-2023-Form-I-IV-official-syllabus-opened-and-all-four-form-tables-reviewed",
@@ -499,7 +500,7 @@ export const chapterSequenceVerificationBatch01 = {
           ]
         }
       },
-      status: "All four official TIE 2023 subject syllabuses opened; Forms I-IV sections confirmed; exact full topic-row extraction remains in progress; broad Form II-IV topic summaries are explicitly provisional"
+      status: "All four official TIE 2023 subject syllabuses opened; Biology, Chemistry, Physics and Mathematics Form I-IV learning-content themes reconciled against detailed tables; no official textbook chapter counts inferred"
     },
     {
       country: "Albania",
