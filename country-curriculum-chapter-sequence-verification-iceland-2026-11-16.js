@@ -48,3 +48,5 @@ export const countryCurriculumVerification = {
     "Author and verify CBE Nexus chapters only after sequence validation."
   ]
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Iceland", gradeSequenceEvidence: "The National Curriculum Guide governs compulsory education; school-level curricula and upper-secondary programmes elaborate subject organisation. Extract Mathematics and integrated/science subject outcomes by grade and upper-secondary programme.", textbookEvidence: "No student textbook contents or official chapter counts verified.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "https://www.government.is/topics/education/curriculum/", nextRequiredWork: "Extract the official grade/year/term sequence for Mathematics and integrated or specialist sciences from the current national documents; inspect actual approved/adopted student textbook contents pages and record exact chapter titles and counts separately." };
