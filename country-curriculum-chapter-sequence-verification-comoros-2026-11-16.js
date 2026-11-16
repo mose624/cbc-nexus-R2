@@ -176,3 +176,15 @@ export const countryCurriculumVerification = {
     "Reconcile national policy with implementation across Ngazidja, Ndzuani and Mwali."
   ]
 };
+
+export const chapterEvidenceReconciliation = {
+  reviewedOn: "2026-11-16",
+  country: "Comoros",
+  gradeSequenceEvidence: "A new collège SVT and Physique-Chimie programme set was announced for 2025–26; the older 2008 programmes are historic references. Verify which other subject programmes remain in force before constructing a full current sequence.",
+  textbookEvidence: "No actual textbook contents inspected; new SVT and Physique-Chimie programme documents need extraction.",
+  actualTextbookContentsInspected: false,
+  officialTextbookChapterCountsVerified: false,
+  officialChapterCount: null,
+  evidenceSource: "Official current syllabus and textbook source retrieval remains outstanding.",
+  nextRequiredWork: "Extract official grade/year/term topic headings for Biology or integrated Life Science, Chemistry, Physics and Mathematics. Then inspect adopted student textbooks and record printed chapter titles and counts separately; do not infer chapters from standards or themes."
+};
