@@ -79,3 +79,5 @@ export const countryCurriculumVerification = {
   },
   "overallStatus": "Country record created with official-source leads and conservative subject mapping; detailed programme extraction and textbook chapter verification remain pending."
 };
+
+export const chapterEvidenceReconciliation = { reviewedOn: "2026-11-16", country: "Guatemala", gradeSequenceEvidence: "DIGECUR publishes CNB by grade and level, including primary CNB materials. Extract Ciencias Naturales and Matemática by grade; Ciclo Básico and Diversificado must be separately mapped by modality.", textbookEvidence: "Official CNB resource portal identified; student textbook contents not inspected.", actualTextbookContentsInspected: false, officialTextbookChapterCountsVerified: false, officialChapterCount: null, evidenceSource: "https://digecur.mineduc.gob.gt/materiales-de-apoyo-curricular/", nextRequiredWork: "Retrieve official grade/year/term programmes and extract Mathematics, Biology or integrated Life Science, Chemistry and Physics topics; inspect approved student textbook contents pages and record printed chapter titles/counts separately." };
