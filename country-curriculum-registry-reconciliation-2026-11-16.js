@@ -15,17 +15,11 @@ export const countryCurriculumRegistryReconciliation = {
     note: "The 196-entry register is the project's configured country/jurisdiction scope. It is not identical to the full UN M49 country-or-area list."
   },
   sourceMapInventory: {
-    existingBatchFiles: 39,
-    batchEntries: 195,
-    canonicalUniqueRegisterCountriesMapped: 191,
-    coveragePercent: 97.45,
-    missingRegisterCountries: [
-      { country: "Afghanistan", isoAlpha3: "AFG" },
-      { country: "Belgium", isoAlpha3: "BEL" },
-      { country: "South Korea", isoAlpha3: "KOR" },
-      { country: "Vatican City", isoAlpha3: "VAT" },
-      { country: "Kosovo", isoAlpha3: "XKX" }
-    ],
+    existingBatchFiles: 40,
+    batchEntries: 200,
+    canonicalUniqueRegisterCountriesMapped: 196,
+    coveragePercent: 100,
+    missingRegisterCountries: [],
     duplicateCountryRecords: [
       { country: "Ghana", firstBatch: 1, duplicateBatch: 14 },
       { country: "Kenya", firstBatch: 1, duplicateBatch: 19 },
@@ -38,7 +32,8 @@ export const countryCurriculumRegistryReconciliation = {
       "Batch 19 and Batch 20 are not duplicates. Batch 19 contains Kenya, Kiribati, Kuwait, Kyrgyzstan and Laos; Batch 20 contains Latvia, Lebanon, Lesotho, Liberia and Libya.",
       "Batch 30 is a reconciliation set. Rwanda is not present in Batch 01; Batch 01 contains Kenya, Ghana, Nigeria, Uganda and Tanzania. Batch 30 references an existing dedicated Rwanda extension (country-online-notes-rwanda-reb.js), so retain the Rwanda source record and link it to the extension rather than deleting it.",
       "Canonical matching resolves The Gambia/Gambia, Brunei Darussalam/Brunei, Federated States of Micronesia/Micronesia, Democratic People's Republic of Korea/North Korea, Republic of the Congo/Congo, diacritics in São Tomé and Príncipe, and other documented name variants.",
-      "Batch numbers are not used as a coverage proxy. Coverage is calculated from normalized country identities and the explicit 196-record register."
+      "Batch 40 adds Afghanistan, Belgium, South Korea, Kosovo and Vatican City to close the five canonical register gaps. Vatican City is a special-scope record: no separate national K–12 syllabus has been verified, so the record must not be treated as four completed national subject mappings.",
+      "Batch numbers are not used as a coverage proxy. Coverage is calculated from normalized country identities and the explicit 196-record register. The 100% figure means every register identity now has a source-map record; it does not mean all curricula or chapters are verified."
     ],
     coverageRule: "A country counts once only when a source-map name resolves to a canonical register identity. A repeated record does not increase coverage; an extra jurisdiction does not increase the 196-country numerator."
   },
@@ -53,7 +48,7 @@ export const countryCurriculumRegistryReconciliation = {
     status: "Source-map presence does not update subject-level curriculum verification or prove chapter word, diagram, question, or teaching-quality targets."
   },
   nextActions: [
-    "Create source maps for Afghanistan, Belgium, South Korea, Vatican City and Kosovo, each with an explicit authority/evidence status.",
+    "Inspect and extract the current official grade/subject documents for all five Batch 40 entries; resolve Vatican City as a special-scope case rather than inventing a national K–12 syllabus.",
     "Keep the three duplicate source-map records linked to the same canonical identity; do not count them twice.",
     "Keep Taiwan outside the 196-country numerator unless the project formally changes its register scope.",
     "Continue country-subject-grade-track mapping from official documents before creating or verifying chapter sequences.",
