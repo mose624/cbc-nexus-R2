@@ -66,6 +66,20 @@ header p{font-size:13.5px}
 @media(max-width:650px){body{font-size:13.5px}.subject p,.subject li,.subject td,.subject th{font-size:13px}.test-meta{display:block}.exam-paper{padding:11px}}
 @media print{.tabs{display:none}.exam-paper{break-inside:avoid}.diagram{break-inside:avoid}}
 
+</style>
+<style id="practical-print-styles">
+.print-practical-btn{display:inline-flex;align-items:center;gap:7px;margin:8px 0 16px;padding:9px 15px;border:0;border-radius:7px;background:#1685c5;color:#fff;font-size:13px;font-weight:700;cursor:pointer}
+.print-practical-btn:hover{background:#08679f}
+@media print{
+ body.printing-practical *{visibility:hidden!important}
+ body.printing-practical .print-target,body.printing-practical .print-target *{visibility:visible!important}
+ body.printing-practical .print-target{position:absolute!important;left:0!important;top:0!important;width:100%!important;margin:0!important;padding:12px!important;background:#fff!important;color:#111!important;box-shadow:none!important}
+ body.printing-practical .print-practical-btn{display:none!important}
+ body.printing-practical table{border-collapse:collapse!important;width:100%!important}
+ body.printing-practical th,body.printing-practical td{border:1px solid #777!important;color:#111!important}
+ body.printing-practical h1,body.printing-practical h2,body.printing-practical h3{break-after:avoid}
+ body.printing-practical .qa,.body.printing-practical tr{break-inside:avoid}
+}
 </style></head>
 <body>
 <header><div class="wrap"><nav><a href="/global-schools.html">← Global Schools</a> · <a id="countryBack" href="/global-schools.html">Country dashboard</a></nav>
@@ -77,6 +91,7 @@ header p{font-size:13.5px}
 <div class="tabs"><a href="#biology">🧬 Online Biology Practical Notes</a><a href="#chemistry">⚗ Online Chemistry Practical Notes</a><a href="#physics">⚛ Online Physics Practical Notes</a><a href="#expanded-practical-handbook">📘 Extra Notes & 5 Tests</a></div>
 <section class="subject" id="biology">
 <h2>🧬 Online Biology Practical Notes</h2>
+<button type="button" class="print-practical-btn" onclick="printPracticalSection('biology')">🖨 Print Biology Practical Notes</button>
 <p>Biology practical work involves observing living organisms and biological materials, using instruments to examine structures, sampling populations, carrying out investigations and recording evidence accurately.</p>
 <h3>1. Essential Biology apparatus and uses</h3>
 <table><thead><tr><th>Apparatus</th><th>Use and correct handling</th></tr></thead><tbody>
@@ -232,6 +247,7 @@ header p{font-size:13.5px}
 </section>
 <section class="subject" id="chemistry">
 <h2>⚗ Online Chemistry Practical Notes</h2>
+<button type="button" class="print-practical-btn" onclick="printPracticalSection('chemistry')">🖨 Print Chemistry Practical Notes</button>
 <p>Chemistry practical work involves handling substances safely, measuring quantities, preparing solutions, separating mixtures, carrying out reactions and analysing experimental evidence.</p>
 <h3>1. Chemistry apparatus and uses</h3>
 <table><thead><tr><th>Apparatus</th><th>Use and correct handling</th></tr></thead><tbody>
@@ -366,6 +382,7 @@ header p{font-size:13.5px}
 </section>
 <section class="subject" id="physics">
 <h2>⚛ Online Physics Practical Notes</h2>
+<button type="button" class="print-practical-btn" onclick="printPracticalSection('physics')">🖨 Print Physics Practical Notes</button>
 <p>Physics practical work uses measurement and mathematical relationships to investigate matter, motion, energy, waves, electricity and fields.</p>
 <h3>1. Physics apparatus and uses</h3>
 <table><thead><tr><th>Apparatus</th><th>Use and correct handling</th></tr></thead><tbody>
@@ -1584,6 +1601,7 @@ table{font-size:.84rem}th,td{padding:7px 8px}
 <ol><li>State the aim and hypothesis.</li><li>Identify independent, dependent and controlled variables.</li><li>Draw and label the apparatus.</li><li>Describe a safe, numbered procedure with quantities and measurement intervals.</li><li>Prepare a results table with units and space for repeats.</li><li>Show calculations, plot the graph and describe the trend.</li><li>Give a conclusion supported by numerical evidence, then identify errors and improvements.</li></ol>
 
 <h2 id="biology-practical-qa">A. Biology practicals: examination questions and answers</h2>
+<button type="button" class="print-practical-btn" onclick="printPracticalSection('biology-practical-qa')">🖨 Print Biology Questions & Answers</button>
 <h3>1. Microscopy, cells and biological drawings</h3>
 <div class="qa"><p><strong>Q1. Describe how to prepare and examine an onion epidermal peel under a light microscope. (6 marks)</strong></p><div class="answer"><strong>Model answer:</strong> Peel a thin transparent epidermis using forceps; place it flat in a drop of water on a clean slide; add a suitable stain such as iodine as instructed; lower a coverslip at an angle to avoid air bubbles; begin with the low-power objective; use the coarse focus then fine focus; centre the specimen and move to higher power, using fine focus only. Draw a large, clear, single-line biological drawing and label cell wall, cytoplasm, nucleus (if visible) and vacuole.</div></div>
 <div class="qa"><p><strong>Q2. State the functions of the eyepiece lens, objective lens, stage, diaphragm, mirror/light source, coarse and fine adjustment knobs. (7 marks)</strong></p><div class="answer">Eyepiece magnifies the image; objective provides primary magnification; stage supports the slide; diaphragm controls light; mirror/lamp directs light through the specimen; coarse adjustment makes large focusing movements at low power; fine adjustment sharpens the image.</div></div>
@@ -1635,6 +1653,7 @@ table{font-size:.84rem}th,td{padding:7px 8px}
 <div class="qa"><p><strong>Q35. Explain why pulse and breathing rates increase during exercise. (4 marks)</strong></p><div class="answer">Working muscles need more ATP; aerobic respiration requires more oxygen and glucose and produces more carbon dioxide; heart rate and ventilation increase to deliver oxygen/glucose and remove carbon dioxide. Rates gradually return towards resting levels during recovery.</div></div>
 
 <h2 id="chemistry-practical-qa">B. Chemistry practicals: examination questions and answers</h2>
+<button type="button" class="print-practical-btn" onclick="printPracticalSection('chemistry-practical-qa')">🖨 Print Chemistry Questions & Answers</button>
 <h3>1. Apparatus, solutions, acids and titration</h3>
 <div class="qa"><p><strong>Q36. Explain how to prepare a standard solution from a soluble solid. (7 marks)</strong></p><div class="answer">Accurately weigh the required mass; dissolve it in a small volume of deionised water in a beaker; transfer quantitatively through a funnel into a volumetric flask; rinse beaker, glass rod and funnel into the flask; add water to near the calibration mark; use a dropper to bring the bottom of the meniscus to the mark at eye level; stopper and invert several times to mix. Calculate concentration using moles = mass ÷ molar mass and concentration = moles ÷ volume in dm³.</div></div>
 <div class="qa"><p><strong>Q37. Describe an acid–alkali titration and how to obtain a reliable titre. (7 marks)</strong></p><div class="answer">Rinse burette with titrant and pipette with solution to be measured; use a pipette filler to transfer a fixed aliquot to a conical flask; add a few drops of suitable indicator; record initial burette reading; add titrant while swirling and approach endpoint dropwise; record final reading; titre = final − initial; repeat until concordant titres are obtained and calculate their mean. Read burette at eye level.</div></div>
@@ -1668,6 +1687,7 @@ table{font-size:.84rem}th,td{padding:7px 8px}
 <div class="qa"><p><strong>Q56. State how changing concentration or temperature may affect a chemical equilibrium. (4 marks)</strong></p><div class="answer">A system at equilibrium responds to a change by shifting in the direction that partially opposes that change (Le Chatelier's principle). Adding a reactant tends to shift towards products; increasing pressure favours the side with fewer gas molecules; increasing temperature favours the endothermic direction. A catalyst changes the time to reach equilibrium, not its position.</div></div>
 
 <h2 id="physics-practical-qa">C. Physics practicals: examination questions and answers</h2>
+<button type="button" class="print-practical-btn" onclick="printPracticalSection('physics-practical-qa')">🖨 Print Physics Questions & Answers</button>
 <h3>1. Measurement instruments</h3>
 <div class="qa"><p><strong>Q57. Describe how to measure the diameter of a wire using a micrometer screw gauge. (6 marks)</strong></p><div class="answer">Check zero error with spindle and anvil gently closed; place wire between them; turn ratchet until it clicks; read sleeve/main scale; read thimble division; multiply thimble division by least count and add to main scale; apply zero correction; repeat at several positions and orientations and calculate mean. Do not overtighten.</div></div>
 <div class="qa"><p><strong>Q58. Explain how to use vernier callipers to measure the internal diameter of a tube. (5 marks)</strong></p><div class="answer">Use the inside jaws; insert them gently and open until they just touch the inner walls; read main scale before vernier zero; find coinciding vernier division; add its value times least count; correct for zero error; repeat in different orientations.</div></div>
@@ -1740,4 +1760,18 @@ table{font-size:.84rem}th,td{padding:7px 8px}
 </main><footer><p>CBE Nexus · Connecting learners to excellence</p><p><a href="/global-schools.html">Global Schools</a> · <a href="/country-online-notes.html">Country Online Notes</a> · <a href="/">Home</a></p></footer>
 <script>
 (function(){const p=new URLSearchParams(location.search);const raw=p.get("country")||"";const known={"afghanistan":"Afghanistan","albania":"Albania","algeria":"Algeria","andorra":"Andorra","angola":"Angola","antigua-and-barbuda":"Antigua and Barbuda","argentina":"Argentina","armenia":"Armenia","australia":"Australia","austria":"Austria","kenya":"Kenya"};const name=known[raw.toLowerCase()]||raw.replace(/[-_]+/g," ").replace(/\b\w/g,x=>x.toUpperCase());if(name){document.getElementById("countryName").textContent=name;document.getElementById("countryIntro").textContent="Biology, Chemistry and Physics practical-skills notes for learners studying in "+name+". Check your national curriculum and examination-board requirements for grade-specific practicals.";const back="/global-schools/"+raw.toLowerCase().replace(/[^a-z0-9-]/g,"");document.getElementById("countryBack").href=back;document.title="Science Practical Skills in "+name+" | CBE Nexus";const md=document.querySelector('meta[name="description"]');md.content="Online Biology, Chemistry and Physics practical skills notes for "+name+": apparatus, measurements, accuracy, graphs, experimental procedures and laboratory safety.";}})();
-</script></body></html>
+</script>
+<script>
+function printPracticalSection(sectionId){
+  const section=document.getElementById(sectionId);
+  if(!section){alert('This practical section could not be found.');return;}
+  document.querySelectorAll('.print-target').forEach(el=>el.classList.remove('print-target'));
+  section.classList.add('print-target');
+  document.body.classList.add('printing-practical');
+  const cleanup=()=>{document.body.classList.remove('printing-practical');section.classList.remove('print-target');window.removeEventListener('afterprint',cleanup);};
+  window.addEventListener('afterprint',cleanup);
+  window.print();
+  setTimeout(cleanup,1200);
+}
+</script>
+</body></html>
