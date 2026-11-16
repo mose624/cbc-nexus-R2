@@ -62,11 +62,11 @@ export const countryCurriculumVerification = {
 export const chapterEvidenceReconciliation = {
   reviewedOn: "2026-11-16",
   country: "Seychelles",
-  gradeSequenceEvidence: "Ministry curriculum portal is the primary source for national subject frameworks. Verify grade sequence, language/medium, and current approved textbook editions; avoid substituting Cambridge examinations for the national curriculum.",
-  textbookEvidence: "Curriculum framework or syllabus portal identified; actual adopted textbook contents pages and complete book PDFs were not inspected in this batch.",
+  gradeSequenceEvidence: "The Ministry curriculum portal provides national Mathematics and Science programme references. Retrieve current grade-level syllabus documents and textbook lists before confirming specialist subject transitions or chapter counts.",
+  textbookEvidence: "The referenced material is a curriculum, ministry or examination-framework source, not an opened textbook contents page. Actual adopted textbook contents pages and full book PDFs were not inspected in this batch.",
   actualTextbookContentsInspected: false,
   officialTextbookChapterCountsVerified: false,
   officialChapterCount: null,
-  evidenceSource: "https://edu.gov.sc/",
-  nextRequiredWork: "Retrieve current grade-by-grade official syllabus and the exact approved/adopted textbook for each grade and pathway; inspect contents pages; record title, edition, publisher, grade, chapter titles and verified chapter count. Keep CBE Nexus-authored chapters separate."
+  evidenceSource: "https://www.education.gov.sc/",
+  nextRequiredWork: "Retrieve the current approved grade-by-grade syllabus and exact adopted textbook for each relevant grade and track; inspect contents pages; record title, edition, publisher, grade, chapter titles and verified count. Keep CBE Nexus-authored chapters separate."
 };
