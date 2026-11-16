@@ -69,3 +69,15 @@ export const countryCurriculumVerification = {
   },
   "overallStatus": "Country record created with official-source leads and conservative subject mapping; detailed programme extraction and textbook chapter verification remain pending."
 };
+
+export const chapterEvidenceReconciliation = {
+ reviewedOn: "2026-11-16",
+ country: "Georgia",
+ gradeSequenceEvidence: "National curriculum defines Mathematics and natural-science subject standards; science is integrated at earlier levels and subject separation develops later. Extract current grade-by-grade national curriculum subject standards and check current transition cycle.",
+ textbookEvidence: "No actual textbook contents inspected; approved textbook catalogue and contents pages outstanding.",
+ actualTextbookContentsInspected: false,
+ officialTextbookChapterCountsVerified: false,
+ officialChapterCount: null,
+ evidenceSource: "Official National Curriculum portal retrieval outstanding.",
+ nextRequiredWork: "Retrieve official grade/year/term programmes and extract topics for Mathematics, Biology or integrated Life Science, Chemistry and Physics; inspect approved student textbook contents pages and record printed chapter titles/counts separately. Do not infer textbook chapters from curriculum themes."
+};
