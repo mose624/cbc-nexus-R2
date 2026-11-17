@@ -169,6 +169,34 @@
       }
     ]
   },
+  "congo": {
+    "seoHeading": "Republic of the Congo Education System, CEPE, BEPC & Baccalauréat",
+    "seoTitle": "Republic of the Congo Education System, CEPE, BEPC & Baccalauréat Resources | CBE Nexus",
+    "seoDescription": "Explore the Republic of the Congo school system, French-language curriculum, CEPE, BEPC and Baccalauréat pathways, subject learning and examination guidance.",
+    "seoIntro": "The Republic of the Congo (Congo-Brazzaville) has a French-language national education system. Primary schooling leads to the Certificat d'études primaires élémentaires (CEPE), followed by lower-secondary education and the Brevet d'études du premier cycle (BEPC). Upper-secondary learners may prepare for the Baccalauréat. Curriculum organisation, examination arrangements and candidate requirements should be checked against current notices from the responsible Congolese education and examination authorities.",
+    "seoTopics": [
+      "Republic of the Congo education system",
+      "Congo-Brazzaville national curriculum",
+      "CEPE examination",
+      "BEPC examination",
+      "Baccalauréat Congo",
+      "French-language school resources"
+    ],
+    "seoFaqs": [
+      {
+        "question": "What are the main school examination stages in the Republic of the Congo?",
+        "answer": "The commonly referenced pathway includes the CEPE at the end of primary education, the BEPC at lower-secondary level and the Baccalauréat at the end of upper-secondary studies. Confirm current arrangements with official notices."
+      },
+      {
+        "question": "What is the main language of instruction in the Republic of the Congo?",
+        "answer": "French is the principal language used in formal schooling. Local language and community contexts may also be relevant to learners."
+      },
+      {
+        "question": "Where should learners verify examination dates and requirements?",
+        "answer": "Use current announcements from the responsible national education ministry and examination authorities for registration rules, syllabuses and examination timetables."
+      }
+    ]
+  },
   "democratic-republic-of-the-congo": {
     "seoHeading": "DR Congo Education System, TENAFEP, TENASOSP & Examen d'État",
     "seoTitle": "DR Congo Education System, TENAFEP, TENASOSP & Examen d'État | CBE Nexus",
