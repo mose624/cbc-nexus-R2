@@ -12,9 +12,9 @@ const countries={
       "Liberia",
       "Puntarenas"
     ],
-    "exams": "Costa Rica national curriculum",
-    "curriculum": "Bachillerato en Educación Media",
-    "language": "MEP curriculum programmes"
+    "exams": "Bachillerato en Educación Media and national secondary completion assessments",
+    "curriculum": "Costa Rica national curriculum",
+    "language": "Spanish, with English commonly taught"
   },
   "cote-divoire": {
     "name": "Côte d’Ivoire",
@@ -26,9 +26,9 @@ const countries={
       "San-Pédro",
       "Korhogo"
     ],
-    "exams": "Côte d’Ivoire national curriculum",
-    "curriculum": "programme scolaire Côte d’Ivoire",
-    "language": "CEPE examination"
+    "exams": "CEPE, BEPC and Baccalauréat examination pathways",
+    "curriculum": "Côte d’Ivoire national curriculum",
+    "language": "French"
   },
   "croatia": {
     "name": "Croatia",
@@ -40,9 +40,9 @@ const countries={
       "Zadar",
       "Pula"
     ],
-    "exams": "Croatia national curriculum",
-    "curriculum": "State Matura Croatia",
-    "language": "državna matura"
+    "exams": "State Matura (državna matura)",
+    "curriculum": "Croatia national curriculum",
+    "language": "Croatian"
   },
   "cuba": {
     "name": "Cuba",
@@ -54,9 +54,9 @@ const countries={
       "Santa Clara",
       "Guantánamo"
     ],
-    "exams": "Cuba national curriculum",
-    "curriculum": "Cuba pre-university education",
-    "language": "Cuba university admission examinations"
+    "exams": "National school assessments and upper-secondary completion; university admission processes",
+    "curriculum": "Cuba national curriculum",
+    "language": "Spanish"
   },
   "cyprus": {
     "name": "Cyprus",
@@ -68,9 +68,9 @@ const countries={
       "Famagusta",
       "Kyrenia"
     ],
-    "exams": "Cyprus national curriculum",
-    "curriculum": "Pancyprian Examinations",
-    "language": "Cyprus Lyceum curriculum"
+    "exams": "Pancyprian Examinations",
+    "curriculum": "Cyprus national curriculum",
+    "language": "Greek in the government-controlled Greek-language system; Turkish-language education in its community context"
   },
   "czechia": {
     "name": "Czechia",
@@ -82,9 +82,9 @@ const countries={
       "Liberec",
       "Olomouc"
     ],
-    "exams": "Czechia national curriculum",
-    "curriculum": "maturitní zkouška",
-    "language": "Czech Maturita examination"
+    "exams": "Maturita (maturitní zkouška)",
+    "curriculum": "Czechia national curriculum",
+    "language": "Czech"
   },
   "democratic-republic-of-the-congo": {
     "name": "Democratic Republic of the Congo",
@@ -96,9 +96,9 @@ const countries={
       "Goma",
       "Bukavu"
     ],
-    "exams": "DR Congo national curriculum",
-    "curriculum": "TENAFEP ENAFEP examination",
-    "language": "TENASOSP examination"
+    "exams": "TENAFEP or ENAFEP, TENASOSP and Examen d’État",
+    "curriculum": "Democratic Republic of the Congo national curriculum",
+    "language": "French, alongside national languages in community and early-learning contexts"
   },
   "denmark": {
     "name": "Denmark",
@@ -110,9 +110,9 @@ const countries={
       "Esbjerg",
       "Randers"
     ],
-    "exams": "Denmark national curriculum",
-    "curriculum": "Folkeskole leaving examination",
-    "language": "Danish upper secondary stx hhx htx hf"
+    "exams": "Folkeskole Leaving Examination and upper-secondary examinations",
+    "curriculum": "Denmark national curriculum",
+    "language": "Danish; Greenlandic and Faroese contexts have distinct arrangements"
   },
   "djibouti": {
     "name": "Djibouti",
@@ -124,9 +124,9 @@ const countries={
       "Dikhil",
       "Arta"
     ],
-    "exams": "Djibouti national curriculum",
-    "curriculum": "CFEB Djibouti",
-    "language": "Brevet d’Enseignement Fondamental BEF"
+    "exams": "CFEB, BEF and Baccalauréat pathways",
+    "curriculum": "Djibouti national curriculum",
+    "language": "French and Arabic; Afar and Somali are important national languages"
   },
   "dominica": {
     "name": "Dominica",
@@ -138,11 +138,11 @@ const countries={
       "Mahaut",
       "Grand Bay"
     ],
-    "exams": "Dominica national curriculum",
-    "curriculum": "Dominica CSEC examination",
-    "language": "Dominica CAPE subjects"
+    "exams": "CSEC and CAPE examinations",
+    "curriculum": "Dominica national curriculum",
+    "language": "English, with Dominican Creole widely spoken"
   }
-}
+};
 const $=id=>document.getElementById(id);
 const el=(tag,cls,txt)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=txt;return n;};
 const addMeta=(selector,attr,key,value)=>{let m=document.querySelector(selector);if(!m){m=document.createElement("meta");m.setAttribute(attr,key);document.head.appendChild(m);}m.content=value;};
