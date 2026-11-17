@@ -3148,7 +3148,7 @@ async function serveStatic(req,res,url){
         ["Education curriculum and learning framework",countryProfile.curriculum],
         ["Education system and school stages",countryProfile.system],
         ["Responsible education authority",countryProfile.authority],
-        ["Language(s) of instruction / teaching",countryProfile.instructionLanguages||countryProfile.officialLanguages],
+        ["Language(s) of instruction / teaching",countryProfile.instructionLanguages],
         ["Academic year and term calendar",countryProfile.termCalendar],
         ["School calendar",countryProfile.calendar],
         ["Teacher qualifications, registration and licensing",countryProfile.qualificationRequirements]
