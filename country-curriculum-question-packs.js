@@ -84,25 +84,21 @@ function afghanGrade1MathPashto(){
 }
 
 function b1math(lang){
- const out=[],L={
- Albanian:["Sa bëjnë","dhe","Sa mbetet nga","kur hiqen","Cili numër është më i madh","mollë","fëmijë"],
- Arabic:["ما ناتج","و","كم يتبقى من","إذا طرحنا","أي العددين أكبر","تفاحات","أطفال"],
- Catalan:["Quant fan","i","Quant queda de","si traiem","Quin nombre és més gran","pomes","infants"],
- Portuguese:["Quanto é","mais","Quanto resta de","se retirarmos","Qual número é maior","maçãs","crianças"],
- English:["What is","plus","How many remain from","when","Which number is greater","apples","children"]
+ const out=[],T={
+ Albanian:{add:(a,b)=>"Sa është shuma e "+a+" dhe "+b+"?",sub:(a,b)=>"Sa mbetet nëse nga "+a+" hiqet "+b+"?",cmp:(a,b)=>"Cili numër është më i madh: "+a+" apo "+b+"?",word:(a,b)=>"Arta ka "+a+" mollë dhe merr edhe "+b+". Sa mollë ka gjithsej?",tri:"Sa brinjë ka një trekëndësh?",sq:"Sa brinjë ka një katror?",cir:"Sa kënde ka një rreth?",combo:"Një trekëndësh ka 3 brinjë dhe një katror 4. Sa brinjë kanë së bashku?"},
+ Arabic:{add:(a,b)=>"ما مجموع "+a+" و"+b+"؟",sub:(a,b)=>"كم يتبقى إذا طرحنا "+b+" من "+a+"؟",cmp:(a,b)=>"أي العددين أكبر: "+a+" أم "+b+"؟",word:(a,b)=>"لدى سارة "+a+" تفاحات وأخذت "+b+" تفاحات أخرى. كم تفاحة لديها؟",tri:"كم ضلعاً للمثلث؟",sq:"كم ضلعاً للمربع؟",cir:"كم زاوية للدائرة؟",combo:"للمثلث 3 أضلاع وللمربع 4 أضلاع. كم ضلعاً لهما معاً؟"},
+ Catalan:{add:(a,b)=>"Quina és la suma de "+a+" i "+b+"?",sub:(a,b)=>"Quants en queden si traiem "+b+" de "+a+"?",cmp:(a,b)=>"Quin nombre és més gran: "+a+" o "+b+"?",word:(a,b)=>"La Laia té "+a+" pomes i en rep "+b+" més. Quantes en té en total?",tri:"Quants costats té un triangle?",sq:"Quants costats té un quadrat?",cir:"Quants vèrtexs té un cercle?",combo:"Un triangle té 3 costats i un quadrat en té 4. Quants costats sumen?"},
+ Portuguese:{add:(a,b)=>"Qual é a soma de "+a+" e "+b+"?",sub:(a,b)=>"Quanto resta se retirarmos "+b+" de "+a+"?",cmp:(a,b)=>"Qual número é maior: "+a+" ou "+b+"?",word:(a,b)=>"A Ana tem "+a+" maçãs e recebe mais "+b+". Quantas maçãs tem ao todo?",tri:"Quantos lados tem um triângulo?",sq:"Quantos lados tem um quadrado?",cir:"Quantos cantos tem um círculo?",combo:"Um triângulo tem 3 lados e um quadrado tem 4. Quantos lados têm juntos?"},
+ English:{add:(a,b)=>"What is the sum of "+a+" and "+b+"?",sub:(a,b)=>"How many remain when "+b+" is taken from "+a+"?",cmp:(a,b)=>"Which number is greater: "+a+" or "+b+"?",word:(a,b)=>"A learner has "+a+" apples and receives "+b+" more. How many apples are there altogether?",tri:"How many sides does a triangle have?",sq:"How many sides does a square have?",cir:"How many corners does a circle have?",combo:"A triangle has 3 sides and a square has 4. How many sides are there altogether?"}
  }[lang];
- const add=(q,n,topic,tag)=>{const v=[n,n+1,Math.max(0,n-1),n+2],s=out.length%4,o=v.slice(s).concat(v.slice(0,s));out.push(make(q,o,o.indexOf(n),topic,"Calculate using the stated number operation.",topic,topic,"Solve a foundational Grade 1 mathematics problem.",q,tag,lang));};
- for(let i=0;i<20;i++){let a=i%10+1,b=i%5+1;add(L[0]+" "+a+" "+L[1]+" "+b+"?",a+b,"Addition",i%5===0?"higher-order":"foundational");}
- for(let i=0;i<20;i++){let a=i%10+2,b=i%3+1;add(L[2]+" "+a+" "+L[3]+" "+b+"?",a-b,"Subtraction",i%5===0?"higher-order":"foundational");}
- for(let i=0;i<20;i++){let a=i+1,b=20-i;add(L[4]+" : "+a+" / "+b+"?",Math.max(a,b),"Comparing numbers","application");}
- for(let i=0;i<20;i++){let a=i%8+1,b=i%4+1;add(a+" "+L[5]+" et "+b+" "+L[5]+". Total?",a+b,"Everyday addition","application");}
- for(let i=0;i<10;i++){let a=i+3,b=i%3+1;add(a+" "+L[6]+" jouent. "+b+" arrivent. Combien maintenant?",a+b,"Word problems","higher-order");}
- const fixed=[
- ["How many sides does a triangle have?",3,"Geometry"],["How many sides does a square have?",4,"Geometry"],
- ["How many corners does a circle have?",0,"Geometry"],["A triangle has 3 sides and a square has 4. How many altogether?",7,"Geometry"]
- ];
- fixed.forEach((x,i)=>add(x[0],x[1],x[2],i===3?"higher-order":"foundational"));
- while(out.length<100){let i=out.length,a=i%10+1,b=i%5+1;add(L[0]+" "+a+" "+L[1]+" "+b+"?",a+b,"Number operations",i%4===0?"higher-order":"foundational");}
+ const add=(q,n,topic,tag)=>{const v=[n,n+1,Math.max(0,n-1),n+2],s=out.length%4,o=v.slice(s).concat(v.slice(0,s));out.push(make(q,o,o.indexOf(n),topic,"The correct result is "+n+".",topic,topic,"Solve a Grade 1 number or shape problem.",q,tag,lang));};
+ for(let i=0;i<20;i++){let a=i%10+1,b=i%5+1;add(T.add(a,b),a+b,"Addition",i%5===0?"higher-order":"foundational");}
+ for(let i=0;i<20;i++){let a=i%10+2,b=i%3+1;add(T.sub(a,b),a-b,"Subtraction",i%5===0?"higher-order":"foundational");}
+ for(let i=0;i<20;i++){let a=i+1,b=20-i;add(T.cmp(a,b),Math.max(a,b),"Comparing numbers","application");}
+ for(let i=0;i<20;i++){let a=i%8+1,b=i%4+1;add(T.word(a,b),a+b,"Everyday problem solving","application");}
+ for(let i=0;i<10;i++){let a=i+3,b=i%3+1;add(T.word(a,b),a+b,"Reasoning with quantities","higher-order");}
+ add(T.tri,3,"Geometry","foundational");add(T.sq,4,"Geometry","foundational");add(T.cir,0,"Geometry","foundational");add(T.combo,7,"Geometry","higher-order");
+ while(out.length<100){let i=out.length,a=i%10+1,b=i%5+1;add(T.add(a,b),a+b,"Number operations",i%4===0?"higher-order":"foundational");}
  return out.slice(0,100);
 }
 
