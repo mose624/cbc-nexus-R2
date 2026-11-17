@@ -1180,6 +1180,8 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       curriculum: curriculum ? curriculum.value.trim() : "Kenya CBC/CBE",
       grade: grade.value,
       subject: subject.value,
+      questionLanguage: (window.CBENexusCountryQuestionPacks && window.CBENexusCountryQuestionPacks[country ? country.value : ""] && window.CBENexusCountryQuestionPacks[country ? country.value : ""].language) || "English supplementary practice",
+      cognitiveLevel: document.getElementById("quizCognitiveInput") ? document.getElementById("quizCognitiveInput").value : "all",
       strand: strand ? strand.value : "All Topics",
       subStrand: subStrand ? subStrand.value : "All Sub-Strands",
       learningOutcome: outcome ? outcome.value : "All Outcomes",
