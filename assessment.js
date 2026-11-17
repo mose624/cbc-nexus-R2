@@ -351,7 +351,14 @@
   "Tonga":["Tonga Curriculum Framework for Core Subjects / Class Level 1"],
   "Tunisia":["Tunisia National Curriculum / السنة الأولى ابتدائي"],
   "Turkmenistan":["Turkmenistan State Education Standards / Grade 1"],
-  "Tuvalu":["Tuvalu National Curriculum / Class 1"],
+  "Tuvalu":["Tuvalu National Curriculum / Class 1"],,
+  "Uruguay":["Uruguay ANEP Educación Básica Integrada / Primaria 1.º"],
+  "Uzbekistan":["Uzbekistan National Curriculum / Grade 1"],
+  "Vanuatu":["Vanuatu National Curriculum / Year 1"],
+  "Vatican City":["Vatican City Schools / Italian Primary Curriculum (provisional)"],
+  "Venezuela":["Venezuela Currículo Nacional Bolivariano / Primer Grado"],
+  "Vietnam":["Vietnam 2018 General Education Curriculum / Grade 1"],
+  "Yemen":["Yemen National Curriculum / الصف الأول الأساسي"]
 };
 
 const nationalLevelStructures = {
@@ -561,7 +568,14 @@ const nationalLevelStructures = {
   "Turkey":["1. Sınıf"],
   "Turkmenistan":["Grade 1"],
   "Tuvalu":["Class 1"],
-  "Ukraine":["1 клас"],
+  "Ukraine":["1 клас"],,
+  "Uruguay":["1.º de Primaria"],
+  "Uzbekistan":["1-sinf"],
+  "Vanuatu":["Year 1"],
+  "Vatican City":["Classe Prima"],
+  "Venezuela":["1er Grado"],
+  "Vietnam":["Lớp 1"],
+  "Yemen":["الصف الأول الأساسي"]
 };
 function levelOptionsFor(countryName, curriculumName){
   const c=(curriculumName||"").toLowerCase();
