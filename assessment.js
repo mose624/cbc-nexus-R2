@@ -124,6 +124,13 @@
   const country = document.getElementById("quizCountryInput");
   const curriculum = document.getElementById("quizCurriculumInput");
   const curriculumByCountry = {
+  "Panama":["Panama National Curriculum / Primer Grado Mathematics"],
+  "Paraguay":["Paraguay National Curriculum / 1.er Grado Educación Escolar Básica Mathematics"],
+  "Peru":["Peru Currículo Nacional de la Educación Básica / 1.º Grado Mathematics"],
+  "Poland":["Polish National Curriculum / Edukacja wczesnoszkolna, klasa 1 Mathematics"],
+  "Portugal":["Portugal Aprendizagens Essenciais / 1.º Ano Matemática"],
+  "Romania":["Romania National Curriculum / Clasa I Mathematics"],
+
   "Nicaragua":["Nicaragua MINED Mathematics / Primer Grado"],
   "Niger":["Niger National Primary Curriculum / CI-CP Mathematics"],
   "North Korea":["DPR Korea Primary Education Curriculum / Grade 1 Mathematics"],
@@ -319,6 +326,15 @@
 };
 
 const nationalLevelStructures = {
+  "Panama":["1º Grado"],
+  "Papua New Guinea":["Elementary One"],
+  "Paraguay":["1.er Grado"],
+  "Peru":["1.º Grado"],
+  "Poland":["Klasa 1"],
+  "Portugal":["1.º Ano"],
+  "Romania":["Clasa I"],
+  "Russia":["1 класс"],
+
   "Oman":["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Nicaragua":["1º Grado"],
   "Niger":["CI"],
@@ -1204,6 +1220,17 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const languageNotice = document.getElementById("quizLanguageNotice");
     if (languageNotice) {
       const expectedInstructionLanguages = {
+  "Panama":"Spanish (initial-language starter stream; regional and school-medium variations may apply)",
+  "Papua New Guinea":"English (initial-language starter stream; regional and school-medium variations may apply)",
+  "Paraguay":"Spanish (initial-language starter stream; regional and school-medium variations may apply)",
+  "Peru":"Spanish (initial-language starter stream; regional and school-medium variations may apply)",
+  "Philippines":"Filipino and English (initial-language starter stream; regional and school-medium variations may apply)",
+  "Poland":"Polish (initial-language starter stream; regional and school-medium variations may apply)",
+  "Portugal":"Portuguese (initial-language starter stream; regional and school-medium variations may apply)",
+  "Qatar":"Arabic (initial-language starter stream; regional and school-medium variations may apply)",
+  "Romania":"Romanian (initial-language starter stream; regional and school-medium variations may apply)",
+  "Russia":"Russian (initial-language starter stream; regional and school-medium variations may apply)",
+
   "Nicaragua":"Spanish",
   "Niger":"French",
   "North Korea":"Korean (English starter questions only; national-language localization pending)",
@@ -1339,6 +1366,17 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const nigeriaSubjects = isNigeriaNERDC && window.CBENexusNigeriaBanks && window.CBENexusNigeriaBanks.banks &&
       window.CBENexusNigeriaBanks.banks[grade.value] ? Object.keys(window.CBENexusNigeriaBanks.banks[grade.value]) : [];
     const countrySubjects = {
+  "Panama":["Español","Matemática","Ciencias Naturales","Ciencias Sociales","Inglés","Expresiones Artísticas","Educación Física"],
+  "Papua New Guinea":["English","Language","Mathematics","Community and Culture","Citizenship and Christian Values Education"],
+  "Paraguay":["Lengua Castellana","Guaraní","Matemática","Ciencias de la Naturaleza y Salud","Estudios Sociales","Trabajo y Tecnología","Educación Artística","Educación Física"],
+  "Peru":["Comunicación","Matemática","Personal Social","Ciencia y Tecnología","Educación Física","Arte y Cultura","Educación Religiosa"],
+  "Philippines":["Language","Reading and Literacy","Mathematics","Makabansa","GMRC"],
+  "Poland":["Edukacja polonistyczna","Edukacja matematyczna","Edukacja przyrodnicza","Edukacja społeczna","Język obcy nowożytny","Edukacja plastyczna","Edukacja muzyczna","Wychowanie fizyczne"],
+  "Portugal":["Português","Matemática","Estudo do Meio","Educação Artística","Educação Física","Cidadania e Desenvolvimento"],
+  "Qatar":["اللغة العربية","الرياضيات","العلوم","اللغة الإنجليزية","التربية الإسلامية","الدراسات الاجتماعية","الفنون","التربية البدنية"],
+  "Romania":["Comunicare în limba română","Matematică și explorarea mediului","Limba modernă","Muzică și mișcare","Arte vizuale și abilități practice","Educație fizică","Dezvoltare personală","Religie"],
+  "Russia":["Русский язык","Литературное чтение","Математика","Окружающий мир","Иностранный язык","Изобразительное искусство","Музыка","Технология","Физическая культура"],
+
   "Nicaragua":["Lengua y Literatura","Matemática","Conociendo mi Mundo","Inglés","Educación Física","Creciendo en Valores"],
   "Niger":["Français","Mathématiques","Éducation scientifique","Éducation civique","Éducation physique et sportive"],
   "North Korea":["Korean Language","Mathematics","Nature Study","Physical Education","Music","Art"],
