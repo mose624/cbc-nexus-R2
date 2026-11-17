@@ -2547,6 +2547,10 @@ function trustedReferenceLinksForPath(pathname){
 }
 function injectTrustedReferenceSection(html,pathname){
   let out=String(html||"");
+  // Country pages render their own country-specific official sources in the
+  // server-generated country profile. Never append the Kenya-only reference
+  // set to another country's page.
+  if(/^\/global-schools\/[a-z0-9-]+\/?$/i.test(String(pathname||""))) return out;
   if(/id=["']cbe-trusted-reference-section["']/i.test(out)) return out;
   const section=trustedReferenceLinksForPath(pathname).replace('<section class="seo-trusted-references"','<section id="cbe-trusted-reference-section" class="seo-trusted-references"');
   const styles='<style id="cbe-trusted-reference-css">.seo-trusted-references{max-width:1180px;margin:18px auto;padding:12px 16px;border:1px solid #dce6ee;border-radius:10px;background:#f7fafc;font-size:12px;color:#334e5f}.seo-trusted-references h3{font-size:14px;margin:0 0 5px;color:#123447}.seo-trusted-references p{font-size:11px;margin:0 0 8px}.seo-trusted-references ul{display:flex;flex-wrap:wrap;gap:7px 18px;list-style:none;padding:0;margin:0}.seo-trusted-references a{color:#245b83;text-decoration:underline;text-underline-offset:2px}.seo-trusted-references a:hover{color:#a90f28}@media(max-width:600px){.seo-trusted-references{margin:12px 8px;padding:10px}.seo-trusted-references ul{display:grid;grid-template-columns:1fr 1fr;gap:8px}}</style>';
