@@ -925,6 +925,13 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     refreshOutcomeOptions();
   }
 
+  function getSelectedCountryPack(countryName, curriculumName) {
+    const root = window.CBENexusCountryQuestionPacks && window.CBENexusCountryQuestionPacks[countryName];
+    if (!root) return null;
+    const selected = root.variants && root.variants[curriculumName] ? root.variants[curriculumName] : root;
+    return selected && String(selected.curriculum || "").toLowerCase() === String(curriculumName || "").toLowerCase() ? selected : null;
+  }
+
   function updateQuestionBankCoverage() {
     const coverage = document.getElementById("quizBankCoverage");
     if (!coverage || !subject || !subject.value) return;
@@ -937,10 +944,8 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       normalize(item.subject) === normalize(subject.value) &&
       String(item.question || "").trim() && Array.isArray(item.options) && item.options.length >= 4
     ).length;
-    const pack = window.CBENexusCountryQuestionPacks && window.CBENexusCountryQuestionPacks[country.value];
-    const exact = pack && pack.curriculum.toLowerCase() === String(curriculum.value || "").toLowerCase()
-      ? pack.grades && pack.grades[grade.value] && pack.grades[grade.value][subject.value]
-      : null;
+    const pack = getSelectedCountryPack(country.value, curriculum.value);
+    const exact = pack && pack.grades && pack.grades[grade.value] && pack.grades[grade.value][subject.value];
     const nationalCount = getAvailableQuestions(grade.value, subject.value).length;
     const count = publishedCount || (Array.isArray(exact) ? exact.length : 0) + nationalCount;
     coverage.textContent = count
@@ -1046,10 +1051,8 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       window.CBENexusCBCBanks.banks && window.CBENexusCBCBanks.banks[selectedGrade] && window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject] ||
       isNigeriaNERDC && window.CBENexusNigeriaBanks &&
       window.CBENexusNigeriaBanks.banks && window.CBENexusNigeriaBanks.banks[selectedGrade] && window.CBENexusNigeriaBanks.banks[selectedGrade][selectedSubject];
-    const pack = window.CBENexusCountryQuestionPacks && window.CBENexusCountryQuestionPacks[selectedCountry];
-    const exactPack = pack && pack.curriculum.toLowerCase() === selectedCurriculum.toLowerCase()
-      ? pack.grades && pack.grades[selectedGrade] && pack.grades[selectedGrade][selectedSubject]
-      : null;
+    const pack = getSelectedCountryPack(selectedCountry, selectedCurriculum);
+    const exactPack = pack && pack.grades && pack.grades[selectedGrade] && pack.grades[selectedGrade][selectedSubject];
     const packBank = Array.isArray(exactPack) ? exactPack.slice() : [];
     const nationalBank = Array.isArray(nationalGradeBank) ? nationalGradeBank : [];
     const gradeBank = nationalBank.concat(packBank);
@@ -1212,7 +1215,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       curriculum: curriculum ? curriculum.value.trim() : "Kenya CBC/CBE",
       grade: grade.value,
       subject: subject.value,
-      questionLanguage: (window.CBENexusCountryQuestionPacks && window.CBENexusCountryQuestionPacks[country ? country.value : ""] && window.CBENexusCountryQuestionPacks[country ? country.value : ""].curriculum.toLowerCase() === String(curriculum && curriculum.value || "").toLowerCase()) ? window.CBENexusCountryQuestionPacks[country ? country.value : ""].language : "English supplementary practice",
+      questionLanguage: (getSelectedCountryPack(country ? country.value : "", curriculum && curriculum.value) || {}).language || "English supplementary practice",
       cognitiveLevel: document.getElementById("quizCognitiveInput") ? document.getElementById("quizCognitiveInput").value : "all",
       strand: strand ? strand.value : "All Topics",
       subStrand: subStrand ? subStrand.value : "All Sub-Strands",
@@ -1709,7 +1712,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       curriculum: curriculum ? curriculum.value.trim() : "Kenya CBC/CBE",
       grade: grade.value,
       subject: subject.value,
-      questionLanguage: (() => { const p = window.CBENexusCountryQuestionPacks && window.CBENexusCountryQuestionPacks[country ? country.value : ""]; return p && p.curriculum.toLowerCase() === String(curriculum && curriculum.value || "").toLowerCase() && p.grades && p.grades[grade.value] && p.grades[grade.value][subject.value] ? p.language : "English supplementary practice"; })(),
+      questionLanguage: (() => { const p = getSelectedCountryPack(country ? country.value : "", curriculum && curriculum.value); return p && p.grades && p.grades[grade.value] && p.grades[grade.value][subject.value] ? p.language : "English supplementary practice"; })(),
       cognitiveLevel: document.getElementById("quizCognitiveInput") ? document.getElementById("quizCognitiveInput").value : "all",
       strand: strand ? strand.value : "All Topics",
       learningOutcome: outcome ? outcome.value : "All Outcomes",
