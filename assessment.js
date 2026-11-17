@@ -347,6 +347,11 @@
   "Taiwan":["Taiwan Curriculum Guidelines / Elementary Grade 1 Mathematics"],
   "Tajikistan":["Tajikistan National Curriculum / Grade 1"],
   "Thailand":["Thailand Basic Education Core Curriculum / Prathom 1 Mathematics"],
+  "Togo":["Togo National Curriculum / Cours préparatoire 1 (CP1)"],
+  "Tonga":["Tonga Curriculum Framework for Core Subjects / Class Level 1"],
+  "Tunisia":["Tunisia National Curriculum / السنة الأولى ابتدائي"],
+  "Turkmenistan":["Turkmenistan State Education Standards / Grade 1"],
+  "Tuvalu":["Tuvalu National Curriculum / Class 1"],
 };
 
 const nationalLevelStructures = {
@@ -549,6 +554,14 @@ const nationalLevelStructures = {
   "Taiwan":["Grade 1"],
   "Tajikistan":["Grade 1"],
   "Thailand":["Prathom 1"],
+  "Togo":["CP1"],
+  "Tonga":["Class 1"],
+  "Trinidad and Tobago":["Standard 1"],
+  "Tunisia":["السنة الأولى"],
+  "Turkey":["1. Sınıf"],
+  "Turkmenistan":["Grade 1"],
+  "Tuvalu":["Class 1"],
+  "Ukraine":["1 клас"],
 };
 function levelOptionsFor(countryName, curriculumName){
   const c=(curriculumName||"").toLowerCase();
