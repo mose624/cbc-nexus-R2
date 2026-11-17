@@ -77,7 +77,7 @@ const packs={
     ]
    }
   }
- }, ,
+ },
  "Nigeria":{
   curriculum:"Nigeria NERDC Curriculum / WAEC / NECO",language:"English",verifiedAt:"2026-11-17",
   source:"https://nerdc.gov.ng/content_manager/jss1-3.html",
@@ -112,8 +112,7 @@ const packs={
     ]
    }
   }
- }
- ,
+ },
  "South Africa":{
   curriculum:"South Africa CAPS / NSC (DBE)",language:"English",
   languageNote:"This pack is written in English. South African schools may use different approved languages of learning and teaching; confirm the learner's school language before assigning a language-specific assessment.",
@@ -148,8 +147,7 @@ const packs={
     ]
    }
   }
- }
-
+ },
  "Uganda":{
   curriculum:"Uganda NCDC Curriculum / UNEB",language:"English",verifiedAt:"2026-11-17",
   source:"https://ncdc.go.ug/wp-content/uploads/2024/03/Curriculum_Framework.pdf",
