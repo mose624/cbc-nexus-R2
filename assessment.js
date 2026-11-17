@@ -38,6 +38,55 @@
       ["What is the function of a fuse in an electrical circuit?",["Increase voltage","Protect the circuit from excessive current","Store water","Produce light"],1,"Electricity","A fuse breaks the circuit when current becomes too high."],
       ["Which practice helps prevent soil erosion?",["Planting vegetation","Removing all plants","Overgrazing","Leaving soil bare"],0,"Environment","Plant roots help hold soil together and reduce erosion."]
     ],
+    Biology: [
+      ["Which cell structure controls most activities of a eukaryotic cell?",["Cell wall","Nucleus","Vacuole","Ribosome"],1,"Cell Biology","The nucleus contains genetic material and helps control cell activities."],
+      ["Which process releases usable energy from glucose in cells?",["Photosynthesis","Respiration","Transpiration","Diffusion"],1,"Cell Biology","Cellular respiration releases energy from glucose."],
+      ["Which blood component transports oxygen?",["Platelets","Red blood cells","Plasma only","White blood cells"],1,"Human Biology","Haemoglobin in red blood cells binds and transports oxygen."],
+      ["What is the main role of decomposers in an ecosystem?",["Produce sunlight","Recycle nutrients","Stop all predation","Make rocks"],1,"Ecology","Decomposers break down dead matter and return nutrients to ecosystems."],
+      ["Which molecule carries hereditary information in most organisms?",["Starch","DNA","Water","Cellulose"],1,"Genetics","DNA stores hereditary information in most living organisms."]
+    ],
+    Chemistry: [
+      ["What is the chemical symbol for sodium?",["So","S","Na","N"],2,"Elements","Na is the chemical symbol for sodium."],
+      ["A solution with pH 3 is best described as:",["Acidic","Neutral","Alkaline","A pure metal"],0,"Acids and Bases","A pH below 7 indicates an acidic solution."],
+      ["Which particle has a negative electrical charge?",["Proton","Neutron","Electron","Nucleus"],2,"Atomic Structure","Electrons carry a negative charge."],
+      ["What is formed when an acid reacts with a base?",["Salt and water","Oxygen only","A metal","Carbon only"],0,"Chemical Reactions","Neutralisation typically produces salt and water."],
+      ["Which method is suitable for separating an insoluble solid from a liquid?",["Filtration","Fractional distillation","Chromatography only","Magnetising the liquid"],0,"Separation Techniques","Filtration traps insoluble solid particles while liquid passes through."]
+    ],
+    Physics: [
+      ["What is the SI unit of force?",["Joule","Watt","Newton","Pascal"],2,"Forces","Force is measured in newtons (N)."],
+      ["Which equation relates speed, distance and time?",["Speed = distance ÷ time","Speed = time ÷ distance","Speed = distance × time","Speed = mass × volume"],0,"Motion","Average speed is distance travelled divided by time taken."],
+      ["Which instrument measures electric current?",["Voltmeter","Ammeter","Thermometer","Barometer"],1,"Electricity","An ammeter measures electric current in amperes."],
+      ["What happens to the resistance of a fixed resistor if its temperature stays constant and voltage increases?",["It always doubles","It remains approximately constant","It becomes zero","It changes into current"],1,"Electricity","For an ohmic resistor at constant temperature, resistance is approximately constant."],
+      ["Which form of energy is stored in a stretched spring?",["Chemical","Elastic potential","Nuclear","Sound"],1,"Energy","A stretched spring stores elastic potential energy."]
+    ],
+    "Computer Studies": [
+      ["Which component is commonly called the brain of a computer?",["Monitor","CPU","Keyboard","Printer"],1,"Computer Systems","The central processing unit executes instructions and processes data."],
+      ["Which of these is an example of an operating system?",["Spreadsheet","Linux","Web browser","Presentation slide"],1,"Software","Linux is an operating system."],
+      ["What is the main purpose of a strong password?",["Increase screen brightness","Protect access to an account","Speed up typing","Store electricity"],1,"Digital Safety","Strong passwords help prevent unauthorised access."],
+      ["Which device is primarily used to enter text into a computer?",["Keyboard","Monitor","Speaker","Projector"],0,"Input Devices","A keyboard is an input device used to enter text and commands."],
+      ["What does a web browser help a user do?",["Browse websites","Print money","Repair hardware automatically","Generate electricity"],0,"Internet","A web browser is used to access and view web pages."]
+    ],
+    "Social Studies": [
+      ["What does a map scale show?",["The age of a map","The relationship between map distance and ground distance","The weather forecast","The population only"],1,"Geography Skills","A map scale compares distances on a map with actual distances."],
+      ["Which is a renewable natural resource when managed sustainably?",["Coal","Petroleum","Forest","Natural gas"],2,"Environment","Forests can regenerate when protected and managed sustainably."],
+      ["Why do communities establish rules and laws?",["To organise society and protect rights","To stop all trade","To prevent learning","To remove public services"],0,"Citizenship","Rules and laws support order, safety and protection of rights."],
+      ["Which line divides Earth into the Northern and Southern Hemispheres?",["Prime Meridian","Equator","Tropic of Cancer","Arctic Circle"],1,"Geography","The Equator is at 0° latitude and separates the two hemispheres."],
+      ["What is one purpose of local government?",["Provide local public services","Control every country","Replace all schools","Set the Earth's orbit"],0,"Governance","Local governments commonly manage services such as local roads and waste collection."]
+    ],
+    "Business Studies": [
+      ["What is profit?",["Revenue minus total costs","Total costs plus losses","Money borrowed only","The number of workers"],0,"Business Finance","Profit is the amount remaining when total costs are subtracted from revenue."],
+      ["Which document records money received and paid by a business?",["Cash book","Atlas","Timetable","Laboratory manual"],0,"Bookkeeping","A cash book records cash and bank receipts and payments."],
+      ["What is market research used for?",["Understanding customers and demand","Choosing the weather","Measuring rainfall only","Replacing accounting"],0,"Marketing","Market research gathers information about customers, competitors and demand."],
+      ["Which is an example of a fixed cost?",["Monthly rent","Raw materials per unit","Sales commission per item","Packaging for each product"],0,"Costs","Rent is commonly fixed over an agreed period."],
+      ["Why should a business keep financial records?",["To monitor performance and support decisions","To avoid planning","To hide all transactions","To stop customer service"],0,"Business Management","Accurate records help track performance, meet obligations and make decisions."]
+    ],
+    Agriculture: [
+      ["Which soil property describes the relative amounts of sand, silt and clay?",["Texture","Colour only","Temperature","Slope"],0,"Soil Science","Soil texture is determined by the proportions of sand, silt and clay."],
+      ["Why is crop rotation practised?",["To help manage soil fertility and pests","To prevent all rainfall","To remove all soil organisms","To stop seed germination"],0,"Crop Production","Rotation can improve nutrient management and interrupt pest and disease cycles."],
+      ["Which tool is commonly used for loosening soil on a small plot?",["Hoe","Syringe","Thermometer","Compass"],0,"Farm Tools","A hoe is used for shallow cultivation and weeding."],
+      ["What is the main purpose of compost?",["Add organic matter and nutrients to soil","Make soil waterproof","Remove all microorganisms","Replace sunlight"],0,"Soil Fertility","Compost adds organic matter and can improve soil structure and nutrient supply."],
+      ["Which practice helps reduce soil erosion on sloping land?",["Contour farming","Burning all vegetation","Overgrazing","Ploughing straight downhill"],0,"Soil Conservation","Contour farming slows runoff by following the land's contours."]
+    ],
     English: [
       ["Choose the correctly spelled word.",["Beautifull","Beautiful","Beutiful","Beautifull"],1,"Spelling","The correct spelling is beautiful."],
       ["What is the opposite of 'ancient'?",["Old","Modern","Historic","Past"],1,"Vocabulary","Modern means relating to the present or recent times."],
