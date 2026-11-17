@@ -77,6 +77,68 @@ const profiles={
    {question:"Is there one national senior-secondary examination in Australia?",answer:"Senior-secondary certificates and assessment arrangements are jurisdiction-based. Students should check the authority responsible for their state or territory."}
   ],
   verifiedAt:"2026-11-17"
+
+ },
+ "afghanistan":{
+  officialLanguages:"Dari and Pashto are official state languages; several other regional languages have recognised status in areas where they are spoken.",
+  instructionLanguages:"In the documented national school framework, the main language of teaching is Dari or Pashto, selected according to the predominant language of the local community. Some schools use both. Regional-language teaching is provided in relevant areas. Because education policy and access conditions have changed, families should confirm current arrangements with the local education authority.",
+  officialSources:[
+   {name:"Afghanistan Ministry of Education — National Education Strategic Plan III",url:"https://moe.gov.af/sites/default/files/2019-05/NESP%20III%20English%20-%20Final%20-%2027-03-2017.pdf",body:"Ministry plan describing Dari and Pashto as the principal school media of instruction and regional-language provision."},
+   {name:"Ministry of Justice — Constitution of Afghanistan",url:"https://moj.gov.af/index.php/en/enforced-constitution-afghanistan",body:"Constitutional language provisions; verify current legal and administrative status."}
+  ],
+  verifiedAt:"2026-11-17"
+ },
+ "algeria":{
+  officialLanguages:"Arabic and Tamazight are national/official languages; French and English are also taught as foreign languages.",
+  instructionLanguages:"Arabic is the legally specified language of instruction in public and private education. Tamazight is introduced where there is demand and provision, particularly in relevant regions. French and English are taught as foreign languages; their use as a subject or academic language should not be confused with the general medium of instruction.",
+  officialSources:[
+   {name:"Prime Minister of Algeria — National Education Orientation Law",url:"https://www.premier-ministre.gov.dz/fr/document/loi-n0-08-04-portant-loi-d-orientation-sur-l-education-nationale",body:"Articles 33–35 specify Arabic as the language of instruction and provide for Tamazight and foreign-language teaching."}
+  ],
+  verifiedAt:"2026-11-17"
+ },
+ "angola":{
+  officialLanguages:"Portuguese is the principal official language of schooling; Angola's national languages are also supported.",
+  instructionLanguages:"Portuguese is the statutory general language of instruction. The Basic Law of the Education and Teaching System also provides for the expansion and use of Angolan national languages and sign language in education, subject to implementing rules. Foreign-language schools may teach in their own country's official language while also teaching specified Angolan subjects.",
+  officialSources:[
+   {name:"Angola — Law 32/20, Basic Law of the Education and Teaching System",url:"https://sys.portais.gov.ao/uploads/13lei_32_20_de_12_de_agosto_lei_de_bases_de_educacao_e_ensino_alteracao_a_lei_17_137004928963237a670211f_16_compressed_28b9365abc.pdf",body:"Article 16 sets Portuguese as the teaching language and provides for national languages and sign language."}
+  ],
+  verifiedAt:"2026-11-17"
+ },
+ "antigua-and-barbuda":{
+  officialLanguages:"English is the principal language used in public administration and the school system; Antiguan Creole is widely used in everyday communication.",
+  instructionLanguages:"English is the principal teaching language in mainstream public education and is used for the regional Caribbean examination pathway. Spanish and French are taught as additional languages; school-specific and international programmes may differ. The Government has discussed phased expansion of Spanish teaching, so availability should be checked with the individual school.",
+  officialSources:[
+   {name:"Ministry of Education, Sports and Creative Industries",url:"https://education.gov.ag/",body:"Official ministry portal for schools, departments and education information."},
+   {name:"Government of Antigua and Barbuda — 2026 Cabinet language-policy update",url:"https://embassy.ag/news/report-from-the-cabinet-of-antigua-and-barbuda-meeting-of-wednesday-22nd-july-2026/",body:"Government report describing existing Spanish instruction and proposed phased expansion; this is not evidence that Spanish is the general medium of instruction."}
+  ],
+  verifiedAt:"2026-11-17"
+ },
+ "argentina":{
+  officialLanguages:"Spanish is the dominant language of schooling. Indigenous languages are used in intercultural bilingual education in relevant communities; English or another foreign language is also taught.",
+  instructionLanguages:"Spanish is the main teaching language across most schools, with education managed by provincial and city jurisdictions. Intercultural Bilingual Education supports teaching that preserves Indigenous languages and, in some communities, uses the mother tongue alongside Spanish. The exact language pair and programme vary by community and province.",
+  officialSources:[
+   {name:"Argentina Ministry of Education — Intercultural Bilingual Education",url:"https://www.argentina.gob.ar/modalidad-de-educacion-intercultural-bilingue",body:"Official description of bilingual intercultural education and Indigenous mother-tongue learning alongside Spanish."},
+   {name:"Argentina — National Education Law 26.206",url:"https://www.argentina.gob.ar/normativa/nacional/ley-26206-123542/actualizacion",body:"National legal framework, including intercultural bilingual education and foreign-language teaching."}
+  ],
+  verifiedAt:"2026-11-17"
+ },
+ "armenia":{
+  officialLanguages:"Armenian is the state language; Russian and other minority languages have teaching provision in eligible schools and communities.",
+  instructionLanguages:"Armenian is the general language of teaching. Russian-medium classes and schools are available, and national-minority communities may receive education in their mother tongue under the public-education framework, with Armenian language study required. Availability depends on the community and school.",
+  officialSources:[
+   {name:"National Assembly of Armenia — Law on Language",url:"https://ns1.parliament.am/legislation.php?ID=1793&lang=eng&sel=show",body:"Article 2 identifies literary Armenian as the language of teaching and education while guaranteeing minority-language use."},
+   {name:"Armenian Ministry of Foreign Affairs — Education rights of national minorities",url:"https://www.mfa.am/en/speeches/2011/03/02/speech-kirak/2105",body:"Government explanation of mother-tongue education and compulsory Armenian-language study for national minorities."}
+  ],
+  verifiedAt:"2026-11-17"
+ },
+ "austria":{
+  officialLanguages:"German is the principal language of schooling. Slovenian, Burgenland Croatian and Hungarian have protected bilingual education provision in designated minority areas.",
+  instructionLanguages:"German is the general language of teaching. In designated bilingual schools, Slovenian is used in Carinthia and Burgenland Croatian and Hungarian are used in Burgenland alongside German. International and private schools may teach in English, French or another language; check the individual school's curriculum.",
+  officialSources:[
+   {name:"Austrian Federal Ministry of Education — German support and minority education",url:"https://www.bmb.gv.at/en/Topics/school/krp/add_sup_cl_german.html",body:"Ministry information on German as the academic language and bilingual minority-school provision."},
+   {name:"Austrian Federal Ministry for European and International Affairs — Schools and studying",url:"https://www.bmeia.gv.at/en/austrian-embassy-nicosia/travels-to-austria/schools-studying",body:"Government information confirming German as the teaching language and noting bilingual and international schools."}
+  ],
+  verifiedAt:"2026-11-17"
  }
 };
 Object.keys(profiles).forEach(slug=>{d[slug]=Object.assign({},d[slug]||{},profiles[slug]);});
