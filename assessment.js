@@ -124,6 +124,11 @@
   const country = document.getElementById("quizCountryInput");
   const curriculum = document.getElementById("quizCurriculumInput");
   const curriculumByCountry = {
+  "Afghanistan":["Afghanistan Ministry of Education National Curriculum"],
+  "Albania":["Albania National Pre-University Curriculum / ASCAP"],
+  "Algeria":["Algeria National Curriculum / Ministry of National Education"],
+  "Andorra":["Andorra Andorran Education System","Andorra French Education System","Andorra Spanish Education System"],
+  "Angola":["Angola National Curriculum / INADE"],
   "Kenya":["Kenya CBC/CBE","Kenya 8-4-4 / KCSE","Cambridge International","Pearson Edexcel","IB"],
   "Uganda":["Uganda NCDC Curriculum / UNEB","Cambridge International","Pearson Edexcel"],
   "Tanzania":["Tanzania NECTA Curriculum","Cambridge International","Pearson Edexcel"],
@@ -186,6 +191,13 @@
 };
 
 const nationalLevelStructures = {
+  "Afghanistan":["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
+  "Albania":["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
+  "Algeria":["1ère année primaire","2ème année primaire","3ème année primaire","4ème année primaire","5ème année primaire","1ère année moyenne","2ème année moyenne","3ème année moyenne","4ème année moyenne","1ère année secondaire","2ème année secondaire","3ème année secondaire"],
+  "Andorra Andorran Education System":["Primera ensenyança 1","Primera ensenyança 2","Primera ensenyança 3","Primera ensenyança 4","Primera ensenyança 5","Primera ensenyança 6","Segona ensenyança 1","Segona ensenyança 2","Segona ensenyança 3","Segona ensenyança 4","Batxillerat 1","Batxillerat 2"],
+  "Andorra French Education System":["CP","CE1","CE2","CM1","CM2","Sixième","Cinquième","Quatrième","Troisième","Seconde","Première","Terminale"],
+  "Andorra Spanish Education System":["1º Primaria","2º Primaria","3º Primaria","4º Primaria","5º Primaria","6º Primaria","1º ESO","2º ESO","3º ESO","4º ESO","1º Bachillerato","2º Bachillerato"],
+  "Angola":["1.ª Classe","2.ª Classe","3.ª Classe","4.ª Classe","5.ª Classe","6.ª Classe","7.ª Classe","8.ª Classe","9.ª Classe","10.ª Classe","11.ª Classe","12.ª Classe","13.ª Classe"],
   "Kenya": ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Uganda": ["Primary 1","Primary 2","Primary 3","Primary 4","Primary 5","Primary 6","Primary 7","Senior 1","Senior 2","Senior 3","Senior 4","Senior 5","Senior 6"],
   "Tanzania": ["Standard I","Standard II","Standard III","Standard IV","Standard V","Standard VI","Standard VII","Form I","Form II","Form III","Form IV","Form V","Form VI"],
@@ -948,7 +960,15 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isNigeriaNERDC = selectedCountry === "nigeria" && selectedCurriculum === "nigeria nerdc curriculum / waec / neco";
     const nigeriaSubjects = isNigeriaNERDC && window.CBENexusNigeriaBanks && window.CBENexusNigeriaBanks.banks &&
       window.CBENexusNigeriaBanks.banks[grade.value] ? Object.keys(window.CBENexusNigeriaBanks.banks[grade.value]) : [];
-    const baseList = [...(isKenyaCbc ? subjectsForGrade(grade.value) : (isNigeriaNERDC ? nigeriaSubjects : [])), ...Object.keys(bank).filter((name) => name !== "CBC Skills")];
+    const countrySubjects = {
+      "Afghanistan":["Dari","Pashto","Mathematics","Islamic Education","Social Studies","Science","Art"],
+      "Albania":["Albanian Language","Foreign Languages","Mathematics","Biology","Physics","Chemistry","Geography","History","Civic Education","Arts","Physical Education","Technology and ICT"],
+      "Algeria":["Arabic","Tamazight","Mathematics","Islamic Education","Civic Education","History and Geography","Scientific and Technological Education","French","English","Physics","Natural Sciences","Technology"],
+      "Andorra":["Languages and Literature","Mathematics","Science and Technology","Social Sciences","Physical and Natural Sciences","Technology","Visual and Plastic Education","Music","Physical Education","Catalan","French","Spanish","English"],
+      "Angola":["Língua Portuguesa","Matemática","Estudo do Meio","Ciências da Natureza","História","Geografia","Educação Moral e Cívica","Educação Manual e Plástica","Educação Musical","Educação Física","Física","Química","Biologia","Informática"]
+    };
+    const countryBaseSubjects = countrySubjects[country && country.value] || [];
+    const baseList = [...(isKenyaCbc ? subjectsForGrade(grade.value) : (isNigeriaNERDC ? nigeriaSubjects : countryBaseSubjects)), ...Object.keys(bank).filter((name) => name !== "CBC Skills")];
     // Include every subject that has published Admin Dashboard questions for this grade.
     // This changes only discoverability/filtering; saved question text and answers are untouched.
     const adminSubjects = (Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [])
