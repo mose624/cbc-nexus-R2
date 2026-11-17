@@ -860,7 +860,16 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
   function updateQuestionBankCoverage() {
     const coverage = document.getElementById("quizBankCoverage");
     if (!coverage || !subject || !subject.value) return;
-    const count = getGradeQuestionBank(grade.value, subject.value).length;
+    const normalize = (value) => String(value || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+    const publishedCount = (Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : []).filter((item) =>
+      item && item.published !== false &&
+      String(item.country || "Kenya").toLowerCase() === String(country.value || "").toLowerCase() &&
+      String(item.curriculum || "Kenya CBC/CBE").toLowerCase() === String(curriculum.value || "").toLowerCase() &&
+      normalize(item.grade) === normalize(grade.value) &&
+      normalize(item.subject) === normalize(subject.value) &&
+      String(item.question || "").trim() && Array.isArray(item.options) && item.options.length >= 4
+    ).length;
+    const count = publishedCount || getAvailableQuestions(grade.value, subject.value).length;
     coverage.textContent = count
       ? count + " practice question" + (count === 1 ? "" : "s") + " available for " + country.value + " · " + curriculum.value + " · " + grade.value + " · " + subject.value + ". Published country-specific questions take priority; shared starter questions are supplementary."
       : "No questions are published for this selection yet. Try a shared starter subject or ask a teacher to publish a country-, curriculum- and class-specific set.";
