@@ -329,6 +329,8 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       instructions.textContent = grade.value + " " + subject.value + " selected. Choose a strand/topic or All Topics, then click Start / Restart Quiz.";
     }
   });
+  const cognitiveLevelInput = document.getElementById("quizCognitiveInput");
+  if (cognitiveLevelInput) cognitiveLevelInput.addEventListener("change", () => updateQuestionBankCoverage());
   if (subject) {
     subject.addEventListener("change", () => {
       refreshStrandOptions();
@@ -918,10 +920,21 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       normalize(item.subject) === normalize(subject.value) &&
       String(item.question || "").trim() && Array.isArray(item.options) && item.options.length >= 4
     ).length;
-    const count = publishedCount || getAvailableQuestions(grade.value, subject.value).length;
+    const pack = window.CBENexusCountryQuestionPacks && window.CBENexusCountryQuestionPacks[country.value];
+    const exact = pack && pack.curriculum.toLowerCase() === String(curriculum.value || "").toLowerCase()
+      ? pack.grades && pack.grades[grade.value] && pack.grades[grade.value][subject.value]
+      : null;
+    const nationalCount = getAvailableQuestions(grade.value, subject.value).length;
+    const count = publishedCount || (Array.isArray(exact) ? exact.length : 0) + nationalCount;
     coverage.textContent = count
-      ? count + " practice question" + (count === 1 ? "" : "s") + " available for " + country.value + " · " + curriculum.value + " · " + grade.value + " · " + subject.value + ". Published country-specific questions take priority; shared starter questions are supplementary."
-      : "No questions are published for this selection yet. Try a shared starter subject or ask a teacher to publish a country-, curriculum- and class-specific set.";
+      ? count + " questions available for " + country.value + " · " + curriculum.value + " · " + grade.value + " · " + subject.value + (Array.isArray(exact) ? ". Includes a curriculum-mapped question set." : ". Shared starter questions are supplementary, not country-syllabus verified.")
+      : "No verified question set is available for this exact selection yet. Please choose another available class/subject or use teacher-published questions.";
+    const languageNotice = document.getElementById("quizLanguageNotice");
+    if (languageNotice) {
+      languageNotice.textContent = pack && pack.curriculum.toLowerCase() === String(curriculum.value || "").toLowerCase() && Array.isArray(exact)
+        ? "Question language: " + pack.language + ". Curriculum source: " + pack.source + "."
+        : "Question language: English supplementary practice only. Country-specific teaching language and syllabus alignment are not yet verified for this selection.";
+    }
   }
 
   function refreshSubjectOptions() {
@@ -1001,9 +1014,14 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       window.CBENexusCBCBanks.banks && window.CBENexusCBCBanks.banks[selectedGrade] && window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject] ||
       isNigeriaNERDC && window.CBENexusNigeriaBanks &&
       window.CBENexusNigeriaBanks.banks && window.CBENexusNigeriaBanks.banks[selectedGrade] && window.CBENexusNigeriaBanks.banks[selectedGrade][selectedSubject];
-    const gradeBank = Array.isArray(nationalGradeBank) && nationalGradeBank.length
-      ? nationalGradeBank
-      : (Array.isArray(bank[selectedSubject]) ? bank[selectedSubject] : []);
+    const pack = window.CBENexusCountryQuestionPacks && window.CBENexusCountryQuestionPacks[selectedCountry];
+    const exactPack = pack && pack.curriculum.toLowerCase() === selectedCurriculum.toLowerCase()
+      ? pack.grades && pack.grades[selectedGrade] && pack.grades[selectedGrade][selectedSubject]
+      : null;
+    const packBank = Array.isArray(exactPack) ? exactPack.slice() : [];
+    const nationalBank = Array.isArray(nationalGradeBank) ? nationalGradeBank : [];
+    const gradeBank = nationalBank.concat(packBank);
+
 
     const adminQuestions = Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [];
     const publishedSource = adminQuestions.filter((item) =>
@@ -1099,6 +1117,12 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       }
     }
 
+    const cognitiveLevel = document.getElementById("quizCognitiveInput");
+    if (cognitiveLevel && cognitiveLevel.value !== "all") {
+      combined = combined.filter((item) => cognitiveLevel.value === "higher-order"
+        ? String(item[11] || "").toLowerCase() === "higher-order"
+        : !String(item[11] || "").toLowerCase().includes("higher"));
+    }
     return combined;
   };
 
@@ -1386,6 +1410,12 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       const legend = document.createElement("legend");
       legend.textContent = (index + 1) + ". " + item[0];
       fieldset.appendChild(legend);
+      if (item[11]) {
+        const levelTag = document.createElement("p");
+        levelTag.className = "quiz-curriculum-meta";
+        levelTag.textContent = item[11] === "higher-order" ? "Higher-order thinking · application / analysis / evaluation" : "Foundational understanding";
+        fieldset.appendChild(levelTag);
+      }
       if (item[9]) {
         const questionImage = document.createElement("img");
         questionImage.src = item[9];
