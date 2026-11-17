@@ -596,5 +596,9 @@ Object.assign(packs,{
 "Zambia":{curriculum:"Zambia ZEC / ECZ Curriculum",language:"English",languageNote:"100 original Grade 1 Mathematics supplementary questions in English. Topics are intended as a starter practice set under the lower-primary competence-based curriculum; detailed syllabus outcome mapping remains outstanding.",verifiedAt:"2026-11-17",source:"Zambia Ministry of Education Directorate of Curriculum Development, Lower Primary Syllabi Grades 1–3 and CDC Digital Library.",grades:{"Grade 1":{Mathematics:b1math("English")}}}
 });
 
+Object.assign(packs,{
+"Zimbabwe":{curriculum:"Zimbabwe ZIMSEC",language:"English",languageNote:"100 original Grade 1 Mathematics supplementary questions in English. This is a starter practice set; it is not a complete mapping to all Zimbabwean curriculum outcomes. Zimbabwe's local languages may also be used as languages of instruction in primary schools.",verifiedAt:"2026-11-17",source:"Zimbabwe Ministry of Primary and Secondary Education curriculum framework; Grade 1 starter bank pending detailed infant-school syllabus mapping.",grades:{"Grade 1":{Mathematics:b1math("English")}}}
+});
+
 window.CBENexusCountryQuestionPacks=packs;
 })();
