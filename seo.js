@@ -251,9 +251,9 @@ async function sitemap(req){
   .filter(c=>c&&c.slug).map(c=>[String(c.slug).toLowerCase(),c]));
  try{
   const registrySource=await fs.readFile(path.join(__dirname,"global-schools-registry-fallback.js"),"utf8");
-  const rowsMatch=registrySource.match(/const rows="([\\s\\S]*?)";\\s*const entries=/);
+  const rowsMatch=registrySource.match(/const rows="([\s\S]*?)";\s*const entries=/);
   if(rowsMatch){
-   for(const line of rowsMatch[1].split("\\\\n")){
+   for(const line of rowsMatch[1].split("\\n")){
     const [name,code,countrySlug]=line.split("|");
     if(name&&code&&countrySlug&&!countryMap.has(countrySlug)){
      countryMap.set(countrySlug,{name,code,slug:countrySlug,url:"/global-schools/"+countrySlug});
