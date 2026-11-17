@@ -124,6 +124,13 @@
   const country = document.getElementById("quizCountryInput");
   const curriculum = document.getElementById("quizCurriculumInput");
   const curriculumByCountry = {
+  "Sierra Leone":["Sierra Leone MBSSE Basic Education Curriculum"],
+  "Slovakia":["Slovak State Educational Programme / 1. ročník"],
+  "Slovenia":["Slovenian National Curriculum / 1. razred"],
+  "Solomon Islands":["Solomon Islands National Curriculum Framework — Primary"],
+  "Somalia":["Somalia National Curriculum Framework / Grade 1"],
+  "South Sudan":["South Sudan National Curriculum / Primary 1"],
+
   "Saint Kitts and Nevis":["Saint Kitts and Nevis National Curriculum"],
   "Saint Lucia":["Saint Lucia National Curriculum"],
   "Saint Vincent and the Grenadines":["Saint Vincent and the Grenadines Primary Curriculum"],
@@ -335,6 +342,13 @@
 };
 
 const nationalLevelStructures = {
+  "Sierra Leone":["Primary 1"],
+  "Slovakia":["1. ročník"],
+  "Slovenia":["1. razred"],
+  "Solomon Islands":["Year 1"],
+  "Somalia":["Grade 1"],
+  "South Sudan":["P-1"],
+
   "Saint Kitts and Nevis":["Grade 1"],
   "Saint Lucia":["Grade 1"],
   "Saint Vincent and the Grenadines":["Grade 1"],
@@ -1238,6 +1252,17 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const languageNotice = document.getElementById("quizLanguageNotice");
     if (languageNotice) {
       const expectedInstructionLanguages = {
+  "Seychelles":"English (starter question stream; school-medium and regional variations may apply)",
+  "Sierra Leone":"English (starter question stream; school-medium and regional variations may apply)",
+  "Singapore":"English (starter question stream; school-medium and regional variations may apply)",
+  "Slovakia":"Slovak (starter question stream; school-medium and regional variations may apply)",
+  "Slovenia":"Slovenian (starter question stream; school-medium and regional variations may apply)",
+  "Solomon Islands":"English (with local-language support where provided) (starter question stream; school-medium and regional variations may apply)",
+  "Somalia":"Somali (starter question stream; school-medium and regional variations may apply)",
+  "South Africa":"English (starter question stream; school-medium and regional variations may apply)",
+  "South Korea":"Korean (starter question stream; school-medium and regional variations may apply)",
+  "South Sudan":"English (starter question stream; school-medium and regional variations may apply)",
+
   "Rwanda":"Kinyarwanda (starter question stream; school-medium and regional variations may apply)",
   "Saint Kitts and Nevis":"English (starter question stream; school-medium and regional variations may apply)",
   "Saint Lucia":"English (starter question stream; school-medium and regional variations may apply)",
@@ -1395,6 +1420,17 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const nigeriaSubjects = isNigeriaNERDC && window.CBENexusNigeriaBanks && window.CBENexusNigeriaBanks.banks &&
       window.CBENexusNigeriaBanks.banks[grade.value] ? Object.keys(window.CBENexusNigeriaBanks.banks[grade.value]) : [];
     const countrySubjects = {
+  "Seychelles":["English","Français","Kreol","Mathematics","Science","Social Studies","Health and Physical Education"],
+  "Sierra Leone":["English Language","Mathematics","Integrated Science","Social Studies","Religious and Moral Education","Physical and Health Education","Creative Arts"],
+  "Singapore":["English Language","Mother Tongue Language","Mathematics","Science","Art","Music","Physical Education","Social Studies"],
+  "Slovakia":["Slovenský jazyk a literatúra","Matematika","Prvouka","Výtvarná výchova","Hudobná výchova","Telesná a športová výchova"],
+  "Slovenia":["Slovenščina","Matematika","Spoznavanje okolja","Likovna umetnost","Glasbena umetnost","Šport"],
+  "Solomon Islands":["English","Mathematics","Science","Social Studies","Culture and Community Studies","Health and Physical Education","Creative Arts"],
+  "Somalia":["Af-Soomaali","Arabic","English","Mathematics","Science","Social Studies","Islamic Studies"],
+  "South Africa":["Home Language","First Additional Language","Mathematics","Life Skills"],
+  "South Korea":["국어","수학","통합교과","즐거운 생활","바른 생활","슬기로운 생활"],
+  "South Sudan":["English Language","Mathematics","Science","Social Studies","Religious Education","Creative Arts","Physical Education"],
+
   "Rwanda":["Ikinyarwanda","English","Mathematics","Science and Elementary Technology","Social and Religious Studies","Creative Arts","Physical Education"],
   "Saint Kitts and Nevis":["English Language","Mathematics","Science","Social Studies","Health and Family Life Education","Visual and Performing Arts","Physical Education"],
   "Saint Lucia":["Language Arts","Mathematics","Science","Social Studies","HFLE","Creative Arts","Physical Education"],
