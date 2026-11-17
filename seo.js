@@ -244,6 +244,25 @@ const SITEMAP_CACHE_TTL_MS = 15 * 60 * 1000;
 async function sitemap(req){
  if (sitemapCache.body && sitemapCache.expiresAt > Date.now()) return sitemapCache.body;
  const b=base(req);
+ // Keep sitemap country coverage aligned with the server-side country route registry.
+ // The fallback registry contains the complete public route list even when the
+ // optional primary country-data module is empty or incomplete.
+ const countryMap=new Map((Array.isArray(globalSchools.countries)?globalSchools.countries:[])
+  .filter(c=>c&&c.slug).map(c=>[String(c.slug).toLowerCase(),c]));
+ try{
+  const registrySource=await fs.readFile(path.join(__dirname,"global-schools-registry-fallback.js"),"utf8");
+  const rowsMatch=registrySource.match(/const rows="([\\s\\S]*?)";\\s*const entries=/);
+  if(rowsMatch){
+   for(const line of rowsMatch[1].split("\\\\n")){
+    const [name,code,countrySlug]=line.split("|");
+    if(name&&code&&countrySlug&&!countryMap.has(countrySlug)){
+     countryMap.set(countrySlug,{name,code,slug:countrySlug,url:"/global-schools/"+countrySlug});
+    }
+   }
+  }
+  if(!countryMap.has("kosovo"))countryMap.set("kosovo",{name:"Kosovo",code:"XK",slug:"kosovo",url:"/global-schools/kosovo"});
+ }catch(e){console.warn("SEO sitemap country registry fallback failed:",e.message||e);}
+ const sitemapCountries=[...countryMap.values()];
  const urls=[
   "/","/resources.html","/free-resources.html","/quizzes.html","/projects.html","/tuition.html",
   "/blog.html","/learning-hub.html","/answer-hub.html","/grade-10-school-finder.html","/contact.html",
@@ -266,10 +285,10 @@ async function sitemap(req){
   "/articles/grade-9-mathematics-linear-equations.html",
   "/articles/grade-10-biology-photosynthesis.html"
  ];
- try{(globalSchools.countries||[]).forEach(c=>{urls.push(c.url);urls.push("/global-teaching-jobs/"+c.slug);urls.push("/online-teaching/"+c.slug);});}catch(e){console.warn("Global schools sitemap lookup failed:",e.message||e);}
+ try{sitemapCountries.forEach(c=>{urls.push(c.url||("/global-schools/"+c.slug));urls.push("/global-teaching-jobs/"+c.slug);urls.push("/online-teaching/"+c.slug);});}catch(e){console.warn("Global schools sitemap lookup failed:",e.message||e);}
  try{
   const examSlug=value=>String(value||"").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
-  (globalSchools.countries||[]).forEach(country=>{
+  sitemapCountries.forEach(country=>{
    const names=Array.isArray(countryExamSeoIndex[country.slug])?countryExamSeoIndex[country.slug]:[];
    names.forEach(name=>{const slug=examSlug(name);if(slug)urls.push("/global-exams/"+country.slug+"/"+slug);});
    const profile=globalSchools.countryData&&globalSchools.countryData[country.slug]||{};
