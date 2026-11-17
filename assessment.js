@@ -144,6 +144,16 @@
   "Benin":["Benin National Primary Curriculum / CI"],
   "Bhutan":["Bhutan National School Curriculum / CSCD"],
 
+  "Bolivia":["Bolivia Currículo Base del Sistema Educativo Plurinacional"],
+"Bosnia and Herzegovina":["Bosnia and Herzegovina Primary Education Curriculum (entity/canton implementation)"],
+"Botswana":["Botswana Primary School Curriculum / BEC"],
+"Brazil":["Brazil BNCC / Ensino Fundamental"],
+"Brunei":["Brunei SPN21 Primary Education"],
+"Bulgaria":["Bulgaria National Curriculum / Ministry of Education and Science"],
+"Burkina Faso":["Burkina Faso National Primary Curriculum / CP1"],
+"Burundi":["Burundi Fundamental Education Curriculum"],
+"Cabo Verde":["Cabo Verde Plano Curricular do Ensino Básico Formal"],
+"Cambodia":["Cambodia National Curriculum / Ministry of Education Youth and Sport"],
   "Kenya":["Kenya CBC/CBE","Kenya 8-4-4 / KCSE","Cambridge International","Pearson Edexcel","IB"],
   "Uganda":["Uganda NCDC Curriculum / UNEB","Cambridge International","Pearson Edexcel"],
   "Tanzania":["Tanzania NECTA Curriculum","Cambridge International","Pearson Edexcel"],
@@ -228,6 +238,16 @@ const nationalLevelStructures = {
   "Benin":["CI","CP","CE1","CE2","CM1","CM2"],
   "Bhutan":["Class PP","Class I","Class II","Class III","Class IV","Class V","Class VI","Class VII","Class VIII","Class IX","Class X","Class XI","Class XII"],
 
+  "Bolivia":["1er Año de Escolaridad","Level 2","Level 3","Level 4","Level 5","Level 6"],
+"Bosnia and Herzegovina":["Grade 1","Level 2","Level 3","Level 4","Level 5","Level 6"],
+"Botswana":["Standard 1","Level 2","Level 3","Level 4","Level 5","Level 6"],
+"Brazil":["1º Ano do Ensino Fundamental","Level 2","Level 3","Level 4","Level 5","Level 6"],
+"Brunei":["Year 1","Level 2","Level 3","Level 4","Level 5","Level 6"],
+"Bulgaria":["I клас","Level 2","Level 3","Level 4","Level 5","Level 6"],
+"Burkina Faso":["CP1","Level 2","Level 3","Level 4","Level 5","Level 6"],
+"Burundi":["1ère année fondamentale","Level 2","Level 3","Level 4","Level 5","Level 6"],
+"Cabo Verde":["1.º Ano","Level 2","Level 3","Level 4","Level 5","Level 6"],
+"Cambodia":["Grade 1","Level 2","Level 3","Level 4","Level 5","Level 6"],
   "Kenya": ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Uganda": ["Primary 1","Primary 2","Primary 3","Primary 4","Primary 5","Primary 6","Primary 7","Senior 1","Senior 2","Senior 3","Senior 4","Senior 5","Senior 6"],
   "Tanzania": ["Standard I","Standard II","Standard III","Standard IV","Standard V","Standard VI","Standard VII","Form I","Form II","Form III","Form IV","Form V","Form VI"],
@@ -1004,7 +1024,17 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
         "Belgium": curriculum.value && curriculum.value.toLowerCase().includes("flemish") ? "Dutch (Flemish Community)" : curriculum.value && curriculum.value.toLowerCase().includes("french") ? "French (French Community)" : "German (German-speaking Community)",
         "Belize": "English (official language of instruction; multilingual context)",
         "Benin": "French (national school language; national languages support learning)",
-        "Bhutan": "Dzongkha and English (subject and school language arrangements vary)"
+        "Bhutan": "Dzongkha and English (subject and school language arrangements vary)",
+        "Bolivia":"Spanish",
+"Bosnia and Herzegovina":"Bosnian",
+"Botswana":"English",
+"Brazil":"Portuguese",
+"Brunei":"Malay",
+"Bulgaria":"Bulgarian",
+"Burkina Faso":"French",
+"Burundi":"Kirundi",
+"Cabo Verde":"Portuguese",
+"Cambodia":"Khmer"
       };
       languageNotice.textContent = pack && pack.curriculum.toLowerCase() === String(curriculum.value || "").toLowerCase() && Array.isArray(exact)
         ? "Question language: " + pack.language + ". " + (pack.languageNote || "") + " Curriculum source: " + ((pack.subjectSources && pack.subjectSources[subject.value]) || pack.source) + ". Verified: " + (pack.verifiedAt || "date not recorded") + "."
@@ -1042,6 +1072,16 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       "Belgium":["Mathematics","Wiskunde","Mathématiques","Dutch","French","German","World Orientation","Arts","Physical Education"],
       "Belize":["Mathematics","Language Arts","Science","Social Studies","Physical Education","Art","Music"],
       "Benin":["Français","Mathématiques","Éducation sociale","Éducation scientifique et technologique","Éducation artistique"],
+      "Bolivia":["Mathematics","Language","Science","Social Studies","Arts","Physical Education"],
+"Bosnia and Herzegovina":["Mathematics","Language","Science","Social Studies","Arts","Physical Education"],
+"Botswana":["Mathematics","Language","Science","Social Studies","Arts","Physical Education"],
+"Brazil":["Mathematics","Language","Science","Social Studies","Arts","Physical Education"],
+"Brunei":["Mathematics","Language","Science","Social Studies","Arts","Physical Education"],
+"Bulgaria":["Mathematics","Language","Science","Social Studies","Arts","Physical Education"],
+"Burkina Faso":["Mathematics","Language","Science","Social Studies","Arts","Physical Education"],
+"Burundi":["Mathematics","Language","Science","Social Studies","Arts","Physical Education"],
+"Cabo Verde":["Mathematics","Language","Science","Social Studies","Arts","Physical Education"],
+"Cambodia":["Mathematics","Language","Science","Social Studies","Arts","Physical Education"],
       "Bhutan":["རྫོང་ཁ","English","Mathematics","Environmental Studies","Health and Physical Education","Social Studies","ICT"]
     };
     const countryBaseSubjects = countrySubjects[country && country.value] || [];
