@@ -48,7 +48,7 @@ const profiles={
   instructionLanguages:"Belarusian and Russian are the two principal state languages of instruction. The language used depends on the school and locality; Russian is widely used, while Belarusian-medium schools and classes also operate. Minority-language teaching is subject to current national education rules and local provision, so families should confirm the language offered by a particular school.",
   officialSources:[
    {name:"UNESCO Global Education Profiles — Belarus",url:"https://gem-report-education-profiles.unesco.org/node/922.html",body:"Country profile describing Belarusian and Russian as state languages and the legal framework for minority-language education."},
-   {name:"United Nations — Belarus report on national-minority language rights",url:"https://documents.un.org/access.nsf/get?DS= CERD%2FC%2FBLR%2F24-25&Lang=E&Open=",body:"United Nations reporting on education and minority-language rights in Belarus."}
+   {name:"United Nations — Belarus report on national-minority language rights",url:"https://documents.un.org/access.nsf/get?DS=CERD%2FC%2FBLR%2F24-25&Lang=E&Open=",body:"United Nations reporting on education and minority-language rights in Belarus."}
   ],verifiedAt:"2026-11-17"
  },
  "belgium":{
@@ -70,7 +70,6 @@ const profiles={
   instructionLanguages:"French is the main formal language of instruction in much of the school system. Benin's education policy also provides for education through English and national languages, including in bilingual, literacy and language-promotion programmes. The national language used and the extent of classroom teaching in it depend on the programme, locality and school.",
   officialSources:[
    {name:"United Nations — Benin report on language policy in education",url:"https://digitallibrary.un.org/record/3958393/files/CERD_C_BEN_1-9-EN.pdf",body:"Government report describing education provision mainly in French, English and national languages, and the national-language literacy directorate."},
-   {name:"Benin Ministry of Secondary, Technical and Vocational Education",url:"https://enseignementssecondaire.gouv.bj/",body:"Government ministry portal for secondary, technical and vocational education."}
   ],verifiedAt:"2026-11-17"
  },
  "bhutan":{
