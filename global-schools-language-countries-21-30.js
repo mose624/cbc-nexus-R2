@@ -61,6 +61,13 @@ const profiles={
    {name:"UNESCO IICBA — Burundi language and learning outcomes",url:"https://www.iicba.unesco.org/en/burundi-language-and-insecurity-are-behind-low-and-declining-learning-outcomes",body:"Explains the transition from Kirundi to French in mathematics and other subjects."}
   ],verifiedAt:"2026-11-17"
  },
+ "cabo-verde":{
+  instructionLanguages:"Portuguese is the formal language of schooling and the principal language used in curriculum and assessment. Cape Verdean Creole (Kriolu) is the most widely spoken home and community language. Schools may use Kriolu to support understanding, particularly in early learning, while formal written instruction and national examinations use Portuguese.",
+  officialSources:[
+   {name:"Government of Cabo Verde — Ministry of Education",url:"https://minedu.gov.cv/",body:"Government ministry responsible for national education policy, school programmes and education administration."},
+   {name:"United Nations — National language information for Cabo Verde",url:"https://unstats.un.org/unsd/geoinfo/ungegn/docs/4th-uncsgn-docs/e_conf_74_L3.pdf",body:"UN document identifies Portuguese as the national language and records Kabuverdianu as a language used in the country."}
+  ],verifiedAt:"2026-11-17"
+ },
  "cambodia":{
   instructionLanguages:"Khmer is the official language of teaching and learning in public general-education schools, and private general-education schools must include Khmer in their programmes. In Indigenous and minority communities, the Ministry may determine the language of instruction; bilingual and multilingual education programmes support selected local languages, particularly in early grades. International schools may teach through English, French or another approved curriculum language.",
   officialSources:[
