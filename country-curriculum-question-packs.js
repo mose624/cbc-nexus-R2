@@ -144,6 +144,8 @@ add:(a,b)=>a+" と "+b+" の和はいくつですか。",sub:(a,b)=>a+" から "
  Burmese:{add:(a,b)=>a+" နှင့် "+b+" ပေါင်းလျှင် ဘယ်လောက်ရမလဲ။",sub:(a,b)=>a+" ထဲမှ "+b+" နုတ်လျှင် ဘယ်လောက်ကျန်မလဲ။",cmp:(a,b)=>a+" နှင့် "+b+" တွင် ဘယ်ကိန်းက ပိုကြီးသလဲ။",word:(a,b)=>"မောင်မောင်တွင် ပန်းသီး "+a+" လုံးရှိပြီး နောက်ထပ် "+b+" လုံးရသည်။ စုစုပေါင်း ဘယ်နှလုံးရှိသနည်း။",tri:"တြိဂံတွင် ဘက်ဘယ်နှဘက်ရှိသနည်း။",sq:"စတုရန်းတွင် ဘက်ဘယ်နှဘက်ရှိသနည်း။",cir:"စက်ဝိုင်းတွင် ထောင့်ဘယ်နှထောင့်ရှိသနည်း။",combo:"တြိဂံတွင် ဘက် ၃ ဘက်၊ စတုရန်းတွင် ဘက် ၄ ဘက်ရှိသည်။ စုစုပေါင်း ဘက်ဘယ်နှဘက်ရှိသနည်း။",explain:n=>"မှန်ကန်သောအဖြေမှာ "+n+" ဖြစ်သည်။"},
  Nepali:{add:(a,b)=>a+" र "+b+" को योग कति हुन्छ?",sub:(a,b)=>a+" बाट "+b+" घटाउँदा कति बाँकी रहन्छ?",cmp:(a,b)=>a+" र "+b+" मध्ये कुन ठूलो संख्या हो?",word:(a,b)=>"सीतासँग "+a+" वटा स्याउ छन्। उनले थप "+b+" वटा पाइन्। जम्मा कति स्याउ भए?",tri:"त्रिभुजका कति वटा भुजा हुन्छन्?",sq:"वर्गका कति वटा भुजा हुन्छन्?",cir:"वृत्तका कति वटा कुना हुन्छन्?",combo:"त्रिभुजका ३ भुजा र वर्गका ४ भुजा हुन्छन्। जम्मा कति भुजा भए?",explain:n=>"सही उत्तर "+n+" हो।"},
 (a,b)=>"What is the sum of "+a+" and "+b+"?",sub:(a,b)=>"How many remain when "+b+" is taken from "+a+"?",cmp:(a,b)=>"Which number is greater: "+a+" or "+b+"?",word:(a,b)=>"A learner has "+a+" apples and receives "+b+" more. How many apples are there altogether?",tri:"How many sides does a triangle have?",sq:"How many sides does a square have?",cir:"How many corners does a circle have?",combo:"A triangle has 3 sides and a square has 4. How many sides are there altogether?",explain:n=>"The correct answer is "+n+"."}
+ Turkish:{add:(a,b)=>a+" ile "+b+" sayılarının toplamı kaçtır?",sub:(a,b)=>a+" sayısından "+b+" çıkarılırsa kaç kalır?",cmp:(a,b)=>a+" ve "+b+" sayılarından hangisi daha büyüktür?",word:(a,b)=>"Ali'nin "+a+" kalemi var. "+b+" kalem daha alırsa toplam kaç kalemi olur?",tri:"Bir üçgenin kaç kenarı vardır?",sq:"Bir karenin kaç kenarı vardır?",cir:"Bir dairenin kaç köşesi vardır?",combo:"Bir üçgenin 3, bir karenin 4 kenarı vardır. Toplam kaç kenar vardır?",explain:n=>"Doğru cevap "+n+"."},
+
  }[lang];
  const add=(q,n,topic,tag)=>{const v=[...new Set([n,n+1,Math.max(0,n-1),n+2])];for(let candidate=n+3;v.length<4;candidate++)if(!v.includes(candidate))v.push(candidate);const shift=out.length%4,o=v.slice(shift).concat(v.slice(0,shift));out.push(make(q,o,o.indexOf(n),topic,T.explain(n),topic,topic,"Solve a Grade 1 number or shape problem.",q,tag,lang));};
  for(let i=0;i<20;i++){let a=i%10+1,b=i%5+1;add(T.add(a,b),a+b,"Addition",i%5===0?"higher-order":"foundational");}
@@ -598,6 +600,10 @@ Object.assign(packs,{
 
 Object.assign(packs,{
 "Zimbabwe":{curriculum:"Zimbabwe ZIMSEC",language:"English",languageNote:"100 original Grade 1 Mathematics supplementary questions in English. This is a starter practice set; it is not a complete mapping to all Zimbabwean curriculum outcomes. Zimbabwe's local languages may also be used as languages of instruction in primary schools.",verifiedAt:"2026-11-17",source:"Zimbabwe Ministry of Primary and Secondary Education curriculum framework; Grade 1 starter bank pending detailed infant-school syllabus mapping.",grades:{"Grade 1":{Mathematics:b1math("English")}}}
+});
+
+Object.assign(packs,{
+"Türkiye":{curriculum:"Türkiye Ministry of National Education / Türkiye Yüzyılı Maarif Modeli — İlkokul Matematik (1. Sınıf)",language:"Turkish",languageNote:"100 özgün 1. sınıf Matematik alıştırma sorusu Türkçe hazırlanmıştır. Sorular sayı ve işlemler, günlük yaşam problemleri, karşılaştırma ve temel geometrik şekillere odaklanan başlangıç düzeyi destek materyalidir; 2024 programındaki tüm öğrenme çıktılarıyla ayrıntılı eşleştirme henüz tamamlanmamıştır.",verifiedAt:"2026-11-17",source:"Türkiye Cumhuriyeti Millî Eğitim Bakanlığı, Türkiye Yüzyılı Maarif Modeli İlkokul Matematik Dersi Öğretim Programı (1–4. sınıflar), 2024.",grades:{"1. Sınıf":{Mathematics:b1math("Turkish")}}}
 });
 
 window.CBENexusCountryQuestionPacks=packs;
