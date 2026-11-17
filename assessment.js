@@ -12,7 +12,7 @@
       ["If x + 9 = 17, what is x?",["6","7","8","9"],2,"Algebra","17 − 9 = 8."],
       ["How many degrees are in a right angle?",["45°","90°","180°","360°"],1,"Geometry","A right angle measures 90°."],
       ["What is the mean of 4, 6 and 8?",["5","6","7","8"],1,"Statistics","(4 + 6 + 8) ÷ 3 = 6."],
-      ["A KSh 500 item is discounted by 10%. What is the discount?",["KSh 10","KSh 25","KSh 50","KSh 100"],2,"Percentages","10% of KSh 500 is KSh 50."]
+      ["An item costs 500 units and is discounted by 10%. What is the discount?",["10 units","25 units","50 units","100 units"],2,"Percentages","10% of 500 units is 50 units."]
     ],
     Science: [
       ["Which organ pumps blood around the body?",["Lungs","Heart","Kidney","Stomach"],1,"Human Body","The heart pumps blood through the circulatory system."],
@@ -182,7 +182,7 @@ function levelOptionsFor(countryName, curriculumName){
   if(c.includes("ib") || c.includes("international baccalaureate")) return ["PYP Year 1","PYP Year 2","PYP Year 3","PYP Year 4","PYP Year 5","PYP Year 6","MYP Year 1","MYP Year 2","MYP Year 3","MYP Year 4","MYP Year 5","DP Year 1","DP Year 2"];
   if(c.includes("common core") || c.includes("ngss") || c.includes("state standard") || c.includes("american curriculum") || c==="ap") return ["Kindergarten",...Array.from({length:12},(_,i)=>"Grade "+(i+1)),"AP"];
   if(countryName==="Kenya" && (c.includes("8-4-4") || c.includes("kcse"))) return ["Standard 1","Standard 2","Standard 3","Standard 4","Standard 5","Standard 6","Standard 7","Standard 8","Form 1","Form 2","Form 3","Form 4"];
-  return nationalLevelStructures[countryName] || [];
+  return nationalLevelStructures[countryName] || grades;
 }
 function refreshLevelOptions(countryName, curriculumName, input, list){
   if(!input || !list) return;
@@ -605,13 +605,15 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isNigeriaNERDC = selectedCountry === "nigeria" && selectedCurriculum === "nigeria nerdc curriculum / waec / neco";
     if (isKenyaCbc) {
       const gradeBank = window.CBENexusCBCBanks && window.CBENexusCBCBanks.banks && window.CBENexusCBCBanks.banks[selectedGrade] && window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject];
-      return Array.isArray(gradeBank) ? gradeBank.slice() : [];
+      if (Array.isArray(gradeBank) && gradeBank.length) return gradeBank.slice();
     }
     if (isNigeriaNERDC) {
       const gradeBank = window.CBENexusNigeriaBanks && window.CBENexusNigeriaBanks.banks && window.CBENexusNigeriaBanks.banks[selectedGrade] && window.CBENexusNigeriaBanks.banks[selectedGrade][selectedSubject];
-      return Array.isArray(gradeBank) ? gradeBank.slice() : [];
+      if (Array.isArray(gradeBank) && gradeBank.length) return gradeBank.slice();
     }
-    return [];
+    // Shared starter questions keep the practice portal usable in every country.
+    // They are supplementary general practice, not a claim of exact national-syllabus alignment.
+    return Array.isArray(bank[selectedSubject]) ? bank[selectedSubject].slice() : [];
   }
 
   function getCurriculumItems(selectedGrade, selectedSubject) {
@@ -865,7 +867,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const isNigeriaNERDC = selectedCountry === "nigeria" && selectedCurriculum === "nigeria nerdc curriculum / waec / neco";
     const nigeriaSubjects = isNigeriaNERDC && window.CBENexusNigeriaBanks && window.CBENexusNigeriaBanks.banks &&
       window.CBENexusNigeriaBanks.banks[grade.value] ? Object.keys(window.CBENexusNigeriaBanks.banks[grade.value]) : [];
-    const baseList = isKenyaCbc ? subjectsForGrade(grade.value) : nigeriaSubjects;
+    const baseList = isKenyaCbc ? subjectsForGrade(grade.value) : (isNigeriaNERDC ? nigeriaSubjects : Object.keys(bank).filter((name) => name !== "CBC Skills"));
     // Include every subject that has published Admin Dashboard questions for this grade.
     // This changes only discoverability/filtering; saved question text and answers are untouched.
     const adminSubjects = (Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [])
@@ -926,10 +928,13 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const selectedCurriculum = String(curriculum && curriculum.value || "Kenya CBC/CBE").trim();
     const isKenyaCbc = selectedCountry.toLowerCase() === "kenya" && selectedCurriculum.toLowerCase() === "kenya cbc/cbe";
     const isNigeriaNERDC = selectedCountry.toLowerCase() === "nigeria" && selectedCurriculum.toLowerCase() === "nigeria nerdc curriculum / waec / neco";
-    const gradeBank = isKenyaCbc && window.CBENexusCBCBanks &&
+    const nationalGradeBank = isKenyaCbc && window.CBENexusCBCBanks &&
       window.CBENexusCBCBanks.banks && window.CBENexusCBCBanks.banks[selectedGrade] && window.CBENexusCBCBanks.banks[selectedGrade][selectedSubject] ||
       isNigeriaNERDC && window.CBENexusNigeriaBanks &&
       window.CBENexusNigeriaBanks.banks && window.CBENexusNigeriaBanks.banks[selectedGrade] && window.CBENexusNigeriaBanks.banks[selectedGrade][selectedSubject];
+    const gradeBank = Array.isArray(nationalGradeBank) && nationalGradeBank.length
+      ? nationalGradeBank
+      : (Array.isArray(bank[selectedSubject]) ? bank[selectedSubject] : []);
 
     const adminQuestions = Array.isArray(window.CBENexusAdminQuestions) ? window.CBENexusAdminQuestions : [];
     const publishedSource = adminQuestions.filter((item) =>
@@ -963,6 +968,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       String(item.country || "Kenya").toLowerCase() === selectedCountry.toLowerCase() &&
       String(item.curriculum || "Kenya CBC/CBE").toLowerCase() === selectedCurriculum.toLowerCase() &&
       gradeNumber(item.grade) === gradeNumber(selectedGrade) &&
+      normalizeSubject(item.subject) === normalizeSubject(selectedSubject) &&
       String(item.question || "").trim() &&
       Array.isArray(item.options) && item.options.length >= 4
     );
