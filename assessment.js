@@ -129,6 +129,10 @@
   "Algeria":["Algeria National Curriculum / Ministry of National Education"],
   "Andorra":["Andorra Andorran Education System","Andorra French Education System","Andorra Spanish Education System"],
   "Angola":["Angola National Curriculum / INADE"],
+  "Antigua and Barbuda":["Antigua and Barbuda National Curriculum / Ministry of Education","OECS Harmonised Primary Curriculum","CXC CSEC / CAPE"],
+  "Argentina":["Argentina National Education Law / NAP and Provincial Curricula"],
+  "Armenia":["Armenia State Standard of General Education / Ministry of ESCS"],
+  "Austria":["Austria National Curriculum (Lehrplan) / BMB"],
   "Kenya":["Kenya CBC/CBE","Kenya 8-4-4 / KCSE","Cambridge International","Pearson Edexcel","IB"],
   "Uganda":["Uganda NCDC Curriculum / UNEB","Cambridge International","Pearson Edexcel"],
   "Tanzania":["Tanzania NECTA Curriculum","Cambridge International","Pearson Edexcel"],
@@ -198,6 +202,10 @@ const nationalLevelStructures = {
   "Andorra French Education System":["CP","CE1","CE2","CM1","CM2","Sixième","Cinquième","Quatrième","Troisième","Seconde","Première","Terminale"],
   "Andorra Spanish Education System":["1º Primaria","2º Primaria","3º Primaria","4º Primaria","5º Primaria","6º Primaria","1º ESO","2º ESO","3º ESO","4º ESO","1º Bachillerato","2º Bachillerato"],
   "Angola":["1.ª Classe","2.ª Classe","3.ª Classe","4.ª Classe","5.ª Classe","6.ª Classe","7.ª Classe","8.ª Classe","9.ª Classe","10.ª Classe","11.ª Classe","12.ª Classe","13.ª Classe"],
+  "Antigua and Barbuda":["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
+  "Argentina":["1º Grado","2º Grado","3º Grado","4º Grado","5º Grado","6º Grado","7º Grado","1º Año","2º Año","3º Año","4º Año","5º Año","6º Año"],
+  "Armenia":["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
+  "Austria":["Vorschulstufe","1. Schulstufe","2. Schulstufe","3. Schulstufe","4. Schulstufe","5. Schulstufe","6. Schulstufe","7. Schulstufe","8. Schulstufe","9. Schulstufe","10. Schulstufe","11. Schulstufe","12. Schulstufe"],
   "Kenya": ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Uganda": ["Primary 1","Primary 2","Primary 3","Primary 4","Primary 5","Primary 6","Primary 7","Senior 1","Senior 2","Senior 3","Senior 4","Senior 5","Senior 6"],
   "Tanzania": ["Standard I","Standard II","Standard III","Standard IV","Standard V","Standard VI","Standard VII","Form I","Form II","Form III","Form IV","Form V","Form VI"],
@@ -958,7 +966,12 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
         "Albania": "Albanian (minority-language arrangements may also apply)",
         "Algeria": "Arabic; Tamazight is also taught, with foreign-language subjects introduced by grade",
         "Andorra": curriculum.value && curriculum.value.toLowerCase().includes("french") ? "French (French-system curriculum; Andorran formation also includes Catalan)" : curriculum.value && curriculum.value.toLowerCase().includes("spanish") ? "Spanish (Spanish-system curriculum; Andorran formation also includes Catalan)" : "Catalan, Spanish and French are vehicular languages in the Andorran system; school determines subject language",
-        "Angola": "Portuguese"
+        "Angola": "Portuguese",
+        "Antigua and Barbuda": "English (national language of instruction; school-level language offerings may vary)",
+        "Argentina": "Spanish (with intercultural bilingual and other language provisions where applicable)",
+        "Armenia": "Armenian (with foreign-language instruction and minority-language provisions where applicable)",
+        "Australia": "English (with Aboriginal and Torres Strait Islander languages and other language programs where offered)",
+        "Austria": "German (with language-support and minority-language provisions where applicable)"
       };
       languageNotice.textContent = pack && pack.curriculum.toLowerCase() === String(curriculum.value || "").toLowerCase() && Array.isArray(exact)
         ? "Question language: " + pack.language + ". " + (pack.languageNote || "") + " Curriculum source: " + ((pack.subjectSources && pack.subjectSources[subject.value]) || pack.source) + ". Verified: " + (pack.verifiedAt || "date not recorded") + "."
@@ -982,7 +995,11 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       "Albania":["Albanian Language","Foreign Languages","Mathematics","Biology","Physics","Chemistry","Geography","History","Civic Education","Arts","Physical Education","Technology and ICT"],
       "Algeria":["Arabic","Tamazight","Mathematics","Islamic Education","Civic Education","History and Geography","Scientific and Technological Education","French","English","Physics","Natural Sciences","Technology"],
       "Andorra":["Languages and Literature","Mathematics","Science and Technology","Social Sciences","Physical and Natural Sciences","Technology","Visual and Plastic Education","Music","Physical Education","Catalan","French","Spanish","English"],
-      "Angola":["Língua Portuguesa","Matemática","Estudo do Meio","Ciências da Natureza","História","Geografia","Educação Moral e Cívica","Educação Manual e Plástica","Educação Musical","Educação Física","Física","Química","Biologia","Informática"]
+      "Angola":["Língua Portuguesa","Matemática","Estudo do Meio","Ciências da Natureza","História","Geografia","Educação Moral e Cívica","Educação Manual e Plástica","Educação Musical","Educação Física","Física","Química","Biologia","Informática"],
+      "Antigua and Barbuda":["English Language","Mathematics","Science","Social Studies","Language Arts","Agriculture","Visual Arts","Music","Physical Education","Information Technology","Spanish"],
+      "Argentina":["Lengua","Matemática","Ciencias Naturales","Ciencias Sociales","Educación Artística","Educación Física","Formación Ética y Ciudadana","Tecnología","Lenguas Extranjeras"],
+      "Armenia":["Armenian Language","Mathematics","Ես և շրջակա աշխարհը","Հայոց պատմություն","Natural Sciences","Foreign Languages","Technology","Art","Music","Physical Education","Digital Literacy"],
+      "Austria":["Deutsch","Mathematik","Sachunterricht","Englisch","Musik","Kunst und Gestaltung","Technik und Design","Bewegung und Sport","Religion oder Ethik"]
     };
     const countryBaseSubjects = countrySubjects[country && country.value] || [];
     const baseList = [...(isKenyaCbc ? subjectsForGrade(grade.value) : (isNigeriaNERDC ? nigeriaSubjects : countryBaseSubjects)), ...Object.keys(bank).filter((name) => name !== "CBC Skills")];
