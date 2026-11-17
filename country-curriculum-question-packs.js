@@ -7,8 +7,69 @@
 "use strict";
 const make=(q,opts,answer,topic,explanation,strand,sub,outcome,content,cognitive,language="English")=>
  [q,opts,answer,topic,explanation,strand,sub,outcome,content,"","",cognitive,language];
+function afghanGrade1MathDari(){
+ const out=[];
+ const digits=["۰","۱","۲","۳","۴","۵","۶","۷","۸","۹"];
+ const n=x=>String(x).replace(/[0-9]/g,d=>digits[Number(d)]);
+ const add=(a,b)=>a+b, sub=(a,b)=>a-b;
+ const push=(q,ans,wrong,topic,explain,level="foundational")=>{
+   const values=[ans,...wrong].slice(0,4);
+   const shift=out.length%4;
+   const opts=values.slice(shift).concat(values.slice(0,shift));
+   const correct=opts.indexOf(ans);
+   out.push(make(q,opts.map(n),correct,topic,explain,"عدد و عملیات","شمارش، جمع و تفریق","حل مسئله‌های سادهٔ عددی",topic,level,"دری"));
+ };
+ for(let a=0;a<=9;a++) for(let b=0;b<=9;b++){
+   if(out.length>=25) break;
+   const z=add(a,b); push("اگر "+n(a)+" سیب داشته باشیم و "+n(b)+" سیب دیگر بگیریم، چند سیب می‌شود؟",z,[z+1,Math.max(0,z-1),z+2],"جمع","با افزودن "+n(b)+" به "+n(a)+"، حاصل "+n(z)+" است.",out.length%5===0?"higher-order":"foundational");
+ }
+ for(let a=1;a<=10;a++) for(let b=1;b<=a;b++){
+   if(out.length>=50) break;
+   const z=sub(a,b); push("از "+n(a)+" مهره، "+n(b)+" مهره برداشته شود. چند مهره باقی می‌ماند؟",z,[z+1,Math.max(0,z-1),z+2],"تفریق","با کم کردن "+n(b)+" از "+n(a)+"، "+n(z)+" باقی می‌ماند.",out.length%5===0?"higher-order":"foundational");
+ }
+ const countQs=[
+  [3,5],[6,2],[8,4],[1,7],[9,5],[2,6],[4,8],[5,9],[7,3],[0,6],
+  [10,4],[2,9],[1,8],[3,7],[6,10]
+ ];
+ countQs.forEach(([a,b],i)=>push("کدام عدد بزرگ‌تر است: "+n(a)+" یا "+n(b)+"؟",Math.max(a,b),[Math.min(a,b),Math.abs(a-b),Math.max(a,b)+1],"مقایسهٔ اعداد","عدد "+n(Math.max(a,b))+" از "+n(Math.min(a,b))+" بزرگ‌تر است.",i%3===0?"higher-order":"foundational"));
+ const shapes=[
+ ["مثلث چند ضلع دارد؟",3,[2,4,5],"اشکال هندسی","مثلث سه ضلع دارد."],
+ ["مربع چند ضلع مساوی دارد؟",4,[3,5,2],"اشکال هندسی","مربع چهار ضلع مساوی دارد."],
+ ["دایره چند گوشه دارد؟",0,[1,2,3],"اشکال هندسی","دایره گوشه ندارد."],
+ ["مستطیل چند گوشه دارد؟",4,[2,3,5],"اشکال هندسی","مستطیل چهار گوشه دارد."],
+ ["اگر یک مثلث و یک مربع داشته باشیم، روی‌هم چند ضلع دارند؟",7,[6,8,9],"اشکال هندسی","مثلث سه ضلع و مربع چهار ضلع دارد؛ ۳ + ۴ = ۷."]
+ ];
+ shapes.forEach((x,i)=>push(x[0],x[1],x[2],x[3],x[4],i===4?"higher-order":"foundational"));
+ const contexts=[
+  ["مریم ۴ کتاب دارد. برادرش ۳ کتاب دیگر به او می‌دهد. مریم چند کتاب دارد؟",7,[6,8,9],"مسئلهٔ روزمره","۴ + ۳ = ۷."],
+  ["در یک سبد ۹ نارنج بود. ۲ نارنج خورده شد. چند نارنج باقی ماند؟",7,[6,8,9],"مسئلهٔ روزمره","۹ − ۲ = ۷."],
+  ["در صنف ۵ دختر و ۴ پسر هستند. چند شاگرد در صنف است؟",9,[8,10,7],"مسئلهٔ روزمره","۵ + ۴ = ۹."],
+  ["احمد ۱۰ افغانی داشت و ۶ افغانی مصرف کرد. چند افغانی برایش باقی ماند؟",4,[3,5,6],"پول و شمارش","۱۰ − ۶ = ۴ افغانی."],
+  ["یک موتر ۳ مسافر داشت؛ ۲ مسافر دیگر سوار شدند. اکنون چند مسافر است؟",5,[4,6,7],"مسئلهٔ روزمره","۳ + ۲ = ۵."],
+  ["در باغ ۸ درخت بود. ۳ درخت دیگر غرس شد. اکنون چند درخت است؟",11,[10,12,9],"مسئلهٔ روزمره","۸ + ۳ = ۱۱."],
+  ["۱۰ پرنده روی درخت بودند؛ ۴ پرنده پرواز کردند. چند پرنده ماند؟",6,[5,7,8],"مسئلهٔ روزمره","۱۰ − ۴ = ۶."],
+  ["فاطمه ۲ قلم و دوستش ۵ قلم دارد. هر دو باهم چند قلم دارند؟",7,[6,8,9],"مسئلهٔ روزمره","۲ + ۵ = ۷."],
+  ["یک دکان ۷ توپ داشت و ۲ توپ فروخت. چند توپ باقی ماند؟",5,[4,6,7],"مسئلهٔ روزمره","۷ − ۲ = ۵."],
+  ["در یک صف ۶ کودک ایستاده‌اند. ۳ کودک دیگر آمدند. چند کودک شد؟",9,[8,10,7],"مسئلهٔ روزمره","۶ + ۳ = ۹."]
+ ];
+ contexts.forEach((x,i)=>push(x[0],x[1],x[2],x[3],x[4],i>=5?"higher-order":"application"));
+ while(out.length<100){
+   const k=out.length, a=(k*3)%11, b=(k*7)%6, z=(k%2===0)?a+b:Math.max(0,a-b);
+   const q=k%2===0?"حاصل جمع "+n(a)+" و "+n(b)+" چند است؟":"حاصل تفریق "+n(b)+" از "+n(a)+" چند است؟";
+   push(q,z,[z+1,Math.max(0,z-1),z+2],k%3===0?"الگوهای عددی":"جمع و تفریق",k%2===0?n(a)+" + "+n(b)+" = "+n(z):n(a)+" − "+n(b)+" = "+n(z),k%4===0?"higher-order":"foundational");
+ }
+ return out.slice(0,100);
+}
 const packs={
- "Kenya":{
+  "Afghanistan":{
+  curriculum:"Afghanistan Ministry of Education National Curriculum (Dari)",
+  language:"Dari",languageNote:"This first published set is Grade 1 Mathematics in Dari. Pashto-language questions and other grade/subject banks are being prepared separately.",
+  verifiedAt:"2026-11-17",
+  source:"https://moe.gov.af/en/node/450",
+  subjectSources:{"Mathematics":"https://moe.gov.af/en/node/450"},
+  grades:{"Grade 1":{"Mathematics":afghanGrade1MathDari()}}
+ },
+"Kenya":{
   curriculum:"Kenya CBC/CBE",language:"English",verifiedAt:"2026-11-17",
   source:"https://kicd.ac.ke/cbc-materials/curriculum-designs/",
   grades:{
