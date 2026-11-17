@@ -124,6 +124,15 @@
   const country = document.getElementById("quizCountryInput");
   const curriculum = document.getElementById("quizCurriculumInput");
   const curriculumByCountry = {
+  "Saint Kitts and Nevis":["Saint Kitts and Nevis National Curriculum"],
+  "Saint Lucia":["Saint Lucia National Curriculum"],
+  "Saint Vincent and the Grenadines":["Saint Vincent and the Grenadines Primary Curriculum"],
+  "Samoa":["Samoa National Curriculum / Year 1 Mathematics"],
+  "San Marino":["San Marino National Curriculum / Scuola Elementare, Classe Prima"],
+  "Sao Tome and Principe":["São Tomé and Príncipe National Curriculum / 1.ª Classe"],
+  "Senegal":["Senegalese National Curriculum"],
+  "Serbia":["Serbian National Curriculum / 1. razred"],
+
   "Panama":["Panama National Curriculum / Primer Grado Mathematics"],
   "Paraguay":["Paraguay National Curriculum / 1.er Grado Educación Escolar Básica Mathematics"],
   "Peru":["Peru Currículo Nacional de la Educación Básica / 1.º Grado Mathematics"],
@@ -326,6 +335,15 @@
 };
 
 const nationalLevelStructures = {
+  "Saint Kitts and Nevis":["Grade 1"],
+  "Saint Lucia":["Grade 1"],
+  "Saint Vincent and the Grenadines":["Grade 1"],
+  "Samoa":["Year 1"],
+  "San Marino":["Classe Prima"],
+  "Sao Tome and Principe":["1.ª Classe"],
+  "Senegal":["CI"],
+  "Serbia":["1. razred"],
+
   "Panama":["1º Grado"],
   "Papua New Guinea":["Elementary One"],
   "Paraguay":["1.er Grado"],
@@ -1220,6 +1238,17 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const languageNotice = document.getElementById("quizLanguageNotice");
     if (languageNotice) {
       const expectedInstructionLanguages = {
+  "Rwanda":"Kinyarwanda (starter question stream; school-medium and regional variations may apply)",
+  "Saint Kitts and Nevis":"English (starter question stream; school-medium and regional variations may apply)",
+  "Saint Lucia":"English (starter question stream; school-medium and regional variations may apply)",
+  "Saint Vincent and the Grenadines":"English (starter question stream; school-medium and regional variations may apply)",
+  "Samoa":"Samoan and English (starter question stream; school-medium and regional variations may apply)",
+  "San Marino":"Italian (starter question stream; school-medium and regional variations may apply)",
+  "Sao Tome and Principe":"Portuguese (starter question stream; school-medium and regional variations may apply)",
+  "Saudi Arabia":"Arabic (starter question stream; school-medium and regional variations may apply)",
+  "Senegal":"French (starter question stream; school-medium and regional variations may apply)",
+  "Serbia":"Serbian (starter question stream; school-medium and regional variations may apply)",
+
   "Panama":"Spanish (initial-language starter stream; regional and school-medium variations may apply)",
   "Papua New Guinea":"English (initial-language starter stream; regional and school-medium variations may apply)",
   "Paraguay":"Spanish (initial-language starter stream; regional and school-medium variations may apply)",
@@ -1366,6 +1395,17 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const nigeriaSubjects = isNigeriaNERDC && window.CBENexusNigeriaBanks && window.CBENexusNigeriaBanks.banks &&
       window.CBENexusNigeriaBanks.banks[grade.value] ? Object.keys(window.CBENexusNigeriaBanks.banks[grade.value]) : [];
     const countrySubjects = {
+  "Rwanda":["Ikinyarwanda","English","Mathematics","Science and Elementary Technology","Social and Religious Studies","Creative Arts","Physical Education"],
+  "Saint Kitts and Nevis":["English Language","Mathematics","Science","Social Studies","Health and Family Life Education","Visual and Performing Arts","Physical Education"],
+  "Saint Lucia":["Language Arts","Mathematics","Science","Social Studies","HFLE","Creative Arts","Physical Education"],
+  "Saint Vincent and the Grenadines":["Language Arts","Mathematics","Science","Social Studies","Health and Family Life Education","Creative Arts","Physical Education"],
+  "Samoa":["Gagana Samoa","English","Mathematics","Science","Social Studies","Health and Physical Education","Creative Arts"],
+  "San Marino":["Italiano","Matematica","Scienze","Storia","Geografia","Lingua straniera","Arte e immagine","Musica","Educazione motoria"],
+  "Sao Tome and Principe":["Português","Matemática","Estudo do Meio","Expressões Artísticas","Educação Física"],
+  "Saudi Arabia":["اللغة العربية","الرياضيات","العلوم","الدراسات الإسلامية","الدراسات الاجتماعية","اللغة الإنجليزية","المهارات الرقمية","التربية الفنية والبدنية"],
+  "Senegal":["Langue et communication","Mathématiques","Éducation à la science et à la vie sociale","Éducation religieuse et morale","Éducation artistique","Éducation physique et sportive"],
+  "Serbia":["Српски језик","Математика","Свет око нас","Ликовна култура","Музичка култура","Физичко и здравствено васпитање","Дигитални свет"],
+
   "Panama":["Español","Matemática","Ciencias Naturales","Ciencias Sociales","Inglés","Expresiones Artísticas","Educación Física"],
   "Papua New Guinea":["English","Language","Mathematics","Community and Culture","Citizenship and Christian Values Education"],
   "Paraguay":["Lengua Castellana","Guaraní","Matemática","Ciencias de la Naturaleza y Salud","Estudios Sociales","Trabajo y Tecnología","Educación Artística","Educación Física"],
