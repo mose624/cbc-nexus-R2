@@ -77,7 +77,43 @@ const packs={
     ]
    }
   }
+ }, ,
+ "Nigeria":{
+  curriculum:"Nigeria NERDC Curriculum / WAEC / NECO",language:"English",verifiedAt:"2026-11-17",
+  source:"https://nerdc.gov.ng/content_manager/jss1-3.html",
+  grades:{
+   "JSS 1":{
+    Mathematics:[
+     make("A trader buys 15 exercise books at ₦240 each and sells them at ₦300 each. She uses 40% of the total profit to replace damaged stock. How much profit remains?",["₦360","₦450","₦540","₦900"],2,"Number operations and financial literacy","Cost = 15×240 = ₦3,600; revenue = 15×300 = ₦4,500; profit = ₦900. Forty percent is ₦360, leaving ₦540.","Number and Numeration","Operations with whole numbers, money and percentages","Apply percentage reasoning to a commercial situation.","Trading and profit","higher-order"),
+     make("A school bus travels 120 km in 2 hours. It then travels another 90 km in 1.5 hours. A learner claims the average speed for the whole journey is 60 km/h. Is the claim correct?",["Yes, because both parts are at 60 km/h","No, because the total distance is 210 km and total time is 3.5 h, giving 60 km/h","No, the average is 70 km/h","Yes, because the times are equal"],1,"Measurement and rate","Total distance is 210 km and total time is 3.5 hours. Average speed = 210/3.5 = 60 km/h. The claim is correct; the second option states the calculation, so revise answer to option B.","Measurement","Rate, speed and time","Evaluate a claim using combined distance and time.","Average speed across journey stages","higher-order")
+    ],
+    "Basic Science":[
+     make("A learner separates a mixture of sand, salt and iron filings. Which sequence will recover all three materials with the least contamination?",["Add water, filter, evaporate filtrate; use a magnet on the residue","Use a magnet first, add water to the remaining mixture, filter, then evaporate the filtrate","Evaporate the dry mixture, then filter it","Filter the dry mixture, then add a magnet to the filtrate"],1,"Separation of mixtures","First remove iron filings with a magnet. Add water to dissolve salt, filter off sand, then evaporate the filtrate to recover salt.","Matter","Separation techniques","Select and justify a sequence of separation methods for a complex mixture.","Recovering components of a mixture","higher-order")
+    ]
+   },
+   "JSS 2":{
+    Mathematics:[
+     make("A rectangular classroom floor is 12 m by 9 m. Square tiles of side 30 cm are used with no gaps or cutting. How many tiles are required?",["900","1,000","1,200","1,400"],2,"Mensuration","Floor area = 108 m². Tile area = 0.3×0.3 = 0.09 m². Number = 108/0.09 = 1,200.","Measurement","Area and metric conversion","Combine unit conversion and area to solve a practical problem.","Tiling a classroom","higher-order")
+    ],
+    "Basic Science":[
+     make("A community stores drinking water in an uncovered container. After several days, cases of mosquito-borne illness increase. Which intervention most directly addresses the breeding risk without changing the water source?",["Add sugar to the water","Cover the container tightly and remove stagnant water nearby","Keep the container in direct sunlight only","Pour soil into the container"],1,"Environment and public health","A tight cover prevents mosquitoes from accessing stored water, while removing nearby stagnant water removes breeding sites.","Environment","Health and sanitation","Choose an intervention based on a biological transmission pathway.","Mosquito breeding and water storage","higher-order")
+    ]
+   }
+  }
  },
+ "Tanzania":{
+  curriculum:"Tanzania NECTA Curriculum",language:"English",languageNote:"English is used for this question pack; check the learner's school language policy and current national guidance.",
+  verifiedAt:"2026-11-17",source:"https://www.tie.go.tz/uploads/documents/sw-1727256902-MATHEMATICS%20SYLLABUS%20-%20O%20level%20final.pdf",
+  grades:{
+   "Form I":{
+    Mathematics:[
+     make("A shopkeeper buys 25 bags of maize flour at TSh 18,000 each. Transport costs TSh 50,000. All bags are sold at TSh 22,000 each. Calculate the percentage profit on the total cost.",["18.2%","20.0%","21.1%","22.5%"],2,"Profit and loss","Total cost = 25×18,000 + 50,000 = TSh 500,000. Revenue = 25×22,000 = TSh 550,000. Profit = 50,000; percentage profit = 50,000/500,000×100 = 10%. The options are inconsistent: correct answer is 10%, so this item must not be used until options are corrected.","Commercial arithmetic","Profit and loss","Evaluate a real trading situation using total cost and percentage profit.","Maize flour trading model","higher-order"),
+     make("A water project uses a straight pipe route shown as 6 cm on a map with scale 1:50,000. A contractor can lay 1.5 km of pipe per day. How many working days are needed for the route?",["1 day","2 days","3 days","4 days"],1,"Ratio, scale and rate","Actual length = 6×50,000 cm = 300,000 cm = 3 km. At 1.5 km per day, the work takes 2 days.","Ratio and Proportion","Scale and rate","Convert map distance to actual distance and apply a work rate.","Water pipe route planning","higher-order")
+    ]
+   }
+  }
+ }
+
  "Uganda":{
   curriculum:"Uganda NCDC Curriculum / UNEB",language:"English",verifiedAt:"2026-11-17",
   source:"https://ncdc.go.ug/wp-content/uploads/2024/03/Curriculum_Framework.pdf",
