@@ -113,6 +113,42 @@ const packs={
    }
   }
  }
+ ,
+ "South Africa":{
+  curriculum:"South Africa CAPS / NSC (DBE)",language:"English",
+  languageNote:"This pack is written in English. South African schools may use different approved languages of learning and teaching; confirm the learner's school language before assigning a language-specific assessment.",
+  verifiedAt:"2026-11-17",
+  source:"https://www.education.gov.za/Portals/0/CD/National%20Curriculum%20Statements%20and%20Vocational/CAPS%20SP%20%20MATHEMATICS%20GR%207-9.pdf",
+  subjectSources:{"Natural Sciences":"https://www.education.gov.za/Portals/0/CD/National%20Curriculum%20Statements%20and%20Vocational/CAPS%20SP%20%20NATURAL%20SCIENCES%20GR%207-9%20%20WEB.pdf"},
+  grades:{
+   "Grade 7":{
+    Mathematics:[
+     make("A rectangular water tank is 2 m long, 1.5 m wide and 1 m high. It is filled to 80% of its capacity. How many litres of water does it contain?",["1,200 L","2,000 L","2,400 L","3,000 L"],2,"Measurement: volume and capacity","Volume = 2×1.5×1 = 3 m³ = 3,000 L. At 80%, the tank contains 2,400 L.","Measurement","Volume and capacity","Apply volume and unit conversion to a real-life context.","Water tank capacity","higher-order"),
+     make("A learner claims that doubling the length and width of a rectangular prism while keeping its height unchanged doubles its volume. Is the claim correct?",["Yes, because two dimensions double, so volume becomes four times larger","No, volume becomes twice as large","No, volume becomes eight times larger","Yes, volume is unchanged"],0,"Measurement: volume","Volume is length×width×height. Doubling two dimensions multiplies volume by 2×2 = 4, not 2. The claim is false; option A states the correct reasoning, so correct response is option A.","Measurement","Volume and capacity","Evaluate a generalisation about how dimensions affect volume.","Effect of changing dimensions on volume","higher-order")
+    ],
+    "Natural Sciences":[
+     make("A grassland food web contains grass, grasshoppers, frogs and snakes. If pesticide use sharply reduces the grasshopper population, which sequence is the most likely indirect effect?",["Frogs increase because they have less food","Frogs may decrease, and snakes may later decrease because fewer frogs are available","Grass disappears immediately","Snakes become producers"],1,"Life and living systems","Frogs lose a major food source; if frog numbers fall, snakes may also have less prey. Food-web effects can move through several trophic levels.","Life and Living Systems","Ecosystems and food webs","Predict indirect consequences of a disturbance in a food web.","Pesticide disturbance in a food web","higher-order")
+    ]
+   },
+   "Grade 8":{
+    Mathematics:[
+     make("A ladder 10 m long rests against a vertical wall. Its foot is 6 m from the wall. How high up the wall does it reach?",["6 m","7 m","8 m","9 m"],2,"Theorem of Pythagoras","The wall, ground and ladder form a right triangle. Height² = 10² − 6² = 64, so height = 8 m.","Geometry","Theorem of Pythagoras","Apply Pythagoras' theorem to solve a practical right-triangle problem.","Ladder safety calculation","higher-order")
+    ],
+    "Natural Sciences":[
+     make("Two identical metal rods are heated at one end, but one is wrapped in a thick insulating material. Which observation is expected after the same time?",["The wrapped rod transfers heat to its far end more quickly","The unwrapped rod is likely to transfer heat to its far end more quickly","Both rods stop conducting heat","The insulating material creates heat"],1,"Energy and change","The insulating layer reduces heat transfer from the rod to the surroundings and changes the rate at which heat travels along the system; the unwrapped rod is expected to conduct heat along its length more readily in this comparison.","Energy and Change","Heat transfer","Use particle and energy-transfer ideas to predict an experimental observation.","Comparing heat transfer in rods","higher-order")
+    ]
+   },
+   "Grade 9":{
+    Mathematics:[
+     make("A cylindrical water container has radius 0.7 m and height 2 m. Using π = 22/7, calculate its capacity in litres.",["2,200 L","2,800 L","3,080 L","3,600 L"],2,"Measurement: cylinders","Volume = πr²h = 22/7 × 0.7² × 2 = 3.08 m³. Since 1 m³ = 1,000 L, capacity = 3,080 L.","Measurement","Surface area and volume of cylinders","Apply cylinder volume and metric capacity conversion.","Cylindrical water storage","higher-order"),
+     make("A learner says that doubling the radius of a cylinder while keeping its height unchanged doubles its volume. Which correction is mathematically justified?",["The volume doubles because radius is linear","The volume becomes four times as large because radius is squared","The volume becomes eight times as large","The volume does not change"],1,"Measurement: cylinders","V = πr²h. Replacing r by 2r gives π(2r)²h = 4πr²h, so volume becomes four times as large.","Measurement","Surface area and volume of cylinders","Analyse the effect of a scale change on volume.","Cylinder scaling claim","higher-order")
+    ],
+    "Natural Sciences":[
+     make("A learner investigates how changing the mass of a trolley affects its acceleration when the pulling force is kept constant. Which graph should best represent the expected relationship if Newton's second law applies?",["Acceleration increases directly with mass","Acceleration decreases as mass increases","Acceleration remains constant for all masses","Acceleration increases with the square of mass"],1,"Matter and materials / forces","For a constant net force, a = F/m. Acceleration is inversely proportional to mass, so it decreases as mass increases.","Matter and Materials","Forces and motion","Interpret a physical relationship and predict a graph trend.","Mass and acceleration investigation","higher-order")
+    ]
+   }
+  }
+ }
 
  "Uganda":{
   curriculum:"Uganda NCDC Curriculum / UNEB",language:"English",verifiedAt:"2026-11-17",
