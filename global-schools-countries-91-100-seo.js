@@ -6,7 +6,7 @@
 (function(){
 "use strict";
 const d=window.CBE_GLOBAL_COUNTRY_DATA;if(!d)return;
-Object.assign(d,{
+const profiles={
  "albania":{
   seoHeading:"Albania Education System, National Curriculum & State Matura",
   seoTitle:"Albania Education System, Curriculum, State Matura & School Resources | CBE Nexus",
@@ -128,5 +128,6 @@ Object.assign(d,{
   ]
  }
 });
+Object.keys(profiles).forEach(slug=>{d[slug]=d[slug]?{...profiles[slug],...d[slug]}:profiles[slug];});
 window.CBE_COUNTRY_SEO_91_100=true;
 })();
