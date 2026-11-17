@@ -88,6 +88,9 @@ function b1math(lang){
  Albanian:{add:(a,b)=>"Sa është shuma e "+a+" dhe "+b+"?",sub:(a,b)=>"Sa mbetet nëse nga "+a+" hiqet "+b+"?",cmp:(a,b)=>"Cili numër është më i madh: "+a+" apo "+b+"?",word:(a,b)=>"Arta ka "+a+" mollë dhe merr edhe "+b+". Sa mollë ka gjithsej?",tri:"Sa brinjë ka një trekëndësh?",sq:"Sa brinjë ka një katror?",cir:"Sa kënde ka një rreth?",combo:"Një trekëndësh ka 3 brinjë dhe një katror 4. Sa brinjë kanë së bashku?",explain:n=>"Përgjigjja e saktë është "+n+"."},
  Arabic:{add:(a,b)=>"ما مجموع "+a+" و"+b+"؟",sub:(a,b)=>"كم يتبقى إذا طرحنا "+b+" من "+a+"؟",cmp:(a,b)=>"أي العددين أكبر: "+a+" أم "+b+"؟",word:(a,b)=>"لدى سارة "+a+" تفاحات وأخذت "+b+" تفاحات أخرى. كم تفاحة لديها؟",tri:"كم ضلعاً للمثلث؟",sq:"كم ضلعاً للمربع؟",cir:"كم زاوية للدائرة؟",combo:"للمثلث 3 أضلاع وللمربع 4 أضلاع. كم ضلعاً لهما معاً؟",explain:n=>"الإجابة الصحيحة هي "+n+"."},
  Catalan:{add:(a,b)=>"Quina és la suma de "+a+" i "+b+"?",sub:(a,b)=>"Quants en queden si traiem "+b+" de "+a+"?",cmp:(a,b)=>"Quin nombre és més gran: "+a+" o "+b+"?",word:(a,b)=>"La Laia té "+a+" pomes i en rep "+b+" més. Quantes en té en total?",tri:"Quants costats té un triangle?",sq:"Quants costats té un quadrat?",cir:"Quants vèrtexs té un cercle?",combo:"Un triangle té 3 costats i un quadrat en té 4. Quants costats sumen?",explain:n=>"La resposta correcta és "+n+"."},
+ Spanish:{add:(a,b)=>"¿Cuánto es la suma de "+a+" y "+b+"?",sub:(a,b)=>"¿Cuánto queda si quitamos "+b+" de "+a+"?",cmp:(a,b)=>"¿Qué número es mayor: "+a+" o "+b+"?",word:(a,b)=>"Lucía tiene "+a+" manzanas y recibe "+b+" más. ¿Cuántas tiene en total?",tri:"¿Cuántos lados tiene un triángulo?",sq:"¿Cuántos lados tiene un cuadrado?",cir:"¿Cuántos vértices tiene un círculo?",combo:"Un triángulo tiene 3 lados y un cuadrado 4. ¿Cuántos lados suman?",explain:n=>"La respuesta correcta es "+n+"."},
+ Armenian:{add:(a,b)=>"Որքա՞ն է "+a+" և "+b+" թվերի գումարը։",sub:(a,b)=>"Որքա՞ն կմնա, եթե "+a+"-ից հանենք "+b+"-ը։",cmp:(a,b)=>"Ո՞ր թիվն է մեծ՝ "+a+"-ը, թե՞ "+b+"-ը։",word:(a,b)=>"Անին ունի "+a+" խնձոր և ստանում է ևս "+b+"-ը։ Ընդամենը քանի՞ խնձոր ունի։",tri:"Քանի՞ կողմ ունի եռանկյունը։",sq:"Քանի՞ կողմ ունի քառակուսին։",cir:"Քանի՞ գագաթ ունի շրջանը։",combo:"Եռանկյունն ունի 3 կողմ, իսկ քառակուսին՝ 4։ Ընդամենը քանի՞ կողմ կա։",explain:n=>"Ճիշտ պատասխանն է՝ "+n+"։"},
+ German:{add:(a,b)=>"Wie viel ist die Summe von "+a+" und "+b+"?",sub:(a,b)=>"Wie viel bleibt, wenn man "+b+" von "+a+" wegnimmt?",cmp:(a,b)=>"Welche Zahl ist größer: "+a+" oder "+b+"?",word:(a,b)=>"Anna hat "+a+" Äpfel und bekommt "+b+" dazu. Wie viele Äpfel hat sie insgesamt?",tri:"Wie viele Seiten hat ein Dreieck?",sq:"Wie viele Seiten hat ein Quadrat?",cir:"Wie viele Ecken hat ein Kreis?",combo:"Ein Dreieck hat 3 Seiten und ein Quadrat 4. Wie viele Seiten sind das zusammen?",explain:n=>"Die richtige Antwort ist "+n+"."},
  Portuguese:{add:(a,b)=>"Qual é a soma de "+a+" e "+b+"?",sub:(a,b)=>"Quanto resta se retirarmos "+b+" de "+a+"?",cmp:(a,b)=>"Qual número é maior: "+a+" ou "+b+"?",word:(a,b)=>"A Ana tem "+a+" maçãs e recebe mais "+b+". Quantas maçãs tem ao todo?",tri:"Quantos lados tem um triângulo?",sq:"Quantos lados tem um quadrado?",cir:"Quantos cantos tem um círculo?",combo:"Um triângulo tem 3 lados e um quadrado tem 4. Quantos lados têm juntos?",explain:n=>"A resposta correta é "+n+"."},
  English:{add:(a,b)=>"What is the sum of "+a+" and "+b+"?",sub:(a,b)=>"How many remain when "+b+" is taken from "+a+"?",cmp:(a,b)=>"Which number is greater: "+a+" or "+b+"?",word:(a,b)=>"A learner has "+a+" apples and receives "+b+" more. How many apples are there altogether?",tri:"How many sides does a triangle have?",sq:"How many sides does a square have?",cir:"How many corners does a circle have?",combo:"A triangle has 3 sides and a square has 4. How many sides are there altogether?",explain:n=>"The correct answer is "+n+"."}
  }[lang];
@@ -117,23 +120,23 @@ const packs={
  },
  "Argentina":{
   curriculum:"Argentina National Education Law / NAP and Provincial Curricula",
-  language:"Spanish",languageNote:"NAPs provide common national learning priorities; provincial curricula and grade organisation must be checked for the learner's jurisdiction.",
-  verifiedAt:"2026-11-17",source:"https://www.educ.ar/recursos/150199/coleccion-ncleos-de-aprendizaje-prioritarios-",grades:{}
+  language:"Spanish",languageNote:"100 original 1º Grado Mathematics practice items in Spanish, based broadly on Argentina's national NAP framework; provincial curricula may sequence topics differently.",
+  verifiedAt:"2026-11-17",source:"https://www.educ.ar/recursos/150199/coleccion-ncleos-de-aprendizaje-prioritarios-",grades:{"1º Grado":{"Matemática":b1math("Spanish")}}
  },
  "Armenia":{
   curriculum:"Armenia State Standard of General Education / Ministry of ESCS",
-  language:"Armenian",languageNote:"Twelve-year general education is organised as grades 1–4, 5–9 and 10–12; updated subject programmes are being phased in.",
-  verifiedAt:"2026-11-17",source:"https://escs.am/en/static/second-education?s=edu",grades:{}
+  language:"Armenian",languageNote:"100 original Grade 1 Mathematics practice items in Armenian; supplementary practice pending detailed mapping to the current state subject programme.",
+  verifiedAt:"2026-11-17",source:"https://escs.am/en/static/second-education?s=edu",grades:{"Grade 1":{"Mathematics":b1math("Armenian")}}
  },
  "Australia":{
   curriculum:"Australian Curriculum / ACARA",
-  language:"English",languageNote:"Australian Curriculum Version 9.0; state and territory authorities determine implementation timing and local delivery.",
-  verifiedAt:"2026-11-17",source:"https://www.education.gov.au/australian-curriculum",grades:{}
+  language:"English",languageNote:"100 original Year 1 Mathematics practice items in English, broadly aligned to Australian Curriculum Version 9.0 strands; state and territory implementation may vary.",
+  verifiedAt:"2026-11-17",source:"https://www.education.gov.au/australian-curriculum",grades:{"Year 1":{"Mathematics":b1math("English")}}
  },
  "Austria":{
   curriculum:"Austria National Curriculum (Lehrplan) / BMB",
-  language:"German",languageNote:"Primary school (Volksschule) commonly covers school years 1–4; school pathways and upper-level provision vary.",
-  verifiedAt:"2026-11-17",source:"https://www.bildung.gv.at/",grades:{}
+  language:"German",languageNote:"100 original 1. Schulstufe Mathematics practice items in German, supplementing the Volksschule mathematics curriculum; classroom sequencing may vary.",
+  verifiedAt:"2026-11-17",source:"https://www.bildung.gv.at/",grades:{"1. Schulstufe":{"Mathematik":b1math("German")}}
  },
 
   "Afghanistan":{
