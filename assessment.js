@@ -932,7 +932,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const languageNotice = document.getElementById("quizLanguageNotice");
     if (languageNotice) {
       languageNotice.textContent = pack && pack.curriculum.toLowerCase() === String(curriculum.value || "").toLowerCase() && Array.isArray(exact)
-        ? "Question language: " + pack.language + ". Curriculum source: " + ((pack.subjectSources && pack.subjectSources[subject.value]) || pack.source) + ". Verified: " + (pack.verifiedAt || "date not recorded") + "."
+        ? "Question language: " + pack.language + ". " + (pack.languageNote || "") + " Curriculum source: " + ((pack.subjectSources && pack.subjectSources[subject.value]) || pack.source) + ". Verified: " + (pack.verifiedAt || "date not recorded") + "."
         : "Question language: English supplementary practice only. Country-specific teaching language and syllabus alignment are not yet verified for this selection.";
     }
   }
