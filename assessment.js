@@ -242,6 +242,11 @@ function levelOptionsFor(countryName, curriculumName){
   if(c.includes("cambridge") || c.includes("igcse") || c.includes("pearson") || c.includes("edexcel") || c.includes("gcse") || c.includes("british curriculum")) return [...Array.from({length:13},(_,i)=>"Year "+(i+1)),"IGCSE","O Level","AS Level","A Level"];
   if(c.includes("ib") || c.includes("international baccalaureate")) return ["PYP Year 1","PYP Year 2","PYP Year 3","PYP Year 4","PYP Year 5","PYP Year 6","MYP Year 1","MYP Year 2","MYP Year 3","MYP Year 4","MYP Year 5","DP Year 1","DP Year 2"];
   if(c.includes("common core") || c.includes("ngss") || c.includes("state standard") || c.includes("american curriculum") || c==="ap") return ["Kindergarten",...Array.from({length:12},(_,i)=>"Grade "+(i+1)),"AP"];
+  if(countryName==="Andorra") {
+    if(c.includes("french")) return nationalLevelStructures["Andorra French Education System"];
+    if(c.includes("spanish")) return nationalLevelStructures["Andorra Spanish Education System"];
+    return nationalLevelStructures["Andorra Andorran Education System"];
+  }
   if(countryName==="Kenya" && (c.includes("8-4-4") || c.includes("kcse"))) return ["Standard 1","Standard 2","Standard 3","Standard 4","Standard 5","Standard 6","Standard 7","Standard 8","Form 1","Form 2","Form 3","Form 4"];
   return nationalLevelStructures[countryName] || grades;
 }
@@ -943,9 +948,16 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       : "No verified question set is available for this exact selection yet. Please choose another available class/subject or use teacher-published questions.";
     const languageNotice = document.getElementById("quizLanguageNotice");
     if (languageNotice) {
+      const expectedInstructionLanguages = {
+        "Afghanistan": "Dari or Pashto (select according to the school/region; the early-grade national policy recognises both)",
+        "Albania": "Albanian (minority-language arrangements may also apply)",
+        "Algeria": "Arabic; Tamazight is also taught, with foreign-language subjects introduced by grade",
+        "Andorra": curriculum.value && curriculum.value.toLowerCase().includes("french") ? "French (French-system curriculum; Andorran formation also includes Catalan)" : curriculum.value && curriculum.value.toLowerCase().includes("spanish") ? "Spanish (Spanish-system curriculum; Andorran formation also includes Catalan)" : "Catalan, Spanish and French are vehicular languages in the Andorran system; school determines subject language",
+        "Angola": "Portuguese"
+      };
       languageNotice.textContent = pack && pack.curriculum.toLowerCase() === String(curriculum.value || "").toLowerCase() && Array.isArray(exact)
         ? "Question language: " + pack.language + ". " + (pack.languageNote || "") + " Curriculum source: " + ((pack.subjectSources && pack.subjectSources[subject.value]) || pack.source) + ". Verified: " + (pack.verifiedAt || "date not recorded") + "."
-        : "Question language: English supplementary practice only. Country-specific teaching language and syllabus alignment are not yet verified for this selection.";
+        : (expectedInstructionLanguages[country.value] ? "Expected teaching language(s): " + expectedInstructionLanguages[country.value] + ". Question bank for this exact selection is not yet published or language-verified." : "Question language: English supplementary practice only. Country-specific teaching language and syllabus alignment are not yet verified for this selection.");
     }
   }
 
