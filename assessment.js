@@ -339,6 +339,14 @@
   "Papua New Guinea":["PNG Elementary Curriculum / Elementary One","PNG National Curriculum / Grade 10 & 12 National Examinations"],
   "Mauritius":["Mauritius National Curriculum / NCE / SC / HSC","Cambridge International"],
   "Seychelles":["Seychelles National Curriculum / IGCSE","Cambridge International"]
+  "Sudan":["Sudan National Curriculum / Basic Level, Grade 1"],
+  "Suriname":["Suriname Primary Education Curriculum / leerjaar 1"],
+  "Sweden":["Swedish National Curriculum (Lgr22) / Year 1 Mathematics"],
+  "Switzerland":["Swiss Curriculum (Lehrplan 21) / Cycle 1, Grade 1"],
+  "Syria":["Syrian National Curriculum / Grade 1"],
+  "Taiwan":["Taiwan Curriculum Guidelines / Elementary Grade 1 Mathematics"],
+  "Tajikistan":["Tajikistan National Curriculum / Grade 1"],
+  "Thailand":["Thailand Basic Education Core Curriculum / Prathom 1 Mathematics"],
 };
 
 const nationalLevelStructures = {
@@ -533,6 +541,14 @@ const nationalLevelStructures = {
   "Qatar": ["KG 1","KG 2","Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Egypt": ["Primary 1","Primary 2","Primary 3","Primary 4","Primary 5","Primary 6","Preparatory 1","Preparatory 2","Preparatory 3","Secondary 1","Secondary 2","Secondary 3"],
   "Ethiopia": ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"]
+  "Sudan":["Grade 1"],
+  "Suriname":["Leerjaar 1"],
+  "Sweden":["Year 1"],
+  "Switzerland":["1. Klasse"],
+  "Syria":["Grade 1"],
+  "Taiwan":["Grade 1"],
+  "Tajikistan":["Grade 1"],
+  "Thailand":["Prathom 1"],
 };
 function levelOptionsFor(countryName, curriculumName){
   const c=(curriculumName||"").toLowerCase();
@@ -1401,6 +1417,15 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
         "Grenada":"English",
         "Guatemala":"Spanish; Mayan, Garifuna and Xinka language education also applies in relevant communities",
         "Guinea":"French and national languages (school and programme context varies)"
+        "Sri Lanka":["Sinhala and Tamil"],
+        "Sudan":["Arabic"],
+        "Suriname":["Dutch"],
+        "Sweden":["Swedish"],
+        "Switzerland":["German"],
+        "Syria":["Arabic"],
+        "Taiwan":["Mandarin Chinese"],
+        "Tajikistan":["Tajik"],
+        "Thailand":["Thai"],
       };
       languageNotice.textContent = pack && pack.curriculum.toLowerCase() === String(curriculum.value || "").toLowerCase() && Array.isArray(exact)
         ? "Question language: " + pack.language + ". " + (pack.languageNote || "") + " Curriculum source: " + ((pack.subjectSources && pack.subjectSources[subject.value]) || pack.source) + ". Verified: " + (pack.verifiedAt || "date not recorded") + "."
@@ -1568,6 +1593,15 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       "Guatemala":["Comunicación y Lenguaje","Matemáticas","Medio Social y Natural","Expresión Artística","Educación Física"],
       "Guinea":["Français","Mathématiques","Éducation civique et morale","Sciences d'observation","Histoire-Géographie"],
       "Bhutan":["རྫོང་ཁ","English","Mathematics","Environmental Studies","Health and Physical Education","Social Studies","ICT"]
+        "Sri Lanka":["Mathematics","English","Science","Social Studies"],
+        "Sudan":["Mathematics","English","Science","Social Studies"],
+        "Suriname":["Mathematics","English","Science","Social Studies"],
+        "Sweden":["Mathematics","English","Science","Social Studies"],
+        "Switzerland":["Mathematics","English","Science","Social Studies"],
+        "Syria":["Mathematics","English","Science","Social Studies"],
+        "Taiwan":["Mathematics","English","Science","Social Studies"],
+        "Tajikistan":["Mathematics","English","Science","Social Studies"],
+        "Thailand":["Mathematics","English","Science","Social Studies"],
     };
     const countryBaseSubjects = countrySubjects[country && country.value] || [];
     const baseList = [...(isKenyaCbc ? subjectsForGrade(grade.value) : (isNigeriaNERDC ? nigeriaSubjects : countryBaseSubjects)), ...Object.keys(bank).filter((name) => name !== "CBC Skills")];
