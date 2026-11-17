@@ -283,6 +283,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
   if (subject) {
     subject.addEventListener("change", () => {
       refreshStrandOptions();
+      updateQuestionBankCoverage();
       renderSetQuestions();
       if (instructions) {
         instructions.textContent = grade.value + " " + subject.value + " selected. Choose a strand/topic or All Topics, then click Start / Restart Quiz.";
@@ -861,7 +862,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     if (!coverage || !subject || !subject.value) return;
     const count = getGradeQuestionBank(grade.value, subject.value).length;
     coverage.textContent = count
-      ? count + " practice question" + (count === 1 ? "" : "s") + " available for " + country.value + " · " + curriculum.value + " · " + grade.value + " · " + subject.value + ". Published country-specific questions take priority; shared starter questions are supplementary.";
+      ? count + " practice question" + (count === 1 ? "" : "s") + " available for " + country.value + " · " + curriculum.value + " · " + grade.value + " · " + subject.value + ". Published country-specific questions take priority; shared starter questions are supplementary."
       : "No questions are published for this selection yet. Try a shared starter subject or ask a teacher to publish a country-, curriculum- and class-specific set.";
   }
 
