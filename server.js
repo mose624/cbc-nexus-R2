@@ -27,7 +27,7 @@ async function getGlobalCountryRegistry(){
           if(!registry.has("kosovo"))registry.set("kosovo",{name:"Kosovo",code:"XK",slug:"kosovo",url:"/global-schools/kosovo"});
         }
       }catch(error){console.warn("Fallback country registry could not be loaded:",error.message||error);}
-      return [...registry.values()];
+      return [...registry.values()].sort((a,b)=>String(a.name||"").localeCompare(String(b.name||""),undefined,{sensitivity:"base"}));
     })().catch(error=>{globalCountryRegistryPromise=null;throw error;});
   }
   return globalCountryRegistryPromise;
