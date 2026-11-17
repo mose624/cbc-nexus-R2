@@ -281,4 +281,4 @@
       }
     ]
   }
-};Object.keys(profiles).forEach(slug=>{if(d[slug])Object.assign(d[slug],profiles[slug]);});window.CBE_COUNTRY_SEO_31_40=true;})();
+};Object.keys(profiles).forEach(slug=>{d[slug]=d[slug]?{...profiles[slug],...d[slug]}:profiles[slug];});window.CBE_COUNTRY_SEO_31_40=true;})();
