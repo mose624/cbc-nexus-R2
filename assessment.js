@@ -124,7 +124,7 @@
   const country = document.getElementById("quizCountryInput");
   const curriculum = document.getElementById("quizCurriculumInput");
   const curriculumByCountry = {
-  "Afghanistan":["Afghanistan Ministry of Education National Curriculum"],
+  "Afghanistan":["Afghanistan Ministry of Education National Curriculum (Dari)","Afghanistan Ministry of Education National Curriculum (Pashto)"],
   "Albania":["Albania National Pre-University Curriculum / ASCAP"],
   "Algeria":["Algeria National Curriculum / Ministry of National Education"],
   "Andorra":["Andorra Andorran Education System","Andorra French Education System","Andorra Spanish Education System"],
@@ -949,7 +949,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const languageNotice = document.getElementById("quizLanguageNotice");
     if (languageNotice) {
       const expectedInstructionLanguages = {
-        "Afghanistan": "Dari or Pashto (select according to the school/region; the early-grade national policy recognises both)",
+        "Afghanistan": curriculum.value && curriculum.value.toLowerCase().includes("(pashto)") ? "Pashto" : "Dari",
         "Albania": "Albanian (minority-language arrangements may also apply)",
         "Algeria": "Arabic; Tamazight is also taught, with foreign-language subjects introduced by grade",
         "Andorra": curriculum.value && curriculum.value.toLowerCase().includes("french") ? "French (French-system curriculum; Andorran formation also includes Catalan)" : curriculum.value && curriculum.value.toLowerCase().includes("spanish") ? "Spanish (Spanish-system curriculum; Andorran formation also includes Catalan)" : "Catalan, Spanish and French are vehicular languages in the Andorran system; school determines subject language",
