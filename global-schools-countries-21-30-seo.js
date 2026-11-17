@@ -284,5 +284,5 @@ const profiles={
     ]
   }
 };
-Object.keys(profiles).forEach(slug=>{if(d[slug])Object.assign(d[slug],profiles[slug]);});
+Object.keys(profiles).forEach(slug=>{d[slug]=d[slug]?{...profiles[slug],...d[slug]}:profiles[slug];});
 })();
