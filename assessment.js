@@ -320,7 +320,7 @@
   "Trinidad and Tobago":["Trinidad and Tobago National Curriculum / CSEC / CAPE","Cambridge International"],
   "Barbados":["Barbados National Curriculum / CSEC / CAPE","Cambridge International"],
   "Fiji":["Fiji National Curriculum / FSLC","Cambridge International"],
-  "Papua New Guinea":["PNG National Curriculum / Grade 10 & 12 National Examinations"],
+  "Papua New Guinea":["PNG Elementary Curriculum / Elementary One","PNG National Curriculum / Grade 10 & 12 National Examinations"],
   "Mauritius":["Mauritius National Curriculum / NCE / SC / HSC","Cambridge International"],
   "Seychelles":["Seychelles National Curriculum / IGCSE","Cambridge International"]
 };
