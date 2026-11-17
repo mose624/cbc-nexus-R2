@@ -1,6 +1,6 @@
 (function(){
 "use strict";
-const countries=window.CBE_GLOBAL_COUNTRIES||[], details=window.CBE_GLOBAL_COUNTRY_DATA||{}, officialLanguageReference=window.CBE_GLOBAL_OFFICIAL_LANGUAGES||{};
+const countries=(window.CBE_GLOBAL_COUNTRIES||[]).slice().sort((a,b)=>String(a&&a.name||"").localeCompare(String(b&&b.name||""),undefined,{sensitivity:"base"})), details=window.CBE_GLOBAL_COUNTRY_DATA||{}, officialLanguageReference=window.CBE_GLOBAL_OFFICIAL_LANGUAGES||{};
 const $=id=>document.getElementById(id);
 function text(el,value){if(el)el.textContent=value==null?"":String(value);}
 function setSeoMeta(selector,key,value){let el=document.querySelector(selector);if(!el){el=document.createElement("meta");el.setAttribute(key,selector.includes("property=")?selector.match(/property="([^"]+)"/)[1]:selector.match(/name="([^"]+)"/)[1]);document.head.appendChild(el);}el.setAttribute("content",value);}
