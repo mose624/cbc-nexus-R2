@@ -5,7 +5,7 @@
 (function(){
 "use strict";
 const d=window.CBE_GLOBAL_COUNTRY_DATA;if(!d)return;
-Object.assign(d,{
+const profiles={
  "brazil":{
   "seoHeading":"Brazil Education System, BNCC National Common Curricular Base & ENEM",
   "seoTitle":"Brazil Education System, BNCC, ENEM & School Curriculum Resources | CBE Nexus",
@@ -125,5 +125,6 @@ Object.assign(d,{
   ]
  }
 });
+Object.keys(profiles).forEach(slug=>{if(slug==="congo")return;d[slug]=d[slug]?{...profiles[slug],...d[slug]}:profiles[slug];});
 window.CBE_COUNTRY_SEO_181_190=true;
 })();
