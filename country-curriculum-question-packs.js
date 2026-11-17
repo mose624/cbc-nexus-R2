@@ -13,7 +13,8 @@ function afghanGrade1MathDari(){
  const n=x=>String(x).replace(/[0-9]/g,d=>digits[Number(d)]);
  const add=(a,b)=>a+b, sub=(a,b)=>a-b;
  const push=(q,ans,wrong,topic,explain,level="foundational")=>{
-   const values=[ans,...wrong].slice(0,4);
+   const values=[...new Set([ans,...wrong])];
+   for(let candidate=0;values.length<4;candidate++) if(!values.includes(candidate)) values.push(candidate);
    const shift=out.length%4;
    const opts=values.slice(shift).concat(values.slice(0,shift));
    const correct=opts.indexOf(ans);
