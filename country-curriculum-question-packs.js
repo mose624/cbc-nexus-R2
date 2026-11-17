@@ -61,14 +61,46 @@ function afghanGrade1MathDari(){
  }
  return out.slice(0,100);
 }
+
+function afghanGrade1MathPashto(){
+ const out=[];
+ const digits=["۰","۱","۲","۳","۴","۵","۶","۷","۸","۹"];
+ const n=x=>String(x).replace(/[0-9]/g,d=>digits[Number(d)]);
+ const push=(q,ans,wrong,topic,explain,level="foundational")=>{
+  const values=[...new Set([ans,...wrong])];
+  for(let candidate=0;values.length<4;candidate++) if(!values.includes(candidate)) values.push(candidate);
+  const shift=out.length%4, opts=values.slice(shift).concat(values.slice(0,shift));
+  out.push(make(q,opts.map(n),opts.indexOf(ans),topic,explain,"شمېرې او عملیات","شمېرل، جمع او تفریق","د ساده عددي ستونزو حل",topic,level,"پښتو"));
+ };
+ for(let a=0;a<=9;a++) for(let b=0;b<=9;b++){ if(out.length>=25) break; const z=a+b; push("که "+n(a)+" مڼې ولرو او "+n(b)+" نورې ترلاسه کړو، ټولې څو مڼې کېږي؟",z,[z+1,Math.max(0,z-1),z+2],"جمع","د "+n(a)+" او "+n(b)+" جمع "+n(z)+" ده.",out.length%5===0?"higher-order":"foundational"); }
+ for(let a=1;a<=10;a++) for(let b=1;b<=a;b++){ if(out.length>=50) break; const z=a-b; push("له "+n(a)+" مرمرو څخه "+n(b)+" لرې شي، څو مرمر پاتې کېږي؟",z,[z+1,Math.max(0,z-1),z+2],"تفریق","د "+n(a)+" څخه "+n(b)+" منفي کړو، "+n(z)+" پاتې کېږي.",out.length%5===0?"higher-order":"foundational"); }
+ [[3,5],[6,2],[8,4],[1,7],[9,5],[2,6],[4,8],[5,9],[7,3],[0,6],[10,4],[2,9],[1,8],[3,7],[6,10]].forEach(([a,b],i)=>push("کومه شمېره لویه ده: "+n(a)+" که "+n(b)+"؟",Math.max(a,b),[Math.min(a,b),Math.abs(a-b),Math.max(a,b)+1],"د شمېرو پرتله","شمېره "+n(Math.max(a,b))+" له "+n(Math.min(a,b))+" څخه لویه ده.",i%3===0?"higher-order":"foundational"));
+ const shapes=[["مثلث څو اړخونه لري؟",3,[2,4,5],"هندسي بڼې","مثلث درې اړخونه لري."],["مربع څو مساوي اړخونه لري؟",4,[3,5,2],"هندسي بڼې","مربع څلور مساوي اړخونه لري."],["دایره څو کونجونه لري؟",0,[1,2,3],"هندسي بڼې","دایره هېڅ کونج نه لري."],["مستطیل څو کونجونه لري؟",4,[2,3,5],"هندسي بڼې","مستطیل څلور کونجونه لري."],["د مثلث او مربع ټول څو اړخونه دي؟",7,[6,8,9],"هندسي بڼې","مثلث درې او مربع څلور اړخونه لري؛ ټول اووه کېږي."]];
+ shapes.forEach((x,i)=>push(x[0],x[1],x[2],x[3],x[4],i===4?"higher-order":"foundational"));
+ const contexts=[["احمد ۴ کتابونه لري او ۳ نور ورته ورکړل شي. اوس څو کتابونه لري؟",7,[6,8,9],"ورځنی ژوند","۴ + ۳ = ۷."],["په ټوکرۍ کې ۹ نارنج وو؛ ۲ وخوړل شول. څو پاتې شول؟",7,[6,8,9],"ورځنی ژوند","۹ − ۲ = ۷."],["په ټولګي کې ۵ نجونې او ۴ هلکان دي. ټول زده کوونکي څو دي؟",9,[8,10,7],"ورځنی ژوند","۵ + ۴ = ۹."],["مریم ۱۰ افغانۍ لرلې او ۶ یې ولګولې. څو افغانۍ ورسره پاتې شوې؟",4,[3,5,6],"پیسې او شمېرل","۱۰ − ۶ = ۴."],["په موټر کې ۳ مسافر وو او ۲ نور پورته شول. اوس څو مسافر دي؟",5,[4,6,7],"ورځنی ژوند","۳ + ۲ = ۵."],["په بڼ کې ۸ ونې وې او ۳ نورې کېنول شوې. اوس څو ونې دي؟",11,[10,12,9],"ورځنی ژوند","۸ + ۳ = ۱۱."],["۱۰ مرغان پر ونه وو؛ ۴ والوتل. څو پاتې شول؟",6,[5,7,8],"ورځنی ژوند","۱۰ − ۴ = ۶."],["فاطمې ۲ قلمونه او ملګرې یې ۵ قلمونه لري. ټول څو قلمونه دي؟",7,[6,8,9],"ورځنی ژوند","۲ + ۵ = ۷."],["دوکان ۷ توپونه لرل او ۲ یې وپلورل. څو پاتې شول؟",5,[4,6,7],"ورځنی ژوند","۷ − ۲ = ۵."],["په کتار کې ۶ ماشومان ولاړ دي؛ ۳ نور راغلل. اوس څو ماشومان دي؟",9,[8,10,7],"ورځنی ژوند","۶ + ۳ = ۹."]];
+ contexts.forEach((x,i)=>push(x[0],x[1],x[2],x[3],x[4],i>=5?"higher-order":"application"));
+ while(out.length<100){const k=out.length,a=(k*3)%11,b=(k*7)%6,z=k%2===0?a+b:Math.max(0,a-b);push(k%2===0?"د "+n(a)+" او "+n(b)+" مجموعه څو ده؟":"له "+n(a)+" څخه "+n(b)+" منفي کړو، څو پاتې کېږي؟",z,[z+1,Math.max(0,z-1),z+2],k%3===0?"د شمېرونو بڼې":"جمع او تفریق",k%2===0?n(a)+" + "+n(b)+" = "+n(z):n(a)+" − "+n(b)+" = "+n(z),k%4===0?"higher-order":"foundational");}
+ return out.slice(0,100);
+}
+
 const packs={
   "Afghanistan":{
-  curriculum:"Afghanistan Ministry of Education National Curriculum (Dari)",
-  language:"Dari",languageNote:"This first published set is Grade 1 Mathematics in Dari. Pashto-language questions and other grade/subject banks are being prepared separately.",
-  verifiedAt:"2026-11-17",
-  source:"https://moe.gov.af/en/node/450",
-  subjectSources:{"Mathematics":"https://moe.gov.af/en/node/450"},
-  grades:{"Grade 1":{"Mathematics":afghanGrade1MathDari()}}
+  variants:{
+   "Afghanistan Ministry of Education National Curriculum (Dari)":{
+    curriculum:"Afghanistan Ministry of Education National Curriculum (Dari)",language:"Dari",
+    languageNote:"Grade 1 Mathematics practice questions in Dari; original supplementary items, pending detailed mapping to the revised textbook.",
+    verifiedAt:"2026-11-17",source:"https://moe.gov.af/en/node/450",
+    subjectSources:{"Mathematics":"https://moe.gov.af/en/node/450"},
+    grades:{"Grade 1":{"Mathematics":afghanGrade1MathDari()}}
+   },
+   "Afghanistan Ministry of Education National Curriculum (Pashto)":{
+    curriculum:"Afghanistan Ministry of Education National Curriculum (Pashto)",language:"Pashto",
+    languageNote:"Grade 1 Mathematics practice questions in Pashto; original supplementary items, pending detailed mapping to the revised textbook.",
+    verifiedAt:"2026-11-17",source:"https://moe.gov.af/en/node/450",
+    subjectSources:{"Mathematics":"https://moe.gov.af/en/node/450"},
+    grades:{"Grade 1":{"Mathematics":afghanGrade1MathPashto()}}
+   }
+  }
  },
 "Kenya":{
   curriculum:"Kenya CBC/CBE",language:"English",verifiedAt:"2026-11-17",
