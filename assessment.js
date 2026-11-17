@@ -856,6 +856,15 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     refreshOutcomeOptions();
   }
 
+  function updateQuestionBankCoverage() {
+    const coverage = document.getElementById("quizBankCoverage");
+    if (!coverage || !subject || !subject.value) return;
+    const count = getGradeQuestionBank(grade.value, subject.value).length;
+    coverage.textContent = count
+      ? count + " practice question" + (count === 1 ? "" : "s") + " available for " + country.value + " · " + curriculum.value + " · " + grade.value + " · " + subject.value + ". Published country-specific questions take priority; shared starter questions are supplementary.";
+      : "No questions are published for this selection yet. Try a shared starter subject or ask a teacher to publish a country-, curriculum- and class-specific set.";
+  }
+
   function refreshSubjectOptions() {
     if (!subject) return;
     const current = subject.value;
@@ -895,6 +904,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     });
     subject.value = list.includes(current) ? current : list[0];
     refreshStrandOptions();
+    updateQuestionBankCoverage();
   }
 
   // Refresh the student subject selector after the published Admin Dashboard bank loads
@@ -1294,7 +1304,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     // Never hide a valid published question bank merely because it contains
     // fewer than 50 questions. Use up to 50 questions, or all available questions
     // when the teacher has published a smaller set.
-    const requested = Math.min(50, selectedBank.length);
+    const requested = Math.min(50, Math.max(1, Number(length && length.value) || 10), selectedBank.length);
     if (requested < 1) {
       status.textContent = "No published questions are available for " + grade.value + " — " + subject.value +
         (strand && strand.value !== "All Topics" ? " — " + strand.value : "") +
@@ -1352,7 +1362,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     submitButton.disabled = false;
     resultBox.classList.add("hidden-section");
     resultBox.innerHTML = "";
-    instructions.innerHTML = "<strong>" + escapeHtml(grade.value + " " + subject.value) + "</strong> — " + escapeHtml(strand ? strand.value : "All Topics") + " — " + active.length + " randomized questions.";
+    instructions.innerHTML = "<strong>" + escapeHtml(country.value + " · " + curriculum.value + " · " + grade.value + " · " + subject.value) + "</strong> — " + escapeHtml(strand ? strand.value : "All Topics") + " — " + active.length + " randomized questions.";
     status.textContent = "Quiz started. Answer every question and submit when ready.";
     updateTimer();
     if (mode.value === "assessment") timerId = setInterval(updateTimer, 1000);
