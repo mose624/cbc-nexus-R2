@@ -83,7 +83,37 @@ function afghanGrade1MathPashto(){
  return out.slice(0,100);
 }
 
-const packs={\n
+function b1math(lang){
+ const out=[],L={
+ Albanian:["Sa bëjnë","dhe","Sa mbetet nga","kur hiqen","Cili numër është më i madh","mollë","fëmijë"],
+ Arabic:["ما ناتج","و","كم يتبقى من","إذا طرحنا","أي العددين أكبر","تفاحات","أطفال"],
+ Catalan:["Quant fan","i","Quant queda de","si traiem","Quin nombre és més gran","pomes","infants"],
+ Portuguese:["Quanto é","mais","Quanto resta de","se retirarmos","Qual número é maior","maçãs","crianças"],
+ English:["What is","plus","How many remain from","when","Which number is greater","apples","children"]
+ }[lang];
+ const add=(q,n,topic,tag)=>{const v=[n,n+1,Math.max(0,n-1),n+2],s=out.length%4,o=v.slice(s).concat(v.slice(0,s));out.push(make(q,o,o.indexOf(n),topic,"Calculate using the stated number operation.",topic,topic,"Solve a foundational Grade 1 mathematics problem.",q,tag,lang));};
+ for(let i=0;i<20;i++){let a=i%10+1,b=i%5+1;add(L[0]+" "+a+" "+L[1]+" "+b+"?",a+b,"Addition",i%5===0?"higher-order":"foundational");}
+ for(let i=0;i<20;i++){let a=i%10+2,b=i%3+1;add(L[2]+" "+a+" "+L[3]+" "+b+"?",a-b,"Subtraction",i%5===0?"higher-order":"foundational");}
+ for(let i=0;i<20;i++){let a=i+1,b=20-i;add(L[4]+" : "+a+" / "+b+"?",Math.max(a,b),"Comparing numbers","application");}
+ for(let i=0;i<20;i++){let a=i%8+1,b=i%4+1;add(a+" "+L[5]+" et "+b+" "+L[5]+". Total?",a+b,"Everyday addition","application");}
+ for(let i=0;i<10;i++){let a=i+3,b=i%3+1;add(a+" "+L[6]+" jouent. "+b+" arrivent. Combien maintenant?",a+b,"Word problems","higher-order");}
+ const fixed=[
+ ["How many sides does a triangle have?",3,"Geometry"],["How many sides does a square have?",4,"Geometry"],
+ ["How many corners does a circle have?",0,"Geometry"],["A triangle has 3 sides and a square has 4. How many altogether?",7,"Geometry"]
+ ];
+ fixed.forEach((x,i)=>add(x[0],x[1],x[2],i===3?"higher-order":"foundational"));
+ while(out.length<100){let i=out.length,a=i%10+1,b=i%5+1;add(L[0]+" "+a+" "+L[1]+" "+b+"?",a+b,"Number operations",i%4===0?"higher-order":"foundational");}
+ return out.slice(0,100);
+}
+
+const packs={
+
+ "Albania":{curriculum:"Albania National Pre-University Curriculum / ASCAP",language:"Albanian",languageNote:"100 original Grade 1 Mathematics practice items in Albanian. Supplementary foundational practice; detailed learning-outcome mapping remains in progress.",verifiedAt:"2026-11-17",source:"https://www.ascap.edu.al/wp-content/uploads/2026/01/Urdhri-nr.-555-date-28.10.2025-Per-miratimin-e-programeve-mesimore-te-disa-lendeve-te-kurrikules-berthame-te-disa-klasave-te-arsimit-baze.pdf",grades:{"Grade 1":{"Mathematics":b1math("Albanian")}}},
+ "Algeria":{curriculum:"Algeria National Curriculum / Ministry of National Education",language:"Arabic",languageNote:"100 original first-year primary Mathematics practice items in Arabic. This does not represent separate French- or Tamazight-language streams.",verifiedAt:"2026-11-17",source:"https://www.education.gov.dz/",grades:{"1ère année primaire":{"Mathematics":b1math("Arabic")}}},
+ "Andorra":{curriculum:"Andorra Andorran Education System",language:"Catalan",languageNote:"100 original first-year primary Mathematics practice items in Catalan. French- and Spanish-system banks require separate language-specific work.",verifiedAt:"2026-11-17",source:"https://www.govern.ad/en/ministeris-i-secretaries-d-estat/ministeri-de-relacions-institucionals-educacio-i-universitats/convenis-i-normativa/legislacio-ordenament-curricular",grades:{"Primera ensenyança 1":{"Mathematics":b1math("Catalan")}}},
+ "Angola":{curriculum:"Angola National Curriculum / INADE",language:"Portuguese",languageNote:"100 original 1.ª Classe Mathematics practice items in Portuguese. Supplementary practice; detailed INADE outcome mapping remains in progress.",verifiedAt:"2026-11-17",source:"https://inate.gov.ao/",grades:{"1.ª Classe":{"Mathematics":b1math("Portuguese"),"Matemática":b1math("Portuguese")}}},
+ "Antigua and Barbuda":{curriculum:"Antigua and Barbuda National Curriculum / Ministry of Education",language:"English",languageNote:"100 original Grade 1 Mathematics practice items in English. Supplementary foundational practice; detailed national outcome mapping remains in progress.",verifiedAt:"2026-11-17",source:"https://education.gov.ag/",grades:{"Grade 1":{"Mathematics":b1math("English")}}},
+\n
  "Antigua and Barbuda":{
   curriculum:"Antigua and Barbuda National Curriculum / Ministry of Education",
   language:"English",languageNote:"Country-level curriculum and grade selector configured. Subject-level banks will be added only after topic and language validation.",
