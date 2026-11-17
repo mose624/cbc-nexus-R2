@@ -41,6 +41,7 @@ function renderCountries(filter){
   card.addEventListener("click",event=>{const interactive=event.target.closest("a,button,input,select,textarea");if(interactive){if(interactive.classList.contains("gs-country-name"))return;return;}if(c.url)window.location.assign(c.url);});
   card.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){if(event.target===card||event.target.closest(".gs-country-body")){event.preventDefault();if(c.url)window.location.assign(c.url);}}});
   const flag=node("span","gs-flag");flag.textContent=c.flag;flag.setAttribute("aria-hidden","true");
+  const ordinal=node("span","gs-country-ordinal");ordinal.textContent=String(countries.indexOf(c)+1).padStart(3,"0");
   const body=node("span","gs-country-body");
   const nameLink=node("a","gs-country-name");nameLink.href=c.url;nameLink.style.color="inherit";nameLink.style.textDecoration="none";nameLink.setAttribute("aria-label","Open "+c.name+" country dashboard");
   const name=node("strong");name.textContent=c.name;nameLink.append(name);
@@ -59,11 +60,11 @@ function renderCountries(filter){
    {label:"ISS",url:"https://www.iss.edu/for-individuals/find-a-job/current-openings/"}
   ];
   sourceLinks.forEach(source=>{const a=node("a");a.href=safeUrl(source.url);a.textContent=source.label;a.target="_blank";a.rel="noopener noreferrer";a.setAttribute("aria-label","Search "+c.name+" teaching vacancies on "+source.label);links.appendChild(a);});
-  const openProfile=node("a","gs-country-open-profile");openProfile.href=c.url;openProfile.textContent="Open country page →";openProfile.setAttribute("aria-label","Open "+c.name+" dedicated education page");body.append(nameLink,small,snapshot,openProfile,links);card.append(flag,body);grid.appendChild(card);
+  const openProfile=node("a","gs-country-open-profile");openProfile.href=c.url;openProfile.textContent="Open country page →";openProfile.setAttribute("aria-label","Open "+c.name+" dedicated education page");body.append(nameLink,small,snapshot,openProfile,links);card.append(flag,ordinal,body);grid.appendChild(card);
  });
  if(!matches.length){const p=node("p","gs-empty");p.textContent="No matching country found. Try another spelling.";grid.appendChild(p);}
 }
-const countryCardActionStyle=document.createElement("style");countryCardActionStyle.textContent=".gs-country-open-profile{display:inline-flex;align-self:flex-start;margin:5px 0 2px;padding:6px 9px;border-radius:7px;background:#e0f2fe;color:#075080!important;font-size:11px;font-weight:850;text-decoration:none}.gs-country-open-profile:hover{background:#cdeafa}";document.head.appendChild(countryCardActionStyle);
+const countryCardActionStyle=document.createElement("style");countryCardActionStyle.textContent=".gs-country-ordinal{display:inline-flex;align-items:center;justify-content:center;min-width:30px;margin:0 8px 0 2px;color:#64748b;font-size:10px;font-weight:900;font-variant-numeric:tabular-nums}.gs-country-open-profile{display:inline-flex;align-self:flex-start;margin:5px 0 2px;padding:6px 9px;border-radius:7px;background:#e0f2fe;color:#075080!important;font-size:11px;font-weight:850;text-decoration:none}.gs-country-open-profile:hover{background:#cdeafa}";document.head.appendChild(countryCardActionStyle);
 // Learner photography is selected deterministically by country so all country pages have a visual hero.
 const learnerPhotos=[
  'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1800&q=82',
