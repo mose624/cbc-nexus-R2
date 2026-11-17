@@ -144,17 +144,8 @@
     "Brevet d’Études du Premier Cycle (BEPC)",
     "Baccalauréat"
   ],
-  "republic-of-the-congo": [
-    "BEPC",
-    "Baccalauréat"
-  ],
   "costa-rica": [
     "National secondary graduation assessments"
-  ],
-  "cote-d-ivoire": [
-    "CEPE",
-    "BEPC",
-    "Baccalauréat"
   ],
   "croatia": [
     "State Matura"
@@ -275,7 +266,6 @@
     "National examinations",
     "Baccalauréat"
   ],
-  "holy-see": [],
   "honduras": [
     "Secondary education graduation examinations"
   ],
@@ -735,5 +725,15 @@
     "ZIMSEC Grade 7",
     "O-Level",
     "A-Level"
-  ]
+  ],
+  "congo": [
+    "BEPC",
+    "Baccalauréat"
+  ],
+  "cote-divoire": [
+    "CEPE",
+    "BEPC",
+    "Baccalauréat"
+  ],
+  "vatican-city": []
 }
