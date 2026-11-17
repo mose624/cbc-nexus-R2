@@ -1677,6 +1677,8 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       curriculum: curriculum ? curriculum.value.trim() : "Kenya CBC/CBE",
       grade: grade.value,
       subject: subject.value,
+      questionLanguage: (() => { const p = window.CBENexusCountryQuestionPacks && window.CBENexusCountryQuestionPacks[country ? country.value : ""]; return p && p.curriculum.toLowerCase() === String(curriculum && curriculum.value || "").toLowerCase() && p.grades && p.grades[grade.value] && p.grades[grade.value][subject.value] ? p.language : "English supplementary practice"; })(),
+      cognitiveLevel: document.getElementById("quizCognitiveInput") ? document.getElementById("quizCognitiveInput").value : "all",
       strand: strand ? strand.value : "All Topics",
       learningOutcome: outcome ? outcome.value : "All Outcomes",
       subStrand: subStrand ? subStrand.value : "All Sub-Strands",
