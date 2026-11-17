@@ -75,13 +75,7 @@ const profiles={
    {name:"UNESCO Global Education Profiles — Cambodia",url:"https://gem-report-education-profiles.unesco.org/node/78.html",body:"Describes Khmer-medium schooling and multilingual education programmes in Indigenous communities."}
   ],verifiedAt:"2026-11-17"
  },
- "cameroon":{
-  instructionLanguages:"English and French are the two official languages and the principal languages of instruction in the national education system. English-medium schooling is concentrated in the Anglophone North-West and South-West regions, while French-medium schooling is predominant in the other regions. Bilingual schools and programmes teach in both languages; national languages may support early learning or community programmes, depending on the school.",
-  officialSources:[
-   {name:"Republic of Cameroon — Law No. 2019/019 on the promotion of official languages",url:"https://droitcamerounais.info/en/files/552.12.19-Law-of-24-December-2019-on-the-promotion-of-officiel-languages-in-Cameroon.pdf",body:"Law confirming English and French as official languages of equal value and promoting their teaching in the education system."},
-   {name:"CONFEMEN — Cameroon education authority profile",url:"https://www.old1.confemen.org/confemen-stp/etats-et-gouvernements-membres/",body:"Lists English and French as official languages and identifies the national education authorities."}
-  ],verifiedAt:"2026-11-17"
- }
+
 };
 Object.keys(profiles).forEach(slug=>{d[slug]=Object.assign({},d[slug]||{},profiles[slug]);});
 })();
