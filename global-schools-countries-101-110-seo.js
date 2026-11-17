@@ -6,7 +6,7 @@
 (function(){
 "use strict";
 const d=window.CBE_GLOBAL_COUNTRY_DATA;if(!d)return;
-Object.assign(d,{
+const profiles={
  "denmark":{
   seoHeading:"Denmark Education System, Folkeskole & Upper-Secondary Examinations",
   seoTitle:"Denmark Education System, Folkeskole, STX & School Resources | CBE Nexus",
@@ -128,5 +128,6 @@ Object.assign(d,{
   ]
  }
 });
+Object.keys(profiles).forEach(slug=>{d[slug]=d[slug]?{...profiles[slug],...d[slug]}:profiles[slug];});
 window.CBE_COUNTRY_SEO_101_110=true;
 })();
