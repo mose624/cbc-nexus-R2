@@ -1,4 +1,4 @@
-/* Adds Kosovo as the 196th separately listed country/jurisdiction entry in the CBE Nexus directory.
+/* Adds Kosovo's dedicated country/jurisdiction profile to the alphabetized CBE Nexus directory.
  * Kosovo's international recognition is not universal; the directory labels it transparently.
  */
 (function(){
