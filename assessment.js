@@ -221,7 +221,9 @@ const nationalLevelStructures = {
   "Bahamas":["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6"],
   "Bahrain":["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Belarus":["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11"],
-  "Belgium":["1st year primary","2nd year primary","3rd year primary","4th year primary","5th year primary","6th year primary"],
+  "Belgium Flemish Community Curriculum":["1ste leerjaar","2de leerjaar","3de leerjaar","4de leerjaar","5de leerjaar","6de leerjaar"],
+  "Belgium French Community Curriculum":["1re primaire","2e primaire","3e primaire","4e primaire","5e primaire","6e primaire"],
+  "Belgium German-speaking Community Curriculum":["1. Primarschuljahr","2. Primarschuljahr","3. Primarschuljahr","4. Primarschuljahr","5. Primarschuljahr","6. Primarschuljahr"],
   "Belize":["Infants 1","Infants 2","Standard 1","Standard 2","Standard 3","Standard 4","Standard 5","Standard 6"],
   "Benin":["CI","CP","CE1","CE2","CM1","CM2"],
   "Bhutan":["Class PP","Class I","Class II","Class III","Class IV","Class V","Class VI","Class VII","Class VIII","Class IX","Class X","Class XI","Class XII"],
@@ -270,6 +272,7 @@ function levelOptionsFor(countryName, curriculumName){
   if(c.includes("cambridge") || c.includes("igcse") || c.includes("pearson") || c.includes("edexcel") || c.includes("gcse") || c.includes("british curriculum")) return [...Array.from({length:13},(_,i)=>"Year "+(i+1)),"IGCSE","O Level","AS Level","A Level"];
   if(c.includes("ib") || c.includes("international baccalaureate")) return ["PYP Year 1","PYP Year 2","PYP Year 3","PYP Year 4","PYP Year 5","PYP Year 6","MYP Year 1","MYP Year 2","MYP Year 3","MYP Year 4","MYP Year 5","DP Year 1","DP Year 2"];
   if(c.includes("common core") || c.includes("ngss") || c.includes("state standard") || c.includes("american curriculum") || c==="ap") return ["Kindergarten",...Array.from({length:12},(_,i)=>"Grade "+(i+1)),"AP"];
+  if(countryName==="Belgium") return nationalLevelStructures[curriculumName] || nationalLevelStructures["Belgium Flemish Community Curriculum"];
   if(countryName==="Andorra") {
     if(c.includes("french")) return nationalLevelStructures["Andorra French Education System"];
     if(c.includes("spanish")) return nationalLevelStructures["Andorra Spanish Education System"];
@@ -998,7 +1001,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
         "Bangladesh": "Bangla (Bengali; English-medium and other streams also operate)",
         "Barbados": "English",
         "Belarus": "Belarusian and Russian (both state languages; school language varies)",
-        "Belgium": "Dutch, French or German, according to the education community and school",
+        "Belgium": curriculum.value && curriculum.value.toLowerCase().includes("flemish") ? "Dutch (Flemish Community)" : curriculum.value && curriculum.value.toLowerCase().includes("french") ? "French (French Community)" : "German (German-speaking Community)",
         "Belize": "English (official language of instruction; multilingual context)",
         "Benin": "French (national school language; national languages support learning)",
         "Bhutan": "Dzongkha and English (subject and school language arrangements vary)"
@@ -1036,7 +1039,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       "Bangladesh":["বাংলা","গণিত","ইংরেজি","প্রাথমিক বিজ্ঞান","বাংলাদেশ ও বিশ্বপরিচয়","ধর্ম ও নৈতিক শিক্ষা"],
       "Barbados":["Mathematics","Language Arts","Social Studies","Science","HFLE","Physical Education","Visual Arts","Music"],
       "Belarus":["Русский язык","Беларуская мова","Математика","Человек и мир","Трудовое обучение","Изобразительное искусство","Музыка","Физическая культура"],
-      "Belgium":["Mathematics","Dutch","French","German","World Orientation","Arts","Physical Education"],
+      "Belgium":["Mathematics","Wiskunde","Mathématiques","Dutch","French","German","World Orientation","Arts","Physical Education"],
       "Belize":["Mathematics","Language Arts","Science","Social Studies","Physical Education","Art","Music"],
       "Benin":["Français","Mathématiques","Éducation sociale","Éducation scientifique et technologique","Éducation artistique"],
       "Bhutan":["རྫོང་ཁ","English","Mathematics","Environmental Studies","Health and Physical Education","Social Studies","ICT"]
