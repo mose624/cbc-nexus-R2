@@ -13,7 +13,7 @@ const entries=rows.split("\n").map(line=>{
 });
 
 const current=window.CBE_GLOBAL_COUNTRIES;
-if(!Array.isArray(current)||current.length<196){
+if(!Array.isArray(current)||entries.some(country=>!current.some(c=>String(c&&c.slug||"").toLowerCase()===country.slug))){
  const merged=Array.isArray(current)?current.slice():[];
  entries.forEach(country=>{
   if(!merged.some(c=>String(c&&c.slug||"").toLowerCase()===country.slug))merged.push(country);
