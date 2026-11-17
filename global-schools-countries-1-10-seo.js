@@ -15,6 +15,7 @@ const profiles={
   system:"Basic education is followed by upper-secondary general and vocational pathways. State Matura requirements apply to eligible upper-secondary candidates; use the current annual examination instructions for the relevant cohort.",
   authority:"Ministry responsible for education; the National Examinations Agency (QSHA) publishes examination instructions and candidate information.",
   officialLanguages:"Albanian is the principal language of instruction; minority-language provision is available in relevant communities.",
+  instructionLanguages:"Albanian is the main language of teaching in public schools. Minority-language teaching or provision may be available in areas serving recognised communities; check the relevant school and local education authority.",
   exams:[{name:"State Matura (Matura Shtetërore)",level:"Upper-secondary completion and university admission pathway",body:"National Examinations Agency (QSHA) and the responsible ministry"}],
   officialSources:[
    {name:"Ministry of Education and Sports",url:"https://arsimi.gov.al/",body:"National education policy and official ministry notices."},
@@ -38,6 +39,7 @@ const profiles={
   system:"The Andorran system includes maternal, primera ensenyança, segona ensenyança and batxillerat pathways. French and Spanish schools follow their respective national programmes; some private provision also exists.",
   authority:"Government of Andorra, Ministry responsible for education; the French and Spanish school networks also involve their respective national education authorities.",
   officialLanguages:"Catalan is Andorra's official language. Catalan, French and Spanish are used as languages of instruction across the three public systems; the British private school pathway uses English.",
+  instructionLanguages:"Catalan in the Andorran system; French in French-system schools; Spanish (Castilian) in Spanish-system schools. Some private/international schools teach through English. Confirm the language and curriculum with the individual school.",
   exams:[{name:"Andorran Baccalaureate (Batxillerat)",level:"Upper-secondary",body:"Andorran education system"},{name:"French Baccalauréat",level:"Upper-secondary in French-system schools",body:"French education authorities"},{name:"Spanish Bachillerato",level:"Upper-secondary in Spanish-system schools",body:"Spanish education authorities"}],
   officialSources:[
    {name:"Government of Andorra — Education and school systems",url:"https://www.govern.ad/en/tematiques/educacio-formacio-investigacio-i-divulgacio-del-coneixement/estudiar-a-andorra/sistemes-educatius-a-andorra/sistema-educatiu-andorra",body:"Official information about the Andorran school system."},
@@ -61,6 +63,7 @@ const profiles={
   system:"Education delivery is administered by state and territory and non-government authorities. School structures, senior-secondary certificates, subject offerings and tertiary admission arrangements vary across jurisdictions.",
   authority:"Australian Government Department of Education; Australian Curriculum, Assessment and Reporting Authority (ACARA); state and territory education authorities and assessment bodies.",
   officialLanguages:"English is the principal language of instruction in most schools; language programmes and community-language provision vary by jurisdiction and school.",
+  instructionLanguages:"English is the main language of teaching in most Australian schools. Bilingual, Aboriginal and Torres Strait Islander language programmes, community-language programmes and other language pathways vary by state, territory and school.",
   exams:[{name:"NAPLAN",level:"Years 3, 5, 7 and 9",body:"ACARA with state and territory Test Administration Authorities"},{name:"Senior secondary certificates",level:"Years 11–12, jurisdiction-dependent",body:"State and territory curriculum and assessment authorities"}],
   officialSources:[
    {name:"Australian Government — Australian Curriculum",url:"https://www.education.gov.au/australian-curriculum",body:"Australian Curriculum overview and implementation responsibilities."},
