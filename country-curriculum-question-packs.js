@@ -83,7 +83,33 @@ function afghanGrade1MathPashto(){
  return out.slice(0,100);
 }
 
-const packs={
+const packs={\n
+ "Antigua and Barbuda":{
+  curriculum:"Antigua and Barbuda National Curriculum / Ministry of Education",
+  language:"English",languageNote:"Country-level curriculum and grade selector configured. Subject-level banks will be added only after topic and language validation.",
+  verifiedAt:"2026-11-17",source:"https://education.gov.ag/",grades:{}
+ },
+ "Argentina":{
+  curriculum:"Argentina National Education Law / NAP and Provincial Curricula",
+  language:"Spanish",languageNote:"NAPs provide common national learning priorities; provincial curricula and grade organisation must be checked for the learner's jurisdiction.",
+  verifiedAt:"2026-11-17",source:"https://www.educ.ar/recursos/150199/coleccion-ncleos-de-aprendizaje-prioritarios-",grades:{}
+ },
+ "Armenia":{
+  curriculum:"Armenia State Standard of General Education / Ministry of ESCS",
+  language:"Armenian",languageNote:"Twelve-year general education is organised as grades 1–4, 5–9 and 10–12; updated subject programmes are being phased in.",
+  verifiedAt:"2026-11-17",source:"https://escs.am/en/static/second-education?s=edu",grades:{}
+ },
+ "Australia":{
+  curriculum:"Australian Curriculum / ACARA",
+  language:"English",languageNote:"Australian Curriculum Version 9.0; state and territory authorities determine implementation timing and local delivery.",
+  verifiedAt:"2026-11-17",source:"https://www.education.gov.au/australian-curriculum",grades:{}
+ },
+ "Austria":{
+  curriculum:"Austria National Curriculum (Lehrplan) / BMB",
+  language:"German",languageNote:"Primary school (Volksschule) commonly covers school years 1–4; school pathways and upper-level provision vary.",
+  verifiedAt:"2026-11-17",source:"https://www.bildung.gv.at/",grades:{}
+ },
+
   "Afghanistan":{
   variants:{
    "Afghanistan Ministry of Education National Curriculum (Dari)":{
