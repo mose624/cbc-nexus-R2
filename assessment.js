@@ -566,6 +566,7 @@ const nationalLevelStructures = {
   "Trinidad and Tobago":["Standard 1"],
   "Tunisia":["السنة الأولى"],
   "Turkey":["1. Sınıf"],
+  "Türkiye":["1. Sınıf"],
   "Turkmenistan":["Grade 1"],
   "Tuvalu":["Class 1"],
   "Ukraine":["1 клас"],,
