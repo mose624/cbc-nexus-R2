@@ -76,6 +76,7 @@ img.cbe-context-image{animation:cbeImageMotion 7s ease-in-out infinite alternate
               Subject / Learning Area
               <select id="quizSubjectInput" required></select>
             </label>
+            <p id="quizBankCoverage" class="quiz-curriculum-meta" aria-live="polite">Select a country, curriculum, class and subject to view available practice questions.</p>
             <label>
               Strand / Topic
               <select id="quizStrandInput" required>
@@ -103,8 +104,8 @@ img.cbe-context-image{animation:cbeImageMotion 7s ease-in-out infinite alternate
           <div class="quiz-toolbar">
             <label>
               Number of Questions
-              <input id="quizLengthInput" type="number" value="50" min="50" max="50" readonly aria-readonly="true">
-              <small>Every quiz contains exactly 50 questions.</small>
+              <input id="quizLengthInput" type="number" value="10" min="1" max="50">
+              <small>Choose up to 50 questions. The quiz uses the number available in the selected question bank.</small>
             </label>
             <label>
               Quiz Mode
