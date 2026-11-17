@@ -932,7 +932,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const languageNotice = document.getElementById("quizLanguageNotice");
     if (languageNotice) {
       languageNotice.textContent = pack && pack.curriculum.toLowerCase() === String(curriculum.value || "").toLowerCase() && Array.isArray(exact)
-        ? "Question language: " + pack.language + ". Curriculum source: " + pack.source + "."
+        ? "Question language: " + pack.language + ". Curriculum source: " + ((pack.subjectSources && pack.subjectSources[subject.value]) || pack.source) + ". Verified: " + (pack.verifiedAt || "date not recorded") + "."
         : "Question language: English supplementary practice only. Country-specific teaching language and syllabus alignment are not yet verified for this selection.";
     }
   }
@@ -1180,7 +1180,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       curriculum: curriculum ? curriculum.value.trim() : "Kenya CBC/CBE",
       grade: grade.value,
       subject: subject.value,
-      questionLanguage: (window.CBENexusCountryQuestionPacks && window.CBENexusCountryQuestionPacks[country ? country.value : ""] && window.CBENexusCountryQuestionPacks[country ? country.value : ""].language) || "English supplementary practice",
+      questionLanguage: (window.CBENexusCountryQuestionPacks && window.CBENexusCountryQuestionPacks[country ? country.value : ""] && window.CBENexusCountryQuestionPacks[country ? country.value : ""].curriculum.toLowerCase() === String(curriculum && curriculum.value || "").toLowerCase()) ? window.CBENexusCountryQuestionPacks[country ? country.value : ""].language : "English supplementary practice",
       cognitiveLevel: document.getElementById("quizCognitiveInput") ? document.getElementById("quizCognitiveInput").value : "all",
       strand: strand ? strand.value : "All Topics",
       subStrand: subStrand ? subStrand.value : "All Sub-Strands",
