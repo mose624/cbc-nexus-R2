@@ -507,5 +507,11 @@ Object.assign(packs,{
 "Palestine":{curriculum:"Palestinian National Curriculum / الصف الأول الأساسي Mathematics",language:"Arabic",languageNote:"100 original Grade 1 Mathematics supplementary questions. This is a starter practice set, not a complete mapping to every national curriculum outcome or regional language stream.",verifiedAt:"2026-11-17",source:"https://www.moe.edu.ps/",grades:{"الصف الأول الأساسي":{Mathematics:b1math("Arabic")}}}
 });
 
+// Extend countries whose selector already existed but lacked a lower-primary starter pack.
+if (packs.Nigeria && packs.Nigeria.grades) packs.Nigeria.grades["Primary 1"] = {Mathematics:b1math("English")};
+Object.assign(packs,{
+"Oman":{curriculum:"Oman Ministry of Education Curriculum / الصف الأول Mathematics",language:"Arabic",languageNote:"100 original Grade 1 Mathematics supplementary questions in Arabic. This is a starter practice set, not a complete mapping to every national curriculum outcome or international-school stream.",verifiedAt:"2026-11-17",source:"https://home.moe.gov.om/",grades:{"الصف الأول":{Mathematics:b1math("Arabic")}}},
+"Pakistan":{curriculum:"Pakistan National Curriculum / Grade 1 Mathematics",language:"Urdu and English",languageNote:"100 original Grade 1 Mathematics supplementary questions in English. Urdu-language localization is pending; provincial and school-medium variations apply.",verifiedAt:"2026-11-17",source:"https://mofept.gov.pk/Detail/NWJmMmM2YTQtM2YzYi00NjJkLTgzNDEtYzMxMTI4MTllY2Qw",grades:{"Grade 1":{Mathematics:b1math("English")}}}
+});
 window.CBENexusCountryQuestionPacks=packs;
 })();
