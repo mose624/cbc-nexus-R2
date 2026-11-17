@@ -124,6 +124,14 @@
   const country = document.getElementById("quizCountryInput");
   const curriculum = document.getElementById("quizCurriculumInput");
   const curriculumByCountry = {
+  "Nicaragua":["Nicaragua MINED Mathematics / Primer Grado"],
+  "Niger":["Niger National Primary Curriculum / CI-CP Mathematics"],
+  "North Korea":["DPR Korea Primary Education Curriculum / Grade 1 Mathematics"],
+  "North Macedonia":["North Macedonia National Primary Education Concept / I одделение Mathematics"],
+  "Norway":["Norwegian National Curriculum (LK20) / 1. trinn Mathematics"],
+  "Palau":["Palau National Curriculum / Grade 1 Mathematics"],
+  "Palestine":["Palestinian National Curriculum / الصف الأول الأساسي Mathematics"],
+
   "Afghanistan":["Afghanistan Ministry of Education National Curriculum (Dari)","Afghanistan Ministry of Education National Curriculum (Pashto)"],
   "Albania":["Albania National Pre-University Curriculum / ASCAP"],
   "Algeria":["Algeria National Curriculum / Ministry of National Education"],
@@ -311,6 +319,14 @@
 };
 
 const nationalLevelStructures = {
+  "Nicaragua":["1º Grado"],
+  "Niger":["CI"],
+  "North Korea":["Grade 1"],
+  "North Macedonia":["I одделение"],
+  "Norway":["1. trinn"],
+  "Palau":["Grade 1"],
+  "Palestine":["الصف الأول الأساسي"],
+
   "Afghanistan":["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Albania":["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Algeria":["1ère année primaire","2ème année primaire","3ème année primaire","4ème année primaire","5ème année primaire","1ère année moyenne","2ème année moyenne","3ème année moyenne","4ème année moyenne","1ère année secondaire","2ème année secondaire","3ème année secondaire"],
@@ -1187,6 +1203,14 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const languageNotice = document.getElementById("quizLanguageNotice");
     if (languageNotice) {
       const expectedInstructionLanguages = {
+  "Nicaragua":"Spanish",
+  "Niger":"French",
+  "North Korea":"Korean (English starter questions only; national-language localization pending)",
+  "North Macedonia":"Macedonian (English starter questions only; national-language localization pending)",
+  "Norway":"Norwegian (English starter questions only; national-language localization pending)",
+  "Palau":"English (English starter questions only; national-language localization pending)",
+  "Palestine":"Arabic",
+
         "Afghanistan": curriculum.value && curriculum.value.toLowerCase().includes("(pashto)") ? "Pashto" : "Dari",
         "Albania": "Albanian (minority-language arrangements may also apply)",
         "Algeria": "Arabic; Tamazight is also taught, with foreign-language subjects introduced by grade",
@@ -1314,6 +1338,14 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
     const nigeriaSubjects = isNigeriaNERDC && window.CBENexusNigeriaBanks && window.CBENexusNigeriaBanks.banks &&
       window.CBENexusNigeriaBanks.banks[grade.value] ? Object.keys(window.CBENexusNigeriaBanks.banks[grade.value]) : [];
     const countrySubjects = {
+  "Nicaragua":["Lengua y Literatura","Matemática","Conociendo mi Mundo","Inglés","Educación Física","Creciendo en Valores"],
+  "Niger":["Français","Mathématiques","Éducation scientifique","Éducation civique","Éducation physique et sportive"],
+  "North Korea":["Korean Language","Mathematics","Nature Study","Physical Education","Music","Art"],
+  "North Macedonia":["Македонски јазик","Математика","Природни науки","Општество","Англиски јазик","Ликовно образование","Музичко образование","Физичко и здравствено образование"],
+  "Norway":["Norsk","Matematikk","Naturfag","Engelsk","Samfunnsfag","Kunst og håndverk","Musikk","Kroppsøving"],
+  "Palau":["English","Mathematics","Palauan Language","Science","Social Studies","Health and Physical Education","Arts"],
+  "Palestine":["اللغة العربية","الرياضيات","العلوم","التربية الإسلامية","التربية الوطنية والاجتماعية","اللغة الإنجليزية","التربية الفنية","التربية الرياضية"],
+
       "Afghanistan":["Dari","Pashto","Mathematics","Islamic Education","Social Studies","Science","Art"],
       "Albania":["Albanian Language","Foreign Languages","Mathematics","Biology","Physics","Chemistry","Geography","History","Civic Education","Arts","Physical Education","Technology and ICT"],
       "Algeria":["Arabic","Tamazight","Mathematics","Islamic Education","Civic Education","History and Geography","Scientific and Technological Education","French","English","Physics","Natural Sciences","Technology"],
