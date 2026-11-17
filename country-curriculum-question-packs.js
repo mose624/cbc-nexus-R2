@@ -9,7 +9,7 @@ const make=(q,opts,answer,topic,explanation,strand,sub,outcome,content,cognitive
  [q,opts,answer,topic,explanation,strand,sub,outcome,content,"","",cognitive,language];
 const packs={
  "Kenya":{
-  curriculum:"Kenya CBC/CBE",language:"English",
+  curriculum:"Kenya CBC/CBE",language:"English",verifiedAt:"2026-11-17",
   source:"https://kicd.ac.ke/cbc-materials/curriculum-designs/",
   grades:{
    "Grade 7":{
@@ -25,7 +25,7 @@ const packs={
    "Grade 8":{
     Mathematics:[
      make("A learner says that increasing every side of a rectangular garden by 20% increases its area by 20%. The original garden is 10 m by 5 m. Which statement is correct?",["The new area is 60 m², a 20% increase","The new area is 66 m², a 32% increase","The new area is 72 m², a 44% increase","The new area is 75 m², a 50% increase"],2,"Percentages and area","New dimensions are 12 m and 6 m. New area = 72 m²; original area = 50 m². Increase = 22/50 × 100 = 44%.","Number","Fractions, decimals and percentages","Evaluate a claim by applying percentage change to two dimensions.","Compound percentage change in area","higher-order"),
-     make("A taxi charges a fixed booking fee of 80 shillings plus 25 shillings per kilometre. A passenger has at most 330 shillings. What is the greatest whole number of kilometres the passenger can travel?",["8 km","9 km","10 km","11 km"],1,"Linear relationships","80 + 25k ≤ 330, so 25k ≤ 250 and k ≤ 10. The greatest distance is 10 km.","Algebra","Linear equations and inequalities","Form and solve an inequality from a real-life situation.","Taxi fare inequality","higher-order")
+     make("A taxi charges a fixed booking fee of 80 shillings plus 25 shillings per kilometre. A passenger has at most 330 shillings. What is the greatest whole number of kilometres the passenger can travel?",["8 km","9 km","10 km","11 km"],2,"Linear relationships","80 + 25k ≤ 330, so 25k ≤ 250 and k ≤ 10. The greatest distance is 10 km.","Algebra","Linear equations and inequalities","Form and solve an inequality from a real-life situation.","Taxi fare inequality","higher-order")
     ],
     "Integrated Science":[
      make("Two identical bulbs are connected in series to a battery. One bulb is removed. What is the most likely observation and why?",["The other bulb becomes brighter because resistance falls","The other bulb goes out because the circuit is open","The other bulb remains equally bright because current is unchanged","The battery produces more current through an open circuit"],1,"Electric circuits","Removing one bulb breaks the single path in a series circuit, so current stops throughout the circuit.","Energy","Electricity and circuits","Predict and explain the effect of changing a circuit.","Series-circuit fault analysis","higher-order"),
@@ -45,8 +45,9 @@ const packs={
   }
  },
  "Ghana":{
-  curriculum:"Ghana NaCCA Curriculum / WASSCE",language:"English",
+  curriculum:"Ghana NaCCA Curriculum / WASSCE",language:"English",verifiedAt:"2026-11-17",
   source:"https://nacca.gov.gh/wp-content/uploads/2023/06/MATHEMATICS.pdf",
+  subjectSources:{"Science":"https://nacca.gov.gh/wp-content/uploads/2022/10/Science-Curriculum.pdf"},
   grades:{
    "Basic 7":{
     Mathematics:[
@@ -59,7 +60,7 @@ const packs={
    },
    "Basic 8":{
     Mathematics:[
-     make("A phone bundle gives 2.4 GB for GH₵30. Another gives 3.5 GB for GH₵42. Which bundle offers the lower cost per gigabyte, and by how much?",["First bundle by GH₵0.50/GB","Second bundle by GH₵0.50/GB","First bundle by GH₵1.00/GB","Both cost the same per GB"],0,"Ratio and proportion","First: 30/2.4 = GH₵12.50/GB. Second: 42/3.5 = GH₵12.00/GB. The second is cheaper by GH₵0.50/GB.","Number","Ratios and proportion","Compare unit rates and justify a value-for-money decision.","Comparing mobile data plans","higher-order"),
+     make("A phone bundle gives 2.4 GB for GH₵30. Another gives 3.5 GB for GH₵42. Which bundle offers the lower cost per gigabyte, and by how much?",["First bundle by GH₵0.50/GB","Second bundle by GH₵0.50/GB","First bundle by GH₵1.00/GB","Both cost the same per GB"],1,"Ratio and proportion","First: 30/2.4 = GH₵12.50/GB. Second: 42/3.5 = GH₵12.00/GB. The second is cheaper by GH₵0.50/GB.","Number","Ratios and proportion","Compare unit rates and justify a value-for-money decision.","Comparing mobile data plans","higher-order"),
      make("The mean of five scores is 14. Four scores are 9, 12, 16 and 18. A learner says the fifth score must be 15. Is the learner correct?",["Yes, because 14 × 5 − 9 − 12 − 16 − 18 = 15","No, the fifth score is 14","No, the fifth score is 19","Yes, because the median is 15"],0,"Handling data","Total score = 14 × 5 = 70. Known scores total 55, so the fifth score is 15.","Data","Data","Use the mean to infer a missing value and assess a claim.","Missing data from a mean","higher-order")
     ],
     Science:[
@@ -68,7 +69,7 @@ const packs={
    },
    "Basic 9":{
     Mathematics:[
-     make("A school hall has 240 seats. At an event, 85% are occupied. If 30 people leave and 18 arrive, what percentage of the seats is occupied now?",["80%","82.5%","85%","87.5%"],1,"Fractions, decimals and percentages","Initially 0.85 × 240 = 204 people. Then 204 − 30 + 18 = 192. Occupancy = 192/240 × 100 = 80%.","Number","Fractions, decimals and percentages","Apply percentage and number operations to a changing situation.","Changing hall occupancy","higher-order"),
+     make("A school hall has 240 seats. At an event, 85% are occupied. If 30 people leave and 18 arrive, what percentage of the seats is occupied now?",["80%","82.5%","85%","87.5%"],0,"Fractions, decimals and percentages","Initially 0.85 × 240 = 204 people. Then 204 − 30 + 18 = 192. Occupancy = 192/240 × 100 = 80%.","Number","Fractions, decimals and percentages","Apply percentage and number operations to a changing situation.","Changing hall occupancy","higher-order"),
      make("A linear relationship is represented by y = 3x + 2. A learner says doubling x always doubles y. Which counterexample proves the claim false?",["x = 1 gives y = 5; x = 2 gives y = 8","x = 2 gives y = 8; x = 4 gives y = 14","x = 3 gives y = 11; x = 6 gives y = 20","All of the above"],3,"Algebraic relationships","Each pair shows that doubling x does not double y because the constant term 2 remains. Any listed pair is a counterexample.","Algebra","Variables and equations","Evaluate a generalisation using examples and algebraic structure.","Testing a claim about linear functions","higher-order")
     ],
     Science:[
@@ -78,8 +79,9 @@ const packs={
   }
  },
  "Uganda":{
-  curriculum:"Uganda NCDC Curriculum / UNEB",language:"English",
+  curriculum:"Uganda NCDC Curriculum / UNEB",language:"English",verifiedAt:"2026-11-17",
   source:"https://ncdc.go.ug/wp-content/uploads/2024/03/Curriculum_Framework.pdf",
+  subjectSources:{"Biology":"https://ncdc.go.ug/wp-content/uploads/2024/02/Biology_Syllabus_compressed.pdf"},
   grades:{
    "Senior 1":{
     Mathematics:[
