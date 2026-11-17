@@ -2,17 +2,147 @@
 (function(){
 "use strict";
 const countries={
-"algeria":{name:"Algeria",cities:["Algiers","Oran","Constantine","Annaba","Blida","Sétif"],exams:"BEM and Baccalauréat examination pathways",curriculum:"Algeria national curriculum",language:"Arabic and Tamazight, with French widely studied"},
-"egypt":{name:"Egypt",cities:["Cairo","Alexandria","Giza","Shubra El-Kheima","Port Said","Mansoura"],exams:"Preparatory School Certificate and Thanaweya Amma pathways",curriculum:"Egypt national curriculum",language:"Arabic"},
-"libya":{name:"Libya",cities:["Tripoli","Benghazi","Misrata","Bayda","Zawiya","Sabha"],exams:"Basic education assessments and Secondary Education Certificate pathways",curriculum:"Libya national curriculum",language:"Arabic"},
-"morocco":{name:"Morocco",cities:["Casablanca","Rabat","Fez","Marrakesh","Tangier","Agadir"],exams:"Lower-secondary assessment and regional and national Baccalauréat examinations",curriculum:"Morocco national curriculum",language:"Arabic and Amazigh, with French widely used in some programmes"},
-"tunisia":{name:"Tunisia",cities:["Tunis","Sfax","Sousse","Kairouan","Bizerte","Gabès"],exams:"End-of-basic education assessment and national Baccalauréat pathways",curriculum:"Tunisia national curriculum",language:"Arabic, with French important in many scientific and technical subjects"},
-"sudan":{name:"Sudan",cities:["Khartoum","Omdurman","Port Sudan","Kassala","Wad Madani","El Obeid"],exams:"Basic education assessment and Sudan School Certificate examination",curriculum:"Sudan national curriculum",language:"Arabic and English"},
-"south-sudan":{name:"South Sudan",cities:["Juba","Wau","Malakal","Yei","Bor","Aweil"],exams:"National primary and secondary assessment and certificate pathways",curriculum:"South Sudan national curriculum",language:"English, with local languages used in communities and some learning contexts"},
-"somalia":{name:"Somalia",cities:["Mogadishu","Hargeisa","Bosaso","Kismayo","Garowe","Baidoa"],exams:"National secondary school leaving examination pathways; arrangements vary by jurisdiction",curriculum:"Somalia national curriculum",language:"Somali, Arabic and English, depending on school and programme"},
-"eritrea":{name:"Eritrea",cities:["Asmara","Keren","Massawa","Assab","Mendefera","Barentu"],exams:"Middle-level national assessment and Eritrean Secondary Education Certificate Examination (ESECE)",curriculum:"Eritrea national curriculum",language:"Local Eritrean languages and English at different education stages"},
-"djibouti":{name:"Djibouti",cities:["Djibouti City","Ali Sabieh","Tadjourah","Obock","Dikhil","Arta"],exams:"CFEB, BEF and upper-secondary Baccalauréat pathways",curriculum:"Djibouti national curriculum",language:"French and Arabic, with Afar and Somali in the national language context"}
-};
+  "costa-rica": {
+    "name": "Costa Rica",
+    "cities": [
+      "San José",
+      "Alajuela",
+      "Cartago",
+      "Heredia",
+      "Liberia",
+      "Puntarenas"
+    ],
+    "exams": "Costa Rica national curriculum",
+    "curriculum": "Bachillerato en Educación Media",
+    "language": "MEP curriculum programmes"
+  },
+  "cote-divoire": {
+    "name": "Côte d’Ivoire",
+    "cities": [
+      "Abidjan",
+      "Bouaké",
+      "Yamoussoukro",
+      "Daloa",
+      "San-Pédro",
+      "Korhogo"
+    ],
+    "exams": "Côte d’Ivoire national curriculum",
+    "curriculum": "programme scolaire Côte d’Ivoire",
+    "language": "CEPE examination"
+  },
+  "croatia": {
+    "name": "Croatia",
+    "cities": [
+      "Zagreb",
+      "Split",
+      "Rijeka",
+      "Osijek",
+      "Zadar",
+      "Pula"
+    ],
+    "exams": "Croatia national curriculum",
+    "curriculum": "State Matura Croatia",
+    "language": "državna matura"
+  },
+  "cuba": {
+    "name": "Cuba",
+    "cities": [
+      "Havana",
+      "Santiago de Cuba",
+      "Camagüey",
+      "Holguín",
+      "Santa Clara",
+      "Guantánamo"
+    ],
+    "exams": "Cuba national curriculum",
+    "curriculum": "Cuba pre-university education",
+    "language": "Cuba university admission examinations"
+  },
+  "cyprus": {
+    "name": "Cyprus",
+    "cities": [
+      "Nicosia",
+      "Limassol",
+      "Larnaca",
+      "Paphos",
+      "Famagusta",
+      "Kyrenia"
+    ],
+    "exams": "Cyprus national curriculum",
+    "curriculum": "Pancyprian Examinations",
+    "language": "Cyprus Lyceum curriculum"
+  },
+  "czechia": {
+    "name": "Czechia",
+    "cities": [
+      "Prague",
+      "Brno",
+      "Ostrava",
+      "Plzeň",
+      "Liberec",
+      "Olomouc"
+    ],
+    "exams": "Czechia national curriculum",
+    "curriculum": "maturitní zkouška",
+    "language": "Czech Maturita examination"
+  },
+  "democratic-republic-of-the-congo": {
+    "name": "Democratic Republic of the Congo",
+    "cities": [
+      "Kinshasa",
+      "Lubumbashi",
+      "Mbuji-Mayi",
+      "Kisangani",
+      "Goma",
+      "Bukavu"
+    ],
+    "exams": "DR Congo national curriculum",
+    "curriculum": "TENAFEP ENAFEP examination",
+    "language": "TENASOSP examination"
+  },
+  "denmark": {
+    "name": "Denmark",
+    "cities": [
+      "Copenhagen",
+      "Aarhus",
+      "Odense",
+      "Aalborg",
+      "Esbjerg",
+      "Randers"
+    ],
+    "exams": "Denmark national curriculum",
+    "curriculum": "Folkeskole leaving examination",
+    "language": "Danish upper secondary stx hhx htx hf"
+  },
+  "djibouti": {
+    "name": "Djibouti",
+    "cities": [
+      "Djibouti City",
+      "Ali Sabieh",
+      "Tadjourah",
+      "Obock",
+      "Dikhil",
+      "Arta"
+    ],
+    "exams": "Djibouti national curriculum",
+    "curriculum": "CFEB Djibouti",
+    "language": "Brevet d’Enseignement Fondamental BEF"
+  },
+  "dominica": {
+    "name": "Dominica",
+    "cities": [
+      "Roseau",
+      "Portsmouth",
+      "Marigot",
+      "Berekua",
+      "Mahaut",
+      "Grand Bay"
+    ],
+    "exams": "Dominica national curriculum",
+    "curriculum": "Dominica CSEC examination",
+    "language": "Dominica CAPE subjects"
+  }
+}
 const $=id=>document.getElementById(id);
 const el=(tag,cls,txt)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=txt;return n;};
 const addMeta=(selector,attr,key,value)=>{let m=document.querySelector(selector);if(!m){m=document.createElement("meta");m.setAttribute(attr,key);document.head.appendChild(m);}m.content=value;};
