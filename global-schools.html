@@ -296,8 +296,8 @@ img.cbe-context-image{animation:cbeImageMotion 7s ease-in-out infinite alternate
 <script>
 /* First paint: show the learning dashboard before deferred country/SEO scripts execute. */
 (function(){
- var m=location.pathname.match(/^\\/global-schools\\/([^/]+)\\/?$/);if(!m)return;
- var slug=decodeURIComponent(m[1]).toLowerCase(),name=slug.replace(/-/g," ").replace(/\\b\\w/g,function(c){return c.toUpperCase();});
+ var m=location.pathname.match(/^\/global-schools\/([^/]+)\/?$/);if(!m)return;
+ var slug=decodeURIComponent(m[1]).toLowerCase(),name=slug.replace(/-/g," ").replace(/\b\\w/g,function(c){return c.toUpperCase();});
  var root=document.getElementById("gsCountry");if(!root)return;
  var title=document.getElementById("countryName");if(title)title.textContent=name;
  var sub=document.getElementById("countrySub");if(sub)sub.textContent="Explore "+name+" curriculum, online learning resources and national examination preparation.";
