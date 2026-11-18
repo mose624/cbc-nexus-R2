@@ -141,13 +141,8 @@
     hub.append(hero, body);
     root.insertBefore(hub, root.firstChild);
   }
-  // Run after the existing country renderer has completed its own load-time refresh.
-  // The legacy renderer removes/rebuilds country-learning-hub during window.load.
-  window.addEventListener("load", function () {
-    window.setTimeout(buildCountryDashboard, 300);
-  }, { once: true });
-  if (document.readyState !== "loading") {
-    // Handles pages where this script is loaded dynamically after the load event.
-    window.setTimeout(buildCountryDashboard, 300);
-  }
+  // Render immediately: this deferred script is loaded after the legacy country renderer.
+  // Re-render synchronously after its window.load refresh as well; no timers or delayed paint.
+  buildCountryDashboard();
+  window.addEventListener("load", buildCountryDashboard, { once: true });
 })();
