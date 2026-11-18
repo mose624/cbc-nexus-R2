@@ -127,7 +127,7 @@ const profiles={
    {question:"What language is used in Czech schools?",answer:"Czech is the main language of instruction, while minority-language, bilingual and international programmes are also available."}
   ]
  }
-});
+};
 Object.keys(profiles).forEach(slug=>{d[slug]=d[slug]?{...profiles[slug],...d[slug]}:profiles[slug];});
 window.CBE_COUNTRY_SEO_91_100=true;
 })();
