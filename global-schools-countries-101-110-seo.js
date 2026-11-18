@@ -127,7 +127,7 @@ const profiles={
    {question:"Are Irish and English both used in Irish schools?",answer:"English is widely used for instruction and Irish is a core subject. Gaeltacht and Irish-medium schools teach through Irish."}
   ]
  }
-});
+};
 Object.keys(profiles).forEach(slug=>{d[slug]=d[slug]?{...profiles[slug],...d[slug]}:profiles[slug];});
 window.CBE_COUNTRY_SEO_101_110=true;
 })();
