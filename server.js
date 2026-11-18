@@ -7,6 +7,7 @@ const { createUploadUrl, createDownloadUrl, createPdfPreview, createInlineUrl, g
 const mammoth = require("mammoth");
 const { supabase, supabaseConfigured } = require("./supabase");
 const seo = require("./seo");
+const undergraduateSeo = require("./undergraduate-seo");
 const globalSchools = require("./global-schools-data.js");
 // Keep server-side country routes aligned with the browser directory fallback.
 let globalCountryRegistryPromise = null;
@@ -3054,7 +3055,7 @@ async function serveStatic(req,res,url){
   if(req.method==="GET" && seoPage){
     const isAiAcademyPage=/ai-|chatgpt|gemini|generative-ai|prompt-engineering/i.test(String(url.pathname||""));
     const pageHeaders={"Content-Type":"text/html; charset=utf-8","Cache-Control":isAiAcademyPage?"no-store, no-cache, must-revalidate":"public, max-age=600"};if(isAiAcademyPage){pageHeaders.Pragma="no-cache";pageHeaders.Expires="0";}res.writeHead(200,pageHeaders);
-    res.end(injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(injectPageMetadata(injectSeoFooter(seoPage,url.pathname),url.pathname,req)),url.pathname)));
+    res.end(injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(undergraduateSeo.optimize(injectPageMetadata(injectSeoFooter(seoPage,url.pathname),url.pathname,req),url.pathname),url.pathname)));
     return;
   }
   if(req.method==="GET"&&/^[a-z0-9-]+\.html$/i.test(url.pathname.slice(1))){
@@ -3253,7 +3254,7 @@ async function serveStatic(req,res,url){
       if (!data.toString("utf8").includes("resource-centre-bridge.js")) data = Buffer.from(data.toString("utf8").replace("</body>", bridgeScript + "</body>"));
     }
     const ext=path.extname(target).toLowerCase();
-    if(ext===".html"){let pageHtml=await injectChapterNavigation(data.toString("utf8"),url.pathname);pageHtml=injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(injectPageMetadata(injectTrustedReferenceSection(pageHtml,url.pathname),url.pathname,req)),url.pathname));data=Buffer.from(pageHtml);}
+    if(ext===".html"){let pageHtml=await injectChapterNavigation(data.toString("utf8"),url.pathname);pageHtml=undergraduateSeo.optimize(pageHtml,url.pathname);pageHtml=injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(injectPageMetadata(injectTrustedReferenceSection(pageHtml,url.pathname),url.pathname,req)),url.pathname));data=Buffer.from(pageHtml);}
     const isHtml=ext===".html";
     const isEducationHubPage=["/blog.html","/learning-hub.html","/grade-10-school-finder.html"].includes(url.pathname);
     const isVersionedAsset=/[?&]v=|-[0-9]{8,}/.test(url.search||"") && [".css",".js"].includes(ext);
