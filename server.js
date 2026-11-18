@@ -3055,7 +3055,7 @@ async function serveStatic(req,res,url){
   if(req.method==="GET" && seoPage){
     const isAiAcademyPage=/ai-|chatgpt|gemini|generative-ai|prompt-engineering/i.test(String(url.pathname||""));
     const pageHeaders={"Content-Type":"text/html; charset=utf-8","Cache-Control":isAiAcademyPage?"no-store, no-cache, must-revalidate":"public, max-age=600"};if(isAiAcademyPage){pageHeaders.Pragma="no-cache";pageHeaders.Expires="0";}res.writeHead(200,pageHeaders);
-    res.end(injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(undergraduateSeo.optimize(injectPageMetadata(injectSeoFooter(seoPage,url.pathname),url.pathname,req),url.pathname),url.pathname)));
+    res.end(injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(injectPageMetadata(injectSeoFooter(seoPage,url.pathname),url.pathname,req)),url.pathname)));
     return;
   }
   if(req.method==="GET"&&/^[a-z0-9-]+\.html$/i.test(url.pathname.slice(1))){
