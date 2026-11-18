@@ -651,6 +651,35 @@
 .global-resources-all-countries{display:block;margin-top:10px;padding:10px;border-radius:8px;background:#e0f2fe;color:#075985!important;text-align:center;font-weight:800;text-decoration:none}
 @media(max-width:760px){.global-resources-country-dropdown{position:static}.global-resources-country-panel{position:absolute;left:8px;right:8px;width:auto}.global-resources-country-list{grid-template-columns:1fr 1fr;max-height:52vh}}
 </style>
+<style id="nexus-study-sprint-style">
+.nexus-study-sprint{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(20px,4vw,44px);margin:24px clamp(16px,4vw,48px);padding:clamp(22px,4vw,40px);border:1px solid #cfe0ee;border-radius:22px;background:linear-gradient(135deg,#eff8ff 0%,#fff 58%,#f0fdf4 100%);box-shadow:0 14px 36px rgba(15,45,75,.08)}
+.nexus-sprint-intro h2{font-size:clamp(25px,3vw,38px);line-height:1.12;margin:8px 0 12px;color:#123047}
+.nexus-sprint-intro>p:not(.eyebrow){color:#526579;line-height:1.65}
+.nexus-sprint-promise{display:flex;gap:12px;align-items:center;margin-top:22px;padding:14px 16px;border-radius:14px;background:#123b55;color:#fff;line-height:1.5}
+.nexus-sprint-promise>span:first-child{font-size:25px;color:#9de4c0}
+.nexus-sprint-form{padding:20px;border:1px solid #d8e5ef;border-radius:17px;background:#fff;box-shadow:0 8px 24px rgba(15,45,75,.06)}
+.nexus-sprint-form label{display:grid;gap:7px;font-weight:800;font-size:.9rem;color:#263e52}
+.nexus-sprint-form input,.nexus-sprint-form select{width:100%;min-height:46px;padding:10px 12px;border:1px solid #cbd8e3;border-radius:9px;background:#fff;color:#172b3d}
+.nexus-sprint-form input:focus,.nexus-sprint-form select:focus{outline:3px solid rgba(14,116,144,.16);border-color:#0e7490}
+.nexus-sprint-fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:15px 0}
+.nexus-sprint-generate{width:100%;min-height:49px;border:0;border-radius:10px;background:#087a57;color:#fff;font-weight:900;cursor:pointer}
+.nexus-sprint-generate:hover{background:#066448}
+.nexus-sprint-privacy{font-size:.78rem;color:#68798a;margin:10px 0 0}
+.nexus-sprint-result{grid-column:1/-1;padding:22px;border:1px solid #c8e5d4;border-radius:16px;background:#fff}
+.nexus-sprint-result h3{margin:0 0 6px;color:#123b2b}
+.nexus-sprint-result .nexus-plan-meta{color:#607386;margin:0 0 16px}
+.nexus-sprint-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.nexus-sprint-step{padding:14px;border-radius:12px;background:#f3f8fb;border:1px solid #dce8ef}
+.nexus-sprint-step strong{display:block;color:#087a57;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em}
+.nexus-sprint-step b{display:block;margin:5px 0;color:#1d3448}
+.nexus-sprint-step p{margin:0;color:#526579;font-size:.9rem;line-height:1.5}
+.nexus-sprint-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.nexus-sprint-actions a{display:inline-flex;align-items:center;justify-content:center;padding:11px 15px;border-radius:9px;background:#123b55;color:#fff;font-weight:800}
+.nexus-sprint-actions a:last-child{background:#e7f5ed;color:#145b3d;border:1px solid #b9dfca}
+@media(max-width:820px){.nexus-study-sprint{grid-template-columns:1fr}.nexus-sprint-steps{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.nexus-sprint-fields,.nexus-sprint-steps{grid-template-columns:1fr}.nexus-study-sprint{margin:16px 12px;padding:18px}.nexus-sprint-form{padding:15px}}
+@media(prefers-reduced-motion:reduce){.nexus-study-sprint *{scroll-behavior:auto!important;transition:none!important}}
+</style>
 </head>
   <body>
     <a class="cbe-skip-link" href="#main-content">Skip to main content</a>
@@ -956,6 +985,41 @@
   </div>
   <div class="cbe-learning-example"><div><p class="eyebrow">A quick worked example</p><h3>Using Ohm’s law</h3><p>Ohm’s law links potential difference, current and resistance: <strong>V = I × R</strong>.</p><p>If a lamp has a resistance of 6 Ω and a current of 2 A flows through it:</p><ol><li>Write the formula: V = I × R.</li><li>Substitute: V = 2 × 6.</li><li>Calculate: V = 12 V.</li></ol><p><strong>Answer:</strong> The potential difference is 12 volts.</p></div><aside class="cbe-learning-check"><h3>Try it yourself</h3><p>A resistor of 4 Ω carries a current of 3 A. What is the potential difference?</p><details><summary>Reveal the answer and method</summary><p>V = I × R = 3 A × 4 Ω = <strong>12 V</strong>.</p></details></aside></div>
   <p class="cbe-learning-studio-footer">Looking for a particular topic? <a href="/resource-category.html">Browse the learning library by grade, subject and resource type</a>, or explore the <a href="/quizzes.html">interactive question bank</a>.</p>
+</section>
+<section id="nexusStudySprint" class="nexus-study-sprint" aria-labelledby="nexusStudySprintTitle">
+  <div class="nexus-sprint-intro">
+    <p class="eyebrow">YOUR SIGNATURE CBE NEXUS TOOL</p>
+    <h2 id="nexusStudySprintTitle">Turn a learning goal into a study plan you can actually finish.</h2>
+    <p>Build a focused study sprint for your curriculum, course or professional goal. The planner divides your available time into learning, application, self-testing and reflection.</p>
+    <div class="nexus-sprint-promise"><span aria-hidden="true">✦</span><span><strong>The Nexus Learning Loop</strong><br>Understand → Apply → Test → Improve</span></div>
+  </div>
+  <form class="nexus-sprint-form" id="nexusSprintForm">
+    <label>What are you studying?
+      <input id="nexusSprintSubject" name="subject" maxlength="90" placeholder="e.g. Biology — cell division" required>
+    </label>
+    <div class="nexus-sprint-fields">
+      <label>Your learning stage
+        <select id="nexusSprintLevel" name="level">
+          <option>Primary / elementary</option><option>Lower secondary</option><option>Upper secondary</option><option>University / college</option><option>TVET / vocational</option><option>Teacher / professional learning</option>
+        </select>
+      </label>
+      <label>Curriculum or programme
+        <input id="nexusSprintCurriculum" name="curriculum" maxlength="70" placeholder="e.g. Cambridge, IB, national curriculum">
+      </label>
+      <label>Your main goal
+        <select id="nexusSprintGoal" name="goal">
+          <option value="understand">Understand a difficult concept</option><option value="exam">Prepare for an examination</option><option value="practice">Practise questions and improve accuracy</option><option value="assignment">Complete an assignment or project</option><option value="career">Build a practical or professional skill</option>
+        </select>
+      </label>
+      <label>Time available
+        <select id="nexusSprintTime" name="minutes"><option value="20">20 minutes</option><option value="30" selected>30 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option>
+        </select>
+      </label>
+    </div>
+    <button class="nexus-sprint-generate" type="submit">Build my learning sprint <span aria-hidden="true">→</span></button>
+    <p class="nexus-sprint-privacy">No account or personal details required. Your entries are used in this page to create the plan.</p>
+  </form>
+  <div id="nexusSprintResult" class="nexus-sprint-result" aria-live="polite" hidden></div>
 </section>
 <section class="homepage-seo-content" aria-labelledby="global-education-heading">
   <h2 id="global-education-heading">Explore Education in 196 Countries</h2>
@@ -2187,6 +2251,40 @@
     menu.addEventListener("toggle",function(){if(menu.open&&search){search.value="";items.forEach(function(link){link.hidden=false;});search.focus();}});
     document.addEventListener("click",function(event){if(menu.open&&!menu.contains(event.target))menu.open=false;});
     document.addEventListener("keydown",function(event){if(event.key==="Escape")menu.open=false;});
+  });
+})();
+</script>
+<script id="nexus-study-sprint-script">
+(function(){
+  const form=document.getElementById("nexusSprintForm");
+  const result=document.getElementById("nexusSprintResult");
+  if(!form||!result||form.dataset.ready==="1")return;
+  form.dataset.ready="1";
+  const goalText={
+    understand:["Build a clear mental model","Choose one unfamiliar idea. Read a short explanation, define key terms in your own words and sketch how the parts connect.","Work through one solved example, then attempt a similar example without looking at the solution.","Answer two recall questions: explain the idea and give one real-world example.","Write down the point that still feels unclear and the next question to investigate."],
+    exam:["Prepare for examination conditions","List the examinable subtopics and write down what you can recall before opening your notes.","Review one high-value topic, then study the method behind a representative examination question.","Attempt a short timed set of questions. Mark your responses and identify the reason for each error.","Record the three facts, methods or skills to revisit in your next revision session."],
+    practice:["Improve accuracy through deliberate practice","Review the instructions, success criteria and one worked example for the topic.","Complete a small set of progressively harder questions, showing every step of your reasoning.","Check each answer. Classify errors as knowledge gaps, method errors or careless mistakes.","Choose one error pattern and write a specific action to prevent it next time."],
+    assignment:["Make measurable progress on an assignment","Rewrite the task as a clear deliverable and list the requirements, constraints and marking criteria.","Create an outline, research plan, design or sequence of practical steps for the deliverable.","Complete one substantial section or test one part of your solution against the requirements.","Note what is complete, what evidence is still needed and the next action."],
+    career:["Practise a useful professional skill","Define the skill and the real task it helps you perform. Identify what a good result looks like.","Study a demonstration, procedure or professional example, noting the decisions behind it.","Practise the skill on a small realistic task and evaluate the result against a checklist.","Write one improvement and decide how you will demonstrate the skill in a portfolio or workplace."]
+  };
+  form.addEventListener("submit",function(event){
+    event.preventDefault();
+    const subject=document.getElementById("nexusSprintSubject").value.trim();
+    if(!subject){document.getElementById("nexusSprintSubject").focus();return;}
+    const level=document.getElementById("nexusSprintLevel").value;
+    const curriculum=document.getElementById("nexusSprintCurriculum").value.trim();
+    const goal=document.getElementById("nexusSprintGoal").value;
+    const minutes=Number(document.getElementById("nexusSprintTime").value)||30;
+    const labels=["LEARN","APPLY","TEST","REFLECT"];
+    const ratios=[.4,.3,.2,.1];
+    const allocations=ratios.map((r,i)=>i===3?minutes-ratios.slice(0,3).reduce((sum,x)=>sum+Math.round(minutes*x),0):Math.round(minutes*r));
+    const tasks=goalText[goal]||goalText.understand;
+    const cards=labels.map((label,i)=>'<article class="nexus-sprint-step"><strong>'+label+' · '+allocations[i]+' min</strong><b>'+tasks[i]+'</b><p>'+tasks[i+1]+'</p></article>').join("");
+    const safeSubject=subject.replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+    const safeCurriculum=curriculum.replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+    result.innerHTML='<h3>Your '+minutes+'-minute Nexus Learning Sprint: '+safeSubject+'</h3><p class="nexus-plan-meta">'+level+(safeCurriculum?' · '+safeCurriculum:'')+' · '+(goal==='exam'?'Exam preparation':goal==='practice'?'Question practice':goal==='assignment'?'Assignment progress':goal==='career'?'Professional skill':'Concept mastery')+'</p><div class="nexus-sprint-steps">'+cards+'</div><div class="nexus-sprint-actions"><a href="/resource-category.html">Find learning resources</a><a href="/quizzes.html">Practise and self-assess</a><a href="/interactive-questions.html">Explore question bank</a></div>';
+    result.hidden=false;
+    result.scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"nearest"});
   });
 })();
 </script>
