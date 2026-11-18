@@ -2275,11 +2275,11 @@
     const curriculum=document.getElementById("nexusSprintCurriculum").value.trim();
     const goal=document.getElementById("nexusSprintGoal").value;
     const minutes=Number(document.getElementById("nexusSprintTime").value)||30;
-    const labels=["LEARN","APPLY","TEST","REFLECT"];
+    const labels=["LEARN","APPLY","TEST","REFLECT"];\n    const stepTitles=["Choose the focus","Build understanding or make progress","Check the quality of your work","Capture the next step"];
     const ratios=[.4,.3,.2,.1];
     const allocations=ratios.map((r,i)=>i===3?minutes-ratios.slice(0,3).reduce((sum,x)=>sum+Math.round(minutes*x),0):Math.round(minutes*r));
     const tasks=goalText[goal]||goalText.understand;
-    const cards=labels.map((label,i)=>'<article class="nexus-sprint-step"><strong>'+label+' · '+allocations[i]+' min</strong><b>'+tasks[i]+'</b><p>'+tasks[i+1]+'</p></article>').join("");
+    const cards=labels.map((label,i)=>'<article class="nexus-sprint-step"><strong>'+label+' · '+allocations[i]+' min</strong><b>'+stepTitles[i]+'</b><p>'+tasks[i+1]+'</p></article>').join("");
     const safeSubject=subject.replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
     const safeCurriculum=curriculum.replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
     result.innerHTML='<h3>Your '+minutes+'-minute Nexus Learning Sprint: '+safeSubject+'</h3><p class="nexus-plan-meta">'+level+(safeCurriculum?' · '+safeCurriculum:'')+' · '+(goal==='exam'?'Exam preparation':goal==='practice'?'Question practice':goal==='assignment'?'Assignment progress':goal==='career'?'Professional skill':'Concept mastery')+'</p><div class="nexus-sprint-steps">'+cards+'</div><div class="nexus-sprint-actions"><a href="/resource-category.html">Find learning resources</a><a href="/quizzes.html">Practise and self-assess</a><a href="/interactive-questions.html">Explore question bank</a></div>';
