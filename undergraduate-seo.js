@@ -36,13 +36,16 @@ function infoFor(pathname){
 }
 function keywords(info,heading){
   const topic=heading.replace(/^chapter\s+\d+\s*[:—-]?\s*/i,"").replace(/^unit\s+\d+\s*[:—-]?\s*/i,"").trim();
-  return [...new Set([
+  const values=[
     info.subject+" undergraduate notes","undergraduate "+info.subject.toLowerCase()+" notes",
-    info.subject+" degree study guide",info.subject+" university learning resources",
-    topic&&topic+" notes",topic&&topic+" definitions",topic&&topic+" explained",
-    topic&&topic+" worked examples",topic&&topic+" revision questions",
-    topic&&topic+" case studies","undergraduate exam revision","university chapter notes"
-  ].filter(Boolean))].slice(0,14).join(", ");
+    info.subject+" degree study guide",info.subject+" university learning resources"
+  ];
+  if(info.isChapter||info.isUnit){
+    values.push(topic+" notes",topic+" definitions",topic+" explained",topic+" worked examples",topic+" revision questions",topic+" case studies","undergraduate exam revision","university chapter notes");
+  }else{
+    values.push(info.subject+" course structure",info.subject+" degree subjects",info.subject+" course outline","undergraduate "+info.subject.toLowerCase()+" course guide","degree learning outcomes");
+  }
+  return [...new Set(values.filter(Boolean))].slice(0,14).join(", ");
 }
 function description(info,heading){
   const value=info.isChapter
