@@ -2901,13 +2901,13 @@ function invalidateHomepageHtmlCache(){
 }
 
 async function injectChapterNavigation(html,pathname){
-  const match=String(pathname||"").match(/^\\/(undergraduate-[a-z0-9-]+)-chapter-(\\d+)\\.html$/i);
+  const match=String(pathname||"").match(/^\/(undergraduate-[a-z0-9-]+)-chapter-(\d+)\.html$/i);
   if(!match||/id=["']cbe-chapter-navigation["']/i.test(html))return html;
   const prefix=match[1],current=Number(match[2]);
   try{
     const entries=await fs.readdir(ROOT);
     const chapters=entries.map(name=>{
-      const found=name.match(new RegExp("^"+prefix+"-chapter-(\\\\d+)\\\\.html$","i"));
+      const found=name.match(new RegExp("^"+prefix+"-chapter-(\\d+)\\.html$","i"));
       return found?{name,number:Number(found[1])}:null;
     }).filter(Boolean).sort((a,b)=>a.number-b.number);
     const previous=[...chapters].reverse().find(item=>item.number<current);
@@ -2917,7 +2917,7 @@ async function injectChapterNavigation(html,pathname){
     const items=[link(previous,"← Previous chapter"),guide,link(next,"Next chapter →")].filter(Boolean);
     if(!items.length)return html;
     const nav='<nav id="cbe-chapter-navigation" aria-label="Chapter navigation" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;margin:22px 0;padding:14px 16px;border:1px solid #cbdde9;border-radius:10px;background:#f2f8fc"><strong style="color:#123b5a">Continue learning</strong>'+items.join("")+'</nav>';
-    return /<\\/main>/i.test(html)?html.replace(/<\\/main>/i,nav+"</main>"):html.replace(/<\\/body>/i,nav+"</body>");
+    return /<\/main>/i.test(html)?html.replace(/<\/main>/i,nav+"</main>"):html.replace(/<\/body>/i,nav+"</body>");
   }catch(error){
     console.warn("Chapter navigation could not be generated:",error.message||error);
     return html;
