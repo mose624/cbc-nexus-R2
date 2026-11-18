@@ -39,7 +39,7 @@ async function getCountrySeoProfiles(){
   if(!countrySeoProfilesPromise){
     countrySeoProfilesPromise=(async()=>{
       const page=await fs.readFile(path.join(ROOT,"global-schools.html"),"utf8");
-      const scriptPaths=[...page.matchAll(/<script\s+src=["']\/([^"']+)["']/gi)].map(match=>match[1].split(/[?#]/,1)[0]);
+      const scriptPaths=[...page.matchAll(/<script\b[^>]*\bsrc=["']\/([^"']+)["'][^>]*>/gi)].map(match=>match[1].split(/[?#]/,1)[0]);
       const profileFiles=[...new Set(scriptPaths.filter(name=>/^global-schools-(?:first10-seo|countries-11-20|countries-\d+-\d+-seo|countries-remaining-\d+-seo|language-countries-\d+-\d+)\.js$/i.test(name)))];
       const profiles={};
       for(const filename of profileFiles){
