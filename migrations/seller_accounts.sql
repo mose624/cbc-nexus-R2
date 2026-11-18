@@ -10,6 +10,7 @@ create extension if not exists pgcrypto;
 create table if not exists public.users (
   id uuid primary key default gen_random_uuid(),
   name text not null,
+  full_name text,
   phone text not null,
   role text not null default 'seller',
   status text not null default 'active',
@@ -18,6 +19,7 @@ create table if not exists public.users (
 
 alter table public.users
   add column if not exists name text,
+  add column if not exists full_name text,
   add column if not exists phone text,
   add column if not exists role text not null default 'seller',
   add column if not exists status text not null default 'active',
