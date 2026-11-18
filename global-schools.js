@@ -118,6 +118,10 @@ function renderCountry(){
  const slug=routeSlug();if(!slug)return;
  const c=countries.find(x=>x.slug===slug);if(!c){text($("gsTitle"),"Country not found");text($("gsIntro"),"This country slug is not in the current country registry. Return to the directory and select a listed country.");return;}
  const d=details[slug]||{};
+ // Country data is enriched in later, non-blocking script batches. Remove the previous
+ // dashboard instance before the final refresh so late enrichment never duplicates UI.
+ const priorLearningHub=document.getElementById("country-learning-hub");if(priorLearningHub)priorLearningHub.remove();
+ const priorMarketplace=document.getElementById("countryOnlineLearning");if(priorMarketplace)priorMarketplace.remove();
  // Worldwide vacancy roundup belongs on the central directory page only, never on every country profile.
  const worldwideVacancies=$("globalVacancies");if(worldwideVacancies)worldwideVacancies.classList.add("gs-hidden");
  $("gsHero").classList.add("gs-hidden");$("gsDirectory").classList.add("gs-hidden");$("gsSearchWrap").classList.add("gs-hidden");$("gsCountry").classList.remove("gs-hidden");
@@ -544,4 +548,6 @@ $("countrySearch").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventD
 renderCountries("");
  const directoryHero=$("gsHero");if(directoryHero)directoryHero.style.setProperty("--gs-learner-bg",'url("https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1800&q=82")');
  renderCountry();
+ // Expose a safe idempotent refresh for country data loaded after the first paint.
+ window.CBE_REFRESH_COUNTRY_DASHBOARD=renderCountry;
 })();
