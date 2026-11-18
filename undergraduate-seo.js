@@ -64,7 +64,7 @@ function optimize(html,pathname){
   const heading=h1(out)||title(out)||info.subject+" Undergraduate Notes";
   const pageTitle=title(out)||(info.isChapter?heading+" | "+info.subject+" Notes | CBE Nexus":info.subject+" Undergraduate Notes and Study Guide | CBE Nexus");
   const brandedTitle=/cbe nexus/i.test(pageTitle)?pageTitle:pageTitle+" | CBE Nexus";
-  out=out.replace(/<title[^>]*>[\\s\\S]*?<\\/title>/i,"<title>"+esc(brandedTitle)+"</title>");
+  const oldTitleTag=out.match(/<title[^>]*>[\s\S]*?<\/title>/i); if(oldTitleTag)out=out.replace(oldTitleTag[0],"<title>"+esc(brandedTitle)+"</title>");
   const canonical=BASE+"/"+info.file;
   const desc=getMeta(out,"description")||description(info,heading);
   out=setMeta(out,"description",desc.slice(0,160));
