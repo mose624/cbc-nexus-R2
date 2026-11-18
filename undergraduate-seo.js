@@ -63,6 +63,8 @@ function optimize(html,pathname){
   let out=html;
   const heading=h1(out)||title(out)||info.subject+" Undergraduate Notes";
   const pageTitle=title(out)||(info.isChapter?heading+" | "+info.subject+" Notes | CBE Nexus":info.subject+" Undergraduate Notes and Study Guide | CBE Nexus");
+  const brandedTitle=/cbe nexus/i.test(pageTitle)?pageTitle:pageTitle+" | CBE Nexus";
+  out=out.replace(/<title[^>]*>[\\s\\S]*?<\\/title>/i,"<title>"+esc(brandedTitle)+"</title>");
   const canonical=BASE+"/"+info.file;
   const desc=getMeta(out,"description")||description(info,heading);
   out=setMeta(out,"description",desc.slice(0,160));
@@ -71,11 +73,11 @@ function optimize(html,pathname){
   out=setMeta(out,"author","CBE Nexus Editorial Team");
   out=setMeta(out,"og:site_name","CBE Nexus","property");
   out=setMeta(out,"og:type",info.isChapter?"article":"website","property");
-  out=setMeta(out,"og:title",pageTitle,"property");
+  out=setMeta(out,"og:title",brandedTitle,"property");
   out=setMeta(out,"og:description",desc.slice(0,160),"property");
   out=setMeta(out,"og:url",canonical,"property");
   out=setMeta(out,"twitter:card","summary","name");
-  out=setMeta(out,"twitter:title",pageTitle,"name");
+  out=setMeta(out,"twitter:title",brandedTitle,"name");
   out=setMeta(out,"twitter:description",desc.slice(0,160),"name");
   const canonicalTag='<link rel="canonical" href="'+canonical+'">';
   if(/<link\b[^>]*rel=["']canonical["'][^>]*>/i.test(out))out=out.replace(/<link\b[^>]*rel=["']canonical["'][^>]*>/i,canonicalTag);
