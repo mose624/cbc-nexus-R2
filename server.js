@@ -2900,6 +2900,30 @@ function invalidateHomepageHtmlCache(){
   homepageHtmlCacheTime=0;
 }
 
+async function injectChapterNavigation(html,pathname){
+  const match=String(pathname||"").match(/^\\/(undergraduate-[a-z0-9-]+)-chapter-(\\d+)\\.html$/i);
+  if(!match||/id=["']cbe-chapter-navigation["']/i.test(html))return html;
+  const prefix=match[1],current=Number(match[2]);
+  try{
+    const entries=await fs.readdir(ROOT);
+    const chapters=entries.map(name=>{
+      const found=name.match(new RegExp("^"+prefix+"-chapter-(\\\\d+)\\\\.html$","i"));
+      return found?{name,number:Number(found[1])}:null;
+    }).filter(Boolean).sort((a,b)=>a.number-b.number);
+    const previous=[...chapters].reverse().find(item=>item.number<current);
+    const next=chapters.find(item=>item.number>current);
+    const guide=entries.includes(prefix+".html")?'<a href="/'+prefix+'.html">Course guide</a>':"";
+    const link=(item,label)=>item?'<a href="/'+item.name+'">'+label+'</a>':"";
+    const items=[link(previous,"← Previous chapter"),guide,link(next,"Next chapter →")].filter(Boolean);
+    if(!items.length)return html;
+    const nav='<nav id="cbe-chapter-navigation" aria-label="Chapter navigation" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;margin:22px 0;padding:14px 16px;border:1px solid #cbdde9;border-radius:10px;background:#f2f8fc"><strong style="color:#123b5a">Continue learning</strong>'+items.join("")+'</nav>';
+    return /<\\/main>/i.test(html)?html.replace(/<\\/main>/i,nav+"</main>"):html.replace(/<\\/body>/i,nav+"</body>");
+  }catch(error){
+    console.warn("Chapter navigation could not be generated:",error.message||error);
+    return html;
+  }
+}
+
 async function serveStatic(req,res,url){
   if(req.method==="GET" && url.pathname==="/health"){
     res.writeHead(200,{"Content-Type":"text/plain; charset=utf-8","Cache-Control":"no-store"});
@@ -3229,7 +3253,7 @@ async function serveStatic(req,res,url){
       if (!data.toString("utf8").includes("resource-centre-bridge.js")) data = Buffer.from(data.toString("utf8").replace("</body>", bridgeScript + "</body>"));
     }
     const ext=path.extname(target).toLowerCase();
-    if(ext===".html") data=Buffer.from(injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(injectPageMetadata(injectTrustedReferenceSection(data.toString("utf8"),url.pathname),url.pathname,req)),url.pathname)));
+    if(ext===".html"){let pageHtml=await injectChapterNavigation(data.toString("utf8"),url.pathname);pageHtml=injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(injectPageMetadata(injectTrustedReferenceSection(pageHtml,url.pathname),url.pathname,req)),url.pathname));data=Buffer.from(pageHtml);}
     const isHtml=ext===".html";
     const isEducationHubPage=["/blog.html","/learning-hub.html","/grade-10-school-finder.html"].includes(url.pathname);
     const isVersionedAsset=/[?&]v=|-[0-9]{8,}/.test(url.search||"") && [".css",".js"].includes(ext);
