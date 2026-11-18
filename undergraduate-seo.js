@@ -105,6 +105,10 @@ function optimize(html,pathname){
     crumbs.push({"@type":"ListItem","position":3,"name":heading,"item":canonical});
   }
   out=addSchema(out,{"@context":"https://schema.org","@type":"BreadcrumbList","@id":canonical+"#breadcrumb","itemListElement":crumbs},"breadcrumb-list");
+  if(info.isChapter && !out.includes("/undergraduate-learning-tools.js")){
+    const toolsScript='<script src="/undergraduate-learning-tools.js?v=20261118" defer></script>';
+    out=out.replace(/<\\/head>/i,toolsScript+"\\n</head>");
+  }
   return out;
 }
 module.exports={optimize,infoFor,keywords};
