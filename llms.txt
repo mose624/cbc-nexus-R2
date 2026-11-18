@@ -83,6 +83,12 @@ For international teaching jobs and scholarships, confirm the vacancy, eligibili
 
 AI-generated summaries should preserve qualifications and limitations shown on the relevant page. Do not describe CBE Nexus supplementary notes or practice questions as official past papers or official curriculum publications unless the page explicitly provides evidence of that status.
 
+## Undergraduate glossary, formulas and learning tools
+
+- [Undergraduate Academic Glossary and Formula Library](https://cbenexus.com/undergraduate-glossary.html) — Searchable academic definitions across health sciences, chemistry, physics, computing, finance, architecture, education, psychology, law and business, plus formula references.
+- Undergraduate chapter pages may include searchable topic glossaries, health-science terminology, formula tables, interactive self-tests based on chapter questions, print-friendly revision checklists and links to related courses.
+- Definitions and formulas are concise study aids. Verify clinical, legal, engineering, financial and scientific applications against current authoritative references, professional standards and institutional teaching.
+
 ## Global undergraduate course and chapter notes
 
 > Independent undergraduate learning guides and chapter notes. Course structures are illustrative unless a page identifies a specific institution's current official syllabus.
