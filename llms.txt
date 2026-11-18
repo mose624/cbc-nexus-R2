@@ -86,6 +86,7 @@ AI-generated summaries should preserve qualifications and limitations shown on t
 ## Undergraduate glossary, formulas and learning tools
 
 - [Undergraduate Academic Glossary and Formula Library](https://cbenexus.com/undergraduate-glossary.html) — Searchable academic definitions across health sciences, chemistry, physics, computing, finance, architecture, education, psychology, law and business, plus formula references.
+- [Undergraduate Chapter Quality Checklist](https://cbenexus.com/UNDERGRADUATE-CHAPTER-QUALITY-CHECKLIST.md) — Editorial standards for chapter definitions, explanations, diagrams, worked examples, questions, references and internal links.
 - Undergraduate chapter pages may include searchable topic glossaries, health-science terminology, formula tables, interactive self-tests based on chapter questions, print-friendly revision checklists and links to related courses.
 - Definitions and formulas are concise study aids. Verify clinical, legal, engineering, financial and scientific applications against current authoritative references, professional standards and institutional teaching.
 
