@@ -1,6 +1,14 @@
 # CBE Nexus undergraduate chapter quality checklist
 
-Use this checklist when writing or reviewing each undergraduate chapter. It is a quality standard, not a word-count target. A chapter should be as long as the subject requires, with no filler.
+Use this checklist when writing or reviewing each undergraduate chapter. It is a quality standard, not a word-count target. A chapter should be as long as the subject requires, with no filler. Do not impose arbitrary 5,000- or 10,000-word targets: completeness, accuracy, clarity and demonstrated learning take priority over length.
+
+## 0. Learning design and outcomes
+
+- State clear, assessable learning outcomes at the beginning of the chapter.
+- Organise the chapter in a logical sequence from foundational knowledge to advanced application.
+- Connect explanations, diagrams, worked examples and assessment questions directly to the stated outcomes.
+- Include prerequisite knowledge and explain important links to subsequent topics.
+- Use accessible language without sacrificing correct university-level terminology; explain specialist language when first introduced.
 
 ## 1. Definitions and glossary
 
@@ -74,6 +82,7 @@ The global glossary currently provides an interdisciplinary reference set and a 
 ## Editorial review before publication
 
 A reviewer should confirm:
+- The chapter teaches every stated learning outcome at an appropriate undergraduate level; no section exists merely to increase word count.
 - Terminology, equations, diagrams, units and examples are correct.
 - References exist, are relevant and support the claims cited.
 - Questions and answers align with the chapter learning outcomes.
