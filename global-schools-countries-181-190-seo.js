@@ -124,7 +124,7 @@ const profiles={
    {"question":"Does Dominica offer technical and vocational education?","answer":"Yes. Technical and vocational education forms part of the country's education and training pathways."}
   ]
  }
-});
+};
 Object.keys(profiles).forEach(slug=>{if(slug==="congo")return;d[slug]=d[slug]?{...profiles[slug],...d[slug]}:profiles[slug];});
 window.CBE_COUNTRY_SEO_181_190=true;
 })();
