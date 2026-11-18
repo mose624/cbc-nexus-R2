@@ -14,7 +14,7 @@ function esc(v){return String(v||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&l
 function clean(v){return String(v||"").replace(/<[^>]*>/g," ").replace(/&nbsp;/gi," ").replace(/&amp;/gi,"&").replace(/\s+/g," ").trim();}
 function metaTag(html,name,attr){
   const tags=html.match(/<meta\b[^>]*>/gi)||[];
-  return tags.find(t=>new RegExp("\\b"+attr+"=[\\"']"+name+"[\\"']","i").test(t))||"";
+  return tags.find(t => t.toLowerCase().includes(attr.toLowerCase() + "=" + String.fromCharCode(34) + name.toLowerCase() + String.fromCharCode(34)) || t.toLowerCase().includes(attr.toLowerCase() + "=" + String.fromCharCode(39) + name.toLowerCase() + String.fromCharCode(39))) || "";
 }
 function getMeta(html,name,attr="name"){const t=metaTag(html,name,attr);return t.match(/\bcontent=["']([^"']*)["']/i)?.[1]||"";}
 function setMeta(html,name,value,attr="name"){
