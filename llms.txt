@@ -4,7 +4,7 @@
 >
 > Connecting Learners to Excellence. Learn Better. Teach Better. Achieve More.
 
-CBE Nexus is a Kenya-focused education platform for learners, teachers, parents, and schools. Its mission is to make educational resources and education-related opportunities easier to discover and access.
+CBE Nexus is a global education platform connecting learners, teachers, parents, schools and higher-education communities with learning resources and education-related opportunities across countries. Kenya-specific curriculum and school services are included alongside international education resources.
 
 ## Primary website
 
@@ -89,7 +89,6 @@ AI-generated summaries should preserve qualifications and limitations shown on t
 
 - [Global University Courses](https://cbenexus.com/global-university-courses.html) — Undergraduate course discovery and study pathways.
 - [University Resources](https://cbenexus.com/university-resources.html) — Higher education subject and learning-resource hub.
-- [Undergraduate SEO, GEO and AI content standard](https://cbenexus.com/UNDERGRADUATE-SEO-GEO-AI-STANDARD.md) — Editorial definitions, metadata guidance and content-quality recommendations.
 
 ### Undergraduate course and unit landing pages
 
