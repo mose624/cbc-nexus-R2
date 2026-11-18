@@ -6,16 +6,15 @@ const health=/nursing|medicine|surgery|public-health|pharmacy|biotechnology/i.te
 const related={
 nursing:["undergraduate-medicine-surgery.html","undergraduate-public-health.html","undergraduate-psychology.html"],
 "medicine-surgery":["undergraduate-nursing.html","undergraduate-public-health.html","undergraduate-biotechnology.html"],
-"public-health":["undergraduate-nursing.html","undergraduate-medicine-surgery.html","undergraduate-psychology.html"],
+"public-health":["undergraduate-nursing.html","undergraduate-medicine-surgery.html","undergraduate-social-work.html"],
 "chemistry-notes":["undergraduate-biotechnology.html","undergraduate-physics.html","undergraduate-civil-engineering.html"],
 "chemistry-advanced-chapters":["undergraduate-biotechnology.html","undergraduate-physics.html","undergraduate-civil-engineering.html"],
 "accounting-finance":["undergraduate-business-administration-management.html","undergraduate-project-management.html","undergraduate-information-systems.html"],
 "computer-science":["undergraduate-information-systems.html","undergraduate-cybersecurity.html","undergraduate-data-science-ai.html"],
 psychology:["undergraduate-education.html","undergraduate-human-resource-management.html","undergraduate-public-health.html"],
-architecture:["undergraduate-civil-engineering.html","undergraduate-project-management.html","undergraduate-computer-science.html"]
+architecture:["undergraduate-civil-engineering.html","undergraduate-project-management.html","undergraduate-computer-science.html"],
 biotechnology:["undergraduate-chemistry-notes.html","undergraduate-medicine-surgery.html","undergraduate-public-health.html"],
 "business-administration-management":["undergraduate-accounting-finance.html","undergraduate-human-resource-management.html","undergraduate-supply-chain-management.html"],
-"chemistry-advanced-chapters":["undergraduate-biotechnology.html","undergraduate-physics.html","undergraduate-civil-engineering.html"],
 "civil-engineering":["undergraduate-architecture.html","undergraduate-electrical-electronic-engineering.html","undergraduate-project-management.html"],
 cybersecurity:["undergraduate-computer-science.html","undergraduate-information-systems.html","undergraduate-data-science-ai.html"],
 "data-science-ai":["undergraduate-computer-science.html","undergraduate-information-systems.html","undergraduate-cybersecurity.html"],
@@ -26,10 +25,9 @@ education:["undergraduate-psychology.html","undergraduate-social-work.html","und
 law:["undergraduate-business-administration-management.html","undergraduate-human-resource-management.html","undergraduate-public-health.html"],
 pharmacy:["undergraduate-medicine-surgery.html","undergraduate-nursing.html","undergraduate-biotechnology.html"],
 "project-management":["undergraduate-civil-engineering.html","undergraduate-business-administration-management.html","undergraduate-supply-chain-management.html"],
-"public-health":["undergraduate-nursing.html","undergraduate-medicine-surgery.html","undergraduate-social-work.html"],
 "social-work":["undergraduate-psychology.html","undergraduate-public-health.html","undergraduate-education.html"],
 "software-engineering":["undergraduate-computer-science.html","undergraduate-information-systems.html","undergraduate-cybersecurity.html"],
-"supply-chain-management":["undergraduate-business-administration-management.html","undergraduate-accounting-finance.html","undergraduate-project-management.html"],
+"supply-chain-management":["undergraduate-business-administration-management.html","undergraduate-accounting-finance.html","undergraduate-project-management.html"]
 };
 const css=".cbe-study-tools{max-width:1000px;margin:24px auto;padding:0 18px;color:#203247;font:15px/1.6 Arial,sans-serif}.cbe-tool-panel{background:#fff;border:1px solid #d5e1eb;border-radius:12px;padding:20px;margin:16px 0}.cbe-tool-panel h2{margin:0 0 10px;color:#14577f}.cbe-tool-search{width:100%;padding:11px;border:1px solid #aebfce;border-radius:8px;font:inherit}.cbe-tool-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}.cbe-term{padding:12px;border:1px solid #dce6ee;border-radius:8px;background:#f8fbfd}.cbe-term strong{display:block;color:#14577f}.cbe-muted{color:#63788c;font-size:13px}.cbe-tool-btn{border:0;border-radius:7px;background:#176da2;color:white;padding:10px 14px;cursor:pointer;font-weight:700;margin:4px}.cbe-tool-table{width:100%;border-collapse:collapse}.cbe-tool-table th,.cbe-tool-table td{border:1px solid #d5e1eb;padding:9px;text-align:left;vertical-align:top}.cbe-tool-table th{background:#edf5fa}@media print{.cbe-study-tools .cbe-no-print{display:none!important}.cbe-tool-panel{box-shadow:none;break-inside:avoid}.cbe-study-tools{max-width:none;padding:0}}";
 function panel(id,heading,html){const e=document.createElement("section");e.className="cbe-tool-panel";e.id=id;e.innerHTML="<h2>"+heading+"</h2>"+html;return e}
