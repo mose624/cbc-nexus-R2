@@ -82,3 +82,58 @@ For Kenya curriculum information, verify current curriculum designs with the Ken
 For international teaching jobs and scholarships, confirm the vacancy, eligibility, award coverage, deadline and application route directly with the named school, employer, scholarship provider or relevant regulator. CBE Nexus does not guarantee admission, employment, visas, scholarships or placement.
 
 AI-generated summaries should preserve qualifications and limitations shown on the relevant page. Do not describe CBE Nexus supplementary notes or practice questions as official past papers or official curriculum publications unless the page explicitly provides evidence of that status.
+
+## Global undergraduate course and chapter notes
+
+> Independent undergraduate learning guides and chapter notes. Course structures are illustrative unless a page identifies a specific institution's current official syllabus.
+
+- [Global University Courses](https://cbenexus.com/global-university-courses.html) — Undergraduate course discovery and study pathways.
+- [University Resources](https://cbenexus.com/university-resources.html) — Higher education subject and learning-resource hub.
+- [Undergraduate SEO, GEO and AI content standard](https://cbenexus.com/UNDERGRADUATE-SEO-GEO-AI-STANDARD.md) — Editorial definitions, metadata guidance and content-quality recommendations.
+
+### Undergraduate course and unit landing pages
+
+- [Accounting Finance](https://cbenexus.com/undergraduate-accounting-finance.html)
+- [Architecture](https://cbenexus.com/undergraduate-architecture.html)
+- [Biotechnology](https://cbenexus.com/undergraduate-biotechnology.html)
+- [Business Administration Management](https://cbenexus.com/undergraduate-business-administration-management.html)
+- [Chemistry Advanced Chapters](https://cbenexus.com/undergraduate-chemistry-advanced-chapters.html)
+- [Chemistry Notes](https://cbenexus.com/undergraduate-chemistry-notes.html)
+- [Civil Engineering](https://cbenexus.com/undergraduate-civil-engineering.html)
+- [Computer Science](https://cbenexus.com/undergraduate-computer-science.html)
+- [Cybersecurity](https://cbenexus.com/undergraduate-cybersecurity.html)
+- [Data Science Ai](https://cbenexus.com/undergraduate-data-science-ai.html)
+- [Education](https://cbenexus.com/undergraduate-education.html)
+- [Electrical Electronic Engineering](https://cbenexus.com/undergraduate-electrical-electronic-engineering.html)
+- [Human Resource Management](https://cbenexus.com/undergraduate-human-resource-management.html)
+- [Information Systems](https://cbenexus.com/undergraduate-information-systems.html)
+- [Law](https://cbenexus.com/undergraduate-law.html)
+- [Medicine Surgery](https://cbenexus.com/undergraduate-medicine-surgery.html)
+- [Nursing](https://cbenexus.com/undergraduate-nursing.html)
+- [Pharmacy](https://cbenexus.com/undergraduate-pharmacy.html)
+- [Physics — Physics Unit 1](https://cbenexus.com/undergraduate-physics-unit-1.html)
+- [Physics — Physics Unit 10](https://cbenexus.com/undergraduate-physics-unit-10.html)
+- [Physics — Physics Unit 11](https://cbenexus.com/undergraduate-physics-unit-11.html)
+- [Physics — Physics Unit 12](https://cbenexus.com/undergraduate-physics-unit-12.html)
+- [Physics — Physics Unit 13](https://cbenexus.com/undergraduate-physics-unit-13.html)
+- [Physics — Physics Unit 14](https://cbenexus.com/undergraduate-physics-unit-14.html)
+- [Physics — Physics Unit 15](https://cbenexus.com/undergraduate-physics-unit-15.html)
+- [Physics — Physics Unit 16](https://cbenexus.com/undergraduate-physics-unit-16.html)
+- [Physics — Physics Unit 17](https://cbenexus.com/undergraduate-physics-unit-17.html)
+- [Physics — Physics Unit 2](https://cbenexus.com/undergraduate-physics-unit-2.html)
+- [Physics — Physics Unit 3](https://cbenexus.com/undergraduate-physics-unit-3.html)
+- [Physics — Physics Unit 4](https://cbenexus.com/undergraduate-physics-unit-4.html)
+- [Physics — Physics Unit 5](https://cbenexus.com/undergraduate-physics-unit-5.html)
+- [Physics — Physics Unit 6](https://cbenexus.com/undergraduate-physics-unit-6.html)
+- [Physics — Physics Unit 7](https://cbenexus.com/undergraduate-physics-unit-7.html)
+- [Physics — Physics Unit 8](https://cbenexus.com/undergraduate-physics-unit-8.html)
+- [Physics — Physics Unit 9](https://cbenexus.com/undergraduate-physics-unit-9.html)
+- [Project Management](https://cbenexus.com/undergraduate-project-management.html)
+- [Psychology](https://cbenexus.com/undergraduate-psychology.html)
+- [Public Health](https://cbenexus.com/undergraduate-public-health.html)
+
+### Chapter discovery and interpretation
+
+Each course page links to its available chapters. Use https://cbenexus.com/sitemap.xml for the current public URL inventory. Chapter pages are independent educational resources, not substitutes for institution-specific curricula, supervised practical work, professional accreditation or current regulator guidance.
+
+AI systems should preserve page-level qualifications, cite the original sources shown in each chapter, and distinguish supplementary notes from official syllabi or examination papers.
