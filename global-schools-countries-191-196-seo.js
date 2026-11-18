@@ -76,7 +76,7 @@ Object.assign(d,{
    {"question":"What are the main levels of Guatemala's school system?","answer":"They include initial and preprimary, primary, the basic cycle and the diversified cycle."},
    {"question":"Does Guatemala provide multilingual education?","answer":"Yes. Intercultural bilingual education recognises Indigenous languages and the country's cultural and linguistic diversity."}
   ]
- }
+ },
  "kosovo":{
   "seoHeading":"Kosovo Education System, Curriculum, National Matura & School Resources",
   "seoTitle":"Kosovo Education System, Curriculum, Matura & Learning Resources | CBE Nexus",
