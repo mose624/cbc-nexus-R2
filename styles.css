@@ -5031,28 +5031,6 @@ textarea:focus{
 
 
 
-/* Make the Holiday Tuition words visibly green and blinking. */
-@keyframes holidayTuitionTextBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: .55; }
-}
-a[href="#holidayTuition"],
-a[href="tuition.html"],
-.site-header .top-strip a[href="#holidayTuition"],
-.portal-side-link[href="#holidayTuition"],
-.download-tile[href="tuition.html"] {
-  color: #16803c !important;
-  -webkit-text-fill-color: #16803c !important;
-  font-weight: 900 !important;
-  animation: holidayTuitionTextBlink .8s ease-in-out infinite !important;
-}
-a[href="#holidayTuition"] *,
-a[href="tuition.html"] * {
-  color: #16803c !important;
-  -webkit-text-fill-color: #16803c !important;
-  animation: holidayTuitionTextBlink .8s ease-in-out infinite !important;
-}
-
 
 /* Professional responsive CBE Nexus homepage dashboard cards */
 .home-dashboard-cards{padding:30px 18px;background:#f8fafc;border-block:1px solid #e2e8f0}
@@ -5246,12 +5224,6 @@ a[href="tuition.html"] * {
 /* Keep attention animations inexpensive and respect reduced-motion preferences. */
 @media (prefers-reduced-motion: reduce) {
   .danger-blink-button,
-  a[href="#holidayTuition"],
-  a[href="tuition.html"],
-  .site-header .top-strip a[href="#holidayTuition"],
-  .portal-side-link[href="#holidayTuition"],
-  a[href="#holidayTuition"] *,
-  a[href="tuition.html"] *,
   .interactive-questions-header-btn,
   .interactive-questions-header-btn::before {
     animation: none !important;
