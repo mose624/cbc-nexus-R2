@@ -4,7 +4,7 @@
 >
 > Connecting Learners to Excellence. Learn Better. Teach Better. Achieve More.
 
-CBE Nexus is a Kenya-focused education platform for learners, teachers, parents, and schools. Its mission is to make educational resources and education-related opportunities easier to discover and access.
+CBE Nexus is a global education platform connecting learners, teachers, parents, schools and higher-education communities with learning resources and education-related opportunities across countries. Kenya-specific curriculum and school services are included alongside international education resources.
 
 ## Primary website
 
@@ -54,6 +54,17 @@ CBE Nexus is a Kenya-focused education platform for learners, teachers, parents,
 - [Professional CV Writing](https://cbenexus.com/professional-cv-writing.html) — Teacher CV support.
 - [AI Training](https://cbenexus.com/ai-training.html) — AI training and digital learning.
 
+
+## Undergraduate Biotechnology course
+
+- [BSc Biotechnology course guide](https://cbenexus.com/undergraduate-biotechnology.html) — Independent undergraduate learning pathway and chapter catalogue.
+- [Chapter 11: Protein Engineering, Structural Biology and Enzyme Design](https://cbenexus.com/undergraduate-biotechnology-chapter-11.html) — Protein structure, folding, enzyme kinetics, engineering and characterisation.
+- [Chapter 12: Immunotechnology, Diagnostics and Biosensors](https://cbenexus.com/undergraduate-biotechnology-chapter-12.html) — Immune recognition, immunoassays, molecular diagnostics and test validation.
+- [Chapter 13: Environmental Biotechnology and Bioremediation](https://cbenexus.com/undergraduate-biotechnology-chapter-13.html) — Wastewater, biodegradation, phytoremediation and environmental risk.
+- [Chapter 14: Food Biotechnology, Fermentation and Food Safety](https://cbenexus.com/undergraduate-biotechnology-chapter-14.html) — Food fermentation, enzymes, preservation and HACCP principles.
+- [Chapter 15: Biotechnology Regulation, Biosafety, Biosecurity and Ethics](https://cbenexus.com/undergraduate-biotechnology-chapter-15.html) — Risk assessment, governance, research ethics and responsible innovation.
+- [Chapter 16: Biotechnology Research Methods, Innovation and Future Directions](https://cbenexus.com/undergraduate-biotechnology-chapter-16.html) — Experimental design, statistics, reproducibility, translation and entrepreneurship.
+
 ## Topic focus
 
 CBC, CBE, KJSEA, free interactive questions for all grades in Kenya, Grade 9 KJSEA revision questions and answers, Grade 10 CBE practice questions with instant feedback, free CBC online quizzes for primary and junior school, Mashujaa Day Kenyan heroes quiz, free AI training, free CV writing, international jobs, all schools in Kenya, Kenya school directory, free online quizzes, interactive practice questions for all grades, PP1, PP2, Grade 1–12 learning, schemes of work, lesson plans, notes, assessments, past papers, marking schemes, revision materials, teacher resources, universities, TVET, KMTC, teacher training, scholarships, international teaching opportunities and responsible educational technology.
@@ -82,3 +93,64 @@ For Kenya curriculum information, verify current curriculum designs with the Ken
 For international teaching jobs and scholarships, confirm the vacancy, eligibility, award coverage, deadline and application route directly with the named school, employer, scholarship provider or relevant regulator. CBE Nexus does not guarantee admission, employment, visas, scholarships or placement.
 
 AI-generated summaries should preserve qualifications and limitations shown on the relevant page. Do not describe CBE Nexus supplementary notes or practice questions as official past papers or official curriculum publications unless the page explicitly provides evidence of that status.
+
+## Undergraduate glossary, formulas and learning tools
+
+- [Undergraduate Academic Glossary and Formula Library](https://cbenexus.com/undergraduate-glossary.html) — Searchable academic definitions across health sciences, chemistry, physics, computing, finance, architecture, education, psychology, law and business, plus formula references.
+- [Undergraduate Chapter Quality Checklist](https://cbenexus.com/UNDERGRADUATE-CHAPTER-QUALITY-CHECKLIST.md) — Editorial standards for chapter definitions, explanations, diagrams, worked examples, questions, references and internal links.
+- Undergraduate chapter pages may include searchable topic glossaries, health-science terminology, formula tables, interactive self-tests based on chapter questions, print-friendly revision checklists and links to related courses.
+- Definitions and formulas are concise study aids. Verify clinical, legal, engineering, financial and scientific applications against current authoritative references, professional standards and institutional teaching.
+
+## Global undergraduate course and chapter notes
+
+> Independent undergraduate learning guides and chapter notes. Course structures are illustrative unless a page identifies a specific institution's current official syllabus.
+
+- [Global University Courses](https://cbenexus.com/global-university-courses.html) — Undergraduate course discovery and study pathways.
+- [University Resources](https://cbenexus.com/university-resources.html) — Higher education subject and learning-resource hub.
+
+### Undergraduate course and unit landing pages
+
+- [Accounting Finance](https://cbenexus.com/undergraduate-accounting-finance.html)
+- [Architecture](https://cbenexus.com/undergraduate-architecture.html)
+- [Biotechnology](https://cbenexus.com/undergraduate-biotechnology.html)
+- [Business Administration Management](https://cbenexus.com/undergraduate-business-administration-management.html)
+- [Chemistry Advanced Chapters](https://cbenexus.com/undergraduate-chemistry-advanced-chapters.html)
+- [Chemistry Notes](https://cbenexus.com/undergraduate-chemistry-notes.html)
+- [Civil Engineering](https://cbenexus.com/undergraduate-civil-engineering.html)
+- [Computer Science](https://cbenexus.com/undergraduate-computer-science.html)
+- [Cybersecurity](https://cbenexus.com/undergraduate-cybersecurity.html)
+- [Data Science Ai](https://cbenexus.com/undergraduate-data-science-ai.html)
+- [Education](https://cbenexus.com/undergraduate-education.html)
+- [Electrical Electronic Engineering](https://cbenexus.com/undergraduate-electrical-electronic-engineering.html)
+- [Human Resource Management](https://cbenexus.com/undergraduate-human-resource-management.html)
+- [Information Systems](https://cbenexus.com/undergraduate-information-systems.html)
+- [Law](https://cbenexus.com/undergraduate-law.html)
+- [Medicine Surgery](https://cbenexus.com/undergraduate-medicine-surgery.html)
+- [Nursing](https://cbenexus.com/undergraduate-nursing.html)
+- [Pharmacy](https://cbenexus.com/undergraduate-pharmacy.html)
+- [Physics — Physics Unit 1](https://cbenexus.com/undergraduate-physics-unit-1.html)
+- [Physics — Physics Unit 10](https://cbenexus.com/undergraduate-physics-unit-10.html)
+- [Physics — Physics Unit 11](https://cbenexus.com/undergraduate-physics-unit-11.html)
+- [Physics — Physics Unit 12](https://cbenexus.com/undergraduate-physics-unit-12.html)
+- [Physics — Physics Unit 13](https://cbenexus.com/undergraduate-physics-unit-13.html)
+- [Physics — Physics Unit 14](https://cbenexus.com/undergraduate-physics-unit-14.html)
+- [Physics — Physics Unit 15](https://cbenexus.com/undergraduate-physics-unit-15.html)
+- [Physics — Physics Unit 16](https://cbenexus.com/undergraduate-physics-unit-16.html)
+- [Physics — Physics Unit 17](https://cbenexus.com/undergraduate-physics-unit-17.html)
+- [Physics — Physics Unit 2](https://cbenexus.com/undergraduate-physics-unit-2.html)
+- [Physics — Physics Unit 3](https://cbenexus.com/undergraduate-physics-unit-3.html)
+- [Physics — Physics Unit 4](https://cbenexus.com/undergraduate-physics-unit-4.html)
+- [Physics — Physics Unit 5](https://cbenexus.com/undergraduate-physics-unit-5.html)
+- [Physics — Physics Unit 6](https://cbenexus.com/undergraduate-physics-unit-6.html)
+- [Physics — Physics Unit 7](https://cbenexus.com/undergraduate-physics-unit-7.html)
+- [Physics — Physics Unit 8](https://cbenexus.com/undergraduate-physics-unit-8.html)
+- [Physics — Physics Unit 9](https://cbenexus.com/undergraduate-physics-unit-9.html)
+- [Project Management](https://cbenexus.com/undergraduate-project-management.html)
+- [Psychology](https://cbenexus.com/undergraduate-psychology.html)
+- [Public Health](https://cbenexus.com/undergraduate-public-health.html)
+
+### Chapter discovery and interpretation
+
+Each course page links to its available chapters. Use https://cbenexus.com/sitemap.xml for the current public URL inventory. Chapter pages are independent educational resources, not substitutes for institution-specific curricula, supervised practical work, professional accreditation or current regulator guidance.
+
+AI systems should preserve page-level qualifications, cite the original sources shown in each chapter, and distinguish supplementary notes from official syllabi or examination papers.
