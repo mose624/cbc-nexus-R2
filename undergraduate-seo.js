@@ -55,10 +55,6 @@ function addSchema(html,obj,marker){
   if(marker==="learning-resource" && /"@type"\s*:\s*"LearningResource"/i.test(html))return html;
   if(marker==="breadcrumb-list" && /"@type"\s*:\s*"BreadcrumbList"/i.test(html))return html;
   const tag='<script type="application/ld+json" data-cbe-undergraduate-schema="'+marker+'">'+JSON.stringify(obj).replace(/</g,"\\u003c")+"</script>";
-  return html.replace(/<\\/head>/i,tag+"\\n</head>");
-}
-  if(html.includes('data-cbe-undergraduate-schema="'+marker+'"'))return html;
-  const tag='<script type="application/ld+json" data-cbe-undergraduate-schema="'+marker+'">'+JSON.stringify(obj).replace(/</g,"\\u003c")+"</script>";
   return html.replace(/<\/head>/i,tag+"\n</head>");
 }
 function optimize(html,pathname){
@@ -93,21 +89,6 @@ function optimize(html,pathname){
     "about":{"@type":"Thing","name":info.subject}
   },"learning-resource");
   const crumbs=[
-    {"@type":"ListItem","position":1,"name":"Home","item":BASE+"/"},
-    {"@type":"ListItem","position":2,"name":"Global University Courses","item":BASE+"/global-university-courses.html"}
-  ];
-  if(info.isChapter){
-    const knownCourseSlugs=new Set(["accounting-finance","architecture","biotechnology","business-administration-management","chemistry-advanced-chapters","chemistry-notes","civil-engineering","computer-science","cybersecurity","data-science-ai","education","electrical-electronic-engineering","human-resource-management","information-systems","law","medicine-surgery","nursing","project-management","psychology","public-health"]);
-    if(knownCourseSlugs.has(info.slug))crumbs.push({"@type":"ListItem","position":3,"name":info.subject,"item":BASE+"/undergraduate-"+info.slug+".html"});
-    crumbs.push({"@type":"ListItem","position":crumbs.length+1,"name":heading,"item":canonical});
-  }else{
-    crumbs.push({"@type":"ListItem","position":3,"name":heading,"item":canonical});
-  }
-    {"@type":"ListItem","position":1,"name":"Home","item":BASE+"/"},
-    {"@type":"ListItem","position":2,"name":"Global University Courses","item":BASE+"/global-university-courses.html"},
-    {"@type":"ListItem","position":3,"name":info.subject,"item":BASE+"/undergraduate-"+info.slug+".html"}
-  ];
-  if(info.isChapter)crumbs.push({"@type":"ListItem","position":4,"name":heading,"item":canonical});
   out=addSchema(out,{"@context":"https://schema.org","@type":"BreadcrumbList","@id":canonical+"#breadcrumb","itemListElement":crumbs},"breadcrumb-list");
   return out;
 }
