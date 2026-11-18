@@ -3227,26 +3227,25 @@ async function serveStatic(req,res,url){
       // Server-render the country dashboard shell so the requested country page remains
       // visible even if a visitor's browser cannot load or execute global-schools.js.
       if(country){
+        const sectionClassPattern=id=>new RegExp('(<(?:section|div)\\b(?=[^>]*\\bid="'+id+'"[^>]*)[^>]*\\bclass=")([^"]*)(")','i');
         const revealSection=id=>{
-          const re=new RegExp('(<(?:section|div)\\b(?=[^>]*\\bid=["\\']'+id+'["\\'])[^>]*\\bclass=["\\'])([^"\\']*)(["\\'])','i');
-          html=html.replace(re,(match,before,classes,after)=>before+classes.split(/\\s+/).filter(name=>name&&name!=="gs-hidden").join(" ")+after);
+          html=html.replace(sectionClassPattern(id),(match,before,classes,after)=>before+classes.split(/\s+/).filter(name=>name&&name!=="gs-hidden").join(" ")+after);
         };
         ["gsCountry"].forEach(revealSection);
         ["gsHero","gsDirectory"].forEach(id=>{
-          const re=new RegExp('(<(?:section|div)\\b(?=[^>]*\\bid=["\\']'+id+'["\\'])[^>]*\\bclass=["\\'])([^"\\']*)(["\\'])','i');
-          html=html.replace(re,(match,before,classes,after)=>before+(classes.split(/\\s+/).filter(Boolean).includes("gs-hidden")?classes:classes+" gs-hidden")+after);
+          html=html.replace(sectionClassPattern(id),(match,before,classes,after)=>before+(classes.split(/\s+/).includes("gs-hidden")?classes:classes+" gs-hidden")+after);
         });
         const setText=(id,value)=>{
           if(!value)return;
           const escaped=escapeHtml(value);
-          const re=new RegExp('(<([a-z][a-z0-9]*)\\b(?=[^>]*\\bid=["\\']'+id+'["'])[^>]*>)[\\s\\S]*?(<\\/\\2>)','i');
-          html=html.replace(re,(match,start,tag,end)=>start+escaped+end);
+          const re=new RegExp('(<([a-z][a-z0-9]*)\\b(?=[^>]*\\bid="'+id+'"[^>]*)[^>]*>)[\\s\\S]*?(<\\/\\2>)','i');
+          html=html.replace(re,(match,opening,tag,closing)=>opening+escaped+closing);
         };
         setText("countryFlag",country.flag||"");
         setText("countryName",country.name);
         setText("countrySub","Country education guide · /global-schools/"+country.slug);
         setText("countryIntro",String(countryProfile.seoIntro||"Explore "+country.name+" education information, schools, curriculum, national examinations and learning resources. Confirm current requirements with the responsible education authority."));
-        setText("countryStatus", "Country overview · check official sources for current details");
+        setText("countryStatus","Country overview · check official sources for current details");
         setText("verificationNote","Country information is presented for guidance. Confirm curricula, examinations, school listings and professional requirements with official authorities.");
       }
     }
