@@ -859,6 +859,16 @@
 @media(max-width:420px){#competitiveResources .feature-grid{gap:7px}#competitiveResources .feature-grid article{padding:9px;grid-template-columns:22px 1fr}.nexus-feature-icon{width:22px;height:22px}}
 </style>
 
+<style id="country-directory-main-dashboard-layout">
+#countryResourceDirectory.country-resource-fullwidth{display:block!important;width:100%!important;max-width:none!important;box-sizing:border-box!important;margin:18px 0 28px!important;padding:0!important;clear:both!important}
+#countryResourceDirectory .country-resource-panel{display:block!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;box-sizing:border-box!important;padding:clamp(12px,1.8vw,22px)!important;border-radius:16px!important}
+#countryResourceDirectory .country-resource-heading{position:static!important;top:auto!important;margin:-12px -12px 14px!important;border-radius:14px 14px 0 0!important;padding:16px!important}
+#countryResourceDirectory .country-resource-grid{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:7px!important;width:100%!important}
+#countryResourceDirectory .country-resource-button{min-height:34px!important;font-size:clamp(10px,.78vw,12px)!important;padding:6px 8px!important}
+@media(max-width:1100px){#countryResourceDirectory .country-resource-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+@media(max-width:700px){#countryResourceDirectory .country-resource-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:460px){#countryResourceDirectory .country-resource-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px!important}#countryResourceDirectory .country-resource-button{font-size:10px!important;min-height:32px!important;padding:5px 6px!important}}
+</style>
 </head>
   <body>
     <a class="cbe-skip-link" href="#main-content">Skip to main content</a>
@@ -1230,7 +1240,11 @@
           </div>
         </aside>
 
-        <aside class="portal-rightbar country-resource-panel" aria-label="Country education resources">
+        
+      </section>
+
+      <section id="countryResourceDirectory" class="country-resource-fullwidth" aria-label="Country online notes and education resources">
+<aside class="portal-rightbar country-resource-panel" aria-label="Country education resources">
           <div class="country-resource-heading">
             <p class="eyebrow">CBE NEXUS GLOBAL DIRECTORY</p>
             <h2>Available Resources in 196 Countries</h2>
