@@ -7,7 +7,7 @@
 <label>Phone number (include country code)<input name="phone" type="tel" autocomplete="tel" required maxlength="30" placeholder="+254…"></label>
 <label>Country<input name="country" required maxlength="100" list="countryOptions" placeholder="Select or type your country"><datalist id="countryOptions"><option>Kenya</option><option>United States</option><option>United Kingdom</option><option>Ghana</option><option>Nigeria</option><option>South Africa</option><option>India</option><option>Canada</option><option>Australia</option></datalist></label>
 <label>Preferred language<select name="language" required><option value="">Choose language</option><option>English</option><option>French</option><option>Spanish</option><option>Arabic</option><option>Portuguese</option><option>Swahili</option><option>Chinese</option><option>Other</option></select></label>
-<label>Username<input name="username" autocomplete="username" required minlength="3" maxlength="30" pattern="[A-Za-z0-9_.-]+" title="Use letters, numbers, dots, underscores or hyphens"></label>
+<label>Username<input name="username" autocomplete="username" required maxlength="100" placeholder="Choose any username"></label>
 <label>Password<input name="password" type="password" autocomplete="new-password" required minlength="12"></label>
 <label>Confirm password<input name="confirmPassword" type="password" autocomplete="new-password" required minlength="12"></label>
 </div><button type="submit">Create my free account</button><div class="status" id="status" role="status" aria-live="polite"></div></form>
