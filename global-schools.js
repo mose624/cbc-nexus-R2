@@ -580,7 +580,8 @@ $("countrySearch").addEventListener("input",e=>renderCountries(e.target.value));
 $("countrySearch").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();$("searchButton").click();}});
 renderCountries("");
  const directoryHero=$("gsHero");if(directoryHero)directoryHero.style.setProperty("--gs-learner-bg",'url("https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1800&q=82")');
- renderCountry();
- // Expose a safe idempotent refresh for country data loaded after the first paint.
+ // Wait until all deferred country profile and SEO data scripts have executed.
+ // This ensures the initial country view and metadata use the complete 196-country registry.
  window.CBE_REFRESH_COUNTRY_DASHBOARD=renderCountry;
+ window.addEventListener("load",()=>renderCountry(),{once:true});
 })();
