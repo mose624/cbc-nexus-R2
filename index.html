@@ -730,16 +730,49 @@
 .cbe-studio-planner .nexus-sprint-form label{font-size:.84rem}
 .cbe-studio-planner .nexus-sprint-privacy{font-size:.76rem;margin:7px 0 0}
 .cbe-learning-studio-footer{margin:12px 0 0!important;font-size:.9rem}
-.cbe-homepage-global{max-width:1240px;margin:18px auto!important;padding:18px 20px!important}
-.cbe-homepage-global>h2{margin:0 0 6px}
-.cbe-homepage-global>p{margin:5px 0 12px;max-width:1000px}
-.cbe-homepage-link-groups{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.cbe-homepage-link-groups>div{display:flex;flex-direction:column;gap:7px;padding:12px;background:#fff;border:1px solid #dbe5ef;border-radius:12px}
-.cbe-homepage-link-groups h3{font-size:.96rem;margin:0 0 3px;color:#123b63}
-.cbe-homepage-link-groups a{font-size:.87rem;line-height:1.35}
-.cbe-homepage-global-note{font-size:.88rem;color:#526579;margin-top:12px!important}
-@media(max-width:900px){.cbe-studio-tools-grid{grid-template-columns:1fr}.cbe-homepage-link-groups{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:560px){.cbe-learning-studio{padding:14px!important}.cbe-learning-guide-grid{grid-template-columns:1fr!important}.cbe-learning-example{grid-template-columns:1fr!important}.cbe-homepage-global{padding:15px!important}.cbe-homepage-link-groups{grid-template-columns:1fr}}
+/* Full-bleed global education directory: independent row below the Learning Studio. */
+.cbe-homepage-global-fullscreen{
+  display:block!important;box-sizing:border-box!important;
+  position:relative!important;left:50%!important;right:50%!important;
+  width:100vw!important;max-width:none!important;
+  margin:24px 0 28px!important;
+  transform:translateX(-50%)!important;
+  padding:clamp(22px,3.2vw,48px) clamp(16px,3vw,52px)!important;
+  clear:both!important;isolation:isolate!important;
+  background:linear-gradient(135deg,#eff8ff 0%,#f8fafc 52%,#eefbf5 100%)!important;
+  border-top:1px solid #cbddeb!important;border-bottom:1px solid #cbddeb!important;
+  overflow:hidden!important;
+}
+.cbe-homepage-global-fullscreen>*{box-sizing:border-box!important;min-width:0}
+.cbe-homepage-global-fullscreen>h2{max-width:1500px;margin:0 auto 8px!important;color:#123b63;font-size:clamp(1.45rem,2.5vw,2.15rem);line-height:1.15}
+.cbe-homepage-global-fullscreen>p{max-width:1500px;margin:7px auto 18px!important;line-height:1.55}
+.cbe-homepage-global-fullscreen .cbe-homepage-link-groups{
+  width:100%;max-width:1500px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(10px,1.4vw,20px)
+}
+.cbe-homepage-global-fullscreen .cbe-homepage-link-groups>div{
+  display:flex;flex-direction:column;align-items:stretch;gap:9px;
+  min-width:0;padding:clamp(14px,1.5vw,22px);
+  background:#fff;border:1px solid #d4e2ef;border-radius:14px;
+  box-shadow:0 5px 18px rgba(15,45,75,.07)
+}
+.cbe-homepage-global-fullscreen .cbe-homepage-link-groups h3{font-size:1rem;line-height:1.3;margin:0 0 4px;color:#123b63}
+.cbe-homepage-global-fullscreen .cbe-homepage-link-groups a{
+  display:block;padding:8px 10px;border-radius:8px;
+  background:#f1f7fc;color:#075985!important;text-decoration:none!important;
+  font-size:.9rem;line-height:1.35;font-weight:700;
+  overflow-wrap:anywhere;transition:background .15s ease,transform .15s ease
+}
+.cbe-homepage-global-fullscreen .cbe-homepage-link-groups a:hover{background:#dff1ff;transform:translateX(2px)}
+.cbe-homepage-global-fullscreen .cbe-homepage-global-note{
+  max-width:1500px;margin:16px auto 0!important;font-size:.88rem;color:#526579;line-height:1.5
+}
+@media(max-width:1050px){.cbe-homepage-global-fullscreen .cbe-homepage-link-groups{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){
+  .cbe-homepage-global-fullscreen{padding:22px 14px!important;margin:16px 0 22px!important}
+  .cbe-homepage-global-fullscreen .cbe-homepage-link-groups{grid-template-columns:1fr;gap:10px}
+  .cbe-homepage-global-fullscreen .cbe-homepage-link-groups>div{padding:14px}
+}
 </style>
 </head>
   <body>
@@ -1083,7 +1116,7 @@
   <p class="cbe-learning-studio-footer">Explore more: <a href="/resource-category.html">Learning library</a> · <a href="/quizzes.html">Interactive question bank</a></p>
 </section>
 
-<section class="homepage-seo-content cbe-homepage-global" aria-labelledby="global-education-heading">
+<section class="homepage-seo-content cbe-homepage-global cbe-homepage-global-fullscreen" aria-labelledby="global-education-heading">
   <h2 id="global-education-heading">Explore Education in 196 Countries</h2>
   <p>Discover country education systems, curricula, national examinations, school directories, learning resources and teaching opportunities for learners, parents and educators worldwide.</p>
   <div class="cbe-homepage-link-groups">
