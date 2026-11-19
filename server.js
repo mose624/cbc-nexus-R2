@@ -775,6 +775,33 @@ async function handleApi(req,res,url){
     }catch(error){console.error("General account registration error:",error);sendJson(res,500,{ok:false,error:"Registration could not be completed. Please try again."});}
     return true;
   }
+  if(req.method==="POST"&&url.pathname==="/api/accounts/forgot-password"){
+    try{
+      const p=JSON.parse((await readBody(req))||"{}");
+      const email=String(p.email||"").trim().toLowerCase();
+      if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)){sendJson(res,400,{ok:false,error:"Enter a valid email address."});return true;}
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Password reset is temporarily unavailable. Please try again later."});return true;}
+      const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:"https://cbenexus.com/reset-password.html"});
+      if(error)throw error;
+      sendJson(res,200,{ok:true,message:"If an account exists for that email, a password-reset link will be sent. Please check your inbox and spam folder."});
+    }catch(error){console.error("Account password reset request failed:",error);sendJson(res,200,{ok:true,message:"If an account exists for that email, a password-reset link will be sent. Please check your inbox and spam folder."});}
+    return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/accounts/reset-password"){
+    try{
+      const p=JSON.parse((await readBody(req))||"{}");
+      const accessToken=String(p.accessToken||"").trim(),password=String(p.password||"");
+      if(!accessToken){sendJson(res,400,{ok:false,error:"Your reset link is missing or expired. Request a new one."});return true;}
+      if(password.length<12||password.length>200||!/[A-Za-z]/.test(password)||!/[0-9]/.test(password)){sendJson(res,400,{ok:false,error:"Use a password of at least 12 characters containing letters and numbers."});return true;}
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Password reset is temporarily unavailable. Please try again later."});return true;}
+      const {data:authData,error:authError}=await supabase.auth.getUser(accessToken);
+      if(authError||!authData?.user){sendJson(res,401,{ok:false,error:"Your reset link is invalid or expired. Request a new one."});return true;}
+      const {error}=await supabase.auth.admin.updateUserById(authData.user.id,{password});
+      if(error)throw error;
+      sendJson(res,200,{ok:true,message:"Your password has been reset. You can now sign in with your new password."});
+    }catch(error){console.error("Account password update failed:",error);sendJson(res,500,{ok:false,error:"Your password could not be reset. Request a new link and try again."});}
+    return true;
+  }
   if(req.method==="POST"&&url.pathname==="/api/global-teachers/register"){
     try{
       const p=JSON.parse((await readBody(req))||"{}");
