@@ -774,7 +774,7 @@
 }
 </style>
 <style id="country-resource-panel-styles">
-.country-resource-panel{min-width:0;max-height:78vh;overflow-y:auto;overscroll-behavior:contain;padding:12px;background:linear-gradient(145deg,#f0f7ff 0%,#fff7ed 48%,#f5f3ff 100%);border:1px solid #cbdaf0;border-radius:12px;box-shadow:0 5px 18px rgba(31,65,114,.08)}
+.country-resource-panel{min-width:0;height:460px;min-height:420px;max-height:min(82vh,560px);align-self:stretch;overflow-y:auto;overscroll-behavior:contain;padding:12px;background:linear-gradient(145deg,#f0f7ff 0%,#fff7ed 48%,#f5f3ff 100%);border:1px solid #cbdaf0;border-radius:12px;box-shadow:0 5px 18px rgba(31,65,114,.08)}
 .country-resource-heading{position:sticky;top:-12px;z-index:2;margin:-12px -12px 10px;padding:14px 12px 12px;background:linear-gradient(110deg,#123d73 0%,#176b87 52%,#51418d 100%);border-bottom:3px solid #f5b942;color:#fff}
 .country-resource-heading .eyebrow{margin:0 0 5px;color:#ffe08a;font-size:.64rem;font-weight:900;letter-spacing:.08em}
 .country-resource-heading h2{margin:0 0 6px;color:#fff;font-size:1.05rem;line-height:1.25}
@@ -793,7 +793,7 @@
 .country-resource-button:hover,.country-resource-button:focus-visible{filter:saturate(1.12);transform:translateY(-1px);box-shadow:0 3px 9px rgba(20,45,80,.14);outline:2px solid #2563eb;outline-offset:1px}
 .country-resource-flag{flex:0 0 auto;font-size:1rem;line-height:1}
 .country-resource-button span:last-child{overflow-wrap:anywhere}
-@media(max-width:900px){.country-resource-panel{max-height:70vh}.country-resource-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:900px){.country-resource-panel{height:72vh;min-height:360px;max-height:72vh}.country-resource-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:420px){.country-resource-button{font-size:.64rem;min-height:30px;padding:4px 5px;gap:4px}}
 </style>
 </head>
