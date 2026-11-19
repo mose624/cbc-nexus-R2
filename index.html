@@ -705,6 +705,42 @@
 @media(max-width:520px){.nexus-sprint-fields,.nexus-sprint-steps{grid-template-columns:1fr}.nexus-study-sprint{margin:16px 12px;padding:18px}.nexus-sprint-form{padding:15px}}
 @media(prefers-reduced-motion:reduce){.nexus-study-sprint *{scroll-behavior:auto!important;transition:none!important}}
 </style>
+
+<style id="cbe-homepage-compact-refresh">
+.cbe-learning-studio{margin:18px auto!important;padding:clamp(16px,2vw,24px)!important;border-radius:16px!important;max-width:1240px}
+.cbe-learning-studio-heading{margin:0 auto 16px!important}
+.cbe-learning-studio-heading h2{margin:4px 0 6px!important}
+.cbe-learning-studio-heading p:last-child{margin:0}
+.cbe-learning-guide-grid{gap:10px!important}
+.cbe-learning-guide-card{padding:14px!important;border-radius:12px!important}
+.cbe-learning-guide-card h3{font-size:1rem!important;line-height:1.35;margin:8px 0!important}
+.cbe-learning-guide-card p{font-size:.9rem;line-height:1.45;margin:6px 0 8px}
+.cbe-learning-subject{padding:4px 8px!important}
+.cbe-studio-tools-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:14px;align-items:start;margin-top:14px}
+.cbe-learning-example{grid-template-columns:minmax(0,1.25fr) minmax(0,.9fr)!important;gap:12px!important;margin:0!important;padding:15px!important}
+.cbe-learning-example ol{margin:8px 0;padding-left:20px}
+.cbe-learning-check{padding:12px!important}
+.cbe-learning-check h3{font-size:1rem}
+.cbe-studio-planner{margin:0!important;padding:15px!important;border-radius:14px!important}
+.cbe-studio-planner .nexus-sprint-intro h2{font-size:1.15rem;line-height:1.3;margin:5px 0}
+.cbe-studio-planner .nexus-sprint-intro>p:not(.eyebrow){font-size:.9rem;margin:5px 0}
+.cbe-studio-planner .nexus-sprint-promise{margin:8px 0!important;padding:8px 10px!important}
+.cbe-studio-planner .nexus-sprint-form{margin-top:10px!important}
+.cbe-studio-planner .nexus-sprint-fields{gap:8px!important}
+.cbe-studio-planner .nexus-sprint-form label{font-size:.84rem}
+.cbe-studio-planner .nexus-sprint-privacy{font-size:.76rem;margin:7px 0 0}
+.cbe-learning-studio-footer{margin:12px 0 0!important;font-size:.9rem}
+.cbe-homepage-global{max-width:1240px;margin:18px auto!important;padding:18px 20px!important}
+.cbe-homepage-global>h2{margin:0 0 6px}
+.cbe-homepage-global>p{margin:5px 0 12px;max-width:1000px}
+.cbe-homepage-link-groups{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.cbe-homepage-link-groups>div{display:flex;flex-direction:column;gap:7px;padding:12px;background:#fff;border:1px solid #dbe5ef;border-radius:12px}
+.cbe-homepage-link-groups h3{font-size:.96rem;margin:0 0 3px;color:#123b63}
+.cbe-homepage-link-groups a{font-size:.87rem;line-height:1.35}
+.cbe-homepage-global-note{font-size:.88rem;color:#526579;margin-top:12px!important}
+@media(max-width:900px){.cbe-studio-tools-grid{grid-template-columns:1fr}.cbe-homepage-link-groups{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.cbe-learning-studio{padding:14px!important}.cbe-learning-guide-grid{grid-template-columns:1fr!important}.cbe-learning-example{grid-template-columns:1fr!important}.cbe-homepage-global{padding:15px!important}.cbe-homepage-link-groups{grid-template-columns:1fr}}
+</style>
 </head>
   <body>
     <a class="cbe-skip-link" href="#main-content">Skip to main content</a>
@@ -1001,89 +1037,63 @@
   <div class="cbe-learning-studio-heading">
     <p class="eyebrow">CBE NEXUS LEARNING STUDIO</p>
     <h2 id="cbe-learning-studio-title">Study a concept. Follow a worked example. Check your understanding.</h2>
-    <p>Useful learning should explain the idea, show how to apply it and give learners a chance to practise independently. Start with these original study guides.</p>
+    <p>Clear explanations, practical examples and independent practice for learners worldwide.</p>
   </div>
   <div class="cbe-learning-guide-grid">
-    <article class="cbe-learning-guide-card"><span class="cbe-learning-subject">Grade 9 · Integrated Science</span><h3><a href="/articles/grade-9-integrated-science-electric-circuits.html">Electric circuits: components, symbols and calculations</a></h3><p>Understand current, voltage, resistance and series circuits with a labelled circuit diagram, a worked calculation and self-check questions.</p><a class="cbe-learning-read" href="/articles/grade-9-integrated-science-electric-circuits.html">Study this lesson →</a></article>
-    <article class="cbe-learning-guide-card"><span class="cbe-learning-subject">Grade 10 · Chemistry</span><h3><a href="/articles/grade-10-chemistry-mole-concept-worked-examples.html">The mole concept: formulae and worked examples</a></h3><p>Learn how to calculate moles, mass and molar mass, with step-by-step examples and practice questions with answers.</p><a class="cbe-learning-read" href="/articles/grade-10-chemistry-mole-concept-worked-examples.html">Study this lesson →</a></article>
-    <article class="cbe-learning-guide-card"><span class="cbe-learning-subject">Biology · Cell biology</span><h3><a href="/articles/biology-cell-structure-functions-notes.html">Cell structure and functions: a visual study guide</a></h3><p>Compare plant and animal cells, connect organelles to their functions and practise applying cell biology to unfamiliar examples.</p><a class="cbe-learning-read" href="/articles/biology-cell-structure-functions-notes.html">Study this lesson →</a></article>
+    <article class="cbe-learning-guide-card"><span class="cbe-learning-subject">Grade 9 · Integrated Science</span><h3><a href="/articles/grade-9-integrated-science-electric-circuits.html">Electric circuits: components, symbols and calculations</a></h3><p>Explore current, voltage, resistance and series circuits with diagrams and practice.</p><a class="cbe-learning-read" href="/articles/grade-9-integrated-science-electric-circuits.html">Study this lesson →</a></article>
+    <article class="cbe-learning-guide-card"><span class="cbe-learning-subject">Grade 10 · Chemistry</span><h3><a href="/articles/grade-10-chemistry-mole-concept-worked-examples.html">The mole concept: formulae and worked examples</a></h3><p>Calculate moles, mass and molar mass through guided examples and questions.</p><a class="cbe-learning-read" href="/articles/grade-10-chemistry-mole-concept-worked-examples.html">Study this lesson →</a></article>
+    <article class="cbe-learning-guide-card"><span class="cbe-learning-subject">Biology · Cell biology</span><h3><a href="/articles/biology-cell-structure-functions-notes.html">Cell structure and functions: a visual study guide</a></h3><p>Compare plant and animal cells and connect organelles to their functions.</p><a class="cbe-learning-read" href="/articles/biology-cell-structure-functions-notes.html">Study this lesson →</a></article>
   </div>
-  <div class="cbe-learning-example"><div><p class="eyebrow">A quick worked example</p><h3>Using Ohm’s law</h3><p>Ohm’s law links potential difference, current and resistance: <strong>V = I × R</strong>.</p><p>If a lamp has a resistance of 6 Ω and a current of 2 A flows through it:</p><ol><li>Write the formula: V = I × R.</li><li>Substitute: V = 2 × 6.</li><li>Calculate: V = 12 V.</li></ol><p><strong>Answer:</strong> The potential difference is 12 volts.</p></div><aside class="cbe-learning-check"><h3>Try it yourself</h3><p>A resistor of 4 Ω carries a current of 3 A. What is the potential difference?</p><details><summary>Reveal the answer and method</summary><p>V = I × R = 3 A × 4 Ω = <strong>12 V</strong>.</p></details></aside></div>
-  <p class="cbe-learning-studio-footer">Looking for a particular topic? <a href="/resource-category.html">Browse the learning library by grade, subject and resource type</a>, or explore the <a href="/quizzes.html">interactive question bank</a>.</p>
-</section>
-<section id="nexusStudySprint" class="nexus-study-sprint" aria-labelledby="nexusStudySprintTitle">
-  <div class="nexus-sprint-intro">
-    <p class="eyebrow">YOUR SIGNATURE CBE NEXUS TOOL</p>
-    <h2 id="nexusStudySprintTitle">Turn a learning goal into a study plan you can actually finish.</h2>
-    <p>Build a focused study sprint for your curriculum, course or professional goal. The planner divides your available time into learning, application, self-testing and reflection.</p>
-    <div class="nexus-sprint-promise"><span aria-hidden="true">✦</span><span><strong>The Nexus Learning Loop</strong><br>Understand → Apply → Test → Improve</span></div>
-  </div>
-  <form class="nexus-sprint-form" id="nexusSprintForm">
-    <label>What are you studying?
-      <input id="nexusSprintSubject" name="subject" maxlength="90" placeholder="e.g. Biology — cell division" required>
-    </label>
-    <div class="nexus-sprint-fields">
-      <label>Your learning stage
-        <select id="nexusSprintLevel" name="level">
-          <option>Primary / elementary</option><option>Lower secondary</option><option>Upper secondary</option><option>University / college</option><option>TVET / vocational</option><option>Teacher / professional learning</option>
-        </select>
-      </label>
-      <label>Curriculum or programme
-        <input id="nexusSprintCurriculum" name="curriculum" maxlength="70" placeholder="e.g. Cambridge, IB, national curriculum">
-      </label>
-      <label>Your main goal
-        <select id="nexusSprintGoal" name="goal">
-          <option value="understand">Understand a difficult concept</option><option value="exam">Prepare for an examination</option><option value="practice">Practise questions and improve accuracy</option><option value="assignment">Complete an assignment or project</option><option value="career">Build a practical or professional skill</option>
-        </select>
-      </label>
-      <label>Time available
-        <select id="nexusSprintTime" name="minutes"><option value="20">20 minutes</option><option value="30" selected>30 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option>
-        </select>
-      </label>
+  <div class="cbe-studio-tools-grid">
+    <div class="cbe-learning-example">
+      <div><p class="eyebrow">WORKED EXAMPLE</p><h3>Using Ohm’s law</h3><p>Potential difference = current × resistance: <strong>V = I × R</strong>.</p><p>For a lamp with resistance 6 Ω and current 2 A:</p><ol><li>Formula: V = I × R</li><li>Substitute: V = 2 × 6</li><li>Calculate: V = <strong>12 V</strong></li></ol><p><strong>Answer: 12 volts.</strong></p></div>
+      <aside class="cbe-learning-check"><h3>Check your understanding</h3><p>A 4 Ω resistor carries a current of 3 A. What is the potential difference?</p><details><summary>Reveal answer and method</summary><p>V = I × R = 3 × 4 = <strong>12 V</strong>.</p></details></aside>
     </div>
-    <button class="nexus-sprint-generate" type="submit">Build my learning sprint <span aria-hidden="true">→</span></button>
-    <p class="nexus-sprint-privacy">No account or personal details required. Your entries are used in this page to create the plan.</p>
-  </form>
-  <div id="nexusSprintResult" class="nexus-sprint-result" aria-live="polite" hidden></div>
-</section>
-<section class="homepage-seo-content" aria-labelledby="global-education-heading">
-  <h2 id="global-education-heading">Explore Education in 196 Countries</h2>
-  <p>Find country-specific education information, school directories, curricula, national examinations, learning resources and teaching opportunities. Select a country to explore its education system and the resources relevant to its learners and teachers.</p>
-  <div class="homepage-seo-links">
-    <a href="/global-schools">Explore all 196 country education pages</a>
-    <a href="/international-curriculum.html">International curriculum resources</a>
-    <a href="/cambridge-study-notes.html">Cambridge study notes</a>
-    <a href="/ib-comprehensive-study-guides.html">International Baccalaureate study guides</a>
-    <a href="/pearson-study-notes.html">Pearson Edexcel study notes</a>
-    <a href="/international-teaching-jobs.html">International teaching opportunities</a>
-    <a href="/scholarships-opportunities.html">Global scholarships and opportunities</a>
+    <section id="nexusStudySprint" class="nexus-study-sprint cbe-studio-planner" aria-labelledby="nexusStudySprintTitle">
+      <div class="nexus-sprint-intro">
+        <p class="eyebrow">YOUR SIGNATURE CBE NEXUS TOOL</p>
+        <h2 id="nexusStudySprintTitle">Turn a learning goal into a study plan you can actually finish.</h2>
+        <p>Build a focused study sprint for your curriculum, course or professional goal.</p>
+        <div class="nexus-sprint-promise"><span aria-hidden="true">✦</span><span><strong>The Nexus Learning Loop</strong><br>Understand → Apply → Test → Improve</span></div>
+      </div>
+      <form class="nexus-sprint-form" id="nexusSprintForm">
+        <label>What are you studying?
+          <input id="nexusSprintSubject" name="subject" maxlength="90" placeholder="e.g. Biology — cell division" required>
+        </label>
+        <div class="nexus-sprint-fields">
+          <label>Your learning stage
+            <select id="nexusSprintLevel" name="level"><option>Primary / elementary</option><option>Lower secondary</option><option>Upper secondary</option><option>University / college</option><option>TVET / vocational</option><option>Teacher / professional learning</option></select>
+          </label>
+          <label>Curriculum or programme
+            <input id="nexusSprintCurriculum" name="curriculum" maxlength="70" placeholder="e.g. Cambridge, IB, national curriculum">
+          </label>
+          <label>Your main goal
+            <select id="nexusSprintGoal" name="goal"><option value="understand">Understand a difficult concept</option><option value="exam">Prepare for an examination</option><option value="practice">Practise questions and improve accuracy</option><option value="assignment">Complete an assignment or project</option><option value="career">Build a practical or professional skill</option></select>
+          </label>
+          <label>Time available
+            <select id="nexusSprintTime" name="minutes"><option value="20">20 minutes</option><option value="30" selected>30 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option></select>
+          </label>
+        </div>
+        <button class="nexus-sprint-generate" type="submit">Build my learning sprint <span aria-hidden="true">→</span></button>
+        <p class="nexus-sprint-privacy">No account or personal details required. Your entries create a plan on this page.</p>
+      </form>
+      <div id="nexusSprintResult" class="nexus-sprint-result" aria-live="polite" hidden></div>
+    </section>
   </div>
+  <p class="cbe-learning-studio-footer">Explore more: <a href="/resource-category.html">Learning library</a> · <a href="/quizzes.html">Interactive question bank</a></p>
 </section>
-<section class="homepage-seo-content" aria-labelledby="homepage-learning-heading">
-            <h2 id="homepage-learning-heading">Global Education Resources for Learners, Teachers and Schools</h2>
-            <p>CBE Nexus connects learners, parents, teachers and schools with education information and learning materials across 196 countries. Explore country-specific education systems, national examinations, school directories, curriculum notes and opportunities, alongside international programmes such as Cambridge, IGCSE, IB and Pearson Edexcel. Each country section is designed around its own education context and language of instruction.</p>
-            <div class="homepage-seo-links">
-              <a href="free-resources.html">Free CBC learning resources</a>
-              <a href="interactive-questions.html">Interactive questions and self-assessment</a>
-              <a href="kjsea-revision">Grade 9 KJSEA revision</a>
-              <a href="free-interactive-questions/grade-10">Grade 10 practice questions</a>
-              <a href="resource-category.html?type=Notes">Notes and study guides</a>
-              <a href="resource-category.html?type=Marking%20Schemes">Marking schemes and assessment support</a>
-            </div>
-            <p>Students can practise with interactive questions and review their answers. Teachers can explore notes, schemes of work, lesson plans, assessment tests, topical questions and marking schemes. Use the library filters to find materials for the grade, subject and topic you need.</p>
-            <h2>Country Education Systems, School Directories and International Curricula</h2>
-            <p>Explore dedicated country pages for education systems, national examinations, school information, teaching requirements and local learning resources. Learners following international programmes can also access separate Cambridge, IGCSE, IB, Pearson Edexcel, A-Level and O-Level sections. Kenya’s CBC and CBE materials are included as one of the country-specific curriculum collections.</p>
-            <div class="homepage-seo-links">
-              <a href="igcse.html">Cambridge IGCSE study resources</a>
-              <a href="ib-comprehensive-study-guides.html">IB study guides and notes</a>
-              <a href="pearson-study-notes.html">Pearson Edexcel study notes</a>
-              <a href="scholarships-opportunities.html">Scholarships and student opportunities</a>
-              <a href="international-teaching-jobs.html">International teaching vacancies</a>
-              <a href="ai-training.html">AI training and digital skills</a>
-            </div>
-            <h3>Revision, exam preparation and teacher development</h3>
-            <p>Use topic-based notes, practice questions and assessment resources to identify learning gaps, revise difficult concepts and prepare systematically. Teachers can also explore professional development, digital skills and international career information.</p>
-          </section>
+
+<section class="homepage-seo-content cbe-homepage-global" aria-labelledby="global-education-heading">
+  <h2 id="global-education-heading">Explore Education in 196 Countries</h2>
+  <p>Discover country education systems, curricula, national examinations, school directories, learning resources and teaching opportunities for learners, parents and educators worldwide.</p>
+  <div class="cbe-homepage-link-groups">
+    <div><h3>Countries and education systems</h3><a href="/global-schools">Explore all 196 country education pages</a><a href="/international-curriculum.html">International curriculum resources</a></div>
+    <div><h3>Study notes and exam practice</h3><a href="/free-resources.html">Free learning resources</a><a href="/interactive-questions.html">Interactive questions and self-assessment</a><a href="/kjsea-revision">Grade 9 KJSEA revision</a><a href="/free-interactive-questions/grade-10">Grade 10 practice questions</a><a href="/resource-category.html?type=Notes">Notes and study guides</a><a href="/resource-category.html?type=Marking%20Schemes">Marking schemes and assessment support</a></div>
+    <div><h3>International programmes</h3><a href="/cambridge-study-notes.html">Cambridge study notes</a><a href="/igcse.html">Cambridge IGCSE resources</a><a href="/ib-comprehensive-study-guides.html">IB study guides</a><a href="/pearson-study-notes.html">Pearson Edexcel notes</a></div>
+    <div><h3>Opportunities and professional growth</h3><a href="/scholarships-opportunities.html">Scholarships and student opportunities</a><a href="/international-teaching-jobs.html">International teaching vacancies</a><a href="/ai-training.html">AI training and digital skills</a></div>
+  </div>
+  <p class="cbe-homepage-global-note">CBE Nexus brings together country-specific education information and resources alongside international programmes including Cambridge, IGCSE, IB, Pearson Edexcel, A-Level and O-Level. Kenya’s CBC and CBE materials form part of this wider global collection.</p>
+</section>
 
 
           <div class="summary-grid homepage-benefit-grid" aria-label="CBE Nexus learning features">
