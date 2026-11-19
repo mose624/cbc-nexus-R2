@@ -122,7 +122,7 @@ for(const [country,p] of Object.entries(countries)){
  root.verifiedAt="2026-11-19";
  root.grades=root.grades||{};
  p.levels.forEach((level,i)=>{
-  const secondary=i>=p.levels.findIndex(x=>/Form I|Senior 1|S1$|9ème|P-1/.test(x));
+  const secondary=country==="Burundi"?/post-fondamentale/.test(level):i>=p.levels.findIndex(x=>/Form I|Senior 1|S1$|P-1/.test(x));
   const subjects=secondary?p.secondary:p.primary;
   const existing=root.grades[level]||(root.grades[level]={});
   for(const subject of subjects){
