@@ -359,6 +359,11 @@
   "Venezuela":["Venezuela Currículo Nacional Bolivariano / Primer Grado"],
   "Vietnam":["Vietnam 2018 General Education Curriculum / Grade 1"],
   "Yemen":["Yemen National Curriculum / الصف الأول الأساسي"]
+  "Ethiopia":["Ethiopia General Education Curriculum / Ministry of Education"],
+  "Zambia":["Zambia 2023 Education Curriculum Framework / CDC / ECZ","Cambridge International"],
+  "Zimbabwe":["Zimbabwe National Curriculum / ZIMSEC","Cambridge International","Pearson Edexcel"],
+  "Ghana":["Ghana NaCCA Standards-Based Curriculum / Common Core / SHS"],
+  "Malawi":["Malawi Curriculum and Assessment Framework / MIE / MANEB","Cambridge International"],
 };
 
 const nationalLevelStructures = {
@@ -576,17 +581,12 @@ const nationalLevelStructures = {
   "Vatican City":["Classe Prima"],
   "Venezuela":["1er Grado"],
   "Vietnam":["Lớp 1"],
-  "Yemen":["الصف الأول الأساسي"]
-  "Ethiopia":["Ethiopia General Education Curriculum / Ministry of Education"],
-  "Zambia":["Zambia 2023 Education Curriculum Framework / CDC / ECZ","Cambridge International"],
-  "Zimbabwe":["Zimbabwe National Curriculum / ZIMSEC","Cambridge International","Pearson Edexcel"],
-  "Ghana":["Ghana NaCCA Standards-Based Curriculum / Common Core / SHS"],
-  "Malawi":["Malawi Curriculum and Assessment Framework / MIE / MANEB","Cambridge International"],
+  "Yemen":["الصف الأول الأساسي"],
   "Ethiopia":["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Zambia":["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Form 1","Form 2","Form 3","Form 4","Form 5","Form 6"],
   "Zimbabwe":["ECD A","ECD B","Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Form 1","Form 2","Form 3","Form 4","Form 5","Form 6"],
   "Ghana":["KG 1","KG 2","Basic 1","Basic 2","Basic 3","Basic 4","Basic 5","Basic 6","JHS 1","JHS 2","JHS 3","SHS 1","SHS 2","SHS 3"],
-  "Malawi":["P-Class","Standard 1","Standard 2","Standard 3","Standard 4","Standard 5","Standard 6","Standard 7","Standard 8","Form 1","Form 2","Form 3","Form 4"],
+  "Malawi":["P-Class","Standard 1","Standard 2","Standard 3","Standard 4","Standard 5","Standard 6","Standard 7","Standard 8","Form 1","Form 2","Form 3","Form 4"]
 };
 function levelOptionsFor(countryName, curriculumName){
   const c=(curriculumName||"").toLowerCase();
