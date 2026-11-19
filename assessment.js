@@ -129,7 +129,7 @@
   "Slovenia":["Slovenian National Curriculum / 1. razred"],
   "Solomon Islands":["Solomon Islands National Curriculum Framework — Primary"],
   "Somalia":["Somalia National Curriculum Framework / Grade 1"],
-  "South Sudan":["South Sudan National Curriculum / Primary 1"],
+  "South Sudan":["South Sudan National Curriculum / NCDC"],
 
   "Saint Kitts and Nevis":["Saint Kitts and Nevis National Curriculum"],
   "Saint Lucia":["Saint Lucia National Curriculum"],
@@ -367,7 +367,7 @@ const nationalLevelStructures = {
   "Slovenia":["1. razred"],
   "Solomon Islands":["Year 1"],
   "Somalia":["Grade 1"],
-  "South Sudan":["P-1"],
+  "South Sudan":["P-1","P-2","P-3","P-4","P-5","P-6","P-7","P-8","S-1","S-2","S-3","S-4"],
 
   "Saint Kitts and Nevis":["Grade 1"],
   "Saint Lucia":["Grade 1"],
@@ -425,7 +425,7 @@ const nationalLevelStructures = {
 "Brunei":["Year 1","Year 2","Year 3","Year 4","Year 5","Year 6"],
 "Bulgaria":["I клас","II клас","III клас","IV клас","V клас","VI клас","VII клас","VIII клас","IX клас","X клас","XI клас","XII клас"],
 "Burkina Faso":["CP1","CP2","CE1","CE2","CM1","CM2","6ème","5ème","4ème","3ème","2nde","1ère","Terminale"],
-"Burundi":["1ère année fondamentale","2ème année fondamentale","3ème année fondamentale","4ème année fondamentale","5ème année fondamentale","6ème année fondamentale","7ème année fondamentale","8ème année fondamentale","9ème année fondamentale"],
+"Burundi":["1ère année fondamentale","2ème année fondamentale","3ème année fondamentale","4ème année fondamentale","5ème année fondamentale","6ème année fondamentale","7ème année fondamentale","8ème année fondamentale","9ème année fondamentale","1ère année post-fondamentale","2ème année post-fondamentale","3ème année post-fondamentale"],
 "Cabo Verde":["1.º Ano","2.º Ano","3.º Ano","4.º Ano","5.º Ano","6.º Ano","7.º Ano","8.º Ano","9.º Ano","10.º Ano","11.º Ano","12.º Ano"],
 "Cambodia":["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Cameroon":["Class 1","Class 2","Class 3","Class 4","Class 5","Class 6"],
