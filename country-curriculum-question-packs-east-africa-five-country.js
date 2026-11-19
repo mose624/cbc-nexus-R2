@@ -118,7 +118,7 @@ for(const [country,p] of Object.entries(countries)){
  const root=packs[country]||(packs[country]={});
  root.curriculum=p.curriculum;
  root.language=p.language;
- root.languageNote="Original CBE Nexus supplementary practice questions. Grade and subject labels follow the national education pathway; the full outcome-by-outcome syllabus mapping and language localisation must be checked against the current official syllabus. These are not official examination papers.";
+ root.languageNote="Original CBE Nexus supplementary practice questions written in English. Grade and subject labels follow the national education pathway; local-language translations and full outcome-by-outcome syllabus mapping must be checked against the current official syllabus. These are not official examination papers.";
  root.verifiedAt="2026-11-19";
  root.grades=root.grades||{};
  p.levels.forEach((level,i)=>{
@@ -135,8 +135,7 @@ for(const [country,p] of Object.entries(countries)){
    else if(/English|Kiswahili|Kinyarwanda|Kirundi|Français|Literacy/.test(subject))questions=languageBank();
    else if(/Science|General Science|Sciences/.test(subject))questions=scienceBank();
    else questions=socialBank(country);
-   const lang=/Kirundi|Français|Mathématiques/.test(subject)?"French":/Kiswahili/.test(subject)?"Kiswahili":/Kinyarwanda/.test(subject)?"Kinyarwanda":"English";
-   existing[subject]=questions.map(q=>{const item=q.slice();item[12]=lang;return item;});
+   existing[subject]=questions.map(q=>{const item=q.slice();item[12]="English";return item;});
   }
  });
 }
