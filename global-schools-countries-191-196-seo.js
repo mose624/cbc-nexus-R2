@@ -4,7 +4,7 @@
 (function(){
 "use strict";
 const d=window.CBE_GLOBAL_COUNTRY_DATA;if(!d)return;
-Object.assign(d,{
+const profiles={
  "dominican-republic":{
   "seoHeading":"Dominican Republic Education System, National Curriculum & Pruebas Nacionales",
   "seoTitle":"Dominican Republic Education System, Curriculum, Pruebas Nacionales & Resources | CBE Nexus",
@@ -91,6 +91,8 @@ Object.assign(d,{
    {"question":"Can teachers find opportunities in Kosovo?","answer":"Teachers can explore local and international vacancies, but should verify employer requirements, qualifications, language expectations and work authorisation directly."}
   ]
  }
-});
+};
+Object.keys(profiles).forEach(slug=>{d[slug]=Object.assign({},d[slug]||{},profiles[slug]);});
+
 window.CBE_COUNTRY_SEO_191_196=true;
 })();
