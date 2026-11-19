@@ -1889,11 +1889,6 @@ const b=e.target.closest("[data-delete-vacancy]");if(!b)return;if(!confirm("Dele
     if(!button) return;
     if(button.dataset.page) { event.preventDefault(); go(button.dataset.page); return; }
     if(routes[button.id]) { event.preventDefault(); go(routes[button.id]); return; }
-    const search=button.closest("[data-landing-search]")?.dataset.landingSearch || button.dataset.landingSearch;
-    if(search){
-      event.preventDefault();
-      go("resource-category.html?search="+encodeURIComponent(search));
-    }
   },true);
 })();
 
