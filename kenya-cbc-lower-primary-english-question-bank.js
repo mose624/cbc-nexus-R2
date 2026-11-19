@@ -25,7 +25,7 @@ const rows = [
 ].map((r,i)=>({
   id:"ke-cbc-english-"+r[0].toLowerCase().replace(/[^a-z0-9]+/g,"-")+"-"+String(i+1).padStart(2,"0"),
   country:"Kenya",curriculum:"Kenya CBC/CBE",grade:r[0],subject:"English Language Activities",
-  topic:r[1],strand:r[2],substrand:r[3],question:r[4],options:r[5],correctIndex:r[6],explanation:r[7],
+  topic:r[1],theme:r[8],strand:r[2],substrand:r[3],question:r[4],options:r[5],correctIndex:r[6],explanation:r[7],
   difficulty:"Foundational application",published:true,source,sourceName:"KICD Primary School Education Curriculum Design — English Language Activities, Grades 1–3 (Revised 2024)",
   createdAt:"2026-11-19T00:00:00.000Z",updatedAt:"2026-11-19T00:00:00.000Z"
 }));
