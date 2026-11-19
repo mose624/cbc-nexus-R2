@@ -427,7 +427,7 @@ const nationalLevelStructures = {
 "Bosnia and Herzegovina":["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9"],
 "Botswana":["Standard 1","Standard 2","Standard 3","Standard 4","Standard 5","Standard 6","Standard 7","Form 1","Form 2","Form 3","Form 4","Form 5"],
 "Brazil":["1º Ano do Ensino Fundamental","2º Ano do Ensino Fundamental","3º Ano do Ensino Fundamental","4º Ano do Ensino Fundamental","5º Ano do Ensino Fundamental","6º Ano do Ensino Fundamental","7º Ano do Ensino Fundamental","8º Ano do Ensino Fundamental","9º Ano do Ensino Fundamental","1ª Série do Ensino Médio","2ª Série do Ensino Médio","3ª Série do Ensino Médio"],
-"Brunei":["Year 1","Year 2","Year 3","Year 4","Year 5","Year 6"],
+"Brunei":["Year 1","Year 2","Year 3","Year 4","Year 5","Year 6","Year 7","Year 8","Year 9","Year 10","Year 11","Year 12","Year 13"],
 "Bulgaria":["I клас","II клас","III клас","IV клас","V клас","VI клас","VII клас","VIII клас","IX клас","X клас","XI клас","XII клас"],
 "Burkina Faso":["CP1","CP2","CE1","CE2","CM1","CM2","6ème","5ème","4ème","3ème","2nde","1ère","Terminale"],
 "Burundi":["1ère année fondamentale","2ème année fondamentale","3ème année fondamentale","4ème année fondamentale","5ème année fondamentale","6ème année fondamentale","7ème année fondamentale","8ème année fondamentale","9ème année fondamentale","1ère année post-fondamentale","2ème année post-fondamentale","3ème année post-fondamentale"],
