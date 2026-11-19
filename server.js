@@ -768,9 +768,9 @@ async function handleApi(req,res,url){
       if(!/^[+0-9() -]{7,30}$/.test(phone)){sendJson(res,400,{ok:false,error:"Enter a valid phone number with country code."});return true;}
       if(password.length<12||password.length>200||!/[A-Za-z]/.test(password)||!/[0-9]/.test(password)){sendJson(res,400,{ok:false,error:"Use a password of at least 12 characters containing letters and numbers."});return true;}
       if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Registration is temporarily unavailable. Please try again later."});return true;}
-      const {data,error}=await supabase.auth.admin.createUser({email,password,email_confirm:false,user_metadata:{full_name:fullName,phone,country,preferred_language:language,username,account_type:"general"}});
+      const {data,error}=await supabase.auth.admin.createUser({email,password,email_confirm:true,user_metadata:{full_name:fullName,phone,country,preferred_language:language,username,account_type:"general"}});
       if(error){const msg=String(error.message||"");const duplicate=/already|registered|exists/i.test(msg);sendJson(res,duplicate?409:400,{ok:false,error:duplicate?"An account with this email already exists. Try logging in.":"Account could not be created. "+msg.slice(0,220)});return true;}
-      sendJson(res,201,{ok:true,message:"Your CBE Nexus account has been created. Please check your email for any confirmation required before logging in.",user:{id:data.user.id,email:data.user.email,username}});
+      sendJson(res,201,{ok:true,message:"Your CBE Nexus account has been created. You can now log in without email confirmation.",user:{id:data.user.id,email:data.user.email,username}});
     }catch(error){console.error("General account registration error:",error);sendJson(res,500,{ok:false,error:"Registration could not be completed. Please try again."});}
     return true;
   }
