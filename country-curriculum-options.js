@@ -9,10 +9,10 @@ window.CBE_COUNTRY_CURRICULUM_OPTIONS = {
 
   "Saint Kitts and Nevis":["National Primary Curriculum Grades 1–6; Secondary Forms 1–5","CSEC","CAPE"],
   "Saint Lucia":["Saint Lucia National Curriculum: Kindergarten and Grades 1–6; Secondary Forms 1–5","CSEC","CAPE"],
-  "Saint Vincent and the Grenadines":["Saint Vincent and the Grenadines Primary Curriculum"],
-  "Samoa":["Samoa National Curriculum / Year 1 Mathematics"],
-  "San Marino":["San Marino National Curriculum / Scuola Elementare, Classe Prima"],
-  "Sao Tome and Principe":["São Tomé and Príncipe National Curriculum / 1.ª Classe"],
+  "Saint Vincent and the Grenadines":["Saint Vincent and the Grenadines National Primary Curriculum: Grades 1–6; Secondary Forms 1–5","CPEA","CSEC","CAPE"],
+  "Samoa":["Samoa National School Curriculum Framework 2024–2034: Primary Years 1–8; Secondary Years 9–13","SPELL","SPECA","Samoa School Certificate (SSC)","Samoa Secondary Leaving Certificate (SSLC)"],
+  "San Marino":["San Marino National Curriculum: Scuola Elementare 5 years, Scuola Media 3 years, Scuola Superiore 5 years","Maturità"],
+  "Sao Tome and Principe":["São Tomé and Príncipe National Curriculum: Classes 1–4, 5–6, 7–9 and Secondary 10–12","Basic Education Law 4/2018"],
   "Senegal":["Senegalese National Curriculum"],
   "Serbia":["Serbian National Curriculum / 1. razred"],
 
@@ -184,7 +184,7 @@ window.CBE_COUNTRY_CURRICULUM_OPTIONS = {
   "China":["China National Curriculum / Gaokao","Cambridge International","Pearson Edexcel","IB"],
   "Japan":["Japan MEXT Curriculum","Cambridge International","IB"],
   "United Arab Emirates":["UAE Ministry of Education Curriculum","British Curriculum / GCSE / A Level","US Curriculum","IB","CBSE"],
-  "Saudi Arabia":["Saudi Ministry of Education Curriculum","International British Curriculum","American Curriculum","IB"],
+  "Saudi Arabia":["Saudi Ministry of Education National Curriculum: Elementary Grades 1–6, Intermediate 7–9, Secondary 10–12","Secondary pathway system","National Curriculum Center"],
   "Qatar":["Qatar National Curriculum Framework / Primary Grades 1–6, Preparatory 7–9 and Secondary 10–12","British Curriculum","American Curriculum","IB"],
   "Egypt":["Egypt MoETE National Curriculum / Thanaweya Amma / Egyptian Baccalaureate","Egypt IGCSE","Egypt IB"],
   "Ethiopia":["Ethiopia Ministry of Education Curriculum / Ethiopian General School Leaving Examination"],
@@ -262,4 +262,5 @@ window.CBE_COUNTRY_CURRICULUM_OPTIONS = {
   "Moldova":["Moldova National Curriculum / Primary Classes I-IV, Gymnasium V-IX and Lyceum X-XII; Baccalaureate"],
   "Republic of the Congo":["Republic of the Congo national education pathway / Primary CP1–CM2; collège 6e–3e; lycée 2nde–Terminale","CEPE","BEPC","Baccalauréat"],
   "Congo (Republic of the)":["Republic of the Congo national education pathway / Primary CP1–CM2; collège 6e–3e; lycée 2nde–Terminale","CEPE","BEPC","Baccalauréat"],
+  "São Tomé and Príncipe":["São Tomé and Príncipe National Curriculum: Classes 1–4, 5–6, 7–9 and Secondary 10–12","Basic Education Law 4/2018"],
 };
