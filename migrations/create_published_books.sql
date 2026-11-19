@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS public.published_books (
   cover_key text NOT NULL,
   cover_mime text NOT NULL DEFAULT 'image/jpeg',
   status text NOT NULL DEFAULT 'pending'
-    CHECK (status IN ('pending','in_review','revision_required','approved','rejected')),
+    CHECK (status IN ('pending','in_review','revision_required','approved','published','rejected')),
   isbn_status text NOT NULL DEFAULT 'not_started'
     CHECK (isbn_status IN ('not_started','requested','in_process','assigned','not_applicable')),
   isbn text,
