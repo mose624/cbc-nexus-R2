@@ -268,4 +268,9 @@ window.CBE_COUNTRY_CURRICULUM_OPTIONS = {
   "Seychelles":["Seychelles National Curriculum Framework / Primary P1–P6 and Secondary S1–S5","Seychelles National Examinations"],
   "Sierra Leone":["Sierra Leone MBSSE Basic Education Curriculum / 6-3-3-4","NPSE","BECE","WASSCE"],
   "Singapore":["Singapore MOE National Curriculum / Primary 1–6 and Full Subject-Based Banding G1–G3","PSLE","Singapore-Cambridge SEC (from 2027)"],
+  "Slovakia":["Slovak State Educational Programme / Basic School Grades 1–9; gymnasium and vocational secondary programmes","Maturita"],
+  "Slovenia":["Slovenian National Curriculum / Basic School Grades 1–9; upper-secondary general, technical and vocational programmes","NPZ","General Matura","Vocational Matura"],
+  "Solomon Islands":["Solomon Islands National Curriculum Framework / Primary and Secondary Years 1–12","MEHRD national assessments"],
+  "Somalia":["Somalia National Curriculum Framework (2017) / Primary Grades 1–8 and Secondary Grades 9–12","National assessment framework (implementation varies)"],
+  "South Africa":["National Curriculum Statement Grades R–12 / CAPS","National Senior Certificate (NSC)"],
 };
