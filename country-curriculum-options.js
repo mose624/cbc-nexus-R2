@@ -250,4 +250,9 @@ window.CBE_COUNTRY_CURRICULUM_OPTIONS = {
   "Luxembourg":["Luxembourg Fundamental Education / Cycles 1–4; Secondary Classical and General Education (7e–1re)"],
   "Madagascar":["Madagascar operating curriculum pathway / Primary T1–T5, Collège 6e–3e and Lycée 2nde–Terminale; reform cohorts may differ"],
   "Malawi":["Malawi Curriculum and Assessment Framework (MIE, July 2025) / Primary Standards 1–8 and Secondary Forms 1–4; staged reforms"],
+  "Malaysia":["Malaysia National Curriculum: KSSR Standards 1-6 and KSSM Forms 1-5"],
+  "Maldives":["Maldives National Curriculum Framework: Grades 1-12 and five key stages"],
+  "Mali":["Mali fundamental education 1-9 and secondary education; DEF and Baccalaureate"],
+  "Malta":["Malta National Curriculum Framework: Years 1-11 and Sixth Form"],
+  "Marshall Islands":["Marshall Islands Public School System curriculum and MISAT; confirm local school pathway"],
 };
