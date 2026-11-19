@@ -5,7 +5,7 @@
 (function(){
 "use strict";
 const d=window.CBE_GLOBAL_COUNTRY_DATA;if(!d)return;
-Object.assign(d,{
+const profiles={
  "algeria":{
   seoHeading:"Algeria Education System, BEM & Baccalauréat",
   seoTitle:"Algeria Curriculum, BEM & Baccalauréat Examination Resources | CBE Nexus",
@@ -114,6 +114,8 @@ Object.assign(d,{
    {question:"Where can students check official exam dates?",answer:"Consult the Ministry of Education's national examination calendar and current candidate notices."}
   ]
  }
-});
+};
+Object.keys(profiles).forEach(slug=>{d[slug]=Object.assign({},d[slug]||{},profiles[slug]);});
+
 window.CBE_COUNTRY_SEO_MISSING_9=true;
 })();
