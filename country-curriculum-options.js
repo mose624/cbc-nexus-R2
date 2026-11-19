@@ -278,4 +278,5 @@ window.CBE_COUNTRY_CURRICULUM_OPTIONS = {
   "Sudan":["Sudan General Education Curriculum / Basic Grades 1–8; secondary Grades 9–11","Basic Education Certificate","Sudan School Certificate"],
   "Suriname":["Suriname national curriculum / GLO, VOJ and VOS; curriculum reform in progress","GLO","VOJ","VOS"],
   "Sweden":["Swedish national curriculum Lgr22 / Compulsory Years 1–9 and Gymnasium","Year 9 grades","Upper-secondary programme qualifications"],
+  "Timor-Leste":["National Curriculum / Basic Education Grades 1–9; General Secondary Grades 10–12; Tetum and Portuguese","Grade 9 National Examination","Grade 12 National Examination"],
 };
