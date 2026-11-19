@@ -269,9 +269,20 @@ function renderCountry(){
  const dashboardSearchButton=node("button");dashboardSearchButton.type="submit";dashboardSearchButton.textContent="Search";
  dashboardSearch.append(dashboardSearchInput,dashboardSearchButton);
  dashboardSearch.addEventListener("submit",event=>{event.preventDefault();const term=dashboardSearchInput.value.trim();if(term)window.location.href="/resources.html?country="+countryQuery+"&q="+encodeURIComponent(term);});
- const portalSelect=node("select");portalSelect.setAttribute("aria-label","Choose education portal");
- [["","JHS & SHS Portal"],["primary","Primary Portal"],["junior","Junior Secondary Portal"],["senior","Senior Secondary Portal"],["all","All learning resources"]].forEach(([value,label])=>{const option=node("option");option.value=value;option.textContent=label;portalSelect.appendChild(option);});
- portalSelect.addEventListener("change",()=>{const level=portalSelect.value;window.location.href="/resources.html?country="+countryQuery+(level&&level!=="all"?"&level="+encodeURIComponent(level):"");});
+ const portalSelect=node("select");portalSelect.setAttribute("aria-label","Choose this country’s curriculum or learning portal");
+ const prompt=node("option");prompt.value="";prompt.textContent="Choose curriculum or learning portal";portalSelect.appendChild(prompt);
+ const levelGroup=node("optgroup");levelGroup.label="Learning levels";
+ [["primary","Primary Portal"],["junior","Junior Secondary Portal"],["senior","Senior Secondary Portal"],["all","All learning resources"]].forEach(([value,label])=>{const option=node("option");option.value="level:"+value;option.textContent=label;levelGroup.appendChild(option);});
+ portalSelect.appendChild(levelGroup);
+ const curriculumGroup=node("optgroup");curriculumGroup.label="Curricula offered in "+c.name;
+ const curriculumRegistry=window.CBE_COUNTRY_CURRICULUM_OPTIONS||{};
+ let countryCurricula=curriculumRegistry[c.name]||curriculumRegistry[c.name.replace("’","\u0027")]||[];
+ if(!Array.isArray(countryCurricula))countryCurricula=[];
+ const profileCurricula=Array.isArray(d.curricula)?d.curricula:Array.isArray(d.curriculumOptions)?d.curriculumOptions:[];
+ countryCurricula=Array.from(new Set(countryCurricula.concat(profileCurricula).map(x=>String(x||"").trim()).filter(Boolean)));
+ countryCurricula.forEach(label=>{const option=node("option");option.value="curriculum:"+label;option.textContent=label;curriculumGroup.appendChild(option);});
+ if(countryCurricula.length){portalSelect.appendChild(curriculumGroup);}else{const option=node("option");option.disabled=true;option.textContent="Curriculum details being added";portalSelect.appendChild(option);}
+ portalSelect.addEventListener("change",()=>{const selected=portalSelect.value;if(!selected)return;if(selected.startsWith("curriculum:")){window.location.href="/resources.html?country="+countryQuery+"&curriculum="+encodeURIComponent(selected.slice(11));return;}const level=selected.slice(6);window.location.href="/resources.html?country="+countryQuery+(level&&level!=="all"?"&level="+encodeURIComponent(level):"");});
  dashboardTop.append(dashboardBrand,dashboardSearch,portalSelect);
  const heroCopy=node("div","gs-country-learning-hero-copy");heroCopy.style.position="relative";heroCopy.style.zIndex="1";
  const heroTitle=node("h2");heroTitle.textContent=c.name+" Education Resources";
