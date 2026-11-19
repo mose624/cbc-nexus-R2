@@ -30,7 +30,7 @@ const rows = [
 ].map((r,i)=>({
   id:"ke-cbc-env-"+r[0].toLowerCase().replace(/[^a-z0-9]+/g,"-")+"-"+String(i+1).padStart(2,"0"),
   country:"Kenya",curriculum:"Kenya CBC/CBE",grade:r[0],subject:"Environmental Activities",
-  strand:r[6],subStrand:r[7],question:r[2],options:r[3],correctIndex:r[4],explanation:r[5],
+  strand:r[6],substrand:r[7],question:r[2],options:r[3],correctIndex:r[4],explanation:r[5],
   difficulty:"Foundational application",published:true,source:sources[r[0]],sourceName:"Kenya Institute of Curriculum Development (KICD) curriculum design",
   createdAt:"2026-11-19T00:00:00.000Z",updatedAt:"2026-11-19T00:00:00.000Z"
 }));
