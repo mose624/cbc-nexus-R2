@@ -774,6 +774,18 @@ async function handleApi(req,res,url){
     }catch(error){console.error("General account registration error:",error);sendJson(res,500,{ok:false,error:"Registration could not be completed. Please try again."});}
     return true;
   }
+  if(req.method==="POST"&&url.pathname==="/api/accounts/login"){
+    try{
+      const p=JSON.parse((await readBody(req))||"{}");
+      const email=String(p.email||"").trim().toLowerCase(),password=String(p.password||"");
+      if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)||!password){sendJson(res,400,{ok:false,error:"Enter your registered email and password."});return true;}
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Login is temporarily unavailable. Please try again later."});return true;}
+      const {data,error}=await supabase.auth.signInWithPassword({email,password});
+      if(error||!data?.user||!data?.session){sendJson(res,401,{ok:false,error:"Email or password is incorrect. If you forgot your password, use Forgot password."});return true;}
+      sendJson(res,200,{ok:true,message:"You are signed in.",user:{id:data.user.id,email:data.user.email},session:{access_token:data.session.access_token,refresh_token:data.session.refresh_token,expires_at:data.session.expires_at,token_type:data.session.token_type}});
+    }catch(error){console.error("General account login failed:",error);sendJson(res,500,{ok:false,error:"Login could not be completed. Please try again."});}
+    return true;
+  }
   if(req.method==="POST"&&url.pathname==="/api/accounts/forgot-password"){
     try{
       const p=JSON.parse((await readBody(req))||"{}");
