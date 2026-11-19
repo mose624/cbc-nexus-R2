@@ -5,7 +5,7 @@ window.CBE_COUNTRY_CURRICULUM_OPTIONS = {
   "Slovenia":["Slovenian National Curriculum / 1. razred"],
   "Solomon Islands":["Solomon Islands National Curriculum Framework — Primary"],
   "Somalia":["Somalia National Curriculum Framework / Grade 1"],
-  "South Sudan":["South Sudan National Curriculum / Primary 1"],
+  "South Sudan":["South Sudan National Curriculum / NCDC"],
 
   "Saint Kitts and Nevis":["Saint Kitts and Nevis National Curriculum"],
   "Saint Lucia":["Saint Lucia National Curriculum"],
