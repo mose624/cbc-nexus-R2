@@ -730,24 +730,23 @@
 .cbe-studio-planner .nexus-sprint-form label{font-size:.84rem}
 .cbe-studio-planner .nexus-sprint-privacy{font-size:.76rem;margin:7px 0 0}
 .cbe-learning-studio-footer{margin:12px 0 0!important;font-size:.9rem}
-/* Full-bleed global education directory: independent row below the Learning Studio. */
+/* Global education directory: keep it in normal document flow so it cannot
+   break out of a dashboard column, shift off-screen or cover adjacent content. */
 .cbe-homepage-global-fullscreen{
-  display:block!important;box-sizing:border-box!important;
-  position:relative!important;left:50%!important;right:50%!important;
-  width:100vw!important;max-width:none!important;
-  margin:24px 0 28px!important;
-  transform:translateX(-50%)!important;
-  padding:clamp(22px,3.2vw,48px) clamp(16px,3vw,52px)!important;
-  clear:both!important;isolation:isolate!important;
+  display:block!important;position:static!important;inset:auto!important;
+  box-sizing:border-box!important;width:100%!important;max-width:none!important;
+  margin:28px 0 32px!important;transform:none!important;float:none!important;
+  clear:both!important;isolation:isolate!important;min-width:0!important;
+  padding:clamp(22px,3.2vw,48px) clamp(16px,3vw,36px)!important;
   background:linear-gradient(135deg,#eff8ff 0%,#f8fafc 52%,#eefbf5 100%)!important;
-  border-top:1px solid #cbddeb!important;border-bottom:1px solid #cbddeb!important;
-  overflow:hidden!important;
+  border:1px solid #cbddeb!important;border-radius:16px!important;
+  overflow:visible!important;
 }
 .cbe-homepage-global-fullscreen>*{box-sizing:border-box!important;min-width:0}
-.cbe-homepage-global-fullscreen>h2{max-width:1500px;margin:0 auto 8px!important;color:#123b63;font-size:clamp(1.45rem,2.5vw,2.15rem);line-height:1.15}
-.cbe-homepage-global-fullscreen>p{max-width:1500px;margin:7px auto 18px!important;line-height:1.55}
+.cbe-homepage-global-fullscreen>h2{width:100%;max-width:1200px;margin:0 auto 8px!important;color:#123b63;font-size:clamp(1.45rem,2.5vw,2.15rem);line-height:1.2;overflow-wrap:anywhere}
+.cbe-homepage-global-fullscreen>p{width:100%;max-width:1200px;margin:7px auto 18px!important;line-height:1.55;overflow-wrap:anywhere}
 .cbe-homepage-global-fullscreen .cbe-homepage-link-groups{
-  width:100%;max-width:1500px;margin:0 auto;
+  width:100%;max-width:1200px;margin:0 auto;
   display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(10px,1.4vw,20px)
 }
 .cbe-homepage-global-fullscreen .cbe-homepage-link-groups>div{
