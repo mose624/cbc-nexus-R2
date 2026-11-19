@@ -164,8 +164,7 @@ window.CBE_COUNTRY_CURRICULUM_OPTIONS = {
   "South Africa":["South Africa CAPS / NSC (DBE)","IEB NSC","Cambridge International","Pearson Edexcel","IB"],
   "Ghana":["Ghana NaCCA Curriculum / WASSCE","Cambridge International"],
   "Nigeria":["Nigeria NERDC Revised Basic Education Curriculum / Primary 1–6, JSS 1–3; Revised Senior Secondary Curriculum SSS 1–3","WAEC WASSCE","NECO SSCE"],
-  "Zambia":["Zambia ZEC / ECZ Curriculum","Cambridge International"],
-  "Zimbabwe":["Zimbabwe ZIMSEC","Cambridge International","Pearson Edexcel"],
+
   "Botswana":["Botswana BGCSE / BEC","Cambridge International"],
   "Namibia":["Namibia National Curriculum for Basic Education (NIED; Pre-primary–Grade 12)","Cambridge International", "Namibia Junior Primary Curriculum / Grade 1"],
   "Malawi":["Malawi MANEB Curriculum","Cambridge International"],
@@ -234,11 +233,13 @@ window.CBE_COUNTRY_CURRICULUM_OPTIONS = {
   "Vanuatu":["Vanuatu National Curriculum Statement / Kindergarten–Year 13; harmonised Anglophone and Francophone streams"],
   "Vatican City":["No conventional national K–12 curriculum; local school-age provision generally follows Italian or other host-country systems","Holy See ecclesiastical higher education / Pontifical degrees"],
   "Venezuela":["Venezuela Basic Education / Initial, Primary Grades 1–6 and Media General; MPPE curriculum content consultation and updates"],
-  "Vietnam":["Vietnam General Education Curriculum under Circular 32/2018/TT-BGDDT (5+4+3); amendments under Circular 17/2025/TT-BGDDT"],
-  "Yemen":["Yemen National Curriculum / الصف الأول الأساسي"],
+    "Yemen":["Yemen National Curriculum / Basic Education Grades 1–9 and Secondary Grades 10–12"],
+  "Zambia":["Zambia 2023 Education Curriculum Framework / CBC / CDC / ECZ; phased 3–6–6–3 structure"],
+  "Zimbabwe":["Zimbabwe Heritage-Based Curriculum Framework / MoPSE / ZIMSEC; Infant, Junior, Forms 1–4 and Forms 5–6 pathways","Cambridge International","Pearson Edexcel"],
+"Vietnam":["Vietnam General Education Curriculum under Circular 32/2018/TT-BGDDT (5+4+3); amendments under Circular 17/2025/TT-BGDDT"],
+
   "Ethiopia":["Ethiopia General Education Curriculum / Ministry of Education"],
-  "Zambia":["Zambia 2023 Education Curriculum Framework / CDC / ECZ","Cambridge International"],
-  "Zimbabwe":["Zimbabwe National Curriculum / ZIMSEC","Cambridge International","Pearson Edexcel"],
+
   "Ghana":["Ghana NaCCA Standards-Based Curriculum / Common Core / SHS"],
   "Malawi":["Malawi Curriculum and Assessment Framework / MIE / MANEB","Cambridge International"],
   "Guinea-Bissau":["Guinea-Bissau Basic Education Law / Ensino Básico 1º–9º Ano and Ensino Secundário 10º–12º Ano"],
