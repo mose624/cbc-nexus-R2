@@ -2529,7 +2529,8 @@
     const curriculum=document.getElementById("nexusSprintCurriculum").value.trim();
     const goal=document.getElementById("nexusSprintGoal").value;
     const minutes=Number(document.getElementById("nexusSprintTime").value)||30;
-    const labels=["LEARN","APPLY","TEST","REFLECT"];\n    const stepTitles=["Choose the focus","Build understanding or make progress","Check the quality of your work","Capture the next step"];
+    const labels=["LEARN","APPLY","TEST","REFLECT"];
+    const stepTitles=["Choose the focus","Build understanding or make progress","Check the quality of your work","Capture the next step"];
     const ratios=[.4,.3,.2,.1];
     const allocations=ratios.map((r,i)=>i===3?minutes-ratios.slice(0,3).reduce((sum,x)=>sum+Math.round(minutes*x),0):Math.round(minutes*r));
     const tasks=goalText[goal]||goalText.understand;
