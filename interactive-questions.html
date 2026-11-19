@@ -213,74 +213,13 @@ img.cbe-context-image{animation:cbeImageMotion 7s ease-in-out infinite alternate
     <footer class="iq-footer">CBE Nexus · Connecting learners to excellence · Free interactive practice</footer>
   <section class="iq-section" id="practice-guide" aria-labelledby="practice-guide-heading"><div class="iq-section-head"><div><h2 id="practice-guide-heading">How to use free interactive questions effectively</h2><p>Choose your country and curriculum, select the correct learning level, then practise one subject at a time. Read the feedback, retry missed questions and revisit difficult topics later.</p></div></div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px"><article class="iq-promise"><h3>1. Choose the right level</h3><p>Confirm your grade, class or examination stage before starting. If you are preparing for KJSEA, select Grade 9 and the relevant Kenyan curriculum option.</p></article><article class="iq-promise"><h3>2. Practise with purpose</h3><p>Attempt questions without looking at notes first. Show calculations and explain your reasoning where the question requires it.</p></article><article class="iq-promise"><h3>3. Learn from feedback</h3><p>Review explanations where provided. Record topics you missed and return to them after revising the relevant lesson.</p></article><article class="iq-promise"><h3>4. Check coverage</h3><p>Question banks are published progressively. A subject or grade selection does not guarantee that every curriculum topic has a question set yet.</p></article></div><p><strong>Important:</strong> CBE Nexus questions are supplementary practice materials, not official KNEC examination papers. Confirm assessment requirements through your school and official examination guidance.</p><p><a href="/resources.html">Browse notes and learning resources</a> · <a href="/cbc-exam-generator.html">Open the teacher exam generator</a> · <a href="/grade-10-school-finder.html">Explore Grade 10 pathways</a></p></section><section class="iq-section" id="interactive-faq"><h2>Frequently asked questions about interactive learning questions</h2><article class="iq-promise"><h3>Are CBE Nexus interactive questions free?</h3><p>The interactive question portal offers free practice. Specific quiz features, question coverage and explanations depend on the available published question bank.</p></article><article class="iq-promise"><h3>Can I practise KJSEA questions online?</h3><p>Yes. Select Kenya, the appropriate curriculum and Grade 9 where those options are available, then choose a subject. Use the questions as supplementary revision and check official assessment guidance separately.</p></article><article class="iq-promise"><h3>Do all grades and subjects have complete question banks?</h3><p>Not necessarily. Availability depends on the questions published and tagged for each country, curriculum, level and subject. Check the available sets rather than assuming complete coverage.</p></article><article class="iq-promise"><h3>Are the questions official KNEC past papers?</h3><p>No. CBE Nexus interactive questions are supplementary practice unless a resource is explicitly identified and sourced as an official publication. Check KNEC for official examination information.</p></article><article class="iq-promise"><h3>How should learners use instant marking?</h3><p>Use marking to identify gaps, not just to record a score. Read explanations where provided, correct errors and try similar questions again after revision.</p></article></section>\n</main>
 
+  <script src="/country-curriculum-options.js?v=20261119-01"></script>
   <script>
     (function(){
       const country = document.getElementById('iqCountry');
       const curriculum = document.getElementById('iqCurriculum');
       const level = document.getElementById('iqLevel');
-      const curriculumByCountry = {
-  "Kenya":["Kenya CBC/CBE","Kenya 8-4-4 / KCSE","Cambridge International","Pearson Edexcel","IB"],
-  "Uganda":["Uganda NCDC Curriculum / UNEB","Cambridge International","Pearson Edexcel"],
-  "Tanzania":["Tanzania NECTA Curriculum","Cambridge International","Pearson Edexcel"],
-  "Rwanda":["Rwanda REB Curriculum / NESA","Cambridge International"],
-  "South Africa":["South Africa CAPS / NSC (DBE)","IEB NSC","Cambridge International","Pearson Edexcel","IB"],
-  "Ghana":["Ghana NaCCA Curriculum / WASSCE","Cambridge International"],
-  "Nigeria":["Nigeria NERDC Curriculum / WAEC / NECO","Cambridge International"],
-  "Zambia":["Zambia ZEC / ECZ Curriculum","Cambridge International"],
-  "Zimbabwe":["Zimbabwe ZIMSEC","Cambridge International","Pearson Edexcel"],
-  "Botswana":["Botswana BGCSE / BEC","Cambridge International"],
-  "Namibia":["Namibia NSSCO / NSSCAS","Cambridge International"],
-  "Malawi":["Malawi MANEB Curriculum","Cambridge International"],
-  "Lesotho":["Lesotho LGCSE / ECOL","Cambridge International"],
-  "Eswatini":["Eswatini EGCSE / ECESWA","Cambridge International"],
-  "India":["India CBSE","India CISCE / ICSE / ISC","State Board","Cambridge International","Pearson Edexcel","IB"],
-  "Pakistan":["Pakistan National Curriculum / FBISE","Punjab Board (BISE)","Cambridge O Level / A Level","Pearson Edexcel","IB"],
-  "Bangladesh":["Bangladesh NCTB / SSC / HSC","Cambridge O Level / A Level","Pearson Edexcel","IB"],
-  "United Kingdom":["England National Curriculum / GCSE / A Level","Wales Curriculum for Wales / WJEC","Scotland Curriculum for Excellence / SQA","Northern Ireland CCEA","Cambridge International","Pearson Edexcel","IB"],
-  "United States":["US Common Core / NGSS","State Standards / State Assessments","AP","IB"],
-  "Canada":["Canadian Provincial Curriculum","Ontario Curriculum / OSSLT","British Columbia Curriculum","Alberta Curriculum","IB"],
-  "Australia":["Australian Curriculum / ACARA","NSW NESA","VCE (Victoria)","QCE (Queensland)","WACE (Western Australia)","IB"],
-  "New Zealand":["New Zealand Curriculum / NCEA","Cambridge International","IB"],
-  "Singapore":["Singapore MOE Curriculum / GCE","Cambridge International","IB"],
-  "Malaysia":["Malaysia KSSM / KSSR / SPM","Cambridge IGCSE","IB"],
-  "China":["China National Curriculum / Gaokao","Cambridge International","Pearson Edexcel","IB"],
-  "Japan":["Japan MEXT Curriculum","Cambridge International","IB"],
-  "United Arab Emirates":["UAE Ministry of Education Curriculum","British Curriculum / GCSE / A Level","US Curriculum","IB","CBSE"],
-  "Saudi Arabia":["Saudi Ministry of Education Curriculum","International British Curriculum","American Curriculum","IB"],
-  "Qatar":["Qatar National Curriculum","British Curriculum","American Curriculum","IB"],
-  "Egypt":["Egypt Ministry of Education Curriculum / Thanaweya Amma","IGCSE","IB"],
-  "Ethiopia":["Ethiopia Ministry of Education Curriculum / Ethiopian General School Leaving Examination"],
-  "Ireland":["Irish Primary Curriculum / Junior Cycle / Leaving Certificate","Cambridge International","IB"],
-  "France":["French National Curriculum / Baccalauréat","Cambridge International","IB"],
-  "Germany":["German Länder Curriculum / Abitur","Cambridge International","IB"],
-  "Netherlands":["Dutch National Curriculum / VMBO / HAVO / VWO","Cambridge International","IB"],
-  "Brazil":["Brazil BNCC / ENEM","Cambridge International","IB"],
-  "Mexico":["Mexico SEP Curriculum","Cambridge International","IB"],
-  "Philippines":["Philippines DepEd K to 12 / MATATAG","Cambridge International","IB"],
-  "Indonesia":["Indonesia Merdeka Curriculum / National Assessment","Cambridge International","IB"],
-  "South Korea":["South Korea National Curriculum / CSAT (Suneung)","IB"],
-  "Sri Lanka":["Sri Lanka National Curriculum / GCE O/L & A/L","Cambridge International","Pearson Edexcel"],
-  "Nepal":["Nepal CDC Curriculum / NEB","Cambridge International"],
-  "Myanmar":["Myanmar Basic Education Curriculum / Matriculation","Cambridge International"],
-  "Oman":["Oman Ministry of Education Curriculum","British Curriculum","IB"],
-  "Kuwait":["Kuwait Ministry of Education Curriculum","British Curriculum","American Curriculum","IB"],
-  "Bahrain":["Bahrain Ministry of Education Curriculum","British Curriculum","American Curriculum","IB"],
-  "Jordan":["Jordan National Curriculum / Tawjihi","Cambridge International","IB"],
-  "Israel":["Israel Ministry of Education / Bagrut","IB"],
-  "Turkey":["Türkiye Ministry of National Education / YKS","Cambridge International","IB"],
-  "Türkiye":["Türkiye Ministry of National Education / YKS","Cambridge International","IB"],
-  "Russia":["Russian Federal State Educational Standards / EGE","IB"],
-  "Ukraine":["Ukraine State Standard / NMT","IB"],
-  "Jamaica":["Jamaica National Standards Curriculum / CSEC / CAPE","Cambridge International"],
-  "Trinidad and Tobago":["Trinidad and Tobago National Curriculum / CSEC / CAPE","Cambridge International"],
-  "Barbados":["Barbados National Curriculum / CSEC / CAPE","Cambridge International"],
-  "Fiji":["Fiji National Curriculum / FSLC","Cambridge International"],
-  "Papua New Guinea":["PNG National Curriculum / Grade 10 & 12 National Examinations"],
-  "Mauritius":["Mauritius National Curriculum / NCE / SC / HSC","Cambridge International"],
-  "Seychelles":["Seychelles National Curriculum / IGCSE","Cambridge International"]
-};
-
-const nationalLevelStructures = {
+      const curriculumByCountry = window.CBE_COUNTRY_CURRICULUM_OPTIONS || {};const nationalLevelStructures = {
   "Kenya": ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Uganda": ["Primary 1","Primary 2","Primary 3","Primary 4","Primary 5","Primary 6","Primary 7","Senior 1","Senior 2","Senior 3","Senior 4","Senior 5","Senior 6"],
   "Tanzania": ["Standard I","Standard II","Standard III","Standard IV","Standard V","Standard VI","Standard VII","Form I","Form II","Form III","Form IV","Form V","Form VI"],
@@ -339,7 +278,14 @@ function refreshLevelOptions(countryName, curriculumName, input, list){
 }
 
 function boardsForCountry(name){
-  return curriculumByCountry[name] || ["National curriculum / national examinations (confirm board)","Cambridge International","Pearson Edexcel","IB"];
+  const aliases = {
+    "Gambia":"The Gambia",
+    "Congo (Republic of the)":"Congo",
+    "Sao Tome and Principe":"São Tomé and Príncipe",
+    "Turkey":"Türkiye"
+  };
+  const key = aliases[name] || name;
+  return curriculumByCountry[key] || curriculumByCountry[name] || ["National curriculum / examination pathway (country-specific options being curated)"];
 }
 function setCurriculumOptions(countryEl, curriculumEl, preferred){
   if(!countryEl || !curriculumEl) return;
