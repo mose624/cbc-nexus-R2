@@ -263,4 +263,9 @@ window.CBE_COUNTRY_CURRICULUM_OPTIONS = {
   "Republic of the Congo":["Republic of the Congo national education pathway / Primary CP1–CM2; collège 6e–3e; lycée 2nde–Terminale","CEPE","BEPC","Baccalauréat"],
   "Congo (Republic of the)":["Republic of the Congo national education pathway / Primary CP1–CM2; collège 6e–3e; lycée 2nde–Terminale","CEPE","BEPC","Baccalauréat"],
   "São Tomé and Príncipe":["São Tomé and Príncipe National Curriculum: Classes 1–4, 5–6, 7–9 and Secondary 10–12","Basic Education Law 4/2018"],
+  "Senegal":["Senegal Curriculum de l’éducation de base / CI–CM2, moyen 6e–3e and lycée 2nde–Terminale","CFEE","BFEM","Baccalauréat"],
+  "Serbia":["Serbia National Curriculum / Primary Grades 1–8 and secondary 3–4 year programmes","Primary final examination"],
+  "Seychelles":["Seychelles National Curriculum Framework / Primary P1–P6 and Secondary S1–S5","Seychelles National Examinations"],
+  "Sierra Leone":["Sierra Leone MBSSE Basic Education Curriculum / 6-3-3-4","NPSE","BECE","WASSCE"],
+  "Singapore":["Singapore MOE National Curriculum / Primary 1–6 and Full Subject-Based Banding G1–G3","PSLE","Singapore-Cambridge SEC (from 2027)"],
 };
