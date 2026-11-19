@@ -338,7 +338,7 @@
   "Fiji":["Fiji National Curriculum / FSLC","Cambridge International"],
   "Papua New Guinea":["PNG Elementary Curriculum / Elementary One","PNG National Curriculum / Grade 10 & 12 National Examinations"],
   "Mauritius":["Mauritius National Curriculum / NCE / SC / HSC","Cambridge International"],
-  "Seychelles":["Seychelles National Curriculum / IGCSE","Cambridge International"]
+  "Seychelles":["Seychelles National Curriculum / IGCSE","Cambridge International"],
   "Sudan":["Sudan National Curriculum / Basic Level, Grade 1"],
   "Suriname":["Suriname Primary Education Curriculum / leerjaar 1"],
   "Sweden":["Swedish National Curriculum (Lgr22) / Year 1 Mathematics"],
@@ -557,7 +557,7 @@ const nationalLevelStructures = {
   "Saudi Arabia": ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Qatar": ["KG 1","KG 2","Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Egypt": ["Primary 1","Primary 2","Primary 3","Primary 4","Primary 5","Primary 6","Preparatory 1","Preparatory 2","Preparatory 3","Secondary 1","Secondary 2","Secondary 3"],
-  "Ethiopia": ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"]
+  "Ethiopia": ["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Sudan":["Grade 1"],
   "Suriname":["Leerjaar 1"],
   "Sweden":["Year 1"],
@@ -574,7 +574,7 @@ const nationalLevelStructures = {
   "Türkiye":["1. Sınıf"],
   "Turkmenistan":["Grade 1"],
   "Tuvalu":["Class 1"],
-  "Ukraine":["1 клас"],,
+  "Ukraine":["1 клас"],
   "Uruguay":["1.º de Primaria"],
   "Uzbekistan":["1-sinf"],
   "Vanuatu":["Year 1"],
@@ -1454,7 +1454,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
         "Greece":"Greek",
         "Grenada":"English",
         "Guatemala":"Spanish; Mayan, Garifuna and Xinka language education also applies in relevant communities",
-        "Guinea":"French and national languages (school and programme context varies)"
+        "Guinea":"French and national languages (school and programme context varies)",
         "Sri Lanka":["Sinhala and Tamil"],
         "Sudan":["Arabic"],
         "Suriname":["Dutch"],
@@ -1630,7 +1630,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       "Grenada":["Language Arts","Mathematics","Science","Social Studies","Creative Arts","Physical Education"],
       "Guatemala":["Comunicación y Lenguaje","Matemáticas","Medio Social y Natural","Expresión Artística","Educación Física"],
       "Guinea":["Français","Mathématiques","Éducation civique et morale","Sciences d'observation","Histoire-Géographie"],
-      "Bhutan":["རྫོང་ཁ","English","Mathematics","Environmental Studies","Health and Physical Education","Social Studies","ICT"]
+      "Bhutan":["རྫོང་ཁ","English","Mathematics","Environmental Studies","Health and Physical Education","Social Studies","ICT"],
         "Sri Lanka":["Mathematics","English","Science","Social Studies"],
         "Sudan":["Mathematics","English","Science","Social Studies"],
         "Suriname":["Mathematics","English","Science","Social Studies"],
