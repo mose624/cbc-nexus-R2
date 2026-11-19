@@ -3317,6 +3317,11 @@ if((isSecondaryDomain||isWwwPrimaryDomain)&&(req.method==="GET"||req.method==="H
   res.end();
   return;
 }
+if(url.pathname==="/kenya-universities-colleges.html"&&(req.method==="GET"||req.method==="HEAD")){
+  res.writeHead(301,{"Location":"/university-resources.html"+url.search,"Cache-Control":"public, max-age=3600"});
+  res.end();
+  return;
+}
 try{if(await handleApi(req,res,url))return;await serveStatic(req,res,url);}catch(error){console.error("Unhandled server error:",error);if(res.headersSent||res.writableEnded||res.destroyed){if(!res.writableEnded&&!res.destroyed)res.destroy(error);return;}sendJson(res,500,{ok:false,error:"Server error."});}});
 async function seedInteractiveQuestions(){
   try{
