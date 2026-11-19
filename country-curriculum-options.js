@@ -255,4 +255,9 @@ window.CBE_COUNTRY_CURRICULUM_OPTIONS = {
   "Mali":["Mali fundamental education 1-9 and secondary education; DEF and Baccalaureate"],
   "Malta":["Malta National Curriculum Framework: Years 1-11 and Sixth Form"],
   "Marshall Islands":["Marshall Islands Public School System curriculum and MISAT; confirm local school pathway"],
+  "Mauritania":["Mauritania national education pathway: Primary, Collège and Lycée; Baccalauréat"],
+  "Mauritius":["Mauritius National Curriculum Framework / Grades 1-6, 7-9, 10-11 and 12-13; PSAC, NCE, SC and HSC"],
+  "Mexico":["Mexico SEP Plan de Estudio 2022 / Preschool, Primary and Secondary six learning phases; upper-secondary Bachillerato subsystems"],
+  "Federated States of Micronesia":["FSM National Curriculum Standards and Benchmarks / Elementary Grades 1-8 and Secondary Grades 9-12; NMCT"],
+  "Moldova":["Moldova National Curriculum / Primary Classes I-IV, Gymnasium V-IX and Lyceum X-XII; Baccalaureate"],
 };
