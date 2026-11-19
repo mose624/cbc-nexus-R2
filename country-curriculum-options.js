@@ -235,4 +235,9 @@ window.CBE_COUNTRY_CURRICULUM_OPTIONS = {
   "Venezuela":["Venezuela Currículo Nacional Bolivariano / Primer Grado"],
   "Vietnam":["Vietnam 2018 General Education Curriculum / Grade 1"],
   "Yemen":["Yemen National Curriculum / الصف الأول الأساسي"]
+  "Ethiopia":["Ethiopia General Education Curriculum / Ministry of Education"],
+  "Zambia":["Zambia 2023 Education Curriculum Framework / CDC / ECZ","Cambridge International"],
+  "Zimbabwe":["Zimbabwe National Curriculum / ZIMSEC","Cambridge International","Pearson Edexcel"],
+  "Ghana":["Ghana NaCCA Standards-Based Curriculum / Common Core / SHS"],
+  "Malawi":["Malawi Curriculum and Assessment Framework / MIE / MANEB","Cambridge International"],
 };
