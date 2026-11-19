@@ -273,4 +273,9 @@ window.CBE_COUNTRY_CURRICULUM_OPTIONS = {
   "Solomon Islands":["Solomon Islands National Curriculum Framework / Primary and Secondary Years 1–12","MEHRD national assessments"],
   "Somalia":["Somalia National Curriculum Framework (2017) / Primary Grades 1–8 and Secondary Grades 9–12","National assessment framework (implementation varies)"],
   "South Africa":["National Curriculum Statement Grades R–12 / CAPS","National Senior Certificate (NSC)"],
+  "Spain":["LOMLOE / Primary 1–6, ESO 1–4, Bachillerato 1–2","ESO qualification","Bachillerato"],
+  "Sri Lanka":["National Curriculum Framework / Grades 1–13; phased reforms 2026–2033","G.C.E. Ordinary Level","G.C.E. Advanced Level"],
+  "Sudan":["Sudan General Education Curriculum / Basic Grades 1–8; secondary Grades 9–11","Basic Education Certificate","Sudan School Certificate"],
+  "Suriname":["Suriname national curriculum / GLO, VOJ and VOS; curriculum reform in progress","GLO","VOJ","VOS"],
+  "Sweden":["Swedish national curriculum Lgr22 / Compulsory Years 1–9 and Gymnasium","Year 9 grades","Upper-secondary programme qualifications"],
 };
