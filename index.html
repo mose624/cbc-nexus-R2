@@ -774,15 +774,23 @@
 }
 </style>
 <style id="country-resource-panel-styles">
-.country-resource-panel{min-width:0;max-height:78vh;overflow-y:auto;overscroll-behavior:contain;padding:12px;background:#f7fafc;border:1px solid #d8e3ec;border-radius:12px}
-.country-resource-heading{position:sticky;top:-12px;z-index:2;margin:-12px -12px 10px;padding:14px 12px 12px;background:#fff;border-bottom:1px solid #dce6ee}
-.country-resource-heading .eyebrow{margin:0 0 5px;color:#087b50;font-size:.64rem;font-weight:900;letter-spacing:.08em}
-.country-resource-heading h2{margin:0 0 6px;color:#12304a;font-size:1.05rem;line-height:1.25}
-.country-resource-heading p:not(.eyebrow){margin:0;color:#526577;font-size:.75rem;line-height:1.45}
-.country-resource-count{display:inline-block;margin-top:8px;padding:3px 7px;border-radius:20px;background:#e8f5ee;color:#087b50;font-size:.62rem;font-weight:900;letter-spacing:.04em}
+.country-resource-panel{min-width:0;max-height:78vh;overflow-y:auto;overscroll-behavior:contain;padding:12px;background:linear-gradient(145deg,#f0f7ff 0%,#fff7ed 48%,#f5f3ff 100%);border:1px solid #cbdaf0;border-radius:12px;box-shadow:0 5px 18px rgba(31,65,114,.08)}
+.country-resource-heading{position:sticky;top:-12px;z-index:2;margin:-12px -12px 10px;padding:14px 12px 12px;background:linear-gradient(110deg,#123d73 0%,#176b87 52%,#51418d 100%);border-bottom:3px solid #f5b942;color:#fff}
+.country-resource-heading .eyebrow{margin:0 0 5px;color:#ffe08a;font-size:.64rem;font-weight:900;letter-spacing:.08em}
+.country-resource-heading h2{margin:0 0 6px;color:#fff;font-size:1.05rem;line-height:1.25}
+.country-resource-heading p:not(.eyebrow){margin:0;color:#e8f2ff;font-size:.75rem;line-height:1.45}
+.country-resource-count{display:inline-block;margin-top:8px;padding:3px 7px;border-radius:20px;background:#fff0c2;color:#704600;font-size:.62rem;font-weight:900;letter-spacing:.04em}
 .country-resource-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
-.country-resource-button{display:flex;align-items:center;gap:6px;min-width:0;min-height:32px;padding:5px 7px;border:1px solid #d6e2eb;border-radius:6px;background:#fff;color:#18364e;text-decoration:none;font-size:.68rem;font-weight:750;line-height:1.15;transition:background .15s,border-color .15s,color .15s}
-.country-resource-button:hover,.country-resource-button:focus-visible{background:#eaf5ff;border-color:#1680ba;color:#075985;outline:2px solid transparent}
+.country-resource-button{display:flex;align-items:center;gap:6px;min-width:0;min-height:32px;padding:5px 7px;border:1px solid var(--country-border,#cbd5e1);border-left:3px solid var(--country-accent,#2563eb);border-radius:7px;background:var(--country-bg,#fff);color:#18364e;text-decoration:none;font-size:.68rem;font-weight:800;line-height:1.15;box-shadow:0 1px 3px rgba(20,45,80,.06);transition:transform .15s,box-shadow .15s,filter .15s}
+.country-resource-button:nth-child(8n+1){--country-bg:#e8f2ff;--country-border:#b9d4ff;--country-accent:#2563eb}
+.country-resource-button:nth-child(8n+2){--country-bg:#e7f8ef;--country-border:#b5e6ca;--country-accent:#159455}
+.country-resource-button:nth-child(8n+3){--country-bg:#fff1e6;--country-border:#ffd0ad;--country-accent:#e87928}
+.country-resource-button:nth-child(8n+4){--country-bg:#f2eaff;--country-border:#d8c4ff;--country-accent:#8250df}
+.country-resource-button:nth-child(8n+5){--country-bg:#fff0f3;--country-border:#ffc6d2;--country-accent:#d6336c}
+.country-resource-button:nth-child(8n+6){--country-bg:#e5f8fb;--country-border:#afe5ed;--country-accent:#07839a}
+.country-resource-button:nth-child(8n+7){--country-bg:#fff8dc;--country-border:#f3df91;--country-accent:#b8860b}
+.country-resource-button:nth-child(8n){--country-bg:#edf1f5;--country-border:#cbd5e1;--country-accent:#475569}
+.country-resource-button:hover,.country-resource-button:focus-visible{filter:saturate(1.12);transform:translateY(-1px);box-shadow:0 3px 9px rgba(20,45,80,.14);outline:2px solid #2563eb;outline-offset:1px}
 .country-resource-flag{flex:0 0 auto;font-size:1rem;line-height:1}
 .country-resource-button span:last-child{overflow-wrap:anywhere}
 @media(max-width:900px){.country-resource-panel{max-height:70vh}.country-resource-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
