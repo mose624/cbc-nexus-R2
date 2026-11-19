@@ -2819,7 +2819,7 @@ function injectPageMetadata(html, pathname, req){
   const description=(descriptionMatch&&descriptionMatch[1].trim()) ||
     (h1+" — Explore CBC and CBE learning resources, revision questions, teaching materials and education support in Kenya on CBE Nexus.");
   const canonicalUrl=seo.base(req)+pathOnly;
-  const privatePage=/admin|login|dashboard|checkout|payment|account|upload|reset-password/i.test(pathOnly);
+  const privatePage=/(^|[\\/_-])(?:admin|login|dashboard|checkout|payment|account|upload|reset-password)(?=$|[\\/_ .-])/i.test(pathOnly);
   const additions=[];
   if(!/<meta\b[^>]*\bname=["']description["']/i.test(out)) additions.push('<meta name="description" content="'+escapeSeoAttribute(description.slice(0,300))+'">');
   if(!/<meta\b[^>]*\bname=["']robots["']/i.test(out)) additions.push('<meta name="robots" content="'+(privatePage?"noindex, nofollow":"index, follow")+'">');
