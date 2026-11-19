@@ -2285,29 +2285,41 @@
 </script>
 
 <style id="cbe-learning-studio-full-width">
-/* Give the Learning Studio the full horizontal stage of the website, beyond the narrower portal column. */
-#dashboard.portal-dashboard .cbe-learning-studio{
-  box-sizing:border-box!important;
-  width:calc(100vw - 48px)!important;
-  max-width:none!important;
-  margin-left:calc(50% - 50vw + 24px)!important;
-  margin-right:0!important;
+/* Keep the Learning Studio in its own full-width row, separate from the three-column resource dashboard. */
+.cbe-learning-studio.cbe-learning-studio-full-row{
+  display:block!important;box-sizing:border-box!important;
+  width:calc(100% - 32px)!important;max-width:1440px!important;
+  min-width:0!important;margin:22px auto!important;
+  position:relative!important;clear:both!important;
 }
-#dashboard.portal-dashboard .cbe-learning-studio > *{min-width:0}
-#dashboard.portal-dashboard .cbe-learning-guide-grid,
-#dashboard.portal-dashboard .cbe-studio-tools-grid{width:100%;min-width:0}
+.cbe-learning-studio-full-row > *{min-width:0}
+.cbe-learning-studio-full-row .cbe-learning-guide-grid,
+.cbe-learning-studio-full-row .cbe-studio-tools-grid{width:100%;min-width:0}
 @media(max-width:700px){
-  #dashboard.portal-dashboard .cbe-learning-studio{
-    width:calc(100vw - 20px)!important;
-    margin-left:calc(50% - 50vw + 10px)!important;
-    padding:16px!important;
+  .cbe-learning-studio.cbe-learning-studio-full-row{
+    width:calc(100% - 20px)!important;margin:14px auto!important;padding:16px!important;
   }
 }
 @media(max-width:560px){
-  #dashboard.portal-dashboard .cbe-learning-guide-grid{grid-template-columns:1fr}
-  #dashboard.portal-dashboard .cbe-learning-example{grid-template-columns:1fr}
+  .cbe-learning-studio-full-row .cbe-learning-guide-grid{grid-template-columns:1fr!important}
+  .cbe-learning-studio-full-row .cbe-learning-example{grid-template-columns:1fr!important}
 }
 </style>
+<script id="cbe-learning-studio-layout-fix">
+(function(){
+  function placeLearningStudio(){
+    var dashboard=document.getElementById("dashboard");
+    if(!dashboard || dashboard.dataset.studioSeparated==="1") return;
+    var studio=dashboard.querySelector(".portal-main > .cbe-learning-studio");
+    if(!studio) return;
+    dashboard.insertAdjacentElement("afterend",studio);
+    studio.classList.add("cbe-learning-studio-full-row");
+    dashboard.dataset.studioSeparated="1";
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",placeLearningStudio,{once:true});
+  else placeLearningStudio();
+})();
+</script>
 
 </body>
 </html>
