@@ -2584,5 +2584,62 @@
 })();
 </script>
 
+
+<style id="cbenexus-original-three-column-reference">
+/* Match the supplied desktop reference: welcome | Resource Centre | 196-country directory. */
+@media (min-width: 901px){
+  #dashboard.portal-dashboard{
+    display:grid!important;
+    grid-template-columns:minmax(0,30%) minmax(0,38%) minmax(0,32%)!important;
+    gap:12px!important;
+    align-items:stretch!important;
+    width:100%!important;
+    max-width:none!important;
+    box-sizing:border-box!important;
+  }
+  #dashboard.portal-dashboard > .portal-main{
+    grid-column:1!important;grid-row:1!important;
+    min-width:0!important;width:auto!important;
+  }
+  #dashboard.portal-dashboard > .portal-sidebar{
+    grid-column:2!important;grid-row:1!important;
+    min-width:0!important;width:auto!important;
+    max-height:620px!important;overflow-y:auto!important;
+  }
+  #dashboard.portal-dashboard > .portal-rightbar.country-resource-panel{
+    grid-column:3!important;grid-row:1!important;
+    min-width:0!important;width:auto!important;
+    height:620px!important;min-height:620px!important;max-height:620px!important;
+    overflow-y:auto!important;align-self:stretch!important;
+  }
+}
+@media (max-width:900px){
+  #dashboard.portal-dashboard{display:flex!important;flex-direction:column!important;gap:14px!important}
+  #dashboard.portal-dashboard > .portal-main,
+  #dashboard.portal-dashboard > .portal-sidebar,
+  #dashboard.portal-dashboard > .portal-rightbar.country-resource-panel{
+    width:100%!important;max-width:100%!important;min-width:0!important;
+  }
+  #dashboard.portal-dashboard > .portal-rightbar.country-resource-panel{
+    height:72vh!important;min-height:420px!important;max-height:72vh!important;
+  }
+}
+</style>
+<script id="cbenexus-restore-country-directory-column">
+(function(){
+  function restoreCountryColumn(){
+    var dashboard=document.getElementById("dashboard");
+    if(!dashboard)return;
+    var countryPanel=document.querySelector("#dashboard .portal-rightbar.country-resource-panel, .cbe-learning-studio .portal-rightbar.country-resource-panel");
+    var resourceCentre=dashboard.querySelector(":scope > .portal-sidebar");
+    if(countryPanel && resourceCentre && countryPanel.parentElement!==dashboard){
+      resourceCentre.insertAdjacentElement("afterend",countryPanel);
+    }
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",restoreCountryColumn,{once:true});
+  else restoreCountryColumn();
+})();
+</script>
+
 </body>
 </html>
