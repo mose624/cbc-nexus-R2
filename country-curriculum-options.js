@@ -245,4 +245,9 @@ window.CBE_COUNTRY_CURRICULUM_OPTIONS = {
   "Guyana":["Guyana National Curriculum / Nursery–Grade 9; Revised Enhanced National Learning Outcomes 2026"],
   "Haiti":["Haiti MENFP Competency-Based Curriculum / Fondamental 1er–3e Cycles and Secondaire I–IV"],
   "Hong Kong":["Hong Kong EDB Curriculum / Primary 1–6 and Secondary 1–6; HKDSE"],
+  "Liechtenstein":["Liechtenstein Curriculum (LiLe) / Primary Years 1–5, Secondary I Years 6–9 and Gymnasium pathway"],
+  "Lithuania":["Lithuanian General Education Curriculum / Primary Grades 1–4, Lower Secondary 5–10 and Upper Secondary 11–12"],
+  "Luxembourg":["Luxembourg Fundamental Education / Cycles 1–4; Secondary Classical and General Education (7e–1re)"],
+  "Madagascar":["Madagascar operating curriculum pathway / Primary T1–T5, Collège 6e–3e and Lycée 2nde–Terminale; reform cohorts may differ"],
+  "Malawi":["Malawi Curriculum and Assessment Framework (MIE, July 2025) / Primary Standards 1–8 and Secondary Forms 1–4; staged reforms"],
 };
