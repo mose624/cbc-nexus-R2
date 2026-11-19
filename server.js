@@ -3249,6 +3249,10 @@ async function serveStatic(req,res,url){
         setText("verificationNote","Country information is presented for guidance. Confirm curricula, examinations, school listings and professional requirements with official authorities.");
       }
     }
+    if(country){
+      const countryImageScript='<script>(function(){const countryName='+JSON.stringify(country.name).replace(/</g,"\\u003c")+';const img=document.querySelector("img.cbe-context-image");if(!img)return;img.removeAttribute("src");img.alt="Representative country image for "+countryName;img.loading="eager";img.decoding="async";img.referrerPolicy="no-referrer";const api="https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&redirects=1&prop=pageimages&piprop=thumbnail&pithumbsize=1600&titles="+encodeURIComponent(countryName);fetch(api).then(r=>{if(!r.ok)throw new Error("Image lookup failed");return r.json()}).then(data=>{const pages=data&&data.query&&data.query.pages?Object.values(data.query.pages):[];const page=pages.find(item=>item&&item.thumbnail&&item.thumbnail.source);if(!page)throw new Error("No country image available");img.src=page.thumbnail.source;const credit=document.createElement("a");credit.href="https://en.wikipedia.org/wiki/"+encodeURIComponent(page.title.replace(/ /g,"_"));credit.target="_blank";credit.rel="noopener noreferrer";credit.textContent="Image source and country details: "+countryName;credit.style.cssText="display:block;text-align:center;font-size:11px;margin:-14px auto 18px;color:#075080;font-weight:700";img.insertAdjacentElement("afterend",credit)}).catch(()=>{img.style.display="none"})})();</script>';
+      html=html.replace("</body>",countryImageScript+"</body>");
+    }
     html=injectAccessibilityEnhancements(injectAdSenseTags(injectAnalyticsTags(injectPageMetadata(injectTrustedReferenceSection(html,url.pathname),url.pathname,req)),url.pathname));
     res.writeHead(200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"public, max-age=300, must-revalidate"});
     res.end(html);
