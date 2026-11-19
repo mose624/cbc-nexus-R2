@@ -235,6 +235,28 @@ function renderCountry(){
  // Country education dashboard: shared visual system, country-specific content and links.
  const learningHub=node("section","gs-country-learning-dashboard");learningHub.id="country-learning-hub";
  const hero=node("header","gs-country-learning-hero");
+ // Render a banner image on the first paint, then upgrade it to a country-specific
+ // Wikimedia image when available. Keep the fallback if the lookup is slow or fails.
+ const heroImage=node("img","gs-country-learning-hero-image");
+ heroImage.src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1600&q=80";
+ heroImage.alt="Students learning in a classroom for "+c.name;
+ heroImage.loading="eager";heroImage.decoding="async";heroImage.fetchPriority="high";heroImage.referrerPolicy="no-referrer";
+ heroImage.style.cssText="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:.5;z-index:0;pointer-events:none";
+ hero.appendChild(heroImage);
+ const imageNames={"Côte d’Ivoire":"Côte d'Ivoire","The Gambia":"The Gambia","Türkiye":"Turkey","Czechia":"Czech Republic","Palestine":"State of Palestine"};
+ const imageTitle=imageNames[c.name]||c.name;
+ const imageCache=window.CBE_COUNTRY_HERO_IMAGES||(window.CBE_COUNTRY_HERO_IMAGES={});
+ if(imageCache[c.slug]&&imageCache[c.slug].src){heroImage.src=imageCache[c.slug].src;}
+ else{
+  const imageApi="https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&redirects=1&prop=pageimages&piprop=thumbnail&pithumbsize=1600&titles="+encodeURIComponent(imageTitle);
+  fetch(imageApi,{headers:{Accept:"application/json"}}).then(response=>{if(!response.ok)throw new Error("Image lookup unavailable");return response.json();}).then(payload=>{
+   const pages=payload&&payload.query&&payload.query.pages;
+   const page=pages&&Object.keys(pages).map(key=>pages[key]).find(item=>item&&item.thumbnail&&item.thumbnail.source);
+   if(!page)return;
+   const result={src:page.thumbnail.source,page:"https://en.wikipedia.org/wiki/"+encodeURIComponent((page.title||imageTitle).replace(/ /g,"_"))};
+   imageCache[c.slug]=result;heroImage.src=result.src;heroImage.alt="Representative image of "+c.name+" for its CBE Nexus education dashboard";
+  }).catch(()=>{});
+ }
  const heroBrand=node("div","gs-country-learning-brand");
  const flagMark=node("span","gs-country-learning-flag");flagMark.textContent=c.flag||"🌍";
  const brandText=node("strong");brandText.textContent=c.name+" Education Resources";
@@ -251,7 +273,7 @@ function renderCountry(){
  [["","JHS & SHS Portal"],["primary","Primary Portal"],["junior","Junior Secondary Portal"],["senior","Senior Secondary Portal"],["all","All learning resources"]].forEach(([value,label])=>{const option=node("option");option.value=value;option.textContent=label;portalSelect.appendChild(option);});
  portalSelect.addEventListener("change",()=>{const level=portalSelect.value;window.location.href="/resources.html?country="+countryQuery+(level&&level!=="all"?"&level="+encodeURIComponent(level):"");});
  dashboardTop.append(dashboardBrand,dashboardSearch,portalSelect);
- const heroCopy=node("div","gs-country-learning-hero-copy");
+ const heroCopy=node("div","gs-country-learning-hero-copy");heroCopy.style.position="relative";heroCopy.style.zIndex="1";
  const heroTitle=node("h2");heroTitle.textContent=c.name+" Education Resources";
  const heroTag=node("span","gs-country-learning-tagline");heroTag.textContent="Learn • Practise • Revise • Succeed";
  const heroDesc=node("p");heroDesc.textContent="Explore curriculum learning resources and prepare for "+((d.exams||[]).slice(0,2).map(x=>x.name).join(" and ")||"national examinations")+".";
