@@ -272,11 +272,13 @@ function levelOptionsFor(countryName, curriculumName){
 function refreshLevelOptions(countryName, curriculumName, input, list){
   if(!input || !list) return;
   const previous=input.value;
-  list.replaceChildren();
-  levelOptionsFor(countryName,curriculumName).forEach(function(label){const option=document.createElement("option");option.value=label;list.appendChild(option);});
-  input.placeholder=list.options.length ? "Choose or type a class / level" : "Enter this country's class / level";
-  if(previous && Array.from(list.options).some(function(option){return option.value===previous;})) input.value=previous;
-  else input.value=list.options.length ? list.options[0].value : "";
+  const labels=levelOptionsFor(countryName,curriculumName);
+  const fragment=document.createDocumentFragment();
+  const available=new Set(labels);
+  labels.forEach(function(label){const option=document.createElement("option");option.value=label;fragment.appendChild(option);});
+  list.replaceChildren(fragment);
+  input.placeholder=labels.length ? "Choose or type a class / level" : "Enter this country's class / level";
+  input.value=previous && available.has(previous) ? previous : (labels[0] || "");
 }
 
 function boardsForCountry(name){
@@ -307,6 +309,7 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
       if (incoming.get('level')) level.value = incoming.get('level');
       country.addEventListener('change',function(){setCurriculumOptions(country,curriculum,'');refreshLevelOptions(country.value,curriculum.value,level,levelList);updateQuizLinks();});
       const openSelected = document.getElementById('iqOpenSelected');
+      const quizLinks = Array.from(document.querySelectorAll('a[href^="quizzes.html"]'));
       function updateQuizLinks(){
         const params = new URLSearchParams({
           country: (country.value || 'Kenya').trim(),
@@ -316,9 +319,12 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
         const target = 'quizzes.html?' + params.toString() + '#quizCentre';
         openSelected.href = target;
         openSelected.setAttribute('aria-disabled', !country.value.trim() || !curriculum.value.trim() ? 'true' : 'false');
-        document.querySelectorAll('a[href^="quizzes.html"]').forEach(function(link){ link.href = target; });
+        quizLinks.forEach(function(link){ link.href = target; });
       }
-      [country,curriculum,level].forEach(function(field){ field.addEventListener('input',updateQuizLinks); field.addEventListener('change',updateQuizLinks); });
+      country.addEventListener('change',updateQuizLinks);
+      curriculum.addEventListener('change',updateQuizLinks);
+      level.addEventListener('input',updateQuizLinks);
+      level.addEventListener('change',updateQuizLinks);
       openSelected.addEventListener('click',function(event){if(!country.value.trim()||!curriculum.value.trim()){event.preventDefault();curriculum.focus();curriculum.setCustomValidity('Enter the curriculum or examination board for this country.');curriculum.reportValidity();curriculum.addEventListener('input',function(){curriculum.setCustomValidity('');},{once:true});}});
       updateQuizLinks();
       const search = document.getElementById('subjectSearch');
