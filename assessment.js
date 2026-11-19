@@ -287,8 +287,8 @@
   "South Africa":["South Africa CAPS / NSC (DBE)","IEB NSC","Cambridge International","Pearson Edexcel","IB"],
   "Ghana":["Ghana NaCCA Curriculum / WASSCE","Cambridge International"],
   "Nigeria":["Nigeria NERDC Curriculum / WAEC / NECO","Cambridge International"],
-  "Zambia":["Zambia ZEC / ECZ Curriculum","Cambridge International"],
-  "Zimbabwe":["Zimbabwe ZIMSEC","Cambridge International","Pearson Edexcel"],
+  "Zambia":["Zambia 2023 Education Curriculum Framework / CDC / ECZ; phased 3–6–6–3 structure","Cambridge International"],
+  "Zimbabwe":["Zimbabwe Heritage-Based Curriculum Framework / MoPSE / ZIMSEC; Infant, Junior, Forms 1–4 and Forms 5–6 pathways","Cambridge International","Pearson Edexcel"],
   "Botswana":["Botswana BGCSE / BEC","Cambridge International"],
   "Namibia":["Namibia NSSCO / NSSCAS","Cambridge International", "Namibia Junior Primary Curriculum / Grade 1"],
   "Malawi":["Malawi MANEB Curriculum","Cambridge International"],
@@ -358,7 +358,7 @@
   "Vatican City":["Vatican City Schools / Italian Primary Curriculum (provisional)"],
   "Venezuela":["Venezuela Currículo Nacional Bolivariano / Primer Grado"],
   "Vietnam":["Vietnam 2018 General Education Curriculum / Grade 1"],
-  "Yemen":["Yemen National Curriculum / الصف الأول الأساسي"],
+  "Yemen":["Yemen National Curriculum / Basic Education Grades 1–9 and Secondary Grades 10–12"],
   "Ethiopia":["Ethiopia General Education Curriculum / Ministry of Education"],
   "Zambia":["Zambia 2023 Education Curriculum Framework / CDC / ECZ","Cambridge International"],
   "Zimbabwe":["Zimbabwe National Curriculum / ZIMSEC","Cambridge International","Pearson Edexcel"],
@@ -581,9 +581,9 @@ const nationalLevelStructures = {
   "Vatican City":["Classe Prima"],
   "Venezuela":["1er Grado"],
   "Vietnam":["Lớp 1"],
-  "Yemen":["الصف الأول الأساسي"],
+  "Yemen":["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
   "Ethiopia":["KG 1","KG 2","KG 3","Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9","Grade 10","Grade 11","Grade 12"],
-  "Zambia":["ECE 1","ECE 2","ECE 3","Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Form 1","Form 2","Form 3","Form 4","Form 5","Form 6"],
+  "Zambia":["Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Form 1","Form 2","Form 3","Form 4","Form 5","Form 6"],
   "Zimbabwe":["ECD A","ECD B","Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Form 1","Form 2","Form 3","Form 4","Form 5","Form 6"],
   "Ghana":["KG 1","KG 2","Basic 1","Basic 2","Basic 3","Basic 4","Basic 5","Basic 6","JHS 1","JHS 2","JHS 3","SHS 1","SHS 2","SHS 3"],
   "Malawi":["P-Class","Standard 1","Standard 2","Standard 3","Standard 4","Standard 5","Standard 6","Standard 7","Standard 8","Form 1","Form 2","Form 3","Form 4"]
@@ -1640,6 +1640,9 @@ function setCurriculumOptions(countryEl, curriculumEl, preferred){
         "Taiwan":["Mathematics","English","Science","Social Studies"],
         "Tajikistan":["Mathematics","English","Science","Social Studies"],
         "Thailand":["Mathematics","English","Science","Social Studies"],
+        "Yemen":["Arabic","English","Mathematics","Science","Physics","Chemistry","Biology","Islamic Education","Social Studies","History","Geography","Computer Studies"],
+        "Zambia":["English","Zambian Language","Mathematics","Integrated Science","Biology","Chemistry","Physics","Social Studies","Civic Education","Geography","History","Business Studies","Computer Studies","Agriculture","Technology Studies","Creative and Technology Studies","Religious Education"],
+        "Zimbabwe":["Indigenous Language","English Language","Mathematics","Science and Technology","General Science","Biology","Chemistry","Physics","Social Studies","Heritage Studies","Geography","History","Agriculture","Commerce","Computer Science","Technical and Vocational Studies","Family, Religion and Moral Education","Visual and Performing Arts","ICT"],
     };
     const countryBaseSubjects = countrySubjects[country && country.value] || [];
     const baseList = [...(isKenyaCbc ? subjectsForGrade(grade.value) : (isNigeriaNERDC ? nigeriaSubjects : countryBaseSubjects)), ...Object.keys(bank).filter((name) => name !== "CBC Skills")];
