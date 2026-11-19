@@ -814,6 +814,51 @@
   }
 }
 </style>
+
+<style id="nexus-compact-dashboard-polish">
+/* Compact, colourful dashboard treatment for the resource, payment and information panels. */
+#competitiveResources.nexus-compact-panel,.seo-band.nexus-compact-panel,#popularSearches.landing-band,#payments.payment-band,#about.info-band,#affiliateMarketplace.affiliate-band,#educationHubHome.education-hub-home{
+  box-sizing:border-box;border:1px solid #d9e5f4;border-radius:16px;margin:14px auto;padding:clamp(12px,1.8vw,20px);
+  box-shadow:0 7px 22px rgba(25,55,95,.07);font-size:13px;line-height:1.5;max-width:100%;
+}
+#competitiveResources.nexus-compact-panel{background:linear-gradient(120deg,#eef7ff 0%,#f6f2ff 52%,#effcf7 100%);}
+.nexus-compact-panel .section-heading,#payments .section-heading,#popularSearches .section-heading{gap:10px;align-items:center;margin-bottom:12px;}
+.nexus-compact-panel .eyebrow,#payments .eyebrow,#about .eyebrow,#affiliateMarketplace .eyebrow,#educationHubHome .eyebrow,#popularSearches .eyebrow{font-size:10px;letter-spacing:.1em;font-weight:800;color:#41658e;margin:0 0 4px;}
+.nexus-compact-panel h2,#payments h2,#about h2,#affiliateMarketplace h2,#educationHubHome h2,#popularSearches h2{font-size:clamp(17px,2vw,22px);line-height:1.2;margin:0 0 5px;}
+.nexus-panel-intro{font-size:12px;color:#52657c;margin:4px 0 0;max-width:720px;}
+#competitiveResources .feature-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:12px 0;}
+#competitiveResources .feature-grid article{display:grid;grid-template-columns:25px 1fr;align-content:start;column-gap:8px;row-gap:3px;min-width:0;padding:11px;border-radius:12px;background:rgba(255,255,255,.88);border:1px solid #dce8f5;box-shadow:0 3px 10px rgba(31,65,114,.045);}
+#competitiveResources .feature-grid article:nth-child(4n+1){border-top:3px solid #3996dc}
+#competitiveResources .feature-grid article:nth-child(4n+2){border-top:3px solid #8b70d6}
+#competitiveResources .feature-grid article:nth-child(4n+3){border-top:3px solid #28a889}
+#competitiveResources .feature-grid article:nth-child(4n){border-top:3px solid #e5a33b}
+#competitiveResources .feature-grid strong{font-size:12px;color:#203b5b;align-self:center}
+#competitiveResources .feature-grid span:not(.nexus-feature-icon){grid-column:2;font-size:11px;color:#5a6c80;line-height:1.4}
+.nexus-feature-icon{width:25px;height:25px;display:grid;place-items:center;border-radius:8px;background:#e8f2ff;color:#2468a6;font-size:16px;font-weight:800}
+#competitiveResources .quick-types{margin-top:8px}
+.seo-band.nexus-compact-panel{background:linear-gradient(115deg,#fff8e9,#fff 60%,#eef8ff);}
+.seo-band.nexus-compact-panel p:last-child{font-size:12px;color:#52657c;margin:6px 0 0;max-width:1100px}
+#popularSearches.landing-band{background:linear-gradient(120deg,#f4f1ff,#f4faff);}.landing-grid{gap:8px}
+.landing-grid button{font-size:11px!important;padding:8px 11px!important;border-radius:9px!important;border:1px solid #cbdaf0!important;background:#fff!important;color:#31577f!important;box-shadow:0 2px 7px rgba(31,65,114,.05)}
+#payments.payment-band{background:linear-gradient(120deg,#edf9f4,#f0f7ff);}.payment-layout{gap:12px}
+.payment-form,.payment-card{border:1px solid #d6e5ed!important;border-radius:12px!important;padding:13px!important;background:rgba(255,255,255,.94)!important}
+.payment-form label,.payment-card p{font-size:11px!important;line-height:1.45}
+.payment-form input{font-size:12px!important;min-height:37px}
+.payment-card h3{font-size:14px;margin:0 0 8px}.payment-card p{margin:6px 0;color:#52657c}
+#about.info-band{background:linear-gradient(120deg,#f3f6ff,#f1fbf8);}.info-layout{gap:14px}
+#about .info-layout>div>p:not(.eyebrow),#about .info-card p,#about .why-cbe-nexus li{font-size:11.5px;line-height:1.55;color:#52657c}
+#about .info-card{border:1px solid #d9e5f4;border-radius:12px;padding:13px;background:#fff}
+#about .info-card h3{font-size:14px}#about .why-cbe-nexus h4{font-size:12px}
+#affiliateMarketplace.affiliate-band{background:linear-gradient(120deg,#fff6ed,#fff 60%,#f2f8ff)}
+.affiliate-disclosure{font-size:10px;color:#68798b;margin:8px 0 12px}
+#educationHubHome.education-hub-home{background:linear-gradient(120deg,#edf7ff,#f7f3ff)}
+.education-hub-heading>div>p:not(.eyebrow){font-size:11.5px;color:#5b6c80;margin:5px 0}
+.education-hub-home-grid{gap:10px}.education-hub-card{border:1px solid #d9e5f4;border-radius:12px;overflow:hidden;background:#fff}
+.education-hub-card h3{font-size:13px;line-height:1.35}.education-hub-card p,.education-hub-card .read{font-size:11px}
+@media(max-width:760px){#competitiveResources .feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.nexus-compact-panel .section-heading,#payments .section-heading{align-items:flex-start}.price-pill{font-size:10px}}
+@media(max-width:420px){#competitiveResources .feature-grid{gap:7px}#competitiveResources .feature-grid article{padding:9px;grid-template-columns:22px 1fr}.nexus-feature-icon{width:22px;height:22px}}
+</style>
+
 </head>
   <body>
     <a class="cbe-skip-link" href="#main-content">Skip to main content</a>
@@ -1550,47 +1595,35 @@
         </div>
       </section>
 
-      <section id="competitiveResources" class="competitive-band" aria-label="Fast resource discovery">
+      <section id="competitiveResources" class="competitive-band nexus-compact-panel" aria-label="CBE resource centre">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">Find what you need fast</p>
-            <h2>Competitive CBE resource centre</h2>
+            <p class="eyebrow">YOUR LEARNING RESOURCE CENTRE</p>
+            <h2>Find the right CBE resources, faster</h2>
+            <p class="nexus-panel-intro">Search, select and order classroom materials in one convenient place.</p>
           </div>
           <div class="price-pill">WhatsApp support: <strong>***</strong></div>
         </div>
         <div class="feature-grid">
-          <article>
-            <strong>Fast Search</strong>
-            <span>Search by grade, subject, term, resource type, or keyword.</span>
-          </article>
-          <article>
-            <strong>Cart Orders</strong>
-            <span>Add several resources and send one WhatsApp order.</span>
-          </article>
-          <article>
-            <strong>CBE Aligned</strong>
-            <span>Organized by Grades 1-12 and official subject groupings.</span>
-          </article>
-          <article>
-            <strong>Instant M-Pesa</strong>
-            <span>Prepare payment details and confirm by WhatsApp.</span>
-          </article>
+          <article><span class="nexus-feature-icon">⌕</span><strong>Quick resource search</strong><span>Find materials by grade, subject, term, resource type or keyword.</span></article>
+          <article><span class="nexus-feature-icon">▤</span><strong>Convenient cart orders</strong><span>Add multiple resources and submit one WhatsApp order.</span></article>
+          <article><span class="nexus-feature-icon">✓</span><strong>Curriculum organised</strong><span>Browse Grades 1–12 and relevant subject groupings.</span></article>
+          <article><span class="nexus-feature-icon">▣</span><strong>M-Pesa checkout</strong><span>Prepare your payment and confirm your order securely.</span></article>
         </div>
         <div class="quick-types" id="quickTypes" aria-label="Quick resource type buttons"></div>
       </section>
 
-      <section class="seo-band" aria-label="CBE resource topics">
-        <h2>Kenya-Specific CBC and CBE Learning Resources</h2>
-        <p>
-          For learners and teachers in Kenya, find CBC and CBE resources for Grades 1-12, including notes, schemes of work, lesson plans, assessment tests, topical questions, holiday workbooks, KNEC rubrics and other classroom materials. This is the Kenya-specific collection within CBE Nexus’s wider global education directory.
-        </p>
+      <section class="seo-band nexus-compact-panel" aria-label="Kenya CBC and CBE learning resources">
+        <p class="eyebrow">KENYA RESOURCE COLLECTION</p>
+        <h2>Kenya CBC &amp; CBE Learning Resources</h2>
+        <p>Explore curriculum-aligned materials for learners and teachers in Kenya, including Grades 1–12 notes, schemes of work, lesson plans, assessment tests, topical questions, holiday workbooks and KNEC rubrics. This dedicated Kenya collection forms part of the wider CBE Nexus global education directory.</p>
       </section>
 
       <section id="popularSearches" class="landing-band" aria-label="Popular CBE landing pages">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">SEO landing pages</p>
-            <h2>Popular searches</h2>
+            <p class="eyebrow">QUICK TOPIC LINKS</p>
+            <h2>Popular learning searches</h2>
           </div>
         </div>
         <div class="landing-grid">
@@ -1606,8 +1639,9 @@
       <section id="payments" class="payment-band">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">Secure M-Pesa & WhatsApp Checkout</p>
-            <h2>Complete Your Resource Purchase</h2>
+            <p class="eyebrow">SECURE ORDER &amp; PAYMENT</p>
+            <h2>Complete your resource order</h2>
+            <p class="nexus-panel-intro">Review your selected material, enter your details and choose your preferred checkout option.</p>
           </div>
           <div class="price-pill">M-Pesa Till/Phone: <strong>0798462815</strong></div>
         </div>
@@ -1616,16 +1650,16 @@
           <form id="paymentForm" class="payment-form">
             <div class="form-row">
               <label>
-                Customer Phone Number
+                M-Pesa phone number
                 <input id="customerPhoneInput" type="tel" required placeholder="07XXXXXXXX">
               </label>
               <label>
-                Amount
+                Amount (KSh)
                 <input id="amountInput" type="number" min="1" value="150" required>
               </label>
             </div>
             <label>
-              Selected Resource
+              Selected resource
               <input id="selectedResourceInput" required placeholder="Choose a resource from the library" readonly>
             <input id="selectedResourceIdInput" type="hidden">
             </label>
@@ -1633,16 +1667,14 @@
               <button class="primary-button" type="submit">Pay with M-Pesa</button>
               <a id="whatsappOrderButton" class="whatsapp-button" href="https://wa.me/254798462815" target="_blank" rel="noopener">Order on WhatsApp</a>
             </div>
-            <p id="paymentStatus" class="form-status" aria-live="polite">Your payment is processed securely through the CBE Nexus M-Pesa checkout.</p>
+            <p id="paymentStatus" class="form-status" aria-live="polite">Your payment is handled through the CBE Nexus M-Pesa checkout. Follow the payment prompt to complete your order.</p>
           </form>
 
           <div class="payment-card">
-            <h3>Payment contacts</h3>
+            <h3>Payment &amp; support details</h3>
             <p><strong>M-Pesa:</strong> ***</p>
-            <p><strong>WhatsApp:</strong> ***</p>
-            <p>
-              Enter the phone number you want to receive the M-Pesa STK Push on and confirm the amount shown. Click <strong>Pay with M-Pesa</strong> to initiate checkout. If STK Push is unavailable, pay <strong>KSh</strong> <span id="mpesaManualAmount">the amount shown</span> to <strong>0798462815</strong> and send the M-Pesa confirmation on WhatsApp for verification.
-            </p>
+            <p><strong>WhatsApp support:</strong> ***</p>
+            <p>Enter the phone number that should receive the M-Pesa STK Push and check the amount displayed. Select <strong>Pay with M-Pesa</strong> to start checkout. If the STK Push is unavailable, send the displayed amount in KSh to <strong>0798462815</strong>, then share the M-Pesa confirmation through WhatsApp for verification.</p>
           </div>
         </div>
       </section>
@@ -1654,7 +1686,7 @@
       <section id="about" class="info-band">
         <div class="info-layout">
           <div>
-            <p class="eyebrow">About us</p>
+            <p class="eyebrow">OUR GLOBAL EDUCATION NETWORK</p>
             <h2>About CBE Nexus</h2>
             <p>
               CBE Nexus is a global education platform connecting learners, teachers, parents and schools with country-specific education systems, curricula, national examinations, school directories, study resources and opportunities across 196 countries. Explore learning materials and education information by country, subject and international curriculum.
@@ -1664,14 +1696,10 @@
             </p>
           </div>
           <div class="info-card">
-            <h3>Preview</h3>
-            <p>
-              Browse by grade, choose a subject, preview available resources, add materials to cart,
-              and confirm orders through M-Pesa or WhatsApp support.
-            </p>
+            <h3>How the resource centre works</h3>
+            <p>Choose a grade and subject, preview available materials, add your selections to the cart and complete your order through M-Pesa or WhatsApp support.</p>
             <div class="why-cbe-nexus">
-              <h4>Why CBE Nexus</h4>
-              <p>Our strengths:</p>
+              <h4>What guides our work</h4>
               <ul>
                 <li>Innovation</li>
                 <li>Professionalism</li>
@@ -1691,9 +1719,9 @@
       <section id="affiliateMarketplace" class="affiliate-band" aria-labelledby="affiliate-title">
   <div class="section-heading">
     <div>
-      <p class="eyebrow">Recommended products</p>
-      <h2 id="affiliate-title">CBE Nexus Affiliate Marketplace</h2>
-      <p>Discover useful books, devices, learning tools and other products from trusted online marketplaces.</p>
+      <p class="eyebrow">LEARNING TOOLS &amp; PARTNER OFFERS</p>
+      <h2 id="affiliate-title">CBE Nexus Marketplace</h2>
+      <p>Discover books, devices and practical learning tools offered by selected online marketplace partners.</p>
     </div>
     <span class="price-pill">Shop from partner sellers</span>
   </div>
@@ -1703,7 +1731,7 @@
 
 <section id="educationHubHome" class="education-hub-home" aria-labelledby="educationHubHomeTitle">
   <div class="section-heading education-hub-heading">
-    <div><p class="eyebrow">CBE NEXUS EDUCATION HUB</p><h2 id="educationHubHomeTitle">Latest Education Guides &amp; Opportunities</h2><p>Practical articles on international teaching jobs, scholarships, teacher CVs, AI tools and CBC/CBE education.</p></div>
+    <div><p class="eyebrow">INSIGHTS, GUIDANCE &amp; OPPORTUNITIES</p><h2 id="educationHubHomeTitle">Education guides &amp; latest opportunities</h2><p>Explore practical guidance on international teaching careers, scholarships, professional teacher CVs, AI tools and CBC/CBE learning.</p></div>
     <a class="primary-button education-hub-view-all" href="blog.html">Explore Education Hub →</a>
   </div>
   <div id="educationHubHomeArticles" class="education-hub-home-grid" aria-live="polite">
