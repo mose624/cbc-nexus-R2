@@ -261,4 +261,5 @@ window.CBE_COUNTRY_CURRICULUM_OPTIONS = {
   "Federated States of Micronesia":["FSM National Curriculum Standards and Benchmarks / Elementary Grades 1-8 and Secondary Grades 9-12; NMCT"],
   "Moldova":["Moldova National Curriculum / Primary Classes I-IV, Gymnasium V-IX and Lyceum X-XII; Baccalaureate"],
   "Republic of the Congo":["Republic of the Congo national education pathway / Primary CP1–CM2; collège 6e–3e; lycée 2nde–Terminale","CEPE","BEPC","Baccalauréat"],
+  "Congo (Republic of the)":["Republic of the Congo national education pathway / Primary CP1–CM2; collège 6e–3e; lycée 2nde–Terminale","CEPE","BEPC","Baccalauréat"],
 };
