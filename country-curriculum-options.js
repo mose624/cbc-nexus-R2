@@ -214,7 +214,7 @@ window.CBE_COUNTRY_CURRICULUM_OPTIONS = {
   "Fiji":["Fiji National Curriculum / FSLC","Cambridge International"],
   "Papua New Guinea":["PNG Elementary Curriculum / Elementary One","PNG National Curriculum / Grade 10 & 12 National Examinations"],
   "Mauritius":["Mauritius National Curriculum / NCE / SC / HSC","Cambridge International"],
-  "Seychelles":["Seychelles National Curriculum / IGCSE","Cambridge International"]
+  "Seychelles":["Seychelles National Curriculum / IGCSE","Cambridge International"],
   "Sudan":["Sudan National Curriculum / Basic Level, Grade 1"],
   "Suriname":["Suriname Primary Education Curriculum / leerjaar 1"],
   "Sweden":["Swedish National Curriculum (Lgr22) / Year 1 Mathematics"],
@@ -227,7 +227,7 @@ window.CBE_COUNTRY_CURRICULUM_OPTIONS = {
   "Tonga":["Tonga Curriculum Framework for Core Subjects / Class Level 1"],
   "Tunisia":["Tunisia National Curriculum / السنة الأولى ابتدائي"],
   "Turkmenistan":["Turkmenistan State Education Standards / Grade 1"],
-  "Tuvalu":["Tuvalu National Curriculum / Class 1"],,
+  "Tuvalu":["Tuvalu National Curriculum / Class 1"],
   "Uruguay":["Uruguay ANEP Educación Básica Integrada / Primaria 1.º"],
   "Uzbekistan":["Uzbekistan National Curriculum / Grade 1"],
   "Vanuatu":["Vanuatu National Curriculum / Year 1"],
