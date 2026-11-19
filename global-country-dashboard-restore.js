@@ -27,7 +27,11 @@
       style.textContent = [
         "#country-learning-hub{display:block!important;width:100%;margin:0 0 24px;overflow:hidden;background:#f1f5f8;color:#102d4d;font-family:Arial,Helvetica,sans-serif;box-shadow:0 5px 22px rgba(15,45,70,.1);position:relative;z-index:1}",
         "#country-learning-hub *{box-sizing:border-box}",
-        "#country-learning-hub .cbe-learning-hero{display:flex;align-items:center;min-height:205px;padding:28px clamp(22px,3.2vw,54px);background:linear-gradient(90deg,rgba(0,73,51,.98),rgba(0,91,62,.94) 52%,rgba(0,91,62,.45)),url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1800&q=82') center 42%/cover;color:#fff}",
+        "#country-learning-hub .cbe-learning-hero{position:relative;isolation:isolate;display:flex;align-items:center;min-height:250px;overflow:hidden;padding:28px clamp(22px,3.2vw,54px);background:#064b3b;color:#fff}",
+        "#country-learning-hub .cbe-country-hero-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:-2;opacity:.72}",
+        "#country-learning-hub .cbe-learning-hero:before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(0,57,42,.94),rgba(0,76,54,.78) 52%,rgba(0,63,47,.35))}",
+        "#country-learning-hub .cbe-learning-copy{position:relative;z-index:1;max-width:850px}",
+        "#country-learning-hub .cbe-country-image-credit{display:inline-block;margin-top:12px;color:#fff!important;font-size:11px;font-weight:700;text-decoration:underline;text-underline-offset:3px}"
         "#country-learning-hub .cbe-learning-hero h2{margin:0 0 10px;color:#fff;font-size:clamp(30px,3.4vw,52px);line-height:1.08;font-weight:900}",
         "#country-learning-hub .cbe-learning-tag{display:inline-block;padding:8px 18px;border-radius:999px;background:#f3c52e;color:#172d42;font-size:clamp(14px,1.35vw,20px);font-weight:900}",
         "#country-learning-hub .cbe-learning-hero p{margin:12px 0 0;color:#fff;font-size:clamp(13px,1.15vw,18px);line-height:1.5}",
@@ -60,13 +64,70 @@
       if (text !== undefined) node.textContent = text;
       return node;
     }
+    function loadCountryHeroImage(countryName, countrySlug, image, creditLink) {
+      var overrides = {
+        "Côte d’Ivoire": "Côte d'Ivoire",
+        "The Gambia": "The Gambia",
+        "Türkiye": "Turkey",
+        "Czechia": "Czech Republic",
+        "Palestine": "State of Palestine",
+        "Vatican City": "Vatican City"
+      };
+      var title = overrides[countryName] || countryName;
+      var cache = window.CBE_COUNTRY_HERO_IMAGES || (window.CBE_COUNTRY_HERO_IMAGES = {});
+      if (cache[countrySlug]) {
+        image.src = cache[countrySlug].src;
+        if (cache[countrySlug].page) {
+          creditLink.href = cache[countrySlug].page;
+          creditLink.hidden = false;
+        }
+        return;
+      }
+      var endpoint = "https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&redirects=1&prop=pageimages&piprop=thumbnail&pithumbsize=1600&titles=" + encodeURIComponent(title);
+      fetch(endpoint, { headers: { "Accept": "application/json" } })
+        .then(function (response) {
+          if (!response.ok) throw new Error("Country image lookup unavailable");
+          return response.json();
+        })
+        .then(function (payload) {
+          var pages = payload && payload.query && payload.query.pages;
+          var page = pages && Object.keys(pages).map(function (key) { return pages[key]; }).find(function (item) { return item && item.thumbnail && item.thumbnail.source; });
+          if (!page) throw new Error("No representative country image found");
+          var result = {
+            src: page.thumbnail.source,
+            page: "https://en.wikipedia.org/wiki/" + encodeURIComponent((page.title || title).replace(/ /g, "_"))
+          };
+          cache[countrySlug] = result;
+          image.src = result.src;
+          image.alt = "Representative image of " + countryName + " for its CBE Nexus education profile";
+          creditLink.href = result.page;
+          creditLink.hidden = false;
+        })
+        .catch(function () {
+          image.remove();
+          creditLink.hidden = true;
+        });
+    }
     var hub = el("section");
     hub.id = "country-learning-hub";
     var hero = el("header", "cbe-learning-hero");
-    var heroCopy = el("div");
+    var heroImage = el("img", "cbe-country-hero-image");
+    heroImage.alt = "Representative image of " + name + " for its CBE Nexus education profile";
+    heroImage.loading = "eager";
+    heroImage.decoding = "async";
+    heroImage.fetchPriority = "high";
+    heroImage.referrerPolicy = "no-referrer";
+    hero.appendChild(heroImage);
+    var heroCopy = el("div", "cbe-learning-copy");
     heroCopy.appendChild(el("span", "cbe-learning-tag", "Learn • Practise • Revise • Succeed"));
     heroCopy.appendChild(el("p", "", "Explore curriculum learning resources and prepare for " + (exams.slice(0, 2).map(function (x) { return x.name; }).join(" and ") || "national examinations") + "."));
+    var imageCredit = el("a", "cbe-country-image-credit", "Country image source and details");
+    imageCredit.target = "_blank";
+    imageCredit.rel = "noopener noreferrer";
+    imageCredit.hidden = true;
+    heroCopy.appendChild(imageCredit);
     hero.appendChild(heroCopy);
+    loadCountryHeroImage(name, slug, heroImage, imageCredit);
     var body = el("div", "cbe-learning-body");
     var left = el("div");
     var grid = el("div", "cbe-learning-grid");
