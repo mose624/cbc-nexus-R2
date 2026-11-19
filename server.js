@@ -1555,9 +1555,13 @@ async function handleApi(req,res,url){
       sendJson(res,201,{ok:true,book,message:"Book submitted. It is now in the CBE Nexus quality-review queue."});return true;
     }catch(error){console.error("Book submission error:",error);sendJson(res,500,{ok:false,error:"The book could not be saved. Confirm the book-publishing migration has been applied."});return true;}
   }
+  if(req.method==="GET"&&url.pathname==="/api/seller/books/cover"){
+    const username=verifySellerSession(req);if(!username){sendJson(res,401,{ok:false,error:"Please sign in."});return true;}if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Supabase is required."});return true;}
+    try{const id=String(url.searchParams.get("id")||"");const {data:seller,error:se}=await supabase.from("sellers").select("id").eq("username",username).maybeSingle();if(se)throw se;if(!seller){sendJson(res,404,{ok:false,error:"Seller not found."});return true;}const {data:book,error}=await supabase.from("published_books").select("cover_key,title").eq("id",id).eq("seller_id",seller.id).single();if(error)throw error;const coverUrl=await createInlineUrl(book.cover_key,String(book.title||"book-cover")+".jpg","image/jpeg");sendJson(res,200,{ok:true,url:coverUrl});return true;}catch(error){console.error("Seller book cover URL error:",error);sendJson(res,404,{ok:false,error:"Book cover could not be opened."});return true;}
+  }
   if(req.method==="GET"&&url.pathname==="/api/admin/published-books"){
     if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Supabase is required."});return true;}
-    try{const {data,error}=await supabase.from("published_books").select("*,sellers(name,username)").order("created_at",{ascending:false}).limit(500);if(error)throw error;sendJson(res,200,{ok:true,books:data||[]});return true;}catch(error){console.error("Admin published books lookup error:",error);sendJson(res,500,{ok:false,error:"Book review queue could not be loaded. Apply the book-publishing migration."});return true;}
+    try{const {data,error}=await supabase.from("published_books").select("*,sellers(name,username)").order("created_at",{ascending:false}).limit(500);if(error)throw error;const books=await Promise.all((data||[]).map(async b=>({...b,cover_url:await createInlineUrl(b.cover_key,String(b.title||"book-cover")+".jpg","image/jpeg"),pdf_url:await createDownloadUrl(b.pdf_key,String(b.title||"book")+".pdf")})));sendJson(res,200,{ok:true,books});return true;}catch(error){console.error("Admin published books lookup error:",error);sendJson(res,500,{ok:false,error:"Book review queue could not be loaded. Apply the book-publishing migration."});return true;}
   }
   if(req.method==="POST"&&url.pathname==="/api/admin/published-books/review"){
     if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Supabase is required."});return true;}
@@ -1765,7 +1769,7 @@ async function handleApi(req,res,url){
       // not supply a length, keep the buffered fallback for compatibility.
       const uploaded=contentLength>0
         ? await uploadObject({grade,subject,type,fileName,resourceId,contentType},req,contentLength)
-        : await uploadObject({grade,subject,type,fileName,resourceId,contentType},await readBinaryBody(req),0);
+        : await uploadObject({grade,subject,type,fileName,resourceId,contentType},await readBinaryBody(req,maxUpload),0);
       // Confirm the uploaded file exists in durable object storage before telling
       // the admin the upload succeeded. Render's local filesystem is not durable.
       const stored=await getObjectMetadata(uploaded.key);
