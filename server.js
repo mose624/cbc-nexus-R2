@@ -758,6 +758,23 @@ async function handleApi(req,res,url){
       sendJson(res,200,{ok:true,teachers,count:teachers.length});return true;
     }catch(error){console.error("Global teacher directory lookup error:",error);sendJson(res,500,{ok:false,error:"Teacher profiles could not be loaded. Please try again."});return true;}
   }
+  if(req.method==="POST"&&url.pathname==="/api/accounts/register"){
+    try{
+      const p=JSON.parse((await readBody(req))||"{}");
+      const clean=(v,n=300)=>String(v??"").trim().slice(0,n);
+      const fullName=clean(p.fullName,160),email=clean(p.email,254).toLowerCase(),phone=clean(p.phone,30),country=clean(p.country,100),language=clean(p.language,80),username=clean(p.username,30).toLowerCase(),password=String(p.password||"");
+      if(!fullName||!email||!phone||!country||!language||!username||!password){sendJson(res,400,{ok:false,error:"Complete all registration fields."});return true;}
+      if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)){sendJson(res,400,{ok:false,error:"Enter a valid email address."});return true;}
+      if(!/^[+0-9() -]{7,30}$/.test(phone)){sendJson(res,400,{ok:false,error:"Enter a valid phone number with country code."});return true;}
+      if(!/^[a-z0-9_.-]{3,30}$/.test(username)){sendJson(res,400,{ok:false,error:"Username must be 3–30 characters using letters, numbers, dots, underscores or hyphens."});return true;}
+      if(password.length<12||password.length>200||!/[A-Za-z]/.test(password)||!/[0-9]/.test(password)){sendJson(res,400,{ok:false,error:"Use a password of at least 12 characters containing letters and numbers."});return true;}
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Registration is temporarily unavailable. Please try again later."});return true;}
+      const {data,error}=await supabase.auth.admin.createUser({email,password,email_confirm:false,user_metadata:{full_name:fullName,phone,country,preferred_language:language,username,account_type:"general"}});
+      if(error){const msg=String(error.message||"");const duplicate=/already|registered|exists/i.test(msg);sendJson(res,duplicate?409:400,{ok:false,error:duplicate?"An account with this email already exists. Try logging in.":"Account could not be created. "+msg.slice(0,220)});return true;}
+      sendJson(res,201,{ok:true,message:"Your CBE Nexus account has been created. Please check your email for any confirmation required before logging in.",user:{id:data.user.id,email:data.user.email,username}});
+    }catch(error){console.error("General account registration error:",error);sendJson(res,500,{ok:false,error:"Registration could not be completed. Please try again."});}
+    return true;
+  }
   if(req.method==="POST"&&url.pathname==="/api/global-teachers/register"){
     try{
       const p=JSON.parse((await readBody(req))||"{}");
