@@ -140,6 +140,7 @@
       ["⚗","green","Chemistry Notes","Free chemistry notes, worked calculations and revision questions","/country-online-notes.html?country="+query+"&subject=Chemistry"],
       ["🧬","purple","Biology Notes","Free biology notes, labelled diagrams and practice questions","/country-online-notes.html?country="+query+"&subject=Biology"],
       ["⚛","blue","Physics Notes","Free physics notes, diagrams and worked calculations","/country-online-notes.html?country="+query+"&subject=Physics"],
+      ["🎓","gold","University Notes","Explore existing diploma, undergraduate, postgraduate and research study notes for "+name,"/university-resources.html?country="+query+"#subject-hubs"],
       ["▤","gold","Past Papers","Past examination papers and revision resources","/resources.html?country="+query+"&type=past-papers"],
       ["☑","red","Mock Exams","Practise with examination-style tasks","/resource-category.html?type=mock-exams&country="+query],
       ["⚡","blue","Interactive Quizzes","Country-selected quizzes, self-check questions and explanations","/interactive-questions.html?country="+query],
