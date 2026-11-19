@@ -31,7 +31,7 @@
         "#country-learning-hub .cbe-country-hero-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:-2;opacity:.72}",
         "#country-learning-hub .cbe-learning-hero:before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(0,57,42,.94),rgba(0,76,54,.78) 52%,rgba(0,63,47,.35))}",
         "#country-learning-hub .cbe-learning-copy{position:relative;z-index:1;max-width:850px}",
-        "#country-learning-hub .cbe-country-image-credit{display:inline-block;margin-top:12px;color:#fff!important;font-size:11px;font-weight:700;text-decoration:underline;text-underline-offset:3px}"
+        "#country-learning-hub .cbe-country-image-credit{display:inline-block;margin-top:12px;color:#fff!important;font-size:11px;font-weight:700;text-decoration:underline;text-underline-offset:3px}",
         "#country-learning-hub .cbe-learning-hero h2{margin:0 0 10px;color:#fff;font-size:clamp(30px,3.4vw,52px);line-height:1.08;font-weight:900}",
         "#country-learning-hub .cbe-learning-tag{display:inline-block;padding:8px 18px;border-radius:999px;background:#f3c52e;color:#172d42;font-size:clamp(14px,1.35vw,20px);font-weight:900}",
         "#country-learning-hub .cbe-learning-hero p{margin:12px 0 0;color:#fff;font-size:clamp(13px,1.15vw,18px);line-height:1.5}",
