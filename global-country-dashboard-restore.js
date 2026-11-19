@@ -84,6 +84,10 @@
         return;
       }
       var endpoint = "https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&redirects=1&prop=pageimages&piprop=thumbnail&pithumbsize=1600&titles=" + encodeURIComponent(title);
+      // Show a classroom banner immediately while the country-specific Wikimedia
+      // image loads. A slow or failed lookup must never leave the hero blank.
+      image.src = "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1600&q=80";
+      image.alt = "Students learning in a classroom while the " + countryName + " country image loads";
       fetch(endpoint, { headers: { "Accept": "application/json" } })
         .then(function (response) {
           if (!response.ok) throw new Error("Country image lookup unavailable");
@@ -104,7 +108,7 @@
           creditLink.hidden = false;
         })
         .catch(function () {
-          image.remove();
+          // Keep the immediate classroom fallback visible if Wikimedia is unavailable.
           creditLink.hidden = true;
         });
     }
