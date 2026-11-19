@@ -730,14 +730,14 @@
 .cbe-studio-planner .nexus-sprint-form label{font-size:.84rem}
 .cbe-studio-planner .nexus-sprint-privacy{font-size:.76rem;margin:7px 0 0}
 .cbe-learning-studio-footer{margin:12px 0 0!important;font-size:.9rem}
-/* Global education directory: keep it in normal document flow so it cannot
-   break out of a dashboard column, shift off-screen or cover adjacent content. */
+/* Full-width country directory placed after the complete dashboard grid.
+   A clear top gap prevents collision with dashboard panels above it. */
 .cbe-homepage-global-fullscreen{
-  display:block!important;position:static!important;inset:auto!important;
+  display:block!important;position:relative!important;inset:auto!important;
   box-sizing:border-box!important;width:100%!important;max-width:none!important;
-  margin:28px 0 32px!important;transform:none!important;float:none!important;
+  margin:34px 0 32px!important;transform:none!important;float:none!important;
   clear:both!important;isolation:isolate!important;min-width:0!important;
-  padding:clamp(22px,3.2vw,48px) clamp(16px,3vw,36px)!important;
+  padding:clamp(24px,3.2vw,48px) clamp(16px,3vw,44px)!important;
   background:linear-gradient(135deg,#eff8ff 0%,#f8fafc 52%,#eefbf5 100%)!important;
   border:1px solid #cbddeb!important;border-radius:16px!important;
   overflow:visible!important;
@@ -1115,17 +1115,7 @@
   <p class="cbe-learning-studio-footer">Explore more: <a href="/resource-category.html">Learning library</a> · <a href="/quizzes.html">Interactive question bank</a></p>
 </section>
 
-<section class="homepage-seo-content cbe-homepage-global cbe-homepage-global-fullscreen" aria-labelledby="global-education-heading">
-  <h2 id="global-education-heading">Explore Education in 196 Countries</h2>
-  <p>Discover country education systems, curricula, national examinations, school directories, learning resources and teaching opportunities for learners, parents and educators worldwide.</p>
-  <div class="cbe-homepage-link-groups">
-    <div><h3>Countries and education systems</h3><a href="/global-schools">Explore all 196 country education pages</a><a href="/international-curriculum.html">International curriculum resources</a></div>
-    <div><h3>Study notes and exam practice</h3><a href="/free-resources.html">Free learning resources</a><a href="/interactive-questions.html">Interactive questions and self-assessment</a><a href="/kjsea-revision">Grade 9 KJSEA revision</a><a href="/free-interactive-questions/grade-10">Grade 10 practice questions</a><a href="/resource-category.html?type=Notes">Notes and study guides</a><a href="/resource-category.html?type=Marking%20Schemes">Marking schemes and assessment support</a></div>
-    <div><h3>International programmes</h3><a href="/cambridge-study-notes.html">Cambridge study notes</a><a href="/igcse.html">Cambridge IGCSE resources</a><a href="/ib-comprehensive-study-guides.html">IB study guides</a><a href="/pearson-study-notes.html">Pearson Edexcel notes</a></div>
-    <div><h3>Opportunities and professional growth</h3><a href="/scholarships-opportunities.html">Scholarships and student opportunities</a><a href="/international-teaching-jobs.html">International teaching vacancies</a><a href="/ai-training.html">AI training and digital skills</a></div>
-  </div>
-  <p class="cbe-homepage-global-note">CBE Nexus brings together country-specific education information and resources alongside international programmes including Cambridge, IGCSE, IB, Pearson Edexcel, A-Level and O-Level. Kenya’s CBC and CBE materials form part of this wider global collection.</p>
-</section>
+
 
 
           <div class="portal-announcement">
@@ -1176,6 +1166,18 @@
           </div>
         </aside>
       </section>
+
+      <section class="homepage-seo-content cbe-homepage-global cbe-homepage-global-fullscreen" aria-labelledby="global-education-heading">
+  <h2 id="global-education-heading">Explore Education in 196 Countries</h2>
+  <p>Discover country education systems, curricula, national examinations, school directories, learning resources and teaching opportunities for learners, parents and educators worldwide.</p>
+  <div class="cbe-homepage-link-groups">
+    <div><h3>Countries and education systems</h3><a href="/global-schools">Explore all 196 country education pages</a><a href="/international-curriculum.html">International curriculum resources</a></div>
+    <div><h3>Study notes and exam practice</h3><a href="/free-resources.html">Free learning resources</a><a href="/interactive-questions.html">Interactive questions and self-assessment</a><a href="/kjsea-revision">Grade 9 KJSEA revision</a><a href="/free-interactive-questions/grade-10">Grade 10 practice questions</a><a href="/resource-category.html?type=Notes">Notes and study guides</a><a href="/resource-category.html?type=Marking%20Schemes">Marking schemes and assessment support</a></div>
+    <div><h3>International programmes</h3><a href="/cambridge-study-notes.html">Cambridge study notes</a><a href="/igcse.html">Cambridge IGCSE resources</a><a href="/ib-comprehensive-study-guides.html">IB study guides</a><a href="/pearson-study-notes.html">Pearson Edexcel notes</a></div>
+    <div><h3>Opportunities and professional growth</h3><a href="/scholarships-opportunities.html">Scholarships and student opportunities</a><a href="/international-teaching-jobs.html">International teaching vacancies</a><a href="/ai-training.html">AI training and digital skills</a></div>
+  </div>
+  <p class="cbe-homepage-global-note">CBE Nexus brings together country-specific education information and resources alongside international programmes including Cambridge, IGCSE, IB, Pearson Edexcel, A-Level and O-Level. Kenya’s CBC and CBE materials form part of this wider global collection.</p>
+</section>
 
       <!-- Mobile-only dashboard navigation. Header and footer stay unchanged. -->
       <!-- Mobile-only dashboard navigation. Regrouped into two compact sections. -->
