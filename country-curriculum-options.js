@@ -234,7 +234,7 @@ window.CBE_COUNTRY_CURRICULUM_OPTIONS = {
   "Vatican City":["Vatican City Schools / Italian Primary Curriculum (provisional)"],
   "Venezuela":["Venezuela Currículo Nacional Bolivariano / Primer Grado"],
   "Vietnam":["Vietnam 2018 General Education Curriculum / Grade 1"],
-  "Yemen":["Yemen National Curriculum / الصف الأول الأساسي"]
+  "Yemen":["Yemen National Curriculum / الصف الأول الأساسي"],
   "Ethiopia":["Ethiopia General Education Curriculum / Ministry of Education"],
   "Zambia":["Zambia 2023 Education Curriculum Framework / CDC / ECZ","Cambridge International"],
   "Zimbabwe":["Zimbabwe National Curriculum / ZIMSEC","Cambridge International","Pearson Edexcel"],
