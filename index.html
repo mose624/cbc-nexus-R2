@@ -773,6 +773,21 @@
   .cbe-homepage-global-fullscreen .cbe-homepage-link-groups>div{padding:14px}
 }
 </style>
+<style id="country-resource-panel-styles">
+.country-resource-panel{min-width:0;max-height:78vh;overflow-y:auto;overscroll-behavior:contain;padding:12px;background:#f7fafc;border:1px solid #d8e3ec;border-radius:12px}
+.country-resource-heading{position:sticky;top:-12px;z-index:2;margin:-12px -12px 10px;padding:14px 12px 12px;background:#fff;border-bottom:1px solid #dce6ee}
+.country-resource-heading .eyebrow{margin:0 0 5px;color:#087b50;font-size:.64rem;font-weight:900;letter-spacing:.08em}
+.country-resource-heading h2{margin:0 0 6px;color:#12304a;font-size:1.05rem;line-height:1.25}
+.country-resource-heading p:not(.eyebrow){margin:0;color:#526577;font-size:.75rem;line-height:1.45}
+.country-resource-count{display:inline-block;margin-top:8px;padding:3px 7px;border-radius:20px;background:#e8f5ee;color:#087b50;font-size:.62rem;font-weight:900;letter-spacing:.04em}
+.country-resource-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.country-resource-button{display:flex;align-items:center;gap:6px;min-width:0;min-height:32px;padding:5px 7px;border:1px solid #d6e2eb;border-radius:6px;background:#fff;color:#18364e;text-decoration:none;font-size:.68rem;font-weight:750;line-height:1.15;transition:background .15s,border-color .15s,color .15s}
+.country-resource-button:hover,.country-resource-button:focus-visible{background:#eaf5ff;border-color:#1680ba;color:#075985;outline:2px solid transparent}
+.country-resource-flag{flex:0 0 auto;font-size:1rem;line-height:1}
+.country-resource-button span:last-child{overflow-wrap:anywhere}
+@media(max-width:900px){.country-resource-panel{max-height:70vh}.country-resource-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:420px){.country-resource-button{font-size:.64rem;min-height:30px;padding:4px 5px;gap:4px}}
+</style>
 </head>
   <body>
     <a class="cbe-skip-link" href="#main-content">Skip to main content</a>
@@ -1144,26 +1159,211 @@
           </div>
         </aside>
 
-        <aside class="portal-rightbar" aria-label="Account and quick links">
-          <div class="portal-card account-card">
-            <div class="portal-card-heading"><span>ACCOUNT</span></div>
-            <strong>Welcome to CBE Nexus</strong>
-            <p>Access your learning resources and account tools.</p>
-            <a class="portal-side-link" href="#payments">Payments</a>
-
-            
+        <aside class="portal-rightbar country-resource-panel" aria-label="Country education resources">
+          <div class="country-resource-heading">
+            <p class="eyebrow">CBE NEXUS GLOBAL DIRECTORY</p>
+            <h2>Available Resources in 196 Countries</h2>
+            <p>Select a country to explore its education system, curriculum, study notes, examinations and learning resources.</p>
+            <span class="country-resource-count">196 COUNTRIES</span>
           </div>
-          <div class="portal-card">
-            <div class="portal-card-heading"><span>LEARNING TOOLS</span></div>
-            <a class="portal-side-link" href="#quizCentre">Quizzes &amp; Progress</a>
-
-            <a class="portal-side-link" href="#referFriend">Refer a Friend</a>
-          </div>
-          <div class="portal-card portal-help-card">
-            <div class="portal-card-heading"><span>NEED HELP?</span></div>
-            <p>For orders, corrections and general support, contact CBE Nexus.</p>
-
-          </div>
+          <nav class="country-resource-grid" aria-label="Select a country">
+            <a class="country-resource-button" href="/global-schools/afghanistan" aria-label="Open Afghanistan education resources"><span class="country-resource-flag" aria-hidden="true">🇦🇫</span><span>Afghanistan</span></a>
+<a class="country-resource-button" href="/global-schools/albania" aria-label="Open Albania education resources"><span class="country-resource-flag" aria-hidden="true">🇦🇱</span><span>Albania</span></a>
+<a class="country-resource-button" href="/global-schools/algeria" aria-label="Open Algeria education resources"><span class="country-resource-flag" aria-hidden="true">🇩🇿</span><span>Algeria</span></a>
+<a class="country-resource-button" href="/global-schools/andorra" aria-label="Open Andorra education resources"><span class="country-resource-flag" aria-hidden="true">🇦🇩</span><span>Andorra</span></a>
+<a class="country-resource-button" href="/global-schools/angola" aria-label="Open Angola education resources"><span class="country-resource-flag" aria-hidden="true">🇦🇴</span><span>Angola</span></a>
+<a class="country-resource-button" href="/global-schools/antigua-and-barbuda" aria-label="Open Antigua and Barbuda education resources"><span class="country-resource-flag" aria-hidden="true">🇦🇬</span><span>Antigua and Barbuda</span></a>
+<a class="country-resource-button" href="/global-schools/argentina" aria-label="Open Argentina education resources"><span class="country-resource-flag" aria-hidden="true">🇦🇷</span><span>Argentina</span></a>
+<a class="country-resource-button" href="/global-schools/armenia" aria-label="Open Armenia education resources"><span class="country-resource-flag" aria-hidden="true">🇦🇲</span><span>Armenia</span></a>
+<a class="country-resource-button" href="/global-schools/australia" aria-label="Open Australia education resources"><span class="country-resource-flag" aria-hidden="true">🇦🇺</span><span>Australia</span></a>
+<a class="country-resource-button" href="/global-schools/austria" aria-label="Open Austria education resources"><span class="country-resource-flag" aria-hidden="true">🇦🇹</span><span>Austria</span></a>
+<a class="country-resource-button" href="/global-schools/azerbaijan" aria-label="Open Azerbaijan education resources"><span class="country-resource-flag" aria-hidden="true">🇦🇿</span><span>Azerbaijan</span></a>
+<a class="country-resource-button" href="/global-schools/bahamas" aria-label="Open Bahamas education resources"><span class="country-resource-flag" aria-hidden="true">🇧🇸</span><span>Bahamas</span></a>
+<a class="country-resource-button" href="/global-schools/bahrain" aria-label="Open Bahrain education resources"><span class="country-resource-flag" aria-hidden="true">🇧🇭</span><span>Bahrain</span></a>
+<a class="country-resource-button" href="/global-schools/bangladesh" aria-label="Open Bangladesh education resources"><span class="country-resource-flag" aria-hidden="true">🇧🇩</span><span>Bangladesh</span></a>
+<a class="country-resource-button" href="/global-schools/barbados" aria-label="Open Barbados education resources"><span class="country-resource-flag" aria-hidden="true">🇧🇧</span><span>Barbados</span></a>
+<a class="country-resource-button" href="/global-schools/belarus" aria-label="Open Belarus education resources"><span class="country-resource-flag" aria-hidden="true">🇧🇾</span><span>Belarus</span></a>
+<a class="country-resource-button" href="/global-schools/belgium" aria-label="Open Belgium education resources"><span class="country-resource-flag" aria-hidden="true">🇧🇪</span><span>Belgium</span></a>
+<a class="country-resource-button" href="/global-schools/belize" aria-label="Open Belize education resources"><span class="country-resource-flag" aria-hidden="true">🇧🇿</span><span>Belize</span></a>
+<a class="country-resource-button" href="/global-schools/benin" aria-label="Open Benin education resources"><span class="country-resource-flag" aria-hidden="true">🇧🇯</span><span>Benin</span></a>
+<a class="country-resource-button" href="/global-schools/bhutan" aria-label="Open Bhutan education resources"><span class="country-resource-flag" aria-hidden="true">🇧🇹</span><span>Bhutan</span></a>
+<a class="country-resource-button" href="/global-schools/bolivia" aria-label="Open Bolivia education resources"><span class="country-resource-flag" aria-hidden="true">🇧🇴</span><span>Bolivia</span></a>
+<a class="country-resource-button" href="/global-schools/bosnia-and-herzegovina" aria-label="Open Bosnia and Herzegovina education resources"><span class="country-resource-flag" aria-hidden="true">🇧🇦</span><span>Bosnia and Herzegovina</span></a>
+<a class="country-resource-button" href="/global-schools/botswana" aria-label="Open Botswana education resources"><span class="country-resource-flag" aria-hidden="true">🇧🇼</span><span>Botswana</span></a>
+<a class="country-resource-button" href="/global-schools/brazil" aria-label="Open Brazil education resources"><span class="country-resource-flag" aria-hidden="true">🇧🇷</span><span>Brazil</span></a>
+<a class="country-resource-button" href="/global-schools/brunei" aria-label="Open Brunei education resources"><span class="country-resource-flag" aria-hidden="true">🇧🇳</span><span>Brunei</span></a>
+<a class="country-resource-button" href="/global-schools/bulgaria" aria-label="Open Bulgaria education resources"><span class="country-resource-flag" aria-hidden="true">🇧🇬</span><span>Bulgaria</span></a>
+<a class="country-resource-button" href="/global-schools/burkina-faso" aria-label="Open Burkina Faso education resources"><span class="country-resource-flag" aria-hidden="true">🇧🇫</span><span>Burkina Faso</span></a>
+<a class="country-resource-button" href="/global-schools/burundi" aria-label="Open Burundi education resources"><span class="country-resource-flag" aria-hidden="true">🇧🇮</span><span>Burundi</span></a>
+<a class="country-resource-button" href="/global-schools/cabo-verde" aria-label="Open Cabo Verde education resources"><span class="country-resource-flag" aria-hidden="true">🇨🇻</span><span>Cabo Verde</span></a>
+<a class="country-resource-button" href="/global-schools/cambodia" aria-label="Open Cambodia education resources"><span class="country-resource-flag" aria-hidden="true">🇰🇭</span><span>Cambodia</span></a>
+<a class="country-resource-button" href="/global-schools/cameroon" aria-label="Open Cameroon education resources"><span class="country-resource-flag" aria-hidden="true">🇨🇲</span><span>Cameroon</span></a>
+<a class="country-resource-button" href="/global-schools/canada" aria-label="Open Canada education resources"><span class="country-resource-flag" aria-hidden="true">🇨🇦</span><span>Canada</span></a>
+<a class="country-resource-button" href="/global-schools/central-african-republic" aria-label="Open Central African Republic education resources"><span class="country-resource-flag" aria-hidden="true">🇨🇫</span><span>Central African Republic</span></a>
+<a class="country-resource-button" href="/global-schools/chad" aria-label="Open Chad education resources"><span class="country-resource-flag" aria-hidden="true">🇹🇩</span><span>Chad</span></a>
+<a class="country-resource-button" href="/global-schools/chile" aria-label="Open Chile education resources"><span class="country-resource-flag" aria-hidden="true">🇨🇱</span><span>Chile</span></a>
+<a class="country-resource-button" href="/global-schools/china" aria-label="Open China education resources"><span class="country-resource-flag" aria-hidden="true">🇨🇳</span><span>China</span></a>
+<a class="country-resource-button" href="/global-schools/colombia" aria-label="Open Colombia education resources"><span class="country-resource-flag" aria-hidden="true">🇨🇴</span><span>Colombia</span></a>
+<a class="country-resource-button" href="/global-schools/comoros" aria-label="Open Comoros education resources"><span class="country-resource-flag" aria-hidden="true">🇰🇲</span><span>Comoros</span></a>
+<a class="country-resource-button" href="/global-schools/congo" aria-label="Open Congo education resources"><span class="country-resource-flag" aria-hidden="true">🇨🇬</span><span>Congo</span></a>
+<a class="country-resource-button" href="/global-schools/costa-rica" aria-label="Open Costa Rica education resources"><span class="country-resource-flag" aria-hidden="true">🇨🇷</span><span>Costa Rica</span></a>
+<a class="country-resource-button" href="/global-schools/cote-d-ivoire" aria-label="Open Côte d’Ivoire education resources"><span class="country-resource-flag" aria-hidden="true">🇨🇮</span><span>Côte d’Ivoire</span></a>
+<a class="country-resource-button" href="/global-schools/croatia" aria-label="Open Croatia education resources"><span class="country-resource-flag" aria-hidden="true">🇭🇷</span><span>Croatia</span></a>
+<a class="country-resource-button" href="/global-schools/cuba" aria-label="Open Cuba education resources"><span class="country-resource-flag" aria-hidden="true">🇨🇺</span><span>Cuba</span></a>
+<a class="country-resource-button" href="/global-schools/cyprus" aria-label="Open Cyprus education resources"><span class="country-resource-flag" aria-hidden="true">🇨🇾</span><span>Cyprus</span></a>
+<a class="country-resource-button" href="/global-schools/czechia" aria-label="Open Czechia education resources"><span class="country-resource-flag" aria-hidden="true">🇨🇿</span><span>Czechia</span></a>
+<a class="country-resource-button" href="/global-schools/democratic-republic-of-the-congo" aria-label="Open Democratic Republic of the Congo education resources"><span class="country-resource-flag" aria-hidden="true">🇨🇩</span><span>Democratic Republic of the Congo</span></a>
+<a class="country-resource-button" href="/global-schools/denmark" aria-label="Open Denmark education resources"><span class="country-resource-flag" aria-hidden="true">🇩🇰</span><span>Denmark</span></a>
+<a class="country-resource-button" href="/global-schools/djibouti" aria-label="Open Djibouti education resources"><span class="country-resource-flag" aria-hidden="true">🇩🇯</span><span>Djibouti</span></a>
+<a class="country-resource-button" href="/global-schools/dominica" aria-label="Open Dominica education resources"><span class="country-resource-flag" aria-hidden="true">🇩🇲</span><span>Dominica</span></a>
+<a class="country-resource-button" href="/global-schools/dominican-republic" aria-label="Open Dominican Republic education resources"><span class="country-resource-flag" aria-hidden="true">🇩🇴</span><span>Dominican Republic</span></a>
+<a class="country-resource-button" href="/global-schools/ecuador" aria-label="Open Ecuador education resources"><span class="country-resource-flag" aria-hidden="true">🇪🇨</span><span>Ecuador</span></a>
+<a class="country-resource-button" href="/global-schools/egypt" aria-label="Open Egypt education resources"><span class="country-resource-flag" aria-hidden="true">🇪🇬</span><span>Egypt</span></a>
+<a class="country-resource-button" href="/global-schools/el-salvador" aria-label="Open El Salvador education resources"><span class="country-resource-flag" aria-hidden="true">🇸🇻</span><span>El Salvador</span></a>
+<a class="country-resource-button" href="/global-schools/equatorial-guinea" aria-label="Open Equatorial Guinea education resources"><span class="country-resource-flag" aria-hidden="true">🇬🇶</span><span>Equatorial Guinea</span></a>
+<a class="country-resource-button" href="/global-schools/eritrea" aria-label="Open Eritrea education resources"><span class="country-resource-flag" aria-hidden="true">🇪🇷</span><span>Eritrea</span></a>
+<a class="country-resource-button" href="/global-schools/estonia" aria-label="Open Estonia education resources"><span class="country-resource-flag" aria-hidden="true">🇪🇪</span><span>Estonia</span></a>
+<a class="country-resource-button" href="/global-schools/eswatini" aria-label="Open Eswatini education resources"><span class="country-resource-flag" aria-hidden="true">🇸🇿</span><span>Eswatini</span></a>
+<a class="country-resource-button" href="/global-schools/ethiopia" aria-label="Open Ethiopia education resources"><span class="country-resource-flag" aria-hidden="true">🇪🇹</span><span>Ethiopia</span></a>
+<a class="country-resource-button" href="/global-schools/fiji" aria-label="Open Fiji education resources"><span class="country-resource-flag" aria-hidden="true">🇫🇯</span><span>Fiji</span></a>
+<a class="country-resource-button" href="/global-schools/finland" aria-label="Open Finland education resources"><span class="country-resource-flag" aria-hidden="true">🇫🇮</span><span>Finland</span></a>
+<a class="country-resource-button" href="/global-schools/france" aria-label="Open France education resources"><span class="country-resource-flag" aria-hidden="true">🇫🇷</span><span>France</span></a>
+<a class="country-resource-button" href="/global-schools/gabon" aria-label="Open Gabon education resources"><span class="country-resource-flag" aria-hidden="true">🇬🇦</span><span>Gabon</span></a>
+<a class="country-resource-button" href="/global-schools/the-gambia" aria-label="Open The Gambia education resources"><span class="country-resource-flag" aria-hidden="true">🇬🇲</span><span>The Gambia</span></a>
+<a class="country-resource-button" href="/global-schools/georgia" aria-label="Open Georgia education resources"><span class="country-resource-flag" aria-hidden="true">🇬🇪</span><span>Georgia</span></a>
+<a class="country-resource-button" href="/global-schools/germany" aria-label="Open Germany education resources"><span class="country-resource-flag" aria-hidden="true">🇩🇪</span><span>Germany</span></a>
+<a class="country-resource-button" href="/global-schools/ghana" aria-label="Open Ghana education resources"><span class="country-resource-flag" aria-hidden="true">🇬🇭</span><span>Ghana</span></a>
+<a class="country-resource-button" href="/global-schools/greece" aria-label="Open Greece education resources"><span class="country-resource-flag" aria-hidden="true">🇬🇷</span><span>Greece</span></a>
+<a class="country-resource-button" href="/global-schools/grenada" aria-label="Open Grenada education resources"><span class="country-resource-flag" aria-hidden="true">🇬🇩</span><span>Grenada</span></a>
+<a class="country-resource-button" href="/global-schools/guatemala" aria-label="Open Guatemala education resources"><span class="country-resource-flag" aria-hidden="true">🇬🇹</span><span>Guatemala</span></a>
+<a class="country-resource-button" href="/global-schools/guinea" aria-label="Open Guinea education resources"><span class="country-resource-flag" aria-hidden="true">🇬🇳</span><span>Guinea</span></a>
+<a class="country-resource-button" href="/global-schools/guinea-bissau" aria-label="Open Guinea-Bissau education resources"><span class="country-resource-flag" aria-hidden="true">🇬🇼</span><span>Guinea-Bissau</span></a>
+<a class="country-resource-button" href="/global-schools/guyana" aria-label="Open Guyana education resources"><span class="country-resource-flag" aria-hidden="true">🇬🇾</span><span>Guyana</span></a>
+<a class="country-resource-button" href="/global-schools/haiti" aria-label="Open Haiti education resources"><span class="country-resource-flag" aria-hidden="true">🇭🇹</span><span>Haiti</span></a>
+<a class="country-resource-button" href="/global-schools/honduras" aria-label="Open Honduras education resources"><span class="country-resource-flag" aria-hidden="true">🇭🇳</span><span>Honduras</span></a>
+<a class="country-resource-button" href="/global-schools/hungary" aria-label="Open Hungary education resources"><span class="country-resource-flag" aria-hidden="true">🇭🇺</span><span>Hungary</span></a>
+<a class="country-resource-button" href="/global-schools/iceland" aria-label="Open Iceland education resources"><span class="country-resource-flag" aria-hidden="true">🇮🇸</span><span>Iceland</span></a>
+<a class="country-resource-button" href="/global-schools/india" aria-label="Open India education resources"><span class="country-resource-flag" aria-hidden="true">🇮🇳</span><span>India</span></a>
+<a class="country-resource-button" href="/global-schools/indonesia" aria-label="Open Indonesia education resources"><span class="country-resource-flag" aria-hidden="true">🇮🇩</span><span>Indonesia</span></a>
+<a class="country-resource-button" href="/global-schools/iran" aria-label="Open Iran education resources"><span class="country-resource-flag" aria-hidden="true">🇮🇷</span><span>Iran</span></a>
+<a class="country-resource-button" href="/global-schools/iraq" aria-label="Open Iraq education resources"><span class="country-resource-flag" aria-hidden="true">🇮🇶</span><span>Iraq</span></a>
+<a class="country-resource-button" href="/global-schools/ireland" aria-label="Open Ireland education resources"><span class="country-resource-flag" aria-hidden="true">🇮🇪</span><span>Ireland</span></a>
+<a class="country-resource-button" href="/global-schools/israel" aria-label="Open Israel education resources"><span class="country-resource-flag" aria-hidden="true">🇮🇱</span><span>Israel</span></a>
+<a class="country-resource-button" href="/global-schools/italy" aria-label="Open Italy education resources"><span class="country-resource-flag" aria-hidden="true">🇮🇹</span><span>Italy</span></a>
+<a class="country-resource-button" href="/global-schools/jamaica" aria-label="Open Jamaica education resources"><span class="country-resource-flag" aria-hidden="true">🇯🇲</span><span>Jamaica</span></a>
+<a class="country-resource-button" href="/global-schools/japan" aria-label="Open Japan education resources"><span class="country-resource-flag" aria-hidden="true">🇯🇵</span><span>Japan</span></a>
+<a class="country-resource-button" href="/global-schools/jordan" aria-label="Open Jordan education resources"><span class="country-resource-flag" aria-hidden="true">🇯🇴</span><span>Jordan</span></a>
+<a class="country-resource-button" href="/global-schools/kazakhstan" aria-label="Open Kazakhstan education resources"><span class="country-resource-flag" aria-hidden="true">🇰🇿</span><span>Kazakhstan</span></a>
+<a class="country-resource-button" href="/global-schools/kenya" aria-label="Open Kenya education resources"><span class="country-resource-flag" aria-hidden="true">🇰🇪</span><span>Kenya</span></a>
+<a class="country-resource-button" href="/global-schools/kiribati" aria-label="Open Kiribati education resources"><span class="country-resource-flag" aria-hidden="true">🇰🇮</span><span>Kiribati</span></a>
+<a class="country-resource-button" href="/global-schools/kosovo" aria-label="Open Kosovo education resources"><span class="country-resource-flag" aria-hidden="true">🇽🇰</span><span>Kosovo</span></a>
+<a class="country-resource-button" href="/global-schools/kuwait" aria-label="Open Kuwait education resources"><span class="country-resource-flag" aria-hidden="true">🇰🇼</span><span>Kuwait</span></a>
+<a class="country-resource-button" href="/global-schools/kyrgyzstan" aria-label="Open Kyrgyzstan education resources"><span class="country-resource-flag" aria-hidden="true">🇰🇬</span><span>Kyrgyzstan</span></a>
+<a class="country-resource-button" href="/global-schools/laos" aria-label="Open Laos education resources"><span class="country-resource-flag" aria-hidden="true">🇱🇦</span><span>Laos</span></a>
+<a class="country-resource-button" href="/global-schools/latvia" aria-label="Open Latvia education resources"><span class="country-resource-flag" aria-hidden="true">🇱🇻</span><span>Latvia</span></a>
+<a class="country-resource-button" href="/global-schools/lebanon" aria-label="Open Lebanon education resources"><span class="country-resource-flag" aria-hidden="true">🇱🇧</span><span>Lebanon</span></a>
+<a class="country-resource-button" href="/global-schools/lesotho" aria-label="Open Lesotho education resources"><span class="country-resource-flag" aria-hidden="true">🇱🇸</span><span>Lesotho</span></a>
+<a class="country-resource-button" href="/global-schools/liberia" aria-label="Open Liberia education resources"><span class="country-resource-flag" aria-hidden="true">🇱🇷</span><span>Liberia</span></a>
+<a class="country-resource-button" href="/global-schools/libya" aria-label="Open Libya education resources"><span class="country-resource-flag" aria-hidden="true">🇱🇾</span><span>Libya</span></a>
+<a class="country-resource-button" href="/global-schools/liechtenstein" aria-label="Open Liechtenstein education resources"><span class="country-resource-flag" aria-hidden="true">🇱🇮</span><span>Liechtenstein</span></a>
+<a class="country-resource-button" href="/global-schools/lithuania" aria-label="Open Lithuania education resources"><span class="country-resource-flag" aria-hidden="true">🇱🇹</span><span>Lithuania</span></a>
+<a class="country-resource-button" href="/global-schools/luxembourg" aria-label="Open Luxembourg education resources"><span class="country-resource-flag" aria-hidden="true">🇱🇺</span><span>Luxembourg</span></a>
+<a class="country-resource-button" href="/global-schools/madagascar" aria-label="Open Madagascar education resources"><span class="country-resource-flag" aria-hidden="true">🇲🇬</span><span>Madagascar</span></a>
+<a class="country-resource-button" href="/global-schools/malawi" aria-label="Open Malawi education resources"><span class="country-resource-flag" aria-hidden="true">🇲🇼</span><span>Malawi</span></a>
+<a class="country-resource-button" href="/global-schools/malaysia" aria-label="Open Malaysia education resources"><span class="country-resource-flag" aria-hidden="true">🇲🇾</span><span>Malaysia</span></a>
+<a class="country-resource-button" href="/global-schools/maldives" aria-label="Open Maldives education resources"><span class="country-resource-flag" aria-hidden="true">🇲🇻</span><span>Maldives</span></a>
+<a class="country-resource-button" href="/global-schools/mali" aria-label="Open Mali education resources"><span class="country-resource-flag" aria-hidden="true">🇲🇱</span><span>Mali</span></a>
+<a class="country-resource-button" href="/global-schools/malta" aria-label="Open Malta education resources"><span class="country-resource-flag" aria-hidden="true">🇲🇹</span><span>Malta</span></a>
+<a class="country-resource-button" href="/global-schools/marshall-islands" aria-label="Open Marshall Islands education resources"><span class="country-resource-flag" aria-hidden="true">🇲🇭</span><span>Marshall Islands</span></a>
+<a class="country-resource-button" href="/global-schools/mauritania" aria-label="Open Mauritania education resources"><span class="country-resource-flag" aria-hidden="true">🇲🇷</span><span>Mauritania</span></a>
+<a class="country-resource-button" href="/global-schools/mauritius" aria-label="Open Mauritius education resources"><span class="country-resource-flag" aria-hidden="true">🇲🇺</span><span>Mauritius</span></a>
+<a class="country-resource-button" href="/global-schools/mexico" aria-label="Open Mexico education resources"><span class="country-resource-flag" aria-hidden="true">🇲🇽</span><span>Mexico</span></a>
+<a class="country-resource-button" href="/global-schools/micronesia" aria-label="Open Micronesia education resources"><span class="country-resource-flag" aria-hidden="true">🇫🇲</span><span>Micronesia</span></a>
+<a class="country-resource-button" href="/global-schools/moldova" aria-label="Open Moldova education resources"><span class="country-resource-flag" aria-hidden="true">🇲🇩</span><span>Moldova</span></a>
+<a class="country-resource-button" href="/global-schools/monaco" aria-label="Open Monaco education resources"><span class="country-resource-flag" aria-hidden="true">🇲🇨</span><span>Monaco</span></a>
+<a class="country-resource-button" href="/global-schools/mongolia" aria-label="Open Mongolia education resources"><span class="country-resource-flag" aria-hidden="true">🇲🇳</span><span>Mongolia</span></a>
+<a class="country-resource-button" href="/global-schools/montenegro" aria-label="Open Montenegro education resources"><span class="country-resource-flag" aria-hidden="true">🇲🇪</span><span>Montenegro</span></a>
+<a class="country-resource-button" href="/global-schools/morocco" aria-label="Open Morocco education resources"><span class="country-resource-flag" aria-hidden="true">🇲🇦</span><span>Morocco</span></a>
+<a class="country-resource-button" href="/global-schools/mozambique" aria-label="Open Mozambique education resources"><span class="country-resource-flag" aria-hidden="true">🇲🇿</span><span>Mozambique</span></a>
+<a class="country-resource-button" href="/global-schools/myanmar" aria-label="Open Myanmar education resources"><span class="country-resource-flag" aria-hidden="true">🇲🇲</span><span>Myanmar</span></a>
+<a class="country-resource-button" href="/global-schools/namibia" aria-label="Open Namibia education resources"><span class="country-resource-flag" aria-hidden="true">🇳🇦</span><span>Namibia</span></a>
+<a class="country-resource-button" href="/global-schools/nauru" aria-label="Open Nauru education resources"><span class="country-resource-flag" aria-hidden="true">🇳🇷</span><span>Nauru</span></a>
+<a class="country-resource-button" href="/global-schools/nepal" aria-label="Open Nepal education resources"><span class="country-resource-flag" aria-hidden="true">🇳🇵</span><span>Nepal</span></a>
+<a class="country-resource-button" href="/global-schools/netherlands" aria-label="Open Netherlands education resources"><span class="country-resource-flag" aria-hidden="true">🇳🇱</span><span>Netherlands</span></a>
+<a class="country-resource-button" href="/global-schools/new-zealand" aria-label="Open New Zealand education resources"><span class="country-resource-flag" aria-hidden="true">🇳🇿</span><span>New Zealand</span></a>
+<a class="country-resource-button" href="/global-schools/nicaragua" aria-label="Open Nicaragua education resources"><span class="country-resource-flag" aria-hidden="true">🇳🇮</span><span>Nicaragua</span></a>
+<a class="country-resource-button" href="/global-schools/niger" aria-label="Open Niger education resources"><span class="country-resource-flag" aria-hidden="true">🇳🇪</span><span>Niger</span></a>
+<a class="country-resource-button" href="/global-schools/nigeria" aria-label="Open Nigeria education resources"><span class="country-resource-flag" aria-hidden="true">🇳🇬</span><span>Nigeria</span></a>
+<a class="country-resource-button" href="/global-schools/north-korea" aria-label="Open North Korea education resources"><span class="country-resource-flag" aria-hidden="true">🇰🇵</span><span>North Korea</span></a>
+<a class="country-resource-button" href="/global-schools/north-macedonia" aria-label="Open North Macedonia education resources"><span class="country-resource-flag" aria-hidden="true">🇲🇰</span><span>North Macedonia</span></a>
+<a class="country-resource-button" href="/global-schools/norway" aria-label="Open Norway education resources"><span class="country-resource-flag" aria-hidden="true">🇳🇴</span><span>Norway</span></a>
+<a class="country-resource-button" href="/global-schools/oman" aria-label="Open Oman education resources"><span class="country-resource-flag" aria-hidden="true">🇴🇲</span><span>Oman</span></a>
+<a class="country-resource-button" href="/global-schools/pakistan" aria-label="Open Pakistan education resources"><span class="country-resource-flag" aria-hidden="true">🇵🇰</span><span>Pakistan</span></a>
+<a class="country-resource-button" href="/global-schools/palau" aria-label="Open Palau education resources"><span class="country-resource-flag" aria-hidden="true">🇵🇼</span><span>Palau</span></a>
+<a class="country-resource-button" href="/global-schools/palestine" aria-label="Open Palestine education resources"><span class="country-resource-flag" aria-hidden="true">🇵🇸</span><span>Palestine</span></a>
+<a class="country-resource-button" href="/global-schools/panama" aria-label="Open Panama education resources"><span class="country-resource-flag" aria-hidden="true">🇵🇦</span><span>Panama</span></a>
+<a class="country-resource-button" href="/global-schools/papua-new-guinea" aria-label="Open Papua New Guinea education resources"><span class="country-resource-flag" aria-hidden="true">🇵🇬</span><span>Papua New Guinea</span></a>
+<a class="country-resource-button" href="/global-schools/paraguay" aria-label="Open Paraguay education resources"><span class="country-resource-flag" aria-hidden="true">🇵🇾</span><span>Paraguay</span></a>
+<a class="country-resource-button" href="/global-schools/peru" aria-label="Open Peru education resources"><span class="country-resource-flag" aria-hidden="true">🇵🇪</span><span>Peru</span></a>
+<a class="country-resource-button" href="/global-schools/philippines" aria-label="Open Philippines education resources"><span class="country-resource-flag" aria-hidden="true">🇵🇭</span><span>Philippines</span></a>
+<a class="country-resource-button" href="/global-schools/poland" aria-label="Open Poland education resources"><span class="country-resource-flag" aria-hidden="true">🇵🇱</span><span>Poland</span></a>
+<a class="country-resource-button" href="/global-schools/portugal" aria-label="Open Portugal education resources"><span class="country-resource-flag" aria-hidden="true">🇵🇹</span><span>Portugal</span></a>
+<a class="country-resource-button" href="/global-schools/qatar" aria-label="Open Qatar education resources"><span class="country-resource-flag" aria-hidden="true">🇶🇦</span><span>Qatar</span></a>
+<a class="country-resource-button" href="/global-schools/romania" aria-label="Open Romania education resources"><span class="country-resource-flag" aria-hidden="true">🇷🇴</span><span>Romania</span></a>
+<a class="country-resource-button" href="/global-schools/russia" aria-label="Open Russia education resources"><span class="country-resource-flag" aria-hidden="true">🇷🇺</span><span>Russia</span></a>
+<a class="country-resource-button" href="/global-schools/rwanda" aria-label="Open Rwanda education resources"><span class="country-resource-flag" aria-hidden="true">🇷🇼</span><span>Rwanda</span></a>
+<a class="country-resource-button" href="/global-schools/saint-kitts-and-nevis" aria-label="Open Saint Kitts and Nevis education resources"><span class="country-resource-flag" aria-hidden="true">🇰🇳</span><span>Saint Kitts and Nevis</span></a>
+<a class="country-resource-button" href="/global-schools/saint-lucia" aria-label="Open Saint Lucia education resources"><span class="country-resource-flag" aria-hidden="true">🇱🇨</span><span>Saint Lucia</span></a>
+<a class="country-resource-button" href="/global-schools/saint-vincent-and-the-grenadines" aria-label="Open Saint Vincent and the Grenadines education resources"><span class="country-resource-flag" aria-hidden="true">🇻🇨</span><span>Saint Vincent and the Grenadines</span></a>
+<a class="country-resource-button" href="/global-schools/samoa" aria-label="Open Samoa education resources"><span class="country-resource-flag" aria-hidden="true">🇼🇸</span><span>Samoa</span></a>
+<a class="country-resource-button" href="/global-schools/san-marino" aria-label="Open San Marino education resources"><span class="country-resource-flag" aria-hidden="true">🇸🇲</span><span>San Marino</span></a>
+<a class="country-resource-button" href="/global-schools/sao-tome-and-principe" aria-label="Open São Tomé and Príncipe education resources"><span class="country-resource-flag" aria-hidden="true">🇸🇹</span><span>São Tomé and Príncipe</span></a>
+<a class="country-resource-button" href="/global-schools/saudi-arabia" aria-label="Open Saudi Arabia education resources"><span class="country-resource-flag" aria-hidden="true">🇸🇦</span><span>Saudi Arabia</span></a>
+<a class="country-resource-button" href="/global-schools/senegal" aria-label="Open Senegal education resources"><span class="country-resource-flag" aria-hidden="true">🇸🇳</span><span>Senegal</span></a>
+<a class="country-resource-button" href="/global-schools/serbia" aria-label="Open Serbia education resources"><span class="country-resource-flag" aria-hidden="true">🇷🇸</span><span>Serbia</span></a>
+<a class="country-resource-button" href="/global-schools/seychelles" aria-label="Open Seychelles education resources"><span class="country-resource-flag" aria-hidden="true">🇸🇨</span><span>Seychelles</span></a>
+<a class="country-resource-button" href="/global-schools/sierra-leone" aria-label="Open Sierra Leone education resources"><span class="country-resource-flag" aria-hidden="true">🇸🇱</span><span>Sierra Leone</span></a>
+<a class="country-resource-button" href="/global-schools/singapore" aria-label="Open Singapore education resources"><span class="country-resource-flag" aria-hidden="true">🇸🇬</span><span>Singapore</span></a>
+<a class="country-resource-button" href="/global-schools/slovakia" aria-label="Open Slovakia education resources"><span class="country-resource-flag" aria-hidden="true">🇸🇰</span><span>Slovakia</span></a>
+<a class="country-resource-button" href="/global-schools/slovenia" aria-label="Open Slovenia education resources"><span class="country-resource-flag" aria-hidden="true">🇸🇮</span><span>Slovenia</span></a>
+<a class="country-resource-button" href="/global-schools/solomon-islands" aria-label="Open Solomon Islands education resources"><span class="country-resource-flag" aria-hidden="true">🇸🇧</span><span>Solomon Islands</span></a>
+<a class="country-resource-button" href="/global-schools/somalia" aria-label="Open Somalia education resources"><span class="country-resource-flag" aria-hidden="true">🇸🇴</span><span>Somalia</span></a>
+<a class="country-resource-button" href="/global-schools/south-africa" aria-label="Open South Africa education resources"><span class="country-resource-flag" aria-hidden="true">🇿🇦</span><span>South Africa</span></a>
+<a class="country-resource-button" href="/global-schools/south-korea" aria-label="Open South Korea education resources"><span class="country-resource-flag" aria-hidden="true">🇰🇷</span><span>South Korea</span></a>
+<a class="country-resource-button" href="/global-schools/south-sudan" aria-label="Open South Sudan education resources"><span class="country-resource-flag" aria-hidden="true">🇸🇸</span><span>South Sudan</span></a>
+<a class="country-resource-button" href="/global-schools/spain" aria-label="Open Spain education resources"><span class="country-resource-flag" aria-hidden="true">🇪🇸</span><span>Spain</span></a>
+<a class="country-resource-button" href="/global-schools/sri-lanka" aria-label="Open Sri Lanka education resources"><span class="country-resource-flag" aria-hidden="true">🇱🇰</span><span>Sri Lanka</span></a>
+<a class="country-resource-button" href="/global-schools/sudan" aria-label="Open Sudan education resources"><span class="country-resource-flag" aria-hidden="true">🇸🇩</span><span>Sudan</span></a>
+<a class="country-resource-button" href="/global-schools/suriname" aria-label="Open Suriname education resources"><span class="country-resource-flag" aria-hidden="true">🇸🇷</span><span>Suriname</span></a>
+<a class="country-resource-button" href="/global-schools/sweden" aria-label="Open Sweden education resources"><span class="country-resource-flag" aria-hidden="true">🇸🇪</span><span>Sweden</span></a>
+<a class="country-resource-button" href="/global-schools/switzerland" aria-label="Open Switzerland education resources"><span class="country-resource-flag" aria-hidden="true">🇨🇭</span><span>Switzerland</span></a>
+<a class="country-resource-button" href="/global-schools/syria" aria-label="Open Syria education resources"><span class="country-resource-flag" aria-hidden="true">🇸🇾</span><span>Syria</span></a>
+<a class="country-resource-button" href="/global-schools/tajikistan" aria-label="Open Tajikistan education resources"><span class="country-resource-flag" aria-hidden="true">🇹🇯</span><span>Tajikistan</span></a>
+<a class="country-resource-button" href="/global-schools/tanzania" aria-label="Open Tanzania education resources"><span class="country-resource-flag" aria-hidden="true">🇹🇿</span><span>Tanzania</span></a>
+<a class="country-resource-button" href="/global-schools/thailand" aria-label="Open Thailand education resources"><span class="country-resource-flag" aria-hidden="true">🇹🇭</span><span>Thailand</span></a>
+<a class="country-resource-button" href="/global-schools/timor-leste" aria-label="Open Timor-Leste education resources"><span class="country-resource-flag" aria-hidden="true">🇹🇱</span><span>Timor-Leste</span></a>
+<a class="country-resource-button" href="/global-schools/togo" aria-label="Open Togo education resources"><span class="country-resource-flag" aria-hidden="true">🇹🇬</span><span>Togo</span></a>
+<a class="country-resource-button" href="/global-schools/tonga" aria-label="Open Tonga education resources"><span class="country-resource-flag" aria-hidden="true">🇹🇴</span><span>Tonga</span></a>
+<a class="country-resource-button" href="/global-schools/trinidad-and-tobago" aria-label="Open Trinidad and Tobago education resources"><span class="country-resource-flag" aria-hidden="true">🇹🇹</span><span>Trinidad and Tobago</span></a>
+<a class="country-resource-button" href="/global-schools/tunisia" aria-label="Open Tunisia education resources"><span class="country-resource-flag" aria-hidden="true">🇹🇳</span><span>Tunisia</span></a>
+<a class="country-resource-button" href="/global-schools/turkiye" aria-label="Open Türkiye education resources"><span class="country-resource-flag" aria-hidden="true">🇹🇷</span><span>Türkiye</span></a>
+<a class="country-resource-button" href="/global-schools/turkmenistan" aria-label="Open Turkmenistan education resources"><span class="country-resource-flag" aria-hidden="true">🇹🇲</span><span>Turkmenistan</span></a>
+<a class="country-resource-button" href="/global-schools/tuvalu" aria-label="Open Tuvalu education resources"><span class="country-resource-flag" aria-hidden="true">🇹🇻</span><span>Tuvalu</span></a>
+<a class="country-resource-button" href="/global-schools/uganda" aria-label="Open Uganda education resources"><span class="country-resource-flag" aria-hidden="true">🇺🇬</span><span>Uganda</span></a>
+<a class="country-resource-button" href="/global-schools/ukraine" aria-label="Open Ukraine education resources"><span class="country-resource-flag" aria-hidden="true">🇺🇦</span><span>Ukraine</span></a>
+<a class="country-resource-button" href="/global-schools/united-arab-emirates" aria-label="Open United Arab Emirates education resources"><span class="country-resource-flag" aria-hidden="true">🇦🇪</span><span>United Arab Emirates</span></a>
+<a class="country-resource-button" href="/global-schools/united-kingdom" aria-label="Open United Kingdom education resources"><span class="country-resource-flag" aria-hidden="true">🇬🇧</span><span>United Kingdom</span></a>
+<a class="country-resource-button" href="/global-schools/united-states" aria-label="Open United States education resources"><span class="country-resource-flag" aria-hidden="true">🇺🇸</span><span>United States</span></a>
+<a class="country-resource-button" href="/global-schools/uruguay" aria-label="Open Uruguay education resources"><span class="country-resource-flag" aria-hidden="true">🇺🇾</span><span>Uruguay</span></a>
+<a class="country-resource-button" href="/global-schools/uzbekistan" aria-label="Open Uzbekistan education resources"><span class="country-resource-flag" aria-hidden="true">🇺🇿</span><span>Uzbekistan</span></a>
+<a class="country-resource-button" href="/global-schools/vanuatu" aria-label="Open Vanuatu education resources"><span class="country-resource-flag" aria-hidden="true">🇻🇺</span><span>Vanuatu</span></a>
+<a class="country-resource-button" href="/global-schools/vatican-city" aria-label="Open Vatican City education resources"><span class="country-resource-flag" aria-hidden="true">🇻🇦</span><span>Vatican City</span></a>
+<a class="country-resource-button" href="/global-schools/venezuela" aria-label="Open Venezuela education resources"><span class="country-resource-flag" aria-hidden="true">🇻🇪</span><span>Venezuela</span></a>
+<a class="country-resource-button" href="/global-schools/vietnam" aria-label="Open Vietnam education resources"><span class="country-resource-flag" aria-hidden="true">🇻🇳</span><span>Vietnam</span></a>
+<a class="country-resource-button" href="/global-schools/yemen" aria-label="Open Yemen education resources"><span class="country-resource-flag" aria-hidden="true">🇾🇪</span><span>Yemen</span></a>
+<a class="country-resource-button" href="/global-schools/zambia" aria-label="Open Zambia education resources"><span class="country-resource-flag" aria-hidden="true">🇿🇲</span><span>Zambia</span></a>
+<a class="country-resource-button" href="/global-schools/zimbabwe" aria-label="Open Zimbabwe education resources"><span class="country-resource-flag" aria-hidden="true">🇿🇼</span><span>Zimbabwe</span></a>
+          </nav>
         </aside>
       </section>
 
