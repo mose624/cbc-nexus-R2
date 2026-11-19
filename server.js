@@ -764,7 +764,7 @@ async function handleApi(req,res,url){
       const clean=(v,n=300)=>String(v??"").trim().slice(0,n);
       const fullName=clean(p.fullName,160),email=clean(p.email,254).toLowerCase(),phone=clean(p.phone,30),country=clean(p.country,100),language=clean(p.language,80),username=clean(p.username,30).toLowerCase(),password=String(p.password||"");
       if(!fullName||!email||!phone||!country||!language||!username||!password){sendJson(res,400,{ok:false,error:"Complete all registration fields."});return true;}
-      if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)){sendJson(res,400,{ok:false,error:"Enter a valid email address."});return true;}
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){sendJson(res,400,{ok:false,error:"Enter a valid email address."});return true;}
       if(!/^[+0-9() -]{7,30}$/.test(phone)){sendJson(res,400,{ok:false,error:"Enter a valid phone number with country code."});return true;}
       if(!/^[a-z0-9_.-]{3,30}$/.test(username)){sendJson(res,400,{ok:false,error:"Username must be 3–30 characters using letters, numbers, dots, underscores or hyphens."});return true;}
       if(password.length<12||password.length>200||!/[A-Za-z]/.test(password)||!/[0-9]/.test(password)){sendJson(res,400,{ok:false,error:"Use a password of at least 12 characters containing letters and numbers."});return true;}
