@@ -32,7 +32,7 @@ const profiles={
  },
  "andorra":{
   seoHeading:"Andorra Education System, Three School Systems and Curriculum Pathways",
-  seoTitle:"Andorra Education System, Catalan, French and Spanish School Pathways | CBE Nexus",
+  seoTitle:"Andorra Education System & School Pathways | CBE Nexus",
   seoDescription:"Understand Andorra's Andorran, French and Spanish school systems, languages of instruction, education stages and official school information.",
   seoIntro:"Andorra has three public education systems: Andorran, French and Spanish. The Andorran system is centred on Catalan, while the French and Spanish systems follow their respective national programmes and use their own languages of instruction. A learner's correct curriculum, grade progression and examinations therefore depend on the school system attended. Identify the system before choosing textbooks, syllabuses or examination-preparation materials.",
   curriculum:"Three coexisting systems: Andorran, French and Spanish curricula",
