@@ -1689,6 +1689,50 @@ async function handleApi(req,res,url){
       sendJson(res,200,{ok:true,status:"paid",resourceId:resource.id,title:resource.title,downloadUrl,expiresIn:300,currency:purchase.currency||resource.currency||"KES",amount:Number(purchase.amount||0)});return true;
     }catch(error){console.error("Resource Paystack verification error:",error);sendJson(res,500,{ok:false,error:"Paystack payment could not be verified securely."});return true;}
   }
+  if(req.method==="POST"&&url.pathname==="/api/cv/paystack/checkout"){
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure CV checkout requires Supabase."});return true;}
+      const secret=String(process.env.PAYSTACK_SECRET_KEY||"").trim();
+      if(!secret){sendJson(res,503,{ok:false,error:"Paystack is not configured. Contact CBE Nexus support."});return true;}
+      const p=JSON.parse((await readBody(req))||"{}");
+      const packageId=String(p.packageId||"").trim().toLowerCase();
+      const email=String(p.email||"").trim().toLowerCase();
+      const cvPrices={basic:200,classic:400,professional:800};
+      if(!Object.prototype.hasOwnProperty.call(cvPrices,packageId)||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+        sendJson(res,400,{ok:false,error:"Choose a valid CV package and enter a valid email address."});return true;
+      }
+      let quote;
+      try{quote=await quoteInternationalAmount(cvPrices[packageId],"KES");}
+      catch(error){sendJson(res,400,{ok:false,error:String(error?.message||"International price conversion is unavailable.")});return true;}
+      const reference="CBECV-"+crypto.randomBytes(18).toString("hex");
+      const origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.com").replace(/\/$/,"");
+      const response=await fetch("https://api.paystack.co/transaction/initialize",{method:"POST",headers:{"Authorization":"Bearer "+secret,"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({email,amount:Math.round(quote.amount*100),currency:"USD",reference,callback_url:origin+"/professional-cv-writing.html?cv_payment_reference="+encodeURIComponent(reference),metadata:{product:"cbe_nexus_cv_builder",package:packageId,source_amount:quote.sourceAmount,source_currency:"KES",kes_usd_rate:quote.exchangeRate}})});
+      const result=await response.json().catch(()=>({}));
+      if(!response.ok||!result.status||!result.data?.authorization_url)throw new Error(String(result.message||"Paystack could not initialize international CV checkout."));
+      const purchase=await savePayment({resource_id:null,customer_phone:"paystack:"+email,amount:quote.amount,currency:"USD",payment_provider:"paystack",status:"pending",payment_reference:reference,checkout_request_id:"PAYSTACK-"+reference,merchant_request_id:"",result_code:null,result_desc:"CV "+packageId+" checkout; source KSh "+quote.sourceAmount+"; KES/USD "+quote.exchangeRate,mpesa_receipt:null,transaction_time:null});
+      sendJson(res,200,{ok:true,authorizationUrl:result.data.authorization_url,reference,amount:quote.amount,currency:"USD",purchaseId:purchase.id});return true;
+    }catch(error){console.error("CV Paystack checkout initialization error:",error);sendJson(res,502,{ok:false,error:String(error?.message||"International CV checkout could not be started.")});return true;}
+  }
+  if(req.method==="GET"&&url.pathname==="/api/cv/paystack/verify"){
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure CV payment verification requires Supabase."});return true;}
+      const secret=String(process.env.PAYSTACK_SECRET_KEY||"").trim();
+      const reference=String(url.searchParams.get("reference")||"").trim();
+      if(!secret||!/^CBECV-[a-f0-9]{36}$/i.test(reference)){sendJson(res,400,{ok:false,error:"A valid CV payment reference is required."});return true;}
+      const {data:purchase,error}=await supabase.from("purchases").select("*").eq("payment_reference",reference).maybeSingle();
+      if(error)throw error;
+      if(!purchase||String(purchase.payment_provider||"").toLowerCase()!=="paystack"||!String(purchase.result_desc||"").startsWith("CV ")){sendJson(res,404,{ok:false,error:"CV payment order was not found."});return true;}
+      if(["paid","completed","success"].includes(String(purchase.status||"").toLowerCase())){sendJson(res,200,{ok:true,status:"paid",amount:Number(purchase.amount||0),currency:"USD"});return true;}
+      const verifyResponse=await fetch("https://api.paystack.co/transaction/verify/"+encodeURIComponent(reference),{headers:{"Authorization":"Bearer "+secret,"Accept":"application/json"},signal:AbortSignal.timeout(12000)});
+      const verified=await verifyResponse.json().catch(()=>({}));
+      const tx=verified.data||{};
+      if(!verifyResponse.ok||!verified.status||String(tx.status||"").toLowerCase()!=="success"){sendJson(res,200,{ok:true,status:"pending"});return true;}
+      if(Number(tx.amount)!==Math.round(Number(purchase.amount||0)*100)||String(tx.currency||"").toUpperCase()!=="USD"||String(tx.reference||"")!==reference){sendJson(res,400,{ok:false,error:"The verified CV payment amount, currency or reference did not match this order."});return true;}
+      const {data:updated,error:updateError}=await supabase.from("purchases").update({status:"paid",verified_at:new Date().toISOString(),result_code:0,result_desc:String(purchase.result_desc||"CV payment")+"; Paystack payment verified",mpesa_receipt:reference,transaction_time:String(tx.paid_at||"")}).eq("id",purchase.id).select("*").single();
+      if(updateError)throw updateError;
+      sendJson(res,200,{ok:true,status:"paid",amount:Number(updated.amount||0),currency:"USD"});return true;
+    }catch(error){console.error("CV Paystack verification error:",error);sendJson(res,500,{ok:false,error:"CV payment could not be verified securely."});return true;}
+  }
   if(req.method==="POST"&&url.pathname==="/api/mpesa/stk-push"){
     const p=JSON.parse((await readBody(req))||"{}");
     const phone=normalizeMpesaPhone(p.customerPhone||p.phone||"");
