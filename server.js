@@ -1616,24 +1616,28 @@ async function handleApi(req,res,url){
       sendJson(res,200,{ok:true,books:items});return true;
     }catch(error){console.error("Public bookshop catalogue error:",error);sendJson(res,500,{ok:false,error:"The published book catalogue could not be loaded."});return true;}
   }
-  if(req.method==="POST"&&url.pathname==="/api/books/paystack/checkout"){
+  if(req.method==="POST"&&url.pathname==="/api/books/intasend/checkout"){
     try{
       if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure book checkout requires Supabase."});return true;}
-      const secret=String(process.env.PAYSTACK_SECRET_KEY||"").trim();if(!secret){sendJson(res,503,{ok:false,error:"Paystack is not configured. Contact CBE Nexus support."});return true;}
       const p=JSON.parse((await readBody(req))||"{}"),bookId=String(p.bookId||"").trim(),email=String(p.email||"").trim().toLowerCase();
-      if(!bookId||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){sendJson(res,400,{ok:false,error:"Choose a book and enter a valid email address."});return true;}
+      if(!bookId||!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)){sendJson(res,400,{ok:false,error:"Choose a book and enter a valid email address."});return true;}
       const {data:book,error:bookError}=await supabase.from("published_books").select("id,title,seller_id,price,currency,status").eq("id",bookId).eq("status","published").maybeSingle();
       if(bookError)throw bookError;if(!book){sendJson(res,404,{ok:false,error:"This book is not currently published for sale."});return true;}
       const quote=await quoteInternationalAmount(Number(book.price),String(book.currency||"KES"));
       const reference="CBEB-"+crypto.randomBytes(18).toString("hex");
-      const origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.com").replace(/\/$/,"");
+      const origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.com").replace(/\\/$/,"");
       const {data:sale,error:saleError}=await supabase.from("published_book_sales").insert({book_id:book.id,seller_id:book.seller_id,buyer_email:email,payment_reference:reference,amount:quote.amount,currency:"USD",source_amount:quote.sourceAmount,source_currency:quote.sourceCurrency,exchange_rate:quote.exchangeRate,status:"pending"}).select("id").single();
       if(saleError)throw saleError;
-      const response=await fetch("https://api.paystack.co/transaction/initialize",{method:"POST",headers:{"Authorization":"Bearer "+secret,"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({email,amount:Math.round(quote.amount*100),currency:"USD",reference,callback_url:origin+"/bookshop.html?book_payment_reference="+encodeURIComponent(reference),metadata:{product:"cbe_nexus_published_book",book_id:book.id,book_title:String(book.title||"").slice(0,180),source_amount:quote.sourceAmount,source_currency:quote.sourceCurrency,exchange_rate:quote.exchangeRate}})});
-      const result=await response.json().catch(()=>({}));
-      if(!response.ok||!result.status||!result.data?.authorization_url){await supabase.from("published_book_sales").update({status:"failed",updated_at:new Date().toISOString()}).eq("id",sale.id);throw new Error(String(result.message||"Paystack could not initialize the book payment."));}
-      sendJson(res,200,{ok:true,authorizationUrl:result.data.authorization_url,reference,amount:quote.amount,currency:"USD",sourceAmount:quote.sourceAmount,sourceCurrency:quote.sourceCurrency,exchangeRate:quote.exchangeRate,saleId:sale.id});return true;
-    }catch(error){console.error("International book checkout error:",error);sendJson(res,502,{ok:false,error:String(error?.message||"International book checkout could not be started.")});return true;}
+      try{
+        const checkout=await intasend.createCheckout({email,amount:quote.amount,currency:"USD",apiRef:reference,redirectUrl:origin+"/bookshop.html?book_payment_reference="+encodeURIComponent(reference)});
+        const {error:updateError}=await supabase.from("published_book_sales").update({intasend_checkout_id:checkout.checkoutId,updated_at:new Date().toISOString()}).eq("id",sale.id);
+        if(updateError)throw updateError;
+        sendJson(res,200,{ok:true,authorizationUrl:checkout.checkoutUrl,checkoutUrl:checkout.checkoutUrl,checkoutId:checkout.checkoutId,reference,amount:quote.amount,currency:"USD",sourceAmount:quote.sourceAmount,sourceCurrency:quote.sourceCurrency,exchangeRate:quote.exchangeRate,saleId:sale.id});return true;
+      }catch(checkoutError){
+        await supabase.from("published_book_sales").update({status:"failed",updated_at:new Date().toISOString()}).eq("id",sale.id);
+        throw checkoutError;
+      }
+    }catch(error){console.error("IntaSend book checkout error:",error);sendJson(res,502,{ok:false,error:String(error?.message||"International book checkout could not be started.")});return true;}
   }
   if(req.method==="GET"&&url.pathname==="/api/books/paystack/verify"){
     try{
