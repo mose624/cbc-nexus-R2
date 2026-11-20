@@ -2115,7 +2115,8 @@ async function handleApi(req,res,url){
       const resourcePriceForProtectedResource=resourcePrice(protectedResource);
       let validPayments=[];
       if(supabaseConfigured){
-        if(email){const {data:referencePurchase,error:referenceError}=await supabase.from("purchases").select("id").eq("customer_phone",customerIdentity).eq("payment_reference",paymentReference).in("status",["paid","completed","success"]).maybeSingle();if(referenceError)throw referenceError;if(!referencePurchase){sendJson(res,403,{ok:false,error:"The international payment reference does not match a verified purchase for this email."});return true;}}\n        const {data:payments,error:paymentError}=await supabase.from("purchases").select("*").eq("customer_phone",customerIdentity).in("status",["paid","completed","success"]).limit(100);
+        if(email){const {data:referencePurchase,error:referenceError}=await supabase.from("purchases").select("id").eq("customer_phone",customerIdentity).eq("payment_reference",paymentReference).in("status",["paid","completed","success"]).maybeSingle();if(referenceError)throw referenceError;if(!referencePurchase){sendJson(res,403,{ok:false,error:"The international payment reference does not match a verified purchase for this email."});return true;}}
+        const {data:payments,error:paymentError}=await supabase.from("purchases").select("*").eq("customer_phone",customerIdentity).in("status",["paid","completed","success"]).limit(100);
         if(paymentError)throw paymentError;
         const now=Date.now(),gradeNumber=Number(String(protectedResource?.grade||"").match(/(?:Grade\s*)?(\d+)/i)?.[1]||0);
         validPayments=(payments||[]).filter(p=>{
