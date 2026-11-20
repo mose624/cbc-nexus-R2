@@ -1579,11 +1579,11 @@ async function handleApi(req,res,url){
       const quote=await quoteInternationalAmount(Number(book.price),String(book.currency||"KES"));
       const reference="CBEB-"+crypto.randomBytes(18).toString("hex");
       const origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.com").replace(/\/$/,"");
-      const response=await fetch("https://api.paystack.co/transaction/initialize",{method:"POST",headers:{"Authorization":"Bearer "+secret,"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({email,amount:Math.round(quote.amount*100),currency:"USD",reference,callback_url:origin+"/bookshop.html?book_payment_reference="+encodeURIComponent(reference),metadata:{product:"cbe_nexus_published_book",book_id:book.id,book_title:String(book.title||"").slice(0,180),source_amount:quote.sourceAmount,source_currency:quote.sourceCurrency,exchange_rate:quote.exchangeRate}})});
-      const result=await response.json().catch(()=>({}));
-      if(!response.ok||!result.status||!result.data?.authorization_url)throw new Error(String(result.message||"Paystack could not initialize the book payment."));
       const {data:sale,error:saleError}=await supabase.from("published_book_sales").insert({book_id:book.id,seller_id:book.seller_id,buyer_email:email,payment_reference:reference,amount:quote.amount,currency:"USD",source_amount:quote.sourceAmount,source_currency:quote.sourceCurrency,exchange_rate:quote.exchangeRate,status:"pending"}).select("id").single();
       if(saleError)throw saleError;
+      const response=await fetch("https://api.paystack.co/transaction/initialize",{method:"POST",headers:{"Authorization":"Bearer "+secret,"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({email,amount:Math.round(quote.amount*100),currency:"USD",reference,callback_url:origin+"/bookshop.html?book_payment_reference="+encodeURIComponent(reference),metadata:{product:"cbe_nexus_published_book",book_id:book.id,book_title:String(book.title||"").slice(0,180),source_amount:quote.sourceAmount,source_currency:quote.sourceCurrency,exchange_rate:quote.exchangeRate}})});
+      const result=await response.json().catch(()=>({}));
+      if(!response.ok||!result.status||!result.data?.authorization_url){await supabase.from("published_book_sales").update({status:"failed",updated_at:new Date().toISOString()}).eq("id",sale.id);throw new Error(String(result.message||"Paystack could not initialize the book payment."));}
       sendJson(res,200,{ok:true,authorizationUrl:result.data.authorization_url,reference,amount:quote.amount,currency:"USD",sourceAmount:quote.sourceAmount,sourceCurrency:quote.sourceCurrency,exchangeRate:quote.exchangeRate,saleId:sale.id});return true;
     }catch(error){console.error("International book checkout error:",error);sendJson(res,502,{ok:false,error:String(error?.message||"International book checkout could not be started.")});return true;}
   }
@@ -1605,7 +1605,7 @@ async function handleApi(req,res,url){
         sale.status=updated.status;sale.seller_amount=updated.seller_amount;sale.platform_amount=updated.platform_amount;
       }
       const {data:book,error:bookError}=await supabase.from("published_books").select("id,title,pdf_key,status").eq("id",sale.book_id).maybeSingle();
-      if(bookError)throw bookError;if(!book||book.status!=="published"){sendJson(res,409,{ok:false,error:"Payment is recorded, but the book is temporarily unavailable. Contact CBE Nexus support."});return true;}
+      if(bookError)throw bookError;if(!book){sendJson(res,404,{ok:false,error:"The purchased book record could not be found. Contact CBE Nexus support."});return true;}
       const downloadUrl=await createDownloadUrl(book.pdf_key,String(book.title||"book").replace(/[^a-z0-9_-]/gi,"-")+".pdf");
       sendJson(res,200,{ok:true,status:"paid",book:{id:book.id,title:book.title},amount:Number(sale.amount),currency:"USD",sellerShare:Number(sale.seller_amount),platformShare:Number(sale.platform_amount),downloadUrl,expiresIn:300});return true;
     }catch(error){console.error("International book verification error:",error);sendJson(res,500,{ok:false,error:"The book payment could not be verified securely."});return true;}
