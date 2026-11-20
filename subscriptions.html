@@ -27,7 +27,7 @@
 <section class="grade-grid" aria-label="Grade packages">
 <article class="grade-card"><div><strong>Grade 1 package</strong><small>All available subjects · one-time payment</small></div><button class="button" data-plan="grade-package:1">KSh 50</button></article><article class="grade-card"><div><strong>Grade 2 package</strong><small>All available subjects · one-time payment</small></div><button class="button" data-plan="grade-package:2">KSh 50</button></article><article class="grade-card"><div><strong>Grade 3 package</strong><small>All available subjects · one-time payment</small></div><button class="button" data-plan="grade-package:3">KSh 50</button></article><article class="grade-card"><div><strong>Grade 4 package</strong><small>All available subjects · one-time payment</small></div><button class="button" data-plan="grade-package:4">KSh 50</button></article><article class="grade-card"><div><strong>Grade 5 package</strong><small>All available subjects · one-time payment</small></div><button class="button" data-plan="grade-package:5">KSh 50</button></article><article class="grade-card"><div><strong>Grade 6 package</strong><small>All available subjects · one-time payment</small></div><button class="button" data-plan="grade-package:6">KSh 50</button></article><article class="grade-card"><div><strong>Grade 7 package</strong><small>All available subjects · one-time payment</small></div><button class="button" data-plan="grade-package:7">KSh 50</button></article><article class="grade-card"><div><strong>Grade 8 package</strong><small>All available subjects · one-time payment</small></div><button class="button" data-plan="grade-package:8">KSh 50</button></article><article class="grade-card"><div><strong>Grade 9 package</strong><small>All available subjects · one-time payment</small></div><button class="button" data-plan="grade-package:9">KSh 50</button></article>
 </section>
-<section class="checkout" id="checkout"><h2>Secure M-Pesa checkout</h2><label for="phone">M-Pesa phone number</label><input id="phone" inputmode="tel" autocomplete="tel" placeholder="e.g. 0712345678" maxlength="15"><p><button class="button" id="payButton" disabled>Select a plan above</button></p><div class="status" id="status" role="status" aria-live="polite"></div></section>
+<section class="checkout" id="checkout"><h2>Kenyan payment — M-Pesa</h2><label for="phone">M-Pesa phone number</label><input id="phone" inputmode="tel" autocomplete="tel" placeholder="e.g. 0712345678" maxlength="15"><p><button class="button" id="payButton" disabled>Select a plan above</button></p><hr style="border:0;border-top:1px solid var(--line);margin:20px 0"><h2>International payment — debit or credit card</h2><label for="internationalEmail">Email address for your access receipt</label><input id="internationalEmail" type="email" autocomplete="email" placeholder="you@example.com"><p><button class="button" id="internationalPayButton" disabled>Pay internationally in USD</button></p><p style="font-size:13px;color:#59636e">Your KSh price is converted to USD using the current exchange rate. Paystack requires a minimum USD payment of $2. Some low-priced grade packages may therefore be unavailable for international card checkout. No extra amount is added to meet the minimum.</p><div class="status" id="internationalStatus" role="status" aria-live="polite"></div><div class="status" id="status" role="status" aria-live="polite"></div></section>
 </main><footer>CBE Nexus · Quality and genuine learning resources</footer>
 <script>
 (()=> {
@@ -66,6 +66,47 @@
    }catch(e){status.textContent=e.message||"Payment could not be completed.";pay.textContent="Try payment again";}
    finally{busy=false;pay.disabled=!selected||!phone.value.trim()||pay.textContent==="Payment confirmed";}
  });
+
+ const internationalEmail=document.getElementById("internationalEmail"),internationalPay=document.getElementById("internationalPayButton"),internationalStatus=document.getElementById("internationalStatus");
+ const validEmail=()=>/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(internationalEmail.value.trim());
+ internationalEmail.addEventListener("input",()=>{internationalPay.disabled=!selected||!validEmail()||busy;});
+ document.querySelectorAll("[data-plan]").forEach(b=>b.addEventListener("click",()=>{internationalPay.disabled=!selected||!validEmail()||busy;}));
+ internationalPay.addEventListener("click",async()=>{
+   if(!selected||!validEmail()||busy)return;
+   busy=true;pay.disabled=true;internationalPay.disabled=true;internationalStatus.textContent="Getting the current KES/USD conversion and preparing secure Paystack checkout…";
+   try{
+     const email=internationalEmail.value.trim().toLowerCase();
+     const start=await fetch("/api/access/paystack/checkout",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({resourceId:selected,email})});
+     const data=await start.json().catch(()=>({}));
+     if(!start.ok||!data.ok||!data.authorizationUrl)throw new Error(data.error||"International checkout could not be started.");
+     localStorage.setItem("cbe_access_email",email);
+     localStorage.setItem("cbe_access_reference",data.reference);
+     internationalStatus.textContent="Redirecting to Paystack. Amount: $"+Number(data.amount).toFixed(2)+" USD.";
+     window.location.assign(data.authorizationUrl);
+   }catch(error){internationalStatus.textContent=error.message||"International checkout failed."}
+   finally{busy=false;pay.disabled=!selected||!phone.value.trim();internationalPay.disabled=!selected||!validEmail();}
+ });
+ async function verifyInternationalAccessReturn(){
+   const reference=new URLSearchParams(location.search).get("access_payment_reference");
+   if(!reference)return;
+   internationalStatus.textContent="Verifying your card payment securely…";
+   try{
+     let paid=null;
+     for(let attempt=0;attempt<8;attempt++){
+       const response=await fetch("/api/access/paystack/verify?reference="+encodeURIComponent(reference),{credentials:"same-origin",cache:"no-store"});
+       const result=await response.json().catch(()=>({}));
+       if(response.ok&&result.ok&&result.status==="paid"){paid=result;break;}
+       if(!response.ok)throw new Error(result.error||"Payment verification failed.");
+       await new Promise(resolve=>setTimeout(resolve,2500));
+     }
+     if(!paid)throw new Error("Paystack has not confirmed this payment yet. Keep your receipt and retry verification shortly.");
+     localStorage.setItem("cbe_access_reference",reference);
+     const email=localStorage.getItem("cbe_access_email")||"";
+     internationalStatus.textContent="Payment confirmed. Your "+paid.resourceId.replace(":"," ")+" access is active. Use the same email and this payment reference when downloading resources.";
+     history.replaceState({},"",location.pathname);
+   }catch(error){internationalStatus.textContent=error.message||"We could not verify your payment."}
+ }
+ verifyInternationalAccessReturn();
 })();
 </script>
 </body></html>
