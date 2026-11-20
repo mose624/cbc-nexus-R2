@@ -982,7 +982,7 @@ async function handleApi(req,res,url){
       if(teacher.listing_plan!=="basic"){sendJson(res,400,{ok:false,error:"This checkout is only for the $2 Basic Listing."});return true;}
       const reference="CBET-"+crypto.randomBytes(18).toString("hex"),origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.com").replace(/\/$/,"");
       const checkout=await intasend.createCheckout({email:teacher.email,amount:2,currency:"USD",apiRef:reference,redirectUrl:origin+"/online-teaching.html?checkout=global-teacher&reference="+encodeURIComponent(reference)});
-      const {error:updateError}=await supabase.from("global_teachers").update({payment_status:"pending",payment_reference:reference,updated_at:new Date().toISOString()}).eq("id",teacher.id);if(updateError)throw updateError;
+      const {error:updateError}=await supabase.from("global_teachers").update({payment_status:"pending",payment_reference:reference,intasend_checkout_id:checkout.checkoutId,updated_at:new Date().toISOString()}).eq("id",teacher.id);if(updateError)throw updateError;
       sendJson(res,200,{ok:true,checkoutUrl:checkout.checkoutUrl,reference,amount:2,currency:"USD"});return true;
     }catch(error){console.error("Global teacher IntaSend checkout initialization error:",error);sendJson(res,502,{ok:false,error:"Secure checkout could not be started. Please try again or contact info@cbenexus.co.ke."});return true;}
   }
@@ -991,11 +991,11 @@ async function handleApi(req,res,url){
       if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Payment verification is temporarily unavailable."});return true;}
       const reference=String(url.searchParams.get("reference")||"").trim();
       if(!/^CBET-[a-f0-9]{36}$/i.test(reference)){sendJson(res,400,{ok:false,error:"Invalid payment reference."});return true;}
-      const {data:teacher,error}=await supabase.from("global_teachers").select("id,full_name,email,status,payment_status,payment_reference").eq("payment_reference",reference).maybeSingle();if(error)throw error;
+      const {data:teacher,error}=await supabase.from("global_teachers").select("id,full_name,email,status,payment_status,payment_reference,intasend_checkout_id").eq("payment_reference",reference).maybeSingle();if(error)throw error;
       if(!teacher){sendJson(res,404,{ok:false,error:"No application matches this payment reference."});return true;}
       if(teacher.payment_status==="paid"){sendJson(res,200,{ok:true,paid:true,message:"Payment has already been verified. Your application still requires administrator review."});return true;}
-      const invoice=await intasend.getPaymentStatus(reference,"api_ref");
-      if(!intasend.matchesExpectedPayment(invoice,{apiRef:reference,amount:2})||String(invoice?.email||invoice?.customer?.email||"").toLowerCase()!==teacher.email.toLowerCase()){
+      const invoice=await intasend.getPaymentStatus(teacher.intasend_checkout_id);
+      if(!intasend.matchesExpectedPayment(invoice,{apiRef:reference,amount:2})){
         sendJson(res,200,{ok:true,paid:false,status:String(invoice?.state||invoice?.status||"pending"),message:"Payment is not yet verified. Your application will remain unpublished."});return true;
       }
       const {data:updated,error:updateError}=await supabase.from("global_teachers").update({payment_status:"paid",updated_at:new Date().toISOString()}).eq("id",teacher.id).eq("payment_reference",reference).select("id,full_name,status,payment_status").single();if(updateError)throw updateError;
