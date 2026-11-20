@@ -8,6 +8,7 @@ const profiles={
   seoTitle:"Bolivia Education System & Multilingual Schools | CBE Nexus",
   seoDescription:"Explore Bolivia's multilingual education model, Indigenous mother-tongue instruction and Spanish-language learning pathways.",
   seoIntro:"Bolivia's education framework recognises multilingual and intercultural learning. In relevant Indigenous-language communities, early education is intended to begin in the learner's mother tongue, with Spanish introduced as a second language. The language used depends on the community and region, so families should confirm the school's language programme and curriculum locally.",
+  curriculum:"Bolivia’s Law No. 070 establishes a Plurinational Base Curriculum alongside regionalised and diversified curricula that reflect cultural and linguistic contexts. The Ministry of Education is responsible for designing and implementing the base curriculum and supporting regional curricula; subject content therefore combines national learning expectations with locally relevant material.",
   seoTopics:["Bolivia education system","Bolivia multilingual education","Indigenous language instruction Bolivia","Bolivia intercultural curriculum","Spanish as a second language Bolivia"],
   seoFaqs:[
    {question:"Does Bolivia provide education in Indigenous languages?",answer:"Bolivia's multilingual and intercultural framework supports mother-tongue instruction in relevant Indigenous-language communities."},
@@ -18,6 +19,7 @@ const profiles={
   officialSources:[
    {name:"United Nations — Bolivia report on education and indigenous-language instruction",url:"https://digitallibrary.un.org/record/831616/files/A_HRC_31_59_Add.1-RU.pdf",body:"Report describing the Plurinational curriculum and mother-tongue instruction in the first years of schooling."},
    {name:"UNESCO Observatory on the Right to Education — Bolivia laws",url:"https://www.unesco.org/en/right-education/observatory/list?hub=100308&sort=sort_country_asc",body:"Lists Bolivia's Constitution and Education Law No. 070 as core legal sources."}
+   {name:"Bolivia Ministry of Education — Curriculum 2023 guide",url:"https://www.minedu.gob.bo/index.php?Itemid=1200&id=1005%3Aabc-curriculo2023-actualizado&option=com_k2&view=item",body:"Ministry guide to the Plurinational Education System and its curriculum for primary and secondary education."},
   ],verifiedAt:"2026-11-17"
  },
  "bosnia-and-herzegovina":{
@@ -25,6 +27,7 @@ const profiles={
   seoTitle:"Bosnia and Herzegovina Education System | CBE Nexus",
   seoDescription:"Understand Bosnia and Herzegovina's Bosnian, Croatian and Serbian school-language pathways and locally managed education arrangements.",
   seoIntro:"Schools in Bosnia and Herzegovina use Bosnian, Croatian or Serbian according to the constituent community, local education authority and school curriculum. Education arrangements can vary by entity, canton and district, including separate curricula or language streams. Families should confirm the actual language of instruction and curriculum with the school and competent ministry.",
+  curriculum:"Bosnia and Herzegovina does not operate one uniform curriculum administered through a single national education ministry. Curriculum and school-programme responsibilities are distributed among entities, cantons and the Brčko District, so subject plans, textbooks and assessment arrangements can differ by jurisdiction and school. Confirm the applicable curriculum with the competent local education ministry.",
   seoTopics:["Bosnia and Herzegovina education system","Bosnian Croatian Serbian school languages","Bosnia school curriculum","education by canton Bosnia","Bosnia school language pathways"],
   seoFaqs:[
    {question:"Which languages are used in schools in Bosnia and Herzegovina?",answer:"Schools use Bosnian, Croatian or Serbian according to local arrangements and the school curriculum."},
@@ -43,6 +46,7 @@ const profiles={
   seoTitle:"Botswana Education System & School Languages | CBE Nexus",
   seoDescription:"Explore Botswana's school language policy, English and Setswana instruction, local-language initiatives and official education sources.",
   seoIntro:"Botswana's school language arrangements include English and Setswana, with the language used varying by grade and policy implementation. Government reporting describes a traditional transition from Setswana in the first grade to English from the second grade, while selected public schools have introduced local languages in lower-primary classes. The actual programme can vary by school and rollout stage.",
+  curriculum:"Botswana’s school curriculum is set through national education policy and Ministry-approved syllabuses, with primary and secondary programmes and national assessment pathways. Curriculum reform and local-language implementation may change by phase; teachers should use the latest Ministry curriculum documents and school guidance for grade-specific subject content.",
   seoTopics:["Botswana education system","Botswana school language policy","Setswana language instruction","English-medium education Botswana","Botswana local languages in schools"],
   seoFaqs:[
    {question:"Which languages are used in Botswana schools?",answer:"English and Setswana are used in the school system, with arrangements varying by grade and implementation."},
@@ -61,6 +65,7 @@ const profiles={
   seoTitle:"Brazil Education System & School Curriculum | CBE Nexus",
   seoDescription:"Explore Brazil's Portuguese-medium school system, Indigenous mother-tongue education and bilingual intercultural learning provisions.",
   seoIntro:"Portuguese is the normal language of instruction in Brazil's regular elementary education. The Constitution and education law also protect Indigenous communities' use of their mother tongues and their own learning methods, including bilingual and intercultural school education. The language and curriculum offered depend on the community, school and approved programme.",
+  curriculum:"Brazil’s Base Nacional Comum Curricular (BNCC) defines essential learning and competencies across stages of basic education. State and municipal education systems and schools use the BNCC to develop their own curricula and pedagogical proposals, taking local contexts into account; it is a common national reference rather than one identical lesson plan for every school.",
   seoTopics:["Brazil education system","Brazil school curriculum","Portuguese language of instruction Brazil","Indigenous language education Brazil","Brazil bilingual intercultural schools"],
   seoFaqs:[
    {question:"What is the normal language of instruction in Brazilian schools?",answer:"Portuguese is the normal language of instruction in regular elementary education."},
@@ -71,6 +76,7 @@ const profiles={
   officialSources:[
    {name:"Brazil Ministry of Education — National Education Guidelines and Framework Law",url:"https://portal.mec.gov.br/seb/arquivos/pdf/DB.pdf",body:"Article 32(3) establishes Portuguese for regular elementary education and protects Indigenous mother-tongue instruction."},
    {name:"Supreme Federal Court of Brazil — Federal Constitution",url:"https://www.stf.jus.br/arquivo/cms/legislacaoConstituicao/anexo/brazil_federal_constitution.pdf",body:"Article 210(2) provides for Portuguese-medium regular elementary education and Indigenous-language use."}
+   {name:"Brazil Ministry of Education — Base Nacional Comum Curricular",url:"https://basenacionalcomum.mec.gov.br/a-base",body:"Official BNCC portal defining essential learning and guiding state, municipal and school curricula."},
   ],verifiedAt:"2026-11-17"
  },
  "brunei":{
@@ -78,6 +84,7 @@ const profiles={
   seoTitle:"Brunei Education System & School Languages | CBE Nexus",
   seoDescription:"Understand Brunei's Malay-medium education framework, English alongside Malay, Arabic-school pathways and international curricula.",
   seoIntro:"Malay is the main medium of instruction under Brunei's Education Act, which also allows English to be used alongside Malay. Arabic may be used as a medium in Arabic schools, where Malay and English remain compulsory subjects. Expatriate and international schools may follow other approved curricula and language arrangements.",
+  curriculum:"Brunei’s SPN21 (National Education System for the 21st Century) organises primary and secondary learning into broad learning areas and education pathways. The Ministry’s curriculum places emphasis on literacy, numeracy, science, technology, physical education, social studies and national and religious studies, with progression and subject combinations varying by stage and programme.",
   seoTopics:["Brunei education system","Brunei Malay language of instruction","English in Brunei schools","Arabic schools Brunei","Brunei Education Act Chapter 210"],
   seoFaqs:[
    {question:"What is the main medium of instruction in Brunei?",answer:"Malay is the main medium under the Education Act, with English also permitted alongside it."},
@@ -88,6 +95,8 @@ const profiles={
   officialSources:[
    {name:"Attorney General's Chambers of Brunei — Education Act, Chapter 210",url:"https://www.agc.gov.bn/AGC%20Images/LAWS/ACT_PDF/E/CHAPTER%20210.pdf",body:"Section 19 sets Malay as the main medium, allows English alongside it and permits Arabic in Arabic schools."},
    {name:"UNESCO Global Education Profiles — Brunei Darussalam",url:"https://gem-report-education-profiles.unesco.org/node/206.html",body:"UNESCO country profile summarising Malay and English media of instruction and Arabic-school provision."}
+   {name:"Brunei Ministry of Education — Primary Education",url:"https://www.moe.gov.bn/primary-education/",body:"Ministry outline of SPN21 learning areas, common curriculum and primary-school assessment."},
+   {name:"Brunei Ministry of Education — Secondary Education",url:"https://www.moe.gov.bn/secondary-education/",body:"Official description of common lower-secondary curriculum and subsequent general, applied and special pathways."},
   ],verifiedAt:"2026-11-17"
  },
  "bulgaria":{
@@ -95,6 +104,7 @@ const profiles={
   seoTitle:"Bulgaria Education System & School Curriculum | CBE Nexus",
   seoDescription:"Explore Bulgaria's Bulgarian-medium school system, foreign-language programmes and mother-tongue learning provisions.",
   seoIntro:"Bulgarian is the official language of preschool and school education and is the normal teaching language. Approved schools may teach selected subjects in a foreign language under an authorised curriculum, while pupils whose mother tongue is not Bulgarian may study that language under applicable standards and school arrangements. Families should confirm the programme offered by each school.",
+  curriculum:"Bulgaria’s Ministry of Education and Science develops state education standards, framework curricula and subject syllabuses for pre-school and school education. The national framework covers general and specialised pathways, assessment and other cross-cutting areas; pupils’ specific programmes depend on grade, school type and approved profile.",
   seoTopics:["Bulgaria education system","Bulgarian language of instruction","Bulgaria foreign-language schools","Bulgaria school curriculum","mother-tongue education Bulgaria"],
   seoFaqs:[
    {question:"What is the official language of school education in Bulgaria?",answer:"Bulgarian is the official language of preschool and school education."},
@@ -105,6 +115,7 @@ const profiles={
   officialSources:[
    {name:"National Assembly of Bulgaria — Preschool and School Education Act",url:"https://www.parliament.bg/bg/laws/ID/15077",body:"Article 13 identifies Bulgarian as the official language of preschool and school education and sets conditions for foreign-language subject teaching."},
    {name:"Bulgarian Government — Education system in Bulgaria",url:"https://www.nra.bg/wps/portal/egov/en/your%20europe/education-or-traineeship-in-another-ms/education-system-in-another-member-state/%21ut/p/z0/hY3BEsEwGIRfhYNjJsEwHMOhHcaU6YVcTNSvDZqkyd_StxcOhgunnd3Z_ZYKuqVCy0blEpXR8hr8Toz363XE42jCWDybcLYZ9tNkmkTDdDmiCyp-FwJh4FbzVU6FlVgQpU-GbuFYZ68P4luPUIaYSG2wAEdKKA9BPEqE51ydq0pwKjKjEe4YxrlpQPfYU3usNbXrQO2MhRC9ucYRdFJpAF8o-8X3n70___YiDu2Ndx_zzzmQ/",body:"Government guidance confirming Bulgarian as the official language of preschool and school education."}
+   {name:"Bulgaria Ministry of Education and Science — Pre-school and School Education Content Directorate",url:"https://www.mon.bg/en/bg/ministry/specialized-administration/pre-school-and-school-education-content-directorate/",body:"Ministry directorate responsible for state education standards, framework curricula and subject syllabuses."},
   ],verifiedAt:"2026-11-17"
  },
  "burkina-faso":{
@@ -112,6 +123,7 @@ const profiles={
   seoTitle:"Burkina Faso Education System & School Languages | CBE Nexus",
   seoDescription:"Explore Burkina Faso's French and national-language education policy, bilingual programmes and official education references.",
   seoIntro:"Burkina Faso's education policy recognises French and national languages as languages of instruction and assessment. French remains widely used in formal schooling, while national-language instruction is developed through bilingual and multilingual programmes. The language offered depends on the locality, programme and school, so families should check current Ministry guidance.",
+  curriculum:"Burkina Faso’s education law provides for teaching programmes that define the knowledge and competencies to be acquired in each cycle. These programmes form a national framework within which schools and teachers organise instruction, while the language of teaching and assessment may be French or national languages under the applicable regulations.",
   seoTopics:["Burkina Faso education system","Burkina Faso language of instruction","French and national languages in schools","Burkina Faso bilingual education","Burkina Faso curriculum"],
   seoFaqs:[
    {question:"Which languages are recognised for instruction in Burkina Faso?",answer:"The cited education framework recognises French and national languages as languages of instruction and assessment."},
@@ -122,6 +134,7 @@ const profiles={
   officialSources:[
    {name:"UNESCO Global Education Profiles — Burkina Faso",url:"https://gem-report-education-profiles.unesco.org/node/111.html",body:"Cites Education Act No. 013-2007, which identifies French and national languages as languages of instruction and assessment."},
    {name:"UNESCO Correspondence Guide — Burkina Faso education ministries",url:"https://pax.unesco.org/countries/CorrespGuideEN.html",body:"Lists Burkina Faso's Ministry of Basic Education, Literacy and Promotion of National Languages."}
+   {name:"Burkina Faso Ministry of Education — Fundamental texts of the education system",url:"https://www.education.gov.bf/fileadmin/user_upload/cahier_1_textes_fondamentaux_du_systeme_educatif_c.pdf",body:"Education law provisions on cycle-based teaching programmes, competencies and languages of instruction."},
   ],verifiedAt:"2026-11-17"
  },
  "burundi":{
@@ -129,6 +142,7 @@ const profiles={
   seoTitle:"Burundi Education System & School Languages | CBE Nexus",
   seoDescription:"Understand Burundi's grade-based language policy, Kirundi and French instruction, and English and Kiswahili learning.",
   seoIntro:"Burundi's language-of-instruction arrangements change by education cycle and grade. Kirundi is used in the first and second cycles of fundamental education, while French becomes the main teaching language from the third cycle, with specified subjects continuing in Kirundi. English and Kiswahili are introduced at designated stages. Families should check the current school programme and applicable regulations.",
+  curriculum:"Burundi’s fundamental-education curriculum is organised across education cycles and is implemented through national programmes and grade-level learning expectations. The language transition between Kirundi and French, and the introduction of English and Kiswahili, are reflected in the applicable regulations; schools should confirm the current syllabus and subject sequence for each cohort.",
   seoTopics:["Burundi education system","Kirundi language of instruction","French-medium education Burundi","English and Kiswahili in Burundi schools","Burundi education decree 2019"],
   seoFaqs:[
    {question:"Which language is used in the early cycles of fundamental education in Burundi?",answer:"Kirundi is used in the first and second cycles under the cited decree."},
@@ -146,6 +160,7 @@ const profiles={
   seoTitle:"Cabo Verde Education System & School Resources | CBE Nexus",
   seoDescription:"Explore Cabo Verde's Portuguese-language school curriculum, Cape Verdean Creole community language and official education information.",
   seoIntro:"Portuguese is the formal language of schooling, curriculum and assessment in Cabo Verde. Cape Verdean Creole (Kriolu) is widely spoken at home and in communities and may support understanding in classroom interaction, particularly in early learning. Families should check the school's programme for the relationship between formal Portuguese instruction and local-language support.",
+  curriculum:"Cabo Verde’s formal basic-education curriculum covers Years 1–8 and is organised through curriculum plans, study matrices, subject programmes and assessment arrangements. The Ministry publishes guidance and annual school-year orientations; the curriculum was consolidated through a staged basic-education reform and should be checked against the current year’s Ministry guidance.",
   seoTopics:["Cabo Verde education system","Portuguese language of instruction Cabo Verde","Cape Verdean Creole Kriolu","Cabo Verde school curriculum","Cabo Verde Ministry of Education"],
   seoFaqs:[
    {question:"What is the formal language of schooling in Cabo Verde?",answer:"Portuguese is the formal language used in the school curriculum and national assessment."},
@@ -156,6 +171,7 @@ const profiles={
   officialSources:[
    {name:"Government of Cabo Verde — Ministry of Education",url:"https://minedu.gov.cv/",body:"Government ministry responsible for national education policy, school programmes and education administration."},
    {name:"United Nations — National language information for Cabo Verde",url:"https://unstats.un.org/unsd/geoinfo/ungegn/docs/4th-uncsgn-docs/e_conf_74_L3.pdf",body:"UN document identifies Portuguese as the national language and records Kabuverdianu as a language used in the country."}
+   {name:"Cabo Verde Ministry of Education — Educational resources and orientations",url:"https://minedu.gov.cv/recursos_educativosorientacoes/8",body:"Official curriculum plan for formal basic education Years 1–8, subject programmes, study plans and assessment."},
   ],verifiedAt:"2026-11-17"
  },
  "cambodia":{
@@ -163,6 +179,7 @@ const profiles={
   seoTitle:"Cambodia Education System & School Curriculum | CBE Nexus",
   seoDescription:"Explore Cambodia's Khmer-medium public education, Indigenous-language programmes and international school pathways.",
   seoIntro:"Khmer is the official language of teaching and learning in Cambodia's public general-education schools, and private general-education schools must include Khmer in their programmes. In Indigenous and minority communities, the Ministry may determine the language of instruction, and bilingual programmes support selected local languages, particularly in early grades. International schools may use other approved curriculum languages.",
+  curriculum:"Cambodia’s Education Law requires the Ministry to define the fundamental education programme and detailed curriculum frameworks for all education levels. The national general-education curriculum is delivered through grade-level programmes, with Khmer as a core language subject and approved bilingual or multilingual provision in relevant communities.",
   seoTopics:["Cambodia education system","Khmer language of instruction","Cambodia multilingual education","Indigenous-language schools Cambodia","Cambodia Education Law Article 24","Cambodia international schools"],
   seoFaqs:[
    {question:"What is the official language of teaching in Cambodian public schools?",answer:"Khmer is the official language of teaching and learning in public general-education schools."},
@@ -173,6 +190,7 @@ const profiles={
   officialSources:[
    {name:"Cambodia — Education Law, Article 24",url:"https://cdc.gov.kh/wp-content/uploads/2022/04/LAW-ON-EDUCATION_071208-.pdf",body:"Article 24 establishes Khmer as the language of teaching and learning and provides for Ministry-determined minority-language arrangements."},
    {name:"UNESCO Global Education Profiles — Cambodia",url:"https://gem-report-education-profiles.unesco.org/node/78.html",body:"Describes Khmer-medium schooling and multilingual education programmes in Indigenous communities."}
+   {name:"Cambodia — Education Law, Articles 23–24",url:"https://cdc.gov.kh/wp-content/uploads/2022/04/LAW-ON-EDUCATION_071208-.pdf",body:"Requires the Ministry to define the fundamental education programme and curriculum frameworks at all levels."},
   ],verifiedAt:"2026-11-17"
  },
 
