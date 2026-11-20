@@ -13,12 +13,12 @@
    const email=String(emailInput).trim().toLowerCase();
    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))throw new Error("Enter a valid email address.");
    sessionStorage.setItem("cbe_cv_pending",JSON.stringify({html:$("cvPreview").innerHTML,data:d}));
-   $("cvPaymentStatus").textContent="Getting the live KES/USD conversion and preparing Paystack checkout...";
-   const response=await fetch("/api/cv/paystack/checkout",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({packageId:String(d.cvType||"Professional").toLowerCase(),email})});
+   $("cvPaymentStatus").textContent="Getting the live KES/USD conversion and preparing IntaSend checkout...";
+   const response=await fetch("/api/cv/intasend/checkout",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({packageId:String(d.cvType||"Professional").toLowerCase(),email})});
    const result=await response.json().catch(()=>({}));
-   if(!response.ok||!result.ok||!result.authorizationUrl)throw new Error(result.error||"International card checkout could not be started.");
-   $("cvPaymentStatus").textContent="Redirecting to secure Paystack checkout for $"+Number(result.amount).toFixed(2)+" USD...";
-   window.location.assign(result.authorizationUrl);return;
+   if(!response.ok||!result.ok||!result.checkoutUrl)throw new Error(result.error||"International card checkout could not be started.");
+   $("cvPaymentStatus").textContent="Redirecting to secure IntaSend checkout for $"+Number(result.amount).toFixed(2)+" USD...";
+   window.location.assign(result.checkoutUrl);return;
   }
   const amount=d.cvType==="Basic"?200:d.cvType==="Classic"?400:800;
   const phoneInput=prompt("Enter the Safaricom number to receive the M-Pesa STK Push (e.g. 0712345678 or +254712345678):",d.cvPhone||"");
@@ -52,13 +52,13 @@ $("resetCv").addEventListener("click",()=>setTimeout(()=>{$("cvPreview").innerHT
   $("cvPaymentStatus").textContent="Verifying your international card payment securely...";
   let verified=false;
   for(let i=0;i<8;i++){
-   const r=await fetch("/api/cv/paystack/verify?reference="+encodeURIComponent(reference),{credentials:"same-origin",cache:"no-store"});
+   const r=await fetch("/api/cv/intasend/verify?reference="+encodeURIComponent(reference),{credentials:"same-origin",cache:"no-store"});
    const result=await r.json().catch(()=>({}));
    if(r.ok&&result.ok&&result.status==="paid"){verified=true;break}
    if(!r.ok)throw new Error(result.error||"Payment verification failed.");
    await new Promise(resolve=>setTimeout(resolve,2500));
   }
-  if(!verified)throw new Error("Paystack has not confirmed payment yet. Keep this page open and retry verification shortly.");
+  if(!verified)throw new Error("IntaSend has not confirmed payment yet. Keep this page open and retry verification shortly.");
   sessionStorage.removeItem("cbe_cv_pending");
   window.history.replaceState({},"",window.location.pathname);
   await download();$("cvPaymentStatus").textContent="International payment confirmed. Your CV is ready to save as PDF.";
