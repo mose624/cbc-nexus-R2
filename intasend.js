@@ -61,7 +61,7 @@ async function createCheckout({ email, amount, currency = "USD", apiRef, redirec
   return { checkoutId, checkoutUrl, apiRef: reference, amount: value, currency: "USD" };
 }
 
-async function getPaymentStatus(checkoutId) {
+async function getPaymentStatus(checkoutId, identifierType = "checkout_id") {
   const config = getConfig();
   const id = String(checkoutId || "").trim();
   if (!id) throw new Error("An IntaSend checkout ID is required for payment verification.");
@@ -72,7 +72,7 @@ async function getPaymentStatus(checkoutId) {
       "Content-Type": "application/json",
       "Accept": "application/json"
     },
-    body: JSON.stringify({ checkout_id: id }),
+    body: JSON.stringify(identifierType === "invoice_id" ? { invoice_id: id } : { checkout_id: id }),
     signal: AbortSignal.timeout(12000)
   });
   const data = await readJsonResponse(response);
