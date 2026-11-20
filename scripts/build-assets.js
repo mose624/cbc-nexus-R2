@@ -6,6 +6,7 @@ const CleanCSS = require("clean-css");
 const root = path.resolve(__dirname, "..");
 const jsFiles = [
   "app.js",
+  "global-schools.js",
   "admin-bulk-upload.js",
   "admin-subject-stability.js",
   "admin-interactive-questions.js"
