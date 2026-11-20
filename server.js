@@ -1639,28 +1639,27 @@ async function handleApi(req,res,url){
       }
     }catch(error){console.error("IntaSend book checkout error:",error);sendJson(res,502,{ok:false,error:String(error?.message||"International book checkout could not be started.")});return true;}
   }
-  if(req.method==="GET"&&url.pathname==="/api/books/paystack/verify"){
+  if(req.method==="GET"&&url.pathname==="/api/books/intasend/verify"){
     try{
       if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure book payment verification requires Supabase."});return true;}
-      const secret=String(process.env.PAYSTACK_SECRET_KEY||"").trim(),reference=String(url.searchParams.get("reference")||"").trim();
-      if(!secret||!/^CBEB-[a-f0-9]{36}$/i.test(reference)){sendJson(res,400,{ok:false,error:"A valid book payment reference is required."});return true;}
+      const reference=String(url.searchParams.get("reference")||"").trim();
+      if(!/^CBEB-[a-f0-9]{36}$/i.test(reference)){sendJson(res,400,{ok:false,error:"A valid book payment reference is required."});return true;}
       const {data:sale,error:saleError}=await supabase.from("published_book_sales").select("*").eq("payment_reference",reference).maybeSingle();
       if(saleError)throw saleError;if(!sale){sendJson(res,404,{ok:false,error:"The book payment order was not found."});return true;}
       if(!["paid","completed","success"].includes(String(sale.status||"").toLowerCase())){
-        const response=await fetch("https://api.paystack.co/transaction/verify/"+encodeURIComponent(reference),{headers:{"Authorization":"Bearer "+secret,"Accept":"application/json"},signal:AbortSignal.timeout(12000)});
-        const verified=await response.json().catch(()=>({})),tx=verified.data||{};
-        if(!response.ok||!verified.status||String(tx.status||"").toLowerCase()!=="success"){sendJson(res,200,{ok:true,status:"pending"});return true;}
-        if(Number(tx.amount)!==Math.round(Number(sale.amount)*100)||String(tx.currency||"").toUpperCase()!=="USD"||String(tx.reference||"")!==reference||String(tx.customer?.email||"").trim().toLowerCase()!==String(sale.buyer_email||"").toLowerCase()){sendJson(res,400,{ok:false,error:"Verified payment amount, currency, email or reference did not match this book order."});return true;}
-        const sellerAmount=Math.round(Number(sale.amount)*70)/100,platformAmount=Math.round(Number(sale.amount)*30)/100;
-        const {data:updated,error:updateError}=await supabase.from("published_book_sales").update({status:"paid",seller_amount:sellerAmount,platform_amount:platformAmount,paid_at:String(tx.paid_at||new Date().toISOString()),updated_at:new Date().toISOString()}).eq("id",sale.id).select("*").single();
+        if(!sale.intasend_checkout_id){sendJson(res,200,{ok:true,status:"pending"});return true;}
+        const invoice=await intasend.getPaymentStatus(sale.intasend_checkout_id);
+        if(!intasend.matchesExpectedPayment(invoice,{apiRef:reference,amount:Number(sale.amount)})){sendJson(res,200,{ok:true,status:"pending"});return true;}
+        const now=new Date().toISOString(),sellerAmount=Math.round(Number(sale.amount)*70)/100,platformAmount=Math.round(Number(sale.amount)*30)/100;
+        const {data:updated,error:updateError}=await supabase.from("published_book_sales").update({status:"paid",seller_amount:sellerAmount,platform_amount:platformAmount,paid_at:now,updated_at:now}).eq("id",sale.id).neq("status","paid").select("*").maybeSingle();
         if(updateError)throw updateError;
-        sale.status=updated.status;sale.seller_amount=updated.seller_amount;sale.platform_amount=updated.platform_amount;
+        if(updated){sale.status=updated.status;sale.seller_amount=updated.seller_amount;sale.platform_amount=updated.platform_amount;}
       }
       const {data:book,error:bookError}=await supabase.from("published_books").select("id,title,pdf_key,status").eq("id",sale.book_id).maybeSingle();
       if(bookError)throw bookError;if(!book){sendJson(res,404,{ok:false,error:"The purchased book record could not be found. Contact CBE Nexus support."});return true;}
       const downloadUrl=await createDownloadUrl(book.pdf_key,String(book.title||"book").replace(/[^a-z0-9_-]/gi,"-")+".pdf");
       sendJson(res,200,{ok:true,status:"paid",book:{id:book.id,title:book.title},amount:Number(sale.amount),currency:"USD",sellerShare:Number(sale.seller_amount),platformShare:Number(sale.platform_amount),downloadUrl,expiresIn:300});return true;
-    }catch(error){console.error("International book verification error:",error);sendJson(res,500,{ok:false,error:"The book payment could not be verified securely."});return true;}
+    }catch(error){console.error("IntaSend book verification error:",error);sendJson(res,500,{ok:false,error:"The book payment could not be verified securely."});return true;}
   }
   if(req.method==="GET"&&url.pathname==="/api/seller/books"){
     const username=verifySellerSession(req);if(!username){sendJson(res,401,{ok:false,error:"Please sign in to your seller account."});return true;}
