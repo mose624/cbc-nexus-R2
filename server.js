@@ -1559,6 +1559,57 @@ async function handleApi(req,res,url){
   if(req.method==="POST"&&url.pathname==="/api/admin/logout"){res.setHeader("Set-Cookie","__Host-cbe_admin_session=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0");sendJson(res,200,{ok:true});return true;}
   if(req.method==="POST"&&url.pathname==="/api/seller/account"){const p=JSON.parse((await readBody(req))||"{}"),u=String(p.username||"").trim().toLowerCase(),pw=String(p.password||""),name=String(p.name||"").trim(),phone=String(p.phone||"").trim();if(!u||pw.length<8||!name||!phone){sendJson(res,400,{ok:false,error:"Name, phone, username and a password of at least 8 characters are required."});return true;}if(supabaseConfigured){try{const {data:existing,error:existingError}=await supabase.from("sellers").select("id,username").eq("username",u).maybeSingle();if(existingError)throw existingError;if(existing){sendJson(res,409,{ok:false,error:"This seller username is already registered."});return true;}const passwordHash=await hashPassword(pw);const {data:user,error:userError}=await supabase.from("users").insert({name,full_name:name,phone,role:"seller",status:"active"}).select("id").single();if(userError)throw userError;const {data:seller,error:sellerError}=await supabase.from("sellers").insert({user_id:user.id,name,phone,username:u,password_hash:passwordHash,status:"pending"}).select("id,phone,username,status").single();if(sellerError)throw sellerError;sendJson(res,201,{ok:true,account:{...seller,name},storage:"supabase"});return true;}catch(error){console.error("Supabase seller registration error:",error);sendJson(res,500,{ok:false,error:"Seller account could not be created in Supabase."});return true;}}const ac=await readJsonStore("seller-accounts.json");if(ac.some(x=>x.username===u)){sendJson(res,409,{ok:false,error:"This seller username is already registered."});return true;}const a={id:"seller-account-"+Date.now(),name,phone,username:u,passwordHash:await hashPassword(pw),status:"pending",createdAt:new Date().toISOString()};await appendJsonStore("seller-accounts.json",a);sendJson(res,201,{ok:true,account:{id:a.id,name,phone,username:u,status:"pending"},storage:"local"});return true;}
   if(req.method==="POST"&&url.pathname==="/api/seller/login"){const p=JSON.parse((await readBody(req))||"{}"),u=String(p.username||"").trim().toLowerCase();let a=null;if(supabaseConfigured){try{const {data,error}=await supabase.from("sellers").select("id,user_id,phone,username,password_hash,status").eq("username",u).maybeSingle();if(error)throw error;a=data;}catch(error){console.error("Supabase seller login lookup error:",error);sendJson(res,500,{ok:false,error:"Seller account could not be checked in Supabase."});return true;}}else{const ac=await readJsonStore("seller-accounts.json");a=ac.find(x=>x.username===u);}if(!a||!(await verifyPassword(String(p.password||""),a.password_hash||a.passwordHash||""))){sendJson(res,401,{ok:false,error:"Invalid seller username or password."});return true;}if(!["approved","pending"].includes(String(a.status||"").toLowerCase())){sendJson(res,403,{ok:false,error:"This seller account is not active. Contact CBE Nexus support."});return true;}res.setHeader("Set-Cookie",sellerCookie(createSellerSession(u)));sendJson(res,200,{ok:true,account:{id:a.id,name:a.name||"Seller",phone:a.phone,username:a.username,status:a.status},storage:supabaseConfigured?"supabase":"local"});return true;}
+  if(req.method==="GET"&&url.pathname==="/api/bookshop"){
+    if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"The public bookshop is temporarily unavailable."});return true;}
+    try{
+      const {data:books,error}=await supabase.from("published_books").select("id,title,summary,author_name,country,curriculum,subject,level,price,currency,cover_key,cover_mime,isbn").eq("status","published").order("created_at",{ascending:false}).limit(200);
+      if(error)throw error;
+      const items=await Promise.all((books||[]).map(async b=>({...b,cover_url:await createInlineUrl(b.cover_key,String(b.title||"book-cover").replace(/[^a-z0-9_-]/gi,"-")+".jpg",b.cover_mime||"image/jpeg")})));
+      sendJson(res,200,{ok:true,books:items});return true;
+    }catch(error){console.error("Public bookshop catalogue error:",error);sendJson(res,500,{ok:false,error:"The published book catalogue could not be loaded."});return true;}
+  }
+  if(req.method==="POST"&&url.pathname==="/api/books/paystack/checkout"){
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure book checkout requires Supabase."});return true;}
+      const secret=String(process.env.PAYSTACK_SECRET_KEY||"").trim();if(!secret){sendJson(res,503,{ok:false,error:"Paystack is not configured. Contact CBE Nexus support."});return true;}
+      const p=JSON.parse((await readBody(req))||"{}"),bookId=String(p.bookId||"").trim(),email=String(p.email||"").trim().toLowerCase();
+      if(!bookId||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){sendJson(res,400,{ok:false,error:"Choose a book and enter a valid email address."});return true;}
+      const {data:book,error:bookError}=await supabase.from("published_books").select("id,title,seller_id,price,currency,status").eq("id",bookId).eq("status","published").maybeSingle();
+      if(bookError)throw bookError;if(!book){sendJson(res,404,{ok:false,error:"This book is not currently published for sale."});return true;}
+      const quote=await quoteInternationalAmount(Number(book.price),String(book.currency||"KES"));
+      const reference="CBEB-"+crypto.randomBytes(18).toString("hex");
+      const origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.com").replace(/\/$/,"");
+      const response=await fetch("https://api.paystack.co/transaction/initialize",{method:"POST",headers:{"Authorization":"Bearer "+secret,"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({email,amount:Math.round(quote.amount*100),currency:"USD",reference,callback_url:origin+"/bookshop.html?book_payment_reference="+encodeURIComponent(reference),metadata:{product:"cbe_nexus_published_book",book_id:book.id,book_title:String(book.title||"").slice(0,180),source_amount:quote.sourceAmount,source_currency:quote.sourceCurrency,exchange_rate:quote.exchangeRate}})});
+      const result=await response.json().catch(()=>({}));
+      if(!response.ok||!result.status||!result.data?.authorization_url)throw new Error(String(result.message||"Paystack could not initialize the book payment."));
+      const {data:sale,error:saleError}=await supabase.from("published_book_sales").insert({book_id:book.id,seller_id:book.seller_id,buyer_email:email,payment_reference:reference,amount:quote.amount,currency:"USD",source_amount:quote.sourceAmount,source_currency:quote.sourceCurrency,exchange_rate:quote.exchangeRate,status:"pending"}).select("id").single();
+      if(saleError)throw saleError;
+      sendJson(res,200,{ok:true,authorizationUrl:result.data.authorization_url,reference,amount:quote.amount,currency:"USD",sourceAmount:quote.sourceAmount,sourceCurrency:quote.sourceCurrency,exchangeRate:quote.exchangeRate,saleId:sale.id});return true;
+    }catch(error){console.error("International book checkout error:",error);sendJson(res,502,{ok:false,error:String(error?.message||"International book checkout could not be started.")});return true;}
+  }
+  if(req.method==="GET"&&url.pathname==="/api/books/paystack/verify"){
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure book payment verification requires Supabase."});return true;}
+      const secret=String(process.env.PAYSTACK_SECRET_KEY||"").trim(),reference=String(url.searchParams.get("reference")||"").trim();
+      if(!secret||!/^CBEB-[a-f0-9]{36}$/i.test(reference)){sendJson(res,400,{ok:false,error:"A valid book payment reference is required."});return true;}
+      const {data:sale,error:saleError}=await supabase.from("published_book_sales").select("*").eq("payment_reference",reference).maybeSingle();
+      if(saleError)throw saleError;if(!sale){sendJson(res,404,{ok:false,error:"The book payment order was not found."});return true;}
+      if(!["paid","completed","success"].includes(String(sale.status||"").toLowerCase())){
+        const response=await fetch("https://api.paystack.co/transaction/verify/"+encodeURIComponent(reference),{headers:{"Authorization":"Bearer "+secret,"Accept":"application/json"},signal:AbortSignal.timeout(12000)});
+        const verified=await response.json().catch(()=>({})),tx=verified.data||{};
+        if(!response.ok||!verified.status||String(tx.status||"").toLowerCase()!=="success"){sendJson(res,200,{ok:true,status:"pending"});return true;}
+        if(Number(tx.amount)!==Math.round(Number(sale.amount)*100)||String(tx.currency||"").toUpperCase()!=="USD"||String(tx.reference||"")!==reference||String(tx.customer?.email||"").trim().toLowerCase()!==String(sale.buyer_email||"").toLowerCase()){sendJson(res,400,{ok:false,error:"Verified payment amount, currency, email or reference did not match this book order."});return true;}
+        const sellerAmount=Math.round(Number(sale.amount)*70)/100,platformAmount=Math.round(Number(sale.amount)*30)/100;
+        const {data:updated,error:updateError}=await supabase.from("published_book_sales").update({status:"paid",seller_amount:sellerAmount,platform_amount:platformAmount,paid_at:String(tx.paid_at||new Date().toISOString()),updated_at:new Date().toISOString()}).eq("id",sale.id).select("*").single();
+        if(updateError)throw updateError;
+        sale.status=updated.status;sale.seller_amount=updated.seller_amount;sale.platform_amount=updated.platform_amount;
+      }
+      const {data:book,error:bookError}=await supabase.from("published_books").select("id,title,pdf_key,status").eq("id",sale.book_id).maybeSingle();
+      if(bookError)throw bookError;if(!book||book.status!=="published"){sendJson(res,409,{ok:false,error:"Payment is recorded, but the book is temporarily unavailable. Contact CBE Nexus support."});return true;}
+      const downloadUrl=await createDownloadUrl(book.pdf_key,String(book.title||"book").replace(/[^a-z0-9_-]/gi,"-")+".pdf");
+      sendJson(res,200,{ok:true,status:"paid",book:{id:book.id,title:book.title},amount:Number(sale.amount),currency:"USD",sellerShare:Number(sale.seller_amount),platformShare:Number(sale.platform_amount),downloadUrl,expiresIn:300});return true;
+    }catch(error){console.error("International book verification error:",error);sendJson(res,500,{ok:false,error:"The book payment could not be verified securely."});return true;}
+  }
   if(req.method==="GET"&&url.pathname==="/api/seller/books"){
     const username=verifySellerSession(req);if(!username){sendJson(res,401,{ok:false,error:"Please sign in to your seller account."});return true;}
     if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Book publishing requires the permanent Supabase database."});return true;}
