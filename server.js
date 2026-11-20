@@ -709,6 +709,53 @@ function startExpleeHotLeadSync(){
 
 
 async function handleApi(req,res,url){
+  if(req.method==="POST"&&url.pathname==="/api/intasend/webhook"){
+    try{
+      const payload=JSON.parse((await readBody(req))||"{}");
+      if(String(payload.topic||"")!=="collection_event"||!intasend.challengeMatches(payload.challenge)){
+        sendJson(res,401,{ok:false,error:"Invalid IntaSend webhook challenge or event topic."});return true;
+      }
+      const apiRef=String(payload.api_ref||"").trim();
+      if(!apiRef){sendJson(res,400,{ok:false,error:"Payment reference is missing."});return true;}
+      const eventState=String(payload.state||"").toUpperCase();
+      if(eventState!=="COMPLETE"){sendJson(res,200,{ok:true,ignored:true,state:eventState});return true;}
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Payment database is unavailable."});return true;}
+      const [purchaseResult,saleResult,teacherResult]=await Promise.all([
+        supabase.from("purchases").select("*").eq("payment_reference",apiRef).maybeSingle(),
+        supabase.from("published_book_sales").select("*").eq("payment_reference",apiRef).maybeSingle(),
+        supabase.from("global_teachers").select("*").eq("payment_reference",apiRef).maybeSingle()
+      ]);
+      if(purchaseResult.error)throw purchaseResult.error;
+      if(saleResult.error)throw saleResult.error;
+      if(teacherResult.error)throw teacherResult.error;
+      const purchase=purchaseResult.data,sale=saleResult.data,teacher=teacherResult.data;
+      const target=purchase||sale||teacher;
+      if(!target){sendJson(res,404,{ok:false,error:"Unknown CBE Nexus payment reference."});return true;}
+      const checkoutId=String(payload.invoice_id||"").trim();
+      if(!checkoutId){sendJson(res,400,{ok:false,error:"IntaSend invoice ID is missing."});return true;}
+      const invoice=await intasend.getPaymentStatus(checkoutId);
+      const expected={apiRef,amount:Number(target.amount??target.payment_amount??2)};
+      if(!intasend.matchesExpectedPayment(invoice,expected)){sendJson(res,400,{ok:false,error:"IntaSend payment details did not match the order."});return true;}
+      const now=new Date().toISOString();
+      if(purchase){
+        if(!["paid","completed","success"].includes(String(purchase.status||"").toLowerCase())){
+          const {data:updated,error}=await supabase.from("purchases").update({status:"paid",verified_at:now,result_code:0,result_desc:"IntaSend payment verified",mpesa_receipt:checkoutId,transaction_time:now}).eq("id",purchase.id).select("*").single();
+          if(error)throw error;
+          await recordSellerEarning(updated);
+        }
+      }else if(sale){
+        if(!["paid","completed","success"].includes(String(sale.status||"").toLowerCase())){
+          const {error}=await supabase.from("published_book_sales").update({status:"paid",seller_amount:Math.round(Number(sale.amount)*70)/100,platform_amount:Math.round(Number(sale.amount)*30)/100,paid_at:now,updated_at:now}).eq("id",sale.id);
+          if(error)throw error;
+        }
+      }else if(teacher.payment_status!=="paid"){
+        const {error}=await supabase.from("global_teachers").update({payment_status:"paid",updated_at:now}).eq("id",teacher.id).eq("payment_reference",apiRef);
+        if(error)throw error;
+      }
+      sendJson(res,200,{ok:true,accepted:true});return true;
+    }catch(error){console.error("IntaSend webhook processing failed:",error);sendJson(res,500,{ok:false,error:"Webhook could not be processed."});return true;}
+  }
+
   if((req.method==="GET"||req.method==="POST")&&url.pathname==="/api/admin/explee-hot-leads"){
     try{
       if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Administrator sign-in required."});return true;}
