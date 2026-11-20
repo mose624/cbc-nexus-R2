@@ -176,8 +176,6 @@ async function startDirectMpesaPurchase(resource,b){
   }
   const phone=window.prompt("Enter the M-Pesa phone number to receive the STK Push (e.g. 0712345678):","");
   if(!phone)return;
-  const id=String(resource.id||resource._id||resource.key||"").trim();
-  if(!id)throw new Error("This resource has no valid ID.");
   const start=await fetch("/api/mpesa/stk-push",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({customerPhone:phone,resourceId:id})});
   const data=await start.json().catch(()=>({}));
   if(!start.ok||!data.ok){const diagnostic=data.diagnosticCode?` [${data.diagnosticCode}]`:"";throw new Error((data.error||"M-Pesa STK Push could not be started.")+diagnostic);}
