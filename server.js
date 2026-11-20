@@ -2095,7 +2095,7 @@ async function handleApi(req,res,url){
     return true;
   }
   if(req.method==="GET"&&url.pathname==="/api/r2/file"){
-    const key=String(url.searchParams.get("key")||"").trim(),resourceId=String(url.searchParams.get("resourceId")||"").trim(),phone=normalizeMpesaPhone(url.searchParams.get("phone")||"");
+    const key=String(url.searchParams.get("key")||"").trim(),resourceId=String(url.searchParams.get("resourceId")||"").trim(),email=String(url.searchParams.get("email")||"").trim().toLowerCase(),paymentReference=String(url.searchParams.get("paymentReference")||"").trim(),phone=normalizeMpesaPhone(url.searchParams.get("phone")||""),customerIdentity=email&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)&&/^CBEA-[a-f0-9]{36}$/i.test(paymentReference)?"paystack:"+email:phone;
     if(!resourceId){sendJson(res,400,{ok:false,error:"Resource ID is required."});return true;}
     let resource=null;
     try{
@@ -2110,12 +2110,12 @@ async function handleApi(req,res,url){
         res.writeHead(302,{"Location":target,"Cache-Control":"no-store","Referrer-Policy":"no-referrer"});
         res.end();return true;
       }
-      if(!key||!phone){sendJson(res,400,{ok:false,error:"A resource, phone number and protected file are required for paid downloads."});return true;}
+      if(!key||!customerIdentity){sendJson(res,400,{ok:false,error:"A resource, phone number or verified international email and payment reference are required for paid downloads."});return true;}
       const protectedResource=await findResourceForPayment(resourceId);
       const resourcePriceForProtectedResource=resourcePrice(protectedResource);
       let validPayments=[];
       if(supabaseConfigured){
-        const {data:payments,error:paymentError}=await supabase.from("purchases").select("*").eq("customer_phone",phone).in("status",["paid","completed","success"]).limit(100);
+        if(email){const {data:referencePurchase,error:referenceError}=await supabase.from("purchases").select("id").eq("customer_phone",customerIdentity).eq("payment_reference",paymentReference).in("status",["paid","completed","success"]).maybeSingle();if(referenceError)throw referenceError;if(!referencePurchase){sendJson(res,403,{ok:false,error:"The international payment reference does not match a verified purchase for this email."});return true;}}\n        const {data:payments,error:paymentError}=await supabase.from("purchases").select("*").eq("customer_phone",customerIdentity).in("status",["paid","completed","success"]).limit(100);
         if(paymentError)throw paymentError;
         const now=Date.now(),gradeNumber=Number(String(protectedResource?.grade||"").match(/(?:Grade\s*)?(\d+)/i)?.[1]||0);
         validPayments=(payments||[]).filter(p=>{
