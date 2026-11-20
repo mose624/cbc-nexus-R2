@@ -118,6 +118,18 @@ function renderCountry(){
  const slug=routeSlug();if(!slug)return;
  const c=countries.find(x=>x.slug===slug);if(!c){text($("gsTitle"),"Country not found");text($("gsIntro"),"This country slug is not in the current country registry. Return to the directory and select a listed country.");return;}
  const d=details[slug]||{};
+ // Country SEO batches store authority citations as officialSources. Normalize them
+ // into the existing sourceLinks renderer so country-specific references are visible.
+ if(Array.isArray(d.officialSources)&&d.officialSources.length){
+  const merged=[...(Array.isArray(d.sources)?d.sources:[])];
+  const known=new Set(merged.map(item=>item&&item.url).filter(Boolean));
+  d.officialSources.forEach(item=>{
+   if(!item||!item.url||known.has(item.url))return;
+   merged.push({name:item.name||"Official education source",url:item.url,description:item.body||""});
+   known.add(item.url);
+  });
+  d.sources=merged;
+ }
  // Country data is enriched in later, non-blocking script batches. Remove the previous
  // dashboard instance before the final refresh so late enrichment never duplicates UI.
  const priorLearningHub=document.getElementById("country-learning-hub");if(priorLearningHub)priorLearningHub.remove();
