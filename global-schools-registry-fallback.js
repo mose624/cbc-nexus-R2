@@ -13,7 +13,8 @@ const entries=rows.split("\n").map(line=>{
 });
 
 const current=window.CBE_GLOBAL_COUNTRIES;
-if(!Array.isArray(current)||entries.some(country=>!current.some(c=>String(c&&c.slug||"").toLowerCase()===country.slug))){
+const needsFallback=!Array.isArray(current)||entries.some(country=>!current.some(c=>String(c&&c.slug||"").toLowerCase()===country.slug));
+if(needsFallback){
  const merged=Array.isArray(current)?current.slice():[];
  entries.forEach(country=>{
   if(!merged.some(c=>String(c&&c.slug||"").toLowerCase()===country.slug))merged.push(country);
@@ -23,8 +24,11 @@ if(!Array.isArray(current)||entries.some(country=>!current.some(c=>String(c&&c.s
 if(!window.CBE_GLOBAL_COUNTRY_DATA||typeof window.CBE_GLOBAL_COUNTRY_DATA!=="object"){
  window.CBE_GLOBAL_COUNTRY_DATA={};
 }
-// Render a visible emergency directory immediately. The full renderer replaces these
-// simple links when it loads; if it fails, visitors still get every country link.
+// Render emergency links only when the primary registry is incomplete.
+// The HTML already contains all 196 static country links, and the full renderer
+// builds the enhanced cards. Skipping this intermediate rebuild avoids a second
+// 196-card DOM replacement on normal page loads while retaining the fallback.
+if(needsFallback){
 const grid=document.getElementById("countryGrid");
 if(grid){
  const fragment=document.createDocumentFragment();
@@ -40,6 +44,7 @@ if(grid){
  grid.replaceChildren(fragment);
  const count=document.getElementById("countryCount");
  if(count)count.textContent=entries.length+" countries shown · "+entries.length+" country routes available";
+}
 }
 window.CBE_GLOBAL_REGISTRY_FALLBACK=true;
 })();
