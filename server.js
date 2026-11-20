@@ -1733,6 +1733,52 @@ async function handleApi(req,res,url){
       sendJson(res,200,{ok:true,status:"paid",amount:Number(updated.amount||0),currency:"USD"});return true;
     }catch(error){console.error("CV Paystack verification error:",error);sendJson(res,500,{ok:false,error:"CV payment could not be verified securely."});return true;}
   }
+  if(req.method==="POST"&&url.pathname==="/api/access/paystack/checkout"){
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure international access checkout requires Supabase."});return true;}
+      const secret=String(process.env.PAYSTACK_SECRET_KEY||"").trim();
+      if(!secret){sendJson(res,503,{ok:false,error:"Paystack is not configured. Contact CBE Nexus support."});return true;}
+      const p=JSON.parse((await readBody(req))||"{}");
+      const resourceId=String(p.resourceId||"").trim();
+      const email=String(p.email||"").trim().toLowerCase();
+      const validPlan=/^subscription:(month|6months|year)$/.test(resourceId);
+      const validGrade=/^grade-package:[1-9]$/.test(resourceId);
+      if((!validPlan&&!validGrade)||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+        sendJson(res,400,{ok:false,error:"Choose a valid access plan or grade package and enter a valid email address."});return true;
+      }
+      const sourceAmount=validGrade?50:({"subscription:month":300,"subscription:6months":700,"subscription:year":1200})[resourceId];
+      let quote;
+      try{quote=await quoteInternationalAmount(sourceAmount,"KES");}
+      catch(error){sendJson(res,400,{ok:false,error:String(error?.message||"Live KES/USD conversion is unavailable.")});return true;}
+      const reference="CBEA-"+crypto.randomBytes(18).toString("hex");
+      const origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.com").replace(/\/$/,"");
+      const response=await fetch("https://api.paystack.co/transaction/initialize",{method:"POST",headers:{"Authorization":"Bearer "+secret,"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({email,amount:Math.round(quote.amount*100),currency:"USD",reference,callback_url:origin+"/subscriptions.html?access_payment_reference="+encodeURIComponent(reference),metadata:{product:"cbe_nexus_resource_access",resource_id:resourceId,source_amount:quote.sourceAmount,source_currency:"KES",kes_usd_rate:quote.exchangeRate}})});
+      const result=await response.json().catch(()=>({}));
+      if(!response.ok||!result.status||!result.data?.authorization_url)throw new Error(String(result.message||"Paystack could not initialize this USD payment."));
+      const purchase=await savePayment({resource_id:resourceId,customer_phone:"paystack:"+email,amount:quote.amount,currency:"USD",payment_provider:"paystack",status:"pending",payment_reference:reference,checkout_request_id:"PAYSTACK-"+reference,merchant_request_id:"",result_code:null,result_desc:"Access plan checkout; source KSh "+quote.sourceAmount+"; KES/USD rate "+quote.exchangeRate,email,mpesa_receipt:null,transaction_time:null});
+      sendJson(res,200,{ok:true,authorizationUrl:result.data.authorization_url,reference,amount:quote.amount,currency:"USD",purchaseId:purchase.id,sourceAmount:quote.sourceAmount,exchangeRate:quote.exchangeRate});return true;
+    }catch(error){console.error("International access checkout error:",error);sendJson(res,502,{ok:false,error:String(error?.message||"International access checkout could not be started.")});return true;}
+  }
+  if(req.method==="GET"&&url.pathname==="/api/access/paystack/verify"){
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure payment verification requires Supabase."});return true;}
+      const secret=String(process.env.PAYSTACK_SECRET_KEY||"").trim();
+      const reference=String(url.searchParams.get("reference")||"").trim();
+      if(!secret||!/^CBEA-[a-f0-9]{36}$/i.test(reference)){sendJson(res,400,{ok:false,error:"A valid access payment reference is required."});return true;}
+      const {data:purchase,error}=await supabase.from("purchases").select("*").eq("payment_reference",reference).maybeSingle();
+      if(error)throw error;
+      if(!purchase||String(purchase.payment_provider||"").toLowerCase()!=="paystack"||!/^subscription:(month|6months|year)$|^grade-package:[1-9]$/.test(String(purchase.resource_id||""))){sendJson(res,404,{ok:false,error:"The access payment order was not found."});return true;}
+      if(["paid","completed","success"].includes(String(purchase.status||"").toLowerCase())){sendJson(res,200,{ok:true,status:"paid",resourceId:purchase.resource_id,amount:Number(purchase.amount||0),currency:"USD"});return true;}
+      const response=await fetch("https://api.paystack.co/transaction/verify/"+encodeURIComponent(reference),{headers:{"Authorization":"Bearer "+secret,"Accept":"application/json"},signal:AbortSignal.timeout(12000)});
+      const verified=await response.json().catch(()=>({}));
+      const tx=verified.data||{};
+      if(!response.ok||!verified.status||String(tx.status||"").toLowerCase()!=="success"){sendJson(res,200,{ok:true,status:"pending"});return true;}
+      if(Number(tx.amount)!==Math.round(Number(purchase.amount||0)*100)||String(tx.currency||"").toUpperCase()!=="USD"||String(tx.reference||"")!==reference){sendJson(res,400,{ok:false,error:"Verified payment amount, currency or reference did not match this order."});return true;}
+      const {data:updated,error:updateError}=await supabase.from("purchases").update({status:"paid",verified_at:new Date().toISOString(),result_code:0,result_desc:String(purchase.result_desc||"Access plan")+"; Paystack payment verified",mpesa_receipt:reference,transaction_time:String(tx.paid_at||"")}).eq("id",purchase.id).select("*").single();
+      if(updateError)throw updateError;
+      sendJson(res,200,{ok:true,status:"paid",resourceId:updated.resource_id,amount:Number(updated.amount||0),currency:"USD"});return true;
+    }catch(error){console.error("International access verification error:",error);sendJson(res,500,{ok:false,error:"International payment could not be verified securely."});return true;}
+  }
   if(req.method==="POST"&&url.pathname==="/api/mpesa/stk-push"){
     const p=JSON.parse((await readBody(req))||"{}");
     const phone=normalizeMpesaPhone(p.customerPhone||p.phone||"");
@@ -1854,14 +1900,17 @@ async function handleApi(req,res,url){
   if(req.method==="POST"&&url.pathname==="/api/r2/project-upload-url"){const p=JSON.parse((await readBody(req))||"{}");if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required for project uploads."});return true;}if(!p.grade||!p.subject){sendJson(res,400,{ok:false,error:"Project grade and subject are required."});return true;}sendJson(res,200,{ok:true,...await createUploadUrl({...p,type:"CBC Projects"})});return true;}
   if(req.method==="POST"&&url.pathname==="/api/download-approval/request"){
     const p=JSON.parse((await readBody(req))||"{}");
-    const resourceId=String(p.resourceId||"").trim(), phone=normalizeMpesaPhone(p.customerPhone||p.phone||"");
-    if(!resourceId||!phone){sendJson(res,400,{ok:false,error:"Resource and valid customer phone are required."});return true;}
+    const resourceId=String(p.resourceId||"").trim();
+    const email=String(p.email||"").trim().toLowerCase();
+    const requestedReference=String(p.paymentReference||p.checkoutRequestID||"").trim();
+    const phone=normalizeMpesaPhone(p.customerPhone||p.phone||"");
+    const customerIdentity=email&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)&&requestedReference?"paystack:"+email:phone;
+    if(!resourceId||!customerIdentity){sendJson(res,400,{ok:false,error:"Resource and a valid phone number, or the purchaser email plus payment reference, are required."});return true;}
     if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure download approvals require Supabase payment verification."});return true;}
     try{
-      const requestedReference=String(p.paymentReference||p.checkoutRequestID||"").trim();
       const resource=await findResourceForPayment(resourceId);
       if(!resource||String(resource.status||"approved").toLowerCase()!=="approved"){sendJson(res,404,{ok:false,error:"The selected resource is not available."});return true;}
-      const {data:entitlements,error:entitlementError}=await supabase.from("purchases").select("*").eq("customer_phone",phone).in("status",["paid","completed","success"]).in("resource_id",["subscription:month","subscription:6months","subscription:year","grade-package:1","grade-package:2","grade-package:3","grade-package:4","grade-package:5","grade-package:6","grade-package:7","grade-package:8","grade-package:9"]).limit(100);
+      const {data:entitlements,error:entitlementError}=await supabase.from("purchases").select("*").eq("customer_phone",customerIdentity).in("status",["paid","completed","success"]).in("resource_id",["subscription:month","subscription:6months","subscription:year","grade-package:1","grade-package:2","grade-package:3","grade-package:4","grade-package:5","grade-package:6","grade-package:7","grade-package:8","grade-package:9"]).limit(100);
       if(entitlementError)throw entitlementError;
       const now=Date.now();
       const gradeNumber=Number(String(resource.grade||"").match(/(?:Grade\s*)?(\d+)/i)?.[1]||0);
@@ -1879,10 +1928,10 @@ async function handleApi(req,res,url){
         sendJson(res,201,{ok:true,approval:data,payment:{status:"paid",receipt:activeEntitlement.mpesa_receipt||null},accessPlan:activeEntitlement.resource_id,storage:"supabase"});return true;
       }
       let payment=null;
-      const {data:payments,error:paymentError}=await supabase.from("purchases").select("*").eq("resource_id",resourceId).eq("customer_phone",phone).in("status",["paid","completed","success"]).limit(1);
+      const {data:payments,error:paymentError}=await supabase.from("purchases").select("*").eq("resource_id",resourceId).eq("customer_phone",customerIdentity).in("status",["paid","completed","success"]).limit(1);
       if(paymentError)throw paymentError;
       payment=payments?.[0]||null;
-      if(!payment&&requestedReference){const {data:byRef,error:refError}=await supabase.from("purchases").select("*").eq("checkout_request_id",requestedReference).eq("resource_id",resourceId).eq("customer_phone",phone).maybeSingle();if(refError)throw refError;payment=byRef;}
+      if(!payment&&requestedReference){const {data:byRef,error:refError}=await supabase.from("purchases").select("*").eq("payment_reference",requestedReference).eq("resource_id",resourceId).eq("customer_phone",customerIdentity).maybeSingle();if(refError)throw refError;payment=byRef;}
       if(!payment){sendJson(res,402,{ok:false,error:"No verified M-Pesa payment was found for this resource and phone number."});return true;}
       if(["pending","failed","cancelled"].includes(String(payment.status||"").toLowerCase())){try{payment=await verifyMpesaPaymentByQuery(payment.checkout_request_id)||payment;}catch(error){console.warn("Payment access reconciliation failed:",error.message||error);}}
       if(!["paid","completed","success"].includes(String(payment.status||"").toLowerCase())){sendJson(res,402,{ok:false,error:"Your M-Pesa payment has not been verified yet."});return true;}
