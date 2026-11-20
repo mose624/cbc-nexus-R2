@@ -103,6 +103,7 @@ const profiles={
   seoTitle:"Algeria Education System, Arabic & Tamazight School Languages | CBE Nexus",
   seoDescription:"Understand Algeria's school language framework, Arabic-medium instruction, Tamazight provision and official national education legislation.",
   seoIntro:"Algeria's National Education Orientation Law identifies Arabic as the language of instruction and provides for Tamazight language teaching. French and English are taught as foreign languages and should not be confused with the general statutory medium of instruction. The availability and extent of Tamazight provision can vary by region and school, so learners should consult current ministry guidance and local school information.",
+  curriculum:"Algeria’s national school curriculum is set within the National Education Orientation Law and Ministry of National Education programmes. Curriculum implementation, subject sequences and Tamazight provision should be checked against current ministry syllabuses and the learner’s school level.",
   seoTopics:["Algeria education system","Arabic language of instruction Algeria","Tamazight education","Algeria National Education Orientation Law","Algeria school curriculum","Algeria foreign language education"],
   seoFaqs:[
    {question:"What is the general language of instruction in Algeria's education system?",answer:"The National Education Orientation Law identifies Arabic as the language of instruction. Consult current national and local guidance for implementation details."},
@@ -121,6 +122,7 @@ const profiles={
   seoTitle:"Angola Education System, Portuguese & National Languages | CBE Nexus",
   seoDescription:"Explore Angola's education-language framework, Portuguese-medium schooling, national-language provisions and the Basic Law of Education.",
   seoIntro:"Angola's Basic Law of the Education and Teaching System establishes Portuguese as the general language of instruction while providing for the expansion and use of Angolan national languages and sign language, subject to implementing rules. The practical availability of bilingual or national-language provision depends on current policy and local delivery. Families should confirm the language used by the individual school.",
+  curriculum:"Angola’s national curriculum is governed by the Basic Law of the Education and Teaching System (Law 32/20), covering general, technical-professional and higher education pathways. Subject programmes and grade-level requirements should be checked against current Ministry guidance.",
   seoTopics:["Angola education system","Portuguese language of instruction Angola","Angolan national languages in education","Angola Basic Law of Education","Angola bilingual education","Angola school resources"],
   seoFaqs:[
    {question:"What is the general language of instruction in Angola?",answer:"Law 32/20 identifies Portuguese as the general teaching language in the education system."},
@@ -139,6 +141,7 @@ const profiles={
   seoTitle:"Antigua and Barbuda Education System & School Resources | CBE Nexus",
   seoDescription:"Explore Antigua and Barbuda's English-medium school system, education ministry information and language learning pathways.",
   seoIntro:"English is the principal teaching language in mainstream public education in Antigua and Barbuda. Spanish and French are taught as additional languages, while Antiguan Creole is widely used in everyday communication. Individual schools and international programmes may differ, so families should confirm the curriculum, language provision and current requirements directly with the Ministry of Education or school.",
+  curriculum:"Antigua and Barbuda’s public-school curriculum is overseen by the Ministry of Education, with primary and secondary programmes and regional Caribbean assessment pathways. Confirm current subject syllabuses and CSEC/CAPE options with the Ministry and the school.",
   seoTopics:["Antigua and Barbuda education system","Antigua school language of instruction","Antigua Ministry of Education","Antigua school curriculum","Antigua Spanish language education","Antigua school resources"],
   seoFaqs:[
    {question:"What is the main language of instruction in Antigua and Barbuda's public schools?",answer:"English is the principal teaching language in mainstream public education."},
@@ -158,6 +161,7 @@ const profiles={
   seoTitle:"Argentina Education System, Curriculum & Bilingual Education | CBE Nexus",
   seoDescription:"Explore Argentina's education system, provincial school administration, Spanish-medium teaching and intercultural bilingual education.",
   seoIntro:"Spanish is the principal teaching language across most of Argentina's school system, while education administration is shared across national, provincial and city jurisdictions. Intercultural Bilingual Education supports Indigenous-language learning and, in relevant communities, mother-tongue teaching alongside Spanish. Curriculum implementation and school arrangements can vary by jurisdiction, so learners should consult the relevant provincial or city education authority.",
+  curriculum:"Argentina uses national Núcleos de Aprendizajes Prioritarios (NAP) as shared learning priorities, alongside curricula and implementation managed by provincial and City of Buenos Aires education authorities. Subject sequences and school calendars therefore vary by jurisdiction.",
   seoTopics:["Argentina education system","Argentina school curriculum","Spanish language of instruction Argentina","Intercultural Bilingual Education Argentina","Indigenous language education","Argentina provincial education authorities"],
   seoFaqs:[
    {question:"What language is generally used for teaching in Argentina?",answer:"Spanish is the principal teaching language across most schools, with jurisdictional and school-level variation."},
@@ -177,6 +181,7 @@ const profiles={
   seoTitle:"Armenia Education System, Armenian & Minority-Language Schools | CBE Nexus",
   seoDescription:"Learn about Armenia's school language framework, Armenian-medium education, Russian-medium provision and minority-language rights.",
   seoIntro:"Armenian is the general language of teaching under the cited national language framework. Russian-medium classes and schools are also available, and national-minority communities have legal provisions for mother-tongue education in eligible settings, alongside Armenian-language study. Actual availability depends on the school and community, so families should confirm current provision with the institution and education authorities.",
+  curriculum:"Armenia’s general-education curriculum is based on state standards and approved subject programmes, including national and school-level curriculum components. Check the current standards, subject programmes and approved textbooks issued by the responsible education authority.",
   seoTopics:["Armenia education system","Armenian language of instruction","Russian-medium schools Armenia","Armenia minority-language education","Armenia Law on Language","Armenia school resources"],
   seoFaqs:[
    {question:"What is the general language of instruction in Armenia?",answer:"The cited Law on Language identifies Armenian as the language of teaching and education."},
@@ -196,6 +201,7 @@ const profiles={
   seoTitle:"Austria Education System, German & Bilingual School Pathways | CBE Nexus",
   seoDescription:"Explore Austria's school language framework, German-medium education, protected bilingual minority schooling and international pathways.",
   seoIntro:"German is the principal language of teaching in Austria. Protected bilingual education is available in designated minority-language areas, including Slovenian in Carinthia and Burgenland Croatian and Hungarian in parts of Burgenland. Private and international schools may offer other teaching languages. The language pathway depends on the school's location and type, so families should check the relevant school and provincial education authority.",
+  curriculum:"Austria’s school curriculum is governed by federal curricula, with different programmes for primary, middle, academic secondary and vocational school types. The applicable syllabus depends on the school type and level; consult the Federal Ministry’s current curriculum documents.",
   seoTopics:["Austria education system","German language of instruction Austria","Austria bilingual minority schools","Slovenian schools Carinthia","Burgenland Croatian education","Hungarian bilingual education Austria"],
   seoFaqs:[
    {question:"What is the main language of instruction in Austrian schools?",answer:"German is the principal language of teaching in the general school system."},
