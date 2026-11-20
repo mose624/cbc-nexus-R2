@@ -374,6 +374,30 @@ async function darajaPost(pathname,body,token){
 function getMpesaConfig(){return {shortCode:firstEnv("MPESA_SHORTCODE","MPESA_BUSINESS_SHORTCODE","MPESA_SHORT_CODE"),tillNumber:firstEnv("MPESA_TILL_NUMBER","MPESA_TILL","MPESA_PARTY_B"),passkey:firstEnv("MPESA_PASSKEY","MPESA_LIPA_NA_MPESA_PASSKEY"),callbackUrl:firstEnv("MPESA_CALLBACK_URL","MPESA_CALLBACK"),environment:firstEnv("MPESA_ENVIRONMENT","MPESA_ENV")||"sandbox"};}
 async function findResourceForPayment(resourceId){if(!resourceId)return null;if(supabaseConfigured){const {data,error}=await supabase.from("resources").select("id,title,price,discount_price,status,r2_key,grade,country,currency,seller_id").eq("id",resourceId).maybeSingle();if(error)throw error;return data;}const rows=await readJsonStore("resources.json");return rows.find(r=>String(r.id)===String(resourceId))||null;}
 function resourcePrice(row){const price=Math.max(0,Number(row?.price||0));const sale=Number(row?.discount_price??row?.discount??0);const payable=sale>0&&sale<price?sale:price;return Math.max(0,Math.round(payable));}
+
+// International checkout uses a fresh server-side KES→USD reference rate.
+// Fail closed when the rate provider is unavailable or its data is stale.
+let kesUsdRateCache=null;
+let kesUsdRateCacheAt=0;
+async function getKesUsdRate(){
+  const now=Date.now();
+  if(kesUsdRateCache&&now-kesUsdRateCacheAt<30*60*1000)return kesUsdRateCache;
+  const response=await fetch("https://open.er-api.com/v6/latest/KES",{headers:{Accept:"application/json"},signal:AbortSignal.timeout(8000)});
+  const data=await response.json().catch(()=>({}));
+  const rate=Number(data?.rates?.USD),updated=Number(data?.time_last_update_unix||0);
+  if(!response.ok||data?.result!=="success"||!Number.isFinite(rate)||rate<=0||!updated||now-updated*1000>48*60*60*1000)throw new Error("Live KES/USD exchange rate is temporarily unavailable. Please try again later.");
+  kesUsdRateCache=rate;kesUsdRateCacheAt=now;return rate;
+}
+async function quoteInternationalAmount(amount,currency){
+  const code=String(currency||"KES").toUpperCase();
+  if(!Number.isFinite(Number(amount))||Number(amount)<=0)throw new Error("A valid positive checkout amount is required.");
+  if(code==="USD")return {amount:Math.round(Number(amount)*100)/100,currency:"USD",sourceAmount:Number(amount),sourceCurrency:"USD",exchangeRate:1};
+  if(code!=="KES")throw new Error("International checkout currently supports KES-priced items converted to USD, or items already priced in USD.");
+  const exchangeRate=await getKesUsdRate();
+  const usd=Math.round(Number(amount)*exchangeRate*100)/100;
+  if(usd<2)throw new Error("This item converts to $"+usd.toFixed(2)+", below Paystack's $2.00 minimum. The item cannot be purchased by international card at its current price.");
+  return {amount:usd,currency:"USD",sourceAmount:Number(amount),sourceCurrency:"KES",exchangeRate};
+}
 async function savePayment(row){if(!supabaseConfigured)throw new Error("Supabase is required for server-side M-Pesa verification.");const {data,error}=await supabase.from("purchases").insert(row).select("*").single();if(error)throw error;return data;}
 async function updatePaymentByCheckout(checkoutRequestId,patch){if(!supabaseConfigured)throw new Error("Supabase is required for server-side M-Pesa verification.");const {data,error}=await supabase.from("purchases").update(patch).eq("checkout_request_id",checkoutRequestId).select("*").single();if(error)throw error;return data;}
 async function recordSellerEarning(purchase){
@@ -382,7 +406,7 @@ async function recordSellerEarning(purchase){
   const {data:resource,error:resourceError}=await supabase.from("resources").select("id,seller_id,currency").eq("id",resourceId).maybeSingle();
   if(resourceError)throw resourceError;if(!resource?.seller_id)return null;
   const gross=Number(purchase.amount||0);if(!Number.isFinite(gross)||gross<=0)return null;
-  const row={purchase_id:purchase.id,resource_id:resource.id,seller_id:resource.seller_id,gross_amount:gross,seller_amount:Math.round(gross*0.70*100)/100,platform_amount:Math.round(gross*0.30*100)/100,currency:String(resource.currency||"KES").toUpperCase(),status:"earned",created_at:new Date().toISOString()};
+  const row={purchase_id:purchase.id,resource_id:resource.id,seller_id:resource.seller_id,gross_amount:gross,seller_amount:Math.round(gross*0.70*100)/100,platform_amount:Math.round(gross*0.30*100)/100,currency:String(purchase.currency||resource.currency||"KES").toUpperCase(),status:"earned",created_at:new Date().toISOString()};
   const {data,error}=await supabase.from("seller_earnings").upsert(row,{onConflict:"purchase_id"}).select("*").single();
   if(error)throw error;return data;
 }
@@ -1626,17 +1650,16 @@ async function handleApi(req,res,url){
       if(!resourceId||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){sendJson(res,400,{ok:false,error:"A resource and valid email address are required."});return true;}
       const resource=await findResourceForPayment(resourceId);
       if(!resource||String(resource.status||"").toLowerCase()!=="approved"||!resource.r2_key){sendJson(res,404,{ok:false,error:"This resource is not available for purchase."});return true;}
-      const amount=resourcePrice(resource),currency=String(resource.currency||"KES").toUpperCase();
-      const supported=["KES","USD","NGN","GHS","ZAR"];
-      const minimum={KES:3,USD:2,NGN:50,GHS:0.1,ZAR:1};
-      if(!supported.includes(currency)){sendJson(res,400,{ok:false,error:"Paystack does not support "+currency+" for this marketplace checkout. Choose a Paystack-enabled currency or contact CBE Nexus about another gateway."});return true;}
-      if(amount<Number(minimum[currency]||1)){sendJson(res,400,{ok:false,error:"The minimum Paystack transaction in "+currency+" is "+minimum[currency]+"."});return true;}
+      const sourceAmount=resourcePrice(resource),sourceCurrency=String(resource.currency||"KES").toUpperCase();
+      let quote;
+      try{quote=await quoteInternationalAmount(sourceAmount,sourceCurrency);}catch(quoteError){sendJson(res,400,{ok:false,error:String(quoteError?.message||"International price conversion is unavailable.")});return true;}
+      const amount=quote.amount,currency="USD";
       const reference="CBER-"+crypto.randomBytes(18).toString("hex");
       const origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.com").replace(/\/$/,"");
-      const response=await fetch("https://api.paystack.co/transaction/initialize",{method:"POST",headers:{"Authorization":"Bearer "+secret,"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({email,amount:Math.round(amount*100),currency,reference,callback_url:origin+"/resource-category.html?payment_reference="+encodeURIComponent(reference),metadata:{resource_id:resourceId,product:"cbe_nexus_teacher_resource",resource_title:String(resource.title||"").slice(0,180)}})});
+      const response=await fetch("https://api.paystack.co/transaction/initialize",{method:"POST",headers:{"Authorization":"Bearer "+secret,"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({email,amount:Math.round(amount*100),currency,reference,callback_url:origin+"/resource-category.html?payment_reference="+encodeURIComponent(reference),metadata:{resource_id:resourceId,product:"cbe_nexus_teacher_resource",resource_title:String(resource.title||"").slice(0,180),source_amount:quote.sourceAmount,source_currency:quote.sourceCurrency,kes_usd_rate:quote.exchangeRate}})});
       const result=await response.json().catch(()=>({}));
       if(!response.ok||!result.status||!result.data?.authorization_url)throw new Error(String(result.message||"Paystack could not initialize this currency or merchant account."));
-      const purchase=await savePayment({resource_id:resourceId,customer_phone:"paystack:"+email,amount,currency,payment_provider:"paystack",status:"pending",payment_reference:reference,checkout_request_id:"PAYSTACK-"+reference,merchant_request_id:"",result_code:null,result_desc:"Paystack hosted checkout initialized",mpesa_receipt:null,transaction_time:null});
+      const purchase=await savePayment({resource_id:resourceId,customer_phone:"paystack:"+email,amount,currency,payment_provider:"paystack",status:"pending",payment_reference:reference,checkout_request_id:"PAYSTACK-"+reference,merchant_request_id:"",result_code:null,result_desc:"Paystack hosted checkout initialized; source "+quote.sourceAmount+" "+quote.sourceCurrency+"; KES/USD rate "+quote.exchangeRate,mpesa_receipt:null,transaction_time:null});
       sendJson(res,200,{ok:true,authorizationUrl:result.data.authorization_url,reference,amount,currency,purchaseId:purchase.id});return true;
     }catch(error){console.error("Resource Paystack checkout initialization error:",error);sendJson(res,502,{ok:false,error:String(error?.message||"Secure Paystack checkout could not be started.")});return true;}
   }
