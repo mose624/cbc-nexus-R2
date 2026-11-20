@@ -11,7 +11,7 @@
    const emailInput=prompt("Enter your email address for the secure international card checkout:",d.cvEmail||"");
    if(!emailInput)return;
    const email=String(emailInput).trim().toLowerCase();
-   if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email))throw new Error("Enter a valid email address.");
+   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))throw new Error("Enter a valid email address.");
    sessionStorage.setItem("cbe_cv_pending",JSON.stringify({html:$("cvPreview").innerHTML,data:d}));
    $("cvPaymentStatus").textContent="Getting the live KES/USD conversion and preparing Paystack checkout...";
    const response=await fetch("/api/cv/paystack/checkout",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({packageId:String(d.cvType||"Professional").toLowerCase(),email})});
@@ -23,8 +23,8 @@
   const amount=d.cvType==="Basic"?200:d.cvType==="Classic"?400:800;
   const phoneInput=prompt("Enter the Safaricom number to receive the M-Pesa STK Push (e.g. 0712345678 or +254712345678):",d.cvPhone||"");
   if(!phoneInput)return;
-  const phone=String(phoneInput).trim().replace(/[\\s()-]/g,"");
-  if(!/^(?:\\+?254|0)?[17]\\d{8}$/.test(phone))throw new Error("Enter a valid Kenyan M-Pesa number, e.g. 0712345678 or +254712345678.");
+  const phone=String(phoneInput).trim().replace(/[\s()-]/g,"");
+  if(!/^(?:\+?254|0)?[17]\d{8}$/.test(phone))throw new Error("Enter a valid Kenyan M-Pesa number, e.g. 0712345678 or +254712345678.");
   $("cvPaymentStatus").textContent="Sending M-Pesa STK Push for KSh "+amount+". Check your phone and enter your M-Pesa PIN.";
   const startPay=await fetch("/api/mpesa/stk-push",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({customerPhone:phone,resourceId:"cv:"+String(d.cvType||"Professional").toLowerCase()})});
   const data=await startPay.json().catch(()=>({}));
