@@ -1615,7 +1615,11 @@ async function handleApi(req,res,url){
     if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Book publishing requires the permanent Supabase database."});return true;}
     try{const {data:seller,error:se}=await supabase.from("sellers").select("id,name,username,status").eq("username",username).maybeSingle();if(se)throw se;if(!seller){sendJson(res,404,{ok:false,error:"Seller account not found."});return true;}
       const {data:books,error}=await supabase.from("published_books").select("id,title,summary,author_name,country,curriculum,subject,level,price,currency,pdf_key,cover_key,status,isbn_status,isbn,review_notes,created_at,updated_at").eq("seller_id",seller.id).order("created_at",{ascending:false}).limit(200);if(error)throw error;
-      sendJson(res,200,{ok:true,seller:{name:seller.name,username:seller.username,status:seller.status},books:books||[]});return true;
+      const {data:sales,error:salesError}=await supabase.from("published_book_sales").select("id,book_id,amount,currency,seller_amount,platform_amount,status,created_at,paid_at").eq("seller_id",seller.id).order("created_at",{ascending:false}).limit(500);if(salesError)throw salesError;
+      const titleById=new Map((books||[]).map(b=>[String(b.id),b.title]));
+      const bookSales=(sales||[]).map(x=>({...x,book_title:titleById.get(String(x.book_id))||"Published book"}));
+      const earnings=bookSales.filter(x=>["paid","completed","success"].includes(String(x.status||"").toLowerCase())).reduce((sum,x)=>sum+Number(x.seller_amount||0),0);
+      sendJson(res,200,{ok:true,seller:{name:seller.name,username:seller.username,status:seller.status},books:books||[],sales:bookSales,earnings,currency:"USD"});return true;
     }catch(error){console.error("Seller book dashboard error:",error);sendJson(res,500,{ok:false,error:"Your book submissions could not be loaded. Ensure the book-publishing database migration has been applied."});return true;}
   }
   if(req.method==="POST"&&url.pathname==="/api/seller/books"){
