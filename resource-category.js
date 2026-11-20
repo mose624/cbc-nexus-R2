@@ -166,11 +166,11 @@ async function startDirectMpesaPurchase(resource,b){
   }
   const chooseInternational=resourceCurrency!=="KES"||window.confirm("Choose OK to pay by international debit/credit card in USD. Choose Cancel to use Kenyan M-Pesa.");
   if(chooseInternational){
-    const email=window.prompt("Enter your email address for secure international Paystack checkout:",savedEmail);
+    const email=window.prompt("Enter your email address for secure international IntaSend checkout:",savedEmail);
     if(!email)return;
-    const response=await fetch("/api/resources/paystack/checkout",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({resourceId:id,email})});
+    const response=await fetch("/api/resources/intasend/checkout",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({resourceId:id,email})});
     const data=await response.json().catch(()=>({}));
-    if(!response.ok||!data.ok)throw new Error(data.error||"Paystack checkout could not be started.");
+    if(!response.ok||!data.ok)throw new Error(data.error||"IntaSend checkout could not be started.");
     localStorage.setItem("cbe_access_email",String(email).trim().toLowerCase());
     window.location.href=data.authorizationUrl;return;
   }
@@ -347,17 +347,17 @@ document.addEventListener("click",event=>{
   window.scrollTo({top:0,behavior:"smooth"});
 });
 
-/* Verify Paystack resource purchases on the secure return URL. */
-(async function completePaystackResourceCheckout(){
+/* Verify IntaSend resource purchases on the secure return URL. */
+(async function completeIntaSendResourceCheckout(){
   const params=new URLSearchParams(location.search),reference=params.get("payment_reference");
   if(!reference)return;
   const notice=document.createElement("div");
   notice.setAttribute("role","status");
   notice.style.cssText="position:sticky;top:8px;z-index:99999;margin:12px auto;padding:14px 18px;max-width:760px;border-radius:10px;background:#eaf6ff;border:1px solid #9ac9e8;color:#12345b;font-weight:800";
-  notice.textContent="Verifying your Paystack payment securely…";
+  notice.textContent="Verifying your IntaSend payment securely…";
   document.body.prepend(notice);
   try{
-    const response=await fetch("/api/resources/paystack/verify?reference="+encodeURIComponent(reference),{credentials:"same-origin",cache:"no-store"});
+    const response=await fetch("/api/resources/intasend/verify?reference="+encodeURIComponent(reference),{credentials:"same-origin",cache:"no-store"});
     const data=await response.json().catch(()=>({}));
     if(!response.ok||!data.ok)throw new Error(data.error||"Payment verification failed. If you were charged, contact CBE Nexus support with your payment reference.");
     notice.textContent="Payment verified. Your secure resource download is starting…";
