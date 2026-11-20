@@ -733,7 +733,7 @@ async function handleApi(req,res,url){
       if(!target){sendJson(res,404,{ok:false,error:"Unknown CBE Nexus payment reference."});return true;}
       const checkoutId=String(payload.invoice_id||"").trim();
       if(!checkoutId){sendJson(res,400,{ok:false,error:"IntaSend invoice ID is missing."});return true;}
-      const invoice=await intasend.getPaymentStatus(checkoutId);
+      const invoice=await intasend.getPaymentStatus(checkoutId,"invoice_id");
       const expected={apiRef,amount:Number(target.amount??target.payment_amount??2)};
       if(!intasend.matchesExpectedPayment(invoice,expected)){sendJson(res,400,{ok:false,error:"IntaSend payment details did not match the order."});return true;}
       const now=new Date().toISOString();
@@ -974,45 +974,33 @@ async function handleApi(req,res,url){
   if(req.method==="POST"&&url.pathname==="/api/global-teachers/checkout"){
     try{
       if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Teacher checkout is temporarily unavailable."});return true;}
-      const secret=String(process.env.PAYSTACK_SECRET_KEY||"").trim();
-      if(!secret){sendJson(res,503,{ok:false,error:"International checkout is not configured yet. Please contact info@cbenexus.co.ke."});return true;}
       const p=JSON.parse((await readBody(req))||"{}"),id=String(p.applicationId||"").trim();
       if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id)){sendJson(res,400,{ok:false,error:"A valid teacher application reference is required."});return true;}
-      const {data:teacher,error}=await supabase.from("global_teachers").select("id,full_name,email,status,payment_status,listing_plan,payment_reference").eq("id",id).maybeSingle();
-      if(error)throw error;
+      const {data:teacher,error}=await supabase.from("global_teachers").select("id,full_name,email,status,payment_status,listing_plan,payment_reference").eq("id",id).maybeSingle();if(error)throw error;
       if(!teacher){sendJson(res,404,{ok:false,error:"Teacher application not found."});return true;}
       if(teacher.payment_status==="paid"){sendJson(res,409,{ok:false,error:"This application already has a verified payment."});return true;}
       if(teacher.listing_plan!=="basic"){sendJson(res,400,{ok:false,error:"This checkout is only for the $2 Basic Listing."});return true;}
-      const reference="CBET-"+crypto.randomBytes(18).toString("hex");
-      const origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.com").replace(/\/$/,"");
-      const response=await fetch("https://api.paystack.co/transaction/initialize",{method:"POST",headers:{"Authorization":"Bearer "+secret,"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({email:teacher.email,amount:200,currency:"USD",reference,callback_url:origin+"/online-teaching.html?checkout=global-teacher",metadata:{application_id:teacher.id,product:"global_teacher_basic_listing",amount_usd:"2.00",custom_fields:[{display_name:"Teacher name",variable_name:"teacher_name",value:teacher.full_name}]}})});
-      const result=await response.json().catch(()=>({}));
-      if(!response.ok||!result.status||!result.data?.authorization_url)throw new Error("Payment provider could not initialize checkout.");
-      const {error:updateError}=await supabase.from("global_teachers").update({payment_status:"pending",payment_reference:reference,updated_at:new Date().toISOString()}).eq("id",teacher.id);
-      if(updateError)throw updateError;
-      sendJson(res,200,{ok:true,authorizationUrl:result.data.authorization_url,reference,amount:2,currency:"USD"});return true;
-    }catch(error){console.error("Global teacher checkout initialization error:",error);sendJson(res,502,{ok:false,error:"Secure checkout could not be started. Please try again or contact info@cbenexus.co.ke."});return true;}
+      const reference="CBET-"+crypto.randomBytes(18).toString("hex"),origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.com").replace(/\/$/,"");
+      const checkout=await intasend.createCheckout({email:teacher.email,amount:2,currency:"USD",apiRef:reference,redirectUrl:origin+"/online-teaching.html?checkout=global-teacher&reference="+encodeURIComponent(reference)});
+      const {error:updateError}=await supabase.from("global_teachers").update({payment_status:"pending",payment_reference:reference,updated_at:new Date().toISOString()}).eq("id",teacher.id);if(updateError)throw updateError;
+      sendJson(res,200,{ok:true,checkoutUrl:checkout.checkoutUrl,reference,amount:2,currency:"USD"});return true;
+    }catch(error){console.error("Global teacher IntaSend checkout initialization error:",error);sendJson(res,502,{ok:false,error:"Secure checkout could not be started. Please try again or contact info@cbenexus.co.ke."});return true;}
   }
   if(req.method==="GET"&&url.pathname==="/api/global-teachers/checkout/verify"){
     try{
       if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Payment verification is temporarily unavailable."});return true;}
-      const secret=String(process.env.PAYSTACK_SECRET_KEY||"").trim(),reference=String(url.searchParams.get("reference")||"").trim();
-      if(!secret){sendJson(res,503,{ok:false,error:"Payment verification is not configured."});return true;}
+      const reference=String(url.searchParams.get("reference")||"").trim();
       if(!/^CBET-[a-f0-9]{36}$/i.test(reference)){sendJson(res,400,{ok:false,error:"Invalid payment reference."});return true;}
-      const {data:teacher,error}=await supabase.from("global_teachers").select("id,full_name,email,status,payment_status,payment_reference").eq("payment_reference",reference).maybeSingle();
-      if(error)throw error;
+      const {data:teacher,error}=await supabase.from("global_teachers").select("id,full_name,email,status,payment_status,payment_reference").eq("payment_reference",reference).maybeSingle();if(error)throw error;
       if(!teacher){sendJson(res,404,{ok:false,error:"No application matches this payment reference."});return true;}
       if(teacher.payment_status==="paid"){sendJson(res,200,{ok:true,paid:true,message:"Payment has already been verified. Your application still requires administrator review."});return true;}
-      const response=await fetch("https://api.paystack.co/transaction/verify/"+encodeURIComponent(reference),{headers:{"Authorization":"Bearer "+secret,"Accept":"application/json"}});
-      const result=await response.json().catch(()=>({})),tx=result.data||{};
-      if(!response.ok||!result.status){sendJson(res,502,{ok:false,error:"The payment provider could not verify this transaction yet. Please retry shortly."});return true;}
-      if(tx.status!=="success"||Number(tx.amount)!==200||String(tx.currency||"").toUpperCase()!=="USD"||String(tx.customer?.email||"").toLowerCase()!==teacher.email.toLowerCase()||String(tx.metadata?.application_id||"")!==teacher.id){
-        sendJson(res,200,{ok:true,paid:false,status:String(tx.status||"pending"),message:"Payment is not yet verified. Your application will remain unpublished."});return true;
+      const invoice=await intasend.getPaymentStatus(reference,"api_ref");
+      if(!intasend.matchesExpectedPayment(invoice,{apiRef:reference,amount:2})||String(invoice?.email||invoice?.customer?.email||"").toLowerCase()!==teacher.email.toLowerCase()){
+        sendJson(res,200,{ok:true,paid:false,status:String(invoice?.state||invoice?.status||"pending"),message:"Payment is not yet verified. Your application will remain unpublished."});return true;
       }
-      const {data:updated,error:updateError}=await supabase.from("global_teachers").update({payment_status:"paid",updated_at:new Date().toISOString()}).eq("id",teacher.id).eq("payment_reference",reference).select("id,full_name,status,payment_status").single();
-      if(updateError)throw updateError;
+      const {data:updated,error:updateError}=await supabase.from("global_teachers").update({payment_status:"paid",updated_at:new Date().toISOString()}).eq("id",teacher.id).eq("payment_reference",reference).select("id,full_name,status,payment_status").single();if(updateError)throw updateError;
       sendJson(res,200,{ok:true,paid:true,application:{id:updated.id,name:updated.full_name,status:updated.status,paymentStatus:updated.payment_status},message:"Payment verified. Your teacher application is now awaiting administrator review."});return true;
-    }catch(error){console.error("Global teacher payment verification error:",error);sendJson(res,500,{ok:false,error:"Payment verification failed. Contact info@cbenexus.co.ke if you were charged."});return true;}
+    }catch(error){console.error("Global teacher IntaSend payment verification error:",error);sendJson(res,500,{ok:false,error:"Payment verification failed. Contact info@cbenexus.co.ke if you were charged."});return true;}
   }
   if(req.method==="GET"&&url.pathname==="/api/admin/global-teachers"){
     if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
@@ -1831,51 +1819,35 @@ async function handleApi(req,res,url){
       sendJson(res,200,{ok:true,status:"paid",amount:Number(updated.amount||0),currency:"USD"});return true;
     }catch(error){console.error("CV IntaSend verification error:",error);sendJson(res,500,{ok:false,error:"CV payment could not be verified securely."});return true;}
   }
-  if(req.method==="POST"&&url.pathname==="/api/access/paystack/checkout"){
+  if(req.method==="POST"&&url.pathname==="/api/access/intasend/checkout"){
     try{
       if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure international access checkout requires Supabase."});return true;}
-      const secret=String(process.env.PAYSTACK_SECRET_KEY||"").trim();
-      if(!secret){sendJson(res,503,{ok:false,error:"Paystack is not configured. Contact CBE Nexus support."});return true;}
-      const p=JSON.parse((await readBody(req))||"{}");
-      const resourceId=String(p.resourceId||"").trim();
-      const email=String(p.email||"").trim().toLowerCase();
-      const validPlan=/^subscription:(month|6months|year)$/.test(resourceId);
-      const validGrade=/^grade-package:[1-9]$/.test(resourceId);
-      if((!validPlan&&!validGrade)||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-        sendJson(res,400,{ok:false,error:"Choose a valid access plan or grade package and enter a valid email address."});return true;
-      }
+      const p=JSON.parse((await readBody(req))||"{}"),resourceId=String(p.resourceId||"").trim(),email=String(p.email||"").trim().toLowerCase();
+      const validPlan=/^subscription:(month|6months|year)$/.test(resourceId),validGrade=/^grade-package:[1-9]$/.test(resourceId);
+      if((!validPlan&&!validGrade)||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){sendJson(res,400,{ok:false,error:"Choose a valid access plan or grade package and enter a valid email address."});return true;}
       const sourceAmount=validGrade?50:({"subscription:month":300,"subscription:6months":700,"subscription:year":1200})[resourceId];
-      let quote;
-      try{quote=await quoteInternationalAmount(sourceAmount,"KES");}
-      catch(error){sendJson(res,400,{ok:false,error:String(error?.message||"Live KES/USD conversion is unavailable.")});return true;}
-      const reference="CBEA-"+crypto.randomBytes(18).toString("hex");
-      const origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.com").replace(/\/$/,"");
-      const response=await fetch("https://api.paystack.co/transaction/initialize",{method:"POST",headers:{"Authorization":"Bearer "+secret,"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({email,amount:Math.round(quote.amount*100),currency:"USD",reference,callback_url:origin+"/subscriptions.html?access_payment_reference="+encodeURIComponent(reference),metadata:{product:"cbe_nexus_resource_access",resource_id:resourceId,source_amount:quote.sourceAmount,source_currency:"KES",kes_usd_rate:quote.exchangeRate}})});
-      const result=await response.json().catch(()=>({}));
-      if(!response.ok||!result.status||!result.data?.authorization_url)throw new Error(String(result.message||"Paystack could not initialize this USD payment."));
-      const purchase=await savePayment({resource_id:resourceId,customer_phone:"paystack:"+email,amount:quote.amount,currency:"USD",payment_provider:"paystack",status:"pending",payment_reference:reference,checkout_request_id:"PAYSTACK-"+reference,merchant_request_id:"",result_code:null,result_desc:"Access plan checkout; source KSh "+quote.sourceAmount+"; KES/USD rate "+quote.exchangeRate,mpesa_receipt:null,transaction_time:null});
-      sendJson(res,200,{ok:true,authorizationUrl:result.data.authorization_url,reference,amount:quote.amount,currency:"USD",purchaseId:purchase.id,sourceAmount:quote.sourceAmount,exchangeRate:quote.exchangeRate});return true;
-    }catch(error){console.error("International access checkout error:",error);sendJson(res,502,{ok:false,error:String(error?.message||"International access checkout could not be started.")});return true;}
+      let quote;try{quote=await quoteInternationalAmount(sourceAmount,"KES");}catch(error){sendJson(res,400,{ok:false,error:String(error?.message||"Live KES/USD conversion is unavailable.")});return true;}
+      const reference="CBEA-"+crypto.randomBytes(18).toString("hex"),origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.com").replace(/\/$/,"");
+      const purchase=await savePayment({resource_id:resourceId,customer_phone:"intasend:"+email,amount:quote.amount,currency:"USD",payment_provider:"intasend",status:"pending",payment_reference:reference,checkout_request_id:"",merchant_request_id:"",result_code:null,result_desc:"Access plan checkout; source KSh "+quote.sourceAmount+"; KES/USD rate "+quote.exchangeRate,mpesa_receipt:null,transaction_time:null});
+      const checkout=await intasend.createCheckout({email,amount:quote.amount,currency:"USD",apiRef:reference,redirectUrl:origin+"/subscriptions.html?access_payment_reference="+encodeURIComponent(reference)});
+      const {error:updateError}=await supabase.from("purchases").update({checkout_request_id:checkout.checkoutId}).eq("id",purchase.id);if(updateError)throw updateError;
+      sendJson(res,200,{ok:true,checkoutUrl:checkout.checkoutUrl,reference,amount:quote.amount,currency:"USD",purchaseId:purchase.id,sourceAmount:quote.sourceAmount,exchangeRate:quote.exchangeRate});return true;
+    }catch(error){console.error("IntaSend access checkout error:",error);sendJson(res,502,{ok:false,error:String(error?.message||"International access checkout could not be started.")});return true;}
   }
-  if(req.method==="GET"&&url.pathname==="/api/access/paystack/verify"){
+  if(req.method==="GET"&&url.pathname==="/api/access/intasend/verify"){
     try{
       if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure payment verification requires Supabase."});return true;}
-      const secret=String(process.env.PAYSTACK_SECRET_KEY||"").trim();
       const reference=String(url.searchParams.get("reference")||"").trim();
-      if(!secret||!/^CBEA-[a-f0-9]{36}$/i.test(reference)){sendJson(res,400,{ok:false,error:"A valid access payment reference is required."});return true;}
-      const {data:purchase,error}=await supabase.from("purchases").select("*").eq("payment_reference",reference).maybeSingle();
-      if(error)throw error;
-      if(!purchase||String(purchase.payment_provider||"").toLowerCase()!=="paystack"||!/^subscription:(month|6months|year)$|^grade-package:[1-9]$/.test(String(purchase.resource_id||""))){sendJson(res,404,{ok:false,error:"The access payment order was not found."});return true;}
+      if(!/^CBEA-[a-f0-9]{36}$/i.test(reference)){sendJson(res,400,{ok:false,error:"A valid access payment reference is required."});return true;}
+      const {data:purchase,error}=await supabase.from("purchases").select("*").eq("payment_reference",reference).maybeSingle();if(error)throw error;
+      if(!purchase||String(purchase.payment_provider||"").toLowerCase()!=="intasend"||!/^subscription:(month|6months|year)$|^grade-package:[1-9]$/.test(String(purchase.resource_id||""))){sendJson(res,404,{ok:false,error:"The access payment order was not found."});return true;}
       if(["paid","completed","success"].includes(String(purchase.status||"").toLowerCase())){sendJson(res,200,{ok:true,status:"paid",resourceId:purchase.resource_id,amount:Number(purchase.amount||0),currency:"USD"});return true;}
-      const response=await fetch("https://api.paystack.co/transaction/verify/"+encodeURIComponent(reference),{headers:{"Authorization":"Bearer "+secret,"Accept":"application/json"},signal:AbortSignal.timeout(12000)});
-      const verified=await response.json().catch(()=>({}));
-      const tx=verified.data||{};
-      if(!response.ok||!verified.status||String(tx.status||"").toLowerCase()!=="success"){sendJson(res,200,{ok:true,status:"pending"});return true;}
-      if(Number(tx.amount)!==Math.round(Number(purchase.amount||0)*100)||String(tx.currency||"").toUpperCase()!=="USD"||String(tx.reference||"")!==reference){sendJson(res,400,{ok:false,error:"Verified payment amount, currency or reference did not match this order."});return true;}
-      const {data:updated,error:updateError}=await supabase.from("purchases").update({status:"paid",verified_at:new Date().toISOString(),result_code:0,result_desc:String(purchase.result_desc||"Access plan")+"; Paystack payment verified",mpesa_receipt:reference,transaction_time:String(tx.paid_at||"")}).eq("id",purchase.id).select("*").single();
-      if(updateError)throw updateError;
+      const invoice=await intasend.getPaymentStatus(purchase.checkout_request_id);
+      if(!intasend.matchesExpectedPayment(invoice,{apiRef:reference,amount:purchase.amount})){sendJson(res,200,{ok:true,status:"pending"});return true;}
+      const {data:updated,error:updateError}=await supabase.from("purchases").update({status:"paid",verified_at:new Date().toISOString(),result_code:0,result_desc:String(purchase.result_desc||"Access plan")+"; IntaSend payment verified",mpesa_receipt:reference,transaction_time:new Date().toISOString()}).eq("id",purchase.id).select("*").single();if(updateError)throw updateError;
+      await recordSellerEarning(updated);
       sendJson(res,200,{ok:true,status:"paid",resourceId:updated.resource_id,amount:Number(updated.amount||0),currency:"USD"});return true;
-    }catch(error){console.error("International access verification error:",error);sendJson(res,500,{ok:false,error:"International payment could not be verified securely."});return true;}
+    }catch(error){console.error("IntaSend access verification error:",error);sendJson(res,500,{ok:false,error:"International payment could not be verified securely."});return true;}
   }
   if(req.method==="POST"&&url.pathname==="/api/mpesa/stk-push"){
     const p=JSON.parse((await readBody(req))||"{}");
