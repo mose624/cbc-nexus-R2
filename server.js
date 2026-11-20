@@ -375,28 +375,28 @@ function getMpesaConfig(){return {shortCode:firstEnv("MPESA_SHORTCODE","MPESA_BU
 async function findResourceForPayment(resourceId){if(!resourceId)return null;if(supabaseConfigured){const {data,error}=await supabase.from("resources").select("id,title,price,discount_price,status,r2_key,grade,country,currency,seller_id").eq("id",resourceId).maybeSingle();if(error)throw error;return data;}const rows=await readJsonStore("resources.json");return rows.find(r=>String(r.id)===String(resourceId))||null;}
 function resourcePrice(row){const price=Math.max(0,Number(row?.price||0));const sale=Number(row?.discount_price??row?.discount??0);const payable=sale>0&&sale<price?sale:price;return Math.max(0,Math.round(payable));}
 
-// International checkout uses a fresh server-side KES→USD reference rate.
-// Fail closed when the rate provider is unavailable or its data is stale.
-let kesUsdRateCache=null;
-let kesUsdRateCacheAt=0;
-async function getKesUsdRate(){
-  const now=Date.now();
-  if(kesUsdRateCache&&now-kesUsdRateCacheAt<30*60*1000)return kesUsdRateCache;
-  const response=await fetch("https://open.er-api.com/v6/latest/KES",{headers:{Accept:"application/json"},signal:AbortSignal.timeout(8000)});
+// International checkout converts supported seller listing currencies into USD.
+const internationalRateCache=new Map();
+async function getInternationalUsdRate(currency){
+  const code=String(currency||"").toUpperCase(),now=Date.now();
+  const cached=internationalRateCache.get(code);
+  if(cached&&now-cached.at<30*60*1000)return cached.rate;
+  const response=await fetch("https://open.er-api.com/v6/latest/"+encodeURIComponent(code),{headers:{Accept:"application/json"},signal:AbortSignal.timeout(8000)});
   const data=await response.json().catch(()=>({}));
   const rate=Number(data?.rates?.USD),updated=Number(data?.time_last_update_unix||0);
-  if(!response.ok||data?.result!=="success"||!Number.isFinite(rate)||rate<=0||!updated||now-updated*1000>48*60*60*1000)throw new Error("Live KES/USD exchange rate is temporarily unavailable. Please try again later.");
-  kesUsdRateCache=rate;kesUsdRateCacheAt=now;return rate;
+  if(!response.ok||data?.result!=="success"||!Number.isFinite(rate)||rate<=0||!updated||now-updated*1000>48*60*60*1000)throw new Error("The live "+code+"/USD exchange rate is temporarily unavailable. Please try again later.");
+  internationalRateCache.set(code,{rate,at:now});return rate;
 }
 async function quoteInternationalAmount(amount,currency){
   const code=String(currency||"KES").toUpperCase();
+  const supported=["KES","USD","GBP","EUR","NGN","GHS","UGX","TZS","ZAR","RWF","INR","PKR","BDT","PHP","AUD","CAD","AED","SAR","BRL","JPY","CNY","ETB"];
   if(!Number.isFinite(Number(amount))||Number(amount)<=0)throw new Error("A valid positive checkout amount is required.");
+  if(!supported.includes(code))throw new Error("International checkout does not yet support "+code+". Please contact CBE Nexus.");
   if(code==="USD")return {amount:Math.round(Number(amount)*100)/100,currency:"USD",sourceAmount:Number(amount),sourceCurrency:"USD",exchangeRate:1};
-  if(code!=="KES")throw new Error("International checkout currently supports KES-priced items converted to USD, or items already priced in USD.");
-  const exchangeRate=await getKesUsdRate();
+  const exchangeRate=await getInternationalUsdRate(code);
   const usd=Math.round(Number(amount)*exchangeRate*100)/100;
-  if(usd<2)throw new Error("This item converts to $"+usd.toFixed(2)+", below Paystack's $2.00 minimum. The item cannot be purchased by international card at its current price.");
-  return {amount:usd,currency:"USD",sourceAmount:Number(amount),sourceCurrency:"KES",exchangeRate};
+  if(usd<2)throw new Error("This item converts to $"+usd.toFixed(2)+", below Paystack's $2.00 minimum. It cannot be purchased by international card at its current price.");
+  return {amount:usd,currency:"USD",sourceAmount:Number(amount),sourceCurrency:code,exchangeRate};
 }
 async function savePayment(row){if(!supabaseConfigured)throw new Error("Supabase is required for server-side M-Pesa verification.");const {data,error}=await supabase.from("purchases").insert(row).select("*").single();if(error)throw error;return data;}
 async function updatePaymentByCheckout(checkoutRequestId,patch){if(!supabaseConfigured)throw new Error("Supabase is required for server-side M-Pesa verification.");const {data,error}=await supabase.from("purchases").update(patch).eq("checkout_request_id",checkoutRequestId).select("*").single();if(error)throw error;return data;}
