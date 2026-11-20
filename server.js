@@ -1800,14 +1800,14 @@ async function handleApi(req,res,url){
       const packageId=String(p.packageId||"").trim().toLowerCase();
       const email=String(p.email||"").trim().toLowerCase();
       const cvPrices={basic:200,classic:400,professional:800};
-      if(!Object.prototype.hasOwnProperty.call(cvPrices,packageId)||!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)){
+      if(!Object.prototype.hasOwnProperty.call(cvPrices,packageId)||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
         sendJson(res,400,{ok:false,error:"Choose a valid CV package and enter a valid email address."});return true;
       }
       let quote;
       try{quote=await quoteInternationalAmount(cvPrices[packageId],"KES");}
       catch(error){sendJson(res,400,{ok:false,error:String(error?.message||"International price conversion is unavailable.")});return true;}
       const reference="CBECV-"+crypto.randomBytes(18).toString("hex");
-      const origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.com").replace(/\\/$/,"");
+      const origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.com").replace(/\/$/,"");
       const purchase=await savePayment({resource_id:null,customer_phone:"intasend:"+email,amount:quote.amount,currency:"USD",payment_provider:"intasend",status:"pending",payment_reference:reference,checkout_request_id:"",merchant_request_id:"",result_code:null,result_desc:"CV "+packageId+" checkout; source KSh "+quote.sourceAmount+"; KES/USD "+quote.exchangeRate,mpesa_receipt:null,transaction_time:null});
       const checkout=await intasend.createCheckout({email,amount:quote.amount,currency:"USD",apiRef:reference,redirectUrl:origin+"/professional-cv-writing.html?cv_payment_reference="+encodeURIComponent(reference)});
       const {error:updateError}=await supabase.from("purchases").update({checkout_request_id:checkout.checkoutId}).eq("id",purchase.id);
