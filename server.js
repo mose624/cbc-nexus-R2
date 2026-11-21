@@ -1612,12 +1612,12 @@ async function handleApi(req,res,url){
     try{
       if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure book checkout requires Supabase."});return true;}
       const p=JSON.parse((await readBody(req))||"{}"),bookId=String(p.bookId||"").trim(),email=String(p.email||"").trim().toLowerCase();
-      if(!bookId||!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)){sendJson(res,400,{ok:false,error:"Choose a book and enter a valid email address."});return true;}
+       if(!bookId||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){sendJson(res,400,{ok:false,error:"Choose a book and enter a valid email address."});return true;}
       const {data:book,error:bookError}=await supabase.from("published_books").select("id,title,seller_id,price,currency,status").eq("id",bookId).eq("status","published").maybeSingle();
       if(bookError)throw bookError;if(!book){sendJson(res,404,{ok:false,error:"This book is not currently published for sale."});return true;}
       const quote=await quoteInternationalAmount(Number(book.price),String(book.currency||"KES"));
       const reference="CBEB-"+crypto.randomBytes(18).toString("hex");
-      const origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.com").replace(/\\/$/,"");
+      const origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.com").replace(/\/$/,"");
       const {data:sale,error:saleError}=await supabase.from("published_book_sales").insert({book_id:book.id,seller_id:book.seller_id,buyer_email:email,payment_reference:reference,amount:quote.amount,currency:"USD",source_amount:quote.sourceAmount,source_currency:quote.sourceCurrency,exchange_rate:quote.exchangeRate,status:"pending"}).select("id").single();
       if(saleError)throw saleError;
       try{
@@ -1743,12 +1743,12 @@ async function handleApi(req,res,url){
     try{
       if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure resource checkout requires Supabase."});return true;}
       const p=JSON.parse((await readBody(req))||"{}"),resourceId=String(p.resourceId||"").trim(),email=String(p.email||"").trim().toLowerCase();
-      if(!resourceId||!/^\\S+@\\S+\\.\\S+$/.test(email)){sendJson(res,400,{ok:false,error:"A resource and valid email address are required."});return true;}
+       if(!resourceId||!/^\S+@\S+\.\S+$/.test(email)){sendJson(res,400,{ok:false,error:"A resource and valid email address are required."});return true;}
       const resource=await findResourceForPayment(resourceId);
       if(!resource||String(resource.status||"").toLowerCase()!=="approved"||!resource.r2_key){sendJson(res,404,{ok:false,error:"This resource is not available for purchase."});return true;}
       const quote=await quoteInternationalAmount(resourcePrice(resource),String(resource.currency||"KES").toUpperCase());
       const reference="CBER-"+crypto.randomBytes(18).toString("hex");
-      const origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.com").replace(/\\/$/,"");
+      const origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.com").replace(/\/$/,"");
       const purchase=await savePayment({resource_id:resourceId,customer_phone:"intasend:"+email,amount:quote.amount,currency:"USD",payment_provider:"intasend",status:"pending",payment_reference:reference,checkout_request_id:"",merchant_request_id:"",result_code:null,result_desc:"IntaSend checkout pending; source "+quote.sourceAmount+" "+quote.sourceCurrency+"; KES/USD rate "+quote.exchangeRate,mpesa_receipt:null,transaction_time:null});
       try{
         const checkout=await intasend.createCheckout({email,amount:quote.amount,currency:"USD",apiRef:reference,redirectUrl:origin+"/resource-category.html?payment_reference="+encodeURIComponent(reference)});
