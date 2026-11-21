@@ -1978,7 +1978,7 @@ async function handleApi(req,res,url){
     const email=String(p.email||"").trim().toLowerCase();
     const requestedReference=String(p.paymentReference||p.checkoutRequestID||"").trim();
     const phone=normalizeMpesaPhone(p.customerPhone||p.phone||"");
-    const customerIdentity=email&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)&&requestedReference?"paystack:"+email:phone;
+    const customerIdentity=email&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)&&requestedReference?"intasend:"+email:phone;
     if(!resourceId||!customerIdentity){sendJson(res,400,{ok:false,error:"Resource and a valid phone number, or the purchaser email plus payment reference, are required."});return true;}
     if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure download approvals require Supabase payment verification."});return true;}
     try{
@@ -2169,7 +2169,7 @@ async function handleApi(req,res,url){
     return true;
   }
   if(req.method==="GET"&&url.pathname==="/api/r2/file"){
-    const key=String(url.searchParams.get("key")||"").trim(),resourceId=String(url.searchParams.get("resourceId")||"").trim(),email=String(url.searchParams.get("email")||"").trim().toLowerCase(),paymentReference=String(url.searchParams.get("paymentReference")||"").trim(),phone=normalizeMpesaPhone(url.searchParams.get("phone")||""),customerIdentity=email&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)&&/^CBEA-[a-f0-9]{36}$/i.test(paymentReference)?"paystack:"+email:phone;
+    const key=String(url.searchParams.get("key")||"").trim(),resourceId=String(url.searchParams.get("resourceId")||"").trim(),email=String(url.searchParams.get("email")||"").trim().toLowerCase(),paymentReference=String(url.searchParams.get("paymentReference")||"").trim(),phone=normalizeMpesaPhone(url.searchParams.get("phone")||""),customerIdentity=email&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)&&/^CBEA-[a-f0-9]{36}$/i.test(paymentReference)?"intasend:"+email:phone;
     if(!resourceId){sendJson(res,400,{ok:false,error:"Resource ID is required."});return true;}
     let resource=null;
     try{
