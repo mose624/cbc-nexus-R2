@@ -68,7 +68,7 @@
  });
 
  const internationalEmail=document.getElementById("internationalEmail"),internationalPay=document.getElementById("internationalPayButton"),internationalStatus=document.getElementById("internationalStatus");
- const validEmail=()=>/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(internationalEmail.value.trim());
+ const validEmail=()=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(internationalEmail.value.trim());
  internationalEmail.addEventListener("input",()=>{internationalPay.disabled=!selected||!validEmail()||busy;});
  document.querySelectorAll("[data-plan]").forEach(b=>b.addEventListener("click",()=>{internationalPay.disabled=!selected||!validEmail()||busy;}));
  internationalPay.addEventListener("click",async()=>{
