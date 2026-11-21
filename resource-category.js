@@ -148,20 +148,34 @@ fillSubjects();paintCachedResources();rebuildGradeOptionsFromResources();rebuild
 
 async function startDirectMpesaPurchase(resource,b){
   const resourceCurrency=String(resource.currency||"KES").toUpperCase();
-  if(resourceCurrency!=="KES"){
-    const email=window.prompt("Enter your email address for secure Paystack checkout:","");
+  const id=String(resource.id||resource._id||resource.key||"").trim();
+  if(!id)throw new Error("This resource has no valid ID.");
+  const savedEmail=String(localStorage.getItem("cbe_access_email")||"").trim().toLowerCase();
+  const savedReference=String(localStorage.getItem("cbe_access_reference")||"").trim();
+  if(savedEmail&&savedReference&&Number(resource.price||0)>0){
+    try{
+      const approval=await fetch("/api/download-approval/request",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({resourceId:id,email:savedEmail,paymentReference:savedReference})});
+      const approvalData=await approval.json().catch(()=>({}));
+      if(approval.ok&&approvalData.ok){
+        const key=String(resource.r2Key||resource.r2_key||"").trim();
+        const download=await fetch("/api/r2/file?key="+encodeURIComponent(key)+"&resourceId="+encodeURIComponent(id)+"&email="+encodeURIComponent(savedEmail)+"&paymentReference="+encodeURIComponent(savedReference),{credentials:"same-origin",cache:"no-store"});
+        const downloadData=await download.json().catch(()=>({}));
+        if(download.ok&&downloadData.ok){window.location.href=downloadData.downloadUrl;return;}
+      }
+    }catch(error){console.warn("Saved international access could not be applied:",error);}
+  }
+  const chooseInternational=resourceCurrency!=="KES"||window.confirm("Choose OK to pay by international debit/credit card in USD. Choose Cancel to use Kenyan M-Pesa.");
+  if(chooseInternational){
+    const email=window.prompt("Enter your email address for secure international Paystack checkout:",savedEmail);
     if(!email)return;
-    const id=String(resource.id||resource._id||resource.key||"").trim();
-    if(!id)throw new Error("This resource has no valid ID.");
     const response=await fetch("/api/resources/paystack/checkout",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({resourceId:id,email})});
     const data=await response.json().catch(()=>({}));
     if(!response.ok||!data.ok)throw new Error(data.error||"Paystack checkout could not be started.");
+    localStorage.setItem("cbe_access_email",String(email).trim().toLowerCase());
     window.location.href=data.authorizationUrl;return;
   }
   const phone=window.prompt("Enter the M-Pesa phone number to receive the STK Push (e.g. 0712345678):","");
   if(!phone)return;
-  const id=String(resource.id||resource._id||resource.key||"").trim();
-  if(!id)throw new Error("This resource has no valid ID.");
   const start=await fetch("/api/mpesa/stk-push",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({customerPhone:phone,resourceId:id})});
   const data=await start.json().catch(()=>({}));
   if(!start.ok||!data.ok){const diagnostic=data.diagnosticCode?` [${data.diagnosticCode}]`:"";throw new Error((data.error||"M-Pesa STK Push could not be started.")+diagnostic);}

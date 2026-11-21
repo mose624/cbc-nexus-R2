@@ -374,6 +374,34 @@ async function darajaPost(pathname,body,token){
 function getMpesaConfig(){return {shortCode:firstEnv("MPESA_SHORTCODE","MPESA_BUSINESS_SHORTCODE","MPESA_SHORT_CODE"),tillNumber:firstEnv("MPESA_TILL_NUMBER","MPESA_TILL","MPESA_PARTY_B"),passkey:firstEnv("MPESA_PASSKEY","MPESA_LIPA_NA_MPESA_PASSKEY"),callbackUrl:firstEnv("MPESA_CALLBACK_URL","MPESA_CALLBACK"),environment:firstEnv("MPESA_ENVIRONMENT","MPESA_ENV")||"sandbox"};}
 async function findResourceForPayment(resourceId){if(!resourceId)return null;if(supabaseConfigured){const {data,error}=await supabase.from("resources").select("id,title,price,discount_price,status,r2_key,grade,country,currency,seller_id").eq("id",resourceId).maybeSingle();if(error)throw error;return data;}const rows=await readJsonStore("resources.json");return rows.find(r=>String(r.id)===String(resourceId))||null;}
 function resourcePrice(row){const price=Math.max(0,Number(row?.price||0));const sale=Number(row?.discount_price??row?.discount??0);const payable=sale>0&&sale<price?sale:price;return Math.max(0,Math.round(payable));}
+
+// International checkout converts supported seller listing currencies into USD.
+const internationalRateCache=new Map();
+async function getInternationalUsdRate(currency){
+  const code=String(currency||"").toUpperCase(),now=Date.now();
+  const cached=internationalRateCache.get(code);
+  if(cached&&now-cached.at<30*60*1000)return cached.rate;
+  const response=await fetch("https://open.er-api.com/v6/latest/"+encodeURIComponent(code),{headers:{Accept:"application/json"},signal:AbortSignal.timeout(8000)});
+  const data=await response.json().catch(()=>({}));
+  const rate=Number(data?.rates?.USD),updated=Number(data?.time_last_update_unix||0);
+  if(!response.ok||data?.result!=="success"||!Number.isFinite(rate)||rate<=0||!updated||now-updated*1000>48*60*60*1000)throw new Error("The live "+code+"/USD exchange rate is temporarily unavailable. Please try again later.");
+  internationalRateCache.set(code,{rate,at:now});return rate;
+}
+async function quoteInternationalAmount(amount,currency){
+  const code=String(currency||"KES").toUpperCase();
+  const supported=["KES","USD","GBP","EUR","NGN","GHS","UGX","TZS","ZAR","RWF","INR","PKR","BDT","PHP","AUD","CAD","AED","SAR","BRL","JPY","CNY","ETB"];
+  if(!Number.isFinite(Number(amount))||Number(amount)<=0)throw new Error("A valid positive checkout amount is required.");
+  if(!supported.includes(code))throw new Error("International checkout does not yet support "+code+". Please contact CBE Nexus.");
+  if(code==="USD"){
+    const usd=Math.round(Number(amount)*100)/100;
+    if(usd<2)throw new Error("This item is priced at $"+usd.toFixed(2)+", below Paystack's $2.00 minimum. It cannot be purchased by international card at its current price.");
+    return {amount:usd,currency:"USD",sourceAmount:Number(amount),sourceCurrency:"USD",exchangeRate:1};
+  }
+  const exchangeRate=await getInternationalUsdRate(code);
+  const usd=Math.round(Number(amount)*exchangeRate*100)/100;
+  if(usd<2)throw new Error("This item converts to $"+usd.toFixed(2)+", below Paystack's $2.00 minimum. It cannot be purchased by international card at its current price.");
+  return {amount:usd,currency:"USD",sourceAmount:Number(amount),sourceCurrency:code,exchangeRate};
+}
 async function savePayment(row){if(!supabaseConfigured)throw new Error("Supabase is required for server-side M-Pesa verification.");const {data,error}=await supabase.from("purchases").insert(row).select("*").single();if(error)throw error;return data;}
 async function updatePaymentByCheckout(checkoutRequestId,patch){if(!supabaseConfigured)throw new Error("Supabase is required for server-side M-Pesa verification.");const {data,error}=await supabase.from("purchases").update(patch).eq("checkout_request_id",checkoutRequestId).select("*").single();if(error)throw error;return data;}
 async function recordSellerEarning(purchase){
@@ -382,7 +410,7 @@ async function recordSellerEarning(purchase){
   const {data:resource,error:resourceError}=await supabase.from("resources").select("id,seller_id,currency").eq("id",resourceId).maybeSingle();
   if(resourceError)throw resourceError;if(!resource?.seller_id)return null;
   const gross=Number(purchase.amount||0);if(!Number.isFinite(gross)||gross<=0)return null;
-  const row={purchase_id:purchase.id,resource_id:resource.id,seller_id:resource.seller_id,gross_amount:gross,seller_amount:Math.round(gross*0.70*100)/100,platform_amount:Math.round(gross*0.30*100)/100,currency:String(resource.currency||"KES").toUpperCase(),status:"earned",created_at:new Date().toISOString()};
+  const row={purchase_id:purchase.id,resource_id:resource.id,seller_id:resource.seller_id,gross_amount:gross,seller_amount:Math.round(gross*0.70*100)/100,platform_amount:Math.round(gross*0.30*100)/100,currency:String(purchase.currency||resource.currency||"KES").toUpperCase(),status:"earned",created_at:new Date().toISOString()};
   const {data,error}=await supabase.from("seller_earnings").upsert(row,{onConflict:"purchase_id"}).select("*").single();
   if(error)throw error;return data;
 }
@@ -1535,12 +1563,67 @@ async function handleApi(req,res,url){
   if(req.method==="POST"&&url.pathname==="/api/admin/logout"){res.setHeader("Set-Cookie","__Host-cbe_admin_session=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0");sendJson(res,200,{ok:true});return true;}
   if(req.method==="POST"&&url.pathname==="/api/seller/account"){const p=JSON.parse((await readBody(req))||"{}"),u=String(p.username||"").trim().toLowerCase(),pw=String(p.password||""),name=String(p.name||"").trim(),phone=String(p.phone||"").trim();if(!u||pw.length<8||!name||!phone){sendJson(res,400,{ok:false,error:"Name, phone, username and a password of at least 8 characters are required."});return true;}if(supabaseConfigured){try{const {data:existing,error:existingError}=await supabase.from("sellers").select("id,username").eq("username",u).maybeSingle();if(existingError)throw existingError;if(existing){sendJson(res,409,{ok:false,error:"This seller username is already registered."});return true;}const passwordHash=await hashPassword(pw);const {data:user,error:userError}=await supabase.from("users").insert({name,full_name:name,phone,role:"seller",status:"active"}).select("id").single();if(userError)throw userError;const {data:seller,error:sellerError}=await supabase.from("sellers").insert({user_id:user.id,name,phone,username:u,password_hash:passwordHash,status:"pending"}).select("id,phone,username,status").single();if(sellerError)throw sellerError;sendJson(res,201,{ok:true,account:{...seller,name},storage:"supabase"});return true;}catch(error){console.error("Supabase seller registration error:",error);sendJson(res,500,{ok:false,error:"Seller account could not be created in Supabase."});return true;}}const ac=await readJsonStore("seller-accounts.json");if(ac.some(x=>x.username===u)){sendJson(res,409,{ok:false,error:"This seller username is already registered."});return true;}const a={id:"seller-account-"+Date.now(),name,phone,username:u,passwordHash:await hashPassword(pw),status:"pending",createdAt:new Date().toISOString()};await appendJsonStore("seller-accounts.json",a);sendJson(res,201,{ok:true,account:{id:a.id,name,phone,username:u,status:"pending"},storage:"local"});return true;}
   if(req.method==="POST"&&url.pathname==="/api/seller/login"){const p=JSON.parse((await readBody(req))||"{}"),u=String(p.username||"").trim().toLowerCase();let a=null;if(supabaseConfigured){try{const {data,error}=await supabase.from("sellers").select("id,user_id,phone,username,password_hash,status").eq("username",u).maybeSingle();if(error)throw error;a=data;}catch(error){console.error("Supabase seller login lookup error:",error);sendJson(res,500,{ok:false,error:"Seller account could not be checked in Supabase."});return true;}}else{const ac=await readJsonStore("seller-accounts.json");a=ac.find(x=>x.username===u);}if(!a||!(await verifyPassword(String(p.password||""),a.password_hash||a.passwordHash||""))){sendJson(res,401,{ok:false,error:"Invalid seller username or password."});return true;}if(!["approved","pending"].includes(String(a.status||"").toLowerCase())){sendJson(res,403,{ok:false,error:"This seller account is not active. Contact CBE Nexus support."});return true;}res.setHeader("Set-Cookie",sellerCookie(createSellerSession(u)));sendJson(res,200,{ok:true,account:{id:a.id,name:a.name||"Seller",phone:a.phone,username:a.username,status:a.status},storage:supabaseConfigured?"supabase":"local"});return true;}
+  if(req.method==="GET"&&url.pathname==="/api/bookshop"){
+    if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"The public bookshop is temporarily unavailable."});return true;}
+    try{
+      const {data:books,error}=await supabase.from("published_books").select("id,title,summary,author_name,country,curriculum,subject,level,price,currency,cover_key,cover_mime,isbn").eq("status","published").order("created_at",{ascending:false}).limit(200);
+      if(error)throw error;
+      const items=await Promise.all((books||[]).map(async b=>({...b,cover_url:await createInlineUrl(b.cover_key,String(b.title||"book-cover").replace(/[^a-z0-9_-]/gi,"-")+".jpg",b.cover_mime||"image/jpeg")})));
+      sendJson(res,200,{ok:true,books:items});return true;
+    }catch(error){console.error("Public bookshop catalogue error:",error);sendJson(res,500,{ok:false,error:"The published book catalogue could not be loaded."});return true;}
+  }
+  if(req.method==="POST"&&url.pathname==="/api/books/paystack/checkout"){
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure book checkout requires Supabase."});return true;}
+      const secret=String(process.env.PAYSTACK_SECRET_KEY||"").trim();if(!secret){sendJson(res,503,{ok:false,error:"Paystack is not configured. Contact CBE Nexus support."});return true;}
+      const p=JSON.parse((await readBody(req))||"{}"),bookId=String(p.bookId||"").trim(),email=String(p.email||"").trim().toLowerCase();
+      if(!bookId||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){sendJson(res,400,{ok:false,error:"Choose a book and enter a valid email address."});return true;}
+      const {data:book,error:bookError}=await supabase.from("published_books").select("id,title,seller_id,price,currency,status").eq("id",bookId).eq("status","published").maybeSingle();
+      if(bookError)throw bookError;if(!book){sendJson(res,404,{ok:false,error:"This book is not currently published for sale."});return true;}
+      const quote=await quoteInternationalAmount(Number(book.price),String(book.currency||"KES"));
+      const reference="CBEB-"+crypto.randomBytes(18).toString("hex");
+      const origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.com").replace(/\/$/,"");
+      const {data:sale,error:saleError}=await supabase.from("published_book_sales").insert({book_id:book.id,seller_id:book.seller_id,buyer_email:email,payment_reference:reference,amount:quote.amount,currency:"USD",source_amount:quote.sourceAmount,source_currency:quote.sourceCurrency,exchange_rate:quote.exchangeRate,status:"pending"}).select("id").single();
+      if(saleError)throw saleError;
+      const response=await fetch("https://api.paystack.co/transaction/initialize",{method:"POST",headers:{"Authorization":"Bearer "+secret,"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({email,amount:Math.round(quote.amount*100),currency:"USD",reference,callback_url:origin+"/bookshop.html?book_payment_reference="+encodeURIComponent(reference),metadata:{product:"cbe_nexus_published_book",book_id:book.id,book_title:String(book.title||"").slice(0,180),source_amount:quote.sourceAmount,source_currency:quote.sourceCurrency,exchange_rate:quote.exchangeRate}})});
+      const result=await response.json().catch(()=>({}));
+      if(!response.ok||!result.status||!result.data?.authorization_url){await supabase.from("published_book_sales").update({status:"failed",updated_at:new Date().toISOString()}).eq("id",sale.id);throw new Error(String(result.message||"Paystack could not initialize the book payment."));}
+      sendJson(res,200,{ok:true,authorizationUrl:result.data.authorization_url,reference,amount:quote.amount,currency:"USD",sourceAmount:quote.sourceAmount,sourceCurrency:quote.sourceCurrency,exchangeRate:quote.exchangeRate,saleId:sale.id});return true;
+    }catch(error){console.error("International book checkout error:",error);sendJson(res,502,{ok:false,error:String(error?.message||"International book checkout could not be started.")});return true;}
+  }
+  if(req.method==="GET"&&url.pathname==="/api/books/paystack/verify"){
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure book payment verification requires Supabase."});return true;}
+      const secret=String(process.env.PAYSTACK_SECRET_KEY||"").trim(),reference=String(url.searchParams.get("reference")||"").trim();
+      if(!secret||!/^CBEB-[a-f0-9]{36}$/i.test(reference)){sendJson(res,400,{ok:false,error:"A valid book payment reference is required."});return true;}
+      const {data:sale,error:saleError}=await supabase.from("published_book_sales").select("*").eq("payment_reference",reference).maybeSingle();
+      if(saleError)throw saleError;if(!sale){sendJson(res,404,{ok:false,error:"The book payment order was not found."});return true;}
+      if(!["paid","completed","success"].includes(String(sale.status||"").toLowerCase())){
+        const response=await fetch("https://api.paystack.co/transaction/verify/"+encodeURIComponent(reference),{headers:{"Authorization":"Bearer "+secret,"Accept":"application/json"},signal:AbortSignal.timeout(12000)});
+        const verified=await response.json().catch(()=>({})),tx=verified.data||{};
+        if(!response.ok||!verified.status||String(tx.status||"").toLowerCase()!=="success"){sendJson(res,200,{ok:true,status:"pending"});return true;}
+        if(Number(tx.amount)!==Math.round(Number(sale.amount)*100)||String(tx.currency||"").toUpperCase()!=="USD"||String(tx.reference||"")!==reference||String(tx.customer?.email||"").trim().toLowerCase()!==String(sale.buyer_email||"").toLowerCase()){sendJson(res,400,{ok:false,error:"Verified payment amount, currency, email or reference did not match this book order."});return true;}
+        const sellerAmount=Math.round(Number(sale.amount)*70)/100,platformAmount=Math.round(Number(sale.amount)*30)/100;
+        const {data:updated,error:updateError}=await supabase.from("published_book_sales").update({status:"paid",seller_amount:sellerAmount,platform_amount:platformAmount,paid_at:String(tx.paid_at||new Date().toISOString()),updated_at:new Date().toISOString()}).eq("id",sale.id).select("*").single();
+        if(updateError)throw updateError;
+        sale.status=updated.status;sale.seller_amount=updated.seller_amount;sale.platform_amount=updated.platform_amount;
+      }
+      const {data:book,error:bookError}=await supabase.from("published_books").select("id,title,pdf_key,status").eq("id",sale.book_id).maybeSingle();
+      if(bookError)throw bookError;if(!book){sendJson(res,404,{ok:false,error:"The purchased book record could not be found. Contact CBE Nexus support."});return true;}
+      const downloadUrl=await createDownloadUrl(book.pdf_key,String(book.title||"book").replace(/[^a-z0-9_-]/gi,"-")+".pdf");
+      sendJson(res,200,{ok:true,status:"paid",book:{id:book.id,title:book.title},amount:Number(sale.amount),currency:"USD",sellerShare:Number(sale.seller_amount),platformShare:Number(sale.platform_amount),downloadUrl,expiresIn:300});return true;
+    }catch(error){console.error("International book verification error:",error);sendJson(res,500,{ok:false,error:"The book payment could not be verified securely."});return true;}
+  }
   if(req.method==="GET"&&url.pathname==="/api/seller/books"){
     const username=verifySellerSession(req);if(!username){sendJson(res,401,{ok:false,error:"Please sign in to your seller account."});return true;}
     if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Book publishing requires the permanent Supabase database."});return true;}
     try{const {data:seller,error:se}=await supabase.from("sellers").select("id,name,username,status").eq("username",username).maybeSingle();if(se)throw se;if(!seller){sendJson(res,404,{ok:false,error:"Seller account not found."});return true;}
       const {data:books,error}=await supabase.from("published_books").select("id,title,summary,author_name,country,curriculum,subject,level,price,currency,pdf_key,cover_key,status,isbn_status,isbn,review_notes,created_at,updated_at").eq("seller_id",seller.id).order("created_at",{ascending:false}).limit(200);if(error)throw error;
-      sendJson(res,200,{ok:true,seller:{name:seller.name,username:seller.username,status:seller.status},books:books||[]});return true;
+      const {data:sales,error:salesError}=await supabase.from("published_book_sales").select("id,book_id,amount,currency,seller_amount,platform_amount,status,created_at,paid_at").eq("seller_id",seller.id).order("created_at",{ascending:false}).limit(500);if(salesError)throw salesError;
+      const titleById=new Map((books||[]).map(b=>[String(b.id),b.title]));
+      const bookSales=(sales||[]).map(x=>({...x,book_title:titleById.get(String(x.book_id))||"Published book"}));
+      const earnings=bookSales.filter(x=>["paid","completed","success"].includes(String(x.status||"").toLowerCase())).reduce((sum,x)=>sum+Number(x.seller_amount||0),0);
+      sendJson(res,200,{ok:true,seller:{name:seller.name,username:seller.username,status:seller.status},books:books||[],sales:bookSales,earnings,currency:"USD"});return true;
     }catch(error){console.error("Seller book dashboard error:",error);sendJson(res,500,{ok:false,error:"Your book submissions could not be loaded. Ensure the book-publishing database migration has been applied."});return true;}
   }
   if(req.method==="POST"&&url.pathname==="/api/seller/books"){
@@ -1626,17 +1709,16 @@ async function handleApi(req,res,url){
       if(!resourceId||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){sendJson(res,400,{ok:false,error:"A resource and valid email address are required."});return true;}
       const resource=await findResourceForPayment(resourceId);
       if(!resource||String(resource.status||"").toLowerCase()!=="approved"||!resource.r2_key){sendJson(res,404,{ok:false,error:"This resource is not available for purchase."});return true;}
-      const amount=resourcePrice(resource),currency=String(resource.currency||"KES").toUpperCase();
-      const supported=["KES","USD","NGN","GHS","ZAR"];
-      const minimum={KES:3,USD:2,NGN:50,GHS:0.1,ZAR:1};
-      if(!supported.includes(currency)){sendJson(res,400,{ok:false,error:"Paystack does not support "+currency+" for this marketplace checkout. Choose a Paystack-enabled currency or contact CBE Nexus about another gateway."});return true;}
-      if(amount<Number(minimum[currency]||1)){sendJson(res,400,{ok:false,error:"The minimum Paystack transaction in "+currency+" is "+minimum[currency]+"."});return true;}
+      const sourceAmount=resourcePrice(resource),sourceCurrency=String(resource.currency||"KES").toUpperCase();
+      let quote;
+      try{quote=await quoteInternationalAmount(sourceAmount,sourceCurrency);}catch(quoteError){sendJson(res,400,{ok:false,error:String(quoteError?.message||"International price conversion is unavailable.")});return true;}
+      const amount=quote.amount,currency="USD";
       const reference="CBER-"+crypto.randomBytes(18).toString("hex");
       const origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.com").replace(/\/$/,"");
-      const response=await fetch("https://api.paystack.co/transaction/initialize",{method:"POST",headers:{"Authorization":"Bearer "+secret,"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({email,amount:Math.round(amount*100),currency,reference,callback_url:origin+"/resource-category.html?payment_reference="+encodeURIComponent(reference),metadata:{resource_id:resourceId,product:"cbe_nexus_teacher_resource",resource_title:String(resource.title||"").slice(0,180)}})});
+      const response=await fetch("https://api.paystack.co/transaction/initialize",{method:"POST",headers:{"Authorization":"Bearer "+secret,"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({email,amount:Math.round(amount*100),currency,reference,callback_url:origin+"/resource-category.html?payment_reference="+encodeURIComponent(reference),metadata:{resource_id:resourceId,product:"cbe_nexus_teacher_resource",resource_title:String(resource.title||"").slice(0,180),source_amount:quote.sourceAmount,source_currency:quote.sourceCurrency,kes_usd_rate:quote.exchangeRate}})});
       const result=await response.json().catch(()=>({}));
       if(!response.ok||!result.status||!result.data?.authorization_url)throw new Error(String(result.message||"Paystack could not initialize this currency or merchant account."));
-      const purchase=await savePayment({resource_id:resourceId,customer_phone:"paystack:"+email,amount,currency,payment_provider:"paystack",status:"pending",payment_reference:reference,checkout_request_id:"PAYSTACK-"+reference,merchant_request_id:"",result_code:null,result_desc:"Paystack hosted checkout initialized",mpesa_receipt:null,transaction_time:null});
+      const purchase=await savePayment({resource_id:resourceId,customer_phone:"paystack:"+email,amount,currency,payment_provider:"paystack",status:"pending",payment_reference:reference,checkout_request_id:"PAYSTACK-"+reference,merchant_request_id:"",result_code:null,result_desc:"Paystack hosted checkout initialized; source "+quote.sourceAmount+" "+quote.sourceCurrency+"; KES/USD rate "+quote.exchangeRate,mpesa_receipt:null,transaction_time:null});
       sendJson(res,200,{ok:true,authorizationUrl:result.data.authorization_url,reference,amount,currency,purchaseId:purchase.id});return true;
     }catch(error){console.error("Resource Paystack checkout initialization error:",error);sendJson(res,502,{ok:false,error:String(error?.message||"Secure Paystack checkout could not be started.")});return true;}
   }
@@ -1665,6 +1747,96 @@ async function handleApi(req,res,url){
       const downloadUrl=await createDownloadUrl(resource.r2_key,String(resource.filename||resource.title||"resource"));
       sendJson(res,200,{ok:true,status:"paid",resourceId:resource.id,title:resource.title,downloadUrl,expiresIn:300,currency:purchase.currency||resource.currency||"KES",amount:Number(purchase.amount||0)});return true;
     }catch(error){console.error("Resource Paystack verification error:",error);sendJson(res,500,{ok:false,error:"Paystack payment could not be verified securely."});return true;}
+  }
+  if(req.method==="POST"&&url.pathname==="/api/cv/paystack/checkout"){
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure CV checkout requires Supabase."});return true;}
+      const secret=String(process.env.PAYSTACK_SECRET_KEY||"").trim();
+      if(!secret){sendJson(res,503,{ok:false,error:"Paystack is not configured. Contact CBE Nexus support."});return true;}
+      const p=JSON.parse((await readBody(req))||"{}");
+      const packageId=String(p.packageId||"").trim().toLowerCase();
+      const email=String(p.email||"").trim().toLowerCase();
+      const cvPrices={basic:200,classic:400,professional:800};
+      if(!Object.prototype.hasOwnProperty.call(cvPrices,packageId)||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+        sendJson(res,400,{ok:false,error:"Choose a valid CV package and enter a valid email address."});return true;
+      }
+      let quote;
+      try{quote=await quoteInternationalAmount(cvPrices[packageId],"KES");}
+      catch(error){sendJson(res,400,{ok:false,error:String(error?.message||"International price conversion is unavailable.")});return true;}
+      const reference="CBECV-"+crypto.randomBytes(18).toString("hex");
+      const origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.com").replace(/\/$/,"");
+      const response=await fetch("https://api.paystack.co/transaction/initialize",{method:"POST",headers:{"Authorization":"Bearer "+secret,"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({email,amount:Math.round(quote.amount*100),currency:"USD",reference,callback_url:origin+"/professional-cv-writing.html?cv_payment_reference="+encodeURIComponent(reference),metadata:{product:"cbe_nexus_cv_builder",package:packageId,source_amount:quote.sourceAmount,source_currency:"KES",kes_usd_rate:quote.exchangeRate}})});
+      const result=await response.json().catch(()=>({}));
+      if(!response.ok||!result.status||!result.data?.authorization_url)throw new Error(String(result.message||"Paystack could not initialize international CV checkout."));
+      const purchase=await savePayment({resource_id:null,customer_phone:"paystack:"+email,amount:quote.amount,currency:"USD",payment_provider:"paystack",status:"pending",payment_reference:reference,checkout_request_id:"PAYSTACK-"+reference,merchant_request_id:"",result_code:null,result_desc:"CV "+packageId+" checkout; source KSh "+quote.sourceAmount+"; KES/USD "+quote.exchangeRate,mpesa_receipt:null,transaction_time:null});
+      sendJson(res,200,{ok:true,authorizationUrl:result.data.authorization_url,reference,amount:quote.amount,currency:"USD",purchaseId:purchase.id});return true;
+    }catch(error){console.error("CV Paystack checkout initialization error:",error);sendJson(res,502,{ok:false,error:String(error?.message||"International CV checkout could not be started.")});return true;}
+  }
+  if(req.method==="GET"&&url.pathname==="/api/cv/paystack/verify"){
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure CV payment verification requires Supabase."});return true;}
+      const secret=String(process.env.PAYSTACK_SECRET_KEY||"").trim();
+      const reference=String(url.searchParams.get("reference")||"").trim();
+      if(!secret||!/^CBECV-[a-f0-9]{36}$/i.test(reference)){sendJson(res,400,{ok:false,error:"A valid CV payment reference is required."});return true;}
+      const {data:purchase,error}=await supabase.from("purchases").select("*").eq("payment_reference",reference).maybeSingle();
+      if(error)throw error;
+      if(!purchase||String(purchase.payment_provider||"").toLowerCase()!=="paystack"||!String(purchase.result_desc||"").startsWith("CV ")){sendJson(res,404,{ok:false,error:"CV payment order was not found."});return true;}
+      if(["paid","completed","success"].includes(String(purchase.status||"").toLowerCase())){sendJson(res,200,{ok:true,status:"paid",amount:Number(purchase.amount||0),currency:"USD"});return true;}
+      const verifyResponse=await fetch("https://api.paystack.co/transaction/verify/"+encodeURIComponent(reference),{headers:{"Authorization":"Bearer "+secret,"Accept":"application/json"},signal:AbortSignal.timeout(12000)});
+      const verified=await verifyResponse.json().catch(()=>({}));
+      const tx=verified.data||{};
+      if(!verifyResponse.ok||!verified.status||String(tx.status||"").toLowerCase()!=="success"){sendJson(res,200,{ok:true,status:"pending"});return true;}
+      if(Number(tx.amount)!==Math.round(Number(purchase.amount||0)*100)||String(tx.currency||"").toUpperCase()!=="USD"||String(tx.reference||"")!==reference){sendJson(res,400,{ok:false,error:"The verified CV payment amount, currency or reference did not match this order."});return true;}
+      const {data:updated,error:updateError}=await supabase.from("purchases").update({status:"paid",verified_at:new Date().toISOString(),result_code:0,result_desc:String(purchase.result_desc||"CV payment")+"; Paystack payment verified",mpesa_receipt:reference,transaction_time:String(tx.paid_at||"")}).eq("id",purchase.id).select("*").single();
+      if(updateError)throw updateError;
+      sendJson(res,200,{ok:true,status:"paid",amount:Number(updated.amount||0),currency:"USD"});return true;
+    }catch(error){console.error("CV Paystack verification error:",error);sendJson(res,500,{ok:false,error:"CV payment could not be verified securely."});return true;}
+  }
+  if(req.method==="POST"&&url.pathname==="/api/access/paystack/checkout"){
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure international access checkout requires Supabase."});return true;}
+      const secret=String(process.env.PAYSTACK_SECRET_KEY||"").trim();
+      if(!secret){sendJson(res,503,{ok:false,error:"Paystack is not configured. Contact CBE Nexus support."});return true;}
+      const p=JSON.parse((await readBody(req))||"{}");
+      const resourceId=String(p.resourceId||"").trim();
+      const email=String(p.email||"").trim().toLowerCase();
+      const validPlan=/^subscription:(month|6months|year)$/.test(resourceId);
+      const validGrade=/^grade-package:[1-9]$/.test(resourceId);
+      if((!validPlan&&!validGrade)||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+        sendJson(res,400,{ok:false,error:"Choose a valid access plan or grade package and enter a valid email address."});return true;
+      }
+      const sourceAmount=validGrade?50:({"subscription:month":300,"subscription:6months":700,"subscription:year":1200})[resourceId];
+      let quote;
+      try{quote=await quoteInternationalAmount(sourceAmount,"KES");}
+      catch(error){sendJson(res,400,{ok:false,error:String(error?.message||"Live KES/USD conversion is unavailable.")});return true;}
+      const reference="CBEA-"+crypto.randomBytes(18).toString("hex");
+      const origin=String(process.env.PUBLIC_SITE_URL||"https://cbenexus.com").replace(/\/$/,"");
+      const response=await fetch("https://api.paystack.co/transaction/initialize",{method:"POST",headers:{"Authorization":"Bearer "+secret,"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({email,amount:Math.round(quote.amount*100),currency:"USD",reference,callback_url:origin+"/subscriptions.html?access_payment_reference="+encodeURIComponent(reference),metadata:{product:"cbe_nexus_resource_access",resource_id:resourceId,source_amount:quote.sourceAmount,source_currency:"KES",kes_usd_rate:quote.exchangeRate}})});
+      const result=await response.json().catch(()=>({}));
+      if(!response.ok||!result.status||!result.data?.authorization_url)throw new Error(String(result.message||"Paystack could not initialize this USD payment."));
+      const purchase=await savePayment({resource_id:resourceId,customer_phone:"paystack:"+email,amount:quote.amount,currency:"USD",payment_provider:"paystack",status:"pending",payment_reference:reference,checkout_request_id:"PAYSTACK-"+reference,merchant_request_id:"",result_code:null,result_desc:"Access plan checkout; source KSh "+quote.sourceAmount+"; KES/USD rate "+quote.exchangeRate,mpesa_receipt:null,transaction_time:null});
+      sendJson(res,200,{ok:true,authorizationUrl:result.data.authorization_url,reference,amount:quote.amount,currency:"USD",purchaseId:purchase.id,sourceAmount:quote.sourceAmount,exchangeRate:quote.exchangeRate});return true;
+    }catch(error){console.error("International access checkout error:",error);sendJson(res,502,{ok:false,error:String(error?.message||"International access checkout could not be started.")});return true;}
+  }
+  if(req.method==="GET"&&url.pathname==="/api/access/paystack/verify"){
+    try{
+      if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure payment verification requires Supabase."});return true;}
+      const secret=String(process.env.PAYSTACK_SECRET_KEY||"").trim();
+      const reference=String(url.searchParams.get("reference")||"").trim();
+      if(!secret||!/^CBEA-[a-f0-9]{36}$/i.test(reference)){sendJson(res,400,{ok:false,error:"A valid access payment reference is required."});return true;}
+      const {data:purchase,error}=await supabase.from("purchases").select("*").eq("payment_reference",reference).maybeSingle();
+      if(error)throw error;
+      if(!purchase||String(purchase.payment_provider||"").toLowerCase()!=="paystack"||!/^subscription:(month|6months|year)$|^grade-package:[1-9]$/.test(String(purchase.resource_id||""))){sendJson(res,404,{ok:false,error:"The access payment order was not found."});return true;}
+      if(["paid","completed","success"].includes(String(purchase.status||"").toLowerCase())){sendJson(res,200,{ok:true,status:"paid",resourceId:purchase.resource_id,amount:Number(purchase.amount||0),currency:"USD"});return true;}
+      const response=await fetch("https://api.paystack.co/transaction/verify/"+encodeURIComponent(reference),{headers:{"Authorization":"Bearer "+secret,"Accept":"application/json"},signal:AbortSignal.timeout(12000)});
+      const verified=await response.json().catch(()=>({}));
+      const tx=verified.data||{};
+      if(!response.ok||!verified.status||String(tx.status||"").toLowerCase()!=="success"){sendJson(res,200,{ok:true,status:"pending"});return true;}
+      if(Number(tx.amount)!==Math.round(Number(purchase.amount||0)*100)||String(tx.currency||"").toUpperCase()!=="USD"||String(tx.reference||"")!==reference){sendJson(res,400,{ok:false,error:"Verified payment amount, currency or reference did not match this order."});return true;}
+      const {data:updated,error:updateError}=await supabase.from("purchases").update({status:"paid",verified_at:new Date().toISOString(),result_code:0,result_desc:String(purchase.result_desc||"Access plan")+"; Paystack payment verified",mpesa_receipt:reference,transaction_time:String(tx.paid_at||"")}).eq("id",purchase.id).select("*").single();
+      if(updateError)throw updateError;
+      sendJson(res,200,{ok:true,status:"paid",resourceId:updated.resource_id,amount:Number(updated.amount||0),currency:"USD"});return true;
+    }catch(error){console.error("International access verification error:",error);sendJson(res,500,{ok:false,error:"International payment could not be verified securely."});return true;}
   }
   if(req.method==="POST"&&url.pathname==="/api/mpesa/stk-push"){
     const p=JSON.parse((await readBody(req))||"{}");
@@ -1787,14 +1959,17 @@ async function handleApi(req,res,url){
   if(req.method==="POST"&&url.pathname==="/api/r2/project-upload-url"){const p=JSON.parse((await readBody(req))||"{}");if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required for project uploads."});return true;}if(!p.grade||!p.subject){sendJson(res,400,{ok:false,error:"Project grade and subject are required."});return true;}sendJson(res,200,{ok:true,...await createUploadUrl({...p,type:"CBC Projects"})});return true;}
   if(req.method==="POST"&&url.pathname==="/api/download-approval/request"){
     const p=JSON.parse((await readBody(req))||"{}");
-    const resourceId=String(p.resourceId||"").trim(), phone=normalizeMpesaPhone(p.customerPhone||p.phone||"");
-    if(!resourceId||!phone){sendJson(res,400,{ok:false,error:"Resource and valid customer phone are required."});return true;}
+    const resourceId=String(p.resourceId||"").trim();
+    const email=String(p.email||"").trim().toLowerCase();
+    const requestedReference=String(p.paymentReference||p.checkoutRequestID||"").trim();
+    const phone=normalizeMpesaPhone(p.customerPhone||p.phone||"");
+    const customerIdentity=email&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)&&requestedReference?"paystack:"+email:phone;
+    if(!resourceId||!customerIdentity){sendJson(res,400,{ok:false,error:"Resource and a valid phone number, or the purchaser email plus payment reference, are required."});return true;}
     if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Secure download approvals require Supabase payment verification."});return true;}
     try{
-      const requestedReference=String(p.paymentReference||p.checkoutRequestID||"").trim();
       const resource=await findResourceForPayment(resourceId);
       if(!resource||String(resource.status||"approved").toLowerCase()!=="approved"){sendJson(res,404,{ok:false,error:"The selected resource is not available."});return true;}
-      const {data:entitlements,error:entitlementError}=await supabase.from("purchases").select("*").eq("customer_phone",phone).in("status",["paid","completed","success"]).in("resource_id",["subscription:month","subscription:6months","subscription:year","grade-package:1","grade-package:2","grade-package:3","grade-package:4","grade-package:5","grade-package:6","grade-package:7","grade-package:8","grade-package:9"]).limit(100);
+      const {data:entitlements,error:entitlementError}=await supabase.from("purchases").select("*").eq("customer_phone",customerIdentity).in("status",["paid","completed","success"]).in("resource_id",["subscription:month","subscription:6months","subscription:year","grade-package:1","grade-package:2","grade-package:3","grade-package:4","grade-package:5","grade-package:6","grade-package:7","grade-package:8","grade-package:9"]).limit(100);
       if(entitlementError)throw entitlementError;
       const now=Date.now();
       const gradeNumber=Number(String(resource.grade||"").match(/(?:Grade\s*)?(\d+)/i)?.[1]||0);
@@ -1807,19 +1982,19 @@ async function handleApi(req,res,url){
         return days>0&&now<created+days*86400000;
       });
       if(activeEntitlement){
-        const item={id:"approval-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),resource_id:resourceId,customer_phone:phone,payment_reference:String(activeEntitlement.mpesa_receipt||activeEntitlement.checkout_request_id||""),status:"approved",approved_at:new Date().toISOString()};
+        const item={id:"approval-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),resource_id:resourceId,customer_phone:customerIdentity,payment_reference:String(activeEntitlement.mpesa_receipt||activeEntitlement.checkout_request_id||""),status:"approved",approved_at:new Date().toISOString()};
         const {data,error}=await supabase.from("download_approvals").insert(item).select("*").single();if(error)throw error;
         sendJson(res,201,{ok:true,approval:data,payment:{status:"paid",receipt:activeEntitlement.mpesa_receipt||null},accessPlan:activeEntitlement.resource_id,storage:"supabase"});return true;
       }
       let payment=null;
-      const {data:payments,error:paymentError}=await supabase.from("purchases").select("*").eq("resource_id",resourceId).eq("customer_phone",phone).in("status",["paid","completed","success"]).limit(1);
+      const {data:payments,error:paymentError}=await supabase.from("purchases").select("*").eq("resource_id",resourceId).eq("customer_phone",customerIdentity).in("status",["paid","completed","success"]).limit(1);
       if(paymentError)throw paymentError;
       payment=payments?.[0]||null;
-      if(!payment&&requestedReference){const {data:byRef,error:refError}=await supabase.from("purchases").select("*").eq("checkout_request_id",requestedReference).eq("resource_id",resourceId).eq("customer_phone",phone).maybeSingle();if(refError)throw refError;payment=byRef;}
+      if(!payment&&requestedReference){const {data:byRef,error:refError}=await supabase.from("purchases").select("*").eq("payment_reference",requestedReference).eq("resource_id",resourceId).eq("customer_phone",customerIdentity).maybeSingle();if(refError)throw refError;payment=byRef;}
       if(!payment){sendJson(res,402,{ok:false,error:"No verified M-Pesa payment was found for this resource and phone number."});return true;}
       if(["pending","failed","cancelled"].includes(String(payment.status||"").toLowerCase())){try{payment=await verifyMpesaPaymentByQuery(payment.checkout_request_id)||payment;}catch(error){console.warn("Payment access reconciliation failed:",error.message||error);}}
       if(!["paid","completed","success"].includes(String(payment.status||"").toLowerCase())){sendJson(res,402,{ok:false,error:"Your M-Pesa payment has not been verified yet."});return true;}
-      const item={id:"approval-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),resource_id:resourceId,customer_phone:phone,payment_reference:String(payment.mpesa_receipt||payment.checkout_request_id||requestedReference||""),status:"approved",approved_at:new Date().toISOString()};
+      const item={id:"approval-"+Date.now()+"-"+crypto.randomBytes(4).toString("hex"),resource_id:resourceId,customer_phone:customerIdentity,payment_reference:String(payment.mpesa_receipt||payment.checkout_request_id||requestedReference||""),status:"approved",approved_at:new Date().toISOString()};
       const {data,error}=await supabase.from("download_approvals").insert(item).select("*").single();if(error)throw error;
       sendJson(res,201,{ok:true,approval:data,payment:{status:"paid",receipt:payment.mpesa_receipt||null},storage:"supabase"});return true;
     }catch(error){console.error("Download approval request error:",error);sendJson(res,500,{ok:false,error:"Download request could not be recorded securely."});return true;}
@@ -1979,7 +2154,7 @@ async function handleApi(req,res,url){
     return true;
   }
   if(req.method==="GET"&&url.pathname==="/api/r2/file"){
-    const key=String(url.searchParams.get("key")||"").trim(),resourceId=String(url.searchParams.get("resourceId")||"").trim(),phone=normalizeMpesaPhone(url.searchParams.get("phone")||"");
+    const key=String(url.searchParams.get("key")||"").trim(),resourceId=String(url.searchParams.get("resourceId")||"").trim(),email=String(url.searchParams.get("email")||"").trim().toLowerCase(),paymentReference=String(url.searchParams.get("paymentReference")||"").trim(),phone=normalizeMpesaPhone(url.searchParams.get("phone")||""),customerIdentity=email&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)&&/^CBEA-[a-f0-9]{36}$/i.test(paymentReference)?"paystack:"+email:phone;
     if(!resourceId){sendJson(res,400,{ok:false,error:"Resource ID is required."});return true;}
     let resource=null;
     try{
@@ -1994,12 +2169,13 @@ async function handleApi(req,res,url){
         res.writeHead(302,{"Location":target,"Cache-Control":"no-store","Referrer-Policy":"no-referrer"});
         res.end();return true;
       }
-      if(!key||!phone){sendJson(res,400,{ok:false,error:"A resource, phone number and protected file are required for paid downloads."});return true;}
+      if(!key||!customerIdentity){sendJson(res,400,{ok:false,error:"A resource, phone number or verified international email and payment reference are required for paid downloads."});return true;}
       const protectedResource=await findResourceForPayment(resourceId);
       const resourcePriceForProtectedResource=resourcePrice(protectedResource);
       let validPayments=[];
       if(supabaseConfigured){
-        const {data:payments,error:paymentError}=await supabase.from("purchases").select("*").eq("customer_phone",phone).in("status",["paid","completed","success"]).limit(100);
+        if(email){const {data:referencePurchase,error:referenceError}=await supabase.from("purchases").select("id").eq("customer_phone",customerIdentity).eq("payment_reference",paymentReference).in("status",["paid","completed","success"]).maybeSingle();if(referenceError)throw referenceError;if(!referencePurchase){sendJson(res,403,{ok:false,error:"The international payment reference does not match a verified purchase for this email."});return true;}}
+        const {data:payments,error:paymentError}=await supabase.from("purchases").select("*").eq("customer_phone",customerIdentity).in("status",["paid","completed","success"]).limit(100);
         if(paymentError)throw paymentError;
         const now=Date.now(),gradeNumber=Number(String(protectedResource?.grade||"").match(/(?:Grade\s*)?(\d+)/i)?.[1]||0);
         validPayments=(payments||[]).filter(p=>{
@@ -2024,7 +2200,7 @@ async function handleApi(req,res,url){
       const downloadUrl=await createDownloadUrl(key,fileName);
       if(supabaseConfigured){
         const downloadLog={resource_id:resourceId,purchase_id:entitlement.id||null};
-        const {error}=await supabase.from("downloads").insert({...downloadLog,customer_phone:phone});
+        const {error}=await supabase.from("downloads").insert({...downloadLog,customer_phone:customerIdentity});
         if(error){
           // Older Supabase downloads tables may not have customer_phone yet.
           // Retry without this optional analytics field so a schema mismatch never blocks the secure download.
