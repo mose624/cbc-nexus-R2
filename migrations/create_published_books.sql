@@ -40,7 +40,7 @@ COMMENT ON TABLE public.published_books IS
 
 
 -- Verified international book sales. The seller/platform split is recorded only
--- after Paystack confirms the exact USD amount and reference server-side.
+-- after IntaSend confirms the exact USD amount and reference server-side.
 CREATE TABLE IF NOT EXISTS public.published_book_sales (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   book_id uuid NOT NULL REFERENCES public.published_books(id) ON DELETE RESTRICT,
