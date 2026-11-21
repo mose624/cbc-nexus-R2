@@ -392,7 +392,11 @@ async function quoteInternationalAmount(amount,currency){
   const supported=["KES","USD","GBP","EUR","NGN","GHS","UGX","TZS","ZAR","RWF","INR","PKR","BDT","PHP","AUD","CAD","AED","SAR","BRL","JPY","CNY","ETB"];
   if(!Number.isFinite(Number(amount))||Number(amount)<=0)throw new Error("A valid positive checkout amount is required.");
   if(!supported.includes(code))throw new Error("International checkout does not yet support "+code+". Please contact CBE Nexus.");
-  if(code==="USD")return {amount:Math.round(Number(amount)*100)/100,currency:"USD",sourceAmount:Number(amount),sourceCurrency:"USD",exchangeRate:1};
+  if(code==="USD"){
+    const usd=Math.round(Number(amount)*100)/100;
+    if(usd<2)throw new Error("This item is priced at $"+usd.toFixed(2)+", below Paystack's $2.00 minimum. It cannot be purchased by international card at its current price.");
+    return {amount:usd,currency:"USD",sourceAmount:Number(amount),sourceCurrency:"USD",exchangeRate:1};
+  }
   const exchangeRate=await getInternationalUsdRate(code);
   const usd=Math.round(Number(amount)*exchangeRate*100)/100;
   if(usd<2)throw new Error("This item converts to $"+usd.toFixed(2)+", below Paystack's $2.00 minimum. It cannot be purchased by international card at its current price.");
