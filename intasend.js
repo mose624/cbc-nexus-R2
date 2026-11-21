@@ -28,7 +28,7 @@ async function createCheckout({ email, amount, currency = "USD", apiRef, redirec
   const value = Math.round(Number(amount) * 100) / 100;
   const reference = String(apiRef || "").trim();
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) throw new Error("A valid customer email is required.");
-  if (!Number.isFinite(value) || value < 0.10) throw new Error("IntaSend checkout requires a minimum payment of USD 0.10.");
+  if (!Number.isFinite(value) || value < 2.00) throw new Error("IntaSend checkout requires a minimum payment of USD 2.00.");
   if (String(currency).toUpperCase() !== "USD") throw new Error("CBE Nexus international checkout must use USD.");
   if (!reference || reference.length > 100) throw new Error("A valid unique payment reference is required.");
   const body = {
