@@ -396,7 +396,7 @@ async function quoteInternationalAmount(amount,currency){
   if(code==="USD")return {amount:Math.round(Number(amount)*100)/100,currency:"USD",sourceAmount:Number(amount),sourceCurrency:"USD",exchangeRate:1};
   const exchangeRate=await getInternationalUsdRate(code);
   const usd=Math.round(Number(amount)*exchangeRate*100)/100;
-  if(usd<0.10)throw new Error("This item converts to $"+usd.toFixed(2)+", below IntaSend's $0.10 minimum.");
+  if(usd<2.00)throw new Error("This item converts to $"+usd.toFixed(2)+", below IntaSend's $2.00 minimum.");
   return {amount:usd,currency:"USD",sourceAmount:Number(amount),sourceCurrency:code,exchangeRate};
 }
 async function savePayment(row){if(!supabaseConfigured)throw new Error("Supabase is required for server-side M-Pesa verification.");const {data,error}=await supabase.from("purchases").insert(row).select("*").single();if(error)throw error;return data;}
