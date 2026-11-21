@@ -738,11 +738,15 @@ async function handleApi(req,res,url){
       if(!intasend.matchesExpectedPayment(invoice,expected)){sendJson(res,400,{ok:false,error:"IntaSend payment details did not match the order."});return true;}
       const now=new Date().toISOString();
       if(purchase){
+        let paidPurchase=purchase;
         if(!["paid","completed","success"].includes(String(purchase.status||"").toLowerCase())){
           const {data:updated,error}=await supabase.from("purchases").update({status:"paid",verified_at:now,result_code:0,result_desc:"IntaSend payment verified",mpesa_receipt:checkoutId,transaction_time:now}).eq("id",purchase.id).select("*").single();
           if(error)throw error;
-          await recordSellerEarning(updated);
+          paidPurchase=updated;
         }
+        // Always reconcile the earnings ledger, including webhook retries after
+        // a payment was marked paid but the original ledger write failed.
+        await recordSellerEarning(paidPurchase);
       }else if(sale){
         if(!["paid","completed","success"].includes(String(sale.status||"").toLowerCase())){
           const {error}=await supabase.from("published_book_sales").update({status:"paid",seller_amount:Math.round(Number(sale.amount)*70)/100,platform_amount:Math.round(Number(sale.amount)*30)/100,paid_at:now,updated_at:now}).eq("id",sale.id);
