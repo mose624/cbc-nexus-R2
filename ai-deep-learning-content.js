@@ -87,7 +87,7 @@
  Object.keys(lessons).forEach(slug=>{
   const course=A[slug],items=lessons[slug]; if(!course)return;
   course.priorityAdvancedNotes=true;
-  course.visuals=course.modules.map((m,i)=>({src:infographic(m[0],diagrams[slug][i],explanations[slug],explanations[slug][i]),alt:course.title+" module "+(i+1)+" instructional diagram",caption:"Module "+(i+1)+" learning map: "+diagrams[slug][i].join(" → ")}));
+  course.visuals=course.modules.map((m,i)=>({src:infographic(m[0],diagrams[slug][i],diagrams[slug][i].map(function(label){return "Apply "+label.toLowerCase()+" and verify the result.";}),explanations[slug][i]),alt:course.title+" module "+(i+1)+" instructional diagram",caption:"Module "+(i+1)+" learning map: "+diagrams[slug][i].join(" → ")}));
  });
  E.makeLongNotes=function(slug,course,m,level){
   const old=prior(slug,course,m,level),items=lessons[slug]; if(!items)return old;
