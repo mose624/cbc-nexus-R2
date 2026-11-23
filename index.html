@@ -2812,5 +2812,44 @@
 
 
 
+
+
+<style id="cbe-phone-compact-card-spacing">
+/* Compact phone cards: reduce excessive height, padding and gaps while keeping
+   the three dashboard columns and their internal scrolling usable. */
+@media screen and (max-device-width:760px),
+       screen and (pointer:coarse) and (max-width:1300px){
+  #dashboard.portal-dashboard{gap:2px!important;padding:2px!important;align-items:stretch!important}
+  #dashboard.portal-dashboard>.portal-main,
+  #dashboard.portal-dashboard>.portal-sidebar,
+  #dashboard.portal-dashboard>.portal-rightbar.country-resource-panel{
+    min-height:0!important;height:320px!important;max-height:320px!important;
+    padding:4px!important;margin:0!important;border-radius:5px!important;
+    overflow-y:auto!important;overflow-x:hidden!important;
+  }
+  #dashboard.portal-dashboard>.portal-main{min-height:320px!important}
+  #dashboard.portal-dashboard>.portal-sidebar,
+  #dashboard.portal-dashboard>.portal-rightbar.country-resource-panel{min-height:320px!important}
+  #dashboard.portal-dashboard .portal-category-grid,
+  #dashboard.portal-dashboard .country-resource-grid{gap:2px!important}
+  #dashboard.portal-dashboard .portal-category-grid>a,
+  #dashboard.portal-dashboard .country-resource-button{margin:0!important;padding:3px!important}
+  .cbe-learning-studio,.cbe-homepage-global-fullscreen,.university-snapshot-band{
+    margin:4px 2px!important;padding:6px 4px!important;border-radius:6px!important;
+  }
+  .cbe-learning-studio-heading{margin-bottom:4px!important}
+  .cbe-learning-guide-grid,.cbe-studio-tools-grid,
+  .cbe-homepage-global-fullscreen .cbe-homepage-link-groups,
+  .university-snapshot-grid{gap:2px!important}
+  .cbe-learning-guide-card,.cbe-learning-example,
+  .cbe-learning-check,.cbe-studio-planner,
+  .cbe-homepage-global-fullscreen .cbe-homepage-link-groups>div,
+  .university-snapshot-card{padding:4px!important;border-radius:5px!important}
+  .university-snapshot-image{height:42px!important;margin:-4px -4px 4px!important}
+  .cbe-learning-guide-card h3,.university-snapshot-card h3{margin:2px 0!important}
+  .cbe-learning-guide-card p,.university-snapshot-card p{margin:2px 0!important}
+}
+</style>
+
 </body>
 </html>
