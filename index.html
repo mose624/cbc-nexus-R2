@@ -2853,3 +2853,72 @@
 
 </body>
 </html>
+
+
+<style id="cbe-phone-primary-nav-fit-screen">
+/* Keep the search control and every primary navigation button visible together
+   on phone screens, including Android browsers using Desktop site. */
+@media screen and (max-device-width:760px),
+       screen and (pointer:coarse) and (max-width:1300px) {
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav {
+    display:grid!important;
+    grid-template-columns:repeat(9,minmax(0,1fr))!important;
+    align-items:stretch!important;
+    gap:2px!important;
+    width:100%!important;min-width:0!important;max-width:100%!important;
+    height:auto!important;min-height:0!important;
+    padding:3px 3px!important;margin:0!important;
+    overflow:visible!important;box-sizing:border-box!important;
+  }
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav > .nav-menu {
+    display:contents!important;
+  }
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav > .nav-menu > a.nav-link,
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav > .nav-menu > details.nav-dropdown {
+    display:block!important;position:relative!important;
+    width:100%!important;min-width:0!important;max-width:100%!important;
+    height:30px!important;min-height:30px!important;max-height:30px!important;
+    margin:0!important;box-sizing:border-box!important;
+  }
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav > .nav-menu > a.nav-link,
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav > .nav-menu > details.nav-dropdown > summary {
+    display:flex!important;align-items:center!important;justify-content:center!important;
+    width:100%!important;min-width:0!important;max-width:100%!important;
+    height:30px!important;min-height:30px!important;max-height:30px!important;
+    padding:2px 1px!important;margin:0!important;box-sizing:border-box!important;
+    font-family:Arial,Helvetica,sans-serif!important;
+    font-size:clamp(5px,1.05vw,8px)!important;
+    font-weight:750!important;line-height:1.05!important;
+    white-space:normal!important;overflow:hidden!important;
+    overflow-wrap:anywhere!important;text-overflow:clip!important;
+    text-align:center!important;letter-spacing:-.1px!important;
+    border-radius:5px!important;
+  }
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav > .nav-menu > details.nav-dropdown > summary {
+    list-style:none!important;cursor:pointer!important;touch-action:manipulation!important;
+  }
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav > .nav-menu > details.nav-dropdown > summary::-webkit-details-marker {
+    display:none!important;
+  }
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav > .nav-menu > details.nav-dropdown > summary span {
+    display:none!important;
+  }
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav .cbe-header-search {
+    display:flex!important;grid-column:auto!important;
+    width:100%!important;min-width:0!important;max-width:100%!important;
+    height:30px!important;min-height:30px!important;margin:0!important;padding:2px!important;
+    box-sizing:border-box!important;overflow:hidden!important;
+  }
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav .cbe-header-search input {
+    display:block!important;width:100%!important;min-width:0!important;max-width:100%!important;
+    height:24px!important;padding:1px 2px!important;margin:0!important;
+    font-size:clamp(5px,1vw,7px)!important;line-height:1!important;
+    box-sizing:border-box!important;
+  }
+  header.site-header.cbe-header-v2 nav.main-nav.cbe-primary-nav .nav-dropdown[open] > .dropdown-panel {
+    position:fixed!important;top:76px!important;left:6px!important;right:6px!important;
+    width:auto!important;min-width:0!important;max-width:none!important;
+    max-height:65vh!important;overflow-y:auto!important;z-index:2147483647!important;
+  }
+}
+</style>
