@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <!-- Country URLs should expose their own country dashboard, not the global 196-country directory.
      Apply this route flag before the body is parsed to avoid duplicate directory content/flash. -->
-<script>(function(){if(/^\\/global-schools\\/[^/]+\\/?$/.test(location.pathname)){document.documentElement.classList.add("cbe-country-route");}})();</script>
+<script>(function(){if(/^\/global-schools\/[^/]+\/?$/.test(location.pathname)){document.documentElement.classList.add("cbe-country-route");}})();</script>
 <style>
 html.cbe-country-route #gsHero,
 html.cbe-country-route #gsDirectory,
