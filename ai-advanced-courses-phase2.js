@@ -20,7 +20,7 @@
  },
  "build-with-ai":{
   caption:"AI-assisted software development: requirements, prototypes, testing and deployment.",
-  images:["photo-1518770660439-4636190af475","photo-155506 раз","photo-1555949963-ff9fe0c870eb","photo-1519389950473-47ba0277781c","photo-1461749280684-dccba630e2f6","photo-1498050108023-c5249f4df085"],
+  images:["photo-1518770660439-4636190af475","photo-1555066931-4365d14bab8c","photo-1555949963-ff9fe0c870eb","photo-1519389950473-47ba0277781c","photo-1461749280684-dccba630e2f6","photo-1498050108023-c5249f4df085"],
   focus:"Treat AI-assisted development as an engineering workflow: specify requirements, inspect generated code, test behaviour, secure data and deploy with rollback and monitoring.",
   example:"A learner wants to build a study planner. Define the user, inputs, outputs and acceptance criteria. Start with a static interface, then add validated task entry, date handling and local persistence. Test empty input, invalid dates, long text, mobile layout and keyboard navigation. Review dependencies and never expose API secrets in browser code.",
   safeguards:"Do not paste private keys, passwords, production database credentials or personal records into prompts. Validate all inputs, enforce authorisation on the server, escape untrusted content, use HTTPS, review dependencies and test failure states. AI-generated code must be reviewed and tested before deployment.",
