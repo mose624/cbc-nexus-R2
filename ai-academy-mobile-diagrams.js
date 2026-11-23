@@ -27,6 +27,6 @@
  }
  Object.keys(stages).forEach(slug=>{
   const course=A[slug];if(!course)return;
-  course.visuals=course.modules.map((m,i)=>({src:diagram(m[0],stages[slug][i].slice(0,4),stages[slug][i].slice(0,4).map(label=>"Apply "+label.toLowerCase()+" and verify the result.")),alt:course.title+" module "+(i+1)+" four-step learning diagram",caption:"Module "+(i+1)+" concept map: "+stages[slug][i].slice(0,4).join(" → ")}));
+  course.visuals=course.modules.map((m,i)=>{const labels=["Core idea","Method","Worked application","Verification"];const notes=[m[1]||"Understand the module objective","Define key terms and follow the method","Apply the method to a realistic case","Check evidence, errors and limitations"];return {src:diagram(m[0],labels,notes),alt:course.title+" module "+(i+1)+" four-step learning diagram",caption:"Module "+(i+1)+" learning map: "+labels.join(" → ")};});
  });
 })();
