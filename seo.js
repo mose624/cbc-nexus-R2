@@ -49,12 +49,28 @@ function gradePage(req,g,sub){
   if(mathSubject){
    const senior=["10","11","12"].includes(g), subjectName=senior?"Core Mathematics":"Mathematics";
    const title="Grade "+g+" "+subjectName+" Notes & Questions | CBE Nexus";
-   const description=senior
-    ?"Study Grade "+g+" Core Mathematics with curriculum-focused topic guidance, clear worked calculations, revision questions and practice for Kenya senior school learners."
-    :"Study Grade "+g+" Mathematics with CBC/CBE topic guidance, worked examples and revision questions covering number, algebra, geometry, measurement, data handling and problem-solving.";
-   const keywords=senior
-    ?"Grade "+g+" Core Mathematics, Grade "+g+" maths notes, Grade "+g+" mathematics questions, Kenya senior school mathematics, CBE Core Mathematics, mathematics revision, worked examples, algebra, number, functions, geometry, statistics, probability, mathematical reasoning"
-    :"Grade "+g+" Mathematics, Grade "+g+" maths notes, Grade "+g+" mathematics questions, CBC Mathematics, CBE Mathematics, KICD mathematics, number, fractions, decimals, algebra, geometry, measurement, data handling, worked examples, revision questions";
+   const juniorDescriptions={
+    "7":"Grade 7 Mathematics notes, worked examples and CBC/CBE revision questions for number, fractions, decimals, algebra, geometry, measurement and data handling.",
+    "8":"Grade 8 Mathematics notes and revision questions for rational numbers, percentages, rates, algebraic expressions, equations, geometry and statistics.",
+    "9":"Grade 9 Mathematics revision with worked examples and practice in algebra, equations, graphs, geometry, trigonometry, statistics and KJSEA preparation."
+   };
+   const seniorDescriptions={
+    "10":"Grade 10 Core Mathematics study support with topic guidance, worked calculations and curriculum-focused revision questions for senior school learners.",
+    "11":"Grade 11 Core Mathematics revision with topic guidance, worked calculations and practice questions for Kenya senior school learners.",
+    "12":"Grade 12 Core Mathematics revision support with worked calculations, topic practice and questions to strengthen senior school mathematics skills."
+   };
+   const description=senior?seniorDescriptions[g]:juniorDescriptions[g];
+   const juniorKeywords={
+    "7":"Grade 7 Mathematics, Grade 7 maths notes, Grade 7 maths questions, CBC Mathematics, KICD mathematics, integers, fractions, decimals, ratio, basic algebra, geometry, measurement, data handling, worked examples",
+    "8":"Grade 8 Mathematics, Grade 8 maths notes, Grade 8 maths questions, rational numbers, percentages, rates, algebraic expressions, equations, geometry, transformations, statistics, CBC revision, worked examples",
+    "9":"Grade 9 Mathematics, Grade 9 maths notes, Grade 9 maths questions, KJSEA Mathematics revision, indices, algebra, linear equations, graphs, geometry, trigonometry, statistics, probability, worked examples"
+   };
+   const seniorKeywords={
+    "10":"Grade 10 Core Mathematics, Grade 10 maths notes, Grade 10 mathematics questions, Kenya senior school CBE, number, algebra, functions, geometry, measurement, statistics, probability, worked calculations, revision practice",
+    "11":"Grade 11 Core Mathematics, Grade 11 maths notes, Grade 11 mathematics questions, Kenya senior school CBE, algebra, functions, mathematical reasoning, geometry, trigonometry, statistics, probability, worked calculations, revision",
+    "12":"Grade 12 Core Mathematics, Grade 12 maths notes, Grade 12 mathematics questions, Kenya senior school CBE, mathematics revision, algebra, functions, geometry, data analysis, probability, mathematical reasoning, worked calculations"
+   };
+   const keywords=senior?seniorKeywords[g]:juniorKeywords[g];
    const extra=[
     {url:"/global-mathematics.html",label:"Global Mathematics Learning Hub"},
     {url:"/international-mathematics-practice.html",label:"International Mathematics Practice"},
