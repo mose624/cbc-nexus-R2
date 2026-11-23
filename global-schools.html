@@ -1,5 +1,13 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Country URLs should expose their own country dashboard, not the global 196-country directory.
+     Apply this route flag before the body is parsed to avoid duplicate directory content/flash. -->
+<script>(function(){if(/^\\/global-schools\\/[^/]+\\/?$/.test(location.pathname)){document.documentElement.classList.add("cbe-country-route");}})();</script>
+<style>
+html.cbe-country-route #gsHero,
+html.cbe-country-route #gsDirectory,
+html.cbe-country-route #gsSearchWrap{display:none!important}
+</style>
 <title>Global Schools Directory: Education Systems & National Exams by Country | CBE Nexus</title>
 <meta name="description" content="Explore education systems, national exams, school directories and learning resources across 196 countries.">
 <meta name="robots" content="index,follow,max-image-preview:large"><link rel="canonical" href="https://cbenexus.com/global-schools"><meta property="og:type" content="website"><meta property="og:site_name" content="CBE Nexus"><meta property="og:title" content="Global Schools Directory: Education Systems & National Exams by Country | CBE Nexus"><meta property="og:description" content="Explore education systems, national exams, school directories and learning resources across 196 countries."><meta property="og:url" content="https://cbenexus.com/global-schools"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Global Schools Directory | CBE Nexus"><meta name="twitter:description" content="Explore country education systems, national examinations, school directories, curricula and online learning resources."><link rel="stylesheet" href="/styles.css?v=20261002-01">
