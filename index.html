@@ -2774,5 +2774,37 @@
 }
 </style>
 
+
+<style id="cbe-dashboard-phone-desktop-mode-fix">
+/* Android/iOS browser "Desktop site" can expose a wide CSS viewport on a small phone.
+   Match the reference layout using the physical device width as well as the CSS viewport. */
+@media screen and (max-device-width:760px),
+       screen and (pointer:coarse) and (max-width:1300px){
+  #dashboard.portal-dashboard{
+    display:grid!important;
+    grid-template-columns:minmax(0,30fr) minmax(0,40fr) minmax(0,30fr)!important;
+    gap:8px!important;align-items:stretch!important;
+    width:100%!important;max-width:none!important;padding:6px!important;
+    box-sizing:border-box!important;overflow:visible!important;
+  }
+  #dashboard.portal-dashboard>.portal-main,
+  #dashboard.portal-dashboard>.portal-sidebar,
+  #dashboard.portal-dashboard>.portal-rightbar.country-resource-panel{
+    grid-row:1!important;min-width:0!important;width:auto!important;max-width:none!important;
+    margin:0!important;box-sizing:border-box!important;
+  }
+  #dashboard.portal-dashboard>.portal-main{grid-column:1!important;min-height:460px!important;overflow:hidden!important}
+  #dashboard.portal-dashboard>.portal-sidebar{grid-column:2!important;height:460px!important;min-height:460px!important;max-height:460px!important;overflow-y:auto!important;overflow-x:hidden!important}
+  #dashboard.portal-dashboard>.portal-rightbar.country-resource-panel{grid-column:3!important;height:460px!important;min-height:460px!important;max-height:460px!important;overflow-y:auto!important;overflow-x:hidden!important}
+  .cbe-learning-guide-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important}
+  .cbe-learning-example{display:grid!important;grid-template-columns:minmax(0,1.2fr) minmax(0,.9fr)!important;gap:7px!important}
+  .cbe-studio-tools-grid{display:grid!important;grid-template-columns:minmax(0,1.15fr) minmax(0,.95fr)!important;gap:7px!important}
+  .cbe-homepage-global-fullscreen .cbe-homepage-link-groups{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .university-snapshot-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #dashboard.portal-dashboard>.portal-main h1{font-size:clamp(15px,2vw,22px)!important;line-height:1.35!important}
+  #dashboard.portal-dashboard>.portal-main p{font-size:clamp(10px,1.2vw,13px)!important;line-height:1.45!important}
+}
+</style>
+
 </body>
 </html>
