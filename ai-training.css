@@ -623,3 +623,10 @@ html body.ai-academy-page>header.ai-nav.academy-unified-header nav a:hover{
  .ai-academy-page input,.ai-academy-page select,.ai-academy-page textarea{max-width:100%!important;min-width:0!important}
 }
 @media(max-width:420px){.ai-academy-page .module-list,.ai-academy-page .course-grid,.ai-academy-page .ai-course-grid{grid-template-columns:1fr!important}}
+
+
+/* Illustrated lesson-note figures for the priority AI Academy courses */
+.ai-lesson-visual{margin:22px 0 30px;background:#f4f8fc;border:1px solid #d9e5f0;border-radius:14px;overflow:hidden;box-shadow:0 8px 24px rgba(7,29,73,.08)}
+.ai-lesson-visual img{display:block;width:100%;height:clamp(190px,32vw,360px);object-fit:cover;object-position:center}
+.ai-lesson-visual figcaption{padding:11px 15px;color:#52647a;font-size:.86rem;line-height:1.5}
+@media(max-width:640px){.notes-paper{padding:18px}.ai-lesson-visual img{height:210px}}
