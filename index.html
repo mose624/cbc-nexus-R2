@@ -2862,5 +2862,46 @@
 }
 </style>
 
+
+<style id="cbe-phone-no-sideways-scroll">
+/* Stable phone mode: keep every dashboard control inside the screen width. */
+@media screen and (max-width:767px), screen and (max-device-width:767px),
+       screen and (pointer:coarse) and (max-width:767px) {
+  html,body{width:100%!important;max-width:100%!important;overflow-x:clip!important}
+  body{touch-action:pan-y}
+  #dashboard.portal-dashboard{display:flex!important;flex-direction:column!important;align-items:stretch!important;width:100%!important;max-width:100%!important;min-width:0!important;overflow-x:clip!important;box-sizing:border-box!important}
+  #dashboard.portal-dashboard *,
+  #dashboard.portal-dashboard *::before,
+  #dashboard.portal-dashboard *::after{box-sizing:border-box!important;min-width:0!important;max-width:100%}
+  #dashboard.portal-dashboard>.portal-main,
+  #dashboard.portal-dashboard>.portal-sidebar,
+  #dashboard.portal-dashboard>.portal-rightbar.country-resource-panel{width:100%!important;min-width:0!important;max-width:100%!important;overflow-x:clip!important}
+  #dashboard.portal-dashboard .portal-category-grid,
+  #dashboard.portal-dashboard .cbe-learning-guide-grid,
+  #dashboard.portal-dashboard .cbe-learning-example,
+  #dashboard.portal-dashboard .cbe-studio-tools-grid,
+  #dashboard.portal-dashboard .cbe-homepage-link-groups,
+  #dashboard.portal-dashboard .university-snapshot-grid,
+  #dashboard.portal-dashboard .country-resource-grid{display:grid!important;grid-template-columns:minmax(0,1fr)!important;width:100%!important;gap:10px!important}
+  #dashboard.portal-dashboard a,
+  #dashboard.portal-dashboard button,
+  #dashboard.portal-dashboard input,
+  #dashboard.portal-dashboard select,
+  #dashboard.portal-dashboard textarea{max-width:100%!important;white-space:normal!important;overflow-wrap:anywhere!important}
+  #dashboard.portal-dashboard .portal-search-shortcut a,
+  #dashboard.portal-dashboard .portal-category-grid>a,
+  #dashboard.portal-dashboard .country-resource-button,
+  #dashboard.portal-dashboard .cbe-learning-read,
+  #dashboard.portal-dashboard .primary-button,
+  #dashboard.portal-dashboard .ghost-button,
+  #dashboard.portal-dashboard .cbe-studio-planner button{width:100%!important;min-height:44px!important;display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important}
+  #dashboard.portal-dashboard .grade-list,
+  #dashboard.portal-dashboard .country-resource-grid{max-height:none!important;overflow:visible!important}
+  #dashboard.portal-dashboard .portal-welcome,
+  #dashboard.portal-dashboard .cbe-learning-studio,
+  #dashboard.portal-dashboard .cbe-homepage-global-fullscreen,
+  #dashboard.portal-dashboard .university-snapshot-band{width:100%!important;max-width:100%!important;margin-left:0!important;margin-right:0!important}
+}
+</style>
 </body>
 </html>
