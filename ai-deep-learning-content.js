@@ -67,7 +67,7 @@
  "ai-automation":["Map the real process before choosing an automation tool.","Authenticate, validate and document every integration boundary.","AI suggests; deterministic rules validate and route.","Collect only the data needed for the stated purpose.","Retries must not create duplicate business effects.","Production workflows need ownership and a recovery path."]
  };
  function xml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&apos;"}[c]));}
- function infographic(title,stages,notes){
+ function infographic(title,stages,notes,takeaway){
   const W=1280,H=510,cardW=276,gap=28,start=32;
   const cards=stages.map((label,i)=>{
    const x=start+i*(cardW+gap), fill=["#e8f1ff","#e7f7ef","#fff4d8","#fbeaf2"][i];
@@ -81,13 +81,13 @@
     lines.slice(0,3).map((t,j)=>'<text x="'+(x+22)+'" y="'+(292+j*23)+'" font-family="Arial" font-size="15" fill="#334155">'+xml(t)+'</text>').join("");
   }).join("");
   const arrows=stages.slice(0,-1).map((_,i)=>{const x=start+(i+1)*cardW+i*gap;return '<path d="M'+(x+2)+' 258 h24 m-8 -8 l8 8 -8 8" fill="none" stroke="#53677f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>';}).join("");
-  const svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'"><rect width="'+W+'" height="'+H+'" rx="24" fill="#f7faff"/><text x="34" y="58" font-family="Arial" font-size="30" font-weight="700" fill="#102b4e">'+xml(title)+'</text><text x="34" y="98" font-family="Arial" font-size="17" fill="#52647a">CBE Nexus AI Academy • Module learning map</text><path d="M34 122 H1244" stroke="#d5dfeb" stroke-width="2"/>'+cards+arrows+'<rect x="32" y="405" width="1216" height="68" rx="14" fill="#eaf0f8"/><text x="54" y="434" font-family="Arial" font-size="15" font-weight="700" fill="#173b69">LEARNING CHECK</text><text x="54" y="456" font-family="Arial" font-size="16" fill="#334155">'+xml(explanations[Object.keys(diagrams).find(k=>title.indexOf(k.replace(/-/g," "))>=0)]?.[0]||"Follow each stage, check the source evidence and record what requires human judgement.")+'</text></svg>';
+  const svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'"><rect width="'+W+'" height="'+H+'" rx="24" fill="#f7faff"/><text x="34" y="58" font-family="Arial" font-size="30" font-weight="700" fill="#102b4e">'+xml(title)+'</text><text x="34" y="98" font-family="Arial" font-size="17" fill="#52647a">CBE Nexus AI Academy • Module learning map</text><path d="M34 122 H1244" stroke="#d5dfeb" stroke-width="2"/>'+cards+arrows+'<rect x="32" y="405" width="1216" height="68" rx="14" fill="#eaf0f8"/><text x="54" y="434" font-family="Arial" font-size="15" font-weight="700" fill="#173b69">LEARNING CHECK</text><text x="54" y="456" font-family="Arial" font-size="16" fill="#334155">'+xml(takeaway||"Follow each stage, check the source evidence and record what requires human judgement.")+'</text></svg>';
   return "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg);
  }
  Object.keys(lessons).forEach(slug=>{
   const course=A[slug],items=lessons[slug]; if(!course)return;
   course.priorityAdvancedNotes=true;
-  course.visuals=course.modules.map((m,i)=>({src:infographic(m[0],diagrams[slug][i],explanations[slug]),alt:course.title+" module "+(i+1)+" instructional diagram",caption:"Module "+(i+1)+" learning map: "+diagrams[slug][i].join(" → ")}));
+  course.visuals=course.modules.map((m,i)=>({src:infographic(m[0],diagrams[slug][i],explanations[slug],explanations[slug][i]),alt:course.title+" module "+(i+1)+" instructional diagram",caption:"Module "+(i+1)+" learning map: "+diagrams[slug][i].join(" → ")}));
  });
  E.makeLongNotes=function(slug,course,m,level){
   const old=prior(slug,course,m,level),items=lessons[slug]; if(!items)return old;
