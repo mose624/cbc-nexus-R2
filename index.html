@@ -2587,7 +2587,7 @@
 @media (min-width: 901px){
   #dashboard.portal-dashboard{
     display:grid!important;
-    grid-template-columns:minmax(0,30%) minmax(0,38%) minmax(0,32%)!important;
+    grid-template-columns:minmax(0,30fr) minmax(0,38fr) minmax(0,32fr)!important;
     gap:12px!important;
     align-items:stretch!important;
     width:100%!important;
@@ -2727,6 +2727,49 @@
   .cbe-learning-studio.cbe-learning-studio-full-row .cbe-learning-example{
     display:grid!important;
     grid-template-columns:minmax(0,1.2fr) minmax(0,.9fr)!important;
+  }
+}
+</style>
+
+
+<style id="cbe-dashboard-all-screen-stability">
+/* Keep the reference dashboard stable at desktop, tablet and phone widths. */
+#dashboard.portal-dashboard,
+#dashboard.portal-dashboard > .portal-main,
+#dashboard.portal-dashboard > .portal-sidebar,
+#dashboard.portal-dashboard > .portal-rightbar.country-resource-panel{
+  box-sizing:border-box!important;min-width:0!important;
+}
+@media (min-width:768px) and (max-width:900px){
+  #dashboard.portal-dashboard{
+    display:grid!important;
+    grid-template-columns:minmax(0,30fr) minmax(0,38fr) minmax(0,32fr)!important;
+    gap:8px!important;align-items:stretch!important;
+    width:100%!important;max-width:none!important;padding:6px!important;
+  }
+  #dashboard.portal-dashboard > .portal-main,
+  #dashboard.portal-dashboard > .portal-sidebar,
+  #dashboard.portal-dashboard > .portal-rightbar.country-resource-panel{
+    grid-row:1!important;width:auto!important;max-width:none!important;
+    min-width:0!important;margin:0!important;
+  }
+  #dashboard.portal-dashboard > .portal-main{grid-column:1!important;min-height:460px!important;overflow:hidden!important}
+  #dashboard.portal-dashboard > .portal-sidebar{grid-column:2!important;height:460px!important;max-height:460px!important;overflow:auto!important}
+  #dashboard.portal-dashboard > .portal-rightbar.country-resource-panel{grid-column:3!important;height:460px!important;min-height:460px!important;max-height:460px!important;overflow:auto!important}
+}
+@media (min-width:901px){
+  #dashboard.portal-dashboard{
+    grid-template-columns:minmax(0,30fr) minmax(0,38fr) minmax(0,32fr)!important;
+    overflow:visible!important;
+  }
+}
+@media (max-width:767px){
+  html,body{max-width:100%;overflow-x:hidden}
+  #dashboard.portal-dashboard{overflow:visible!important}
+  #dashboard.portal-dashboard > .portal-main,
+  #dashboard.portal-dashboard > .portal-sidebar,
+  #dashboard.portal-dashboard > .portal-rightbar.country-resource-panel{
+    min-width:0!important;overflow-wrap:anywhere!important;
   }
 }
 </style>
