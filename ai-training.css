@@ -634,8 +634,8 @@ html body.ai-academy-page>header.ai-nav.academy-unified-header nav a:hover{
 
 /* Deep AI Academy diagrams: preserve the complete labelled illustration on desktop and mobile. */
 .notes-page .ai-lesson-visual{background:#f7faff!important}
-.notes-page .ai-lesson-visual img{width:100%!important;height:auto!important;max-height:none!important;aspect-ratio:1280 / 510;object-fit:contain!important;object-position:center!important;background:#f7faff!important}
-@media(max-width:640px){.notes-page .ai-lesson-visual{margin:16px 0 22px}.notes-page .ai-lesson-visual img{height:auto!important;aspect-ratio:1280 / 510;object-fit:contain!important}}
+.notes-page .ai-lesson-visual img{width:100%!important;height:auto!important;max-height:none!important;aspect-ratio:900 / 610;object-fit:contain!important;object-position:center!important;background:#f7faff!important}
+@media(max-width:640px){.notes-page .ai-lesson-visual{margin:16px 0 22px}.notes-page .ai-lesson-visual img{height:auto!important;aspect-ratio:900 / 610;object-fit:contain!important}}
 
 /* Readability improvements for long-form researched lesson notes. */
 .notes-page .notes-content section{margin:0 0 22px!important;padding:0 0 18px!important;border-bottom:1px solid #e5edf5}
