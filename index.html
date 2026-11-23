@@ -2903,5 +2903,72 @@
   #dashboard.portal-dashboard .university-snapshot-band{width:100%!important;max-width:100%!important;margin-left:0!important;margin-right:0!important}
 }
 </style>
+
+<style id="cbe-final-phone-vertical-override">
+/* Final phone override: supersedes earlier compact three-column rules, including
+   browsers that request Desktop site and expose a wide CSS viewport on a phone. */
+@media screen and (max-device-width:767px),
+       screen and (pointer:coarse) and (max-width:1300px) {
+  html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!important}
+  body{touch-action:pan-y}
+  #dashboard.portal-dashboard{
+    display:flex!important;flex-direction:column!important;align-items:stretch!important;
+    gap:14px!important;width:100%!important;max-width:100%!important;min-width:0!important;
+    margin:0 auto!important;padding:10px!important;overflow-x:hidden!important;
+    box-sizing:border-box!important;
+  }
+  #dashboard.portal-dashboard>.portal-main,
+  #dashboard.portal-dashboard>.portal-sidebar,
+  #dashboard.portal-dashboard>.portal-rightbar.country-resource-panel{
+    display:block!important;float:none!important;grid-column:auto!important;grid-row:auto!important;
+    width:100%!important;max-width:100%!important;min-width:0!important;
+    height:auto!important;min-height:0!important;max-height:none!important;
+    margin:0!important;overflow:visible!important;box-sizing:border-box!important;
+  }
+  #dashboard.portal-dashboard .portal-category-grid,
+  #dashboard.portal-dashboard .country-resource-grid,
+  .cbe-learning-studio-full-row .cbe-learning-guide-grid,
+  .cbe-learning-studio-full-row .cbe-learning-example,
+  .cbe-learning-studio-full-row .cbe-studio-tools-grid,
+  .cbe-homepage-global-fullscreen .cbe-homepage-link-groups,
+  .university-snapshot-grid{
+    display:grid!important;grid-template-columns:minmax(0,1fr)!important;
+    width:100%!important;max-width:100%!important;min-width:0!important;gap:10px!important;
+  }
+  #dashboard.portal-dashboard *,
+  #dashboard.portal-dashboard *::before,
+  #dashboard.portal-dashboard *::after,
+  .cbe-learning-studio-full-row *,
+  .cbe-homepage-global-fullscreen *,
+  .university-snapshot-band *{
+    box-sizing:border-box!important;min-width:0!important;max-width:100%!important;
+    overflow-wrap:anywhere!important;
+  }
+  #dashboard.portal-dashboard a,
+  #dashboard.portal-dashboard button,
+  #dashboard.portal-dashboard input,
+  #dashboard.portal-dashboard select,
+  #dashboard.portal-dashboard textarea,
+  .cbe-learning-studio-full-row a,
+  .cbe-learning-studio-full-row button,
+  .cbe-learning-studio-full-row input,
+  .cbe-learning-studio-full-row select,
+  .cbe-learning-studio-full-row textarea{
+    width:100%!important;max-width:100%!important;min-height:44px!important;
+    white-space:normal!important;overflow-wrap:anywhere!important;
+  }
+  #dashboard.portal-dashboard .grade-list,
+  #dashboard.portal-dashboard .country-resource-grid{
+    max-height:none!important;overflow:visible!important;
+  }
+  .cbe-learning-studio.cbe-learning-studio-full-row,
+  .cbe-homepage-global-fullscreen,
+  .university-snapshot-band{
+    width:calc(100% - 20px)!important;max-width:100%!important;
+    margin:14px auto!important;padding:14px!important;
+  }
+}
+</style>
+
 </body>
 </html>
