@@ -641,15 +641,15 @@ A broad search such as \`education\` produces an enormous range of material. A m
 Search platforms interpret operators differently. Some automatically combine terms or use different exclusion syntax; consult the platform's help guidance.
 
 ## 2.4 Useful search operators
-Exact phrase: \`"artificial intelligence in education"`
+Exact phrase: \`"artificial intelligence in education"\`
 
-Search a website: \`site:unesco.org artificial intelligence education`
+Search a website: \`site:unesco.org artificial intelligence education\`
 
-Find PDF documents: \`secondary education curriculum filetype:pdf`
+Find PDF documents: \`secondary education curriculum filetype:pdf\`
 
-Exclude a term: \`AI education -advertisements`
+Exclude a term: \`AI education -advertisements\`
 
-Search a domain: \`site:edu research methodology`
+Search a domain: \`site:edu research methodology\`
 
 Operators can narrow results but do not establish that a source is trustworthy.
 
