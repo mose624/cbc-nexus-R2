@@ -3208,7 +3208,8 @@ async function serveStatic(req,res,url){
     const canonical=seo.base(req)+(country?country.url:"/global-schools");
     const countryProfile=country?{...(globalSchools.countryData&&globalSchools.countryData[country.slug]||{}),...(await getCountrySeoProfiles())[country.slug]||{}}:{};
     const indexNames=country&&Array.isArray(countryExamSeoIndex[country.slug])?countryExamSeoIndex[country.slug]:[];
-    const curatedNames=Array.isArray(countryProfile.exams)?countryProfile.exams.map(item=>item&&item.name).filter(Boolean):[];
+    const examDetails=Array.isArray(countryProfile.exams)?countryProfile.exams.filter(item=>item&&typeof item==="object"):[];
+    const curatedNames=examDetails.map(item=>item.name).filter(Boolean);
     const normalizeExamName=value=>String(value||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
     const examNames=[...curatedNames,...indexNames].filter((name,index,list)=>name&&list.findIndex(other=>normalizeExamName(other)===normalizeExamName(name))===index);
     const titleExamNames=examNames.slice(0,2).map(name=>String(name).replace(/\s*\([^)]*\)/g,"").trim()).join(" & ");
@@ -3253,7 +3254,7 @@ async function serveStatic(req,res,url){
         : "Explore "+country.name+"'s education system, school information, curriculum guidance and online learning resources. National examination details are being researched and should be confirmed with the official education authority.");
       html=html.replace(/(<[^>]+id=["']gsIntro["'][^>]*>)[\s\S]*?(<\/[^>]+>)/i,"$1"+escapeHtml(intro)+"$2");
       const examItems=examNames.map(name=>{
-        const detail=(countryProfile.exams||[]).find(item=>item&&normalizeExamName(item.name)===normalizeExamName(name))||{};
+        const detail=examDetails.find(item=>normalizeExamName(item.name)===normalizeExamName(name))||{};
         const sub=[detail.level,detail.body].filter(Boolean).join(" — ");
         const examPath="/global-exams/"+country.slug+"/"+String(name).normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
                 return '<li><a href="'+examPath+'"><strong>'+escapeHtml(name)+'</strong></a>'+(sub?"<p>"+escapeHtml(sub)+"</p>":"")+"</li>";
