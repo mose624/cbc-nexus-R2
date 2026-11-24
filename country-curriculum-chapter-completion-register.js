@@ -6379,43 +6379,74 @@
   {
     "country": "Oman",
     "subjects": {
-      "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
-        "chapterCount": null,
-        "chapters": [],
-        "status": "curriculum-mapping-required"
-      },
-      "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
-        "chapterCount": null,
-        "chapters": [],
-        "status": "curriculum-mapping-required"
-      },
-      "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
-        "chapterCount": null,
-        "chapters": [],
-        "status": "curriculum-mapping-required"
-      },
-      "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
-        "chapterCount": null,
-        "chapters": [],
-        "status": "curriculum-mapping-required"
+        "Biology": {
+          "officialAuthority": "Oman Ministry of Education (MoE), including the Directorate-General of Curriculum Development; official subject curriculum frameworks and the national Omani Curriculum Library.",
+          "officialSyllabusUrl": "https://home.moe.gov.om/ar/library/214?GetLang=en",
+          "examBoard": "Oman Ministry of Education national school assessment system; General Education Diploma (GED) examinations at the end of Grade 12. Check the current subject assessment handbook and examination-year rules.",
+          "languageOfInstruction": "Arabic is the principal language of instruction in public schools; English is taught as a subject and may be used in selected programmes or private/international schools. Confirm the language and curriculum pathway of the individual school.",
+          "chapterCount": null,
+          "chapters": [],
+          "official2026CurriculumFrameworkLibraryUrl": "https://home.moe.gov.om/ar/library/214?GetLang=en",
+          "officialOmaniCurriculumLibraryUrl": "https://home.moe.gov.om/en/manaheg",
+          "officialScienceAssessmentDocumentsUrl": "https://site.moe.gov.om/library/198/page/home.moe",
+          "curriculumVersionNote": "The Ministry's 2026 subject-framework library includes current Science frameworks for Grades 1–6 and 7–8, and separate Biology, Chemistry and Physics frameworks for Grades 9–10 and 11–12. Use the 2026/2027 assessment handbooks where applicable; do not rely on older 2022/2023 resource catalogues as the current syllabus.",
+          "assessmentTransitionNote": "For Grade 12, verify the applicable General Education Diploma subject specification and the current Ministry assessment handbook before preparing examination-specific notes.",
+          "subjectPathwayNote": "Biology is a separate subject with dedicated Ministry curriculum frameworks for Grades 9–10 and Grades 11–12. In Grades 1–8, the Ministry publishes integrated Science frameworks; do not label the earlier integrated Science course as a standalone Biology syllabus.",
+          "officialScienceFrameworkGrades1to6Url": "https://home.moe.gov.om/ar/library/214/show/1731",
+          "officialScienceFrameworkAndSubjectFrameworkLibraryUrl": "https://home.moe.gov.om/ar/library/214?GetLang=en",
+          "status": "MoE-2026-curriculum-framework-library-linked; integrated-Science-Grades-1-8-and-separate-subject-frameworks-Grades-9-12-distinction-recorded; grade-topic-sequence-extraction-pending"
+        },
+        "Chemistry": {
+          "officialAuthority": "Oman Ministry of Education (MoE), including the Directorate-General of Curriculum Development; official subject curriculum frameworks and the national Omani Curriculum Library.",
+          "officialSyllabusUrl": "https://home.moe.gov.om/ar/library/214?GetLang=en",
+          "examBoard": "Oman Ministry of Education national school assessment system; General Education Diploma (GED) examinations at the end of Grade 12. Check the current subject assessment handbook and examination-year rules.",
+          "languageOfInstruction": "Arabic is the principal language of instruction in public schools; English is taught as a subject and may be used in selected programmes or private/international schools. Confirm the language and curriculum pathway of the individual school.",
+          "chapterCount": null,
+          "chapters": [],
+          "official2026CurriculumFrameworkLibraryUrl": "https://home.moe.gov.om/ar/library/214?GetLang=en",
+          "officialOmaniCurriculumLibraryUrl": "https://home.moe.gov.om/en/manaheg",
+          "officialScienceAssessmentDocumentsUrl": "https://site.moe.gov.om/library/198/page/home.moe",
+          "curriculumVersionNote": "The Ministry's 2026 subject-framework library includes current Science frameworks for Grades 1–6 and 7–8, and separate Biology, Chemistry and Physics frameworks for Grades 9–10 and 11–12. Use the 2026/2027 assessment handbooks where applicable; do not rely on older 2022/2023 resource catalogues as the current syllabus.",
+          "assessmentTransitionNote": "For Grade 12, verify the applicable General Education Diploma subject specification and the current Ministry assessment handbook before preparing examination-specific notes.",
+          "subjectPathwayNote": "Chemistry is a separate subject with dedicated Ministry curriculum frameworks for Grades 9–10 and Grades 11–12. In Grades 1–8, the Ministry publishes integrated Science frameworks; do not label the earlier integrated Science course as a standalone Chemistry syllabus.",
+          "officialScienceFrameworkGrades1to6Url": "https://home.moe.gov.om/ar/library/214/show/1731",
+          "officialScienceFrameworkAndSubjectFrameworkLibraryUrl": "https://home.moe.gov.om/ar/library/214?GetLang=en",
+          "status": "MoE-2026-curriculum-framework-library-linked; integrated-Science-Grades-1-8-and-separate-subject-frameworks-Grades-9-12-distinction-recorded; grade-topic-sequence-extraction-pending"
+        },
+        "Physics": {
+          "officialAuthority": "Oman Ministry of Education (MoE), including the Directorate-General of Curriculum Development; official subject curriculum frameworks and the national Omani Curriculum Library.",
+          "officialSyllabusUrl": "https://home.moe.gov.om/ar/library/214?GetLang=en",
+          "examBoard": "Oman Ministry of Education national school assessment system; General Education Diploma (GED) examinations at the end of Grade 12. Check the current subject assessment handbook and examination-year rules.",
+          "languageOfInstruction": "Arabic is the principal language of instruction in public schools; English is taught as a subject and may be used in selected programmes or private/international schools. Confirm the language and curriculum pathway of the individual school.",
+          "chapterCount": null,
+          "chapters": [],
+          "official2026CurriculumFrameworkLibraryUrl": "https://home.moe.gov.om/ar/library/214?GetLang=en",
+          "officialOmaniCurriculumLibraryUrl": "https://home.moe.gov.om/en/manaheg",
+          "officialScienceAssessmentDocumentsUrl": "https://site.moe.gov.om/library/198/page/home.moe",
+          "curriculumVersionNote": "The Ministry's 2026 subject-framework library includes current Science frameworks for Grades 1–6 and 7–8, and separate Biology, Chemistry and Physics frameworks for Grades 9–10 and 11–12. Use the 2026/2027 assessment handbooks where applicable; do not rely on older 2022/2023 resource catalogues as the current syllabus.",
+          "assessmentTransitionNote": "For Grade 12, verify the applicable General Education Diploma subject specification and the current Ministry assessment handbook before preparing examination-specific notes.",
+          "subjectPathwayNote": "Physics is a separate subject with dedicated Ministry curriculum frameworks for Grades 9–10 and Grades 11–12. In Grades 1–8, the Ministry publishes integrated Science frameworks; do not label the earlier integrated Science course as a standalone Physics syllabus.",
+          "officialScienceFrameworkGrades1to6Url": "https://home.moe.gov.om/ar/library/214/show/1731",
+          "officialScienceFrameworkAndSubjectFrameworkLibraryUrl": "https://home.moe.gov.om/ar/library/214?GetLang=en",
+          "status": "MoE-2026-curriculum-framework-library-linked; integrated-Science-Grades-1-8-and-separate-subject-frameworks-Grades-9-12-distinction-recorded; grade-topic-sequence-extraction-pending"
+        },
+        "Mathematics": {
+          "officialAuthority": "Oman Ministry of Education (MoE), including the Directorate-General of Curriculum Development; official subject curriculum frameworks and the national Omani Curriculum Library.",
+          "officialSyllabusUrl": "https://home.moe.gov.om/ar/library/214?GetLang=en",
+          "examBoard": "Oman Ministry of Education national school assessment system; General Education Diploma (GED) examinations at the end of Grade 12. Check the current subject assessment handbook and examination-year rules.",
+          "languageOfInstruction": "Arabic is the principal language of instruction in public schools; English is taught as a subject and may be used in selected programmes or private/international schools. Confirm the language and curriculum pathway of the individual school.",
+          "chapterCount": null,
+          "chapters": [],
+          "official2026CurriculumFrameworkLibraryUrl": "https://home.moe.gov.om/ar/library/214?GetLang=en",
+          "officialOmaniCurriculumLibraryUrl": "https://home.moe.gov.om/en/manaheg",
+          "officialScienceAssessmentDocumentsUrl": "https://site.moe.gov.om/library/198/page/home.moe",
+          "curriculumVersionNote": "The Ministry's 2026 subject-framework library includes current Science frameworks for Grades 1–6 and 7–8, and separate Biology, Chemistry and Physics frameworks for Grades 9–10 and 11–12. Use the 2026/2027 assessment handbooks where applicable; do not rely on older 2022/2023 resource catalogues as the current syllabus.",
+          "assessmentTransitionNote": "For Grade 12, verify the applicable General Education Diploma subject specification and the current Ministry assessment handbook before preparing examination-specific notes.",
+          "subjectPathwayNote": "Mathematics is a distinct subject across school grades. The Grade 11 Omani Curriculum Library lists both Basic Mathematics (الرياضيات الأساسية) and Advanced Mathematics (الرياضيات المتقدمة), with separate student and activity books. Map the learner to the correct track and grade rather than merging the two.",
+          "officialGrade11MathematicsLibraryUrl": "https://home.moe.gov.om/en/manaheg/223/page/2",
+          "status": "MoE-2026-curriculum-framework-library-linked; Grade-11-Basic-and-Advanced-Mathematics-tracks-verified; grade-by-grade-learning-outcome-and-topic-sequence-extraction-pending"
+        }
       }
-    }
   },
   {
     "country": "Pakistan",
