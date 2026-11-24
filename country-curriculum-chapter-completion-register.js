@@ -4903,40 +4903,56 @@
     "country": "Mauritania",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of National Education and Reform of the Education System (MERSE); National Pedagogical Institute (IPN) develops and publishes textbooks and pedagogical resources",
+        "officialSyllabusUrl": "https://www.education.gov.mr/ar/manuels-pedagogiques?page=1",
+        "examBoard": "Ministry of National Education and Reform of the Education System; national BEPC and Baccalaureate examinations (streams C, D, A, O and TM)",
+        "languageOfInstruction": "Arabic and French are both used in the national education system; science and mathematics resources for the scientific streams are commonly published in French. Verify language by grade and stream.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialPedagogicalInstituteUrl": "https://ipn.mr/",
+        "officialMathematicsAndScienceResourcesUrl": "https://www.education.gov.mr/index.php/ar/node/19",
+        "currentTextbookDistributionNote": "Government reported in September 2026 that national programmes for all levels had been completed and digital textbooks made available; 2026–2027 distribution includes more than one million books across 87 titles.",
+        "secondaryStructureNote": "Collège 1AS–4AS, followed by lycée 5AS–7AS; scientific Baccalaureate streams include C (Mathematics) and D (Natural Sciences). Keep Chemistry and Physics mapped to the combined Physics-Chemistry subject where that is how the national resources are published.",
+        "status": "official-MERSE-textbook-portal-and-IPN-science-resources-identified; 2026-2027-programme-rollout-noted; subject-and-stream-specific-topic-sequence-extraction-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of National Education and Reform of the Education System (MERSE); National Pedagogical Institute (IPN) develops and publishes textbooks and pedagogical resources",
+        "officialSyllabusUrl": "https://www.education.gov.mr/ar/manuels-pedagogiques?page=1",
+        "examBoard": "Ministry of National Education and Reform of the Education System; national BEPC and Baccalaureate examinations (streams C, D, A, O and TM)",
+        "languageOfInstruction": "Arabic and French are both used in the national education system; science and mathematics resources for the scientific streams are commonly published in French. Verify language by grade and stream.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialPedagogicalInstituteUrl": "https://ipn.mr/",
+        "officialMathematicsAndScienceResourcesUrl": "https://www.education.gov.mr/index.php/ar/node/19",
+        "currentTextbookDistributionNote": "Government reported in September 2026 that national programmes for all levels had been completed and digital textbooks made available; 2026–2027 distribution includes more than one million books across 87 titles.",
+        "secondaryStructureNote": "Collège 1AS–4AS, followed by lycée 5AS–7AS; scientific Baccalaureate streams include C (Mathematics) and D (Natural Sciences). Keep Chemistry and Physics mapped to the combined Physics-Chemistry subject where that is how the national resources are published.",
+        "status": "official-MERSE-textbook-portal-and-IPN-science-resources-identified; 2026-2027-programme-rollout-noted; subject-and-stream-specific-topic-sequence-extraction-pending"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of National Education and Reform of the Education System (MERSE); National Pedagogical Institute (IPN) develops and publishes textbooks and pedagogical resources",
+        "officialSyllabusUrl": "https://www.education.gov.mr/ar/manuels-pedagogiques?page=1",
+        "examBoard": "Ministry of National Education and Reform of the Education System; national BEPC and Baccalaureate examinations (streams C, D, A, O and TM)",
+        "languageOfInstruction": "Arabic and French are both used in the national education system; science and mathematics resources for the scientific streams are commonly published in French. Verify language by grade and stream.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialPedagogicalInstituteUrl": "https://ipn.mr/",
+        "officialMathematicsAndScienceResourcesUrl": "https://www.education.gov.mr/index.php/ar/node/19",
+        "currentTextbookDistributionNote": "Government reported in September 2026 that national programmes for all levels had been completed and digital textbooks made available; 2026–2027 distribution includes more than one million books across 87 titles.",
+        "secondaryStructureNote": "Collège 1AS–4AS, followed by lycée 5AS–7AS; scientific Baccalaureate streams include C (Mathematics) and D (Natural Sciences). Keep Chemistry and Physics mapped to the combined Physics-Chemistry subject where that is how the national resources are published.",
+        "status": "official-MERSE-textbook-portal-and-IPN-science-resources-identified; 2026-2027-programme-rollout-noted; subject-and-stream-specific-topic-sequence-extraction-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of National Education and Reform of the Education System (MERSE); National Pedagogical Institute (IPN) develops and publishes textbooks and pedagogical resources",
+        "officialSyllabusUrl": "https://www.education.gov.mr/ar/manuels-pedagogiques?page=1",
+        "examBoard": "Ministry of National Education and Reform of the Education System; national BEPC and Baccalaureate examinations (streams C, D, A, O and TM)",
+        "languageOfInstruction": "Arabic and French are both used in the national education system; science and mathematics resources for the scientific streams are commonly published in French. Verify language by grade and stream.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialPedagogicalInstituteUrl": "https://ipn.mr/",
+        "officialMathematicsAndScienceResourcesUrl": "https://www.education.gov.mr/index.php/ar/node/19",
+        "currentTextbookDistributionNote": "Government reported in September 2026 that national programmes for all levels had been completed and digital textbooks made available; 2026–2027 distribution includes more than one million books across 87 titles.",
+        "secondaryStructureNote": "Collège 1AS–4AS, followed by lycée 5AS–7AS; scientific Baccalaureate streams include C (Mathematics) and D (Natural Sciences). Keep Chemistry and Physics mapped to the combined Physics-Chemistry subject where that is how the national resources are published.",
+        "status": "official-MERSE-textbook-portal-and-IPN-science-resources-identified; 2026-2027-programme-rollout-noted; subject-and-stream-specific-topic-sequence-extraction-pending"
       }
     }
   },
