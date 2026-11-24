@@ -7375,7 +7375,22 @@
         "languageOfInstruction": "Kiswahili and English use varies by education level and school context; verify the language policy for the specific programme",
         "chapterCount": null,
         "chapters": [],
-        "status": "official-tie-2023-form-i-iv-syllabus-linked; detailed-competence-and-content-sequence-extraction-pending",
+        "topicInventory": [
+                  {
+                            "grade": "Form I",
+                            "topics": [
+                                      "Meaning, branches and applications of Chemistry",
+                                      "Physical and chemical changes of matter",
+                                      "Chemical elements, compounds and mixtures",
+                                      "Separation of mixtures and solution concepts",
+                                      "Properties of compounds compared with their constituent elements",
+                                      "Periodic table: first 20 elements, metals and non-metals",
+                                      "Chemistry laboratory skills, safety, first aid, fire and firefighting"
+                            ],
+                            "status": "partial-form-i-content-areas-extracted-from-official-syllabus-matrix; not chapter titles"
+                  }
+        ],
+        "status": "partial-official-tie-2023-form-i-content-areas-mapped; forms-ii-iv-extraction-pending",
         "syllabusLevel": "Ordinary Secondary Education — Form I to Form IV (TIE 2023 syllabus)"
       },
       "Physics": {
@@ -7385,7 +7400,23 @@
         "languageOfInstruction": "Kiswahili and English use varies by education level and school context; verify the language policy for the specific programme",
         "chapterCount": null,
         "chapters": [],
-        "status": "official-tie-2023-form-i-iv-syllabus-linked; detailed-competence-and-content-sequence-extraction-pending",
+        "topicInventory": [
+                  {
+                            "grade": "Form I",
+                            "topics": [
+                                      "Meaning, branches and applications of Physics",
+                                      "Fundamental and derived physical quantities and SI units",
+                                      "Linear motion: distance, displacement, speed, velocity and acceleration",
+                                      "Force and its effects",
+                                      "Density and the relationship between density, sinking and floating",
+                                      "Pressure",
+                                      "Work, power and energy",
+                                      "Mechanical properties of matter and experimental investigation"
+                            ],
+                            "status": "partial-form-i-content-areas-extracted-from-official-syllabus-matrix; not chapter titles"
+                  }
+        ],
+        "status": "partial-official-tie-2023-form-i-content-areas-mapped; forms-ii-iv-extraction-pending",
         "syllabusLevel": "Ordinary Secondary Education — Form I to Form IV (TIE 2023 syllabus)"
       },
       "Mathematics": {
@@ -7395,7 +7426,22 @@
         "languageOfInstruction": "Kiswahili and English use varies by education level and school context; verify the language policy for the specific programme",
         "chapterCount": null,
         "chapters": [],
-        "status": "official-tie-2023-form-i-iv-syllabus-linked; detailed-competence-and-content-sequence-extraction-pending",
+        "topicInventory": [
+                  {
+                            "grade": "Form I",
+                            "topics": [
+                                      "Foundations and applications of Mathematics",
+                                      "Rational, irrational and real numbers",
+                                      "Recurring decimals and conversion between decimals and fractions",
+                                      "Representing rational numbers on a number line",
+                                      "Inequalities and absolute values of real numbers",
+                                      "Ratios and proportions",
+                                      "Approximations, rounding, significant figures and decimal places"
+                            ],
+                            "status": "partial-form-i-content-areas-extracted-from-official-syllabus-matrix; not chapter titles"
+                  }
+        ],
+        "status": "partial-official-tie-2023-form-i-content-areas-mapped; forms-ii-iv-extraction-pending",
         "syllabusLevel": "Ordinary Secondary Education — Form I to Form IV (TIE 2023 syllabus)"
       }
     }
