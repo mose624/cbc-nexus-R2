@@ -4250,40 +4250,56 @@
     "country": "Liberia",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
+        "officialAuthority": "Liberia Ministry of Education — Bureau of Curriculum, Research and Textbooks",
         "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "examBoard": "West African Examinations Council (WAEC), Liberia; Liberia Senior High School Certificate Examination (LSHSCE), Grade 12",
+        "languageOfInstruction": "English is the principal language of instruction; local-language arrangements may apply in some schools and programmes.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "ministryCurriculumDownloadUrl": "https://moe.gov.lr/curriculum-download/",
+        "waecSeniorExamUrl": "https://waecliberia.org.lr/lshsceregular/",
+        "draftRevisedCurriculumNoticeUrl": "https://moe.gov.lr/",
+        "curriculumStatusNote": "Ministry website announces a Draft Revised National Curriculum and invites stakeholder inputs; do not treat the draft as final or replace current subject sequence until approved documents are verified.",
+        "status": "official-ministry-curriculum-download-and-WAEC-LSHSCE-pathway-identified; draft-revised-national-curriculum-under-consultation; subject-specific-approved-syllabus-extraction-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
+        "officialAuthority": "Liberia Ministry of Education — Bureau of Curriculum, Research and Textbooks",
         "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "examBoard": "West African Examinations Council (WAEC), Liberia; Liberia Senior High School Certificate Examination (LSHSCE), Grade 12",
+        "languageOfInstruction": "English is the principal language of instruction; local-language arrangements may apply in some schools and programmes.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "ministryCurriculumDownloadUrl": "https://moe.gov.lr/curriculum-download/",
+        "waecSeniorExamUrl": "https://waecliberia.org.lr/lshsceregular/",
+        "draftRevisedCurriculumNoticeUrl": "https://moe.gov.lr/",
+        "curriculumStatusNote": "Ministry website announces a Draft Revised National Curriculum and invites stakeholder inputs; do not treat the draft as final or replace current subject sequence until approved documents are verified.",
+        "status": "official-ministry-curriculum-download-and-WAEC-LSHSCE-pathway-identified; draft-revised-national-curriculum-under-consultation; subject-specific-approved-syllabus-extraction-pending"
       },
       "Physics": {
-        "officialAuthority": null,
+        "officialAuthority": "Liberia Ministry of Education — Bureau of Curriculum, Research and Textbooks",
         "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "examBoard": "West African Examinations Council (WAEC), Liberia; Liberia Senior High School Certificate Examination (LSHSCE), Grade 12",
+        "languageOfInstruction": "English is the principal language of instruction; local-language arrangements may apply in some schools and programmes.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "ministryCurriculumDownloadUrl": "https://moe.gov.lr/curriculum-download/",
+        "waecSeniorExamUrl": "https://waecliberia.org.lr/lshsceregular/",
+        "draftRevisedCurriculumNoticeUrl": "https://moe.gov.lr/",
+        "curriculumStatusNote": "Ministry website announces a Draft Revised National Curriculum and invites stakeholder inputs; do not treat the draft as final or replace current subject sequence until approved documents are verified.",
+        "status": "official-ministry-curriculum-download-and-WAEC-LSHSCE-pathway-identified; draft-revised-national-curriculum-under-consultation; subject-specific-approved-syllabus-extraction-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
+        "officialAuthority": "Liberia Ministry of Education — Bureau of Curriculum, Research and Textbooks",
         "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "examBoard": "West African Examinations Council (WAEC), Liberia; Liberia Senior High School Certificate Examination (LSHSCE), Grade 12",
+        "languageOfInstruction": "English is the principal language of instruction; local-language arrangements may apply in some schools and programmes.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "ministryCurriculumDownloadUrl": "https://moe.gov.lr/curriculum-download/",
+        "waecSeniorExamUrl": "https://waecliberia.org.lr/lshsceregular/",
+        "draftRevisedCurriculumNoticeUrl": "https://moe.gov.lr/",
+        "curriculumStatusNote": "Ministry website announces a Draft Revised National Curriculum and invites stakeholder inputs; do not treat the draft as final or replace current subject sequence until approved documents are verified.",
+        "status": "official-ministry-curriculum-download-and-WAEC-LSHSCE-pathway-identified; draft-revised-national-curriculum-under-consultation; subject-specific-approved-syllabus-extraction-pending"
       }
     }
   },
