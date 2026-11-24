@@ -186,11 +186,196 @@ Deliver a small analytical project containing: a defined decision question; a da
 ## Professional performance criteria
 A professional-quality result is accurate, relevant, reproducible, transparent, privacy-aware, fair, accessible and proportionate to the decision. The analyst must be able to explain the method without relying on the AI system's authority. Human accountability remains essential.`;
 
+  const module2 = `# AI-Assisted Analysis: Asking Better Questions and Producing Reliable Findings
+
+## Learning objectives
+By the end of this module, you should be able to translate a practical problem into a focused analytical question; distinguish descriptive, diagnostic, predictive and prescriptive analysis; select an appropriate AI-assisted task; prepare context and data safely; write structured analytical prompts; review AI-generated calculations and explanations; test alternative interpretations; communicate uncertainty; and retain human accountability for decisions.
+
+## 1. From a vague problem to an analytical question
+Analysis should begin with a decision or learning need, not with a tool. “Use AI to analyse our school data” is an activity, not a clear objective. Ask what decision the analysis should inform, who will use the result, what evidence is available and what would count as a useful answer.
+
+A problem statement describes the gap between the current situation and the desired situation. An analytical question narrows that problem into something that can be investigated with available evidence. For example, “Improve learner performance” is too broad. A more useful question is: “Which Biology topics had the lowest average scores in the latest common assessment, and how many learners were assessed in each topic?” This question identifies the subject, measure, assessment and comparison.
+
+A strong question specifies the population, unit of analysis, variables, time period, comparison and intended use. It should be answerable with lawful, relevant data. If the required data do not exist, the correct next step may be better data collection rather than an AI-generated guess.
+
+## 2. Four major forms of analysis
+Descriptive analysis asks what happened. It summarises existing observations using counts, percentages, averages, distributions and trends. Example: “How many customer orders were received each week?”
+
+Diagnostic analysis asks what may explain what happened. It explores differences, segments, relationships and possible contributing factors. Example: “Which product categories contributed most to the fall in weekly orders?” Diagnostic findings usually suggest explanations; they do not automatically prove causes.
+
+Predictive analysis estimates what may happen under stated assumptions. It may use historical patterns, statistical models or machine learning. Example: “What demand range might be expected next month?” Predictions are uncertain and may fail when conditions change or the historical data do not represent the future.
+
+Prescriptive analysis considers possible actions in light of objectives, constraints, risks and trade-offs. Example: “Given the demand range, current stock and delivery lead times, what replenishment options should a manager compare?” A recommendation is not a command. A human decision-maker must consider factors that may not be represented in the dataset.
+
+These categories can overlap in a project, but the distinction matters. Do not present a descriptive summary as a diagnosis, a correlation as a causal explanation, a forecast as certainty or an AI recommendation as an authorised decision.
+
+## 3. Build an analytical question using a framework
+Use the following sequence:
+1. Decision: what choice or action may be informed?
+2. Audience: who needs the result?
+3. Population: which people, transactions, objects or events are included?
+4. Unit: what does one row represent?
+5. Outcome: what result or measure matters?
+6. Explanatory variables: what factors may be relevant?
+7. Period: what dates or terms are covered?
+8. Comparison: against what group, period, target or baseline?
+9. Constraints: what data, privacy, time or resource limits apply?
+10. Success criterion: what would make the analysis useful?
+
+Example: A shop owner wants to reduce stock-outs. Decision: review reorder levels. Population: products sold in the last six months. Unit: product-day or product-transaction, clearly defined. Outcome: days out of stock. Explanatory fields: sales, stock on hand, delivery time and season. Comparison: products and months. Success criterion: fewer stock-out days without excessive inventory cost.
+
+## 4. Match the AI task to the analytical need
+AI systems can assist with different tasks, but the task must match the question. Classification assigns records to defined categories, such as labelling support tickets by topic. Extraction identifies specified fields from documents, such as invoice date and total. Summarisation condenses a set of records or text while preserving key points. Transformation changes format or structure, such as converting inconsistent date strings into a standard format. Clustering groups similar records when categories are not already defined. Forecasting estimates future values from historical observations. Anomaly detection flags unusual observations for investigation. Question answering retrieves or explains information from supplied context.
+
+Each task has limitations. Classification can mislabel ambiguous examples. Extraction can miss fields or confuse similar values. Summarisation can omit minority views or important exceptions. Clustering depends on representation and settings. Forecasts depend on data quality and changing conditions. Anomaly detection can flag legitimate rare events. Always ask what the tool did, what evidence it used and how its output can be checked.
+
+## 5. Understand the input, process and output
+An AI-assisted analytical workflow has inputs, processing steps and outputs. Inputs may include a clearly defined question, a data dictionary, a de-identified dataset, relevant definitions, time period and constraints. Processing may include profiling, cleaning suggestions, calculation, grouping, visualisation or text interpretation. Outputs may include a quality report, tables, formulas, charts, written findings or recommendations.
+
+The output is only as dependable as the data, instructions, method and verification. A model may generate plausible-looking numbers that were never calculated from the supplied data. It may silently assume a unit, misinterpret a column, overlook missing records or invent a source. Require traceable calculations and check important results independently.
+
+## 6. Prepare data and context before using AI
+Start with an untouched source copy and confirm permission to use the data. Remove direct identifiers and unnecessary sensitive fields. Replace names with non-identifying codes only when a legitimate analytical need remains, and remember that combinations of details can still identify people.
+
+Provide a concise data dictionary: field name, definition, data type, unit, valid range, permitted categories and missing-value meaning. Explain what one row represents, the date range, population and known limitations. Do not ask the AI to infer meanings that the data owner has not defined.
+
+For large datasets, a tool may not process every row or may only inspect a sample. Ask it to state the scope actually analysed. If it cannot access or calculate from the full dataset, do not accept a claim that it reviewed all records. Use an appropriate spreadsheet, database or statistical tool for exact calculations, then use AI to explain or critique the verified results.
+
+## 7. Writing an effective analytical prompt
+A useful prompt includes role, context, task, constraints, output format, quality criteria and verification. The role sets a useful perspective, but does not grant the model real expertise or authority. Context explains the dataset and decision. The task states exactly what to do. Constraints define what must not be assumed or exposed. Output format makes the result easy to inspect. Quality criteria specify what good work looks like. Verification requires evidence, calculations or checks.
+
+Weak prompt: “Analyse these sales and tell me what to do.”
+
+Stronger prompt: “You are assisting a small-business analyst. The attached de-identified table contains one row per completed order from 1 January to 31 March. Fields are order_date, product_category, quantity and net_revenue in KSh. First inspect the fields, missing values, duplicates and date coverage. Then calculate monthly order counts and net revenue by product category. Show formulas or reproducible steps, report denominators, identify any unusual values for review, and separate observations from possible explanations. Do not invent missing data, market benchmarks or causes. Do not recommend a stock purchase without considering current stock and supplier lead time. Return a data-quality table, results table, concise findings, limitations and checks a manager should complete.”
+
+The stronger prompt is more useful because it defines the unit, period, fields, currency, calculations, restrictions and output. It still does not guarantee correctness; the result must be verified.
+
+## 8. Ask for a staged analysis, not an unsupported conclusion
+A staged workflow reduces the risk that a model jumps from raw data to a confident recommendation. Stage one: describe the dataset and identify ambiguities. Stage two: propose quality checks without changing the source. Stage three: calculate specified summaries. Stage four: explain patterns and alternative explanations. Stage five: draft a report that labels observations, interpretations and recommendations separately. Stage six: critique the report for unsupported claims and missing limitations.
+
+At each stage, inspect the output before proceeding. Correct misunderstood fields and stop if the data are inappropriate or the model claims to have performed work it could not perform. For important calculations, use a trusted spreadsheet, database or statistical environment and retain the formula or query.
+
+## 9. Verification methods
+Verification should be proportional to the consequence of error. Check arithmetic with an independent calculation. Reconcile totals with source records. Confirm that percentages use the correct denominator. Inspect date filters and category definitions. Test formulas on small examples with known answers. Compare a sample of extracted records with the originals. Check that all groups and exceptions are represented.
+
+A useful control is a test dataset with deliberately known properties: a blank value, a duplicate key, an invalid date, a valid zero, a rare but legitimate value and a category with inconsistent spelling. The analysis workflow should detect the relevant issues without incorrectly deleting valid records.
+
+Do not rely on an AI system to verify its own answer simply by asking it whether it is correct. Independent checks need evidence outside the generated response.
+
+## 10. Interpret findings with discipline
+A finding describes what the analysis shows. An interpretation explains what it may mean. A recommendation proposes an action. Keep these separate.
+
+Example finding: “The number of orders recorded in March was 12% lower than in February.” Interpretation: “The decline coincided with a period when one product was unavailable, but the available data do not establish that this caused the overall decline.” Recommendation: “Review stock records, marketing activity and customer enquiries before changing reorder policy.”
+
+Use calibrated language. Say “the data show” only when the calculation supports it. Use “may indicate”, “is consistent with” or “requires further investigation” when uncertainty remains. Avoid “proves”, “guarantees” or “caused” unless the research design justifies those claims.
+
+## 11. Alternative explanations and analytical humility
+Every apparent pattern may have more than one explanation. A sales decline could reflect stock availability, seasonality, pricing, a change in recording, fewer operating days or a data import failure. A change in assessment results could reflect the assessment difficulty, cohort composition, attendance, teaching time or marking differences.
+
+Before accepting an explanation, list plausible alternatives and identify what evidence would distinguish them. Ask whether the data cover the whole population or a sample, whether definitions remained stable, and whether an important variable is absent. If evidence is insufficient, report the uncertainty rather than filling the gap with speculation.
+
+## 12. Segment comparisons responsibly
+Segmenting data can reveal differences across classes, regions, products or time periods. However, segments should be defined before looking for a preferred result where possible. Report the number of observations in each group and check whether groups are comparable. Small groups can produce unstable percentages and create privacy risks.
+
+Avoid ranking people or groups using measures that do not account for context. Do not use an aggregate average to hide substantial variation. Where appropriate, show distributions or ranges as well as averages. Explain exclusions and do not suppress unfavourable results without a valid reason.
+
+## 13. Communicating analytical results
+A decision-ready analytical brief usually contains:
+- Title and date.
+- Decision question and intended audience.
+- Data source, period, population and unit of analysis.
+- Method and quality checks.
+- Key results with units and denominators.
+- Visualisations with clear labels.
+- Interpretation and alternative explanations.
+- Limitations and uncertainty.
+- Options or next steps.
+- Human reviewer and approval status.
+
+Keep the main message concise but make the method auditable. Place detailed formulas, definitions or additional tables in an appendix. Use plain language and explain technical terms. A reader should be able to distinguish what is known, what is inferred and what remains uncertain.
+
+## 14. Practical case study: school assessment analysis
+A department head wants to identify topics where learners may need more support. The dataset contains anonymised learner codes, class, topic, assessment score and assessment date. Before analysis, confirm that the same assessment criteria and scoring scale were used, that each row represents one learner-topic result, and that missing scores are not recorded as zero.
+
+A suitable descriptive question is: “For each topic, what were the number of assessed learners, median score and proportion below the agreed proficiency threshold?” This requires a defined threshold, consistent topic labels and clear denominators. A diagnostic follow-up might ask whether the pattern differs by class, but the analyst should check group sizes and assessment comparability.
+
+AI may help draft a query, explain a formula or summarise verified results. The teacher should independently verify counts and calculations, inspect sample scripts and consider language, accessibility and teaching context. The result should guide supportive teaching, not label individual learners or make high-impact decisions automatically.
+
+## 15. Practical case study: small-business sales
+A business owner wants to understand why revenue changed. The dataset includes order date, product, quantity, gross amount, discounts, returns and net revenue. First verify currency, tax treatment, whether cancelled orders are included, and whether net revenue is consistently defined.
+
+Ask: “How did net revenue and order count change by product category and month, and which categories contributed most to the overall change?” Calculate totals from the correct fields, reconcile them with the accounting system and compare like periods. A change in revenue is not necessarily a change in profit; costs and margins may be required for profitability decisions.
+
+AI can propose an analysis structure, but it must not invent customer explanations, market trends or missing cost values. The owner should verify the figures and consider stock, pricing, promotions, returns and seasonality before acting.
+
+## 16. Practical prompt lab
+Prompt A — dataset profiling: “Describe the dataset structure. Identify row meaning, field types, date coverage, missing values, duplicates and invalid values. Do not change the source. List ambiguities that require a data owner's answer.”
+
+Prompt B — descriptive analysis: “Using only the supplied fields and confirmed definitions, calculate the requested counts, totals, medians and percentages. Show formulas or queries, denominators and the number of records used. If a field is missing or unsuitable, say so.”
+
+Prompt C — interpretation: “Separate observed results from interpretations. Give at least three plausible alternative explanations for the main pattern. For each, state what additional evidence would help assess it. Do not infer causation from association.”
+
+Prompt D — report review: “Critique this draft for calculation errors, unsupported claims, missing denominators, unclear units, hidden assumptions, privacy risks, unfair comparisons and missing limitations. Quote the exact sentence that needs revision and suggest a more accurate alternative.”
+
+## 17. Iteration lab: improve the workflow
+Version 1 asks a broad question. Version 2 supplies the decision context and dataset description. Version 3 adds field definitions, units, time period and constraints. Version 4 specifies calculations and output structure. Version 5 adds test cases, independent verification and failure handling.
+
+Run each version on the same lawful test dataset. Record which errors were reduced, which new problems appeared and how much review time was required. A longer prompt is not automatically better; retain instructions that demonstrably improve accuracy, relevance, safety or reproducibility.
+
+## 18. Common failure modes
+Watch for fabricated totals, incorrect date filters, wrong units, denominator errors, double-counting, silent sampling, confusion between gross and net values, inappropriate averages, unexamined outliers, false causal claims, selective reporting and unsupported recommendations. Also watch for overconfident language, hidden tool limitations and exposure of personal or confidential data.
+
+When a failure occurs, preserve the original input and output, describe the error, identify its likely cause, correct the workflow and test it again. Do not quietly edit a report without documenting a material correction.
+
+## 19. Responsible AI and human oversight
+Use the minimum data necessary and only approved tools. Do not upload identifiable learner records, health information, private customer details or confidential financial records to an unapproved service. Respect copyright, licences, consent and institutional rules. Disclose AI assistance when required by policy or the task.
+
+A human must remain responsible for consequential decisions. The reviewer should have access to the source evidence, understand the method, be able to reject the recommendation and provide a route for correcting errors. AI-generated scores or recommendations should not be treated as objective merely because they are numerical.
+
+## 20. Evaluation rubric
+Score the analytical output from 1 to 5 for: clarity of the question; suitability of the method; correct use of data and definitions; reproducibility of calculations; quality of verification; consideration of alternatives; clarity of communication; honest treatment of uncertainty; privacy and fairness; and usefulness for the stated decision. Record evidence for each score and identify any criterion that is not met.
+
+## 21. Module assignment
+Choose a small, lawful and de-identified dataset from education, business, agriculture or a public source. Submit: the problem statement; intended decision and audience; analytical question; data dictionary; task selection and reason; prompt versions; data-quality checks; calculations and independent verification; at least three test cases; findings and alternative explanations; a concise report; limitations; human approval plan; and a 200–300 word reflection.
+
+## Key takeaway
+Good AI-assisted analysis is not asking a model to produce a confident answer. It is defining a useful question, choosing an appropriate method, supplying trustworthy context, checking the output, considering alternative explanations and communicating what the evidence can and cannot support. Human judgement remains essential.`;
+
+  const module2Intermediate = `
+
+## Intermediate practice: design a repeatable analytical workflow
+Select a real but low-risk question. Define the audience, decision, population, unit of analysis, variables, time period and success measure. Write a data dictionary and identify missing definitions before using an AI tool. Produce separate prompts for profiling, descriptive calculations, interpretation and report critique. Keep the source dataset unchanged.
+
+Run the prompts against at least three test cases: a normal dataset, a dataset with missing or duplicate values, and a dataset containing an unusual but valid observation. Compare the outputs with independently calculated results. Record errors, revisions and remaining limitations.
+
+## Intermediate deliverable
+Prepare an analytical brief with the question, method, verified results, denominators, visualisation where appropriate, alternative explanations, limitations and recommended next checks. Include a prompt log and a verification table showing each important claim, how it was checked and the result of that check.
+
+## Intermediate standard
+A competent learner selects a suitable analytical task, structures prompts with clear context and constraints, checks calculations independently and distinguishes findings from explanations. A strong learner also tests edge cases, documents failure handling and explains why a proposed recommendation remains subject to human review.`;
+
+  const module2Advanced = `
+
+## Advanced professional practice: analytical design and governance
+Create a workflow specification before using AI. Identify the data owner, lawful purpose, authorised users, approved tools, data minimisation rules, retention period, decision owner, review threshold and escalation route. Define which outputs are advisory and which actions require explicit approval. Keep a traceable record of dataset version, prompt version, tool/model version where available, calculations, corrections and reviewer sign-off.
+
+## Advanced lab: robustness and challenge testing
+Design a test matrix covering missing values, duplicate records, inconsistent categories, extreme values, changing time periods, small groups, distribution shifts and misleading correlations. Define expected behaviour before running the tool. Evaluate whether the system correctly flags uncertainty, refuses unsupported calculations and avoids inventing explanations. Repeat with reasonable alternative assumptions and document which findings remain stable.
+
+## Advanced lab: compare AI assistance with a baseline
+Complete the same analytical task manually or with a trusted spreadsheet/statistical tool, then compare the AI-assisted workflow. Assess accuracy, completeness, reproducibility, time, review effort and error severity. Do not judge success only by speed or fluent writing. Identify tasks where AI adds value and tasks where conventional calculation or expert judgement is safer.
+
+## Advanced capstone
+Deliver an end-to-end analytical workflow for a defined, low-risk problem. Include a decision statement, data dictionary, permission and privacy assessment, prompt architecture, test matrix, verified calculations, findings, alternative explanations, uncertainty statement, human approval gate and monitoring plan. Present a short demonstration and explain one failure that changed the workflow.
+
+## Advanced performance criteria
+Professional work is accurate, reproducible, proportionate to the decision, transparent about limitations, robust to edge cases, privacy-aware and fair. The analyst can explain every material result and retain accountability for the final recommendation. A tool's confident response is never a substitute for evidence.`;
+
   E.makeLongNotes=function(slug,course,module,level){
     const index=course&&Array.isArray(course.modules)?course.modules.indexOf(module):-1;
-    if(slug==="ai-data-analytics"&&index===0){
+    if(slug==="ai-data-analytics"&&index===1){
       const tier=String(level||"basic").toLowerCase();
-      return core+(tier==="advanced"?advanced:tier==="medium"?intermediate:"");
+      return module2+(tier==="advanced"?module2Advanced:tier==="medium"?module2Intermediate:"");
     }
     return previous(slug,course,module,level);
   };
