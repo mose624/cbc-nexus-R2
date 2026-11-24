@@ -4483,40 +4483,60 @@
     "country": "Madagascar",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Madagascar Ministry of National Education (MEN); Directorate General in charge of Pedagogy and Directorate of Curricula and Pedagogical Research",
+        "officialSyllabusUrl": "https://www.education.gov.mg/repartition-annuelle-du-programme-detudes/",
+        "examBoard": "MEN Directorate of Examinations and Certification for national end-of-cycle examinations such as BEPC; General Baccalaureate organized by services designated by the Ministry of Higher Education and Research and controlled by public universities",
+        "languageOfInstruction": "Malagasy and French are used in the national education system; confirm the actual language of each subject, school and programme before producing translated notes.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialSecondaryProgrammePortalUrl": "https://www.education.gov.mg/systeme-educatif/lycee/",
+        "officialDigitalProgrammeLibraryUrl": "https://plateforme.education.mg/bibliotheque-numerique/course/index.php?categoryid=205",
+        "curriculumReformYear": "2026–2027",
+        "subjectNamingNote": "The national portal lists Mathematics, Physics/Chemistry (combined), and Life and Earth Sciences (SVT). Keep Chemistry and Physics as separate learning areas in CBE Nexus but map both to the official combined subject programme where appropriate.",
+        "assessmentFrameworkNote": "The new study programme applies in 2026–2027 with transitional arrangements for official examinations; do not assume every newly introduced classroom component is examined in 2027.",
+        "status": "official-MEN-secondary-programme-and-digital-library-identified; 2026-2027-curriculum-reform-and-exam-transition-noted; subject-by-subject-topic-extraction-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Madagascar Ministry of National Education (MEN); Directorate General in charge of Pedagogy and Directorate of Curricula and Pedagogical Research",
+        "officialSyllabusUrl": "https://www.education.gov.mg/repartition-annuelle-du-programme-detudes/",
+        "examBoard": "MEN Directorate of Examinations and Certification for national end-of-cycle examinations such as BEPC; General Baccalaureate organized by services designated by the Ministry of Higher Education and Research and controlled by public universities",
+        "languageOfInstruction": "Malagasy and French are used in the national education system; confirm the actual language of each subject, school and programme before producing translated notes.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialSecondaryProgrammePortalUrl": "https://www.education.gov.mg/systeme-educatif/lycee/",
+        "officialDigitalProgrammeLibraryUrl": "https://plateforme.education.mg/bibliotheque-numerique/course/index.php?categoryid=205",
+        "curriculumReformYear": "2026–2027",
+        "subjectNamingNote": "The national portal lists Mathematics, Physics/Chemistry (combined), and Life and Earth Sciences (SVT). Keep Chemistry and Physics as separate learning areas in CBE Nexus but map both to the official combined subject programme where appropriate.",
+        "assessmentFrameworkNote": "The new study programme applies in 2026–2027 with transitional arrangements for official examinations; do not assume every newly introduced classroom component is examined in 2027.",
+        "status": "official-MEN-secondary-programme-and-digital-library-identified; 2026-2027-curriculum-reform-and-exam-transition-noted; subject-by-subject-topic-extraction-pending"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Madagascar Ministry of National Education (MEN); Directorate General in charge of Pedagogy and Directorate of Curricula and Pedagogical Research",
+        "officialSyllabusUrl": "https://www.education.gov.mg/repartition-annuelle-du-programme-detudes/",
+        "examBoard": "MEN Directorate of Examinations and Certification for national end-of-cycle examinations such as BEPC; General Baccalaureate organized by services designated by the Ministry of Higher Education and Research and controlled by public universities",
+        "languageOfInstruction": "Malagasy and French are used in the national education system; confirm the actual language of each subject, school and programme before producing translated notes.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialSecondaryProgrammePortalUrl": "https://www.education.gov.mg/systeme-educatif/lycee/",
+        "officialDigitalProgrammeLibraryUrl": "https://plateforme.education.mg/bibliotheque-numerique/course/index.php?categoryid=205",
+        "curriculumReformYear": "2026–2027",
+        "subjectNamingNote": "The national portal lists Mathematics, Physics/Chemistry (combined), and Life and Earth Sciences (SVT). Keep Chemistry and Physics as separate learning areas in CBE Nexus but map both to the official combined subject programme where appropriate.",
+        "assessmentFrameworkNote": "The new study programme applies in 2026–2027 with transitional arrangements for official examinations; do not assume every newly introduced classroom component is examined in 2027.",
+        "status": "official-MEN-secondary-programme-and-digital-library-identified; 2026-2027-curriculum-reform-and-exam-transition-noted; subject-by-subject-topic-extraction-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Madagascar Ministry of National Education (MEN); Directorate General in charge of Pedagogy and Directorate of Curricula and Pedagogical Research",
+        "officialSyllabusUrl": "https://www.education.gov.mg/repartition-annuelle-du-programme-detudes/",
+        "examBoard": "MEN Directorate of Examinations and Certification for national end-of-cycle examinations such as BEPC; General Baccalaureate organized by services designated by the Ministry of Higher Education and Research and controlled by public universities",
+        "languageOfInstruction": "Malagasy and French are used in the national education system; confirm the actual language of each subject, school and programme before producing translated notes.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialSecondaryProgrammePortalUrl": "https://www.education.gov.mg/systeme-educatif/lycee/",
+        "officialDigitalProgrammeLibraryUrl": "https://plateforme.education.mg/bibliotheque-numerique/course/index.php?categoryid=205",
+        "curriculumReformYear": "2026–2027",
+        "subjectNamingNote": "The national portal lists Mathematics, Physics/Chemistry (combined), and Life and Earth Sciences (SVT). Keep Chemistry and Physics as separate learning areas in CBE Nexus but map both to the official combined subject programme where appropriate.",
+        "assessmentFrameworkNote": "The new study programme applies in 2026–2027 with transitional arrangements for official examinations; do not assume every newly introduced classroom component is examined in 2027.",
+        "status": "official-MEN-secondary-programme-and-digital-library-identified; 2026-2027-curriculum-reform-and-exam-transition-noted; subject-by-subject-topic-extraction-pending"
       }
     }
   },
