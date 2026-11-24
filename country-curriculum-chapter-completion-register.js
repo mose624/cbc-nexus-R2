@@ -6196,40 +6196,40 @@
     "country": "Rwanda",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Rwanda Basic Education Board (REB), Ministry of Education",
+        "officialSyllabusUrl": "https://www.reb.gov.rw/",
+        "examBoard": "National Examination and School Inspection Authority (NESA)",
+        "languageOfInstruction": "Language of instruction must be checked against the current national policy and the school or programme; Rwanda uses Kinyarwanda, English, French and Kiswahili in education contexts",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-curriculum-and-examination-authorities-identified; subject-and-level-specific-syllabus-review-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Rwanda Basic Education Board (REB), Ministry of Education",
+        "officialSyllabusUrl": "https://www.reb.gov.rw/",
+        "examBoard": "National Examination and School Inspection Authority (NESA)",
+        "languageOfInstruction": "Language of instruction must be checked against the current national policy and the school or programme; Rwanda uses Kinyarwanda, English, French and Kiswahili in education contexts",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-curriculum-and-examination-authorities-identified; subject-and-level-specific-syllabus-review-pending"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Rwanda Basic Education Board (REB), Ministry of Education",
+        "officialSyllabusUrl": "https://www.reb.gov.rw/",
+        "examBoard": "National Examination and School Inspection Authority (NESA)",
+        "languageOfInstruction": "Language of instruction must be checked against the current national policy and the school or programme; Rwanda uses Kinyarwanda, English, French and Kiswahili in education contexts",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-curriculum-and-examination-authorities-identified; subject-and-level-specific-syllabus-review-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Rwanda Basic Education Board (REB), Ministry of Education",
+        "officialSyllabusUrl": "https://www.reb.gov.rw/",
+        "examBoard": "National Examination and School Inspection Authority (NESA)",
+        "languageOfInstruction": "Language of instruction must be checked against the current national policy and the school or programme; Rwanda uses Kinyarwanda, English, French and Kiswahili in education contexts",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-curriculum-and-examination-authorities-identified; subject-and-level-specific-syllabus-review-pending"
       }
     }
   },
@@ -7344,40 +7344,40 @@
     "country": "Tanzania",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Tanzania Institute of Education (TIE), Ministry of Education, Science and Technology",
+        "officialSyllabusUrl": "https://www.tie.go.tz/",
+        "examBoard": "National Examinations Council of Tanzania (NECTA)",
+        "languageOfInstruction": "Kiswahili and English use varies by education level and school context; verify the language policy for the specific programme",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-curriculum-authority-and-examination-body-identified; subject-and-level-specific-syllabus-review-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Tanzania Institute of Education (TIE), Ministry of Education, Science and Technology",
+        "officialSyllabusUrl": "https://www.tie.go.tz/",
+        "examBoard": "National Examinations Council of Tanzania (NECTA)",
+        "languageOfInstruction": "Kiswahili and English use varies by education level and school context; verify the language policy for the specific programme",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-curriculum-authority-and-examination-body-identified; subject-and-level-specific-syllabus-review-pending"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Tanzania Institute of Education (TIE), Ministry of Education, Science and Technology",
+        "officialSyllabusUrl": "https://www.tie.go.tz/",
+        "examBoard": "National Examinations Council of Tanzania (NECTA)",
+        "languageOfInstruction": "Kiswahili and English use varies by education level and school context; verify the language policy for the specific programme",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-curriculum-authority-and-examination-body-identified; subject-and-level-specific-syllabus-review-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Tanzania Institute of Education (TIE), Ministry of Education, Science and Technology",
+        "officialSyllabusUrl": "https://www.tie.go.tz/",
+        "examBoard": "National Examinations Council of Tanzania (NECTA)",
+        "languageOfInstruction": "Kiswahili and English use varies by education level and school context; verify the language policy for the specific programme",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-curriculum-authority-and-examination-body-identified; subject-and-level-specific-syllabus-review-pending"
       }
     }
   },
@@ -7754,40 +7754,40 @@
     "country": "Uganda",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "National Curriculum Development Centre (NCDC), Ministry of Education and Sports, Uganda",
+        "officialSyllabusUrl": "https://ncdc.go.ug/",
+        "examBoard": "Uganda National Examinations Board (UNEB)",
+        "languageOfInstruction": "English is the principal language of instruction in secondary education; confirm the applicable school and programme policy",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-curriculum-authority-and-examination-body-identified; subject-and-level-specific-syllabus-review-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "National Curriculum Development Centre (NCDC), Ministry of Education and Sports, Uganda",
+        "officialSyllabusUrl": "https://ncdc.go.ug/",
+        "examBoard": "Uganda National Examinations Board (UNEB)",
+        "languageOfInstruction": "English is the principal language of instruction in secondary education; confirm the applicable school and programme policy",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-curriculum-authority-and-examination-body-identified; subject-and-level-specific-syllabus-review-pending"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "National Curriculum Development Centre (NCDC), Ministry of Education and Sports, Uganda",
+        "officialSyllabusUrl": "https://ncdc.go.ug/",
+        "examBoard": "Uganda National Examinations Board (UNEB)",
+        "languageOfInstruction": "English is the principal language of instruction in secondary education; confirm the applicable school and programme policy",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-curriculum-authority-and-examination-body-identified; subject-and-level-specific-syllabus-review-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "National Curriculum Development Centre (NCDC), Ministry of Education and Sports, Uganda",
+        "officialSyllabusUrl": "https://ncdc.go.ug/",
+        "examBoard": "Uganda National Examinations Board (UNEB)",
+        "languageOfInstruction": "English is the principal language of instruction in secondary education; confirm the applicable school and programme policy",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-curriculum-authority-and-examination-body-identified; subject-and-level-specific-syllabus-review-pending"
       }
     }
   },
@@ -8246,40 +8246,40 @@
     "country": "Zambia",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Directorate of Curriculum Development, Ministry of Education, Zambia",
+        "officialSyllabusUrl": "https://www.edu.gov.zm/?page_id=1142",
+        "examBoard": "Examinations Council of Zambia (ECZ)",
+        "languageOfInstruction": "English is the principal language of instruction in secondary education; verify the language policy for the specific level and school",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-curriculum-authority-and-examination-body-identified; current-cbc-subject-and-level-sequence-review-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Directorate of Curriculum Development, Ministry of Education, Zambia",
+        "officialSyllabusUrl": "https://www.edu.gov.zm/?page_id=1142",
+        "examBoard": "Examinations Council of Zambia (ECZ)",
+        "languageOfInstruction": "English is the principal language of instruction in secondary education; verify the language policy for the specific level and school",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-curriculum-authority-and-examination-body-identified; current-cbc-subject-and-level-sequence-review-pending"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Directorate of Curriculum Development, Ministry of Education, Zambia",
+        "officialSyllabusUrl": "https://www.edu.gov.zm/?page_id=1142",
+        "examBoard": "Examinations Council of Zambia (ECZ)",
+        "languageOfInstruction": "English is the principal language of instruction in secondary education; verify the language policy for the specific level and school",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-curriculum-authority-and-examination-body-identified; current-cbc-subject-and-level-sequence-review-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Directorate of Curriculum Development, Ministry of Education, Zambia",
+        "officialSyllabusUrl": "https://www.edu.gov.zm/?page_id=1142",
+        "examBoard": "Examinations Council of Zambia (ECZ)",
+        "languageOfInstruction": "English is the principal language of instruction in secondary education; verify the language policy for the specific level and school",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-curriculum-authority-and-examination-body-identified; current-cbc-subject-and-level-sequence-review-pending"
       }
     }
   },
