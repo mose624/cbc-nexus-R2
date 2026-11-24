@@ -5202,40 +5202,52 @@
     "country": "Mozambique",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
+        "officialAuthority": "Ministry of Education and Culture (MEC); National Institute for Education Development (INDE) develops curriculum programmes; National Directorate of Secondary Education monitors secondary curriculum implementation",
         "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialProgrammePortalUrl": "https://ieda.gov.mz/site/?page_id=4021",
+        "officialCurriculumDocumentsUrl": "https://www.mec.gov.mz/documentos.php",
+        "curriculumFrameworkUrl": "https://www.mined.gov.mz/assets/docs/plano_curricular_es.pdf",
+        "examBoard": "Instituto Nacional de Exames, Certificação e Equivalências (INECE); national secondary examination and certification authority",
+        "languageOfInstruction": "Portuguese is the principal language of secondary instruction; local Mozambican languages also have educational and inclusion roles. Confirm language arrangements for individual schools and bilingual programmes.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "MEC-official-secondary-curriculum-plan-linked; IEDA-official-repository-lists-current-I-and-II-cycle-subject-programmes; subject-PDF-and-detailed-class-sequence-extraction-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
+        "officialAuthority": "Ministry of Education and Culture (MEC); National Institute for Education Development (INDE) develops curriculum programmes; National Directorate of Secondary Education monitors secondary curriculum implementation",
         "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialProgrammePortalUrl": "https://ieda.gov.mz/site/?page_id=4021",
+        "officialCurriculumDocumentsUrl": "https://www.mec.gov.mz/documentos.php",
+        "curriculumFrameworkUrl": "https://www.mined.gov.mz/assets/docs/plano_curricular_es.pdf",
+        "examBoard": "Instituto Nacional de Exames, Certificação e Equivalências (INECE); national secondary examination and certification authority",
+        "languageOfInstruction": "Portuguese is the principal language of secondary instruction; local Mozambican languages also have educational and inclusion roles. Confirm language arrangements for individual schools and bilingual programmes.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "MEC-official-secondary-curriculum-plan-linked; IEDA-official-repository-lists-current-I-and-II-cycle-subject-programmes; subject-PDF-and-detailed-class-sequence-extraction-pending"
       },
       "Physics": {
-        "officialAuthority": null,
+        "officialAuthority": "Ministry of Education and Culture (MEC); National Institute for Education Development (INDE) develops curriculum programmes; National Directorate of Secondary Education monitors secondary curriculum implementation",
         "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialProgrammePortalUrl": "https://ieda.gov.mz/site/?page_id=4021",
+        "officialCurriculumDocumentsUrl": "https://www.mec.gov.mz/documentos.php",
+        "curriculumFrameworkUrl": "https://www.mined.gov.mz/assets/docs/plano_curricular_es.pdf",
+        "examBoard": "Instituto Nacional de Exames, Certificação e Equivalências (INECE); national secondary examination and certification authority",
+        "languageOfInstruction": "Portuguese is the principal language of secondary instruction; local Mozambican languages also have educational and inclusion roles. Confirm language arrangements for individual schools and bilingual programmes.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "MEC-official-secondary-curriculum-plan-linked; IEDA-official-repository-lists-current-I-and-II-cycle-subject-programmes; subject-PDF-and-detailed-class-sequence-extraction-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
+        "officialAuthority": "Ministry of Education and Culture (MEC); National Institute for Education Development (INDE) develops curriculum programmes; National Directorate of Secondary Education monitors secondary curriculum implementation",
         "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialProgrammePortalUrl": "https://ieda.gov.mz/site/?page_id=4021",
+        "officialCurriculumDocumentsUrl": "https://www.mec.gov.mz/documentos.php",
+        "curriculumFrameworkUrl": "https://www.mined.gov.mz/assets/docs/plano_curricular_es.pdf",
+        "examBoard": "Instituto Nacional de Exames, Certificação e Equivalências (INECE); national secondary examination and certification authority",
+        "languageOfInstruction": "Portuguese is the principal language of secondary instruction; local Mozambican languages also have educational and inclusion roles. Confirm language arrangements for individual schools and bilingual programmes.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "MEC-official-secondary-curriculum-plan-linked; IEDA-official-repository-lists-current-I-and-II-cycle-subject-programmes; subject-PDF-and-detailed-class-sequence-extraction-pending"
       }
     }
   },
