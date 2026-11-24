@@ -4476,46 +4476,67 @@
       "Biology": {
         "officialAuthority": "Malawi Institute of Education (MIE), responsible for curriculum and syllabus development under the national education framework; Ministry of Education Directorate of Secondary Education oversees secondary education",
         "officialSyllabusUrl": null,
+        "historicalSyllabusUrl": "https://edu.wtec1.com/pdfs/Biology%20syllabus%20Forms%203-4.pdf",
+        "historicalSyllabusYear": 2013,
+        "historicalSyllabusPublisher": "Malawi Institute of Education; Ministry of Education, Science and Technology",
+        "historicalScopeAndSequence": {
+          "sourceType": "2013-MIE-Biology-syllabus-scope-and-sequence-chart-Forms-1-to-4; historical-baseline-only",
+          "coreElements": [
+            "Research skills",
+            "Environment",
+            "Plant biology",
+            "Animal biology",
+            "Human biology",
+            "Micro-organisms",
+            "Genetics and evolution"
+          ],
+          "scopeAndSequencePages": "Printed pages 1-18; chart allocates learning content across Forms 1-4",
+          "status": "2013-scope-and-sequence-chart-identified; not-labelled-as-current-2026-syllabus"
+        },
         "curriculumFrameworkUrl": "https://mie.edu.mw/download/curriculum-and-assessment-framework-for-schools-and-colleges-in-malawi-july-2025/",
         "currentCurriculumNoticeUrl": "https://mie.edu.mw/download/public-notice_clarification-on-the-current-school-curriculum-and-approved-learning-materials/",
+        "curriculumReviewNoticeUrl": "https://mie.edu.mw/educational-experts-validates-draft-lower-secondary-school-syllabuses-at-malawi-institute-of-education/",
         "examBoard": "Malawi National Examinations Board (MANEB); Junior Certificate of Education (JCE) and Malawi School Certificate of Education (MSCE)",
         "languageOfInstruction": "English (Education Act, Chapter 30:01, section 78); verify any current policy-specific exceptions against the latest Ministry and MIE guidance",
         "chapterCount": null,
         "chapters": [],
-        "status": "MIE-2025-Curriculum-and-Assessment-Framework-and-2026-current-curriculum-clarification-notice-identified; subject-specific-current-syllabus-and-scope-sequence-extraction-pending"
+        "status": "MIE-March-2026-lower-secondary-syllabus-validation-process-linked; July-2026-current-curriculum-notice-linked; current-subject-specific-revised-syllabus-and-sequence-not-yet-verified"
       },
       "Chemistry": {
         "officialAuthority": "Malawi Institute of Education (MIE), responsible for curriculum and syllabus development under the national education framework; Ministry of Education Directorate of Secondary Education oversees secondary education",
         "officialSyllabusUrl": null,
         "curriculumFrameworkUrl": "https://mie.edu.mw/download/curriculum-and-assessment-framework-for-schools-and-colleges-in-malawi-july-2025/",
         "currentCurriculumNoticeUrl": "https://mie.edu.mw/download/public-notice_clarification-on-the-current-school-curriculum-and-approved-learning-materials/",
+        "curriculumReviewNoticeUrl": "https://mie.edu.mw/educational-experts-validates-draft-lower-secondary-school-syllabuses-at-malawi-institute-of-education/",
         "examBoard": "Malawi National Examinations Board (MANEB); Junior Certificate of Education (JCE) and Malawi School Certificate of Education (MSCE)",
         "languageOfInstruction": "English (Education Act, Chapter 30:01, section 78); verify any current policy-specific exceptions against the latest Ministry and MIE guidance",
         "chapterCount": null,
         "chapters": [],
-        "status": "MIE-2025-Curriculum-and-Assessment-Framework-and-2026-current-curriculum-clarification-notice-identified; subject-specific-current-syllabus-and-scope-sequence-extraction-pending"
+        "status": "MIE-March-2026-lower-secondary-syllabus-validation-process-linked; July-2026-current-curriculum-notice-linked; current-subject-specific-revised-syllabus-and-sequence-not-yet-verified"
       },
       "Physics": {
         "officialAuthority": "Malawi Institute of Education (MIE), responsible for curriculum and syllabus development under the national education framework; Ministry of Education Directorate of Secondary Education oversees secondary education",
         "officialSyllabusUrl": null,
         "curriculumFrameworkUrl": "https://mie.edu.mw/download/curriculum-and-assessment-framework-for-schools-and-colleges-in-malawi-july-2025/",
         "currentCurriculumNoticeUrl": "https://mie.edu.mw/download/public-notice_clarification-on-the-current-school-curriculum-and-approved-learning-materials/",
+        "curriculumReviewNoticeUrl": "https://mie.edu.mw/educational-experts-validates-draft-lower-secondary-school-syllabuses-at-malawi-institute-of-education/",
         "examBoard": "Malawi National Examinations Board (MANEB); Junior Certificate of Education (JCE) and Malawi School Certificate of Education (MSCE)",
         "languageOfInstruction": "English (Education Act, Chapter 30:01, section 78); verify any current policy-specific exceptions against the latest Ministry and MIE guidance",
         "chapterCount": null,
         "chapters": [],
-        "status": "MIE-2025-Curriculum-and-Assessment-Framework-and-2026-current-curriculum-clarification-notice-identified; subject-specific-current-syllabus-and-scope-sequence-extraction-pending"
+        "status": "MIE-March-2026-lower-secondary-syllabus-validation-process-linked; July-2026-current-curriculum-notice-linked; current-subject-specific-revised-syllabus-and-sequence-not-yet-verified"
       },
       "Mathematics": {
         "officialAuthority": "Malawi Institute of Education (MIE), responsible for curriculum and syllabus development under the national education framework; Ministry of Education Directorate of Secondary Education oversees secondary education",
         "officialSyllabusUrl": null,
         "curriculumFrameworkUrl": "https://mie.edu.mw/download/curriculum-and-assessment-framework-for-schools-and-colleges-in-malawi-july-2025/",
         "currentCurriculumNoticeUrl": "https://mie.edu.mw/download/public-notice_clarification-on-the-current-school-curriculum-and-approved-learning-materials/",
+        "curriculumReviewNoticeUrl": "https://mie.edu.mw/educational-experts-validates-draft-lower-secondary-school-syllabuses-at-malawi-institute-of-education/",
         "examBoard": "Malawi National Examinations Board (MANEB); Junior Certificate of Education (JCE) and Malawi School Certificate of Education (MSCE)",
         "languageOfInstruction": "English (Education Act, Chapter 30:01, section 78); verify any current policy-specific exceptions against the latest Ministry and MIE guidance",
         "chapterCount": null,
         "chapters": [],
-        "status": "MIE-2025-Curriculum-and-Assessment-Framework-and-2026-current-curriculum-clarification-notice-identified; subject-specific-current-syllabus-and-scope-sequence-extraction-pending"
+        "status": "MIE-March-2026-lower-secondary-syllabus-validation-process-linked; July-2026-current-curriculum-notice-linked; current-subject-specific-revised-syllabus-and-sequence-not-yet-verified"
       }
     }
   },
