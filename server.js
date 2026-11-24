@@ -181,6 +181,7 @@ async function hashPassword(password){const salt=crypto.randomBytes(16).toString
 function createSellerSession(username){const p=Buffer.from(JSON.stringify({u:username,exp:Date.now()+SELLER_SESSION_TTL_MS})).toString("base64url"),s=crypto.createHmac("sha256",String(process.env.ADMIN_SESSION_SECRET||"")).update("seller:"+p).digest("base64url");return p+"."+s;}
 function verifySellerSession(req){const secret=String(process.env.ADMIN_SESSION_SECRET||"");if(!secret)return null;const m=String(req.headers.cookie||"").match(/(?:^|;\s*)cbe_seller_session=([^;]+)/);if(!m)return null;const [p,s]=decodeURIComponent(m[1]).split("."),e=crypto.createHmac("sha256",secret).update("seller:"+p).digest("base64url");if(!p||!s||!safeEqual(s,e))return null;try{const d=JSON.parse(Buffer.from(p,"base64url").toString("utf8"));return Number(d.exp)>Date.now()?d.u:null;}catch{return null;}}
 function sellerCookie(t){return `cbe_seller_session=${encodeURIComponent(t)}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=28800`;}
+const staticGzipCache = new Map();
 const mimeTypes={".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".json":"application/json; charset=utf-8",".png":"image/png",".jpg":"image/jpeg",".jpeg":"image/jpeg",".gif":"image/gif",".svg":"image/svg+xml",".webp":"image/webp",".ico":"image/x-icon",".txt":"text/plain; charset=utf-8",".xml":"application/xml; charset=utf-8"};
 const stores={"/api/projects":"projects.json","/api/tuition":"tuition-registrations.json","/api/quizzes":"quiz-attempts.json","/api/payments":"payments.json","/api/mpesa/stk-push":"mpesa-requests.json"};
 async function ensureDataDir(){await fs.mkdir(DATA_DIR,{recursive:true});}
@@ -3388,8 +3389,30 @@ async function serveStatic(req,res,url){
       "Cache-Control":cacheControl
     };
     if(isCareersPage){responseHeaders["CDN-Cache-Control"]="no-store";responseHeaders["Cloudflare-CDN-Cache-Control"]="no-store";responseHeaders.Pragma="no-cache";responseHeaders.Expires="0";responseHeaders["X-CBE-Page-Revision"]="careers-network-first-20261107";}
-    res.writeHead(200,responseHeaders);
-    res.end(data);
+    const acceptsGzip=/\bgzip\b/i.test(String(req.headers["accept-encoding"]||""));
+    const compressible=[".html",".css",".js",".json",".svg",".xml",".txt"].includes(ext);
+    if(acceptsGzip && compressible && data.length>1024){
+      let compressed;
+      if(isHtml){
+        // HTML is transformed per request, so compress it without retaining a stale copy.
+        compressed=zlib.gzipSync(data,{level:zlib.constants.Z_BEST_SPEED});
+      }else{
+        const cacheKey=target+"|"+stat.mtimeMs+"|"+stat.size;
+        compressed=staticGzipCache.get(cacheKey);
+        if(!compressed){
+          compressed=zlib.gzipSync(data,{level:zlib.constants.Z_BEST_SPEED});
+          if(staticGzipCache.size>=128) staticGzipCache.delete(staticGzipCache.keys().next().value);
+          staticGzipCache.set(cacheKey,compressed);
+        }
+      }
+      responseHeaders["Content-Encoding"]="gzip";
+      responseHeaders["Vary"]="Accept-Encoding";
+      res.writeHead(200,responseHeaders);
+      res.end(compressed);
+    }else{
+      res.writeHead(200,responseHeaders);
+      res.end(data);
+    }
   }catch(error){
     // A response may already have started. Never write a second HTTP response.
     if(res.headersSent||res.writableEnded||res.destroyed)return;
