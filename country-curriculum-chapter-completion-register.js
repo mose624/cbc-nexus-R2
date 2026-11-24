@@ -7345,39 +7345,43 @@
     "subjects": {
       "Biology": {
         "officialAuthority": "Tanzania Institute of Education (TIE), Ministry of Education, Science and Technology",
-        "officialSyllabusUrl": "https://www.tie.go.tz/",
+        "officialSyllabusUrl": "https://www.tie.go.tz/uploads/documents/sw-1727192422-BIOLOGY%20SYLLABUS%20ORDINARY%20SECONDARY%20FINAL%20.pdf",
         "examBoard": "National Examinations Council of Tanzania (NECTA)",
         "languageOfInstruction": "Kiswahili and English use varies by education level and school context; verify the language policy for the specific programme",
         "chapterCount": null,
         "chapters": [],
-        "status": "official-curriculum-authority-and-examination-body-identified; subject-and-level-specific-syllabus-review-pending"
+        "status": "official-tie-2023-form-i-iv-subject-syllabus-linked-and-reviewed; detailed-specific-competence-to-chapter-mapping-pending",
+        "syllabusLevel": "Ordinary Secondary Education — Form I to Form IV (TIE 2023 syllabus)"
       },
       "Chemistry": {
         "officialAuthority": "Tanzania Institute of Education (TIE), Ministry of Education, Science and Technology",
-        "officialSyllabusUrl": "https://www.tie.go.tz/",
+        "officialSyllabusUrl": "https://www.tie.go.tz/uploads/documents/sw-1727192894-CHEMISTRY%20O%27LEVEL%20EDUCATION%20FINAL.pdf",
         "examBoard": "National Examinations Council of Tanzania (NECTA)",
         "languageOfInstruction": "Kiswahili and English use varies by education level and school context; verify the language policy for the specific programme",
         "chapterCount": null,
         "chapters": [],
-        "status": "official-curriculum-authority-and-examination-body-identified; subject-and-level-specific-syllabus-review-pending"
+        "status": "official-tie-2023-form-i-iv-subject-syllabus-linked-and-reviewed; detailed-specific-competence-to-chapter-mapping-pending",
+        "syllabusLevel": "Ordinary Secondary Education — Form I to Form IV (TIE 2023 syllabus)"
       },
       "Physics": {
         "officialAuthority": "Tanzania Institute of Education (TIE), Ministry of Education, Science and Technology",
-        "officialSyllabusUrl": "https://www.tie.go.tz/",
+        "officialSyllabusUrl": "https://www.tie.go.tz/uploads/documents/sw-1727257838-PHYSICS%20FOR%20ORDINARY%20SECONDARY%20EDUCATION%20FINAL.pdf",
         "examBoard": "National Examinations Council of Tanzania (NECTA)",
         "languageOfInstruction": "Kiswahili and English use varies by education level and school context; verify the language policy for the specific programme",
         "chapterCount": null,
         "chapters": [],
-        "status": "official-curriculum-authority-and-examination-body-identified; subject-and-level-specific-syllabus-review-pending"
+        "status": "official-tie-2023-form-i-iv-subject-syllabus-linked-and-reviewed; detailed-specific-competence-to-chapter-mapping-pending",
+        "syllabusLevel": "Ordinary Secondary Education — Form I to Form IV (TIE 2023 syllabus)"
       },
       "Mathematics": {
         "officialAuthority": "Tanzania Institute of Education (TIE), Ministry of Education, Science and Technology",
-        "officialSyllabusUrl": "https://www.tie.go.tz/",
+        "officialSyllabusUrl": "https://www.tie.go.tz/uploads/documents/sw-1727256902-MATHEMATICS%20SYLLABUS%20-%20O%20level%20final.pdf",
         "examBoard": "National Examinations Council of Tanzania (NECTA)",
         "languageOfInstruction": "Kiswahili and English use varies by education level and school context; verify the language policy for the specific programme",
         "chapterCount": null,
         "chapters": [],
-        "status": "official-curriculum-authority-and-examination-body-identified; subject-and-level-specific-syllabus-review-pending"
+        "status": "official-tie-2023-form-i-iv-subject-syllabus-linked-and-reviewed; detailed-specific-competence-to-chapter-mapping-pending",
+        "syllabusLevel": "Ordinary Secondary Education — Form I to Form IV (TIE 2023 syllabus)"
       }
     }
   },
@@ -7755,12 +7759,95 @@
     "subjects": {
       "Biology": {
         "officialAuthority": "National Curriculum Development Centre (NCDC), Ministry of Education and Sports, Uganda",
-        "officialSyllabusUrl": "https://ncdc.go.ug/",
+        "officialSyllabusUrl": "https://www.ncdc.go.ug/wp-content/uploads/2025/03/Biology.pdf",
         "examBoard": "Uganda National Examinations Board (UNEB)",
         "languageOfInstruction": "English is the principal language of instruction in secondary education; confirm the applicable school and programme policy",
-        "chapterCount": null,
-        "chapters": [],
-        "status": "official-curriculum-authority-and-examination-body-identified; subject-and-level-specific-syllabus-review-pending"
+        "chapterCount": 9,
+        "chapters": [
+          {
+            "id": "biology-uganda-seniorfive-topic1",
+            "title": "Topic 1: Cell Biology",
+            "level": "Senior Five",
+            "contentsPage": 10,
+            "sourceUrl": "https://www.ncdc.go.ug/wp-content/uploads/2025/03/Biology.pdf",
+            "sourceType": "official-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "biology-uganda-seniorfive-topic2",
+            "title": "Topic 2: Nutrition",
+            "level": "Senior Five",
+            "contentsPage": 13,
+            "sourceUrl": "https://www.ncdc.go.ug/wp-content/uploads/2025/03/Biology.pdf",
+            "sourceType": "official-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "biology-uganda-seniorfive-topic3",
+            "title": "Topic 3: Transport",
+            "level": "Senior Five",
+            "contentsPage": 15,
+            "sourceUrl": "https://www.ncdc.go.ug/wp-content/uploads/2025/03/Biology.pdf",
+            "sourceType": "official-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "biology-uganda-seniorfive-topic4",
+            "title": "Topic 4: Respiration",
+            "level": "Senior Five",
+            "contentsPage": 17,
+            "sourceUrl": "https://www.ncdc.go.ug/wp-content/uploads/2025/03/Biology.pdf",
+            "sourceType": "official-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "biology-uganda-seniorfive-topic5",
+            "title": "Topic 5: Homeostasis",
+            "level": "Senior Five",
+            "contentsPage": 19,
+            "sourceUrl": "https://www.ncdc.go.ug/wp-content/uploads/2025/03/Biology.pdf",
+            "sourceType": "official-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "biology-uganda-seniorsix-topic6",
+            "title": "Topic 6: Coordination",
+            "level": "Senior Six",
+            "contentsPage": 21,
+            "sourceUrl": "https://www.ncdc.go.ug/wp-content/uploads/2025/03/Biology.pdf",
+            "sourceType": "official-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "biology-uganda-seniorsix-topic7",
+            "title": "Topic 7: Inheritance and Evolution",
+            "level": "Senior Six",
+            "contentsPage": 24,
+            "sourceUrl": "https://www.ncdc.go.ug/wp-content/uploads/2025/03/Biology.pdf",
+            "sourceType": "official-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "biology-uganda-seniorsix-topic8",
+            "title": "Topic 8: Growth and Development",
+            "level": "Senior Six",
+            "contentsPage": 27,
+            "sourceUrl": "https://www.ncdc.go.ug/wp-content/uploads/2025/03/Biology.pdf",
+            "sourceType": "official-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "biology-uganda-seniorsix-topic9",
+            "title": "Topic 9: Ecology",
+            "level": "Senior Six",
+            "contentsPage": 28,
+            "sourceUrl": "https://www.ncdc.go.ug/wp-content/uploads/2025/03/Biology.pdf",
+            "sourceType": "official-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          }
+        ],
+        "status": "official-2025-advanced-secondary-biology-syllabus-reviewed; nine-topics-mapped-for-senior-five-and-six; lower-secondary-biology-sequence-not-yet-mapped",
+        "syllabusLevel": "Advanced Secondary Curriculum — Senior Five and Senior Six (2025)"
       },
       "Chemistry": {
         "officialAuthority": "National Curriculum Development Centre (NCDC), Ministry of Education and Sports, Uganda",
