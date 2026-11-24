@@ -262,5 +262,13 @@ Object.assign(window.CBENexusAICourses,{
 ["Structure","Organise academic work","Plan introductions and conclusions.","Use coherent paragraphs.","Create effective outlines."],
 ["Research & Sources","Work with evidence","Find and evaluate sources.","Take useful research notes.","Avoid unsupported claims."],
 ["Referencing","Give credit","Understand citation principles.","Use consistent referencing.","Avoid plagiarism."],
-["Writing Project","Complete an academic paper","Choose a topic.","Draft, revise and reference it.","Use a final quality checklist."]]}
+["Writing Project","Complete an academic paper","Choose a topic.","Draft, revise and reference it.","Use a final quality checklist."]]},
+"internet-research-information-literacy":{title:"Internet Research & Information Literacy",short:"Find, evaluate, verify and use online information safely and ethically.",description:"Develop advanced internet search, academic database, source evaluation, fact-checking, digital security and responsible AI-assisted research skills.",duration:"6 modules",level:"Beginner → Advanced",page:"internet-research-information-literacy.html",modules:[
+["Information Literacy Foundations","Recognise and meet information needs","Define a focused research question.","Distinguish primary, secondary and tertiary sources.","Plan an evidence-based research process."],
+["Search Engines & Advanced Search","Find relevant information efficiently","Build precise keyword and synonym sets.","Use Boolean operators and search operators.","Refine and document repeatable search strategies."],
+["Academic Databases & Libraries","Locate scholarly and institutional evidence","Search academic databases and repositories.","Evaluate peer review and open-access status.","Create an accurate source log."],
+["Source Evaluation & Fact-Checking","Test credibility and verify claims","Apply CRAAP and lateral-reading methods.","Trace claims to original evidence.","Assess manipulated media and misinformation."],
+["Digital Security & Ethical Use","Protect people, data and intellectual work","Recognise phishing and unsafe sharing.","Apply privacy, copyright and licence principles.","Use AI research assistance with independent verification."],
+["Research Organisation & Capstone","Produce a traceable research report","Organise sources, evidence and drafts.","Synthesise findings and disclose limitations.","Present verified conclusions and ethical safeguards."]
+]}
 });
