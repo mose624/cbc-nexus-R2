@@ -9063,7 +9063,59 @@
         "languageOfInstruction": "English is the principal language of instruction in secondary education; verify the language policy for the specific level and school",
         "chapterCount": null,
         "chapters": [],
-        "status": "official-subject-syllabus-source-identified; Forms-1-4-or-O-Level-pathway-confirmed; topic-sequence-extraction-pending"
+        "topicInventory": [
+                  {
+                            "grade": "Form 1",
+                            "topics": [
+                                      "Nature of science inquiry and the study of Biology",
+                                      "Levels of biological organisation and characteristics of living things",
+                                      "Microscopes, cell types, cell structure, function and specialisation",
+                                      "Food nutrients, dietary needs, plant nutrients and deficiency disorders",
+                                      "Types of reproduction and reproduction in humans, microorganisms and plants",
+                                      "Plant and animal coordination and response",
+                                      "Ecosystems, biotic and abiotic interactions, soil composition and fertility"
+                            ],
+                            "status": "2024-CDC-scope-and-sequence-extracted; topic groupings, not textbook chapter titles"
+                  },
+                  {
+                            "grade": "Form 2",
+                            "topics": [
+                                      "Experimental design, limits of science and scientific ethics",
+                                      "Micrographs, staining, permanent slides, detailed cell structure and properties of water",
+                                      "Types of nutrition, autotrophic and heterotrophic nutrition, transport in plants",
+                                      "Reproduction in plants; plant growth, germination and development",
+                                      "Plant hormones and response; health and disease",
+                                      "Classification, feeding relationships, energy flow and pollution"
+                            ],
+                            "status": "2024-CDC-scope-and-sequence-extracted; topic groupings, not textbook chapter titles"
+                  },
+                  {
+                            "grade": "Form 3",
+                            "topics": [
+                                      "Chemicals of life, food tests and Biology research proposal",
+                                      "Movement of substances across cells, metabolism and enzymes",
+                                      "Dentition in mammals, holozoic nutrition and transport in animals",
+                                      "Gaseous exchange and respiration",
+                                      "Reproduction in frogs and humans; menstrual cycle, fertilisation, embryo development, fertility and birth control",
+                                      "Immunity, endocrine system and nervous system",
+                                      "Carbon, nitrogen and water cycles; classification levels and dichotomous keys"
+                            ],
+                            "status": "2024-CDC-scope-and-sequence-extracted; topic groupings, not textbook chapter titles"
+                  },
+                  {
+                            "grade": "Form 4",
+                            "topics": [
+                                      "Research project in Biology",
+                                      "Cell division",
+                                      "Excretion in plants and animals; homeostasis in human beings",
+                                      "Heredity",
+                                      "Sense organs, support and locomotion",
+                                      "Biodiversity, conservation, natural selection and evolution"
+                            ],
+                            "status": "2024-CDC-scope-and-sequence-extracted; topic groupings, not textbook chapter titles"
+                  }
+        ],
+        "status": "2024-CDC-Forms-1-4-scope-and-sequence-mapped-at-topic-group-level; textbook-chapter-inventory-not-claimed"
       },
       "Chemistry": {
         "officialAuthority": "Directorate of Curriculum Development, Ministry of Education, Zambia",
@@ -9072,7 +9124,51 @@
         "languageOfInstruction": "English is the principal language of instruction in secondary education; verify the language policy for the specific level and school",
         "chapterCount": null,
         "chapters": [],
-        "status": "official-subject-syllabus-source-identified; Forms-1-4-or-O-Level-pathway-confirmed; topic-sequence-extraction-pending"
+        "topicInventory": [
+                  {
+                            "grade": "Form 1",
+                            "topics": [
+                                      "Introduction to Chemistry",
+                                      "Matter",
+                                      "Elements, Compounds and Mixtures",
+                                      "Atomic Structure"
+                            ],
+                            "status": "2024-CDC-syllabus-contents-and-structure-extracted; topic headings, not textbook chapter titles"
+                  },
+                  {
+                            "grade": "Form 2",
+                            "topics": [
+                                      "Bonding",
+                                      "Chemical Reactions",
+                                      "Chemical Kinetics",
+                                      "Redox Reactions",
+                                      "Acids, Bases and Salts"
+                            ],
+                            "status": "2024-CDC-syllabus-contents-and-structure-extracted; topic headings, not textbook chapter titles"
+                  },
+                  {
+                            "grade": "Form 3",
+                            "topics": [
+                                      "Stoichiometry and the Mole Concept",
+                                      "Thermochemistry",
+                                      "Equilibrium",
+                                      "Electricity and Chemistry",
+                                      "Periodicity"
+                            ],
+                            "status": "2024-CDC-syllabus-contents-and-structure-extracted; topic headings, not textbook chapter titles"
+                  },
+                  {
+                            "grade": "Form 4",
+                            "topics": [
+                                      "Metallurgy",
+                                      "Non-Metals",
+                                      "Organic Chemistry",
+                                      "Environmental Chemistry"
+                            ],
+                            "status": "2024-CDC-syllabus-contents-and-structure-extracted; topic headings, not textbook chapter titles"
+                  }
+        ],
+        "status": "2024-CDC-Forms-1-4-topic-headings-mapped; detailed-subtopics-still-to-be-extracted"
       },
       "Physics": {
         "officialAuthority": "Directorate of Curriculum Development, Ministry of Education, Zambia",
@@ -9081,16 +9177,61 @@
         "languageOfInstruction": "English is the principal language of instruction in secondary education; verify the language policy for the specific level and school",
         "chapterCount": null,
         "chapters": [],
-        "status": "official-subject-syllabus-source-identified; Forms-1-4-or-O-Level-pathway-confirmed; topic-sequence-extraction-pending"
+        "topicInventory": [
+                  {
+                            "grade": "Form 1",
+                            "topics": [
+                                      "Introduction to Physics",
+                                      "General Physics",
+                                      "Elementary Astronomy",
+                                      "Geophysics",
+                                      "Mechanics I"
+                            ],
+                            "status": "2024-CDC-syllabus-structure-extracted; topic headings, not textbook chapter titles"
+                  },
+                  {
+                            "grade": "Form 2",
+                            "topics": [
+                                      "Mechanics II",
+                                      "Thermal Physics",
+                                      "Wave Motion and Sound"
+                            ],
+                            "status": "2024-CDC-syllabus-structure-extracted; topic headings, not textbook chapter titles"
+                  },
+                  {
+                            "grade": "Form 3",
+                            "topics": [
+                                      "Light",
+                                      "Static Electricity",
+                                      "Current Electricity",
+                                      "Magnetism",
+                                      "Electromagnetism",
+                                      "Electromagnetic Induction"
+                            ],
+                            "status": "2024-CDC-syllabus-structure-extracted; topic headings, not textbook chapter titles"
+                  },
+                  {
+                            "grade": "Form 4",
+                            "topics": [
+                                      "Basic Electronics",
+                                      "Electronic Communication Systems",
+                                      "Atomic Physics",
+                                      "Renewable Energy"
+                            ],
+                            "status": "2024-CDC-syllabus-structure-extracted; topic headings, not textbook chapter titles"
+                  }
+        ],
+        "status": "2024-CDC-Forms-1-4-topic-headings-mapped; detailed-subtopics-still-to-be-extracted"
       },
       "Mathematics": {
         "officialAuthority": "Directorate of Curriculum Development, Ministry of Education, Zambia",
-        "officialSyllabusUrl": "https://library.cdcrepository.info/browse.php?level=syllabi&subject=78",
+        "officialSyllabusUrl": "https://www.edu.gov.zm/?page_id=1142",
         "examBoard": "Examinations Council of Zambia (ECZ)",
         "languageOfInstruction": "English is the principal language of instruction in secondary education; verify the language policy for the specific level and school",
+        "syllabusPathways": ["Mathematics I (Forms 1-4)", "Mathematics II (Forms 1-4)"],
         "chapterCount": null,
         "chapters": [],
-        "status": "official-subject-syllabus-source-identified; Forms-1-4-or-O-Level-pathway-confirmed; topic-sequence-extraction-pending"
+        "status": "CDC-official-catalogue-identifies-separate-Mathematics-I-and-Mathematics-II-Forms-1-4-syllabuses; pathway-specific-topic-extraction-pending"
       }
     }
   },
