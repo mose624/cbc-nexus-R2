@@ -4199,40 +4199,50 @@
     "country": "Lesotho",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Lesotho Ministry of Education and Training; National Curriculum Development Centre (NCDC) develops syllabuses with subject panels",
+        "officialSyllabusUrl": "https://web.examscouncil.org.ls/uploads/Biology_Syllabus_fb03848271.pdf",
+        "examBoard": "Examinations Council of Lesotho (ECoL); Grade 11 LGCSE public examinations",
+        "languageOfInstruction": "English is the medium of instruction in secondary schools; Sesotho is also a compulsory language subject.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "ministrySyllabusPortalUrl": "https://www.education.gov.ls/schools.php?id=secondary+school+syllabus&target=89",
+        "ecolSyllabusPortalUrl": "https://www.examscouncil.org.ls/web/examinations.html",
+        "syllabusYear": 2020,
+        "syllabusLevel": "LGCSE Grades 11–12; syllabus cover states examination from November 2020",
+        "status": "official-ECoL-Biology-syllabus-2020-identified; topic-sequence-extraction-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
+        "officialAuthority": "Lesotho Ministry of Education and Training; National Curriculum Development Centre (NCDC) develops syllabuses with subject panels",
         "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "examBoard": "Examinations Council of Lesotho (ECoL); Grade 11 LGCSE public examinations",
+        "languageOfInstruction": "English is the medium of instruction in secondary schools; Sesotho is also a compulsory language subject.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "ministrySyllabusPortalUrl": "https://www.education.gov.ls/schools.php?id=secondary+school+syllabus&target=89",
+        "ecolSyllabusPortalUrl": "https://www.examscouncil.org.ls/web/examinations.html",
+        "status": "official-authority-and-LGCSE-assessment-framework-identified; subject-specific-syllabus-review-pending"
       },
       "Physics": {
-        "officialAuthority": null,
+        "officialAuthority": "Lesotho Ministry of Education and Training; National Curriculum Development Centre (NCDC) develops syllabuses with subject panels",
         "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "examBoard": "Examinations Council of Lesotho (ECoL); Grade 11 LGCSE public examinations",
+        "languageOfInstruction": "English is the medium of instruction in secondary schools; Sesotho is also a compulsory language subject.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "ministrySyllabusPortalUrl": "https://www.education.gov.ls/schools.php?id=secondary+school+syllabus&target=89",
+        "ecolSyllabusPortalUrl": "https://www.examscouncil.org.ls/web/examinations.html",
+        "status": "official-authority-and-LGCSE-assessment-framework-identified; subject-specific-syllabus-review-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
+        "officialAuthority": "Lesotho Ministry of Education and Training; National Curriculum Development Centre (NCDC) develops syllabuses with subject panels",
         "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "examBoard": "Examinations Council of Lesotho (ECoL); Grade 11 LGCSE public examinations",
+        "languageOfInstruction": "English is the medium of instruction in secondary schools; Sesotho is also a compulsory language subject.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "ministrySyllabusPortalUrl": "https://www.education.gov.ls/schools.php?id=secondary+school+syllabus&target=89",
+        "ecolSyllabusPortalUrl": "https://www.examscouncil.org.ls/web/examinations.html",
+        "status": "official-authority-and-LGCSE-assessment-framework-identified; subject-specific-syllabus-review-pending"
       }
     }
   },
