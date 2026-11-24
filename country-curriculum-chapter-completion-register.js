@@ -9477,12 +9477,57 @@
       },
       "Mathematics": {
         "officialAuthority": "Ministry of Primary and Secondary Education (MoPSE), Curriculum Development and Technical Services",
-        "officialSyllabusUrl": null,
+        "officialSyllabusUrl": "https://mopsemashwest.gov.zw/Site/Curriculum_Updated_Syllabi.html",
         "examBoard": "Zimbabwe School Examinations Council (ZIMSEC)",
         "languageOfInstruction": "English is widely used in secondary science and mathematics syllabuses; verify the prescribed language and approved local-language provision for each school and learning area",
         "chapterCount": null,
         "chapters": [],
-        "status": "Heritage-Based Curriculum Framework 2024-2030 and ZIMSEC identified; subject-specific current syllabus and scope-and-sequence extraction pending"
+        "topicInventory": {
+          "sourceType": "MoPSE-Heritage-Based-Curriculum-2024-2030-Mathematics-Forms-1-4; syllabus topic headings, not textbook chapter titles",
+          "officialCatalogueUrl": "https://mopsemashwest.gov.zw/Site/Curriculum_Updated_Syllabi.html",
+          "pathways": [
+            {
+              "name": "Mathematics Syllabus A (Forms 1-4)",
+              "sourceUrl": "https://sytbay.co.zw/?slc_download_id=49986&slc_file=wpdm-41997-1",
+              "topics": [
+                "Number Systems",
+                "Set Language and Notation",
+                "Financial Mathematics",
+                "Measures and Mensuration",
+                "Graphs of Linear Functions",
+                "Algebra",
+                "Geometry",
+                "Statistics and Probability",
+                "Matrices"
+              ],
+              "status": "9-topic-headings-and-form-wise-scope-sequence-extracted-from-2024-2030-syllabus-copy; official-catalogue-lists-Mathematics-Forms-1-4"
+            },
+            {
+              "name": "Mathematics Syllabus B (Forms 1-4)",
+              "sourceUrl": "https://studylib.net/doc/28286752/revised-maths-syllabus-b-f1-4",
+              "topics": [
+                "Real Numbers",
+                "Sets",
+                "Money and Finance",
+                "Measures and Mensuration",
+                "Graphs",
+                "Variation",
+                "Algebra",
+                "Geometry",
+                "Statistics",
+                "Trigonometry",
+                "Vectors",
+                "Matrices",
+                "Probability",
+                "Transformations"
+              ],
+              "status": "14-topic-headings-extracted-from-2024-2030-syllabus-copy; detailed-form-wise-scope-and-sequence-extraction-pending"
+            }
+          ],
+          "pathwayNote": "Mathematics A and Mathematics B are distinct syllabus pathways and must not be merged into one sequence. The official MoPSE catalogue also lists Pure Mathematics (Forms 3-4) and Additional Mathematics (Forms 3-4) as separate learning areas; these require their own mapping.",
+          "status": "Mathematics-A-and-B-pathways-identified-and-topic-headings-mapped; detailed-Mathematics-B-form-allocation-and-Pure-Additional-Mathematics-pending"
+        },
+        "status": "MoPSE-2024-2030-Mathematics-A-and-B-topic-inventories-added; pathways-kept-separate; Pure-and-Additional-Mathematics-mapping-pending"
       }
     }
   },
