@@ -6197,39 +6197,39 @@
     "subjects": {
       "Biology": {
         "officialAuthority": "Rwanda Basic Education Board (REB), Ministry of Education",
-        "officialSyllabusUrl": "https://uat-coremis.reb.gov.rw/course/view.php?id=946",
+        "officialSyllabusUrl": "https://elearning.reb.rw/course/view.php?id=1806",
         "examBoard": "National Examination and School Inspection Authority (NESA)",
         "languageOfInstruction": "Language of instruction must be checked against the current national policy and the school or programme; Rwanda uses Kinyarwanda, English, French and Kiswahili in education contexts",
         "chapterCount": null,
         "chapters": [],
-        "status": "REB-secondary-syllabi-portal-identified; 2026-revised-subject-syllabus-and-content-sequence-extraction-pending"
+        "status": "REB-2026-secondary-curriculum-course-identified; revised-Ordinary-Level-syllabi-for-S1-S3-listed; subject-PDF-extraction-pending"
       },
       "Chemistry": {
         "officialAuthority": "Rwanda Basic Education Board (REB), Ministry of Education",
-        "officialSyllabusUrl": "https://uat-coremis.reb.gov.rw/course/view.php?id=946",
+        "officialSyllabusUrl": "https://elearning.reb.rw/course/view.php?id=1806",
         "examBoard": "National Examination and School Inspection Authority (NESA)",
         "languageOfInstruction": "Language of instruction must be checked against the current national policy and the school or programme; Rwanda uses Kinyarwanda, English, French and Kiswahili in education contexts",
         "chapterCount": null,
         "chapters": [],
-        "status": "REB-secondary-syllabi-portal-identified; 2026-revised-subject-syllabus-and-content-sequence-extraction-pending"
+        "status": "REB-2026-secondary-curriculum-course-identified; revised-Ordinary-Level-syllabi-for-S1-S3-listed; subject-PDF-extraction-pending"
       },
       "Physics": {
         "officialAuthority": "Rwanda Basic Education Board (REB), Ministry of Education",
-        "officialSyllabusUrl": "https://uat-coremis.reb.gov.rw/course/view.php?id=946",
+        "officialSyllabusUrl": "https://elearning.reb.rw/course/view.php?id=1806",
         "examBoard": "National Examination and School Inspection Authority (NESA)",
         "languageOfInstruction": "Language of instruction must be checked against the current national policy and the school or programme; Rwanda uses Kinyarwanda, English, French and Kiswahili in education contexts",
         "chapterCount": null,
         "chapters": [],
-        "status": "REB-secondary-syllabi-portal-identified; 2026-revised-subject-syllabus-and-content-sequence-extraction-pending"
+        "status": "REB-2026-secondary-curriculum-course-identified; revised-Ordinary-Level-syllabi-for-S1-S3-listed; subject-PDF-extraction-pending"
       },
       "Mathematics": {
         "officialAuthority": "Rwanda Basic Education Board (REB), Ministry of Education",
-        "officialSyllabusUrl": "https://uat-coremis.reb.gov.rw/course/view.php?id=946",
+        "officialSyllabusUrl": "https://elearning.reb.rw/course/view.php?id=1806",
         "examBoard": "National Examination and School Inspection Authority (NESA)",
         "languageOfInstruction": "Language of instruction must be checked against the current national policy and the school or programme; Rwanda uses Kinyarwanda, English, French and Kiswahili in education contexts",
         "chapterCount": null,
         "chapters": [],
-        "status": "REB-secondary-syllabi-portal-identified; 2026-revised-subject-syllabus-and-content-sequence-extraction-pending"
+        "status": "REB-2026-secondary-curriculum-course-identified; revised-Ordinary-Level-syllabi-for-S1-S3-listed; subject-PDF-extraction-pending"
       }
     }
   },
