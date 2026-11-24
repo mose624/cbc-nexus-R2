@@ -6539,45 +6539,72 @@
   },
     "country": "Palau",
     "subjects": {
-      "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
-        "chapterCount": null,
-        "chapters": [],
-        "status": "curriculum-mapping-required"
-      },
-      "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
-        "chapterCount": null,
-        "chapters": [],
-        "status": "curriculum-mapping-required"
-      },
-      "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
-        "chapterCount": null,
-        "chapters": [],
-        "status": "curriculum-mapping-required"
-      },
-      "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
-        "chapterCount": null,
-        "chapters": [],
-        "status": "curriculum-mapping-required"
+        "Biology": {
+          "officialAuthority": "Republic of Palau Ministry of Education, through the Bureau of Curriculum and Instruction and its Division of Curriculum Development and Implementation; the Ministry develops and implements national school curriculum frameworks and course guides.",
+          "officialSyllabusUrl": "https://www.palauschools.org/?p=bci",
+          "examBoard": "Palau Ministry of Education, Bureau of Curriculum and Instruction; national student assessment arrangements and school-level grading are guided by Ministry policy. Confirm current assessment policy and subject/course requirements with the school.",
+          "languageOfInstruction": "Palauan and English are core languages in the school curriculum. The exact language used for instruction in science and mathematics varies by grade, course and school; verify the school's current language-of-instruction policy.",
+          "chapterCount": null,
+          "chapters": [],
+          "officialMinistryWebsiteUrl": "https://palaumoe.net/",
+          "officialBureauCurriculumInstructionUrl": "https://www.palauschools.org/?p=bci",
+          "officialSchoolHandbookUrl": "https://pacificdata.org/data/dataset/4dbf9a5a-f785-4eff-a231-2556676d0acc/resource/1891558f-1c8d-4f63-900c-1eae8338c674/download/school-handbook.pdf",
+          "officialEducationPolicyBankUrl": "https://policy-bank.pacificdata.org/education/school-handbook",
+          "schoolStructureNote": "The Ministry School Handbook describes elementary Grades 1–8 with five core subjects including Mathematics and Science; high school covers Grades 9–12 with academic and vocational programmes. High-school science is described as Science in the academic curriculum, alongside mathematics; public sources reviewed do not establish a nationally mandated separate Biology/Chemistry/Physics sequence for every grade.",
+          "curriculumReformNote": "A Senate bill on national curriculum framework and quarterly student assessments was reported as passed by the Senate in February 2026 and forwarded for House consideration. This is a legislative proposal in the source reviewed, not confirmation of enactment; verify final legislative status before treating proposed changes as binding curriculum.",
+          "status": "Palau-MOE-and-Bureau-of-Curriculum-and-Instruction-authority-verified; Grades-1-8-and-9-12-structure-recorded; separate-science-subject-syllabuses-and-current-topic-sequences-not-confirmed",
+          "subjectPathwayNote": "Biology content is included within Science in the elementary and high-school programme descriptions. The available Ministry handbook does not establish a separate nationally prescribed Biology syllabus or chapter sequence for each grade; keep it mapped as a Science strand until current subject course guides are obtained from the Bureau."
+        },
+        "Chemistry": {
+          "officialAuthority": "Republic of Palau Ministry of Education, through the Bureau of Curriculum and Instruction and its Division of Curriculum Development and Implementation; the Ministry develops and implements national school curriculum frameworks and course guides.",
+          "officialSyllabusUrl": "https://www.palauschools.org/?p=bci",
+          "examBoard": "Palau Ministry of Education, Bureau of Curriculum and Instruction; national student assessment arrangements and school-level grading are guided by Ministry policy. Confirm current assessment policy and subject/course requirements with the school.",
+          "languageOfInstruction": "Palauan and English are core languages in the school curriculum. The exact language used for instruction in science and mathematics varies by grade, course and school; verify the school's current language-of-instruction policy.",
+          "chapterCount": null,
+          "chapters": [],
+          "officialMinistryWebsiteUrl": "https://palaumoe.net/",
+          "officialBureauCurriculumInstructionUrl": "https://www.palauschools.org/?p=bci",
+          "officialSchoolHandbookUrl": "https://pacificdata.org/data/dataset/4dbf9a5a-f785-4eff-a231-2556676d0acc/resource/1891558f-1c8d-4f63-900c-1eae8338c674/download/school-handbook.pdf",
+          "officialEducationPolicyBankUrl": "https://policy-bank.pacificdata.org/education/school-handbook",
+          "schoolStructureNote": "The Ministry School Handbook describes elementary Grades 1–8 with five core subjects including Mathematics and Science; high school covers Grades 9–12 with academic and vocational programmes. High-school science is described as Science in the academic curriculum, alongside mathematics; public sources reviewed do not establish a nationally mandated separate Biology/Chemistry/Physics sequence for every grade.",
+          "curriculumReformNote": "A Senate bill on national curriculum framework and quarterly student assessments was reported as passed by the Senate in February 2026 and forwarded for House consideration. This is a legislative proposal in the source reviewed, not confirmation of enactment; verify final legislative status before treating proposed changes as binding curriculum.",
+          "status": "Palau-MOE-and-Bureau-of-Curriculum-and-Instruction-authority-verified; Grades-1-8-and-9-12-structure-recorded; separate-science-subject-syllabuses-and-current-topic-sequences-not-confirmed",
+          "subjectPathwayNote": "Chemistry content is included within Science in the elementary and high-school programme descriptions. The available Ministry handbook does not establish a separate nationally prescribed Chemistry syllabus or chapter sequence for each grade; keep it mapped as a Science strand until current subject course guides are obtained from the Bureau."
+        },
+        "Physics": {
+          "officialAuthority": "Republic of Palau Ministry of Education, through the Bureau of Curriculum and Instruction and its Division of Curriculum Development and Implementation; the Ministry develops and implements national school curriculum frameworks and course guides.",
+          "officialSyllabusUrl": "https://www.palauschools.org/?p=bci",
+          "examBoard": "Palau Ministry of Education, Bureau of Curriculum and Instruction; national student assessment arrangements and school-level grading are guided by Ministry policy. Confirm current assessment policy and subject/course requirements with the school.",
+          "languageOfInstruction": "Palauan and English are core languages in the school curriculum. The exact language used for instruction in science and mathematics varies by grade, course and school; verify the school's current language-of-instruction policy.",
+          "chapterCount": null,
+          "chapters": [],
+          "officialMinistryWebsiteUrl": "https://palaumoe.net/",
+          "officialBureauCurriculumInstructionUrl": "https://www.palauschools.org/?p=bci",
+          "officialSchoolHandbookUrl": "https://pacificdata.org/data/dataset/4dbf9a5a-f785-4eff-a231-2556676d0acc/resource/1891558f-1c8d-4f63-900c-1eae8338c674/download/school-handbook.pdf",
+          "officialEducationPolicyBankUrl": "https://policy-bank.pacificdata.org/education/school-handbook",
+          "schoolStructureNote": "The Ministry School Handbook describes elementary Grades 1–8 with five core subjects including Mathematics and Science; high school covers Grades 9–12 with academic and vocational programmes. High-school science is described as Science in the academic curriculum, alongside mathematics; public sources reviewed do not establish a nationally mandated separate Biology/Chemistry/Physics sequence for every grade.",
+          "curriculumReformNote": "A Senate bill on national curriculum framework and quarterly student assessments was reported as passed by the Senate in February 2026 and forwarded for House consideration. This is a legislative proposal in the source reviewed, not confirmation of enactment; verify final legislative status before treating proposed changes as binding curriculum.",
+          "status": "Palau-MOE-and-Bureau-of-Curriculum-and-Instruction-authority-verified; Grades-1-8-and-9-12-structure-recorded; separate-science-subject-syllabuses-and-current-topic-sequences-not-confirmed",
+          "subjectPathwayNote": "Physics content is included within Science in the elementary and high-school programme descriptions. The available Ministry handbook does not establish a separate nationally prescribed Physics syllabus or chapter sequence for each grade; keep it mapped as a Science strand until current subject course guides are obtained from the Bureau."
+        },
+        "Mathematics": {
+          "officialAuthority": "Republic of Palau Ministry of Education, through the Bureau of Curriculum and Instruction and its Division of Curriculum Development and Implementation; the Ministry develops and implements national school curriculum frameworks and course guides.",
+          "officialSyllabusUrl": "https://www.palauschools.org/?p=bci",
+          "examBoard": "Palau Ministry of Education, Bureau of Curriculum and Instruction; national student assessment arrangements and school-level grading are guided by Ministry policy. Confirm current assessment policy and subject/course requirements with the school.",
+          "languageOfInstruction": "Palauan and English are core languages in the school curriculum. The exact language used for instruction in science and mathematics varies by grade, course and school; verify the school's current language-of-instruction policy.",
+          "chapterCount": null,
+          "chapters": [],
+          "officialMinistryWebsiteUrl": "https://palaumoe.net/",
+          "officialBureauCurriculumInstructionUrl": "https://www.palauschools.org/?p=bci",
+          "officialSchoolHandbookUrl": "https://pacificdata.org/data/dataset/4dbf9a5a-f785-4eff-a231-2556676d0acc/resource/1891558f-1c8d-4f63-900c-1eae8338c674/download/school-handbook.pdf",
+          "officialEducationPolicyBankUrl": "https://policy-bank.pacificdata.org/education/school-handbook",
+          "schoolStructureNote": "The Ministry School Handbook describes elementary Grades 1–8 with five core subjects including Mathematics and Science; high school covers Grades 9–12 with academic and vocational programmes. High-school science is described as Science in the academic curriculum, alongside mathematics; public sources reviewed do not establish a nationally mandated separate Biology/Chemistry/Physics sequence for every grade.",
+          "curriculumReformNote": "A Senate bill on national curriculum framework and quarterly student assessments was reported as passed by the Senate in February 2026 and forwarded for House consideration. This is a legislative proposal in the source reviewed, not confirmation of enactment; verify final legislative status before treating proposed changes as binding curriculum.",
+          "status": "Palau-MOE-and-Bureau-of-Curriculum-and-Instruction-authority-verified; Grades-1-8-and-9-12-structure-recorded; separate-science-subject-syllabuses-and-current-topic-sequences-not-confirmed",
+          "subjectPathwayNote": "Mathematics is a core subject in elementary Grades 1–8 and is included in high-school academic programmes. The Ministry handbook does not provide a complete grade-by-grade chapter sequence or prove that a single national textbook order applies to all high-school tracks."
+        }
       }
-    }
   },
-  {
     "country": "Palestine",
     "subjects": {
       "Biology": {
