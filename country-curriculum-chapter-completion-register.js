@@ -9358,40 +9358,40 @@
     "country": "Zimbabwe",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of Primary and Secondary Education (MoPSE), Curriculum Development and Technical Services",
+        "officialSyllabusUrl": "https://www.mopsemashwest.gov.zw/files/Biology%203-4.pdf",
+        "examBoard": "Zimbabwe School Examinations Council (ZIMSEC)",
+        "languageOfInstruction": "English is widely used in secondary science and mathematics syllabuses; verify the prescribed language and approved local-language provision for each school and learning area",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "MoPSE-Biology-Forms-3-4-2024-2030-syllabus-source-identified; Forms-1-2-and-5-6-mapping-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
+        "officialAuthority": "Ministry of Primary and Secondary Education (MoPSE), Curriculum Development and Technical Services",
         "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "examBoard": "Zimbabwe School Examinations Council (ZIMSEC)",
+        "languageOfInstruction": "English is widely used in secondary science and mathematics syllabuses; verify the prescribed language and approved local-language provision for each school and learning area",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "Heritage-Based Curriculum Framework 2024-2030 and ZIMSEC identified; subject-specific current syllabus and scope-and-sequence extraction pending"
       },
       "Physics": {
-        "officialAuthority": null,
+        "officialAuthority": "Ministry of Primary and Secondary Education (MoPSE), Curriculum Development and Technical Services",
         "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "examBoard": "Zimbabwe School Examinations Council (ZIMSEC)",
+        "languageOfInstruction": "English is widely used in secondary science and mathematics syllabuses; verify the prescribed language and approved local-language provision for each school and learning area",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "Heritage-Based Curriculum Framework 2024-2030 and ZIMSEC identified; subject-specific current syllabus and scope-and-sequence extraction pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
+        "officialAuthority": "Ministry of Primary and Secondary Education (MoPSE), Curriculum Development and Technical Services",
         "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "examBoard": "Zimbabwe School Examinations Council (ZIMSEC)",
+        "languageOfInstruction": "English is widely used in secondary science and mathematics syllabuses; verify the prescribed language and approved local-language provision for each school and learning area",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "Heritage-Based Curriculum Framework 2024-2030 and ZIMSEC identified; subject-specific current syllabus and scope-and-sequence extraction pending"
       }
     }
   },
