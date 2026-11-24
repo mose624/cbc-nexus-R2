@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="250" viewBox="0 0 1200 250" role="img" aria-labelledby="title desc">
+<title id="title">CBE Nexus — Global Education Across 196 Countries</title>
+<desc id="desc">A compact promotional banner for CBE Nexus featuring study resources, AI Academy, online tutoring, international teaching jobs, resource marketplace and global schools.</desc>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#082f78"/><stop offset=".58" stop-color="#075bb4"/><stop offset="1" stop-color="#0e9bd5"/></linearGradient><linearGradient id="gold" x1="0" x2="1"><stop stop-color="#fde047"/><stop offset="1" stop-color="#f59e0b"/></linearGradient></defs>
+<rect width="1200" height="250" rx="22" fill="url(#bg)"/>
+<circle cx="1080" cy="125" r="155" fill="#fff" opacity=".07"/><circle cx="1080" cy="125" r="112" fill="none" stroke="#bfdbfe" stroke-width="2" opacity=".38"/><path d="M975 125h210M1080 20v210M1004 54c42 45 42 97 0 142M1156 54c-42 45-42 97 0 142" fill="none" stroke="#bfdbfe" stroke-width="2" opacity=".32"/>
+<g font-family="Arial,Helvetica,sans-serif" fill="#fff">
+<text x="42" y="47" font-size="17" font-weight="700" letter-spacing="2">CONNECTING LEARNERS TO EXCELLENCE · SINCE 2017</text>
+<text x="42" y="104" font-size="49" font-weight="800">CBE NEXUS</text>
+<text x="44" y="143" font-size="29" font-weight="700">Your complete global education hub</text>
+<text x="44" y="174" font-size="18" fill="#e0f2fe">Study resources • AI Academy • Online tutoring • Teaching jobs</text>
+<text x="44" y="200" font-size="18" fill="#e0f2fe">Teacher marketplace • Scholarships • Global school information</text>
+<text x="44" y="231" font-size="16" font-weight="700" fill="#fde68a">LEARN  ·  PRACTISE  ·  ACHIEVE</text>
+<text x="868" y="62" font-size="18" font-weight="700" fill="#dbeafe">GLOBAL EDUCATION</text>
+<text x="868" y="105" font-size="43" font-weight="800">196</text>
+<text x="968" y="105" font-size="24" font-weight="700">COUNTRIES</text>
+</g>
+<rect x="842" y="145" width="322" height="66" rx="15" fill="url(#gold)"/>
+<text x="1003" y="173" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="800" fill="#082f49">EXPLORE CBE NEXUS</text>
+<text x="1003" y="195" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="800" fill="#082f49">www.cbenexus.com</text>
+<path d="M0 239h1200" stroke="#fde047" stroke-width="5"/>
+</svg>
