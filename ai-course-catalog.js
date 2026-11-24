@@ -3,7 +3,7 @@ function e(v){return String(v??"").replace(/[&<>"']/g,function(c){return({"&":"&
 function addCourseListSchema(base){
  var items=Object.keys(base).map(function(k,i){var c=base[k];return {"@type":"ListItem","position":i+1,"item":{"@type":"Course","name":c.title,"description":c.description||c.short,"url":"https://cbenexus.com/"+c.page,"provider":{"@type":"EducationalOrganization","name":"CBE Nexus","url":"https://cbenexus.com/"}}};});
  var node=document.getElementById("ai-course-list-jsonld");if(!node){node=document.createElement("script");node.type="application/ld+json";node.id="ai-course-list-jsonld";document.head.appendChild(node);}
- node.textContent=JSON.stringify({"@context":"https://schema.org","@type":"ItemList","name":"43 Free AI and Digital Skills Courses — CBE Nexus AI Academy","description":"A catalogue of free self-paced courses in artificial intelligence, prompt engineering, education, productivity and applied digital skills.","numberOfItems":items.length,"itemListElement":items});
+ node.textContent=JSON.stringify({"@context":"https://schema.org","@type":"ItemList","name":"44 Free AI and Digital Skills Courses — CBE Nexus AI Academy","description":"A catalogue of free self-paced courses in artificial intelligence, prompt engineering, education, productivity and applied digital skills.","numberOfItems":items.length,"itemListElement":items});
 }
 function renderCourses(dynamic){
  var g=document.getElementById("courseGrid");if(!g)return;var base=window.CBENexusAICourses||{};
