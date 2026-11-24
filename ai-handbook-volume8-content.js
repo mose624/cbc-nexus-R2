@@ -30,7 +30,7 @@ The employee lifecycle commonly includes workforce planning, attraction and recr
 HR professionals advise managers, support employees, maintain accurate records and apply policies consistently. They should act impartially, avoid conflicts of interest, maintain confidentiality and escalate matters beyond their authority. Confidentiality is not absolute where disclosure is legally required or necessary to address a serious safety concern; the correct process and authorised recipients matter.
 
 ## 1.6 Practical application
-Prepare an employee-lifecycle map for a 25-person online learning organisation. Identify the person responsible at each stage, the records created, the employee's experience and one risk that could arise. Recommend a control for each risk.\`,
+Prepare an employee-lifecycle map for a 25-person online learning organisation. Identify the person responsible at each stage, the records created, the employee's experience and one risk that could arise. Recommend a control for each risk.`,
 `# Module 2: Workforce Planning, Recruitment and Selection
 
 ## 2.1 Workforce planning
@@ -63,7 +63,7 @@ Competency questions ask for evidence of behaviour in a relevant situation. Exam
 STAR means Situation, Task, Action and Result. The candidate briefly explains the context, their responsibility, the actions they personally took and the outcome. Interviewers should probe for specific evidence and distinguish individual contribution from team results.
 
 ## 2.6 Practical exercise: recruit an online mathematics teacher
-Write a job description and person specification. Develop five structured interview questions, a simple scoring rubric and a short work-sample task. Identify how you will make the process accessible and non-discriminatory, protect applicant data and document the final decision.\`,
+Write a job description and person specification. Develop five structured interview questions, a simple scoring rubric and a short work-sample task. Identify how you will make the process accessible and non-discriminatory, protect applicant data and document the final decision.`,
 `# Module 3: Employee Onboarding, Training and Development
 
 ## 3.1 Purpose of onboarding
@@ -104,7 +104,7 @@ A positive satisfaction survey does not prove that learning occurred. Evaluation
 Career development may include professional qualifications, mentoring, leadership programmes, stretch assignments, skills training and transparent promotion pathways. Succession planning identifies critical roles and develops a pool of people who may be able to assume them. It should not become an undisclosed promise of promotion or a substitute for fair recruitment.
 
 ## 3.6 Practical exercise
-Conduct a mini training needs analysis for a school introducing a new learning management system. Identify organisational, role and individual needs; recommend two training methods; define a learning measure, a workplace behaviour measure and an organisational result measure.\`,
+Conduct a mini training needs analysis for a school introducing a new learning management system. Identify organisational, role and individual needs; recommend two training methods; define a learning measure, a workplace behaviour measure and an organisational result measure.`,
 `# Module 4: Performance Management and Employee Motivation
 
 ## 4.1 Continuous performance management
@@ -133,7 +133,7 @@ Motivation can be influenced by fair compensation, recognition, autonomy, meanin
 Retention strategies include fair treatment, transparent rewards, professional development, effective leadership, work-life balance, employee engagement and credible career pathways. Retention should not be pursued at the expense of performance standards or employee choice.
 
 ## 4.6 Practical exercise
-Create a performance agreement for an online teacher with three objectives: learner progress, timely feedback and professional development. For each objective, define evidence, review frequency, support offered and a safeguard against unintended consequences. Draft one example of constructive feedback.\`,
+Create a performance agreement for an online teacher with three objectives: learner progress, timely feedback and professional development. For each objective, define evidence, review frequency, support offered and a safeguard against unintended consequences. Draft one example of constructive feedback.`,
 `# Module 5: Compensation, Employee Relations and Workplace Wellbeing
 
 ## 5.1 Total compensation
@@ -162,7 +162,7 @@ A fair grievance process receives and records the complaint, acknowledges it, in
 HR supports safe, respectful and productive working conditions. Areas include occupational health and safety, harassment prevention, mental wellbeing, reasonable accommodation, workload management and reporting procedures. Managers should respond to risks promptly and follow applicable legal and organisational processes.
 
 ## 5.6 Practical exercise
-Using a fictional payroll case, calculate net pay from gross pay and stated deductions. Then draft a grievance-handling flowchart and identify which records should be confidential, who may access them and how an employee can request a review.\`,
+Using a fictional payroll case, calculate net pay from gross pay and stated deductions. Then draft a grievance-handling flowchart and identify which records should be confidential, who may access them and how an employee can request a review.`,
 `# Module 6: HR Technology, Ethics and International People Management
 
 ## 6.1 Human Resource Information Systems
@@ -222,7 +222,7 @@ An effective office has defined responsibilities, clear reporting routes, approp
 A typical workflow is: receive a request; register and classify it; assign responsibility; process or respond; review or obtain approval; record the outcome; and file the evidence. Tracking the request from receipt to closure reduces lost tasks and makes service performance measurable.
 
 ## 1.6 Practical application
-Map the handling of a visitor enquiry in a school or education company. Identify the information required, the staff member responsible, expected response time, privacy risks and the point at which the enquiry must be escalated.\`,
+Map the handling of a visitor enquiry in a school or education company. Identify the information required, the staff member responsible, expected response time, privacy risks and the point at which the enquiry must be escalated.`,
 `# Module 2: Business Communication and Correspondence
 
 ## 2.1 Principles of professional communication
@@ -253,7 +253,7 @@ Answer promptly where possible, identify the organisation or department, speak c
 Effective customer service involves courtesy, responsiveness, accurate information, problem-solving, confidentiality and follow-up. When receiving a complaint, listen without interruption, clarify the issue, record facts, explain the process, refer matters to the authorised person and confirm what will happen next.
 
 ## Practical exercise
-Draft a formal email responding to a client who requests information about an educational programme. Include the programme details available, one clarifying question if necessary, a next step and a professional closing. Do not invent fees, dates or admission requirements.\`,
+Draft a formal email responding to a client who requests information about an educational programme. Include the programme details available, one clarifying question if necessary, a next step and a professional closing. Do not invent fees, dates or admission requirements.`,
 `# Module 3: Records Management and Document Control
 
 ## 3.1 Records management
@@ -300,7 +300,7 @@ Version control records revisions, approval status and the current authoritative
 Retention periods depend on legal, operational, contractual and archival requirements. An organisation should maintain an approved retention schedule, apply legal holds where necessary and securely dispose of records when authorised. Deletion should include relevant copies and storage locations, subject to applicable rules.
 
 ## 3.6 Practical exercise
-Design a filing system for an education organisation. Create a folder tree, a naming convention, a document register and an access matrix for public, internal, confidential and restricted records. Explain how staff will find the correct current version.\`,
+Design a filing system for an education organisation. Create a folder tree, a naming convention, a document register and an access matrix for public, internal, confidential and restricted records. Explain how staff will find the correct current version.`,
 `# Module 4: Meetings, Scheduling and Time Management
 
 ## 4.1 Meeting administration
@@ -331,7 +331,7 @@ A priority matrix separates tasks by urgency and importance:
 Priorities should be reviewed when deadlines, risks or organisational needs change.
 
 ## 4.6 Practical scheduling exercise
-A manager has a finance meeting from 09:00–10:00, a recruitment interview from 10:30–11:30 and a departmental meeting from 14:00–15:00. Confirm availability, prepare documents, allow transition time, check venue or online access and send reminders. Identify what you would do if the interview panel reports a time-zone conflict.\`,
+A manager has a finance meeting from 09:00–10:00, a recruitment interview from 10:30–11:30 and a departmental meeting from 14:00–15:00. Confirm availability, prepare documents, allow transition time, check venue or online access and send reminders. Identify what you would do if the interview panel reports a time-zone conflict.`,
 `# Module 5: Office Technology and Productivity Software
 
 ## 5.1 Word processing
@@ -359,7 +359,7 @@ Cloud platforms such as Google Workspace and Microsoft 365 can support shared do
 Automation can send meeting reminders, route form submissions, notify approvers, allocate tasks and validate data entry. Test workflows with realistic cases, log failures and provide a manual alternative. Human approval should remain for high-impact or sensitive decisions.
 
 ## 5.6 Practical exercise
-Create a monthly office expense spreadsheet with categories, dates, supplier, approved amount, actual amount and variance. Use SUM, AVERAGE and SUMIF. Add validation for categories and explain how you would restrict access and verify the figures before reporting.\`,
+Create a monthly office expense spreadsheet with categories, dates, supplier, approved amount, actual amount and variance. Use SUM, AVERAGE and SUMIF. Add validation for categories and explain how you would restrict access and verify the figures before reporting.`,
 `# Module 6: Office Operations, Ethics and Administrative Controls
 
 ## 6.1 Inventory management
@@ -431,7 +431,7 @@ In a real assignment, the evidence and any empirical claim must be supported by 
 A thesis statement communicates the central argument of an essay. “Technology is important in education” is too broad. A more focused example is: “Effective integration of digital technology can improve access to educational resources and support personalised learning, provided that institutions address teacher training, digital accessibility and data protection.”
 
 ## 1.6 Practical exercise
-Write a focused thesis statement on the role of artificial intelligence in higher education. Identify the main claim, the scope, two supporting reasons and one limitation or condition. Check that the statement can be investigated with credible evidence.\`,
+Write a focused thesis statement on the role of artificial intelligence in higher education. Identify the main claim, the scope, two supporting reasons and one limitation or condition. Check that the statement can be investigated with credible evidence.`,
 `# Module 2: Academic Essays, Arguments and Critical Thinking
 
 ## 2.1 Types of academic essays
@@ -463,7 +463,7 @@ Suppose one study reports increased learner engagement with digital learning whi
 Match the strength of language to the evidence. “The findings demonstrate” implies strong support; “the results suggest” is more cautious; “the findings may indicate” signals uncertainty; and “further research is required” acknowledges limits. Avoid presenting tentative findings as established facts.
 
 ## Practical exercise
-Write two paragraphs presenting competing views on AI-supported assessment. For each view, identify a claim, supporting evidence required, possible limitation and a balanced conclusion. Do not invent a study or quotation.\`,
+Write two paragraphs presenting competing views on AI-supported assessment. For each view, identify a claim, supporting evidence required, possible limitation and a balanced conclusion. Do not invent a study or quotation.`,
 `# Module 3: Literature Reviews and Research Synthesis
 
 ## 3.1 Purpose of a literature review
@@ -497,7 +497,7 @@ Group evidence into themes such as access to AI tools, teacher readiness, learne
 A gap may concern an under-studied population, inconsistent findings, methodological limitations, a changed technological context, an underrepresented location or an unresolved practical problem. Establish the gap by searching systematically and explaining what existing research does and does not show. Do not simply declare that “no research exists”.
 
 ## 3.6 Practical exercise
-Develop a literature search plan for “AI-supported feedback in secondary science education”. List concepts, synonyms, databases, inclusion criteria, exclusion criteria and a literature matrix. Record why each selected source is relevant and what limitation should be considered.\`,
+Develop a literature search plan for “AI-supported feedback in secondary science education”. List concepts, synonyms, databases, inclusion criteria, exclusion criteria and a literature matrix. Record why each selected source is relevant and what limitation should be considered.`,
 `# Module 4: Referencing, Citation and Academic Integrity
 
 ## 4.1 Why referencing matters
@@ -531,7 +531,7 @@ These are templates. Never invent an author, journal, volume, page range, publis
 Paraphrasing expresses another author's idea in genuinely new wording while preserving meaning and citing the source. Merely replacing a few words while retaining the sentence structure is not adequate. Direct quotations reproduce the exact wording, use quotation marks or block format as required and include the appropriate citation and locator.
 
 ## 4.6 Plagiarism and misconduct
-Misconduct may include copying without attribution, submitting another person's work, undisclosed reuse where prohibited, inventing references, fabricating results, falsifying data or misrepresenting AI-generated content as verified research. Keep notes that distinguish direct quotations, paraphrases and your own analysis. Follow institutional rules on collaboration and AI assistance.\`,
+Misconduct may include copying without attribution, submitting another person's work, undisclosed reuse where prohibited, inventing references, fabricating results, falsifying data or misrepresenting AI-generated content as verified research. Keep notes that distinguish direct quotations, paraphrases and your own analysis. Follow institutional rules on collaboration and AI assistance.`,
 `# Module 5: Research Proposals, Dissertations and Scientific Reports
 
 ## 5.1 Research proposal structure
@@ -560,7 +560,7 @@ Present results in a logical sequence using text, tables or figures. Label every
 High performance = 15 ÷ 40 × 100 = **37.5%**. Moderate = 20 ÷ 40 × 100 = **50%**. Below standard = 5 ÷ 40 × 100 = **12.5%**. These figures are illustrative, not research findings.
 
 ## 5.6 Discussion, conclusion and recommendations
-The discussion interprets findings, relates them to previous research and considers alternative explanations. A conclusion answers the research questions and reflects the actual results. Acknowledge limitations and avoid generalising beyond the sample or design. Recommendations should follow from evidence and identify realistic responsible actors.\`,
+The discussion interprets findings, relates them to previous research and considers alternative explanations. A conclusion answers the research questions and reflects the actual results. Acknowledge limitations and avoid generalising beyond the sample or design. Recommendations should follow from evidence and identify realistic responsible actors.`,
 `# Module 6: Editing, Publishing and Responsible AI Use
 
 ## 6.1 Academic editing and proofreading
@@ -622,7 +622,7 @@ Primary sources provide original evidence, such as original research, experiment
 For the question “How does access to digital learning materials affect secondary school learners?”, evidence may include research on digital learning, education statistics, learner achievement studies, internet accessibility data, teacher perspectives and government policies. Define the population, location, period and outcome before searching.
 
 ## 1.6 Practical exercise
-Identify five types of evidence needed to investigate the impact of AI tools on university learning. For each, state a possible source, what it could establish and one limitation. Distinguish evidence about access, usage, learning outcomes, academic integrity and learner experience.\`,
+Identify five types of evidence needed to investigate the impact of AI tools on university learning. For each, state a possible source, what it could establish and one limitation. Distinguish evidence about access, usage, learning outcomes, academic integrity and learner experience.`,
 `# Module 2: Search Engines and Advanced Search Techniques
 
 ## 2.1 Search engines and ranking
@@ -657,7 +657,7 @@ Operators can narrow results but do not establish that a source is trustworthy.
 For renewable-energy education, identify concepts such as renewable energy, clean energy, sustainability and environmental education. Combine synonyms, search scholarly and institutional sources, refine by year or education level and record the query, platform, date and useful results. Keep a search log so another researcher can understand how sources were located.
 
 ## 2.6 Practical exercise
-Develop five distinct search queries for research on digital-skills training in Africa. Include one exact phrase, one site-specific search, one synonym query, one date or file-type refinement and one query aimed at academic literature. Explain why each query is useful and what it may miss.\`,
+Develop five distinct search queries for research on digital-skills training in Africa. Include one exact phrase, one site-specific search, one synonym query, one date or file-type refinement and one query aimed at academic literature. Explain why each query is useful and what it may miss.`,
 `# Module 3: Academic Databases and Digital Research Libraries
 
 ## 3.1 What is an academic database?
@@ -687,7 +687,7 @@ Open-access publications are available online without the usual subscription bar
 Capture bibliographic information when you first save a source. Do not rely on browser history or memory.
 
 ## 3.6 Practical exercise
-Locate five real academic publications on AI in education. Create a source log for each and verify that the publication exists on a publisher, journal or institutional repository page. Record the document type, peer-review status if known, DOI or stable URL and one limitation. Do not invent missing details.\`,
+Locate five real academic publications on AI in education. Create a source log for each and verify that the publication exists on a publisher, journal or institutional repository page. Record the document type, peer-review status if known, DOI or stable URL and one limitation. Do not invent missing details.`,
 `# Module 4: Evaluating Information and Fact-Checking
 
 ## 4.1 Why evaluation is necessary
@@ -717,7 +717,7 @@ Useful methods include reverse-image search, locating original documents, verify
 Warning signs may include inconsistent lighting, unnatural facial movement, distorted text, inconsistent shadows, unusual edges, missing original sources or recycled footage presented as a new event. No single visual clue proves manipulation. Check the original upload, date, location, reverse-image results and independent reporting. Treat automated deepfake detectors as fallible tools, not final proof.
 
 ## Practical fact-checking exercise
-A social media post claims: “All universities in a particular country have abolished entrance examinations.” Identify the country and institutions, search official university admissions pages and ministry announcements, compare credible reporting, check the date and determine whether the claim applies to all institutions or only selected programmes. Write a short conclusion with source links and uncertainty clearly stated.\`,
+A social media post claims: “All universities in a particular country have abolished entrance examinations.” Identify the country and institutions, search official university admissions pages and ministry announcements, compare credible reporting, check the date and determine whether the claim applies to all institutions or only selected programmes. Write a short conclusion with source links and uncertainty clearly stated.`,
 `# Module 5: Digital Security, Privacy and Ethical Information Use
 
 ## 5.1 Personal information
@@ -741,7 +741,7 @@ AI can suggest search terms, summarise supplied documents, explain concepts, org
 A safe workflow is to define a focused question, use AI to suggest search terms, locate original sources independently, verify claims, read important documents, cite original sources and follow institutional AI-use policies. Never cite an AI-generated reference until the publication has been independently confirmed.
 
 ## Practical exercise
-Review a fictional email asking you to download an urgent “research report” and sign in with your university password. Identify warning signs, describe how to verify the sender safely, explain what to do if credentials were entered and list the privacy and copyright checks required before sharing a downloaded report.\`,
+Review a fictional email asking you to download an urgent “research report” and sign in with your university password. Identify warning signs, describe how to verify the sender safely, explain what to do if credentials were entered and list the privacy and copyright checks required before sharing a downloaded report.`,
 `# Module 6: Information Organisation, Digital Research Projects and Reporting
 
 ## 6.1 Organising research information
