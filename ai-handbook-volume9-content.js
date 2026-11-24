@@ -9,7 +9,7 @@
  const previous=E.makeLongNotes;
  const notes={
  "human-resource-management":[
-\`# Module 1: Foundations, Strategy and the HR Function
+`# Module 1: Foundations, Strategy and the HR Function
 
 ## 1.1 What human resource management means
 Human resource management (HRM) is the organised approach an institution uses to attract, select, develop, support, evaluate and retain the people whose work enables it to achieve its purpose. It is more than keeping employee files or processing salaries. It connects workforce capability, organisational culture, leadership, performance, employee wellbeing and legal responsibilities. In a school, for example, HRM includes forecasting the number and type of teachers required, verifying qualifications, supporting induction, arranging professional development, monitoring workload and handling employment matters fairly.
@@ -67,9 +67,9 @@ A school plans to introduce senior secondary science pathways. It has enough cla
 3. Identify four ethical principles that should guide HR decisions.
 4. Explain why line managers and HR share responsibility for people management.
 
-**Suggested answers:** HRM covers the full employee lifecycle and strategic capability, while payroll is one administrative process. Workforce planning identifies future staffing needs; recruitment seeks candidates for defined vacancies. Relevant principles include dignity, fairness, transparency and confidentiality. HR provides systems and advice, while managers lead daily work and remain accountable for their teams.\`,
+**Suggested answers:** HRM covers the full employee lifecycle and strategic capability, while payroll is one administrative process. Workforce planning identifies future staffing needs; recruitment seeks candidates for defined vacancies. Relevant principles include dignity, fairness, transparency and confidentiality. HR provides systems and advice, while managers lead daily work and remain accountable for their teams.`,
 
-\`# Module 2: Workforce Planning, Job Analysis and Organisational Design
+`# Module 2: Workforce Planning, Job Analysis and Organisational Design
 
 ## 2.1 Workforce planning as a continuous process
 Workforce planning ensures that an organisation has the right capabilities, in appropriate numbers, at the required time and place, within its financial and operational constraints. It is not simply predicting headcount. A plan should consider demand, supply, skills, cost, risk and uncertainty.
@@ -138,9 +138,9 @@ A college plans to launch an online learning unit. List six roles or capabilitie
 3. Give two risks of poorly designed competency frameworks.
 4. Explain why a headcount forecast must be tested against workload and skills.
 
-**Suggested answers:** Workforce planning links strategy, workforce analysis, demand and supply forecasts, gap identification, interventions and monitoring. A job description defines the role; a person specification defines requirements for the role holder. Frameworks may become bureaucratic or encode bias. Headcount alone does not show whether the organisation has the right specialist skills or a feasible distribution of work.\`,
+**Suggested answers:** Workforce planning links strategy, workforce analysis, demand and supply forecasts, gap identification, interventions and monitoring. A job description defines the role; a person specification defines requirements for the role holder. Frameworks may become bureaucratic or encode bias. Headcount alone does not show whether the organisation has the right specialist skills or a feasible distribution of work.`,
 
-\`# Module 3: Recruitment, Selection and Effective Onboarding
+`# Module 3: Recruitment, Selection and Effective Onboarding
 
 ## 3.1 Recruitment begins before advertising
 Recruitment is the process of attracting suitable people to apply for a genuine organisational need. Begin by confirming the vacancy, budget, workload, job design and approval authority. Review whether the work should be redesigned, redistributed, developed internally or filled through external recruitment. A rushed advertisement for an unclear role wastes time and can expose the organisation to unfair selection decisions.
@@ -208,9 +208,9 @@ A qualified applicant complains that they were rejected because they did not att
 **Model answer:** Confirm the job analysis; publish essential criteria; use a consistent application rubric; provide a short, accessible data interpretation exercise using synthetic data; conduct structured interviews; verify qualifications and references where appropriate; record evidence; provide accommodations; and communicate outcomes respectfully. The exercise should assess relevant reasoning rather than unpaid production of business work.
 
 ## 3.10 Knowledge check
-Explain the difference between recruitment and selection; identify four sources of bias; describe three onboarding practices; and state why pre-employment checks must be role-related and lawful.\`,
+Explain the difference between recruitment and selection; identify four sources of bias; describe three onboarding practices; and state why pre-employment checks must be role-related and lawful.`,
 
-\`# Module 4: Learning, Development, Performance and Talent Management
+`# Module 4: Learning, Development, Performance and Talent Management
 
 ## 4.1 Learning and development as an organisational investment
 Learning and development (L&D) builds the knowledge, skills and behaviours needed for current performance and future change. Training addresses a defined capability need; development may prepare an employee for broader or more complex responsibilities. Neither should be treated as attendance alone. The important question is whether learning transfers into improved practice.
@@ -270,9 +270,9 @@ Design a 90-day development plan for a newly appointed supervisor. Include three
 **Model outline:** Objective 1: conduct structured weekly team check-ins, evidenced by documented actions and staff feedback. Objective 2: prepare accurate monthly workforce reports, evidenced by quality checks. Objective 3: handle routine concerns using the organisation's policy, evidenced by scenario assessment and supervised practice. Include coaching, policy study, observation and a 30/60/90-day review.
 
 ## 4.10 Knowledge check
-Define training-needs analysis; distinguish learning from transfer; explain continuous performance management; and identify safeguards for fair underperformance management.\`,
+Define training-needs analysis; distinguish learning from transfer; explain continuous performance management; and identify safeguards for fair underperformance management.`,
 
-\`# Module 5: Reward, Employee Relations, Wellbeing and Employment Risk
+`# Module 5: Reward, Employee Relations, Wellbeing and Employment Risk
 
 ## 5.1 Total reward
 Reward includes financial and non-financial elements that employees value in return for their contribution. Financial elements may include base pay, allowances, incentives and benefits. Non-financial elements may include meaningful work, recognition, flexibility, development, supportive leadership and a safe working environment.
@@ -319,9 +319,9 @@ A technician reports that protective equipment is unavailable. The supervisor sa
 **Model approach:** Acknowledge the complaint, explain the process, preserve vacancy and scoring records, identify the decision-makers, use an impartial reviewer, give relevant parties a chance to provide information, check whether criteria were job-related and consistently applied, and communicate the outcome appropriately. Protect confidentiality and address any process defects.
 
 ## 5.11 Knowledge check
-Explain total reward; distinguish job evaluation from individual performance appraisal; identify stages of fair grievance handling; and explain why wellbeing requires attention to work design as well as individual support.\`,
+Explain total reward; distinguish job evaluation from individual performance appraisal; identify stages of fair grievance handling; and explain why wellbeing requires attention to work design as well as individual support.`,
 
-\`# Module 6: HR Information Systems, Analytics, Change and the HR Capstone
+`# Module 6: HR Information Systems, Analytics, Change and the HR Capstone
 
 ## 6.1 HR information systems
 An HR information system (HRIS) supports the secure administration and analysis of workforce information. Depending on the organisation, it may hold approved job records, employee details, recruitment workflows, leave, learning records, performance information and reporting data. A system should be selected according to actual requirements, accessibility, security, integration, support, cost and local data-protection obligations.
@@ -415,7 +415,7 @@ Your plan should distinguish confirmed evidence, assumptions and recommendations
 8. Establish evidence and governance, consult stakeholders, prioritise risks, pilot changes, train users, implement in phases and evaluate outcomes.
 
 ## Course completion standard
-A learner completing this course should be able to explain the employee lifecycle, contribute to workforce planning, analyse jobs, support fair recruitment, design onboarding, identify learning needs, participate in performance conversations, understand reward and employee relations, protect workforce data and develop an evidence-based HR improvement proposal. Competence in actual HR practice also requires supervised experience and knowledge of the laws and professional standards that apply in the learner's jurisdiction.\`
+A learner completing this course should be able to explain the employee lifecycle, contribute to workforce planning, analyse jobs, support fair recruitment, design onboarding, identify learning needs, participate in performance conversations, understand reward and employee relations, protect workforce data and develop an evidence-based HR improvement proposal. Competence in actual HR practice also requires supervised experience and knowledge of the laws and professional standards that apply in the learner's jurisdiction.`
  ]
  };
  E.makeLongNotes=function(slug,course,module,level){
