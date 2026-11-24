@@ -4307,40 +4307,52 @@
     "country": "Libya",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Libya Ministry of Education; Educational Curricula and Educational Research Centre (مركز المناهج التعليمية والبحوث التربوية)",
+        "officialSyllabusUrl": "https://cerc.moe.gov.ly/educational-curricul/?_educational-stage=education-secondary",
+        "examBoard": "National Examinations Center (المركز الوطني للامتحانات), Ministry of Education",
+        "languageOfInstruction": "Arabic is the principal language of instruction in the national public-school curriculum; English is taught as a separate subject. Verify any regional or school-specific language arrangements.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "curriculumCatalogueYear": "2025–2026",
+        "examAuthorityUrl": "https://nec.moe.gov.ly/",
+        "curriculumCatalogueNote": "The official secondary curriculum catalogue lists Biology, Chemistry, Physics and Mathematics across the general first-secondary year and scientific-track second/third-secondary years. Third-secondary Physics is split into two parts; Mathematics is also listed.",
+        "status": "official-2025-2026-secondary-curriculum-catalogue-and-national-exam-authority-identified; subject-book-topic-sequence-extraction-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Libya Ministry of Education; Educational Curricula and Educational Research Centre (مركز المناهج التعليمية والبحوث التربوية)",
+        "officialSyllabusUrl": "https://cerc.moe.gov.ly/educational-curricul/?_educational-stage=education-secondary",
+        "examBoard": "National Examinations Center (المركز الوطني للامتحانات), Ministry of Education",
+        "languageOfInstruction": "Arabic is the principal language of instruction in the national public-school curriculum; English is taught as a separate subject. Verify any regional or school-specific language arrangements.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "curriculumCatalogueYear": "2025–2026",
+        "examAuthorityUrl": "https://nec.moe.gov.ly/",
+        "curriculumCatalogueNote": "The official secondary curriculum catalogue lists Biology, Chemistry, Physics and Mathematics across the general first-secondary year and scientific-track second/third-secondary years. Third-secondary Physics is split into two parts; Mathematics is also listed.",
+        "status": "official-2025-2026-secondary-curriculum-catalogue-and-national-exam-authority-identified; subject-book-topic-sequence-extraction-pending"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Libya Ministry of Education; Educational Curricula and Educational Research Centre (مركز المناهج التعليمية والبحوث التربوية)",
+        "officialSyllabusUrl": "https://cerc.moe.gov.ly/educational-curricul/?_educational-stage=education-secondary",
+        "examBoard": "National Examinations Center (المركز الوطني للامتحانات), Ministry of Education",
+        "languageOfInstruction": "Arabic is the principal language of instruction in the national public-school curriculum; English is taught as a separate subject. Verify any regional or school-specific language arrangements.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "curriculumCatalogueYear": "2025–2026",
+        "examAuthorityUrl": "https://nec.moe.gov.ly/",
+        "curriculumCatalogueNote": "The official secondary curriculum catalogue lists Biology, Chemistry, Physics and Mathematics across the general first-secondary year and scientific-track second/third-secondary years. Third-secondary Physics is split into two parts; Mathematics is also listed.",
+        "status": "official-2025-2026-secondary-curriculum-catalogue-and-national-exam-authority-identified; subject-book-topic-sequence-extraction-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Libya Ministry of Education; Educational Curricula and Educational Research Centre (مركز المناهج التعليمية والبحوث التربوية)",
+        "officialSyllabusUrl": "https://cerc.moe.gov.ly/educational-curricul/?_educational-stage=education-secondary",
+        "examBoard": "National Examinations Center (المركز الوطني للامتحانات), Ministry of Education",
+        "languageOfInstruction": "Arabic is the principal language of instruction in the national public-school curriculum; English is taught as a separate subject. Verify any regional or school-specific language arrangements.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "curriculumCatalogueYear": "2025–2026",
+        "examAuthorityUrl": "https://nec.moe.gov.ly/",
+        "curriculumCatalogueNote": "The official secondary curriculum catalogue lists Biology, Chemistry, Physics and Mathematics across the general first-secondary year and scientific-track second/third-secondary years. Third-secondary Physics is split into two parts; Mathematics is also listed.",
+        "status": "official-2025-2026-secondary-curriculum-catalogue-and-national-exam-authority-identified; subject-book-topic-sequence-extraction-pending"
       }
     }
   },
