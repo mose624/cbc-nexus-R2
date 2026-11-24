@@ -6684,44 +6684,67 @@
     "country": "Panama",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Republic of Panama Ministry of Education (MEDUCA), through the National Directorate of Curriculum and Educational Technology.",
+        "officialSyllabusUrl": "https://www.meduca.gob.pa/planes-y-programas-de-estudio/",
+        "examBoard": "MEDUCA administers national school curriculum and assessment policy. Academic and professional/technical secondary programmes have distinct study plans; do not assume one identical upper-secondary subject combination for every bachillerato.",
+        "languageOfInstruction": "Spanish is the principal language of instruction in the national public-school curriculum; verify school-specific bilingual or intercultural arrangements where applicable.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialMEDUCACurriculumPlansUrl": "https://www.meduca.gob.pa/planes-y-programas-de-estudio/",
+        "officialMEDUCA2026CurriculumRedesignUrl": "https://educapanama.edu.pa/?q=programa-rediseno-curricular-2026&qt-redise_o_prueba_de_tabs=2",
+        "officialPrioritisedCurriculumPortalUrl": "https://www.educapanama.edu.pa/?q=planes_priorizados2021",
+        "curriculumImplementationNote": "MEDUCA Resolution No. 425-AL of 19 February 2026 approved experimental implementation during the 2026 school year of updated academic content for Basic General Education and Secondary Education in official schools. Keep the established 2014 programme archive distinct from the 2026 redesign and experimental updated content; verify the exact subject/grade document and implementation notice before treating a programme as final nationwide.",
+        "schoolStructureNote": "Panama's Basic General Education comprises primary Grades 1–6 and premedia Grades 7–9. Secondary Education (Educación Media) covers Grades 10–12 and includes academic as well as professional/technical pathways. Science is taught as Ciencias Naturales in the basic-education programme; Biology, Chemistry and Physics appear as separate subjects in academic secondary programme listings.",
+        "status": "MEDUCA-authority-and-official-curriculum-portals-verified; Basic-General-Education-Grades-1-9-and-Media-Grades-10-12-recorded; 2026-updated-content-approved-for-experimental-implementation; grade-by-grade-topic-sequence-and-chapter-counts-pending",
+        "subjectPathwayNote": "The official curriculum portal lists Natural Sciences (Ciencias Naturales) for premedia Grades 7–9 and Biology (Biología) in academic secondary programme listings for Grades 10, 11 and 12. Biology is also listed in the 2014 Media programme archive. Map the 2026 experimental Biology programme separately when the grade-specific official file is available; do not treat the 2014 archive as proof of the final 2026 sequence."
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Republic of Panama Ministry of Education (MEDUCA), through the National Directorate of Curriculum and Educational Technology.",
+        "officialSyllabusUrl": "https://www.meduca.gob.pa/planes-y-programas-de-estudio/",
+        "examBoard": "MEDUCA administers national school curriculum and assessment policy. Academic and professional/technical secondary programmes have distinct study plans; do not assume one identical upper-secondary subject combination for every bachillerato.",
+        "languageOfInstruction": "Spanish is the principal language of instruction in the national public-school curriculum; verify school-specific bilingual or intercultural arrangements where applicable.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialMEDUCACurriculumPlansUrl": "https://www.meduca.gob.pa/planes-y-programas-de-estudio/",
+        "officialMEDUCA2026CurriculumRedesignUrl": "https://educapanama.edu.pa/?q=programa-rediseno-curricular-2026&qt-redise_o_prueba_de_tabs=2",
+        "officialPrioritisedCurriculumPortalUrl": "https://www.educapanama.edu.pa/?q=planes_priorizados2021",
+        "curriculumImplementationNote": "MEDUCA Resolution No. 425-AL of 19 February 2026 approved experimental implementation during the 2026 school year of updated academic content for Basic General Education and Secondary Education in official schools. Keep the established 2014 programme archive distinct from the 2026 redesign and experimental updated content; verify the exact subject/grade document and implementation notice before treating a programme as final nationwide.",
+        "schoolStructureNote": "Panama's Basic General Education comprises primary Grades 1–6 and premedia Grades 7–9. Secondary Education (Educación Media) covers Grades 10–12 and includes academic as well as professional/technical pathways. Science is taught as Ciencias Naturales in the basic-education programme; Biology, Chemistry and Physics appear as separate subjects in academic secondary programme listings.",
+        "status": "MEDUCA-authority-and-official-curriculum-portals-verified; Basic-General-Education-Grades-1-9-and-Media-Grades-10-12-recorded; 2026-updated-content-approved-for-experimental-implementation; grade-by-grade-topic-sequence-and-chapter-counts-pending",
+        "subjectPathwayNote": "Chemistry (Química) is listed as a separate academic secondary subject in Grades 10–12 programme materials. Basic General Education uses Natural Sciences rather than a separate Chemistry subject. The 2026 curriculum redesign portal is active; extract and version the grade-specific Chemistry programme before setting chapter counts."
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Republic of Panama Ministry of Education (MEDUCA), through the National Directorate of Curriculum and Educational Technology.",
+        "officialSyllabusUrl": "https://www.meduca.gob.pa/planes-y-programas-de-estudio/",
+        "examBoard": "MEDUCA administers national school curriculum and assessment policy. Academic and professional/technical secondary programmes have distinct study plans; do not assume one identical upper-secondary subject combination for every bachillerato.",
+        "languageOfInstruction": "Spanish is the principal language of instruction in the national public-school curriculum; verify school-specific bilingual or intercultural arrangements where applicable.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialMEDUCACurriculumPlansUrl": "https://www.meduca.gob.pa/planes-y-programas-de-estudio/",
+        "officialMEDUCA2026CurriculumRedesignUrl": "https://educapanama.edu.pa/?q=programa-rediseno-curricular-2026&qt-redise_o_prueba_de_tabs=2",
+        "officialPrioritisedCurriculumPortalUrl": "https://www.educapanama.edu.pa/?q=planes_priorizados2021",
+        "curriculumImplementationNote": "MEDUCA Resolution No. 425-AL of 19 February 2026 approved experimental implementation during the 2026 school year of updated academic content for Basic General Education and Secondary Education in official schools. Keep the established 2014 programme archive distinct from the 2026 redesign and experimental updated content; verify the exact subject/grade document and implementation notice before treating a programme as final nationwide.",
+        "schoolStructureNote": "Panama's Basic General Education comprises primary Grades 1–6 and premedia Grades 7–9. Secondary Education (Educación Media) covers Grades 10–12 and includes academic as well as professional/technical pathways. Science is taught as Ciencias Naturales in the basic-education programme; Biology, Chemistry and Physics appear as separate subjects in academic secondary programme listings.",
+        "status": "MEDUCA-authority-and-official-curriculum-portals-verified; Basic-General-Education-Grades-1-9-and-Media-Grades-10-12-recorded; 2026-updated-content-approved-for-experimental-implementation; grade-by-grade-topic-sequence-and-chapter-counts-pending",
+        "subjectPathwayNote": "Physics (Física) is listed as a separate academic secondary subject in Grades 10–12 programme materials, with professional/technical programmes also listing Physics across secondary grades in their relevant pathways. Basic General Education uses Natural Sciences. Keep academic and technical study plans distinct and verify the 2026 revised programme before assigning chapters."
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Republic of Panama Ministry of Education (MEDUCA), through the National Directorate of Curriculum and Educational Technology.",
+        "officialSyllabusUrl": "https://www.meduca.gob.pa/planes-y-programas-de-estudio/",
+        "examBoard": "MEDUCA administers national school curriculum and assessment policy. Academic and professional/technical secondary programmes have distinct study plans; do not assume one identical upper-secondary subject combination for every bachillerato.",
+        "languageOfInstruction": "Spanish is the principal language of instruction in the national public-school curriculum; verify school-specific bilingual or intercultural arrangements where applicable.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialMEDUCACurriculumPlansUrl": "https://www.meduca.gob.pa/planes-y-programas-de-estudio/",
+        "officialMEDUCA2026CurriculumRedesignUrl": "https://educapanama.edu.pa/?q=programa-rediseno-curricular-2026&qt-redise_o_prueba_de_tabs=2",
+        "officialPrioritisedCurriculumPortalUrl": "https://www.educapanama.edu.pa/?q=planes_priorizados2021",
+        "curriculumImplementationNote": "MEDUCA Resolution No. 425-AL of 19 February 2026 approved experimental implementation during the 2026 school year of updated academic content for Basic General Education and Secondary Education in official schools. Keep the established 2014 programme archive distinct from the 2026 redesign and experimental updated content; verify the exact subject/grade document and implementation notice before treating a programme as final nationwide.",
+        "schoolStructureNote": "Panama's Basic General Education comprises primary Grades 1–6 and premedia Grades 7–9. Secondary Education (Educación Media) covers Grades 10–12 and includes academic as well as professional/technical pathways. Science is taught as Ciencias Naturales in the basic-education programme; Biology, Chemistry and Physics appear as separate subjects in academic secondary programme listings.",
+        "status": "MEDUCA-authority-and-official-curriculum-portals-verified; Basic-General-Education-Grades-1-9-and-Media-Grades-10-12-recorded; 2026-updated-content-approved-for-experimental-implementation; grade-by-grade-topic-sequence-and-chapter-counts-pending",
+        "subjectPathwayNote": "Mathematics (Matemática) is a subject across primary Grades 1–6, premedia Grades 7–9 and secondary Grades 10–12. MEDUCA publishes grade-level primary programmes, a combined premedia Mathematics programme and secondary academic/professional-technical programmes. Preserve pathway differences in secondary education and distinguish the 2014 archive from the 2026 experimental updated content."
       }
     }
   },
-  {
     "country": "Papua New Guinea",
     "subjects": {
       "Biology": {
