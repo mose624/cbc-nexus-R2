@@ -8,7 +8,7 @@
  const previous=E.makeLongNotes.bind(E);
  const notes={
  "human-resource-management":[
-\`# Module 1: Foundations of Human Resource Management
+`# Module 1: Foundations of Human Resource Management
 
 ## 1.1 Meaning and purpose of HRM
 Human Resource Management (HRM) is the organisational function responsible for managing the employment relationship and supporting the effective use, development and wellbeing of people at work. Employees contribute knowledge, skills, experience, judgement and creativity. HRM connects these capabilities with organisational objectives while protecting fair and lawful employment practices.
@@ -31,7 +31,7 @@ HR professionals advise managers, support employees, maintain accurate records a
 
 ## 1.6 Practical application
 Prepare an employee-lifecycle map for a 25-person online learning organisation. Identify the person responsible at each stage, the records created, the employee's experience and one risk that could arise. Recommend a control for each risk.\`,
-\`# Module 2: Workforce Planning, Recruitment and Selection
+`# Module 2: Workforce Planning, Recruitment and Selection
 
 ## 2.1 Workforce planning
 Workforce planning ensures an organisation has the required number of people, with suitable capabilities, at the time and place needed. A practical cycle is to review organisational objectives, map the current workforce, forecast demand and supply, identify capability gaps, choose responses and monitor results.
@@ -64,7 +64,7 @@ STAR means Situation, Task, Action and Result. The candidate briefly explains th
 
 ## 2.6 Practical exercise: recruit an online mathematics teacher
 Write a job description and person specification. Develop five structured interview questions, a simple scoring rubric and a short work-sample task. Identify how you will make the process accessible and non-discriminatory, protect applicant data and document the final decision.\`,
-\`# Module 3: Employee Onboarding, Training and Development
+`# Module 3: Employee Onboarding, Training and Development
 
 ## 3.1 Purpose of onboarding
 Onboarding is a planned process that helps a new employee understand the organisation, role, systems, colleagues and expected standards. It begins before the first day and continues beyond initial orientation. A checklist should cover the employment documentation, equipment, system access, policies, safeguarding or safety requirements, introductions, role objectives and scheduled check-ins.
@@ -105,7 +105,7 @@ Career development may include professional qualifications, mentoring, leadershi
 
 ## 3.6 Practical exercise
 Conduct a mini training needs analysis for a school introducing a new learning management system. Identify organisational, role and individual needs; recommend two training methods; define a learning measure, a workplace behaviour measure and an organisational result measure.\`,
-\`# Module 4: Performance Management and Employee Motivation
+`# Module 4: Performance Management and Employee Motivation
 
 ## 4.1 Continuous performance management
 Performance management is the ongoing process of agreeing expectations, supporting delivery, reviewing evidence, giving feedback and planning improvement. It should be a two-way process: employees need clear goals and resources, while managers need to remove barriers and provide timely guidance.
@@ -134,7 +134,7 @@ Retention strategies include fair treatment, transparent rewards, professional d
 
 ## 4.6 Practical exercise
 Create a performance agreement for an online teacher with three objectives: learner progress, timely feedback and professional development. For each objective, define evidence, review frequency, support offered and a safeguard against unintended consequences. Draft one example of constructive feedback.\`,
-\`# Module 5: Compensation, Employee Relations and Workplace Wellbeing
+`# Module 5: Compensation, Employee Relations and Workplace Wellbeing
 
 ## 5.1 Total compensation
 Compensation includes financial and non-financial rewards provided in connection with work. Financial elements may include basic salary, allowances, bonuses, commissions and overtime payments. Benefits may include health coverage, retirement contributions, paid leave, flexible work and professional development support. Actual entitlements depend on the contract and applicable law.
@@ -163,7 +163,7 @@ HR supports safe, respectful and productive working conditions. Areas include oc
 
 ## 5.6 Practical exercise
 Using a fictional payroll case, calculate net pay from gross pay and stated deductions. Then draft a grievance-handling flowchart and identify which records should be confidential, who may access them and how an employee can request a review.\`,
-\`# Module 6: HR Technology, Ethics and International People Management
+`# Module 6: HR Technology, Ethics and International People Management
 
 ## 6.1 Human Resource Information Systems
 An HR Information System (HRIS) stores and manages employment information and may support recruitment, employee records, attendance, leave, payroll, performance reviews and training. Examples of HR platforms include Workday and BambooHR. Software capabilities and availability vary; selection should follow requirements analysis, security review and cost assessment.
@@ -201,10 +201,10 @@ Develop an HR management plan for an organisation employing 25 people. Include a
 | Explain four principles of ethical employee-data management | 4 |
 | **Total** | **20** |
 
-Suggested marking: award one mark for each accurate, relevant point or correct calculation step; accept equivalent terminology when the explanation is sound.\`
+Suggested marking: award one mark for each accurate, relevant point or correct calculation step; accept equivalent terminology when the explanation is sound.`
  ],
  "office-administration":[
-\`# Module 1: Foundations of Office Administration
+`# Module 1: Foundations of Office Administration
 
 ## 1.1 Meaning and purpose
 Office administration coordinates information, people, resources and processes so that an organisation can operate efficiently. Administrators help ensure that requests are received, tasks are assigned, records are maintained and routine activities are completed consistently. The role supports decision-makers and service users; it does not automatically carry authority to approve expenditure or make management decisions.
@@ -223,7 +223,7 @@ A typical workflow is: receive a request; register and classify it; assign respo
 
 ## 1.6 Practical application
 Map the handling of a visitor enquiry in a school or education company. Identify the information required, the staff member responsible, expected response time, privacy risks and the point at which the enquiry must be escalated.\`,
-\`# Module 2: Business Communication and Correspondence
+`# Module 2: Business Communication and Correspondence
 
 ## 2.1 Principles of professional communication
 Professional communication should be clear, concise, accurate, complete, courteous and appropriate to its audience. Choose the channel according to urgency, complexity, confidentiality and the need for a permanent record. Avoid ambiguous instructions and unexplained abbreviations.
@@ -254,7 +254,7 @@ Effective customer service involves courtesy, responsiveness, accurate informati
 
 ## Practical exercise
 Draft a formal email responding to a client who requests information about an educational programme. Include the programme details available, one clarifying question if necessary, a next step and a professional closing. Do not invent fees, dates or admission requirements.\`,
-\`# Module 3: Records Management and Document Control
+`# Module 3: Records Management and Document Control
 
 ## 3.1 Records management
 Records management is the systematic creation, classification, storage, retrieval, retention and authorised disposal of organisational records. Records provide evidence of activities and decisions. Examples include financial documents, employee files, contracts, correspondence, minutes, reports, student records and customer records.
@@ -301,7 +301,7 @@ Retention periods depend on legal, operational, contractual and archival require
 
 ## 3.6 Practical exercise
 Design a filing system for an education organisation. Create a folder tree, a naming convention, a document register and an access matrix for public, internal, confidential and restricted records. Explain how staff will find the correct current version.\`,
-\`# Module 4: Meetings, Scheduling and Time Management
+`# Module 4: Meetings, Scheduling and Time Management
 
 ## 4.1 Meeting administration
 Meeting administration includes booking a venue or online platform, preparing the agenda, sending invitations, circulating documents, recording attendance, taking minutes and tracking action items. The administrator should confirm the meeting purpose and required participants before sending invitations.
@@ -332,7 +332,7 @@ Priorities should be reviewed when deadlines, risks or organisational needs chan
 
 ## 4.6 Practical scheduling exercise
 A manager has a finance meeting from 09:00–10:00, a recruitment interview from 10:30–11:30 and a departmental meeting from 14:00–15:00. Confirm availability, prepare documents, allow transition time, check venue or online access and send reminders. Identify what you would do if the interview panel reports a time-zone conflict.\`,
-\`# Module 5: Office Technology and Productivity Software
+`# Module 5: Office Technology and Productivity Software
 
 ## 5.1 Word processing
 Word processors support letters, reports, memoranda, policies, minutes and proposals. Professional formatting uses consistent heading styles, readable fonts, appropriate margins, page numbers, tables and headers or footers. Use built-in styles so long documents can generate navigation and a table of contents.
@@ -360,7 +360,7 @@ Automation can send meeting reminders, route form submissions, notify approvers,
 
 ## 5.6 Practical exercise
 Create a monthly office expense spreadsheet with categories, dates, supplier, approved amount, actual amount and variance. Use SUM, AVERAGE and SUMIF. Add validation for categories and explain how you would restrict access and verify the figures before reporting.\`,
-\`# Module 6: Office Operations, Ethics and Administrative Controls
+`# Module 6: Office Operations, Ethics and Administrative Controls
 
 ## 6.1 Inventory management
 Inventory management tracks office supplies and equipment. A stock register may include item description, opening balance, quantity received, quantity issued, current balance, date and responsible officer.
@@ -396,10 +396,10 @@ Design an administrative operations system for a small international education o
 | Explain four principles of office confidentiality | 4 |
 | **Total** | **20** |
 
-Suggested marking: one mark for each accurate, relevant point or correct calculation step. Accept equivalent examples where the principle is correctly explained.\`
+Suggested marking: one mark for each accurate, relevant point or correct calculation step. Accept equivalent examples where the principle is correctly explained.`
  ],
  "academic-writing-research-skills":[
-\`# Module 1: Foundations of Academic Writing
+`# Module 1: Foundations of Academic Writing
 
 ## 1.1 Meaning and purpose
 Academic writing is a formal, evidence-based form of communication used to explain, analyse, evaluate and communicate knowledge. It appears in university assignments, proposals, dissertations, theses, journal articles, literature reviews, conference papers and scientific reports. It requires careful reasoning, transparent use of sources and a clear relationship between claims and evidence.
@@ -432,7 +432,7 @@ A thesis statement communicates the central argument of an essay. “Technology 
 
 ## 1.6 Practical exercise
 Write a focused thesis statement on the role of artificial intelligence in higher education. Identify the main claim, the scope, two supporting reasons and one limitation or condition. Check that the statement can be investigated with credible evidence.\`,
-\`# Module 2: Academic Essays, Arguments and Critical Thinking
+`# Module 2: Academic Essays, Arguments and Critical Thinking
 
 ## 2.1 Types of academic essays
 Descriptive essays explain features; analytical essays examine relationships and components; argumentative essays defend a position; compare-and-contrast essays examine similarities and differences; evaluative essays judge quality against criteria; reflective essays analyse experience; and problem-solution essays define a problem and assess possible responses. The task wording determines the appropriate structure.
@@ -464,7 +464,7 @@ Match the strength of language to the evidence. “The findings demonstrate” i
 
 ## Practical exercise
 Write two paragraphs presenting competing views on AI-supported assessment. For each view, identify a claim, supporting evidence required, possible limitation and a balanced conclusion. Do not invent a study or quotation.\`,
-\`# Module 3: Literature Reviews and Research Synthesis
+`# Module 3: Literature Reviews and Research Synthesis
 
 ## 3.1 Purpose of a literature review
 A literature review evaluates existing academic knowledge to establish what is known, what remains uncertain and why further research may be needed. It defines the field, identifies major concepts, compares findings, examines methods, discusses disagreements and establishes a research gap supported by evidence.
@@ -498,7 +498,7 @@ A gap may concern an under-studied population, inconsistent findings, methodolog
 
 ## 3.6 Practical exercise
 Develop a literature search plan for “AI-supported feedback in secondary science education”. List concepts, synonyms, databases, inclusion criteria, exclusion criteria and a literature matrix. Record why each selected source is relevant and what limitation should be considered.\`,
-\`# Module 4: Referencing, Citation and Academic Integrity
+`# Module 4: Referencing, Citation and Academic Integrity
 
 ## 4.1 Why referencing matters
 Referencing acknowledges original authors, allows readers to verify claims, demonstrates engagement with research, prevents plagiarism and distinguishes the writer's contribution from borrowed ideas. Cite factual claims, quotations, paraphrases, data and arguments that depend on another source, following the required style.
@@ -532,7 +532,7 @@ Paraphrasing expresses another author's idea in genuinely new wording while pres
 
 ## 4.6 Plagiarism and misconduct
 Misconduct may include copying without attribution, submitting another person's work, undisclosed reuse where prohibited, inventing references, fabricating results, falsifying data or misrepresenting AI-generated content as verified research. Keep notes that distinguish direct quotations, paraphrases and your own analysis. Follow institutional rules on collaboration and AI assistance.\`,
-\`# Module 5: Research Proposals, Dissertations and Scientific Reports
+`# Module 5: Research Proposals, Dissertations and Scientific Reports
 
 ## 5.1 Research proposal structure
 A proposal commonly contains a title, background, problem statement, objectives, research questions, literature review, methodology, ethical considerations, work plan, budget where required and references. Departmental formats vary, so follow the institution's approved template.
@@ -561,7 +561,7 @@ High performance = 15 ÷ 40 × 100 = **37.5%**. Moderate = 20 ÷ 40 × 100 = **5
 
 ## 5.6 Discussion, conclusion and recommendations
 The discussion interprets findings, relates them to previous research and considers alternative explanations. A conclusion answers the research questions and reflects the actual results. Acknowledge limitations and avoid generalising beyond the sample or design. Recommendations should follow from evidence and identify realistic responsible actors.\`,
-\`# Module 6: Editing, Publishing and Responsible AI Use
+`# Module 6: Editing, Publishing and Responsible AI Use
 
 ## 6.1 Academic editing and proofreading
 Editing improves argument, organisation, clarity, paragraph structure, consistency and referencing. Proofreading is the final check for spelling, punctuation, grammar, formatting and typographical errors. Edit in stages: argument and structure first, paragraph and sentence clarity next, then citations, tables and final presentation.
@@ -593,10 +593,10 @@ Prepare a 2,000–3,000-word proposal on “The role of artificial intelligence 
 | Identify and explain four forms of academic misconduct | 4 |
 | **Total** | **20** |
 
-Suggested marking: award marks for accurate explanation, relevant examples and appropriate academic terminology. A fabricated citation or unsupported claim should not receive credit as evidence.\`
+Suggested marking: award marks for accurate explanation, relevant examples and appropriate academic terminology. A fabricated citation or unsupported claim should not receive credit as evidence.`
  ],
  "internet-research-information-literacy":[
-\`# Module 1: Foundations of Information Literacy
+`# Module 1: Foundations of Information Literacy
 
 ## 1.1 Meaning of information literacy
 Information literacy is the ability to recognise when information is needed and to locate, evaluate, organise and use it effectively. An information-literate person can define a need, formulate questions, locate relevant material, evaluate credibility, interpret evidence, organise findings and communicate conclusions responsibly.
@@ -623,7 +623,7 @@ For the question “How does access to digital learning materials affect seconda
 
 ## 1.6 Practical exercise
 Identify five types of evidence needed to investigate the impact of AI tools on university learning. For each, state a possible source, what it could establish and one limitation. Distinguish evidence about access, usage, learning outcomes, academic integrity and learner experience.\`,
-\`# Module 2: Search Engines and Advanced Search Techniques
+`# Module 2: Search Engines and Advanced Search Techniques
 
 ## 2.1 Search engines and ranking
 Google Search, Microsoft Bing, DuckDuckGo and Brave Search help users discover indexed internet content. Search engines rank results using multiple signals; ranking position is not proof of accuracy, neutrality or authority. Ads and sponsored results should be distinguished from organic results.
@@ -641,15 +641,15 @@ A broad search such as \`education\` produces an enormous range of material. A m
 Search platforms interpret operators differently. Some automatically combine terms or use different exclusion syntax; consult the platform's help guidance.
 
 ## 2.4 Useful search operators
-Exact phrase: \`"artificial intelligence in education"\`
+Exact phrase: \`"artificial intelligence in education"`
 
-Search a website: \`site:unesco.org artificial intelligence education\`
+Search a website: \`site:unesco.org artificial intelligence education`
 
-Find PDF documents: \`secondary education curriculum filetype:pdf\`
+Find PDF documents: \`secondary education curriculum filetype:pdf`
 
-Exclude a term: \`AI education -advertisements\`
+Exclude a term: \`AI education -advertisements`
 
-Search a domain: \`site:edu research methodology\`
+Search a domain: \`site:edu research methodology`
 
 Operators can narrow results but do not establish that a source is trustworthy.
 
@@ -658,7 +658,7 @@ For renewable-energy education, identify concepts such as renewable energy, clea
 
 ## 2.6 Practical exercise
 Develop five distinct search queries for research on digital-skills training in Africa. Include one exact phrase, one site-specific search, one synonym query, one date or file-type refinement and one query aimed at academic literature. Explain why each query is useful and what it may miss.\`,
-\`# Module 3: Academic Databases and Digital Research Libraries
+`# Module 3: Academic Databases and Digital Research Libraries
 
 ## 3.1 What is an academic database?
 An academic database organises scholarly material such as journal articles, conference papers, dissertations and research reports. Examples include Google Scholar, PubMed, ERIC, JSTOR, DOAJ and CORE. Their subject coverage, indexing and access conditions differ; choose the database that matches the discipline and research question.
@@ -688,7 +688,7 @@ Capture bibliographic information when you first save a source. Do not rely on b
 
 ## 3.6 Practical exercise
 Locate five real academic publications on AI in education. Create a source log for each and verify that the publication exists on a publisher, journal or institutional repository page. Record the document type, peer-review status if known, DOI or stable URL and one limitation. Do not invent missing details.\`,
-\`# Module 4: Evaluating Information and Fact-Checking
+`# Module 4: Evaluating Information and Fact-Checking
 
 ## 4.1 Why evaluation is necessary
 The internet contains accurate research, outdated material, advertisements, opinions, misleading claims and fabricated content. Popularity, professional design, technical language or a high search ranking does not establish accuracy. Evaluate the source and the individual claim.
@@ -718,7 +718,7 @@ Warning signs may include inconsistent lighting, unnatural facial movement, dist
 
 ## Practical fact-checking exercise
 A social media post claims: “All universities in a particular country have abolished entrance examinations.” Identify the country and institutions, search official university admissions pages and ministry announcements, compare credible reporting, check the date and determine whether the claim applies to all institutions or only selected programmes. Write a short conclusion with source links and uncertainty clearly stated.\`,
-\`# Module 5: Digital Security, Privacy and Ethical Information Use
+`# Module 5: Digital Security, Privacy and Ethical Information Use
 
 ## 5.1 Personal information
 Personal information may include names, email addresses, phone numbers, identification details, financial information, location data and educational records. Sensitive information requires additional safeguards. Collect and share information only for appropriate purposes, with a suitable legal basis and safeguards under applicable law.
@@ -742,7 +742,7 @@ A safe workflow is to define a focused question, use AI to suggest search terms,
 
 ## Practical exercise
 Review a fictional email asking you to download an urgent “research report” and sign in with your university password. Identify warning signs, describe how to verify the sender safely, explain what to do if credentials were entered and list the privacy and copyright checks required before sharing a downloaded report.\`,
-\`# Module 6: Information Organisation, Digital Research Projects and Reporting
+`# Module 6: Information Organisation, Digital Research Projects and Reporting
 
 ## 6.1 Organising research information
 Create a structured workspace so sources, data, analysis and drafts can be retrieved and distinguished. Example:
@@ -787,7 +787,7 @@ Conduct a structured investigation on “The impact of artificial intelligence o
 | Explain four principles of safe and ethical internet research | 4 |
 | **Total** | **20** |
 
-Suggested marking: award marks for correct definitions, appropriate application, relevant examples and evidence of verification. Accept equivalent search syntax where the platform supports it.\`
+Suggested marking: award marks for correct definitions, appropriate application, relevant examples and evidence of verification. Accept equivalent search syntax where the platform supports it.`
  ]
  };
  E.makeLongNotes=function(slug,course,module,level){
