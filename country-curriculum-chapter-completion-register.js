@@ -7836,40 +7836,40 @@
     "country": "United Arab Emirates",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "United Arab Emirates Ministry of Education (MoE) for the national curriculum; private-school oversight is shared with local regulators including ADEK (Abu Dhabi), KHDA (Dubai) and SPEA (Sharjah); MoE supervises Ajman, Umm Al Quwain, Ras Al Khaimah and Fujairah",
+        "officialSyllabusUrl": "https://u.ae/en/information-and-services/education/school-education-k-12/curricula-and-language-of-instruction-",
+        "examBoard": "No single examination board applies to every UAE school: Ministry-curriculum schools follow MoE assessment requirements; private schools may use approved curriculum-specific examinations and awarding bodies, subject to emirate regulator approval",
+        "languageOfInstruction": "MoE public schools generally use Arabic as the language of instruction, with English used for technical and scientific subjects; private-school language depends on the licensed curriculum and school",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-moe-curriculum-and-emirate-regulatory-framework-identified; private-school-curricula-and-subject-sequences-must-be-mapped-by-pathway-and-emirate"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "United Arab Emirates Ministry of Education (MoE) for the national curriculum; private-school oversight is shared with local regulators including ADEK (Abu Dhabi), KHDA (Dubai) and SPEA (Sharjah); MoE supervises Ajman, Umm Al Quwain, Ras Al Khaimah and Fujairah",
+        "officialSyllabusUrl": "https://u.ae/en/information-and-services/education/school-education-k-12/curricula-and-language-of-instruction-",
+        "examBoard": "No single examination board applies to every UAE school: Ministry-curriculum schools follow MoE assessment requirements; private schools may use approved curriculum-specific examinations and awarding bodies, subject to emirate regulator approval",
+        "languageOfInstruction": "MoE public schools generally use Arabic as the language of instruction, with English used for technical and scientific subjects; private-school language depends on the licensed curriculum and school",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-moe-curriculum-and-emirate-regulatory-framework-identified; private-school-curricula-and-subject-sequences-must-be-mapped-by-pathway-and-emirate"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "United Arab Emirates Ministry of Education (MoE) for the national curriculum; private-school oversight is shared with local regulators including ADEK (Abu Dhabi), KHDA (Dubai) and SPEA (Sharjah); MoE supervises Ajman, Umm Al Quwain, Ras Al Khaimah and Fujairah",
+        "officialSyllabusUrl": "https://u.ae/en/information-and-services/education/school-education-k-12/curricula-and-language-of-instruction-",
+        "examBoard": "No single examination board applies to every UAE school: Ministry-curriculum schools follow MoE assessment requirements; private schools may use approved curriculum-specific examinations and awarding bodies, subject to emirate regulator approval",
+        "languageOfInstruction": "MoE public schools generally use Arabic as the language of instruction, with English used for technical and scientific subjects; private-school language depends on the licensed curriculum and school",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-moe-curriculum-and-emirate-regulatory-framework-identified; private-school-curricula-and-subject-sequences-must-be-mapped-by-pathway-and-emirate"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "United Arab Emirates Ministry of Education (MoE) for the national curriculum; private-school oversight is shared with local regulators including ADEK (Abu Dhabi), KHDA (Dubai) and SPEA (Sharjah); MoE supervises Ajman, Umm Al Quwain, Ras Al Khaimah and Fujairah",
+        "officialSyllabusUrl": "https://u.ae/en/information-and-services/education/school-education-k-12/curricula-and-language-of-instruction-",
+        "examBoard": "No single examination board applies to every UAE school: Ministry-curriculum schools follow MoE assessment requirements; private schools may use approved curriculum-specific examinations and awarding bodies, subject to emirate regulator approval",
+        "languageOfInstruction": "MoE public schools generally use Arabic as the language of instruction, with English used for technical and scientific subjects; private-school language depends on the licensed curriculum and school",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-moe-curriculum-and-emirate-regulatory-framework-identified; private-school-curricula-and-subject-sequences-must-be-mapped-by-pathway-and-emirate"
       }
     }
   },
