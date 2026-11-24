@@ -9364,7 +9364,42 @@
         "languageOfInstruction": "English is widely used in secondary science and mathematics syllabuses; verify the prescribed language and approved local-language provision for each school and learning area",
         "chapterCount": null,
         "chapters": [],
-        "MoPSE-Biology-Forms-3-4-2024-2030-syllabus-source-identified; Forms-1-2-and-5-6-mapping-pending"
+        "topicInventory": {
+          "sourceType": "MoPSE-2024-2030-Heritage-Based-Biology-Forms-3-4-scope-and-sequence; syllabus topic areas, not textbook chapter titles",
+          "sourceUrl": "https://www.mopsemashwest.gov.zw/files/Biology%203-4.pdf",
+          "forms": [
+            {
+              "form": "Form 3",
+              "topics": [
+                "Introduction to Biology: branches, laboratory safety and careers",
+                "Chemicals of Life: water, carbohydrates, proteins, fats and nucleic acids",
+                "Cells and Cellular Activities: plant and animal cell structure, cell specialisation and cell transport",
+                "Enzymes: properties and mode of action",
+                "Plant Science: nutrition, productivity and transport",
+                "Animal Science: nutrition, gaseous exchange, transport and human sexual reproduction",
+                "Microbiology and Biotechnology: types, characteristics and economic importance of microorganisms"
+              ]
+            },
+            {
+              "form": "Form 4",
+              "topics": [
+                "Introduction to Biology: laboratory safety labels",
+                "Chemicals of Life: carbohydrates, proteins, fats and nucleic acids",
+                "Enzymes: industrial applications",
+                "Plant Science: coordination and response, reproduction and productivity",
+                "Animal Science: homeostasis, coordination and response, and the skeletal system",
+                "Microbiology and Biotechnology: applications and recombinant gene technology",
+                "Genetics: genes and chromosomes, monohybrid inheritance and mutations",
+                "Biodiversity: classification, natural and artificial selection, and variation",
+                "Ecosystems: threats and management",
+                "Health and Disease: health, drug use and abuse, and infectious and non-infectious diseases"
+              ]
+            }
+          ],
+          "documentNote": "The syllabus text describes thirteen compulsory topics, but the numbered topic list and scope-and-sequence table enumerate 6.1–6.12 (twelve headings). This discrepancy is retained for review rather than silently resolved. The scope-and-sequence table distributes some headings across both forms; the form lists above consolidate the stated content areas and are not a textbook chapter count.",
+          "status": "Forms-3-4-topic-scope-and-sequence-extracted; Forms-1-2-follow-General-Science-in-the-framework; Forms-5-6-pathway-specific-mapping-pending"
+        },
+        "status": "MoPSE-2024-2030-Biology-Forms-3-4-scope-and-sequence-extracted; topic-headings-not-textbook-chapters; document-topic-count-discrepancy-flagged; lower-and-upper-secondary-mapping-pending"
       },
       "Chemistry": {
         "officialAuthority": "Ministry of Primary and Secondary Education (MoPSE), Curriculum Development and Technical Services",
