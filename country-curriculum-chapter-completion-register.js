@@ -6893,40 +6893,40 @@
     "country": "South Africa",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Department of Basic Education (DBE), Republic of South Africa",
+        "officialSyllabusUrl": "https://www.education.gov.za/Curriculum/CurriculumAssessmentPolicyStatements/tabid/420/Default.aspx",
+        "examBoard": "Department of Basic Education and Provincial Education Departments administer the National Senior Certificate; Umalusi quality assures and certifies the qualification",
+        "languageOfInstruction": "Varies by school and province; South Africa has multiple official languages and the school language-of-learning policy must be checked",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-curriculum-and-assessment-framework-identified; subject-grade-sequence-review-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Department of Basic Education (DBE), Republic of South Africa",
+        "officialSyllabusUrl": "https://www.education.gov.za/Curriculum/CurriculumAssessmentPolicyStatements/tabid/420/Default.aspx",
+        "examBoard": "Department of Basic Education and Provincial Education Departments administer the National Senior Certificate; Umalusi quality assures and certifies the qualification",
+        "languageOfInstruction": "Varies by school and province; South Africa has multiple official languages and the school language-of-learning policy must be checked",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-curriculum-and-assessment-framework-identified; subject-grade-sequence-review-pending"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Department of Basic Education (DBE), Republic of South Africa",
+        "officialSyllabusUrl": "https://www.education.gov.za/Curriculum/CurriculumAssessmentPolicyStatements/tabid/420/Default.aspx",
+        "examBoard": "Department of Basic Education and Provincial Education Departments administer the National Senior Certificate; Umalusi quality assures and certifies the qualification",
+        "languageOfInstruction": "Varies by school and province; South Africa has multiple official languages and the school language-of-learning policy must be checked",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-curriculum-and-assessment-framework-identified; subject-grade-sequence-review-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Department of Basic Education (DBE), Republic of South Africa",
+        "officialSyllabusUrl": "https://www.education.gov.za/Curriculum/CurriculumAssessmentPolicyStatements/tabid/420/Default.aspx",
+        "examBoard": "Department of Basic Education and Provincial Education Departments administer the National Senior Certificate; Umalusi quality assures and certifies the qualification",
+        "languageOfInstruction": "Varies by school and province; South Africa has multiple official languages and the school language-of-learning policy must be checked",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-curriculum-and-assessment-framework-identified; subject-grade-sequence-review-pending"
       }
     }
   },
