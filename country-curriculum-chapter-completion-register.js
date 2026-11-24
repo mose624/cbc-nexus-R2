@@ -4960,40 +4960,60 @@
     "country": "Mauritius",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Mauritius Ministry of Education and Human Resource Development; Mauritius Institute of Education (MIE) develops curriculum frameworks, teaching syllabi and textbooks",
+        "officialSyllabusUrl": "https://web.mie.ac.mu/curriculum_books/",
+        "examBoard": "Mauritius Examinations Syndicate (MES); Cambridge International examinations for School Certificate/O Level and Higher School Certificate/A Level; National Certificate of Education (NCE) national assessment",
+        "languageOfInstruction": "English is the medium of instruction for most subjects; French, Asian and other language subjects are taught in their respective languages. English and French are compulsory core subjects.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialMinistrySecondaryCurriculumUrl": "https://education.govmu.org/Pages/Education%20Sectors/Secondary%20Education/Secondary-Education-.aspx",
+        "officialExaminationSyllabusUrl": "https://mes.govmu.org/mes/2020/o_level.htm",
+        "currentAssessmentNoticeUrl": "https://mes.govmu.org/mes/?page_id=6777",
+        "secondaryStructureNote": "Grades 7–9: Scientific and Environmental Education integrates Physics, Biology and Chemistry; Grades 10–11: Cambridge School Certificate/O Level; Grades 12–13: Cambridge Higher School Certificate/A Level. From the science stream and examination stage, map Biology, Chemistry and Physics as separate subjects.",
+        "assessmentPathwayNote": "MES 2026 O Level notice lists Biology 5090, Chemistry 5070, Physics 5054 and Mathematics 4024 (Syllabus D); verify the exact Cambridge syllabus code and examination session before building exam-specific resources.",
+        "status": "official-MIE-curriculum-library-and-MES-examination-syllabus-portals-identified; 2026-O-Level-subject-codes-cross-checked; grade-and-pathway-topic-sequence-extraction-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Mauritius Ministry of Education and Human Resource Development; Mauritius Institute of Education (MIE) develops curriculum frameworks, teaching syllabi and textbooks",
+        "officialSyllabusUrl": "https://web.mie.ac.mu/curriculum_books/",
+        "examBoard": "Mauritius Examinations Syndicate (MES); Cambridge International examinations for School Certificate/O Level and Higher School Certificate/A Level; National Certificate of Education (NCE) national assessment",
+        "languageOfInstruction": "English is the medium of instruction for most subjects; French, Asian and other language subjects are taught in their respective languages. English and French are compulsory core subjects.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialMinistrySecondaryCurriculumUrl": "https://education.govmu.org/Pages/Education%20Sectors/Secondary%20Education/Secondary-Education-.aspx",
+        "officialExaminationSyllabusUrl": "https://mes.govmu.org/mes/2020/o_level.htm",
+        "currentAssessmentNoticeUrl": "https://mes.govmu.org/mes/?page_id=6777",
+        "secondaryStructureNote": "Grades 7–9: Scientific and Environmental Education integrates Physics, Biology and Chemistry; Grades 10–11: Cambridge School Certificate/O Level; Grades 12–13: Cambridge Higher School Certificate/A Level. From the science stream and examination stage, map Biology, Chemistry and Physics as separate subjects.",
+        "assessmentPathwayNote": "MES 2026 O Level notice lists Biology 5090, Chemistry 5070, Physics 5054 and Mathematics 4024 (Syllabus D); verify the exact Cambridge syllabus code and examination session before building exam-specific resources.",
+        "status": "official-MIE-curriculum-library-and-MES-examination-syllabus-portals-identified; 2026-O-Level-subject-codes-cross-checked; grade-and-pathway-topic-sequence-extraction-pending"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Mauritius Ministry of Education and Human Resource Development; Mauritius Institute of Education (MIE) develops curriculum frameworks, teaching syllabi and textbooks",
+        "officialSyllabusUrl": "https://web.mie.ac.mu/curriculum_books/",
+        "examBoard": "Mauritius Examinations Syndicate (MES); Cambridge International examinations for School Certificate/O Level and Higher School Certificate/A Level; National Certificate of Education (NCE) national assessment",
+        "languageOfInstruction": "English is the medium of instruction for most subjects; French, Asian and other language subjects are taught in their respective languages. English and French are compulsory core subjects.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialMinistrySecondaryCurriculumUrl": "https://education.govmu.org/Pages/Education%20Sectors/Secondary%20Education/Secondary-Education-.aspx",
+        "officialExaminationSyllabusUrl": "https://mes.govmu.org/mes/2020/o_level.htm",
+        "currentAssessmentNoticeUrl": "https://mes.govmu.org/mes/?page_id=6777",
+        "secondaryStructureNote": "Grades 7–9: Scientific and Environmental Education integrates Physics, Biology and Chemistry; Grades 10–11: Cambridge School Certificate/O Level; Grades 12–13: Cambridge Higher School Certificate/A Level. From the science stream and examination stage, map Biology, Chemistry and Physics as separate subjects.",
+        "assessmentPathwayNote": "MES 2026 O Level notice lists Biology 5090, Chemistry 5070, Physics 5054 and Mathematics 4024 (Syllabus D); verify the exact Cambridge syllabus code and examination session before building exam-specific resources.",
+        "status": "official-MIE-curriculum-library-and-MES-examination-syllabus-portals-identified; 2026-O-Level-subject-codes-cross-checked; grade-and-pathway-topic-sequence-extraction-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Mauritius Ministry of Education and Human Resource Development; Mauritius Institute of Education (MIE) develops curriculum frameworks, teaching syllabi and textbooks",
+        "officialSyllabusUrl": "https://web.mie.ac.mu/curriculum_books/",
+        "examBoard": "Mauritius Examinations Syndicate (MES); Cambridge International examinations for School Certificate/O Level and Higher School Certificate/A Level; National Certificate of Education (NCE) national assessment",
+        "languageOfInstruction": "English is the medium of instruction for most subjects; French, Asian and other language subjects are taught in their respective languages. English and French are compulsory core subjects.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialMinistrySecondaryCurriculumUrl": "https://education.govmu.org/Pages/Education%20Sectors/Secondary%20Education/Secondary-Education-.aspx",
+        "officialExaminationSyllabusUrl": "https://mes.govmu.org/mes/2020/o_level.htm",
+        "currentAssessmentNoticeUrl": "https://mes.govmu.org/mes/?page_id=6777",
+        "secondaryStructureNote": "Grades 7–9: Scientific and Environmental Education integrates Physics, Biology and Chemistry; Grades 10–11: Cambridge School Certificate/O Level; Grades 12–13: Cambridge Higher School Certificate/A Level. From the science stream and examination stage, map Biology, Chemistry and Physics as separate subjects.",
+        "assessmentPathwayNote": "MES 2026 O Level notice lists Biology 5090, Chemistry 5070, Physics 5054 and Mathematics 4024 (Syllabus D); verify the exact Cambridge syllabus code and examination session before building exam-specific resources.",
+        "status": "official-MIE-curriculum-library-and-MES-examination-syllabus-portals-identified; 2026-O-Level-subject-codes-cross-checked; grade-and-pathway-topic-sequence-extraction-pending"
       }
     }
   },
