@@ -5458,40 +5458,40 @@
     "country": "Nigeria",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Nigerian Educational Research and Development Council (NERDC), with Federal Ministry of Education policy oversight",
+        "officialSyllabusUrl": "https://nerdc.gov.ng/content_manager/new_curriculum_home.html",
+        "examBoard": "West African Examinations Council (WAEC) and National Examinations Council (NECO); subject and qualification requirements vary",
+        "languageOfInstruction": "English (current Federal Ministry of Education statement; check applicable school and state guidance)",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-authority-and-examination-framework-identified; current-revised-syllabus-sequence-review-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Nigerian Educational Research and Development Council (NERDC), with Federal Ministry of Education policy oversight",
+        "officialSyllabusUrl": "https://nerdc.gov.ng/content_manager/new_curriculum_home.html",
+        "examBoard": "West African Examinations Council (WAEC) and National Examinations Council (NECO); subject and qualification requirements vary",
+        "languageOfInstruction": "English (current Federal Ministry of Education statement; check applicable school and state guidance)",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-authority-and-examination-framework-identified; current-revised-syllabus-sequence-review-pending"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Nigerian Educational Research and Development Council (NERDC), with Federal Ministry of Education policy oversight",
+        "officialSyllabusUrl": "https://nerdc.gov.ng/content_manager/new_curriculum_home.html",
+        "examBoard": "West African Examinations Council (WAEC) and National Examinations Council (NECO); subject and qualification requirements vary",
+        "languageOfInstruction": "English (current Federal Ministry of Education statement; check applicable school and state guidance)",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-authority-and-examination-framework-identified; current-revised-syllabus-sequence-review-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Nigerian Educational Research and Development Council (NERDC), with Federal Ministry of Education policy oversight",
+        "officialSyllabusUrl": "https://nerdc.gov.ng/content_manager/new_curriculum_home.html",
+        "examBoard": "West African Examinations Council (WAEC) and National Examinations Council (NECO); subject and qualification requirements vary",
+        "languageOfInstruction": "English (current Federal Ministry of Education statement; check applicable school and state guidance)",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-authority-and-examination-framework-identified; current-revised-syllabus-sequence-review-pending"
       }
     }
   },
