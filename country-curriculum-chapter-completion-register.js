@@ -7345,13 +7345,28 @@
     "subjects": {
       "Biology": {
         "officialAuthority": "Tanzania Institute of Education (TIE), Ministry of Education, Science and Technology",
-        "officialSyllabusUrl": "https://www.tie.go.tz/uploads/files/BIOLOGY%20FOR%20ORDINARY%20SECONDARY%20EDUCATION.pdf",
+        "officialSyllabusUrl": "https://www.tie.go.tz/uploads/files/BIOLOGY%20SYLLABUS%20ORDINARY%20SECONDARY%20FINAL%20.pdf",
         "examBoard": "National Examinations Council of Tanzania (NECTA)",
         "languageOfInstruction": "Kiswahili and English use varies by education level and school context; verify the language policy for the specific programme",
-        "chapterCount": null,
-        "chapters": [],
-        "status": "official-tie-2023-form-i-iv-syllabus-linked; detailed-competence-and-content-sequence-extraction-pending",
-        "syllabusLevel": "Ordinary Secondary Education — Form I to Form IV (TIE 2023 syllabus)"
+        "chapterCount": 13,
+        "chapters": [
+          {"id":"tz-bio-f1-01","title":"Biology foundations and the nature of biological study","grade":"Form I","sequence":1,"sourceUrl":"https://www.tie.go.tz/uploads/files/BIOLOGY%20SYLLABUS%20ORDINARY%20SECONDARY%20FINAL%20.pdf","sourceType":"official-tie-2023-form-i-iv-syllabus-content-matrix","curriculumVerified":true},
+          {"id":"tz-bio-f1-02","title":"Cell structure, types and functions","grade":"Form I","sequence":2,"sourceUrl":"https://www.tie.go.tz/uploads/files/BIOLOGY%20SYLLABUS%20ORDINARY%20SECONDARY%20FINAL%20.pdf","sourceType":"official-tie-2023-form-i-iv-syllabus-content-matrix","curriculumVerified":true},
+          {"id":"tz-bio-f1-03","title":"Plant nutrition: leaf structure, photosynthesis and mineral requirements","grade":"Form I","sequence":3,"sourceUrl":"https://www.tie.go.tz/uploads/files/BIOLOGY%20SYLLABUS%20ORDINARY%20SECONDARY%20FINAL%20.pdf","sourceType":"official-tie-2023-form-i-iv-syllabus-content-matrix","curriculumVerified":true},
+          {"id":"tz-bio-f1-04","title":"Biological classification and major groups of organisms","grade":"Form I","sequence":4,"sourceUrl":"https://www.tie.go.tz/uploads/files/BIOLOGY%20SYLLABUS%20ORDINARY%20SECONDARY%20FINAL%20.pdf","sourceType":"official-tie-2023-form-i-iv-syllabus-content-matrix","curriculumVerified":true},
+          {"id":"tz-bio-f1-05","title":"Biological investigation skills, microscopy and scientific reporting","grade":"Form I","sequence":5,"sourceUrl":"https://www.tie.go.tz/uploads/files/BIOLOGY%20SYLLABUS%20ORDINARY%20SECONDARY%20FINAL%20.pdf","sourceType":"official-tie-2023-form-i-iv-syllabus-content-matrix","curriculumVerified":true},
+          {"id":"tz-bio-f2-01","title":"Nutrition in humans and ruminants","grade":"Form II","sequence":1,"sourceUrl":"https://www.tie.go.tz/uploads/files/BIOLOGY%20SYLLABUS%20ORDINARY%20SECONDARY%20FINAL%20.pdf","sourceType":"official-tie-2023-form-i-iv-syllabus-content-matrix","curriculumVerified":true},
+          {"id":"tz-bio-f2-02","title":"Transport of materials in flowering plants","grade":"Form II","sequence":2,"sourceUrl":"https://www.tie.go.tz/uploads/files/BIOLOGY%20SYLLABUS%20ORDINARY%20SECONDARY%20FINAL%20.pdf","sourceType":"official-tie-2023-form-i-iv-syllabus-content-matrix","curriculumVerified":true},
+          {"id":"tz-bio-f2-03","title":"Transport of materials in the human body","grade":"Form II","sequence":3,"sourceUrl":"https://www.tie.go.tz/uploads/files/BIOLOGY%20SYLLABUS%20ORDINARY%20SECONDARY%20FINAL%20.pdf","sourceType":"official-tie-2023-form-i-iv-syllabus-content-matrix","curriculumVerified":true},
+          {"id":"tz-bio-f2-04","title":"Respiration in living organisms","grade":"Form II","sequence":4,"sourceUrl":"https://www.tie.go.tz/uploads/files/BIOLOGY%20SYLLABUS%20ORDINARY%20SECONDARY%20FINAL%20.pdf","sourceType":"official-tie-2023-form-i-iv-syllabus-content-matrix","curriculumVerified":true},
+          {"id":"tz-bio-f3-01","title":"Coordination in plants and animals","grade":"Form III","sequence":1,"sourceUrl":"https://www.tie.go.tz/uploads/files/BIOLOGY%20SYLLABUS%20ORDINARY%20SECONDARY%20FINAL%20.pdf","sourceType":"official-tie-2023-form-i-iv-syllabus-content-matrix","curriculumVerified":true},
+          {"id":"tz-bio-f3-02","title":"Excretion in humans","grade":"Form III","sequence":2,"sourceUrl":"https://www.tie.go.tz/uploads/files/BIOLOGY%20SYLLABUS%20ORDINARY%20SECONDARY%20FINAL%20.pdf","sourceType":"official-tie-2023-form-i-iv-syllabus-content-matrix","curriculumVerified":true},
+          {"id":"tz-bio-f3-03","title":"Regulation and homeostasis in the human body","grade":"Form III","sequence":3,"sourceUrl":"https://www.tie.go.tz/uploads/files/BIOLOGY%20SYLLABUS%20ORDINARY%20SECONDARY%20FINAL%20.pdf","sourceType":"official-tie-2023-form-i-iv-syllabus-content-matrix","curriculumVerified":true},
+          {"id":"tz-bio-f4-01","title":"Reproduction in plants and humans","grade":"Form IV","sequence":1,"sourceUrl":"https://www.tie.go.tz/uploads/files/BIOLOGY%20SYLLABUS%20ORDINARY%20SECONDARY%20FINAL%20.pdf","sourceType":"official-tie-2023-form-i-iv-syllabus-content-matrix","curriculumVerified":true}
+        ],
+        "status": "partial-official-tie-2023-form-i-iv-content-matrix-mapped; remaining-form-content-and-subject-sequences-pending",
+        "syllabusLevel": "Ordinary Secondary Education — Form I to Form IV (TIE 2023 syllabus)",
+        "chapterInventoryStatus": "13 syllabus content areas mapped from official Form I-IV matrix; not a complete chapter inventory"
       },
       "Chemistry": {
         "officialAuthority": "Tanzania Institute of Education (TIE), Ministry of Education, Science and Technology",
