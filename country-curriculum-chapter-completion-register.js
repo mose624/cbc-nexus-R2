@@ -3490,40 +3490,40 @@
     "country": "Indonesia",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of Primary and Secondary Education (Kemendikdasmen), Republic of Indonesia; National Curriculum Information System publishes the current curriculum structure and subject guidance",
+        "officialSyllabusUrl": "https://kurikulum.kemendikdasmen.go.id/",
+        "examBoard": "No single national subject examination board for all school pathways; national assessment and school-level assessments operate under ministry policy, while pathway-specific admissions and qualifications may add requirements",
+        "languageOfInstruction": "Bahasa Indonesia is the national language of instruction; regional languages and other approved languages may be used in defined contexts and international schools may follow licensed curricula",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "current-national-curriculum-framework-and-subject-structure-identified; current-grade-and-pathway-specific-sequence-review-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of Primary and Secondary Education (Kemendikdasmen), Republic of Indonesia; National Curriculum Information System publishes the current curriculum structure and subject guidance",
+        "officialSyllabusUrl": "https://kurikulum.kemendikdasmen.go.id/",
+        "examBoard": "No single national subject examination board for all school pathways; national assessment and school-level assessments operate under ministry policy, while pathway-specific admissions and qualifications may add requirements",
+        "languageOfInstruction": "Bahasa Indonesia is the national language of instruction; regional languages and other approved languages may be used in defined contexts and international schools may follow licensed curricula",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "current-national-curriculum-framework-and-subject-structure-identified; current-grade-and-pathway-specific-sequence-review-pending"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of Primary and Secondary Education (Kemendikdasmen), Republic of Indonesia; National Curriculum Information System publishes the current curriculum structure and subject guidance",
+        "officialSyllabusUrl": "https://kurikulum.kemendikdasmen.go.id/",
+        "examBoard": "No single national subject examination board for all school pathways; national assessment and school-level assessments operate under ministry policy, while pathway-specific admissions and qualifications may add requirements",
+        "languageOfInstruction": "Bahasa Indonesia is the national language of instruction; regional languages and other approved languages may be used in defined contexts and international schools may follow licensed curricula",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "current-national-curriculum-framework-and-subject-structure-identified; current-grade-and-pathway-specific-sequence-review-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of Primary and Secondary Education (Kemendikdasmen), Republic of Indonesia; National Curriculum Information System publishes the current curriculum structure and subject guidance",
+        "officialSyllabusUrl": "https://kurikulum.kemendikdasmen.go.id/",
+        "examBoard": "No single national subject examination board for all school pathways; national assessment and school-level assessments operate under ministry policy, while pathway-specific admissions and qualifications may add requirements",
+        "languageOfInstruction": "Bahasa Indonesia is the national language of instruction; regional languages and other approved languages may be used in defined contexts and international schools may follow licensed curricula",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "current-national-curriculum-framework-and-subject-structure-identified; current-grade-and-pathway-specific-sequence-review-pending"
       }
     }
   },
@@ -3777,40 +3777,40 @@
     "country": "Japan",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of Education, Culture, Sports, Science and Technology (MEXT), Japan; national Courses of Study set curriculum standards, with schools organizing their programmes within the framework",
+        "officialSyllabusUrl": "https://www.mext.go.jp/en/policy/education/elsec/title02/detail02/1373859.htm",
+        "examBoard": "No single national school-leaving examination board for all upper-secondary schools; university entrance examinations are set by individual universities and common testing arrangements, where applicable, are administered separately",
+        "languageOfInstruction": "Japanese is the normal language of classroom instruction in Japanese schools; international schools may use other approved curricula and languages",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "mext-national-courses-of-study-and-school-framework-identified; current-upper-secondary-subject-sequence-and-examination-pathway-review-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of Education, Culture, Sports, Science and Technology (MEXT), Japan; national Courses of Study set curriculum standards, with schools organizing their programmes within the framework",
+        "officialSyllabusUrl": "https://www.mext.go.jp/en/policy/education/elsec/title02/detail02/1373859.htm",
+        "examBoard": "No single national school-leaving examination board for all upper-secondary schools; university entrance examinations are set by individual universities and common testing arrangements, where applicable, are administered separately",
+        "languageOfInstruction": "Japanese is the normal language of classroom instruction in Japanese schools; international schools may use other approved curricula and languages",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "mext-national-courses-of-study-and-school-framework-identified; current-upper-secondary-subject-sequence-and-examination-pathway-review-pending"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of Education, Culture, Sports, Science and Technology (MEXT), Japan; national Courses of Study set curriculum standards, with schools organizing their programmes within the framework",
+        "officialSyllabusUrl": "https://www.mext.go.jp/en/policy/education/elsec/title02/detail02/1373859.htm",
+        "examBoard": "No single national school-leaving examination board for all upper-secondary schools; university entrance examinations are set by individual universities and common testing arrangements, where applicable, are administered separately",
+        "languageOfInstruction": "Japanese is the normal language of classroom instruction in Japanese schools; international schools may use other approved curricula and languages",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "mext-national-courses-of-study-and-school-framework-identified; current-upper-secondary-subject-sequence-and-examination-pathway-review-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of Education, Culture, Sports, Science and Technology (MEXT), Japan; national Courses of Study set curriculum standards, with schools organizing their programmes within the framework",
+        "officialSyllabusUrl": "https://www.mext.go.jp/en/policy/education/elsec/title02/detail02/1373859.htm",
+        "examBoard": "No single national school-leaving examination board for all upper-secondary schools; university entrance examinations are set by individual universities and common testing arrangements, where applicable, are administered separately",
+        "languageOfInstruction": "Japanese is the normal language of classroom instruction in Japanese schools; international schools may use other approved curricula and languages",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "mext-national-courses-of-study-and-school-framework-identified; current-upper-secondary-subject-sequence-and-examination-pathway-review-pending"
       }
     }
   },
@@ -5253,40 +5253,40 @@
     "country": "Nepal",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Curriculum Development Centre (CDC), Ministry of Education, Science and Technology, Nepal",
+        "officialSyllabusUrl": "https://www.moecdc.gov.np/",
+        "examBoard": "National Examination Board (NEB), Nepal; school-level examinations and Grade 11–12 board examinations operate under the national framework",
+        "languageOfInstruction": "Nepali and English are permitted media of instruction; mother-tongue instruction may be used at primary level under applicable policy; verify school and programme language",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-curriculum-development-centre-and-examination-board-identified; current-grade-and-medium-specific-subject-sequence-review-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Curriculum Development Centre (CDC), Ministry of Education, Science and Technology, Nepal",
+        "officialSyllabusUrl": "https://www.moecdc.gov.np/",
+        "examBoard": "National Examination Board (NEB), Nepal; school-level examinations and Grade 11–12 board examinations operate under the national framework",
+        "languageOfInstruction": "Nepali and English are permitted media of instruction; mother-tongue instruction may be used at primary level under applicable policy; verify school and programme language",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-curriculum-development-centre-and-examination-board-identified; current-grade-and-medium-specific-subject-sequence-review-pending"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Curriculum Development Centre (CDC), Ministry of Education, Science and Technology, Nepal",
+        "officialSyllabusUrl": "https://www.moecdc.gov.np/",
+        "examBoard": "National Examination Board (NEB), Nepal; school-level examinations and Grade 11–12 board examinations operate under the national framework",
+        "languageOfInstruction": "Nepali and English are permitted media of instruction; mother-tongue instruction may be used at primary level under applicable policy; verify school and programme language",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-curriculum-development-centre-and-examination-board-identified; current-grade-and-medium-specific-subject-sequence-review-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Curriculum Development Centre (CDC), Ministry of Education, Science and Technology, Nepal",
+        "officialSyllabusUrl": "https://www.moecdc.gov.np/",
+        "examBoard": "National Examination Board (NEB), Nepal; school-level examinations and Grade 11–12 board examinations operate under the national framework",
+        "languageOfInstruction": "Nepali and English are permitted media of instruction; mother-tongue instruction may be used at primary level under applicable policy; verify school and programme language",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-curriculum-development-centre-and-examination-board-identified; current-grade-and-medium-specific-subject-sequence-review-pending"
       }
     }
   },
@@ -6934,40 +6934,40 @@
     "country": "South Korea",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of Education, Republic of Korea; 2022 Revised National Curriculum sets the national primary and secondary curriculum framework",
+        "officialSyllabusUrl": "https://english.moe.go.kr/",
+        "examBoard": "Korea Institute for Curriculum and Evaluation (KICE) develops and administers the College Scholastic Ability Test (CSAT) under the national examination framework",
+        "languageOfInstruction": "Korean is the principal language of instruction in national schools; foreign-language and international schools may follow approved alternative curricula",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "2022-revised-national-curriculum-and-kice-examination-framework-identified; current-grade-and-subject-sequence-review-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of Education, Republic of Korea; 2022 Revised National Curriculum sets the national primary and secondary curriculum framework",
+        "officialSyllabusUrl": "https://english.moe.go.kr/",
+        "examBoard": "Korea Institute for Curriculum and Evaluation (KICE) develops and administers the College Scholastic Ability Test (CSAT) under the national examination framework",
+        "languageOfInstruction": "Korean is the principal language of instruction in national schools; foreign-language and international schools may follow approved alternative curricula",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "2022-revised-national-curriculum-and-kice-examination-framework-identified; current-grade-and-subject-sequence-review-pending"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of Education, Republic of Korea; 2022 Revised National Curriculum sets the national primary and secondary curriculum framework",
+        "officialSyllabusUrl": "https://english.moe.go.kr/",
+        "examBoard": "Korea Institute for Curriculum and Evaluation (KICE) develops and administers the College Scholastic Ability Test (CSAT) under the national examination framework",
+        "languageOfInstruction": "Korean is the principal language of instruction in national schools; foreign-language and international schools may follow approved alternative curricula",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "2022-revised-national-curriculum-and-kice-examination-framework-identified; current-grade-and-subject-sequence-review-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of Education, Republic of Korea; 2022 Revised National Curriculum sets the national primary and secondary curriculum framework",
+        "officialSyllabusUrl": "https://english.moe.go.kr/",
+        "examBoard": "Korea Institute for Curriculum and Evaluation (KICE) develops and administers the College Scholastic Ability Test (CSAT) under the national examination framework",
+        "languageOfInstruction": "Korean is the principal language of instruction in national schools; foreign-language and international schools may follow approved alternative curricula",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "2022-revised-national-curriculum-and-kice-examination-framework-identified; current-grade-and-subject-sequence-review-pending"
       }
     }
   },
@@ -7057,40 +7057,40 @@
     "country": "Sri Lanka",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "National Institute of Education (NIE), Sri Lanka, under the Ministry of Education; NIE develops national curricula and syllabuses",
+        "officialSyllabusUrl": "https://www.nie.lk/",
+        "examBoard": "Department of Examinations, Sri Lanka; conducts G.C.E. Ordinary Level and Advanced Level public examinations",
+        "languageOfInstruction": "Sinhala and Tamil are the principal national-language streams; English is also used as a medium of instruction in schools and as a subject; verify the specific school stream and syllabus language",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-curriculum-institute-and-public-examination-authority-identified; current-grade-and-medium-specific-subject-sequence-review-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "National Institute of Education (NIE), Sri Lanka, under the Ministry of Education; NIE develops national curricula and syllabuses",
+        "officialSyllabusUrl": "https://www.nie.lk/",
+        "examBoard": "Department of Examinations, Sri Lanka; conducts G.C.E. Ordinary Level and Advanced Level public examinations",
+        "languageOfInstruction": "Sinhala and Tamil are the principal national-language streams; English is also used as a medium of instruction in schools and as a subject; verify the specific school stream and syllabus language",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-curriculum-institute-and-public-examination-authority-identified; current-grade-and-medium-specific-subject-sequence-review-pending"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "National Institute of Education (NIE), Sri Lanka, under the Ministry of Education; NIE develops national curricula and syllabuses",
+        "officialSyllabusUrl": "https://www.nie.lk/",
+        "examBoard": "Department of Examinations, Sri Lanka; conducts G.C.E. Ordinary Level and Advanced Level public examinations",
+        "languageOfInstruction": "Sinhala and Tamil are the principal national-language streams; English is also used as a medium of instruction in schools and as a subject; verify the specific school stream and syllabus language",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-curriculum-institute-and-public-examination-authority-identified; current-grade-and-medium-specific-subject-sequence-review-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "National Institute of Education (NIE), Sri Lanka, under the Ministry of Education; NIE develops national curricula and syllabuses",
+        "officialSyllabusUrl": "https://www.nie.lk/",
+        "examBoard": "Department of Examinations, Sri Lanka; conducts G.C.E. Ordinary Level and Advanced Level public examinations",
+        "languageOfInstruction": "Sinhala and Tamil are the principal national-language streams; English is also used as a medium of instruction in schools and as a subject; verify the specific school stream and syllabus language",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-curriculum-institute-and-public-examination-authority-identified; current-grade-and-medium-specific-subject-sequence-review-pending"
       }
     }
   },
@@ -7385,40 +7385,40 @@
     "country": "Thailand",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Office of the Basic Education Commission (OBEC), Ministry of Education, Thailand; Institute for the Promotion of Teaching Science and Technology (IPST) develops science, mathematics and technology curriculum materials and standards",
+        "officialSyllabusUrl": "https://www.ipst.ac.th/curriculum",
+        "examBoard": "National Institute of Educational Testing Service (NIETS); Ordinary National Educational Test (O-NET) assesses relevant grade levels; upper-secondary admissions and subject tests may have additional requirements",
+        "languageOfInstruction": "Thai is the principal language of instruction in national basic education; English and approved bilingual or international programmes may use other language arrangements",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "basic-education-core-curriculum-and-ipst-subject-framework-identified; current-grade-and-examination-specific-sequence-review-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Office of the Basic Education Commission (OBEC), Ministry of Education, Thailand; Institute for the Promotion of Teaching Science and Technology (IPST) develops science, mathematics and technology curriculum materials and standards",
+        "officialSyllabusUrl": "https://www.ipst.ac.th/curriculum",
+        "examBoard": "National Institute of Educational Testing Service (NIETS); Ordinary National Educational Test (O-NET) assesses relevant grade levels; upper-secondary admissions and subject tests may have additional requirements",
+        "languageOfInstruction": "Thai is the principal language of instruction in national basic education; English and approved bilingual or international programmes may use other language arrangements",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "basic-education-core-curriculum-and-ipst-subject-framework-identified; current-grade-and-examination-specific-sequence-review-pending"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Office of the Basic Education Commission (OBEC), Ministry of Education, Thailand; Institute for the Promotion of Teaching Science and Technology (IPST) develops science, mathematics and technology curriculum materials and standards",
+        "officialSyllabusUrl": "https://www.ipst.ac.th/curriculum",
+        "examBoard": "National Institute of Educational Testing Service (NIETS); Ordinary National Educational Test (O-NET) assesses relevant grade levels; upper-secondary admissions and subject tests may have additional requirements",
+        "languageOfInstruction": "Thai is the principal language of instruction in national basic education; English and approved bilingual or international programmes may use other language arrangements",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "basic-education-core-curriculum-and-ipst-subject-framework-identified; current-grade-and-examination-specific-sequence-review-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Office of the Basic Education Commission (OBEC), Ministry of Education, Thailand; Institute for the Promotion of Teaching Science and Technology (IPST) develops science, mathematics and technology curriculum materials and standards",
+        "officialSyllabusUrl": "https://www.ipst.ac.th/curriculum",
+        "examBoard": "National Institute of Educational Testing Service (NIETS); Ordinary National Educational Test (O-NET) assesses relevant grade levels; upper-secondary admissions and subject tests may have additional requirements",
+        "languageOfInstruction": "Thai is the principal language of instruction in national basic education; English and approved bilingual or international programmes may use other language arrangements",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "basic-education-core-curriculum-and-ipst-subject-framework-identified; current-grade-and-examination-specific-sequence-review-pending"
       }
     }
   },
