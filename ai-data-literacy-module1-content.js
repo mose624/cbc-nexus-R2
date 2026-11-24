@@ -373,6 +373,10 @@ Professional work is accurate, reproducible, proportionate to the decision, tran
 
   E.makeLongNotes=function(slug,course,module,level){
     const index=course&&Array.isArray(course.modules)?course.modules.indexOf(module):-1;
+    if(slug==="ai-data-analytics"&&index===0){
+      const tier=String(level||"basic").toLowerCase();
+      return core+(tier==="advanced"?advanced:tier==="medium"?intermediate:"");
+    }
     if(slug==="ai-data-analytics"&&index===1){
       const tier=String(level||"basic").toLowerCase();
       return module2+(tier==="advanced"?module2Advanced:tier==="medium"?module2Intermediate:"");
