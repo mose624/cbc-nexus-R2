@@ -1,6 +1,7 @@
 (function(){
 function esc(v){return String(v??"").replace(/[&<>"']/g,function(c){return({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]);});}
-function renderNotes(value){if(window.CBENotesRenderer&&typeof window.CBENotesRenderer.render==="function")return window.CBENotesRenderer.render(value);return String(value||"").split(/\n\n+/).map(function(block){return "<p>"+esc(block).replace(/\n/g,"<br>")+"</p>";}).join("");}\nfunction init(){
+function renderNotes(value){if(window.CBENotesRenderer&&typeof window.CBENotesRenderer.render==="function")return window.CBENotesRenderer.render(value);return String(value||"").split(/\n\n+/).map(function(block){return "<p>"+esc(block).replace(/\n/g,"<br>")+"</p>";}).join("");}
+function init(){
  const p=new URLSearchParams(location.search), slug=p.get("course"), num=Math.max(1,Number(p.get("module")||1)), level=(p.get("level")||"basic").toLowerCase();
  const course=(window.CBENexusAICourses||{})[slug], root=document.getElementById("notesRoot");
  if(!course){root.innerHTML='<div class="empty-note"><h1>Course not found</h1><a class="ai-btn primary" href="ai-training.html">Back to AI Courses</a></div>';return;}
