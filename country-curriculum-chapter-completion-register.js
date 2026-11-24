@@ -9225,13 +9225,132 @@
       },
       "Mathematics": {
         "officialAuthority": "Directorate of Curriculum Development, Ministry of Education, Zambia",
-        "officialSyllabusUrl": "https://www.edu.gov.zm/?page_id=1142",
+        "officialSyllabusUrl": "https://www.edu.gov.zm/wp-content/uploads/2025/04/MATHEMATICS-O-LEVEL-FORMS-1-4.pdf",
         "examBoard": "Examinations Council of Zambia (ECZ)",
         "languageOfInstruction": "English is the principal language of instruction in secondary education; verify the language policy for the specific level and school",
-        "syllabusPathways": ["Mathematics I (Forms 1-4)", "Mathematics II (Forms 1-4)"],
+        "syllabusPathways": ["Mathematics I (Forms 1-4)", "Mathematics II (STEM, Forms 1-4)"],
         "chapterCount": null,
         "chapters": [],
-        "status": "CDC-official-catalogue-identifies-separate-Mathematics-I-and-Mathematics-II-Forms-1-4-syllabuses; pathway-specific-topic-extraction-pending"
+        "topicInventory": [
+                  {
+                            "grade": "Form 1 — Mathematics I",
+                            "topics": [
+                                      "Numbers",
+                                      "Integers",
+                                      "Approximations and Estimation",
+                                      "Sets",
+                                      "Algebra",
+                                      "Matrices",
+                                      "Angles",
+                                      "Trigonometry",
+                                      "Statistics"
+                            ],
+                            "status": "2024 CDC Mathematics I syllabus table of contents; syllabus topic headings, not textbook chapter titles"
+                  },
+                  {
+                            "grade": "Form 2 — Mathematics I",
+                            "topics": [
+                                      "Coordinate Geometry",
+                                      "Relations and Functions",
+                                      "Algebra",
+                                      "Polygons",
+                                      "Systems of Equations",
+                                      "Travel Graphs",
+                                      "Financial Arithmetic"
+                            ],
+                            "status": "2024 CDC Mathematics I syllabus table of contents; syllabus topic headings, not textbook chapter titles"
+                  },
+                  {
+                            "grade": "Form 3 — Mathematics I",
+                            "topics": [
+                                      "Index Notation",
+                                      "Shapes",
+                                      "Symmetry",
+                                      "Construction",
+                                      "Locus",
+                                      "Similarity and Congruence",
+                                      "Statistics",
+                                      "Bearings and Scale Drawing",
+                                      "Variations",
+                                      "Matrices"
+                            ],
+                            "status": "2024 CDC Mathematics I syllabus table of contents; syllabus topic headings, not textbook chapter titles"
+                  },
+                  {
+                            "grade": "Form 4 — Mathematics I",
+                            "topics": [
+                                      "Quadratic Equations and Functions",
+                                      "Linear Programming",
+                                      "Vectors",
+                                      "Trigonometry",
+                                      "Geometrical Transformations",
+                                      "Probability"
+                            ],
+                            "status": "2024 CDC Mathematics I syllabus table of contents; syllabus topic headings, not textbook chapter titles"
+                  },
+                  {
+                            "grade": "Form 1 — Mathematics II (STEM)",
+                            "topics": [
+                                      "Real Numbers",
+                                      "Sets",
+                                      "Integers",
+                                      "Algebra",
+                                      "Estimation and Approximation",
+                                      "Coordinate Geometry",
+                                      "Relations and Functions",
+                                      "Angles and Polygons",
+                                      "Financial Arithmetic",
+                                      "Directions and Bearings",
+                                      "Similarity and Congruency",
+                                      "Right-Angled Triangles",
+                                      "Mensuration"
+                            ],
+                            "status": "2024 CDC Mathematics II syllabus table of contents; STEM pathway; syllabus topic headings, not textbook chapter titles"
+                  },
+                  {
+                            "grade": "Form 2 — Mathematics II (STEM)",
+                            "topics": [
+                                      "Index Notation",
+                                      "Number Bases",
+                                      "Equations and Inequalities",
+                                      "Algebra",
+                                      "Matrices",
+                                      "Variation",
+                                      "Mensuration",
+                                      "Symmetry",
+                                      "Probability"
+                            ],
+                            "status": "2024 CDC Mathematics II syllabus table of contents; STEM pathway; syllabus topic headings, not textbook chapter titles"
+                  },
+                  {
+                            "grade": "Form 3 — Mathematics II (STEM)",
+                            "topics": [
+                                      "Equations and Inequalities",
+                                      "Functions",
+                                      "Systems of Equations",
+                                      "Coordinate Geometry",
+                                      "Sequences and Series",
+                                      "Exponential and Logarithmic Functions",
+                                      "Geometrical Construction and Loci",
+                                      "Travel Graphs",
+                                      "Statistics"
+                            ],
+                            "status": "2024 CDC Mathematics II syllabus table of contents; STEM pathway; syllabus topic headings, not textbook chapter titles"
+                  },
+                  {
+                            "grade": "Form 4 — Mathematics II (STEM)",
+                            "topics": [
+                                      "Linear Programming",
+                                      "Vectors",
+                                      "Trigonometry",
+                                      "Earth Geometry",
+                                      "Geometrical Transformations",
+                                      "Calculus"
+                            ],
+                            "status": "2024 CDC Mathematics II syllabus table of contents; STEM pathway; syllabus topic headings, not textbook chapter titles"
+                  }
+        ],
+        "status": "2024-CDC-Mathematics-I-and-Mathematics-II-STEM-Forms-1-4-topic-sequences-mapped-separately; detailed-subtopics-pending"
       }
     }
   },
