@@ -2,15 +2,18 @@
 function esc(v){return String(v??"").replace(/[&<>"']/g,function(c){return({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]);});}
 function renderNotes(value){if(window.CBENotesRenderer&&typeof window.CBENotesRenderer.render==="function")return window.CBENotesRenderer.render(value);return String(value||"").split(/\n\n+/).map(function(block){return "<p>"+esc(block).replace(/\n/g,"<br>")+"</p>";}).join("");}
 function init(){
+ const root=document.getElementById("notesRoot");
+ if(root)root.innerHTML='<div class="empty-note"><p>Loading your lesson notes…</p></div>';
+ try {
  const p=new URLSearchParams(location.search), slug=p.get("course"), num=Math.max(1,Number(p.get("module")||1)), level=(p.get("level")||"basic").toLowerCase();
- const course=(window.CBENexusAICourses||{})[slug], root=document.getElementById("notesRoot");
+ const course=(window.CBENexusAICourses||{})[slug];
  if(!course){root.innerHTML='<div class="empty-note"><h1>Course not found</h1><a class="ai-btn primary" href="ai-training.html">Back to AI Courses</a></div>';return;}
  const m=course.modules[num-1]; if(!m){root.innerHTML='<div class="empty-note"><h1>Module not found</h1><a class="ai-btn primary" href="'+course.page+'">Back to Course</a></div>';return;}
- const engine=window.CBENexusAIEnhanced, fallbackNotes=engine?engine.makeLongNotes(slug,course,m,level):m[level==="basic"?2:level==="medium"?3:4];
+ const engine=window.CBENexusAIEnhanced; let fallbackNotes; try{fallbackNotes=engine&&typeof engine.makeLongNotes==="function"?engine.makeLongNotes(slug,course,m,level):m[level==="basic"?2:level==="medium"?3:4];}catch(e){console.error("AI lesson notes generator failed:",e);fallbackNotes=m[level==="basic"?2:level==="medium"?3:4]||m[1]||m[0];}
  const label={basic:"Basic",medium:"Intermediate",advanced:"Advanced"}[level]||"Basic";
  const visual=course.visuals&&course.visuals[num-1];
  const base="ai-course-notes.html?course="+encodeURIComponent(slug)+"&module="+num;
- const qs=engine?engine.makeQuestions(slug,course,m):[];
+ let qs=[]; try{qs=engine&&typeof engine.makeQuestions==="function"?engine.makeQuestions(slug,course,m):[];}catch(e){console.error("AI module assessment generator failed:",e);}
  fetch("/api/ai/course-notes?course="+encodeURIComponent(slug)+"&module="+num+"&level="+encodeURIComponent(level)+"&_="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{if(d&&d.ok&&d.notes&&d.notes.pdfUrl){const paper=document.querySelector(".notes-content");if(paper){paper.insertAdjacentHTML("beforebegin",'<div style="background:#fffbeb;border:2px solid #facc15;border-radius:14px;padding:14px;margin-bottom:18px"><strong>📄 Official PDF Notes</strong><p style="margin:6px 0">Download or open the administrator-uploaded PDF for this module.</p><a class="ai-btn primary" href="'+esc(d.notes.pdfUrl)+'" target="_blank" rel="noopener">Open PDF Notes ↗</a></div>');}}if(d&&d.ok&&d.notes&&d.notes.content&&!course.priorityAdvancedNotes){const paper=document.querySelector(".notes-content");if(paper){paper.innerHTML=renderNotes(d.notes.content);}}}).catch(function(){});
  root.innerHTML='<section class="notes-hero"><p class="eyebrow">MODULE '+num+' • '+esc(course.title)+'</p><h1>'+esc(m[0])+'</h1><p>'+esc(m[1])+'</p><div class="international-badges"><span>🌍 Internationally aligned</span><span>UNESCO AI competencies</span><span>DigComp reference</span><span>Module Assessment</span></div><div class="level-tabs"><a class="'+(level==="basic"?"active":"")+'" href="'+base+'&level=basic">Basic</a><a class="'+(level==="medium"?"active":"")+'" href="'+base+'&level=medium">Intermediate</a><a class="'+(level==="advanced"?"active":"")+'" href="'+base+'&level=advanced">Advanced</a></div></section><article class="notes-paper"><div class="notes-badge">'+label+' Comprehensive Lesson Notes</div>'+(visual?'<figure class="ai-lesson-visual"><img src="'+esc(visual.src)+'" alt="'+esc(visual.alt)+'" loading="lazy" decoding="async"><figcaption>'+esc(visual.caption)+'</figcaption></figure>':'')+'<div class="notes-content">'+renderNotes(fallbackNotes)+'</div><div class="practice-box"><strong>🎯 Applied Challenge</strong><p>Complete the real-world situation in these notes. Save your prompt, input, AI output, verification evidence, final decision and reflection. Your evidence should show what you did—not simply what the AI generated.</p></div></article><section id="quiz" class="module-quiz"><div class="quiz-head"><div><p class="eyebrow">MODULE ASSESSMENT</p><h2><span id="quizCount">Module Assessment</span></h2><p id="quizDescription">Answer every question below. Select one option per question. Pass mark: 70%.</p></div><span class="quiz-score" id="quizScore">0%</span></div><form id="quizForm"></form><button class="ai-btn primary" id="submitQuiz" type="button">Submit Assessment</button><p id="quizResult" class="quiz-result" aria-live="polite"></p></section><div class="notes-nav"><a class="ai-btn light" href="'+course.page+'">← Course Modules</a><a class="ai-btn primary" href="'+course.page+'#module'+(num<6?num+1:6)+'">'+(num<6?"Next Module →":"Review Course →")+'</a></div>';
  const form=document.getElementById("quizForm");
@@ -31,6 +34,7 @@ function init(){
    result.className="quiz-result "+(pct>=70?"pass":"retry");
    window.scrollTo({top:document.getElementById("quiz").offsetTop-80,behavior:"smooth"});
  });
+ }catch(error){console.error("AI lesson page failed to render:",error);if(root)root.innerHTML='<section class="notes-paper"><h1>Lesson notes are temporarily unavailable</h1><p>The lesson page encountered a loading error. Please reload this page. The issue has been logged for diagnosis.</p><a class="ai-btn primary" href="ai-training.html">Return to AI Academy</a></section>';}
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
 })();
