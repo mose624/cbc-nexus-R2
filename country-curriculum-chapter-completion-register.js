@@ -9408,7 +9408,39 @@
         "languageOfInstruction": "English is widely used in secondary science and mathematics syllabuses; verify the prescribed language and approved local-language provision for each school and learning area",
         "chapterCount": null,
         "chapters": [],
-        "status": "Heritage-Based Curriculum Framework 2024-2030 and ZIMSEC identified; subject-specific current syllabus and scope-and-sequence extraction pending"
+        "topicInventory": {
+          "sourceType": "MoPSE-2024-2030-Chemistry-Forms-3-4-syllabus-mirror; broad syllabus topic headings, not textbook chapter titles",
+          "sourceUrl": "https://studylib.net/doc/28473417/revised-chemistry-syllabus-f3-4",
+          "topics": [
+            "Laboratory techniques",
+            "Matter",
+            "Atoms, Elements and Compounds",
+            "Chemical Bonding",
+            "The Mole Concept",
+            "Stoichiometry",
+            "Acids, Bases and Salts",
+            "Electrochemistry",
+            "Chemical Energetics",
+            "Equilibria",
+            "Reaction Kinetics",
+            "Periodic Table",
+            "Metals",
+            "Non-metals",
+            "Fuels",
+            "Classification and Nomenclature of Organic Compounds",
+            "Hydrocarbons",
+            "Alcohols",
+            "Carboxylic Acids",
+            "Polymers",
+            "Waste Management",
+            "Pollution",
+            "Water Purification",
+            "Herbs"
+          ],
+          "coverageNote": "The 2024-2030 syllabus mirror includes a Forms 3-4 scope-and-sequence chart. The current official-hosted PDF link has not yet been confirmed; detailed form-by-form allocation and competency-matrix extraction remain pending.",
+          "status": "24-syllabus-topic-headings-extracted-from-2024-2030-document-mirror; official-host-verification-and-form-allocation-pending"
+        },
+        "status": "MoPSE-2024-2030-Chemistry-Forms-3-4-topic-inventory-extracted-from-mirrored-syllabus; official-host-link-and-form-level-mapping-pending"
       },
       "Physics": {
         "officialAuthority": "Ministry of Primary and Secondary Education (MoPSE), Curriculum Development and Technical Services",
@@ -9417,7 +9449,31 @@
         "languageOfInstruction": "English is widely used in secondary science and mathematics syllabuses; verify the prescribed language and approved local-language provision for each school and learning area",
         "chapterCount": null,
         "chapters": [],
-        "status": "Heritage-Based Curriculum Framework 2024-2030 and ZIMSEC identified; subject-specific current syllabus and scope-and-sequence extraction pending"
+        "topicInventory": {
+          "sourceType": "MoPSE-2024-2030-Physics-Forms-3-4-syllabus-mirror; numbered syllabus topic headings, not textbook chapter titles",
+          "sourceUrl": "https://studylib.net/doc/28551621/revised-physics-syllabus-f3-4",
+          "topics": [
+            "Measurement and Physical Quantities",
+            "Kinematics",
+            "Forces",
+            "Machines",
+            "Mechanical Structures",
+            "Work, Energy and Power",
+            "Thermal Physics",
+            "Internal Combustion Engines",
+            "Waves",
+            "Optics",
+            "Electricity",
+            "Magnetism",
+            "Electromagnetism",
+            "Electronics",
+            "Robotics",
+            "Atomic and Nuclear Physics"
+          ],
+          "coverageNote": "The 2024-2030 syllabus mirror includes a Forms 3-4 scope-and-sequence chart. The current official-hosted PDF link has not yet been confirmed; detailed form-by-form allocation and competency-matrix extraction remain pending.",
+          "status": "16-numbered-syllabus-topic-headings-extracted-from-2024-2030-document-mirror; official-host-verification-and-form-allocation-pending"
+        },
+        "status": "MoPSE-2024-2030-Physics-Forms-3-4-topic-inventory-extracted-from-mirrored-syllabus; official-host-link-and-form-level-mapping-pending"
       },
       "Mathematics": {
         "officialAuthority": "Ministry of Primary and Secondary Education (MoPSE), Curriculum Development and Technical Services",
