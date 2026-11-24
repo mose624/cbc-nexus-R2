@@ -6306,43 +6306,75 @@
   {
     "country": "Norway",
     "subjects": {
-      "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
-        "chapterCount": null,
-        "chapters": [],
-        "status": "curriculum-mapping-required"
-      },
-      "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
-        "chapterCount": null,
-        "chapters": [],
-        "status": "curriculum-mapping-required"
-      },
-      "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
-        "chapterCount": null,
-        "chapters": [],
-        "status": "curriculum-mapping-required"
-      },
-      "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
-        "chapterCount": null,
-        "chapters": [],
-        "status": "curriculum-mapping-required"
+        "Biology": {
+          "officialAuthority": "Norwegian Directorate for Education and Training (Utdanningsdirektoratet, Udir), under the Ministry of Education and Research; national curriculum framework Kunnskapsløftet 2020 (LK20), with parallel Sami curriculum LK20S.",
+          "officialSyllabusUrl": "https://www.udir.no/lk20/",
+          "examBoard": "Udir sets national curriculum and assessment regulations; examinations are administered through the national and county-level examination system. Exact assessment form depends on subject, grade and upper-secondary programme.",
+          "languageOfInstruction": "Norwegian (Bokmål or Nynorsk) is the principal language of instruction; Sami-language pupils may follow parallel LK20S curricula. English translations are available for selected curriculum pages.",
+          "chapterCount": null,
+          "chapters": [],
+          "officialCurriculumFrameworkUrl": "https://www.udir.no/in-english/curricula-in-english/",
+          "officialLK20CurriculumPortalUrl": "https://www.udir.no/lk20/",
+          "officialGovernmentCurriculumStructureUrl": "https://www.regjeringen.no/no/tema/utdanning/grunnopplaring/artikler/innhold-vurdering-og-struktur/id2356931/",
+          "curriculumStructureNote": "Norway's LK20 is competence-based rather than a nationally prescribed textbook chapter sequence. Curriculum outcomes are organised by subject and specified grade milestones in primary/lower-secondary education and by subject/programme in upper-secondary education. CBE Nexus should map competence aims and local teaching sequences without presenting invented national chapter numbers.",
+          "status": "Udir-LK20-framework-and-current-NAT01-05-natural-science-curriculum-linked; integrated-lower-secondary-science-distinction-recorded; separate-upper-secondary-subject-course-mapping-pending",
+          "subjectPathwayNote": "This subject must be mapped against the relevant upper-secondary elective/programme curriculum and course level. In primary and lower-secondary schooling, science learning is primarily addressed through the integrated Natural science curriculum rather than four separate Biology, Chemistry and Physics national syllabuses.",
+          "officialNaturalScienceCurriculumUrl": "https://www.udir.no/lk20/nat01-05/gyldighet-og-innfoering?lang=eng",
+          "curriculumVersionNote": "The revised Natural science curriculum NAT01-05 was established by regulation on 20 May 2026 and is in force from 1 August 2026. Older NAT01-04 is no longer valid after 31 July 2026. Do not apply the NAT01-05 identifier to separate upper-secondary Biology, Chemistry or Physics subjects.",
+          "assessmentTransitionNote": "Use the current LK20/LK20S subject curriculum and applicable examination-year rules. The subject's assessment scheme and any written/oral/practical examination must be checked against its exact course code and programme."
+        },
+        "Chemistry": {
+          "officialAuthority": "Norwegian Directorate for Education and Training (Utdanningsdirektoratet, Udir), under the Ministry of Education and Research; national curriculum framework Kunnskapsløftet 2020 (LK20), with parallel Sami curriculum LK20S.",
+          "officialSyllabusUrl": "https://www.udir.no/lk20/",
+          "examBoard": "Udir sets national curriculum and assessment regulations; examinations are administered through the national and county-level examination system. Exact assessment form depends on subject, grade and upper-secondary programme.",
+          "languageOfInstruction": "Norwegian (Bokmål or Nynorsk) is the principal language of instruction; Sami-language pupils may follow parallel LK20S curricula. English translations are available for selected curriculum pages.",
+          "chapterCount": null,
+          "chapters": [],
+          "officialCurriculumFrameworkUrl": "https://www.udir.no/in-english/curricula-in-english/",
+          "officialLK20CurriculumPortalUrl": "https://www.udir.no/lk20/",
+          "officialGovernmentCurriculumStructureUrl": "https://www.regjeringen.no/no/tema/utdanning/grunnopplaring/artikler/innhold-vurdering-og-struktur/id2356931/",
+          "curriculumStructureNote": "Norway's LK20 is competence-based rather than a nationally prescribed textbook chapter sequence. Curriculum outcomes are organised by subject and specified grade milestones in primary/lower-secondary education and by subject/programme in upper-secondary education. CBE Nexus should map competence aims and local teaching sequences without presenting invented national chapter numbers.",
+          "status": "Udir-LK20-framework-and-current-NAT01-05-natural-science-curriculum-linked; integrated-lower-secondary-science-distinction-recorded; separate-upper-secondary-subject-course-mapping-pending",
+          "subjectPathwayNote": "This subject must be mapped against the relevant upper-secondary elective/programme curriculum and course level. In primary and lower-secondary schooling, science learning is primarily addressed through the integrated Natural science curriculum rather than four separate Biology, Chemistry and Physics national syllabuses.",
+          "officialNaturalScienceCurriculumUrl": "https://www.udir.no/lk20/nat01-05/gyldighet-og-innfoering?lang=eng",
+          "curriculumVersionNote": "The revised Natural science curriculum NAT01-05 was established by regulation on 20 May 2026 and is in force from 1 August 2026. Older NAT01-04 is no longer valid after 31 July 2026. Do not apply the NAT01-05 identifier to separate upper-secondary Biology, Chemistry or Physics subjects.",
+          "assessmentTransitionNote": "Use the current LK20/LK20S subject curriculum and applicable examination-year rules. The subject's assessment scheme and any written/oral/practical examination must be checked against its exact course code and programme."
+        },
+        "Physics": {
+          "officialAuthority": "Norwegian Directorate for Education and Training (Utdanningsdirektoratet, Udir), under the Ministry of Education and Research; national curriculum framework Kunnskapsløftet 2020 (LK20), with parallel Sami curriculum LK20S.",
+          "officialSyllabusUrl": "https://www.udir.no/lk20/",
+          "examBoard": "Udir sets national curriculum and assessment regulations; examinations are administered through the national and county-level examination system. Exact assessment form depends on subject, grade and upper-secondary programme.",
+          "languageOfInstruction": "Norwegian (Bokmål or Nynorsk) is the principal language of instruction; Sami-language pupils may follow parallel LK20S curricula. English translations are available for selected curriculum pages.",
+          "chapterCount": null,
+          "chapters": [],
+          "officialCurriculumFrameworkUrl": "https://www.udir.no/in-english/curricula-in-english/",
+          "officialLK20CurriculumPortalUrl": "https://www.udir.no/lk20/",
+          "officialGovernmentCurriculumStructureUrl": "https://www.regjeringen.no/no/tema/utdanning/grunnopplaring/artikler/innhold-vurdering-og-struktur/id2356931/",
+          "curriculumStructureNote": "Norway's LK20 is competence-based rather than a nationally prescribed textbook chapter sequence. Curriculum outcomes are organised by subject and specified grade milestones in primary/lower-secondary education and by subject/programme in upper-secondary education. CBE Nexus should map competence aims and local teaching sequences without presenting invented national chapter numbers.",
+          "status": "Udir-LK20-framework-and-current-NAT01-05-natural-science-curriculum-linked; integrated-lower-secondary-science-distinction-recorded; separate-upper-secondary-subject-course-mapping-pending",
+          "subjectPathwayNote": "This subject must be mapped against the relevant upper-secondary elective/programme curriculum and course level. In primary and lower-secondary schooling, science learning is primarily addressed through the integrated Natural science curriculum rather than four separate Biology, Chemistry and Physics national syllabuses.",
+          "officialNaturalScienceCurriculumUrl": "https://www.udir.no/lk20/nat01-05/gyldighet-og-innfoering?lang=eng",
+          "curriculumVersionNote": "The revised Natural science curriculum NAT01-05 was established by regulation on 20 May 2026 and is in force from 1 August 2026. Older NAT01-04 is no longer valid after 31 July 2026. Do not apply the NAT01-05 identifier to separate upper-secondary Biology, Chemistry or Physics subjects.",
+          "assessmentTransitionNote": "Use the current LK20/LK20S subject curriculum and applicable examination-year rules. The subject's assessment scheme and any written/oral/practical examination must be checked against its exact course code and programme."
+        },
+        "Mathematics": {
+          "officialAuthority": "Norwegian Directorate for Education and Training (Utdanningsdirektoratet, Udir), under the Ministry of Education and Research; national curriculum framework Kunnskapsløftet 2020 (LK20), with parallel Sami curriculum LK20S.",
+          "officialSyllabusUrl": "https://www.udir.no/lk20/",
+          "examBoard": "Udir sets national curriculum and assessment regulations; examinations are administered through the national and county-level examination system. Exact assessment form depends on subject, grade and upper-secondary programme.",
+          "languageOfInstruction": "Norwegian (Bokmål or Nynorsk) is the principal language of instruction; Sami-language pupils may follow parallel LK20S curricula. English translations are available for selected curriculum pages.",
+          "chapterCount": null,
+          "chapters": [],
+          "officialCurriculumFrameworkUrl": "https://www.udir.no/in-english/curricula-in-english/",
+          "officialLK20CurriculumPortalUrl": "https://www.udir.no/lk20/",
+          "officialGovernmentCurriculumStructureUrl": "https://www.regjeringen.no/no/tema/utdanning/grunnopplaring/artikler/innhold-vurdering-og-struktur/id2356931/",
+          "curriculumStructureNote": "Norway's LK20 is competence-based rather than a nationally prescribed textbook chapter sequence. Curriculum outcomes are organised by subject and specified grade milestones in primary/lower-secondary education and by subject/programme in upper-secondary education. CBE Nexus should map competence aims and local teaching sequences without presenting invented national chapter numbers.",
+          "status": "Udir-LK20-and-MAT01-05-official-subject-curriculum-linked; grade-milestone-structure-identified; upper-secondary-pathways-and-topic-sequence-extraction-pending",
+          "subjectPathwayNote": "Mathematics has a distinct national curriculum for Years 1–10 (MAT01-05), with competence aims for each year from Year 2 through Year 10. Upper-secondary mathematics must be mapped separately by programme and subject level.",
+          "officialSubjectCurriculumUrl": "https://www.udir.no/lk20/mat01-05?lang=eng",
+          "curriculumVersionNote": "The revised Natural science curriculum NAT01-05 was established by regulation on 20 May 2026 and is in force from 1 August 2026. Older NAT01-04 is no longer valid after 31 July 2026. Do not apply the NAT01-05 identifier to separate upper-secondary Biology, Chemistry or Physics subjects.",
+          "assessmentTransitionNote": "Use the current LK20/LK20S subject curriculum and applicable examination-year rules. The subject's assessment scheme and any written/oral/practical examination must be checked against its exact course code and programme."
+        }
       }
-    }
   },
   {
     "country": "Oman",
