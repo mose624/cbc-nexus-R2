@@ -40,13 +40,21 @@ async function getCountrySeoProfiles(){
     countrySeoProfilesPromise=(async()=>{
       const page=await fs.readFile(path.join(ROOT,"global-schools.html"),"utf8");
       const scriptPaths=[...page.matchAll(/<script\b[^>]*\bsrc=["']\/([^"']+)["'][^>]*>/gi)].map(match=>match[1].split(/[?#]/,1)[0]);
-      const profileFiles=[...new Set(scriptPaths.filter(name=>/^global-schools-(?:first10-seo|countries-11-20|countries-\d+-\d+-seo|countries-remaining-\d+-seo|language-countries-\d+-\d+)\.js$/i.test(name)))];
+      const profileFiles=[...new Set(scriptPaths.filter(name=>/^global-schools-(?:first10-seo|countries-\d+-\d+(?:-seo)?|countries-remaining-\d+-seo|language-countries-\d+-\d+|.*-profiles)\.js$/i.test(name)))];
       const profiles={};
       for(const filename of profileFiles){
         try{
           const source=await fs.readFile(path.join(ROOT,filename),"utf8");
           vm.runInNewContext(source,{window:{CBE_GLOBAL_COUNTRY_DATA:profiles}},{timeout:1000,filename});
         }catch(error){console.warn("Country SEO profile load skipped:",filename,error.message||error);}
+      }
+      // Some later profile batches are keyed by display name instead of URL slug.
+      // Normalise those keys against the authoritative country registry for SSR.
+      const normalizeCountryName=value=>String(value||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]+/g," ").trim().replace(/\s+/g," ");
+      const slugByName=new Map((await getGlobalCountryRegistry()).map(country=>[normalizeCountryName(country.name),country.slug]));
+      for(const [key,value] of Object.entries(profiles)){
+        const targetSlug=slugByName.get(normalizeCountryName(key));
+        if(targetSlug&&targetSlug!==key)profiles[targetSlug]=Object.assign({},profiles[targetSlug]||{},value);
       }
       return profiles;
     })().catch(error=>{countrySeoProfilesPromise=null;throw error;});
@@ -3195,9 +3203,16 @@ async function serveStatic(req,res,url){
   }
   const globalSchoolsRoute=url.pathname.match(/^\/global-schools(?:\/([a-z0-9-]+))?\/?$/i);
   if(req.method==="GET"&&globalSchoolsRoute){
-    const countrySlug=String(globalSchoolsRoute[1]||"").toLowerCase();
+    const requestedCountrySlug=String(globalSchoolsRoute[1]||"").toLowerCase();
+    const countrySlugAliases={"cote-d-ivoire":"cote-divoire","holy-see":"vatican-city","republic-of-the-congo":"congo"};
+    const countrySlug=countrySlugAliases[requestedCountrySlug]||requestedCountrySlug;
     const countryRegistry=await getGlobalCountryRegistry();
     const country=countrySlug?countryRegistry.find(c=>String(c.slug||"").toLowerCase()===countrySlug):null;
+    if(requestedCountrySlug&&country&&requestedCountrySlug!==countrySlug){
+      res.writeHead(301,{"Location":seo.base(req)+country.url+url.search,"Cache-Control":"public, max-age=3600"});
+      res.end();
+      return;
+    }
     if(countrySlug&&!country){
       res.writeHead(404,{"Content-Type":"text/plain; charset=utf-8","Cache-Control":"public, max-age=300"});
       res.end("Country not found in the CBE Nexus Global Schools registry.");

@@ -117,7 +117,7 @@ function routeSlug(){const m=location.pathname.match(/^\/global-schools\/([^/]+)
 function renderCountry(){
  const slug=routeSlug();if(!slug)return;
  const c=countries.find(x=>x.slug===slug);if(!c){text($("gsTitle"),"Country not found");text($("gsIntro"),"This country slug is not in the current country registry. Return to the directory and select a listed country.");return;}
- const d=details[slug]||{};
+ const d=Object.assign({},details[c.name]||{},details[slug]||{});
  // Country data is enriched in later, non-blocking script batches. Remove the previous
  // dashboard instance before the final refresh so late enrichment never duplicates UI.
  const priorLearningHub=document.getElementById("country-learning-hub");if(priorLearningHub)priorLearningHub.remove();
