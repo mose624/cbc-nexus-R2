@@ -642,3 +642,22 @@ html body.ai-academy-page>header.ai-nav.academy-unified-header nav a:hover{
 .notes-page .notes-content section h2{line-height:1.3;margin:0 0 10px!important}
 .notes-page .notes-content section p{font-size:1rem;line-height:1.85;color:#24364b;overflow-wrap:anywhere}
 .notes-page .notes-content section p a{color:#0757a6;text-decoration:underline;text-underline-offset:2px}
+
+
+/* International AI Academy lesson-note typography and accessible content blocks */
+.notes-content{font-size:1.02rem;line-height:1.78;color:#26364b}
+.notes-content section{margin:0 0 1.25rem}
+.notes-content h2{margin:1.7rem 0 .7rem;padding-bottom:.45rem;border-bottom:1px solid #dbe5ef;color:#102b4e;font-size:1.35rem;line-height:1.35}
+.notes-content h3{margin:1.25rem 0 .5rem;color:#174a78;font-size:1.12rem;line-height:1.4}
+.notes-content p{margin:.55rem 0 1rem;line-height:1.78}
+.notes-content ul,.notes-content ol{margin:.6rem 0 1.1rem;padding-left:1.6rem}
+.notes-content li{margin:.38rem 0;padding-left:.2rem;line-height:1.65}
+.notes-content blockquote{margin:1rem 0;padding:.85rem 1rem;border-left:4px solid #1595bd;background:#eff8fc;border-radius:0 10px 10px 0;color:#23445b}
+.notes-content pre{overflow:auto;padding:1rem;border-radius:12px;background:#10243c;color:#f4f8ff;line-height:1.55}
+.notes-content code{padding:.12rem .32rem;border-radius:4px;background:#edf2f7;color:#173b5c;font-size:.92em}
+.notes-content pre code{padding:0;background:transparent;color:inherit}
+.notes-content a{color:#086b9e;font-weight:650;text-decoration:underline;text-underline-offset:2px}
+.ai-lesson-visual{margin:1.25rem 0 1.6rem;padding:12px;background:#f7faff;border:1px solid #dbe5ef;border-radius:16px}
+.ai-lesson-visual img{display:block;width:100%;height:auto;max-height:440px;object-fit:contain}
+.ai-lesson-visual figcaption{margin:.6rem .3rem .2rem;color:#53667c;font-size:.9rem;line-height:1.5}
+@media(max-width:640px){.notes-content{font-size:.98rem}.notes-content h2{font-size:1.2rem}.ai-lesson-visual{padding:7px}}
