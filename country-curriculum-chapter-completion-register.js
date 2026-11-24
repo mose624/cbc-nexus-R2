@@ -6237,43 +6237,71 @@
   {
     "country": "North Macedonia",
     "subjects": {
-      "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
-        "chapterCount": null,
-        "chapters": [],
-        "status": "curriculum-mapping-required"
-      },
-      "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
-        "chapterCount": null,
-        "chapters": [],
-        "status": "curriculum-mapping-required"
-      },
-      "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
-        "chapterCount": null,
-        "chapters": [],
-        "status": "curriculum-mapping-required"
-      },
-      "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
-        "chapterCount": null,
-        "chapters": [],
-        "status": "curriculum-mapping-required"
+            "Biology": {
+                  "officialAuthority": "Ministry of Education and Science of the Republic of North Macedonia; Bureau for Development of Education (BDE) develops and publishes national curricula and subject programmes.",
+                  "officialSyllabusUrl": "https://bro.gov.mk/nastavni-programi/",
+                  "examBoard": "State Examinations Centre (Државен испитен центар): State Matura, School Matura and vocational final examinations; assessment depends on the secondary pathway.",
+                  "languageOfInstruction": "Macedonian, Albanian, Turkish, Serbian and Bosnian are among the recognised languages of instruction in public education; subject-level language and school pathway must be confirmed locally.",
+                  "chapterCount": null,
+                  "chapters": [],
+                  "officialBDEProgrammeDatabaseUrl": "https://bro.gov.mk/nastavni-programi/",
+                  "officialBDECurriculumPlansUrl": "https://bro.gov.mk/nastavni-planovi/",
+                  "officialGradeVIIIProgrammeUrl": "https://bro.gov.mk/npviii/",
+                  "primaryCurriculumFrameworkUrl": "https://bro.gov.mk/wp-content/uploads/2024/11/koncepcija-osnovno-obrazovanie-en.pdf",
+                  "curriculumStructureNote": "North Macedonia is implementing revised primary curricula in stages. The official BDE Grade VIII programme listing for 2026/2027 identifies Biology, Chemistry, Physics and Mathematics as separate subjects. The primary curriculum framework describes Natural Sciences in earlier grades as integrated content covering biology, chemistry, physics and parts of geography; do not back-project the separate Grade VIII subject structure into every primary grade.",
+                  "subjectPathwayNote": "Biology is listed as a separate subject in the official Grade VIII programme listing. At earlier primary stages, science content may be integrated within Natural Sciences; secondary programme details must be selected by grade and school pathway.",
+                  "assessmentTransitionNote": "The State Examinations Centre administers state/school matura and vocational final assessments. Do not assume a single identical examination syllabus across gymnasium and vocational pathways.",
+                  "status": "BDE-official-curriculum-database-and-plans-linked; Grade-VIII-2026-2027-subject-listing-verified; integrated-primary-Natural-Sciences-distinction-recorded; complete-grade-and-topic-sequence-extraction-pending"
+            },
+            "Chemistry": {
+                  "officialAuthority": "Ministry of Education and Science of the Republic of North Macedonia; Bureau for Development of Education (BDE) develops and publishes national curricula and subject programmes.",
+                  "officialSyllabusUrl": "https://bro.gov.mk/nastavni-programi/",
+                  "examBoard": "State Examinations Centre (Државен испитен центар): State Matura, School Matura and vocational final examinations; assessment depends on the secondary pathway.",
+                  "languageOfInstruction": "Macedonian, Albanian, Turkish, Serbian and Bosnian are among the recognised languages of instruction in public education; subject-level language and school pathway must be confirmed locally.",
+                  "chapterCount": null,
+                  "chapters": [],
+                  "officialBDEProgrammeDatabaseUrl": "https://bro.gov.mk/nastavni-programi/",
+                  "officialBDECurriculumPlansUrl": "https://bro.gov.mk/nastavni-planovi/",
+                  "officialGradeVIIIProgrammeUrl": "https://bro.gov.mk/npviii/",
+                  "primaryCurriculumFrameworkUrl": "https://bro.gov.mk/wp-content/uploads/2024/11/koncepcija-osnovno-obrazovanie-en.pdf",
+                  "curriculumStructureNote": "North Macedonia is implementing revised primary curricula in stages. The official BDE Grade VIII programme listing for 2026/2027 identifies Biology, Chemistry, Physics and Mathematics as separate subjects. The primary curriculum framework describes Natural Sciences in earlier grades as integrated content covering biology, chemistry, physics and parts of geography; do not back-project the separate Grade VIII subject structure into every primary grade.",
+                  "subjectPathwayNote": "Chemistry is listed as a separate subject in the official Grade VIII programme listing. At earlier primary stages, science content may be integrated within Natural Sciences; secondary programme details must be selected by grade and school pathway.",
+                  "assessmentTransitionNote": "The State Examinations Centre administers state/school matura and vocational final assessments. Do not assume a single identical examination syllabus across gymnasium and vocational pathways.",
+                  "status": "BDE-official-curriculum-database-and-plans-linked; Grade-VIII-2026-2027-subject-listing-verified; integrated-primary-Natural-Sciences-distinction-recorded; complete-grade-and-topic-sequence-extraction-pending"
+            },
+            "Physics": {
+                  "officialAuthority": "Ministry of Education and Science of the Republic of North Macedonia; Bureau for Development of Education (BDE) develops and publishes national curricula and subject programmes.",
+                  "officialSyllabusUrl": "https://bro.gov.mk/nastavni-programi/",
+                  "examBoard": "State Examinations Centre (Државен испитен центар): State Matura, School Matura and vocational final examinations; assessment depends on the secondary pathway.",
+                  "languageOfInstruction": "Macedonian, Albanian, Turkish, Serbian and Bosnian are among the recognised languages of instruction in public education; subject-level language and school pathway must be confirmed locally.",
+                  "chapterCount": null,
+                  "chapters": [],
+                  "officialBDEProgrammeDatabaseUrl": "https://bro.gov.mk/nastavni-programi/",
+                  "officialBDECurriculumPlansUrl": "https://bro.gov.mk/nastavni-planovi/",
+                  "officialGradeVIIIProgrammeUrl": "https://bro.gov.mk/npviii/",
+                  "primaryCurriculumFrameworkUrl": "https://bro.gov.mk/wp-content/uploads/2024/11/koncepcija-osnovno-obrazovanie-en.pdf",
+                  "curriculumStructureNote": "North Macedonia is implementing revised primary curricula in stages. The official BDE Grade VIII programme listing for 2026/2027 identifies Biology, Chemistry, Physics and Mathematics as separate subjects. The primary curriculum framework describes Natural Sciences in earlier grades as integrated content covering biology, chemistry, physics and parts of geography; do not back-project the separate Grade VIII subject structure into every primary grade.",
+                  "subjectPathwayNote": "Physics is listed as a separate subject in the official Grade VIII programme listing. At earlier primary stages, science content may be integrated within Natural Sciences; secondary programme details must be selected by grade and school pathway.",
+                  "assessmentTransitionNote": "The State Examinations Centre administers state/school matura and vocational final assessments. Do not assume a single identical examination syllabus across gymnasium and vocational pathways.",
+                  "status": "BDE-official-curriculum-database-and-plans-linked; Grade-VIII-2026-2027-subject-listing-verified; integrated-primary-Natural-Sciences-distinction-recorded; complete-grade-and-topic-sequence-extraction-pending"
+            },
+            "Mathematics": {
+                  "officialAuthority": "Ministry of Education and Science of the Republic of North Macedonia; Bureau for Development of Education (BDE) develops and publishes national curricula and subject programmes.",
+                  "officialSyllabusUrl": "https://bro.gov.mk/nastavni-programi/",
+                  "examBoard": "State Examinations Centre (Државен испитен центар): State Matura, School Matura and vocational final examinations; assessment depends on the secondary pathway.",
+                  "languageOfInstruction": "Macedonian, Albanian, Turkish, Serbian and Bosnian are among the recognised languages of instruction in public education; subject-level language and school pathway must be confirmed locally.",
+                  "chapterCount": null,
+                  "chapters": [],
+                  "officialBDEProgrammeDatabaseUrl": "https://bro.gov.mk/nastavni-programi/",
+                  "officialBDECurriculumPlansUrl": "https://bro.gov.mk/nastavni-planovi/",
+                  "officialGradeVIIIProgrammeUrl": "https://bro.gov.mk/npviii/",
+                  "primaryCurriculumFrameworkUrl": "https://bro.gov.mk/wp-content/uploads/2024/11/koncepcija-osnovno-obrazovanie-en.pdf",
+                  "curriculumStructureNote": "North Macedonia is implementing revised primary curricula in stages. The official BDE Grade VIII programme listing for 2026/2027 identifies Biology, Chemistry, Physics and Mathematics as separate subjects. The primary curriculum framework describes Natural Sciences in earlier grades as integrated content covering biology, chemistry, physics and parts of geography; do not back-project the separate Grade VIII subject structure into every primary grade.",
+                  "subjectPathwayNote": "Mathematics is a distinct primary and secondary subject. General gymnasium and four-year vocational pathways may use different programmes and examination specifications.",
+                  "assessmentTransitionNote": "The State Examinations Centre administers state/school matura and vocational final assessments. Do not assume a single identical examination syllabus across gymnasium and vocational pathways.",
+                  "status": "BDE-official-curriculum-database-and-plans-linked; Grade-VIII-2026-2027-subject-listing-verified; integrated-primary-Natural-Sciences-distinction-recorded; complete-grade-and-topic-sequence-extraction-pending"
+            }
       }
-    }
   },
   {
     "country": "Norway",
