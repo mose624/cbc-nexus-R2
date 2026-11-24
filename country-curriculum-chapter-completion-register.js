@@ -1235,40 +1235,56 @@
     "country": "Botswana",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
+        "officialAuthority": "Botswana Ministry of Child Welfare and Basic Education — Department of Curriculum Development and Evaluation",
         "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "examBoard": "Botswana Examinations Council (BEC); distinct BSSE and legacy BGCSE assessment pathways",
+        "languageOfInstruction": "English and Setswana are key languages in education; other local-language support may apply by school and level. Confirm the medium for each school.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialSyllabusUrl": null,
+        "officialProgrammeUrl": "https://www.bec.co.bw/index.php/component/sppagebuilder/?id=260&view=page",
+        "legacyBGCSESyllabusUrl": "https://www.bec.co.bw/index.php/qualifications-programmes/bgcse-products/bgcse-assesssment/bgcse-syllabi",
+        "assessmentFrameworkNote": "Do not merge BSSE assessment syllabuses with legacy BGCSE syllabuses. BEC lists BSSE subjects and BGCSE subjects separately; verify the learner’s registered pathway and subject code.",
+        "status": "official-authority-and-examination-pathways-identified; BSSE-and-legacy-BGCSE-subject-code-crosswalk-started; current-teaching-syllabus-sequence-extraction-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
+        "officialAuthority": "Botswana Ministry of Child Welfare and Basic Education — Department of Curriculum Development and Evaluation",
         "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "examBoard": "Botswana Examinations Council (BEC); distinct BSSE and legacy BGCSE assessment pathways",
+        "languageOfInstruction": "English and Setswana are key languages in education; other local-language support may apply by school and level. Confirm the medium for each school.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialSyllabusUrl": null,
+        "officialProgrammeUrl": "https://www.bec.co.bw/index.php/component/sppagebuilder/?id=260&view=page",
+        "legacyBGCSESyllabusUrl": "https://www.bec.co.bw/index.php/qualifications-programmes/bgcse-products/bgcse-assesssment/bgcse-syllabi",
+        "assessmentFrameworkNote": "Do not merge BSSE assessment syllabuses with legacy BGCSE syllabuses. BEC lists BSSE subjects and BGCSE subjects separately; verify the learner’s registered pathway and subject code.",
+        "status": "official-authority-and-examination-pathways-identified; BSSE-and-legacy-BGCSE-subject-code-crosswalk-started; current-teaching-syllabus-sequence-extraction-pending"
       },
       "Physics": {
-        "officialAuthority": null,
+        "officialAuthority": "Botswana Ministry of Child Welfare and Basic Education — Department of Curriculum Development and Evaluation",
         "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "examBoard": "Botswana Examinations Council (BEC); distinct BSSE and legacy BGCSE assessment pathways",
+        "languageOfInstruction": "English and Setswana are key languages in education; other local-language support may apply by school and level. Confirm the medium for each school.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialSyllabusUrl": null,
+        "officialProgrammeUrl": "https://www.bec.co.bw/index.php/component/sppagebuilder/?id=260&view=page",
+        "legacyBGCSESyllabusUrl": "https://www.bec.co.bw/index.php/qualifications-programmes/bgcse-products/bgcse-assesssment/bgcse-syllabi",
+        "assessmentFrameworkNote": "Do not merge BSSE assessment syllabuses with legacy BGCSE syllabuses. BEC lists BSSE subjects and BGCSE subjects separately; verify the learner’s registered pathway and subject code.",
+        "status": "official-authority-and-examination-pathways-identified; BSSE-and-legacy-BGCSE-subject-code-crosswalk-started; current-teaching-syllabus-sequence-extraction-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
+        "officialAuthority": "Botswana Ministry of Child Welfare and Basic Education — Department of Curriculum Development and Evaluation",
         "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "examBoard": "Botswana Examinations Council (BEC); distinct BSSE and legacy BGCSE assessment pathways",
+        "languageOfInstruction": "English and Setswana are key languages in education; other local-language support may apply by school and level. Confirm the medium for each school.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialSyllabusUrl": null,
+        "officialProgrammeUrl": "https://www.bec.co.bw/index.php/component/sppagebuilder/?id=260&view=page",
+        "legacyBGCSESyllabusUrl": "https://www.bec.co.bw/index.php/qualifications-programmes/bgcse-products/bgcse-assesssment/bgcse-syllabi",
+        "assessmentFrameworkNote": "Do not merge BSSE assessment syllabuses with legacy BGCSE syllabuses. BEC lists BSSE subjects and BGCSE subjects separately; verify the learner’s registered pathway and subject code.",
+        "status": "official-authority-and-examination-pathways-identified; BSSE-and-legacy-BGCSE-subject-code-crosswalk-started; current-teaching-syllabus-sequence-extraction-pending"
       }
     }
   },
