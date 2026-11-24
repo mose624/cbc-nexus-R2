@@ -9524,10 +9524,69 @@
               "status": "14-topic-headings-extracted-from-2024-2030-syllabus-copy; detailed-form-wise-scope-and-sequence-extraction-pending"
             }
           ],
-          "pathwayNote": "Mathematics A and Mathematics B are distinct syllabus pathways and must not be merged into one sequence. The official MoPSE catalogue also lists Pure Mathematics (Forms 3-4) and Additional Mathematics (Forms 3-4) as separate learning areas; these require their own mapping.",
-          "status": "Mathematics-A-and-B-pathways-identified-and-topic-headings-mapped; detailed-Mathematics-B-form-allocation-and-Pure-Additional-Mathematics-pending"
+          "pathwayNote": "Mathematics A and Mathematics B are distinct syllabus pathways. Pure Mathematics and Additional Mathematics are also separate Forms 3-4 learning areas and are mapped independently below. Mathematics B form allocation and deeper competency mapping remain pending.",
+          "additionalPathways": [
+            {
+              "name": "Pure Mathematics (Forms 3-4)",
+              "sourceType": "MoPSE-2024-2030-Pure-Mathematics-syllabus-copy; syllabus headings and form scope-and-sequence, not textbook chapter titles",
+              "sourceUrl": "https://www.scribd.com/document/978901310/Pure-Mathematics-syllabus-form-3-to-4",
+              "topics": [
+                "Indices and Irrational Numbers",
+                "Polynomials",
+                "Identities, Equations and Inequalities",
+                "Graphs and Coordinate Geometry",
+                "Vectors",
+                "Functions",
+                "Sequences",
+                "Binomial Expansions",
+                "Trigonometry",
+                "Logarithmic and Exponential Functions",
+                "Differentiation",
+                "Integration",
+                "Numerical Methods"
+              ],
+              "status": "13-topic-headings-and-Form-3-4-scope-sequence-extracted-from-2024-2030-syllabus-copy; official-MoPSE-catalogue-lists-Pure-Mathematics-Forms-3-4"
+            },
+            {
+              "name": "Additional Mathematics (Forms 3-4)",
+              "sourceType": "MoPSE-2024-2030-Additional-Mathematics-syllabus-copy; syllabus headings and form scope-and-sequence, not textbook chapter titles",
+              "sourceUrl": "https://studylib.net/doc/28370179/revised-additional-maths-f3---4",
+              "topicGroups": {
+                "Pure Mathematics": [
+                  "Indices and Irrational Numbers",
+                  "Polynomials",
+                  "Algebraic Identities, Equations and Inequalities",
+                  "Sequences and Series",
+                  "Coordinate Geometry in Two Dimensions",
+                  "Functions",
+                  "Quadratic Functions",
+                  "Logarithmic and Exponential Functions",
+                  "Trigonometric Functions",
+                  "Differentiation",
+                  "Integration"
+                ],
+                "Mechanics": [
+                  "Kinematics of Motion in a Straight Line",
+                  "Forces and Equilibrium",
+                  "Newton's Laws of Motion",
+                  "Energy, Work and Power"
+                ],
+                "Probability and Statistics": [
+                  "Probability",
+                  "Data Collection and Presentation",
+                  "Measures of Central Tendency and Dispersion",
+                  "Discrete and Continuous Probability Distributions",
+                  "Normal Distribution",
+                  "Sampling Methods and Estimation"
+                ]
+              },
+              "coverageNote": "The 2024-2030 syllabus presents the content in three strands: Pure Mathematics, Mechanics, and Probability and Statistics. Topic groupings are retained by strand; detailed Form 3 versus Form 4 allocation and competency-matrix extraction remain pending.",
+              "status": "21-topic-headings-across-three-strands-extracted-from-2024-2030-syllabus-copy; official-MoPSE-catalogue-lists-Additional-Mathematics-Forms-3-4"
+            }
+          ],
+          "status": "Mathematics-A-and-B-plus-Pure-and-Additional-Mathematics-pathways-identified; topic-headings-mapped-separately; deeper-form-allocation-and-competency-mapping-pending"
         },
-        "status": "MoPSE-2024-2030-Mathematics-A-and-B-topic-inventories-added; pathways-kept-separate; Pure-and-Additional-Mathematics-mapping-pending"
+        "status": "MoPSE-2024-2030-Mathematics-A-B-Pure-and-Additional-pathway-inventories-added; pathways-kept-separate; official-catalogue-reference-retained"
       }
     }
   },
