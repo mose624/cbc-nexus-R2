@@ -5381,40 +5381,60 @@
     "country": "Myanmar",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Myanmar Ministry of Education; Department of Myanmar Examinations (DME) administers the national Matriculation Examination",
+        "officialSyllabusUrl": "https://www.myanmarexam.org/",
+        "examBoard": "Department of Myanmar Examinations (DME), Ministry of Education; Grade 12 Matriculation Examination",
+        "languageOfInstruction": "Myanmar (Burmese) is the principal language of basic education; English is taught as a subject. Confirm the actual language and terminology by grade, school and curriculum pathway.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialExamDepartmentUrl": "https://myanmarexam.org/",
+        "official2026MatriculationAnnouncementUrl": "https://presoffministry.gov.mm/en/news/27823",
+        "officialNationalAssessmentGuidelinesUrl": "https://s3-ap-southeast-1.amazonaws.com/resources.mmoe.myanmarexam.org/docs/NAG/NAG%28EN%29WM.pdf",
+        "curriculumContextNote": "Myanmar introduced the KG+12 basic-education structure, with the new Grade 12 curriculum first assessed in the 2024 matriculation examination. The 2026 national matriculation schedule lists Mathematics, Chemistry, Physics and Biology. Map each subject against the applicable grade and pathway; do not infer chapter titles from exam subject names.",
+        "status": "official-examination-authority-and-2026-matriculation-subjects-identified; KG+12-transition-context-identified; current-grade-specific-subject-syllabus-sequence-extraction-pending"
+      }
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Myanmar Ministry of Education; Department of Myanmar Examinations (DME) administers the national Matriculation Examination",
+        "officialSyllabusUrl": "https://www.myanmarexam.org/",
+        "examBoard": "Department of Myanmar Examinations (DME), Ministry of Education; Grade 12 Matriculation Examination",
+        "languageOfInstruction": "Myanmar (Burmese) is the principal language of basic education; English is taught as a subject. Confirm the actual language and terminology by grade, school and curriculum pathway.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialExamDepartmentUrl": "https://myanmarexam.org/",
+        "official2026MatriculationAnnouncementUrl": "https://presoffministry.gov.mm/en/news/27823",
+        "officialNationalAssessmentGuidelinesUrl": "https://s3-ap-southeast-1.amazonaws.com/resources.mmoe.myanmarexam.org/docs/NAG/NAG%28EN%29WM.pdf",
+        "curriculumContextNote": "Myanmar introduced the KG+12 basic-education structure, with the new Grade 12 curriculum first assessed in the 2024 matriculation examination. The 2026 national matriculation schedule lists Mathematics, Chemistry, Physics and Biology. Map each subject against the applicable grade and pathway; do not infer chapter titles from exam subject names.",
+        "status": "official-examination-authority-and-2026-matriculation-subjects-identified; KG+12-transition-context-identified; current-grade-specific-subject-syllabus-sequence-extraction-pending"
+      }
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Myanmar Ministry of Education; Department of Myanmar Examinations (DME) administers the national Matriculation Examination",
+        "officialSyllabusUrl": "https://www.myanmarexam.org/",
+        "examBoard": "Department of Myanmar Examinations (DME), Ministry of Education; Grade 12 Matriculation Examination",
+        "languageOfInstruction": "Myanmar (Burmese) is the principal language of basic education; English is taught as a subject. Confirm the actual language and terminology by grade, school and curriculum pathway.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialExamDepartmentUrl": "https://myanmarexam.org/",
+        "official2026MatriculationAnnouncementUrl": "https://presoffministry.gov.mm/en/news/27823",
+        "officialNationalAssessmentGuidelinesUrl": "https://s3-ap-southeast-1.amazonaws.com/resources.mmoe.myanmarexam.org/docs/NAG/NAG%28EN%29WM.pdf",
+        "curriculumContextNote": "Myanmar introduced the KG+12 basic-education structure, with the new Grade 12 curriculum first assessed in the 2024 matriculation examination. The 2026 national matriculation schedule lists Mathematics, Chemistry, Physics and Biology. Map each subject against the applicable grade and pathway; do not infer chapter titles from exam subject names.",
+        "status": "official-examination-authority-and-2026-matriculation-subjects-identified; KG+12-transition-context-identified; current-grade-specific-subject-syllabus-sequence-extraction-pending"
+      }
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Myanmar Ministry of Education; Department of Myanmar Examinations (DME) administers the national Matriculation Examination",
+        "officialSyllabusUrl": "https://www.myanmarexam.org/",
+        "examBoard": "Department of Myanmar Examinations (DME), Ministry of Education; Grade 12 Matriculation Examination",
+        "languageOfInstruction": "Myanmar (Burmese) is the principal language of basic education; English is taught as a subject. Confirm the actual language and terminology by grade, school and curriculum pathway.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialExamDepartmentUrl": "https://myanmarexam.org/",
+        "official2026MatriculationAnnouncementUrl": "https://presoffministry.gov.mm/en/news/27823",
+        "officialNationalAssessmentGuidelinesUrl": "https://s3-ap-southeast-1.amazonaws.com/resources.mmoe.myanmarexam.org/docs/NAG/NAG%28EN%29WM.pdf",
+        "curriculumContextNote": "Myanmar introduced the KG+12 basic-education structure, with the new Grade 12 curriculum first assessed in the 2024 matriculation examination. The 2026 national matriculation schedule lists Mathematics, Chemistry, Physics and Biology. Map each subject against the applicable grade and pathway; do not infer chapter titles from exam subject names.",
+        "status": "official-examination-authority-and-2026-matriculation-subjects-identified; KG+12-transition-context-identified; current-grade-specific-subject-syllabus-sequence-extraction-pending"
+      }
       }
     }
   },
