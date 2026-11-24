@@ -9058,39 +9058,39 @@
     "subjects": {
       "Biology": {
         "officialAuthority": "Directorate of Curriculum Development, Ministry of Education, Zambia",
-        "officialSyllabusUrl": "https://www.edu.gov.zm/?page_id=1142",
+        "officialSyllabusUrl": "https://www.edu.gov.zm/wp-content/uploads/2025/04/BIOLOGY-SYLABUS-O-LEVEL-FORM-1-4.pdf",
         "examBoard": "Examinations Council of Zambia (ECZ)",
         "languageOfInstruction": "English is the principal language of instruction in secondary education; verify the language policy for the specific level and school",
         "chapterCount": null,
         "chapters": [],
-        "status": "official-curriculum-authority-and-examination-body-identified; current-cbc-subject-and-level-sequence-review-pending"
+        "status": "official-subject-syllabus-source-identified; Forms-1-4-or-O-Level-pathway-confirmed; topic-sequence-extraction-pending"
       },
       "Chemistry": {
         "officialAuthority": "Directorate of Curriculum Development, Ministry of Education, Zambia",
-        "officialSyllabusUrl": "https://www.edu.gov.zm/?page_id=1142",
+        "officialSyllabusUrl": "https://www.edu.gov.zm/wp-content/uploads/2025/04/CHEMISTRY-SYLLABUS.pdf",
         "examBoard": "Examinations Council of Zambia (ECZ)",
         "languageOfInstruction": "English is the principal language of instruction in secondary education; verify the language policy for the specific level and school",
         "chapterCount": null,
         "chapters": [],
-        "status": "official-curriculum-authority-and-examination-body-identified; current-cbc-subject-and-level-sequence-review-pending"
+        "status": "official-subject-syllabus-source-identified; Forms-1-4-or-O-Level-pathway-confirmed; topic-sequence-extraction-pending"
       },
       "Physics": {
         "officialAuthority": "Directorate of Curriculum Development, Ministry of Education, Zambia",
-        "officialSyllabusUrl": "https://www.edu.gov.zm/?page_id=1142",
+        "officialSyllabusUrl": "https://www.edu.gov.zm/wp-content/uploads/2025/04/PHYSICS-SYLLABUS-O-LEVEL-FORM-1-4.pdf",
         "examBoard": "Examinations Council of Zambia (ECZ)",
         "languageOfInstruction": "English is the principal language of instruction in secondary education; verify the language policy for the specific level and school",
         "chapterCount": null,
         "chapters": [],
-        "status": "official-curriculum-authority-and-examination-body-identified; current-cbc-subject-and-level-sequence-review-pending"
+        "status": "official-subject-syllabus-source-identified; Forms-1-4-or-O-Level-pathway-confirmed; topic-sequence-extraction-pending"
       },
       "Mathematics": {
         "officialAuthority": "Directorate of Curriculum Development, Ministry of Education, Zambia",
-        "officialSyllabusUrl": "https://www.edu.gov.zm/?page_id=1142",
+        "officialSyllabusUrl": "https://library.cdcrepository.info/browse.php?level=syllabi&subject=78",
         "examBoard": "Examinations Council of Zambia (ECZ)",
         "languageOfInstruction": "English is the principal language of instruction in secondary education; verify the language policy for the specific level and school",
         "chapterCount": null,
         "chapters": [],
-        "status": "official-curriculum-authority-and-examination-body-identified; current-cbc-subject-and-level-sequence-review-pending"
+        "status": "official-subject-syllabus-source-identified; Forms-1-4-or-O-Level-pathway-confirmed; topic-sequence-extraction-pending"
       }
     }
   },
