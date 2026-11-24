@@ -5267,40 +5267,60 @@
     "country": "Morocco",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Morocco Ministry of National Education, Preschool and Sports (MENPS); National Curriculum and Programme Renewal Commission coordinates curriculum updating",
+        "officialSyllabusUrl": "https://www.men.gov.ma/fr/éducation-nationale",
+        "examBoard": "Morocco Ministry of National Education through the National Centre for School Examinations and Evaluation and regional education academies; national Baccalaureate and lower-secondary certificate examinations",
+        "languageOfInstruction": "Arabic and French are used across the school system; subject and track language varies. French is used in many scientific and technical programmes; confirm language by grade, stream and school.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialCurriculumRenewalUrl": "https://cpracp.men.gov.ma",
+        "officialLowerSecondaryExamResourcesUrl": "https://www.men.gov.ma/index.php/إعلانات/شهادة-السلك-الإعدادي-لسنة-2025",
+        "officialBaccalaureate2026ScheduleUrl": "https://www.men.gov.ma/sites/default/files/2026-01/N014200126.pdf",
+        "curriculumRenewalStatusNote": "The permanent commission presented a preliminary curriculum reference framework on 27 July 2026; treat it as a draft under review, not an already adopted replacement syllabus.",
+        "subjectNamingNote": "At lower-secondary level, official examination resources list Mathematics and combined Physics-Chemistry. In upper-secondary science and mathematics tracks, Physics-Chemistry, Life and Earth Sciences (SVT), and Mathematics appear as distinct examination subjects. Preserve the learner’s grade and track when mapping content.",
+        "status": "official-MENPS-authority-and-2026-national-exam-framework-identified; curriculum-reference-framework-preliminary-draft-under-review; grade-and-track-specific-syllabus-sequence-extraction-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Morocco Ministry of National Education, Preschool and Sports (MENPS); National Curriculum and Programme Renewal Commission coordinates curriculum updating",
+        "officialSyllabusUrl": "https://www.men.gov.ma/fr/éducation-nationale",
+        "examBoard": "Morocco Ministry of National Education through the National Centre for School Examinations and Evaluation and regional education academies; national Baccalaureate and lower-secondary certificate examinations",
+        "languageOfInstruction": "Arabic and French are used across the school system; subject and track language varies. French is used in many scientific and technical programmes; confirm language by grade, stream and school.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialCurriculumRenewalUrl": "https://cpracp.men.gov.ma",
+        "officialLowerSecondaryExamResourcesUrl": "https://www.men.gov.ma/index.php/إعلانات/شهادة-السلك-الإعدادي-لسنة-2025",
+        "officialBaccalaureate2026ScheduleUrl": "https://www.men.gov.ma/sites/default/files/2026-01/N014200126.pdf",
+        "curriculumRenewalStatusNote": "The permanent commission presented a preliminary curriculum reference framework on 27 July 2026; treat it as a draft under review, not an already adopted replacement syllabus.",
+        "subjectNamingNote": "At lower-secondary level, official examination resources list Mathematics and combined Physics-Chemistry. In upper-secondary science and mathematics tracks, Physics-Chemistry, Life and Earth Sciences (SVT), and Mathematics appear as distinct examination subjects. Preserve the learner’s grade and track when mapping content.",
+        "status": "official-MENPS-authority-and-2026-national-exam-framework-identified; curriculum-reference-framework-preliminary-draft-under-review; grade-and-track-specific-syllabus-sequence-extraction-pending"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Morocco Ministry of National Education, Preschool and Sports (MENPS); National Curriculum and Programme Renewal Commission coordinates curriculum updating",
+        "officialSyllabusUrl": "https://www.men.gov.ma/fr/éducation-nationale",
+        "examBoard": "Morocco Ministry of National Education through the National Centre for School Examinations and Evaluation and regional education academies; national Baccalaureate and lower-secondary certificate examinations",
+        "languageOfInstruction": "Arabic and French are used across the school system; subject and track language varies. French is used in many scientific and technical programmes; confirm language by grade, stream and school.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialCurriculumRenewalUrl": "https://cpracp.men.gov.ma",
+        "officialLowerSecondaryExamResourcesUrl": "https://www.men.gov.ma/index.php/إعلانات/شهادة-السلك-الإعدادي-لسنة-2025",
+        "officialBaccalaureate2026ScheduleUrl": "https://www.men.gov.ma/sites/default/files/2026-01/N014200126.pdf",
+        "curriculumRenewalStatusNote": "The permanent commission presented a preliminary curriculum reference framework on 27 July 2026; treat it as a draft under review, not an already adopted replacement syllabus.",
+        "subjectNamingNote": "At lower-secondary level, official examination resources list Mathematics and combined Physics-Chemistry. In upper-secondary science and mathematics tracks, Physics-Chemistry, Life and Earth Sciences (SVT), and Mathematics appear as distinct examination subjects. Preserve the learner’s grade and track when mapping content.",
+        "status": "official-MENPS-authority-and-2026-national-exam-framework-identified; curriculum-reference-framework-preliminary-draft-under-review; grade-and-track-specific-syllabus-sequence-extraction-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Morocco Ministry of National Education, Preschool and Sports (MENPS); National Curriculum and Programme Renewal Commission coordinates curriculum updating",
+        "officialSyllabusUrl": "https://www.men.gov.ma/fr/éducation-nationale",
+        "examBoard": "Morocco Ministry of National Education through the National Centre for School Examinations and Evaluation and regional education academies; national Baccalaureate and lower-secondary certificate examinations",
+        "languageOfInstruction": "Arabic and French are used across the school system; subject and track language varies. French is used in many scientific and technical programmes; confirm language by grade, stream and school.",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "officialCurriculumRenewalUrl": "https://cpracp.men.gov.ma",
+        "officialLowerSecondaryExamResourcesUrl": "https://www.men.gov.ma/index.php/إعلانات/شهادة-السلك-الإعدادي-لسنة-2025",
+        "officialBaccalaureate2026ScheduleUrl": "https://www.men.gov.ma/sites/default/files/2026-01/N014200126.pdf",
+        "curriculumRenewalStatusNote": "The permanent commission presented a preliminary curriculum reference framework on 27 July 2026; treat it as a draft under review, not an already adopted replacement syllabus.",
+        "subjectNamingNote": "At lower-secondary level, official examination resources list Mathematics and combined Physics-Chemistry. In upper-secondary science and mathematics tracks, Physics-Chemistry, Life and Earth Sciences (SVT), and Mathematics appear as distinct examination subjects. Preserve the learner’s grade and track when mapping content.",
+        "status": "official-MENPS-authority-and-2026-national-exam-framework-identified; curriculum-reference-framework-preliminary-draft-under-review; grade-and-track-specific-syllabus-sequence-extraction-pending"
       }
     }
   },
