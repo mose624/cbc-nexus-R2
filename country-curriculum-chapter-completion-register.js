@@ -866,40 +866,40 @@
     "country": "Bangladesh",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "National Curriculum and Textbook Board (NCTB), Ministry of Education, Bangladesh",
+        "officialSyllabusUrl": "https://nctb.gov.bd/",
+        "examBoard": "Education Boards of Bangladesh (including the regional Boards of Intermediate and Secondary Education); qualification and board-specific requirements apply",
+        "languageOfInstruction": "Bangla is the principal medium in Bangla-version institutions; English-version and English-medium schools follow their applicable curricula and policies",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-curriculum-authority-and-public-examination-board-framework-identified; current-subject-and-version-specific-syllabus-review-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "National Curriculum and Textbook Board (NCTB), Ministry of Education, Bangladesh",
+        "officialSyllabusUrl": "https://nctb.gov.bd/",
+        "examBoard": "Education Boards of Bangladesh (including the regional Boards of Intermediate and Secondary Education); qualification and board-specific requirements apply",
+        "languageOfInstruction": "Bangla is the principal medium in Bangla-version institutions; English-version and English-medium schools follow their applicable curricula and policies",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-curriculum-authority-and-public-examination-board-framework-identified; current-subject-and-version-specific-syllabus-review-pending"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "National Curriculum and Textbook Board (NCTB), Ministry of Education, Bangladesh",
+        "officialSyllabusUrl": "https://nctb.gov.bd/",
+        "examBoard": "Education Boards of Bangladesh (including the regional Boards of Intermediate and Secondary Education); qualification and board-specific requirements apply",
+        "languageOfInstruction": "Bangla is the principal medium in Bangla-version institutions; English-version and English-medium schools follow their applicable curricula and policies",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-curriculum-authority-and-public-examination-board-framework-identified; current-subject-and-version-specific-syllabus-review-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "National Curriculum and Textbook Board (NCTB), Ministry of Education, Bangladesh",
+        "officialSyllabusUrl": "https://nctb.gov.bd/",
+        "examBoard": "Education Boards of Bangladesh (including the regional Boards of Intermediate and Secondary Education); qualification and board-specific requirements apply",
+        "languageOfInstruction": "Bangla is the principal medium in Bangla-version institutions; English-version and English-medium schools follow their applicable curricula and policies",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-curriculum-authority-and-public-examination-board-framework-identified; current-subject-and-version-specific-syllabus-review-pending"
       }
     }
   },
@@ -3449,40 +3449,40 @@
     "country": "India",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "National Council of Educational Research and Training (NCERT) provides national curriculum frameworks and learning resources; curriculum and examinations also vary by state/UT and school board (including CBSE and CISCE)",
+        "officialSyllabusUrl": "https://ncert.nic.in/",
+        "examBoard": "Central Board of Secondary Education (CBSE), Council for the Indian School Certificate Examinations (CISCE), and state/UT examination boards; board-specific requirements apply",
+        "languageOfInstruction": "Language of instruction varies by state, school board and institution; English and regional languages are used",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-curriculum-framework-and-major-school-board-sources-identified; state-board-and-subject-sequence-review-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "National Council of Educational Research and Training (NCERT) provides national curriculum frameworks and learning resources; curriculum and examinations also vary by state/UT and school board (including CBSE and CISCE)",
+        "officialSyllabusUrl": "https://ncert.nic.in/",
+        "examBoard": "Central Board of Secondary Education (CBSE), Council for the Indian School Certificate Examinations (CISCE), and state/UT examination boards; board-specific requirements apply",
+        "languageOfInstruction": "Language of instruction varies by state, school board and institution; English and regional languages are used",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-curriculum-framework-and-major-school-board-sources-identified; state-board-and-subject-sequence-review-pending"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "National Council of Educational Research and Training (NCERT) provides national curriculum frameworks and learning resources; curriculum and examinations also vary by state/UT and school board (including CBSE and CISCE)",
+        "officialSyllabusUrl": "https://ncert.nic.in/",
+        "examBoard": "Central Board of Secondary Education (CBSE), Council for the Indian School Certificate Examinations (CISCE), and state/UT examination boards; board-specific requirements apply",
+        "languageOfInstruction": "Language of instruction varies by state, school board and institution; English and regional languages are used",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-curriculum-framework-and-major-school-board-sources-identified; state-board-and-subject-sequence-review-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "National Council of Educational Research and Training (NCERT) provides national curriculum frameworks and learning resources; curriculum and examinations also vary by state/UT and school board (including CBSE and CISCE)",
+        "officialSyllabusUrl": "https://ncert.nic.in/",
+        "examBoard": "Central Board of Secondary Education (CBSE), Council for the Indian School Certificate Examinations (CISCE), and state/UT examination boards; board-specific requirements apply",
+        "languageOfInstruction": "Language of instruction varies by state, school board and institution; English and regional languages are used",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-curriculum-framework-and-major-school-board-sources-identified; state-board-and-subject-sequence-review-pending"
       }
     }
   },
@@ -4515,40 +4515,40 @@
     "country": "Malaysia",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of Education Malaysia (Kementerian Pendidikan Malaysia), Curriculum Development Division; KSSM uses Dokumen Standard Kurikulum dan Pentaksiran (DSKP)",
+        "officialSyllabusUrl": "https://www.moe.gov.my/",
+        "examBoard": "Lembaga Peperiksaan Malaysia (Malaysian Examinations Syndicate), Ministry of Education; SPM assessment",
+        "languageOfInstruction": "Bahasa Melayu is the national language; language of instruction varies by school type and programme, with English also used in specified subjects and school contexts",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-kssm-curriculum-and-spm-assessment-framework-identified; current-dskp-subject-sequence-review-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of Education Malaysia (Kementerian Pendidikan Malaysia), Curriculum Development Division; KSSM uses Dokumen Standard Kurikulum dan Pentaksiran (DSKP)",
+        "officialSyllabusUrl": "https://www.moe.gov.my/",
+        "examBoard": "Lembaga Peperiksaan Malaysia (Malaysian Examinations Syndicate), Ministry of Education; SPM assessment",
+        "languageOfInstruction": "Bahasa Melayu is the national language; language of instruction varies by school type and programme, with English also used in specified subjects and school contexts",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-kssm-curriculum-and-spm-assessment-framework-identified; current-dskp-subject-sequence-review-pending"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of Education Malaysia (Kementerian Pendidikan Malaysia), Curriculum Development Division; KSSM uses Dokumen Standard Kurikulum dan Pentaksiran (DSKP)",
+        "officialSyllabusUrl": "https://www.moe.gov.my/",
+        "examBoard": "Lembaga Peperiksaan Malaysia (Malaysian Examinations Syndicate), Ministry of Education; SPM assessment",
+        "languageOfInstruction": "Bahasa Melayu is the national language; language of instruction varies by school type and programme, with English also used in specified subjects and school contexts",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-kssm-curriculum-and-spm-assessment-framework-identified; current-dskp-subject-sequence-review-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of Education Malaysia (Kementerian Pendidikan Malaysia), Curriculum Development Division; KSSM uses Dokumen Standard Kurikulum dan Pentaksiran (DSKP)",
+        "officialSyllabusUrl": "https://www.moe.gov.my/",
+        "examBoard": "Lembaga Peperiksaan Malaysia (Malaysian Examinations Syndicate), Ministry of Education; SPM assessment",
+        "languageOfInstruction": "Bahasa Melayu is the national language; language of instruction varies by school type and programme, with English also used in specified subjects and school contexts",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-kssm-curriculum-and-spm-assessment-framework-identified; current-dskp-subject-sequence-review-pending"
       }
     }
   },
@@ -5663,40 +5663,40 @@
     "country": "Pakistan",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "National Curriculum Council (NCC), Ministry of Federal Education and Professional Training; provincial and regional authorities adapt and implement curricula within their jurisdictions",
+        "officialSyllabusUrl": "https://www.ncc.gov.pk/",
+        "examBoard": "Provincial and regional Boards of Intermediate and Secondary Education (BISE) and other competent examination authorities; board-specific syllabuses apply",
+        "languageOfInstruction": "Language of instruction varies by province, school system and institution; English and Urdu are widely used, alongside provincial languages",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-curriculum-coordination-and-provincial-implementation-framework-identified; board-specific-subject-sequence-review-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "National Curriculum Council (NCC), Ministry of Federal Education and Professional Training; provincial and regional authorities adapt and implement curricula within their jurisdictions",
+        "officialSyllabusUrl": "https://www.ncc.gov.pk/",
+        "examBoard": "Provincial and regional Boards of Intermediate and Secondary Education (BISE) and other competent examination authorities; board-specific syllabuses apply",
+        "languageOfInstruction": "Language of instruction varies by province, school system and institution; English and Urdu are widely used, alongside provincial languages",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-curriculum-coordination-and-provincial-implementation-framework-identified; board-specific-subject-sequence-review-pending"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "National Curriculum Council (NCC), Ministry of Federal Education and Professional Training; provincial and regional authorities adapt and implement curricula within their jurisdictions",
+        "officialSyllabusUrl": "https://www.ncc.gov.pk/",
+        "examBoard": "Provincial and regional Boards of Intermediate and Secondary Education (BISE) and other competent examination authorities; board-specific syllabuses apply",
+        "languageOfInstruction": "Language of instruction varies by province, school system and institution; English and Urdu are widely used, alongside provincial languages",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-curriculum-coordination-and-provincial-implementation-framework-identified; board-specific-subject-sequence-review-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "National Curriculum Council (NCC), Ministry of Federal Education and Professional Training; provincial and regional authorities adapt and implement curricula within their jurisdictions",
+        "officialSyllabusUrl": "https://www.ncc.gov.pk/",
+        "examBoard": "Provincial and regional Boards of Intermediate and Secondary Education (BISE) and other competent examination authorities; board-specific syllabuses apply",
+        "languageOfInstruction": "Language of instruction varies by province, school system and institution; English and Urdu are widely used, alongside provincial languages",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-curriculum-coordination-and-provincial-implementation-framework-identified; board-specific-subject-sequence-review-pending"
       }
     }
   },
@@ -5950,40 +5950,40 @@
     "country": "Philippines",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Department of Education (DepEd), Republic of the Philippines",
+        "officialSyllabusUrl": "https://www.deped.gov.ph/",
+        "examBoard": "Department of Education (DepEd) administers national basic-education assessment and curriculum policy; senior high school subject offerings and assessment rules depend on the applicable curriculum and school implementation",
+        "languageOfInstruction": "Filipino and English are used as official languages of instruction; language use also depends on grade, subject, school and applicable multilingual education policy",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-basic-education-curriculum-authority-identified; strengthened-senior-high-school-2026-27-subject-sequence-review-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Department of Education (DepEd), Republic of the Philippines",
+        "officialSyllabusUrl": "https://www.deped.gov.ph/",
+        "examBoard": "Department of Education (DepEd) administers national basic-education assessment and curriculum policy; senior high school subject offerings and assessment rules depend on the applicable curriculum and school implementation",
+        "languageOfInstruction": "Filipino and English are used as official languages of instruction; language use also depends on grade, subject, school and applicable multilingual education policy",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-basic-education-curriculum-authority-identified; strengthened-senior-high-school-2026-27-subject-sequence-review-pending"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Department of Education (DepEd), Republic of the Philippines",
+        "officialSyllabusUrl": "https://www.deped.gov.ph/",
+        "examBoard": "Department of Education (DepEd) administers national basic-education assessment and curriculum policy; senior high school subject offerings and assessment rules depend on the applicable curriculum and school implementation",
+        "languageOfInstruction": "Filipino and English are used as official languages of instruction; language use also depends on grade, subject, school and applicable multilingual education policy",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-basic-education-curriculum-authority-identified; strengthened-senior-high-school-2026-27-subject-sequence-review-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Department of Education (DepEd), Republic of the Philippines",
+        "officialSyllabusUrl": "https://www.deped.gov.ph/",
+        "examBoard": "Department of Education (DepEd) administers national basic-education assessment and curriculum policy; senior high school subject offerings and assessment rules depend on the applicable curriculum and school implementation",
+        "languageOfInstruction": "Filipino and English are used as official languages of instruction; language use also depends on grade, subject, school and applicable multilingual education policy",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "national-basic-education-curriculum-authority-identified; strengthened-senior-high-school-2026-27-subject-sequence-review-pending"
       }
     }
   },
@@ -6688,40 +6688,40 @@
     "country": "Singapore",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of Education (MOE), Singapore",
+        "officialSyllabusUrl": "https://www.moe.gov.sg/education-in-sg/our-programmes",
+        "examBoard": "Singapore Examinations and Assessment Board (SEAB), MOE and Cambridge International Education jointly examine the 2026 GCE O-Level; 2027 Secondary Education Certificate (SEC) transition applies",
+        "languageOfInstruction": "English is the main language of instruction; Mother Tongue Languages are also part of the curriculum",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "moe-curriculum-and-seab-examination-framework-identified; current-2026-o-level-and-2027-sec-subject-sequence-review-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of Education (MOE), Singapore",
+        "officialSyllabusUrl": "https://www.moe.gov.sg/education-in-sg/our-programmes",
+        "examBoard": "Singapore Examinations and Assessment Board (SEAB), MOE and Cambridge International Education jointly examine the 2026 GCE O-Level; 2027 Secondary Education Certificate (SEC) transition applies",
+        "languageOfInstruction": "English is the main language of instruction; Mother Tongue Languages are also part of the curriculum",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "moe-curriculum-and-seab-examination-framework-identified; current-2026-o-level-and-2027-sec-subject-sequence-review-pending"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of Education (MOE), Singapore",
+        "officialSyllabusUrl": "https://www.moe.gov.sg/education-in-sg/our-programmes",
+        "examBoard": "Singapore Examinations and Assessment Board (SEAB), MOE and Cambridge International Education jointly examine the 2026 GCE O-Level; 2027 Secondary Education Certificate (SEC) transition applies",
+        "languageOfInstruction": "English is the main language of instruction; Mother Tongue Languages are also part of the curriculum",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "moe-curriculum-and-seab-examination-framework-identified; current-2026-o-level-and-2027-sec-subject-sequence-review-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "Ministry of Education (MOE), Singapore",
+        "officialSyllabusUrl": "https://www.moe.gov.sg/education-in-sg/our-programmes",
+        "examBoard": "Singapore Examinations and Assessment Board (SEAB), MOE and Cambridge International Education jointly examine the 2026 GCE O-Level; 2027 Secondary Education Certificate (SEC) transition applies",
+        "languageOfInstruction": "English is the main language of instruction; Mother Tongue Languages are also part of the curriculum",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "moe-curriculum-and-seab-examination-framework-identified; current-2026-o-level-and-2027-sec-subject-sequence-review-pending"
       }
     }
   },
