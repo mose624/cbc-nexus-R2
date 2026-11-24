@@ -2998,40 +2998,40 @@
     "country": "Ghana",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "National Council for Curriculum and Assessment (NaCCA), Ghana",
+        "officialSyllabusUrl": "https://nacca.gov.gh/",
+        "examBoard": "West African Examinations Council (WAEC), Ghana National Office",
+        "languageOfInstruction": "English (secondary education; confirm school-specific language policy)",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-authority-identified; subject-sequence-and-current-syllabus-document-review-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "National Council for Curriculum and Assessment (NaCCA), Ghana",
+        "officialSyllabusUrl": "https://nacca.gov.gh/",
+        "examBoard": "West African Examinations Council (WAEC), Ghana National Office",
+        "languageOfInstruction": "English (secondary education; confirm school-specific language policy)",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-authority-identified; subject-sequence-and-current-syllabus-document-review-pending"
       },
       "Physics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "National Council for Curriculum and Assessment (NaCCA), Ghana",
+        "officialSyllabusUrl": "https://nacca.gov.gh/",
+        "examBoard": "West African Examinations Council (WAEC), Ghana National Office",
+        "languageOfInstruction": "English (secondary education; confirm school-specific language policy)",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-authority-identified; subject-sequence-and-current-syllabus-document-review-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
-        "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "officialAuthority": "National Council for Curriculum and Assessment (NaCCA), Ghana",
+        "officialSyllabusUrl": "https://nacca.gov.gh/",
+        "examBoard": "West African Examinations Council (WAEC), Ghana National Office",
+        "languageOfInstruction": "English (secondary education; confirm school-specific language policy)",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "official-authority-identified; subject-sequence-and-current-syllabus-document-review-pending"
       }
     }
   },
