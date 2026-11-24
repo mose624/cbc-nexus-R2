@@ -4474,40 +4474,48 @@
     "country": "Malawi",
     "subjects": {
       "Biology": {
-        "officialAuthority": null,
+        "officialAuthority": "Malawi Institute of Education (MIE), responsible for curriculum and syllabus development under the national education framework; Ministry of Education Directorate of Secondary Education oversees secondary education",
         "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "curriculumFrameworkUrl": "https://mie.edu.mw/download/curriculum-and-assessment-framework-for-schools-and-colleges-in-malawi-july-2025/",
+        "currentCurriculumNoticeUrl": "https://mie.edu.mw/download/public-notice_clarification-on-the-current-school-curriculum-and-approved-learning-materials/",
+        "examBoard": "Malawi National Examinations Board (MANEB); Junior Certificate of Education (JCE) and Malawi School Certificate of Education (MSCE)",
+        "languageOfInstruction": "English (Education Act, Chapter 30:01, section 78); verify any current policy-specific exceptions against the latest Ministry and MIE guidance",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "MIE-2025-Curriculum-and-Assessment-Framework-and-2026-current-curriculum-clarification-notice-identified; subject-specific-current-syllabus-and-scope-sequence-extraction-pending"
       },
       "Chemistry": {
-        "officialAuthority": null,
+        "officialAuthority": "Malawi Institute of Education (MIE), responsible for curriculum and syllabus development under the national education framework; Ministry of Education Directorate of Secondary Education oversees secondary education",
         "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "curriculumFrameworkUrl": "https://mie.edu.mw/download/curriculum-and-assessment-framework-for-schools-and-colleges-in-malawi-july-2025/",
+        "currentCurriculumNoticeUrl": "https://mie.edu.mw/download/public-notice_clarification-on-the-current-school-curriculum-and-approved-learning-materials/",
+        "examBoard": "Malawi National Examinations Board (MANEB); Junior Certificate of Education (JCE) and Malawi School Certificate of Education (MSCE)",
+        "languageOfInstruction": "English (Education Act, Chapter 30:01, section 78); verify any current policy-specific exceptions against the latest Ministry and MIE guidance",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "MIE-2025-Curriculum-and-Assessment-Framework-and-2026-current-curriculum-clarification-notice-identified; subject-specific-current-syllabus-and-scope-sequence-extraction-pending"
       },
       "Physics": {
-        "officialAuthority": null,
+        "officialAuthority": "Malawi Institute of Education (MIE), responsible for curriculum and syllabus development under the national education framework; Ministry of Education Directorate of Secondary Education oversees secondary education",
         "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "curriculumFrameworkUrl": "https://mie.edu.mw/download/curriculum-and-assessment-framework-for-schools-and-colleges-in-malawi-july-2025/",
+        "currentCurriculumNoticeUrl": "https://mie.edu.mw/download/public-notice_clarification-on-the-current-school-curriculum-and-approved-learning-materials/",
+        "examBoard": "Malawi National Examinations Board (MANEB); Junior Certificate of Education (JCE) and Malawi School Certificate of Education (MSCE)",
+        "languageOfInstruction": "English (Education Act, Chapter 30:01, section 78); verify any current policy-specific exceptions against the latest Ministry and MIE guidance",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "MIE-2025-Curriculum-and-Assessment-Framework-and-2026-current-curriculum-clarification-notice-identified; subject-specific-current-syllabus-and-scope-sequence-extraction-pending"
       },
       "Mathematics": {
-        "officialAuthority": null,
+        "officialAuthority": "Malawi Institute of Education (MIE), responsible for curriculum and syllabus development under the national education framework; Ministry of Education Directorate of Secondary Education oversees secondary education",
         "officialSyllabusUrl": null,
-        "examBoard": null,
-        "languageOfInstruction": null,
+        "curriculumFrameworkUrl": "https://mie.edu.mw/download/curriculum-and-assessment-framework-for-schools-and-colleges-in-malawi-july-2025/",
+        "currentCurriculumNoticeUrl": "https://mie.edu.mw/download/public-notice_clarification-on-the-current-school-curriculum-and-approved-learning-materials/",
+        "examBoard": "Malawi National Examinations Board (MANEB); Junior Certificate of Education (JCE) and Malawi School Certificate of Education (MSCE)",
+        "languageOfInstruction": "English (Education Act, Chapter 30:01, section 78); verify any current policy-specific exceptions against the latest Ministry and MIE guidance",
         "chapterCount": null,
         "chapters": [],
-        "status": "curriculum-mapping-required"
+        "status": "MIE-2025-Curriculum-and-Assessment-Framework-and-2026-current-curriculum-clarification-notice-identified; subject-specific-current-syllabus-and-scope-sequence-extraction-pending"
       }
     }
   },
