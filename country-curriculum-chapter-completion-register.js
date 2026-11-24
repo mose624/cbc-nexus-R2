@@ -4505,6 +4505,26 @@
       "Chemistry": {
         "officialAuthority": "Malawi Institute of Education (MIE), responsible for curriculum and syllabus development under the national education framework; Ministry of Education Directorate of Secondary Education oversees secondary education",
         "officialSyllabusUrl": null,
+        "historicalSyllabusUrl": "https://edu.wtec1.com/pdfs/Chemistry%20syllabus%20Forms%203-4%20-.pdf",
+        "historicalSyllabusYear": 2013,
+        "historicalSyllabusPublisher": "Malawi Institute of Education; Ministry of Education, Science and Technology",
+        "historicalScopeAndSequence": {
+          "sourceType": "2013-MIE-Chemistry-scope-and-sequence-chart-Forms-1-to-4; historical-reference-only",
+          "coreElements": [
+            "Analytical skills in Chemistry: laboratory safety, measurement, apparatus, scientific investigations and experimental techniques",
+            "Chemical composition of matter: particulate matter, elements, compounds, mixtures, solutions, separation methods and chemical bonding",
+            "Inorganic chemistry: atomic structure, electron configuration, isotopes, periodic table, group trends, nitrogen, sulphur and phosphorus",
+            "Chemical reactions: physical and chemical changes, equations, mole concept, stoichiometry, reacting masses, concentration, titration, yield, rates and equilibrium",
+            "Heats of reactions: endothermic and exothermic reactions, energy profiles and bond energies",
+            "Acids and bases: indicators, pH, neutralisation, Brønsted-Lowry theory, strength and applications",
+            "Oxidation and reduction: oxidation states, half-equations, redox agents, displacement, activity series and corrosion",
+            "Electrolysis: electrolytic processes, copper purification and electroplating",
+            "Organic chemistry: hydrocarbons, alkanols, alkanals, alkanones, alkanoic acids, isomerism and polymers",
+            "Environmental chemistry: chemical impacts, waste and environmental applications"
+          ],
+          "scopeAndSequencePages": "Printed pages 1-11; teaching syllabus for Forms 3-4 begins on printed page 12",
+          "status": "2013-MIE-scope-and-sequence-chart-reviewed; historical-not-current-2026-syllabus; core-elements-not-textbook-chapter-titles"
+        },
         "curriculumFrameworkUrl": "https://mie.edu.mw/download/curriculum-and-assessment-framework-for-schools-and-colleges-in-malawi-july-2025/",
         "currentCurriculumNoticeUrl": "https://mie.edu.mw/download/public-notice_clarification-on-the-current-school-curriculum-and-approved-learning-materials/",
         "curriculumReviewNoticeUrl": "https://mie.edu.mw/educational-experts-validates-draft-lower-secondary-school-syllabuses-at-malawi-institute-of-education/",
@@ -4517,6 +4537,22 @@
       "Physics": {
         "officialAuthority": "Malawi Institute of Education (MIE), responsible for curriculum and syllabus development under the national education framework; Ministry of Education Directorate of Secondary Education oversees secondary education",
         "officialSyllabusUrl": null,
+        "historicalSyllabusUrl": "https://edu.wtec1.com/pdfs/Physics%20syllabus%20Forms%203-4.pdf",
+        "historicalSyllabusYear": 2013,
+        "historicalSyllabusPublisher": "Malawi Institute of Education; Ministry of Education, Science and Technology",
+        "historicalScopeAndSequence": {
+          "sourceType": "2013-MIE-Physics-scope-and-sequence-chart-Forms-1-to-4; historical-reference-only",
+          "coreElements": [
+            "Scientific investigations and skills: laboratory safety, SI quantities, measurement, experimental design, variables, data, graphs and scientific reporting",
+            "Properties of matter: particulate nature, states and changes of state, density, kinetic theory, thermal expansion, heat capacity, heat transfer, thermometry, pressure, fluids and gas laws",
+            "Mechanics: force, mass and weight, friction, work, energy, power, machines, scalar and vector quantities, linear motion, Newton's laws, momentum, moments, circular motion and elasticity",
+            "Electricity and magnetism: electric charge, current, circuits, electrical energy, magnetic fields, electromagnetism and applications",
+            "Oscillation and waves: oscillations, wave properties, sound and light-related wave applications",
+            "Nuclear physics: atomic structure, radioactivity, nuclear processes, uses and safe handling of radioactive materials"
+          ],
+          "scopeAndSequencePages": "Printed pages 1-22; teaching syllabus for Forms 3-4 begins on printed page 23",
+          "status": "2013-MIE-scope-and-sequence-chart-reviewed; historical-not-current-2026-syllabus; core-elements-not-textbook-chapter-titles"
+        },
         "curriculumFrameworkUrl": "https://mie.edu.mw/download/curriculum-and-assessment-framework-for-schools-and-colleges-in-malawi-july-2025/",
         "currentCurriculumNoticeUrl": "https://mie.edu.mw/download/public-notice_clarification-on-the-current-school-curriculum-and-approved-learning-materials/",
         "curriculumReviewNoticeUrl": "https://mie.edu.mw/educational-experts-validates-draft-lower-secondary-school-syllabuses-at-malawi-institute-of-education/",
@@ -4529,6 +4565,54 @@
       "Mathematics": {
         "officialAuthority": "Malawi Institute of Education (MIE), responsible for curriculum and syllabus development under the national education framework; Ministry of Education Directorate of Secondary Education oversees secondary education",
         "officialSyllabusUrl": null,
+        "historicalSyllabusUrl": "https://edu.wtec1.com/pdfs/Maths%20syllabus%20Forms%203-4.pdf",
+        "historicalSyllabusYear": 2013,
+        "historicalSyllabusPublisher": "Malawi Institute of Education; Ministry of Education, Science and Technology",
+        "historicalScopeAndSequence": {
+          "sourceType": "2013-MIE-Mathematics-scope-and-sequence-chart-Forms-1-to-4; historical-reference-only",
+          "forms": [
+            {
+              "form": "Form 1",
+              "topics": [
+                "Number systems, algebraic expressions, simple algebraic fractions, approximations and estimations, HCF and LCM, factorisation, commercial arithmetic, linear equations and number patterns",
+                "Sets and transformations",
+                "Lines and angles, triangles and polygons, geometric constructions",
+                "Coordinate geometry",
+                "Statistics"
+              ]
+            },
+            {
+              "form": "Form 2",
+              "topics": [
+                "Number patterns, algebraic expressions, simultaneous linear equations, proportion, mixtures, indices, standard form, logarithms and quadratic equations",
+                "Pythagoras theorem, congruent triangles, quadrilaterals, similar triangles, mensuration and geometric construction",
+                "Graphs of simultaneous equations, inequalities and distance-time graphs",
+                "Probability"
+              ]
+            },
+            {
+              "form": "Form 3",
+              "topics": [
+                "Quadratic equations, irrational numbers, algebraic fractions with linear or quadratic denominators, changing the subject of formulae, exponential and logarithmic equations",
+                "Sets and transformations",
+                "Circle geometry: chord and angle properties, trigonometry and similarity",
+                "Mapping and functions, coordinate geometry, variations, inequalities and graphs of quadratic functions",
+                "Statistics"
+              ]
+            },
+            {
+              "form": "Form 4",
+              "topics": [
+                "Matrices, simultaneous linear and quadratic equations, progressions and polynomials",
+                "Vectors",
+                "Tangents to circles, trigonometry and mensuration",
+                "Travel graphs, linear programming and cubic graphs",
+                "Statistics and probability"
+              ]
+            }
+          ],
+          "status": "2013-MIE-Forms-1-to-4-scope-and-sequence-chart-extracted; historical-not-current-2026-syllabus; topic-groups-not-textbook-chapter-titles"
+        },
         "curriculumFrameworkUrl": "https://mie.edu.mw/download/curriculum-and-assessment-framework-for-schools-and-colleges-in-malawi-july-2025/",
         "currentCurriculumNoticeUrl": "https://mie.edu.mw/download/public-notice_clarification-on-the-current-school-curriculum-and-approved-learning-materials/",
         "curriculumReviewNoticeUrl": "https://mie.edu.mw/educational-experts-validates-draft-lower-secondary-school-syllabuses-at-malawi-institute-of-education/",
