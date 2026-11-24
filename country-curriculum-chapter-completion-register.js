@@ -4532,7 +4532,7 @@
         "languageOfInstruction": "English (Education Act, Chapter 30:01, section 78); verify any current policy-specific exceptions against the latest Ministry and MIE guidance",
         "chapterCount": null,
         "chapters": [],
-        "status": "MIE-March-2026-lower-secondary-syllabus-validation-process-linked; July-2026-current-curriculum-notice-linked; current-subject-specific-revised-syllabus-and-sequence-not-yet-verified"
+        "status": "2013-MIE-Chemistry-historical-scope-and-sequence-added; 2025-framework-and-2026-reform-notice-linked; current-revised-subject-syllabus-not-yet-verified"
       },
       "Physics": {
         "officialAuthority": "Malawi Institute of Education (MIE), responsible for curriculum and syllabus development under the national education framework; Ministry of Education Directorate of Secondary Education oversees secondary education",
@@ -4560,7 +4560,7 @@
         "languageOfInstruction": "English (Education Act, Chapter 30:01, section 78); verify any current policy-specific exceptions against the latest Ministry and MIE guidance",
         "chapterCount": null,
         "chapters": [],
-        "status": "MIE-March-2026-lower-secondary-syllabus-validation-process-linked; July-2026-current-curriculum-notice-linked; current-subject-specific-revised-syllabus-and-sequence-not-yet-verified"
+        "status": "2013-MIE-Physics-historical-scope-and-sequence-added; 2025-framework-and-2026-reform-notice-linked; current-revised-subject-syllabus-not-yet-verified"
       },
       "Mathematics": {
         "officialAuthority": "Malawi Institute of Education (MIE), responsible for curriculum and syllabus development under the national education framework; Ministry of Education Directorate of Secondary Education oversees secondary education",
@@ -4620,7 +4620,7 @@
         "languageOfInstruction": "English (Education Act, Chapter 30:01, section 78); verify any current policy-specific exceptions against the latest Ministry and MIE guidance",
         "chapterCount": null,
         "chapters": [],
-        "status": "MIE-March-2026-lower-secondary-syllabus-validation-process-linked; July-2026-current-curriculum-notice-linked; current-subject-specific-revised-syllabus-and-sequence-not-yet-verified"
+        "status": "2013-MIE-Mathematics-historical-scope-and-sequence-added; 2025-framework-and-2026-reform-notice-linked; current-revised-subject-syllabus-not-yet-verified"
       }
     }
   },
