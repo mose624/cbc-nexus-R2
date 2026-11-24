@@ -7345,12 +7345,12 @@
     "subjects": {
       "Biology": {
         "officialAuthority": "Tanzania Institute of Education (TIE), Ministry of Education, Science and Technology",
-        "officialSyllabusUrl": "https://www.tie.go.tz/uploads/documents/sw-1727192422-BIOLOGY%20SYLLABUS%20ORDINARY%20SECONDARY%20FINAL%20.pdf",
+        "officialSyllabusUrl": "https://www.tie.go.tz/uploads/files/BIOLOGY%20FOR%20ORDINARY%20SECONDARY%20EDUCATION.pdf",
         "examBoard": "National Examinations Council of Tanzania (NECTA)",
         "languageOfInstruction": "Kiswahili and English use varies by education level and school context; verify the language policy for the specific programme",
         "chapterCount": null,
         "chapters": [],
-        "status": "official-tie-2023-form-i-iv-subject-syllabus-linked-and-reviewed; detailed-specific-competence-to-chapter-mapping-pending",
+        "status": "official-tie-2023-form-i-iv-syllabus-linked; detailed-competence-and-content-sequence-extraction-pending",
         "syllabusLevel": "Ordinary Secondary Education — Form I to Form IV (TIE 2023 syllabus)"
       },
       "Chemistry": {
@@ -7360,27 +7360,27 @@
         "languageOfInstruction": "Kiswahili and English use varies by education level and school context; verify the language policy for the specific programme",
         "chapterCount": null,
         "chapters": [],
-        "status": "official-tie-2023-form-i-iv-subject-syllabus-linked-and-reviewed; detailed-specific-competence-to-chapter-mapping-pending",
+        "status": "official-tie-2023-form-i-iv-syllabus-linked; detailed-competence-and-content-sequence-extraction-pending",
         "syllabusLevel": "Ordinary Secondary Education — Form I to Form IV (TIE 2023 syllabus)"
       },
       "Physics": {
         "officialAuthority": "Tanzania Institute of Education (TIE), Ministry of Education, Science and Technology",
-        "officialSyllabusUrl": "https://www.tie.go.tz/uploads/documents/sw-1727257838-PHYSICS%20FOR%20ORDINARY%20SECONDARY%20EDUCATION%20FINAL.pdf",
+        "officialSyllabusUrl": "https://www.tie.go.tz/uploads/files/PHYSICS%20FOR%20ORDINARY%20SECONDARY%20EDUCATION%20FINAL.pdf",
         "examBoard": "National Examinations Council of Tanzania (NECTA)",
         "languageOfInstruction": "Kiswahili and English use varies by education level and school context; verify the language policy for the specific programme",
         "chapterCount": null,
         "chapters": [],
-        "status": "official-tie-2023-form-i-iv-subject-syllabus-linked-and-reviewed; detailed-specific-competence-to-chapter-mapping-pending",
+        "status": "official-tie-2023-form-i-iv-syllabus-linked; detailed-competence-and-content-sequence-extraction-pending",
         "syllabusLevel": "Ordinary Secondary Education — Form I to Form IV (TIE 2023 syllabus)"
       },
       "Mathematics": {
         "officialAuthority": "Tanzania Institute of Education (TIE), Ministry of Education, Science and Technology",
-        "officialSyllabusUrl": "https://www.tie.go.tz/uploads/documents/sw-1727256902-MATHEMATICS%20SYLLABUS%20-%20O%20level%20final.pdf",
+        "officialSyllabusUrl": "https://www.tie.go.tz/uploads/files/MATHEMATICS%20SYLLABUS%20-%20O%20level%20final.pdf",
         "examBoard": "National Examinations Council of Tanzania (NECTA)",
         "languageOfInstruction": "Kiswahili and English use varies by education level and school context; verify the language policy for the specific programme",
         "chapterCount": null,
         "chapters": [],
-        "status": "official-tie-2023-form-i-iv-subject-syllabus-linked-and-reviewed; detailed-specific-competence-to-chapter-mapping-pending",
+        "status": "official-tie-2023-form-i-iv-syllabus-linked; detailed-competence-and-content-sequence-extraction-pending",
         "syllabusLevel": "Ordinary Secondary Education — Form I to Form IV (TIE 2023 syllabus)"
       }
     }
@@ -7851,30 +7851,693 @@
       },
       "Chemistry": {
         "officialAuthority": "National Curriculum Development Centre (NCDC), Ministry of Education and Sports, Uganda",
-        "officialSyllabusUrl": "https://ncdc.go.ug/",
+        "officialSyllabusUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/CHEMISTRY.pdf",
         "examBoard": "Uganda National Examinations Board (UNEB)",
         "languageOfInstruction": "English is the principal language of instruction in secondary education; confirm the applicable school and programme policy",
-        "chapterCount": null,
-        "chapters": [],
-        "status": "official-curriculum-authority-and-examination-body-identified; subject-and-level-specific-syllabus-review-pending"
+        "chapterCount": 13,
+        "chapters": [
+          {
+            "id": "chemistry-uganda-2025-topic1",
+            "title": "Moles and Equations",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 1,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/CHEMISTRY.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "chemistry-uganda-2025-topic2",
+            "title": "Atomic and Electronic Structure",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 2,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/CHEMISTRY.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "chemistry-uganda-2025-topic3",
+            "title": "Bonding and Structure",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 3,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/CHEMISTRY.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "chemistry-uganda-2025-topic4",
+            "title": "Periodicity 1",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 4,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/CHEMISTRY.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "chemistry-uganda-2025-topic5",
+            "title": "Thermochemistry",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 5,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/CHEMISTRY.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "chemistry-uganda-2025-topic6",
+            "title": "Organic Chemistry I",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 6,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/CHEMISTRY.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "chemistry-uganda-2025-topic7",
+            "title": "Equilibria I",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 7,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/CHEMISTRY.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "chemistry-uganda-2025-topic8",
+            "title": "Equilibria II",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 8,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/CHEMISTRY.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "chemistry-uganda-2025-topic9",
+            "title": "Organic Chemistry II",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 9,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/CHEMISTRY.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "chemistry-uganda-2025-topic10",
+            "title": "Electrochemistry",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 10,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/CHEMISTRY.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "chemistry-uganda-2025-topic11",
+            "title": "Periodicity II",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 11,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/CHEMISTRY.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "chemistry-uganda-2025-topic12",
+            "title": "Organic Chemistry III",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 12,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/CHEMISTRY.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "chemistry-uganda-2025-topic13",
+            "title": "Reaction Kinetics",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 13,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/CHEMISTRY.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          }
+        ],
+        "status": "official-2025-ncdc-chemistry-syllabus-reviewed; 13-ordered-topics-mapped-for-senior-five-and-six",
+        "syllabusLevel": "Advanced Secondary Curriculum — Senior Five and Senior Six (2025)"
       },
       "Physics": {
         "officialAuthority": "National Curriculum Development Centre (NCDC), Ministry of Education and Sports, Uganda",
-        "officialSyllabusUrl": "https://ncdc.go.ug/",
+        "officialSyllabusUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
         "examBoard": "Uganda National Examinations Board (UNEB)",
         "languageOfInstruction": "English is the principal language of instruction in secondary education; confirm the applicable school and programme policy",
-        "chapterCount": null,
-        "chapters": [],
-        "status": "official-curriculum-authority-and-examination-body-identified; subject-and-level-specific-syllabus-review-pending"
+        "chapterCount": 33,
+        "chapters": [
+          {
+            "id": "physics-uganda-2025-topic1",
+            "title": "Measurement and Dimensions of Physical Quantities",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 1,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic2",
+            "title": "Statics",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 2,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic3",
+            "title": "Linear Motion",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 3,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic4",
+            "title": "Motion Under Gravity",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 4,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic5",
+            "title": "Work, Energy and Power",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 5,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic6",
+            "title": "Solid Friction",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 6,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic7",
+            "title": "Fluid Mechanics",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 7,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic8",
+            "title": "Mechanical Properties of Matter",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 8,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic9",
+            "title": "Thermometry",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 9,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic10",
+            "title": "Heat Quantities",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 10,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic11",
+            "title": "Transfer of Heat",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 11,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic12",
+            "title": "Behaviour of Gases",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 12,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic13",
+            "title": "Thermodynamics",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 13,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic14",
+            "title": "Reflection of Light",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 14,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic15",
+            "title": "Refraction of Light",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 15,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic16",
+            "title": "Optical Instruments",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 16,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic17",
+            "title": "Electrostatics",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 17,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic18",
+            "title": "Capacitors",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 18,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic19",
+            "title": "Digital Electronics",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 19,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic20",
+            "title": "Circular Motion",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 20,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic21",
+            "title": "Simple Harmonic Motion",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 21,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic22",
+            "title": "Gravitation",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 22,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic23",
+            "title": "Progressive Waves",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 23,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic24",
+            "title": "Stationary Waves",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 24,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic25",
+            "title": "Sound Waves",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 25,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic26",
+            "title": "Current Electricity",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 26,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic27",
+            "title": "Magnetism in Matter",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 27,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic28",
+            "title": "Magnetic Effect of an Electric Current",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 28,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic29",
+            "title": "Electromagnetic Induction",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 29,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic30",
+            "title": "A.C. Circuits",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 30,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic31",
+            "title": "Atomic Particles",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 31,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic32",
+            "title": "Quantum Theory",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 32,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "physics-uganda-2025-topic33",
+            "title": "Nuclear Processes",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 33,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/Physics.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          }
+        ],
+        "status": "official-2025-ncdc-physics-syllabus-reviewed; 33-ordered-topics-mapped-for-senior-five-and-six",
+        "syllabusLevel": "Advanced Secondary Curriculum — Senior Five and Senior Six (2025)"
       },
       "Mathematics": {
         "officialAuthority": "National Curriculum Development Centre (NCDC), Ministry of Education and Sports, Uganda",
-        "officialSyllabusUrl": "https://ncdc.go.ug/",
+        "officialSyllabusUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
         "examBoard": "Uganda National Examinations Board (UNEB)",
         "languageOfInstruction": "English is the principal language of instruction in secondary education; confirm the applicable school and programme policy",
-        "chapterCount": null,
-        "chapters": [],
-        "status": "official-curriculum-authority-and-examination-body-identified; subject-and-level-specific-syllabus-review-pending"
+        "chapterCount": 27,
+        "chapters": [
+          {
+            "id": "mathematics-uganda-2025-topic1",
+            "title": "Numerical Concepts",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 1,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic2",
+            "title": "Equations and Inequalities",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 2,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic3",
+            "title": "Coordinate Geometry 1",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 3,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic4",
+            "title": "Partial Fractions",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 4,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic5",
+            "title": "Trigonometry",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 5,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic6",
+            "title": "Descriptive Statistics",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 6,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic7",
+            "title": "Scatter Diagrams and Correlations",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 7,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic8",
+            "title": "Dynamics 1",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 8,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic9",
+            "title": "Probability Theory",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 9,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic10",
+            "title": "Differentiation 1",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 10,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic11",
+            "title": "Integration 1",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 11,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic12",
+            "title": "Permutations and Combinations",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 12,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic13",
+            "title": "Series",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 13,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic14",
+            "title": "Random Variables",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 14,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic15",
+            "title": "Probability Distributions",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 15,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic16",
+            "title": "Error Analysis",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 16,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic17",
+            "title": "Vectors",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 17,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic18",
+            "title": "Differentiation 2",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 18,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic19",
+            "title": "Integration 2",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 19,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic20",
+            "title": "Dynamics 2",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 20,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic21",
+            "title": "Trapezium Rule",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 21,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic22",
+            "title": "Sampling Distribution",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 22,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic23",
+            "title": "Iterative Methods",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 23,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic24",
+            "title": "Coordinate Geometry 2",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 24,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic25",
+            "title": "Complex Numbers",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 25,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic26",
+            "title": "Differential Equations",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 26,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          },
+          {
+            "id": "mathematics-uganda-2025-topic27",
+            "title": "Flow Charts",
+            "level": "Advanced Secondary — Senior Five and Senior Six",
+            "sequence": 27,
+            "sourceUrl": "https://ncdc.go.ug/wp-content/uploads/2025/03/PRINCIPAL-MATHS.pdf",
+            "sourceType": "official-ncdc-2025-advanced-secondary-syllabus-table-of-contents",
+            "curriculumVerified": true
+          }
+        ],
+        "status": "official-2025-ncdc-principal-mathematics-syllabus-reviewed; 27-ordered-topics-mapped-for-senior-five-and-six",
+        "syllabusLevel": "Advanced Secondary Principal Mathematics — Senior Five and Senior Six (2025)"
       }
     }
   },
