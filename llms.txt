@@ -50,7 +50,11 @@ CBE Nexus is a global education platform serving learners, teachers, parents, sc
 - [University Physics Notes](https://cbenexus.com/university-physics.html) — Physics study resources across mechanics, electricity, waves, thermodynamics and modern physics.
 - [Global Mathematics Learning Hub](https://cbenexus.com/global-mathematics.html) — Mathematics learning pathways and resources from foundational through postgraduate study.
 - [University Economics Notes](https://cbenexus.com/university-economics.html) — Economics resources covering microeconomics, macroeconomics, development, trade, finance and econometrics.
-- [Global University Course Catalogue](https://cbenexus.com/global-university-courses.html) — Broad course guides and illustrative study pathways. Course structures should be checked against each institution's current official catalogue.
+- [Global University Course Catalogue](https://cbenexus.com/global-university-courses.html) — Broad course guides and illustrative study pathways.
+- [Research and Dissertation Resources](https://cbenexus.com/research-dissertation-resources.html) — Core research notes on foundations, literature reviews, research design, sampling, data collection, analysis, ethics and dissertation structure.
+- [Advanced Research and Dissertation Notes](https://cbenexus.com/research-dissertation-advanced-notes.html) — Postgraduate research design, systematic reviews, causal inference, advanced statistics, qualitative analysis, research integrity and thesis defence.
+- [Research Proposal and Dissertation Toolkit](https://cbenexus.com/research-dissertation-toolkit.html) — Practical proposal templates, problem statement examples, questionnaires, interview guides, analysis exercises, ethics checklists, timelines and viva questions.
+- [Research Methods Course](https://cbenexus.com/research-methods.html) — Six-module learning pathway from research foundations through a proposal project. Course structures should be checked against each institution's current official catalogue.
 
 These are shared global resources, not 196 duplicated country libraries. Country education profiles link learners to the existing subject resources. CBE Nexus notes are supplementary learning materials and should not be represented as official university publications or as a substitute for institution-specific syllabuses.
 
