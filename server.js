@@ -2168,15 +2168,19 @@ async function handleApi(req,res,url){
     return true;
   }
   if(req.method==="GET"&&url.pathname==="/api/online-notes"){
-    const id=String(url.searchParams.get("id")||"").trim();
-    if(!id){sendJson(res,400,{ok:false,error:"A note identifier is required."});return true;}
     if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Online notes are temporarily unavailable."});return true;}
     try{
-      const {data,error}=await supabase.from("online_notes").select("id,curriculum,country,level,subject,topic,chapter,title,objectives,content,examples,practical,questions,answers,seo_title,seo_description,seo_keywords,status,updated_at").eq("id",id).eq("status","published").maybeSingle();
+      const id=String(url.searchParams.get("id")||"").trim();
+      if(id){
+        const {data,error}=await supabase.from("online_notes").select("id,curriculum,country,level,subject,topic,chapter,title,objectives,content,examples,practical,questions,answers,seo_title,seo_description,seo_keywords,status,updated_at").eq("id",id).eq("status","published").maybeSingle();
+        if(error)throw error;
+        if(!data){sendJson(res,404,{ok:false,error:"This chapter has not been published or could not be found."});return true;}
+        sendJson(res,200,{ok:true,note:data});return true;
+      }
+      const {data,error}=await supabase.from("online_notes").select("id,curriculum,country,level,subject,topic,chapter,title,seo_description,updated_at").eq("status","published").order("updated_at",{ascending:false}).limit(500);
       if(error)throw error;
-      if(!data){sendJson(res,404,{ok:false,error:"This chapter has not been published or could not be found."});return true;}
-      sendJson(res,200,{ok:true,note:data});
-    }catch(error){console.error("Public online notes lookup error:",error);sendJson(res,500,{ok:false,error:"The requested study notes could not be loaded."});}
+      sendJson(res,200,{ok:true,notes:data||[]});
+    }catch(error){console.error("Public online notes lookup error:",error);sendJson(res,500,{ok:false,error:"The online notes library could not be loaded."});}
     return true;
   }
   if(req.method==="GET"&&url.pathname==="/api/admin/ai-course-notes"){
