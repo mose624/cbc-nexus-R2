@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="index,follow"><meta name="theme-color" content="#0b4f83">
+<title>Online Study Notes | CBE Nexus</title>
+<meta name="description" content="Read structured online study notes, worked examples, practical applications and examination questions across national and international curricula at CBE Nexus.">
+<link rel="canonical" href="https://cbenexus.com/online-notes.html">
+<meta property="og:type" content="article"><meta property="og:site_name" content="CBE Nexus">
+<meta property="og:title" content="Online Study Notes | CBE Nexus">
+<meta property="og:description" content="Comprehensive online subject notes, examples and examination practice.">
+<link rel="stylesheet" href="/styles.min.css">
+<style>
+body{background:#f3f7fb;color:#172033}.note-reader{max-width:980px;margin:38px auto;padding:24px;background:#fff;border-radius:18px;box-shadow:0 8px 28px #0f172a12}.note-meta{color:#526277;font-size:.95rem}.note-reader h1{font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.2}.note-section{border-top:1px solid #e2e8f0;padding-top:18px;margin-top:22px}.note-body{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.8;font-size:1.04rem}.note-loading{padding:40px;text-align:center}.note-reader a{color:#0369a1}.note-back{display:inline-block;margin-bottom:18px}.note-error{color:#b91c1c}
+</style>
+</head>
+<body>
+<main class="note-reader">
+<a class="note-back" href="/">← CBE Nexus home</a>
+<div id="noteReader" class="note-loading" aria-live="polite">Loading online study notes…</div>
+</main>
+<script>
+(function(){
+ const host=document.getElementById("noteReader");
+ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+ const id=new URLSearchParams(location.search).get("id");
+ if(!id){host.innerHTML='<p class="note-error">No note was selected. Return to CBE Nexus and choose a published chapter.</p>';return;}
+ fetch("/api/online-notes?id="+encodeURIComponent(id),{cache:"no-store"}).then(async r=>{const d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||"This note is not available.");return d.note;}).then(n=>{
+   document.title=(n.seo_title||n.title)+" | CBE Nexus";
+   const description=n.seo_description||"Online "+n.subject+" study notes, explanations and examination practice.";
+   let meta=document.querySelector('meta[name="description"]');if(meta)meta.content=description;
+   const section=(title,value)=>value?'<section class="note-section"><h2>'+title+'</h2><div class="note-body">'+esc(value)+'</div></section>':"";
+   host.className="";
+   host.innerHTML='<p class="note-meta">'+esc([n.curriculum,n.country,n.level,n.subject,n.topic,n.chapter].filter(Boolean).join(" · "))+'</p><h1>'+esc(n.title)+'</h1>'+section("Learning objectives",n.objectives)+section("Chapter notes",n.content)+section("Worked examples",n.examples)+section("Practical applications",n.practical)+section("Examination questions",n.questions)+section("Answers and marking guidance",n.answers)+'<p class="note-meta">Published by CBE Nexus · '+esc(n.updated_at?new Date(n.updated_at).toLocaleDateString():"")+'</p>';
+ }).catch(e=>{host.className="note-error";host.textContent=e.message;});
+})();
+</script>
+</body></html>
