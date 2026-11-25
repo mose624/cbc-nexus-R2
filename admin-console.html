@@ -428,6 +428,19 @@
 .global-resources-all-countries{display:block;margin-top:10px;padding:10px;border-radius:8px;background:#e0f2fe;color:#075985!important;text-align:center;font-weight:800;text-decoration:none}
 @media(max-width:760px){.global-resources-country-dropdown{position:static}.global-resources-country-panel{position:absolute;left:8px;right:8px;width:auto}.global-resources-country-list{grid-template-columns:1fr 1fr;max-height:52vh}}
 </style>
+<style id="online-notes-manager-style">
+.online-notes-manager-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,.8fr);gap:18px;margin-top:18px;align-items:start}
+.online-notes-manager-grid .admin-form,.online-notes-list-panel{background:#fff;border:1px solid #dbe5ef;border-radius:16px;padding:18px;min-width:0}
+.online-notes-manager-grid label{display:block;font-weight:700;margin:10px 0}
+.online-notes-manager-grid input,.online-notes-manager-grid select,.online-notes-manager-grid textarea{box-sizing:border-box;width:100%;max-width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:8px}
+.online-notes-manager-grid textarea{resize:vertical;line-height:1.5}
+.online-note-form-actions{display:flex;gap:8px;align-items:end;flex-wrap:wrap;padding-top:24px}
+.online-note-admin-card{border:1px solid #dbe5ef;border-radius:12px;padding:12px;margin:10px 0;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.online-note-admin-card span,.online-note-admin-card small{display:block;color:#526277;margin-top:4px}
+.online-note-actions{display:flex;gap:8px;flex-wrap:wrap;white-space:nowrap}
+.online-note-actions a,.online-note-actions button{border:0;border-radius:7px;padding:8px 10px;background:#e0f2fe;color:#075985;text-decoration:none;cursor:pointer}
+@media(max-width:900px){.online-notes-manager-grid{grid-template-columns:1fr}.online-note-admin-card{align-items:flex-start;flex-direction:column}}
+</style>
 </head>
   <body>
     <a class="cbe-skip-link" href="#main-content">Skip to main content</a>
@@ -1431,6 +1444,7 @@
           <button id="admin-tab-ai-courses" class="admin-module-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-ai-courses" tabindex="-1" data-admin-module="ai-courses">🤖 Free AI Courses</button>
             <button id="admin-tab-scholarships" class="admin-module-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-scholarships" tabindex="-1" data-admin-module="scholarships">🎓 Scholarships & Opportunities</button>
           <button id="admin-tab-prices" class="admin-module-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-prices" tabindex="-1" data-admin-module="prices">Prices</button>
+          <button id="admin-tab-online-notes" class="admin-module-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-online-notes" tabindex="-1" data-admin-module="online-notes">📚 Online Notes Manager</button>
           <button id="admin-tab-ai-notes" class="admin-module-tab ai-academy-notes-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-ai-notes" tabindex="-1" data-admin-module="ai-notes">🤖 AI Academy Notes</button>
           <button id="admin-tab-blog" class="admin-module-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-blog" tabindex="-1" data-admin-module="blog">🎓 Education Hub <span id="adminBlogBadge">0</span></button>
           <button id="admin-tab-school-directory" class="admin-module-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-school-directory" tabindex="-1" data-admin-module="school-directory">🏫 School Directory</button>
@@ -1536,6 +1550,29 @@
               <span id="adminSalesSummary" class="admin-module-summary"></span>
             </div>
             <div id="adminSalesManagement" class="admin-management-list"></div>
+          </div>
+          <div id="admin-panel-online-notes" class="admin-module-panel" role="tabpanel" tabindex="0" aria-labelledby="admin-tab-online-notes" data-admin-module-panel="online-notes">
+            <div class="admin-module-heading"><div><h3>📚 Universal Online Notes Manager</h3><span>Create and publish textbook-style chapters across national and international curricula.</span></div><span id="onlineNotesSummary" class="admin-module-summary">Loading notes…</span></div>
+            <div class="online-notes-manager-grid">
+              <form id="onlineNotesForm" class="admin-form">
+                <input id="onNoteId" type="hidden">
+                <div class="form-row"><label>Curriculum<select id="onCurriculum" required><option>National Curriculum</option><option>Cambridge</option><option>Pearson Edexcel</option><option>International Baccalaureate</option><option>University</option><option>AI Academy</option></select></label><label>Country (national curriculum)<input id="onCountry" placeholder="e.g. Kenya, Ghana, South Africa"></label></div>
+                <div class="form-row"><label>Level / grade<input id="onLevel" required placeholder="e.g. Grade 10, IGCSE, A-Level, Diploma"></label><label>Subject<input id="onSubject" required placeholder="e.g. Biology, Chemistry, History"></label></div>
+                <div class="form-row"><label>Topic<input id="onTopic" placeholder="Unit or topic"></label><label>Chapter<input id="onChapter" placeholder="Chapter number or name"></label></div>
+                <label>Chapter title<input id="onTitle" required placeholder="Clear, descriptive chapter title"></label>
+                <label>Learning objectives<textarea id="onObjectives" rows="3" placeholder="What learners should know and be able to do"></textarea></label>
+                <label>Comprehensive textbook-style notes<textarea id="onContent" rows="14" required placeholder="Detailed explanations, key concepts, definitions, diagrams (describe or use labelled text diagrams), theory and applications"></textarea></label>
+                <label>Worked examples and case studies<textarea id="onExamples" rows="6" placeholder="Step-by-step examples with explanations"></textarea></label>
+                <label>Practical applications / experiments<textarea id="onPractical" rows="5" placeholder="Methods, materials, safety, observations and applications"></textarea></label>
+                <label>Examination and discussion questions<textarea id="onQuestions" rows="6" placeholder="Include a range of question types and marks"></textarea></label>
+                <label>Answers and marking guidance<textarea id="onAnswers" rows="6" placeholder="Model answers, explanations and marking points"></textarea></label>
+                <div class="form-row"><label>SEO title<input id="onSeoTitle" maxlength="70" placeholder="Search-friendly chapter title"></label><label>SEO description<input id="onSeoDescription" maxlength="170" placeholder="Accurate summary for search results"></label></div>
+                <label>SEO keywords<input id="onSeoKeywords" placeholder="Relevant subject, curriculum and topic phrases"></label>
+                <div class="form-row"><label>Publishing status<select id="onStatus"><option value="draft">Draft</option><option value="published">Published</option></select></label><div class="online-note-form-actions"><button type="button" id="onlineNotesPreview" class="secondary-button">Preview</button><button type="button" id="onlineNotesReset" class="secondary-button">Clear form</button><button type="submit" class="primary-button">Save / Publish Chapter</button></div></div>
+                <p id="onlineNotesAdminStatus" role="status" aria-live="polite"></p>
+              </form>
+              <aside class="online-notes-list-panel"><h4>Saved chapters</h4><p class="admin-note">Edit drafts, review published chapters or open the public reader.</p><div id="onlineNotesList"><p>Loading saved notes…</p></div></aside>
+            </div>
           </div>
           <div id="admin-panel-ai-notes" class="admin-module-panel" role="tabpanel" tabindex="0" aria-labelledby="admin-tab-ai-notes" data-admin-module-panel="ai-notes">
   <div class="admin-module-heading"><div><h3>🤖 AI Academy Notes Publisher</h3><span>Create, edit, preview and publish comprehensive notes for any of the 23 AI courses.</span></div><span id="aiNotesAdminSummary" class="admin-module-summary"></span></div>
@@ -1988,6 +2025,7 @@
   function scheduleAnalytics(){var run=function(){initAnalytics();};if('requestIdleCallback' in window)requestIdleCallback(run,{timeout:4000});else setTimeout(run,2500);} if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',scheduleAnalytics);else scheduleAnalytics();
 })();
 </script>
+<script src="/online-notes-manager.js?v=1" defer></script>
 <script src="/app.js?v=20261031-admin-publishing-fix1" defer></script>
 <script src="/admin-fallback.js?v=20261124-admin-login-fix1" defer></script>
 
