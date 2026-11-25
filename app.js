@@ -582,6 +582,41 @@ function renderAdminModuleDetails(data){
   const users=Array.isArray(data?.users)?data.users:[];
   const sales=Array.isArray(data?.sales)?data.sales:[];
   const resources=Array.isArray(data?.resources)?data.resources:[];
+  const sellers=Array.isArray(data?.sellers)?data.sellers:[];
+  const sellerNames=new Map(sellers.map(s=>[String(s.id),s.name||s.username||"Seller"]));
+  const resourceHost=document.getElementById("adminResourceManagement");
+  if(resourceHost){
+    resourceHost.innerHTML=resources.length?resources.slice().sort((x,y)=>String(y.createdAt||"").localeCompare(String(x.createdAt||""))).map(r=>{
+      const status=String(r.status||"pending").toLowerCase();
+      const seller=r.sellerId?sellerNames.get(String(r.sellerId))||"Registered seller":"Admin / direct upload";
+      const price=Number(r.price||0);
+      const actions=status==="pending"
+        ? '<div class="admin-resource-review-actions"><button type="button" class="primary-button" data-resource-review="approved" data-resource-id="'+escapeHtml(r.id)+'">Approve & publish</button><button type="button" class="secondary-button" data-resource-review="rejected" data-resource-id="'+escapeHtml(r.id)+'">Reject</button></div>'
+        : '<span class="price-pill">'+escapeHtml(status.toUpperCase())+'</span>';
+      return '<article class="admin-management-card"><div class="admin-management-heading"><div><span class="eyebrow">'+escapeHtml(status.toUpperCase())+' RESOURCE</span><h4>'+escapeHtml(r.title||"Untitled resource")+'</h4><p>'+escapeHtml([r.subject,r.grade,r.country].filter(Boolean).join(" · "))+'</p></div><span class="price-pill">'+(price>0?escapeHtml(r.currency||"KES")+" "+price.toLocaleString("en-KE"):"FREE")+'</span></div><p>'+escapeHtml(r.description||"No description supplied.")+'</p><small>Submitted by: '+escapeHtml(seller)+' · '+escapeHtml(r.createdAt?new Date(r.createdAt).toLocaleString("en-KE"):"Date not recorded")+'</small>'+actions+'</article>';
+    }).join(""):'<div class="admin-management-card"><strong>No marketplace resources have been submitted.</strong><p>Seller uploads will appear here for review.</p></div>';
+    if(resourceHost.dataset.reviewHandler!=="1"){
+      resourceHost.dataset.reviewHandler="1";
+      resourceHost.addEventListener("click",async event=>{
+        const button=event.target.closest("[data-resource-review]");
+        if(!button||button.disabled)return;
+        const id=button.dataset.resourceId,status=button.dataset.resourceReview;
+        if(!id||!["approved","rejected"].includes(status))return;
+        button.disabled=true;button.textContent="Saving…";
+        try{
+          const response=await fetch("/api/admin/resource-status",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({id,status})});
+          const result=await response.json().catch(()=>({}));
+          if(!response.ok||!result.ok)throw new Error(result.error||"Resource review could not be saved.");
+          if(typeof showToast==="function")showToast(status==="approved"?"Resource approved and published.":"Resource rejected.");
+          await loadAdminDashboard();
+        }catch(error){
+          button.disabled=false;button.textContent=status==="approved"?"Approve & publish":"Reject";
+          if(typeof showToast==="function")showToast(error.message||"Could not save review.");
+          else alert(error.message||"Could not save review.");
+        }
+      });
+    }
+  }
   const userHost=document.getElementById("adminUserManagement");
   if(userHost){
     userHost.innerHTML=users.length
