@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Online Notes Library | CBE Nexus</title>
+<meta name="description" content="Browse online study notes by curriculum, country, level and subject. Explore national curricula, Cambridge, Pearson Edexcel, IB and university study guides.">
+<meta name="keywords" content="online study notes, free study notes, national curriculum notes, Cambridge notes, IGCSE notes, A Level notes, Pearson Edexcel notes, IB study guides, university notes">
+<meta name="robots" content="index,follow"><link rel="canonical" href="https://cbenexus.com/online-notes-library.html">
+<meta property="og:type" content="website"><meta property="og:title" content="Online Notes Library | CBE Nexus"><meta property="og:description" content="Find published online study notes across national and international curricula.">
+<link rel="stylesheet" href="/styles.min.css">
+<style>
+body{background:#f3f7fb;color:#172033}.library{max-width:1120px;margin:34px auto;padding:20px}.library-head,.filters,.note-card{background:#fff;border:1px solid #dbe5ef;border-radius:16px;padding:20px;margin-bottom:16px}.library h1{font-size:clamp(2rem,4vw,2.8rem)}.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.filters label{font-weight:700}.filters select,.filters input{display:block;width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:8px;margin-top:6px}.notes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}.note-card{margin:0}.note-card h2{font-size:1.2rem;margin:8px 0}.note-card p{color:#526277}.note-card a{color:#0369a1;font-weight:700}.meta{font-size:.9rem;color:#64748b}.empty{background:white;border-radius:14px;padding:24px}
+</style></head><body><main class="library">
+<header class="library-head"><a href="/">← CBE Nexus home</a><p class="meta">CBE Nexus · Global learning resources</p><h1>Online Notes Library</h1><p>Browse published chapter notes by curriculum, country, level and subject. New chapters appear here after publication by the CBE Nexus editorial team.</p></header>
+<section class="filters" aria-label="Filter study notes">
+<label>Curriculum<select id="fCurriculum"><option value="">All curricula</option><option>National Curriculum</option><option>Cambridge</option><option>Pearson Edexcel</option><option>International Baccalaureate</option><option>University</option><option>AI Academy</option></select></label>
+<label>Country<input id="fCountry" placeholder="e.g. Kenya"></label>
+<label>Level<input id="fLevel" placeholder="e.g. Grade 10, IGCSE"></label>
+<label>Subject<input id="fSubject" placeholder="e.g. Biology"></label>
+<label>Search<input id="fSearch" placeholder="Search titles and topics"></label>
+</section>
+<p id="count" class="meta" aria-live="polite">Loading published chapters…</p>
+<section id="notes" class="notes-grid" aria-live="polite"></section>
+</main>
+<script>
+(function(){
+const host=document.getElementById("notes"),fields=["fCurriculum","fCountry","fLevel","fSubject","fSearch"];let rows=[];
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function render(){
+ const values=fields.map(id=>document.getElementById(id).value.trim().toLowerCase());
+ const filtered=rows.filter(n=>{
+  const hay=[n.title,n.topic,n.chapter,n.subject,n.curriculum,n.country,n.level].join(" ").toLowerCase();
+  return (!values[0]||String(n.curriculum).toLowerCase()===values[0])&&(!values[1]||String(n.country||"").toLowerCase().includes(values[1]))&&(!values[2]||String(n.level||"").toLowerCase().includes(values[2]))&&(!values[3]||String(n.subject||"").toLowerCase().includes(values[3]))&&(!values[4]||hay.includes(values[4]));
+ });
+ document.getElementById("count").textContent=filtered.length+" published chapter"+(filtered.length===1?"":"s");
+ host.innerHTML=filtered.map(n=>'<article class="note-card"><p class="meta">'+esc([n.curriculum,n.country,n.level,n.subject].filter(Boolean).join(" · "))+'</p><h2>'+esc(n.title)+'</h2><p>'+esc(n.seo_description||n.topic||n.chapter||"Study notes, worked examples and examination practice.")+'</p><a href="/online-notes.html?id='+encodeURIComponent(n.id)+'">Read chapter →</a></article>').join("")||'<div class="empty">No published chapters match these filters yet. Try another subject or curriculum.</div>';
+}
+fields.forEach(id=>document.getElementById(id).addEventListener("input",render));
+fetch("/api/online-notes",{cache:"no-store"}).then(async r=>{const d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||"Library unavailable.");return d.notes||[];}).then(data=>{rows=data;render();}).catch(e=>{document.getElementById("count").textContent=e.message;host.innerHTML="";});
+})();
+</script></body></html>

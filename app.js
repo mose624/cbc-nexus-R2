@@ -477,6 +477,7 @@ function setAdminModule(module) {
     setTimeout(()=>panel.scrollIntoView({behavior:"smooth",block:"nearest"}),0);
   }
   if(activeAdminModule==="ai-notes" && typeof initAICourseNotesAdmin==="function") initAICourseNotesAdmin();
+  if(activeAdminModule==="online-notes" && typeof window.initOnlineNotesManager==="function") window.initOnlineNotesManager();
   if(activeAdminModule==="resources"){
     if(typeof window.loadAdminResourceModeration==="function") window.loadAdminResourceModeration();
     const form=document.getElementById("resourceForm");
