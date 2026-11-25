@@ -626,16 +626,26 @@ async function loadAdminDashboard() {
     if(me.ok){ const md=await me.json().catch(()=>({})); if(md.authenticated===false){sessionStorage.removeItem("cbeAdminUnlocked");return;} }
   } catch (_) {}
   document.body.classList.add("admin-unlocked");
+  // Admin review data must come from the permanent database, not this browser's localStorage.
   try {
-    const r=await fetch("/api/admin/resources?_="+Date.now(),{credentials:"same-origin",cache:"no-store"});
+    const r=await fetch("/api/admin/dashboard?_="+Date.now(),{credentials:"same-origin",cache:"no-store"});
     const d=await r.json().catch(()=>({}));
-    if(r.ok && d.ok) adminDashboardData={...adminDashboardData,resources:d.resources||[]};
-  } catch (_) {}
-  adminDashboardData.sellers=readSellerAccounts();
-  adminDashboardData.payments=readPaymentRecords();
+    if(!r.ok || !d.ok) throw new Error(d.error||"Admin dashboard data could not be loaded.");
+    adminDashboardData={...adminDashboardData,...d};
+  } catch (error) {
+    console.error("Admin Supabase dashboard refresh failed:",error);
+    // Keep the dedicated resources endpoint as a fallback for the resource list only.
+    try {
+      const r=await fetch("/api/admin/resources?_="+Date.now(),{credentials:"same-origin",cache:"no-store"});
+      const d=await r.json().catch(()=>({}));
+      if(r.ok && d.ok) adminDashboardData={...adminDashboardData,resources:d.resources||[]};
+    } catch (_) {}
+  }
+  adminDashboardData.sellers=Array.isArray(adminDashboardData.sellers)?adminDashboardData.sellers:readSellerAccounts();
+  adminDashboardData.payments=Array.isArray(adminDashboardData.payments)?adminDashboardData.payments:readPaymentRecords();
   adminDashboardData.downloads=readApprovedDownloads();
-  adminDashboardData.users=JSON.parse(localStorage.getItem("cbeUsers")||"[]");
-  adminDashboardData.sales=JSON.parse(localStorage.getItem("cbeSales")||"[]");
+  adminDashboardData.users=Array.isArray(adminDashboardData.users)?adminDashboardData.users:JSON.parse(localStorage.getItem("cbeUsers")||"[]");
+  adminDashboardData.sales=Array.isArray(adminDashboardData.sales)?adminDashboardData.sales:JSON.parse(localStorage.getItem("cbeSales")||"[]");
   renderAdminControlCentre(adminDashboardData);
   setAdminModule(activeAdminModule||"resources");
   if(typeof window.loadAdminResourceModeration==="function") await window.loadAdminResourceModeration();
