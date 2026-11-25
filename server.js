@@ -1580,9 +1580,9 @@ async function handleApi(req,res,url){
       if(resourceError)throw resourceError;
       const ids=(resources||[]).map(x=>x.id);
       let purchases=[];
-      if(ids.length){const {data,error}=await supabase.from("purchases").select("id,resource_id,amount,status,created_at,mpesa_receipt").in("resource_id",ids).in("status",["paid","completed","success"]).limit(1000);if(error)throw error;purchases=data||[];}
+      if(ids.length){const {data,error}=await supabase.from("purchases").select("id,resource_id,amount,status,mpesa_receipt").in("resource_id",ids).in("status",["paid","completed","success"]).limit(1000);if(error)throw error;purchases=data||[];}
       const priceById=new Map((resources||[]).map(x=>[String(x.id),x]));
-      const sales=purchases.map(p=>{const r=priceById.get(String(p.resource_id));const gross=Number(p.amount||0);return {id:p.id,resourceId:p.resource_id,resource:r?.title||"Resource",gross,currency:r?.currency||"KES",teacherShare:Math.round(gross*0.70*100)/100,platformShare:Math.round(gross*0.30*100)/100,date:p.created_at,receipt:p.mpesa_receipt||""};});
+      const sales=purchases.map(p=>{const r=priceById.get(String(p.resource_id));const gross=Number(p.amount||0);return {id:p.id,resourceId:p.resource_id,resource:r?.title||"Resource",gross,currency:r?.currency||"KES",teacherShare:Math.round(gross*0.70*100)/100,platformShare:Math.round(gross*0.30*100)/100,date:p.created_at||p.paid_at||p.verified_at||null,receipt:p.mpesa_receipt||""};});
       const earnings=sales.reduce((sum,x)=>sum+x.teacherShare,0);
       sendJson(res,200,{ok:true,seller:{name:seller.name,username:seller.username,status:seller.status},resources:resources||[],sales,earnings,storage:"supabase"});return true;
     }catch(error){console.error("Seller dashboard lookup error:",error);sendJson(res,500,{ok:false,error:"Seller dashboard could not be loaded."});return true;}
