@@ -2125,6 +2125,60 @@ async function handleApi(req,res,url){
     }
     return true;
   }
+  if(req.method==="GET"&&url.pathname==="/api/admin/online-notes"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Supabase is required for permanent online-notes storage. No note was changed."});return true;}
+    try{
+      const id=String(url.searchParams.get("id")||"").trim();
+      if(id){const {data,error}=await supabase.from("online_notes").select("*").eq("id",id).maybeSingle();if(error)throw error;sendJson(res,200,{ok:true,note:data||null});return true;}
+      const {data,error}=await supabase.from("online_notes").select("*").order("updated_at",{ascending:false}).limit(500);
+      if(error)throw error;
+      sendJson(res,200,{ok:true,notes:data||[],storage:"supabase"});
+    }catch(error){console.error("Online notes admin lookup error:",error);sendJson(res,500,{ok:false,error:"Online notes could not be loaded. Confirm the Supabase schema has been applied."});}
+    return true;
+  }
+  if(req.method==="POST"&&url.pathname==="/api/admin/online-notes"){
+    if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
+    if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Supabase is required for permanent online-notes storage. No note was saved."});return true;}
+    try{
+      const p=JSON.parse((await readBody(req))||"{}");
+      const allowedCurricula=["National Curriculum","Cambridge","Pearson Edexcel","International Baccalaureate","University","AI Academy"];
+      const curriculum=String(p.curriculum||"").trim(),country=String(p.country||"").trim().slice(0,100),level=String(p.level||"").trim().slice(0,100),subject=String(p.subject||"").trim().slice(0,120);
+      const topic=String(p.topic||"").trim().slice(0,180),chapter=String(p.chapter||"").trim().slice(0,180),title=String(p.title||"").trim().slice(0,240);
+      const content=String(p.content||"").trim(),status=String(p.status||"draft").trim().toLowerCase();
+      if(!allowedCurricula.includes(curriculum)||!level||!subject||!title||content.length<100||!["draft","published"].includes(status)){
+        sendJson(res,400,{ok:false,error:"Choose a valid curriculum and provide level, subject, title and at least 100 characters of chapter notes."});return true;
+      }
+      if(curriculum==="National Curriculum"&&!country){sendJson(res,400,{ok:false,error:"Select the country for national-curriculum notes."});return true;}
+      const now=new Date().toISOString();
+      const row={
+        id:String(p.id||"ON-"+Date.now()+"-"+crypto.randomBytes(5).toString("hex").toUpperCase()).slice(0,100),
+        curriculum,country,level,subject,topic,chapter,title,
+        objectives:String(p.objectives||"").slice(0,12000),content:content.slice(0,150000),
+        examples:String(p.examples||"").slice(0,30000),practical:String(p.practical||"").slice(0,30000),
+        questions:String(p.questions||"").slice(0,40000),answers:String(p.answers||"").slice(0,40000),
+        seo_title:String(p.seoTitle||"").slice(0,70),seo_description:String(p.seoDescription||"").slice(0,170),
+        seo_keywords:String(p.seoKeywords||"").slice(0,1000),status,updated_at:now,created_at:now
+      };
+      const {data,error}=await supabase.from("online_notes").upsert(row,{onConflict:"id"}).select("*").single();
+      if(error)throw error;
+      if(!data||data.id!==row.id||data.status!==row.status)throw new Error("Saved note could not be verified.");
+      sendJson(res,200,{ok:true,note:data,storage:"supabase",verified:true});
+    }catch(error){console.error("Online notes save error:",error);sendJson(res,500,{ok:false,error:"Online note could not be saved. Check the Supabase online_notes schema and try again."});}
+    return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/online-notes"){
+    const id=String(url.searchParams.get("id")||"").trim();
+    if(!id){sendJson(res,400,{ok:false,error:"A note identifier is required."});return true;}
+    if(!supabaseConfigured){sendJson(res,503,{ok:false,error:"Online notes are temporarily unavailable."});return true;}
+    try{
+      const {data,error}=await supabase.from("online_notes").select("id,curriculum,country,level,subject,topic,chapter,title,objectives,content,examples,practical,questions,answers,seo_title,seo_description,seo_keywords,status,updated_at").eq("id",id).eq("status","published").maybeSingle();
+      if(error)throw error;
+      if(!data){sendJson(res,404,{ok:false,error:"This chapter has not been published or could not be found."});return true;}
+      sendJson(res,200,{ok:true,note:data});
+    }catch(error){console.error("Public online notes lookup error:",error);sendJson(res,500,{ok:false,error:"The requested study notes could not be loaded."});}
+    return true;
+  }
   if(req.method==="GET"&&url.pathname==="/api/admin/ai-course-notes"){
     if(!verifyAdminSession(req)){sendJson(res,401,{ok:false,error:"Admin login required."});return true;}
     if(supabaseConfigured){try{const {data,error}=await supabase.from("ai_course_notes").select("*").order("updated_at",{ascending:false}).limit(500);if(error)throw error;sendJson(res,200,{ok:true,notes:data||[],storage:"supabase"});return true;}catch(error){console.error("Admin AI notes lookup error:",error);sendJson(res,500,{ok:false,error:"AI course notes could not be loaded."});return true;}}
