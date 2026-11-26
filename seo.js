@@ -138,7 +138,7 @@ async function resourcePage(req,id){
   if(!r)return page(req,"Resource Not Found | CBE Nexus","The requested CBE Nexus resource could not be found or is not currently approved.",canonical,"Resource not found","This resource is unavailable or has not been approved for publication yet.",[{url:"/",label:"CBE Nexus Home"},{url:"/cbc-notes-kenya",label:"CBC Notes Kenya"},{url:"/cbc-exams-kenya",label:"CBC Exams Kenya"}]);
   const type=r.resource_type||"Learning Resource",grade=r.grade||"CBC/CBE",subject=r.subject||"General";
   const title=String(r.title||"").trim()||type+" for "+grade+" "+subject;
-  const country=String(r.country||((/CBC|CBE/i.test(grade)||/^(?:PP1|PP2|Grade\\s*(?:[1-9]|1[0-2])|Form\\s*[1-4])$/i.test(grade))?"Kenya":"")).trim();
+  const country=String(r.country||((/CBC|CBE/i.test(grade)||/^(?:PP1|PP2|Grade\s*(?:[1-9]|1[0-2])|Form\s*[1-4])$/i.test(grade))?"Kenya":"")).trim();
   const currency=String(r.currency||"KES").toUpperCase();
   const basePrice=Math.max(0,Number(r.price||0));
   const salePrice=Math.max(0,Number(r.discount_price||0));
