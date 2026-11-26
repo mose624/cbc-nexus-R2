@@ -3160,12 +3160,7 @@ async function serveStatic(req,res,url){
         return "<url><loc>"+xmlEscape(loc)+"</loc>"+(lastmod?"<lastmod>"+lastmod+"</lastmod>":"")+"</url>";
       }).join("");
     }catch(error){console.warn("Teaching vacancy sitemap generation failed:",error.message||error);}
-    let destinationUrls="";
-    try{
-      const countries=await getGlobalCountryRegistry(),existing=new Set([...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>m[1]));
-      destinationUrls=countries.map(country=>{const loc=base+"/teaching-jobs-country/"+encodeURIComponent(String(country.slug));return existing.has(loc)?"":"<url><loc>"+xmlEscape(loc)+"</loc></url>";}).join("");
-    }catch(error){console.warn("Teaching destination sitemap generation failed:",error.message||error);}
-    res.end(xml.replace("</urlset>",guideUrls+vacancyUrls+destinationUrls+"</urlset>"));
+    res.end(xml.replace("</urlset>",guideUrls+vacancyUrls+"</urlset>"));
     return;
   }
   if(req.method==="GET" && url.pathname==="/ads.txt"){
