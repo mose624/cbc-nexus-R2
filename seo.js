@@ -137,7 +137,7 @@ async function resourceCategoryPage(req){
   const {data,error}=await supabase.from("resources").select("*").eq("status","approved").order("created_at",{ascending:false}).limit(1000);
   if(error)throw error;
   const allRows=(data||[]).filter(r=>r&&r.id);
-  const norm=v=>String(v??"").trim().toLowerCase().replace(/\\s+/g," ");
+  const norm=v=>String(v??"").trim().toLowerCase().replace(/\s+/g," ");
   const rows=allRows.filter(r=>{
    if(grade&&grade!=="All Grades"&&norm(r.grade)!==norm(grade))return false;
    if(subject&&subject!=="All Subjects"&&norm(r.subject)!==norm(subject))return false;
@@ -146,7 +146,7 @@ async function resourceCategoryPage(req){
    if(country.toLowerCase()==="kenya"){
     const rowCountry=norm(r.country||r.country_name||r.countryName);
     const rowGrade=norm(r.grade);
-    const kenyaGrade=/^(?:pp[12]|grade\\s*(?:[1-9]|1[0-2]))$/.test(rowGrade);
+    const kenyaGrade=/^(?:pp[12]|grade\s*(?:[1-9]|1[0-2]))$/.test(rowGrade);
     if(!rowCountry.includes("kenya")&&!kenyaGrade)return false;
    }
    return true;
@@ -218,7 +218,7 @@ async function resourcePage(req,id){
   const currentPrice=discounted?salePrice:basePrice;
   const isFree=currentPrice<=0;
   const rawDescription=String(r.description||"");
-  const metaField=label=>{const match=rawDescription.match(new RegExp("^\\s*"+label+":\\s*(.+)$","im"));return match?String(match[1]).trim():"";};
+  const metaField=label=>{const match=rawDescription.match(new RegExp("^\s*"+label+":\s*(.+)$","im"));return match?String(match[1]).trim():"";};
   const academicYear=metaField("Academic year"),term=metaField("Term"),assessmentType=metaField("Assessment type"),packageName=metaField("CBE Nexus package");
   const cleanDescription=rawDescription.split(/\r?\n/).filter(line=>!/^[ \t]*(?:CBE Nexus package:|Package ID:|Academic year:|Term:|Assessment type:|Package mode:|Original filename:)/i.test(line)).join(" ").replace(/\s+/g," ").trim();
   const fileName=String(r.filename||"");
