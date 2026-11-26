@@ -676,6 +676,20 @@ async function loadAdminDashboard() {
       if(r.ok && d.ok) adminDashboardData={...adminDashboardData,resources:d.resources||[]};
     } catch (_) {}
   }
+  // Fetch seller-owned resources independently so they remain visible in the admin review queue
+  // even if another dashboard data source is temporarily unavailable.
+  try {
+    const queueResponse=await fetch("/api/admin/seller-review-queue?_="+Date.now(),{credentials:"same-origin",cache:"no-store"});
+    const queue=await queueResponse.json().catch(()=>({}));
+    if(!queueResponse.ok||!queue.ok) throw new Error(queue.error||"Seller review queue could not be loaded.");
+    const currentResources=Array.isArray(adminDashboardData.resources)?adminDashboardData.resources:[];
+    const byId=new Map(currentResources.map(resource=>[String(resource.id),resource]));
+    (Array.isArray(queue.resources)?queue.resources:[]).forEach(resource=>byId.set(String(resource.id),resource));
+    adminDashboardData.resources=[...byId.values()];
+    if(Array.isArray(queue.sellers)) adminDashboardData.sellers=queue.sellers;
+  } catch(queueError) {
+    console.error("Dedicated seller review queue refresh failed:",queueError);
+  }
   adminDashboardData.sellers=Array.isArray(adminDashboardData.sellers)?adminDashboardData.sellers:readSellerAccounts();
   adminDashboardData.payments=Array.isArray(adminDashboardData.payments)?adminDashboardData.payments:readPaymentRecords();
   adminDashboardData.downloads=readApprovedDownloads();
