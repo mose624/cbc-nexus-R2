@@ -218,7 +218,7 @@ async function resourcePage(req,id){
   const currentPrice=discounted?salePrice:basePrice;
   const isFree=currentPrice<=0;
   const rawDescription=String(r.description||"");
-  const metaField=label=>{const match=rawDescription.match(new RegExp("^\s*"+label+":\s*(.+)$","im"));return match?String(match[1]).trim():"";};
+  const metaField=label=>{const match=rawDescription.match(new RegExp("^\\s*"+label+":\\s*(.+)$","im"));return match?String(match[1]).trim():"";};
   const academicYear=metaField("Academic year"),term=metaField("Term"),assessmentType=metaField("Assessment type"),packageName=metaField("CBE Nexus package");
   const cleanDescription=rawDescription.split(/\r?\n/).filter(line=>!/^[ \t]*(?:CBE Nexus package:|Package ID:|Academic year:|Term:|Assessment type:|Package mode:|Original filename:)/i.test(line)).join(" ").replace(/\s+/g," ").trim();
   const fileName=String(r.filename||"");
