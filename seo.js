@@ -145,13 +145,13 @@ async function resourcePage(req,id){
   const discounted=salePrice>0&&salePrice<basePrice;
   const currentPrice=discounted?salePrice:basePrice;
   const isFree=currentPrice<=0;
-  const cleanDescription=String(r.description||"").split(/\\r?\\n/).filter(line=>!/^[ \\t]*(?:CBE Nexus package:|Package ID:|Academic year:|Term:|Assessment type:|Package mode:|Original filename:)/i.test(line)).join(" ").replace(/\\s+/g," ").trim();
+  const cleanDescription=String(r.description||"").split(/\r?\n/).filter(line=>!/^[ \\t]*(?:CBE Nexus package:|Package ID:|Academic year:|Term:|Assessment type:|Package mode:|Original filename:)/i.test(line)).join(" ").replace(/\s+/g," ").trim();
   const fileName=String(r.filename||"");
-  const format=/\\.pdf$/i.test(fileName)?"PDF":/\\.(?:doc|docx)$/i.test(fileName)?"Word document":"Digital resource";
+  const format=/\.pdf$/i.test(fileName)?"PDF":/\.(?:doc|docx)$/i.test(fileName)?"Word document":"Digital resource";
   const description=(cleanDescription||("Explore this "+grade+" "+subject+" "+type+" on CBE Nexus. Check the file format, curriculum details and current price before ordering.")).slice(0,165);
   const keywords=[title,grade+" "+subject+" resources",grade+" "+subject+" "+type,subject+" learning materials",type+" download",format+" learning resources",country+" CBC resources",country+" CBE learning materials","CBE Nexus resource library"];
   if(/lesson plan|scheme of work/i.test(type))keywords.push("editable teacher lesson plans","CBC teacher planning resources");
-  if(/grade\\s*9/i.test(grade))keywords.push("KJSEA Grade 9 revision resources");
+  if(/grade\s*9/i.test(grade))keywords.push("KJSEA Grade 9 revision resources");
   if(/past paper|assessment|exam/i.test(type))keywords.push("CBC assessment questions","Kenya school exam revision");
   const pageTitle=(title+" | "+grade+" "+subject+" | CBE Nexus").slice(0,70);
   const b=base(req),absolute=b+canonical;
