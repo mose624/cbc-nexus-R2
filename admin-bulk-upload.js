@@ -119,6 +119,20 @@
     }
     if(!ctx.packageName){if(status)status.textContent="Enter a Package / Set Name so these files can be identified together.";return;}
     if(["Assessment Test","Past Papers"].includes(ctx.type)&&ctx.assessmentType==="Not applicable"){if(status)status.textContent="Choose Opener, Midterm, Endterm, Revision or Topical for assessment and exam resources.";return;}
+    // Verify the admin session once before starting any file uploads. This
+    // prevents a missing or expired session from generating repeated 401s.
+    if(status)status.textContent="Verifying admin session…";
+    try{
+      const sessionResponse=await fetch("/api/admin/me",{method:"GET",credentials:"same-origin",cache:"no-store",headers:{"Accept":"application/json"}});
+      const sessionData=await sessionResponse.json().catch(()=>({}));
+      if(!sessionResponse.ok||sessionData.authenticated!==true){
+        if(status){status.className="form-status";status.textContent="Admin session expired or missing. Sign in again, refresh this page, and then start the batch. No files were uploaded.";}
+        return;
+      }
+    }catch(error){
+      if(status){status.className="form-status";status.textContent="Could not verify admin login. Check your connection and try again. No files were uploaded.";}
+      return;
+    }
     if(files.length>30){if(status)status.textContent="Select no more than 30 files per batch.";return;}
     if(files.some(f=>f.size===0)){if(status)status.textContent="The batch contains an empty file. Remove it and try again.";return;}
     const originalLabel=button?.textContent;
