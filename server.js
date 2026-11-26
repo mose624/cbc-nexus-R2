@@ -3262,7 +3262,6 @@ async function serveStatic(req,res,url){
     const safeApplicationEmail=applicationEmailVerified&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(applicationEmail)?applicationEmail:"";
     const safeOfficialUrl=websiteVerified&&/^https:\/\//i.test(officialUrl)?officialUrl:"";
     const officialVerified=!!(safeOfficialUrl||safeApplicationEmail);
-    const safeOfficialUrl=officialVerified&&/^https:\/\//i.test(officialUrl)?officialUrl:"";
     const indexable=verified&&!expired&&officialVerified&&!!(vacancy.title&&vacancy.school&&vacancy.country&&vacancy.description&&vacancy.requirements);
     const title=String(vacancy.title||"International Teaching Vacancy")+" at "+String(vacancy.school||"School");
     const description=String(vacancy.description||"").replace(/\s+/g," ").trim().slice(0,155)||"Review this international teaching vacancy, employer requirements and official application information on CBE Nexus.";
