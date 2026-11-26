@@ -130,14 +130,27 @@ async function resourceCategoryPage(req){
   const subject=String(params.get("subject")||"").trim();
   const type=String(params.get("type")||"").trim();
   const country=String(params.get("country")||"").trim();
-  let query=supabase.from("resources").select("id,title,description,grade,subject,resource_type,price,discount_price,status,filename,currency,country,created_at").eq("status","approved").order("created_at",{ascending:false}).range(0,99);
-  if(grade&&grade!=="All Grades")query=query.eq("grade",grade);
-  if(subject&&subject!=="All Subjects")query=query.eq("subject",subject);
-  if(type&&type!=="All Materials"&&type!=="All Resources")query=query.eq("resource_type",type);
-  if(country.toLowerCase()==="kenya")query=query.or("country.ilike.%Kenya%,grade.ilike.%Grade%,grade.eq.PP1,grade.eq.PP2");
-  const {data,error}=await query;
+  // Select the complete resource row rather than naming optional legacy columns.
+  // Upload records have used both `type`/`resource_type`, `discount`/`discount_price`
+  // and `country`/`country_name`; selecting one variant can make PostgREST reject
+  // the entire page and silently fall back to the JavaScript-only listing.
+  const {data,error}=await supabase.from("resources").select("*").eq("status","approved").order("created_at",{ascending:false}).limit(1000);
   if(error)throw error;
-  const rows=(data||[]).filter(r=>r&&r.id);
+  const allRows=(data||[]).filter(r=>r&&r.id);
+  const norm=v=>String(v??"").trim().toLowerCase().replace(/\s+/g," ");
+  const rows=allRows.filter(r=>{
+   if(grade&&grade!=="All Grades"&&norm(r.grade)!==norm(grade))return false;
+   if(subject&&subject!=="All Subjects"&&norm(r.subject)!==norm(subject))return false;
+   const rowType=r.type||r.resource_type||"";
+   if(type&&type!=="All Materials"&&type!=="All Resources"&&norm(rowType)!==norm(type))return false;
+   if(country.toLowerCase()==="kenya"){
+    const rowCountry=norm(r.country||r.country_name||r.countryName);
+    const rowGrade=norm(r.grade);
+    const kenyaGrade=/^(?:pp[12]|grade\s*(?:[1-9]|1[0-2]))$/.test(rowGrade);
+    if(!rowCountry.includes("kenya")&&!kenyaGrade)return false;
+   }
+   return true;
+  }).slice(0,100);
   const escHtml=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const label=[grade,subject,type].filter(Boolean).join(" ");
   const heading=label?label+" Resources | CBE Nexus":"Kenya CBC & CBE Learning Resources | CBE Nexus";
@@ -152,12 +165,12 @@ async function resourceCategoryPage(req){
    const title=String(r.title||"Learning resource");
    const gradeLabel=String(r.grade||"");
    const subjectLabel=String(r.subject||"");
-   const kind=String(r.resource_type||"Learning Resource");
+   const kind=String(r.type||r.resource_type||"Learning Resource");
    const currency=String(r.currency||"KES").toUpperCase();
    const basePrice=Math.max(0,Number(r.price||0));
-   const salePrice=Math.max(0,Number(r.discount_price||0));
-   const discounted=salePrice>0&&salePrice<basePrice;
-   const current=discounted?salePrice:basePrice;
+   const discountPct=Math.max(0,Math.min(100,Number(r.discount??r.discount_price??0)));
+   const current=Math.max(0,Math.round(basePrice*(1-discountPct/100)));
+   const discounted=discountPct>0&&current<basePrice;
    const price=current<=0?"Free resource":currency+" "+current.toLocaleString();
    const raw=String(r.description||"").split(/\r?\n/).filter(line=>!/^[ \t]*(?:CBE Nexus package:|Package ID:|Academic year:|Term:|Assessment type:|Package mode:|Original filename:)/i.test(line)).join(" ").replace(/\s+/g," ").trim();
    const short=raw.slice(0,180);
