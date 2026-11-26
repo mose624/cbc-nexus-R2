@@ -142,4 +142,96 @@ const profiles={
  }
 };
 Object.keys(profiles).forEach(slug=>{d[slug]=Object.assign({},d[slug]||{},profiles[slug]);});
+
+/* Complete country-specific SEO fields for the remaining countries in the
+ * alphabetical 1–10 batch. Assessment arrangements vary by cohort and region.
+ */
+const seoProfiles={
+ "afghanistan":{
+  seoHeading:"Afghanistan Education System, School Curriculum and Learning Resources",
+  seoTitle:"Afghanistan Education System, Curriculum and School Resources | CBE Nexus",
+  seoDescription:"Explore Afghanistan's school education framework, Dari and Pashto language pathways, curriculum guidance and education resources.",
+  seoIntro:"Afghanistan's school education framework is shaped by national education policy and the Ministry of Education. Dari and Pashto are the principal languages used for teaching in the documented national framework, with regional-language provision in relevant communities. Education access, school operations and curriculum implementation can vary significantly by location and current policy. Families and educators should confirm the latest arrangements with the responsible local and national authorities before relying on grade, subject or examination information.",
+  seoTopics:["Afghanistan education system","Afghanistan school curriculum","Dari and Pashto education","Afghanistan school learning resources","Afghanistan Ministry of Education"],
+  seoFaqs:[
+   {question:"Which languages are used in Afghanistan schools?",answer:"Dari and Pashto are the principal languages used for teaching in the national school framework. Regional-language provision may be available in relevant communities; check local school arrangements."},
+   {question:"Where can families verify Afghanistan curriculum information?",answer:"Consult the Ministry of Education and the relevant local education authority for current school, curriculum and access information."},
+   {question:"Are school arrangements uniform across Afghanistan?",answer:"No. Access, school operation and education arrangements may differ by location and current policy. Verify information locally before making education decisions."}
+  ]
+ },
+ "algeria":{
+  seoHeading:"Algeria National Curriculum, BEM and Baccalauréat",
+  seoTitle:"Algeria Curriculum, BEM, Baccalauréat and School Resources | CBE Nexus",
+  seoDescription:"Explore Algeria's national school curriculum, Arabic-medium education, BEM middle-school examination, Baccalauréat and official learning resources.",
+  seoIntro:"Algeria's national education system is organised through primary, middle and secondary education under the Ministry of National Education. Arabic is the principal language of instruction in the national system, while Tamazight has recognised status and is taught where provision is available. Key examination milestones include the Brevet d'Enseignement Moyen (BEM) and the Baccalauréat. Candidates should consult current ministry and examination notices for subject requirements, registration and annual procedures.",
+  seoTopics:["Algeria national curriculum","Algeria BEM examination","Algeria Baccalauréat","Algeria school syllabus","Algeria Arabic and Tamazight education"],
+  seoFaqs:[
+   {question:"What are the main school examinations in Algeria?",answer:"The BEM is a key examination at the end of middle education, followed by the Baccalauréat at the end of secondary education. Check current official notices for candidate rules and subjects."},
+   {question:"What is the main language of instruction in Algeria?",answer:"Arabic is the principal language of instruction in the national school system. Tamazight is also recognised and taught where provision is available."},
+   {question:"Where can learners find Algeria's official curriculum?",answer:"Use the Ministry of National Education and its current curriculum and examination publications for the applicable grade and cohort."}
+  ]
+ },
+ "angola":{
+  seoHeading:"Angola Education System, National Curriculum and School Resources",
+  seoTitle:"Angola Curriculum, Education System and School Resources | CBE Nexus",
+  seoDescription:"Explore Angola's national education framework, Portuguese-language curriculum, school stages, national-language education and learning resources.",
+  seoIntro:"Angola's education system is governed by the Basic Law of the Education and Teaching System and national education policy. Portuguese is the general language of instruction, while the legal framework also provides for the promotion of Angolan national languages and sign language in education. School pathways include primary and secondary education, alongside technical and vocational options. Confirm current subject programmes, grade progression and assessment requirements through the Ministry of Education and the relevant school.",
+  seoTopics:["Angola education system","Angola national curriculum","Angola Portuguese language instruction","Angola school subjects","Angola technical vocational education"],
+  seoFaqs:[
+   {question:"What is the main language of instruction in Angola?",answer:"Portuguese is the general language of instruction under the national education framework. The law also provides for Angolan national languages and sign language in education."},
+   {question:"Which education pathways are available in Angola?",answer:"The system includes general education as well as technical and vocational pathways. The precise programme and progression requirements depend on the learner's level and institution."},
+   {question:"Where can students verify Angola curriculum information?",answer:"Consult the Ministry of Education and the current approved curriculum and school guidance for the relevant grade."}
+  ]
+ },
+ "antigua-and-barbuda":{
+  seoHeading:"Antigua and Barbuda Education System, CSEC and CAPE",
+  seoTitle:"Antigua and Barbuda Curriculum, CSEC, CAPE and School Resources | CBE Nexus",
+  seoDescription:"Explore Antigua and Barbuda's school education system, English-language learning, CXC CSEC and CAPE qualifications and official resources.",
+  seoIntro:"Antigua and Barbuda's education system provides primary and secondary schooling under the national Ministry of Education. English is the principal language used in mainstream public education. Secondary learners may prepare for Caribbean regional qualifications, particularly CXC CSEC, with CAPE available for advanced post-secondary study in participating institutions. School subject offerings and examination entry arrangements vary, so students should confirm details with their school and the Caribbean Examinations Council.",
+  seoTopics:["Antigua and Barbuda education system","Antigua and Barbuda curriculum","CXC CSEC Antigua","CAPE Antigua and Barbuda","Caribbean school resources"],
+  seoFaqs:[
+   {question:"Which examinations are commonly taken by secondary students?",answer:"CXC CSEC is a major regional secondary qualification. CAPE is available for advanced study in participating schools and institutions; confirm current offerings with the school and CXC."},
+   {question:"What is the main language of instruction?",answer:"English is the principal teaching language in mainstream public education. Additional language subjects and school-specific programmes vary."},
+   {question:"Where can students find official examination syllabuses?",answer:"Use the Caribbean Examinations Council for current CSEC and CAPE syllabuses, assessment information and examination notices."}
+  ]
+ },
+ "argentina":{
+  seoHeading:"Argentina Education System, National Curriculum and Secondary Qualifications",
+  seoTitle:"Argentina Curriculum, Secondary Education and School Resources | CBE Nexus",
+  seoDescription:"Explore Argentina's federal education system, national learning frameworks, provincial secondary qualifications and school study resources.",
+  seoIntro:"Argentina's education system is governed through a federal structure in which national authorities establish shared education frameworks and provinces and the City of Buenos Aires organise much of school delivery. Spanish is the principal language of instruction, while intercultural bilingual education supports Indigenous languages in relevant communities. Secondary completion certificates and assessment arrangements are administered through jurisdictional systems, so learners should identify their province and school pathway before selecting curriculum or examination materials.",
+  seoTopics:["Argentina education system","Argentina national curriculum","Argentina secondary school certificate","Argentina provincial education authorities","Argentina bilingual intercultural education"],
+  seoFaqs:[
+   {question:"Does Argentina have one school curriculum for every province?",answer:"Argentina has national education frameworks, but provinces and the City of Buenos Aires organise implementation and many school arrangements. Check the relevant jurisdiction's curriculum."},
+   {question:"What language is used in Argentine schools?",answer:"Spanish is the principal language of instruction. Intercultural bilingual education supports Indigenous languages in relevant communities."},
+   {question:"Are secondary examinations and certificates identical across Argentina?",answer:"School completion and assessment arrangements are administered through jurisdictional systems. Confirm the applicable certificate and requirements with the province or school."}
+  ]
+ },
+ "armenia":{
+  seoHeading:"Armenia Education System, National Curriculum and School Examinations",
+  seoTitle:"Armenia Curriculum, School Examinations and Education Resources | CBE Nexus",
+  seoDescription:"Explore Armenia's national school curriculum, Armenian-language education, general education stages and official examination guidance.",
+  seoIntro:"Armenia's general education system is guided by national state standards and subject programmes under the Ministry of Education, Science, Culture and Sport. Armenian is the principal language of instruction, while schools serving recognised minority communities may provide additional language pathways. School progression includes primary, basic and upper-secondary education, with final assessments and higher-education admission procedures governed by current national rules. Check official notices for the learner's cohort and examination year.",
+  seoTopics:["Armenia national curriculum","Armenia general education","Armenia school examinations","Armenia university admission examinations","Armenian language education"],
+  seoFaqs:[
+   {question:"Which curriculum do schools in Armenia follow?",answer:"Schools follow national state education standards and approved subject programmes. Consult the Ministry of Education, Science, Culture and Sport for current curriculum information."},
+   {question:"What is the main language of instruction in Armenia?",answer:"Armenian is the principal language of instruction. Additional minority-language provision depends on the community and school."},
+   {question:"Where should candidates verify examination requirements?",answer:"Use current Ministry and examination authority notices for final assessments, university admission procedures, subjects and deadlines."}
+  ]
+ },
+ "austria":{
+  seoHeading:"Austria Education System, Austrian Curriculum and Matura",
+  seoTitle:"Austria Curriculum, Matura and School Education Resources | CBE Nexus",
+  seoDescription:"Explore Austria's school system, national curriculum, primary and secondary pathways, Reifeprüfung Matura and official learning resources.",
+  seoIntro:"Austria's education system is governed by federal education legislation and national curricula. Learners progress through primary education and different lower- and upper-secondary school types, including academic secondary schools and vocational pathways. The Reifeprüfung (Matura) is a key qualification for completion of academic upper-secondary education and access to higher education; vocational routes have their own final qualification arrangements. Check the responsible Ministry and school for the applicable curriculum, examination format and admission rules.",
+  seoTopics:["Austria national curriculum","Austria education system","Austria Matura examination","Reifeprüfung Austria","Austria vocational education pathways"],
+  seoFaqs:[
+   {question:"What is the Matura in Austria?",answer:"The Reifeprüfung, commonly called the Matura, is the final examination for academic upper-secondary education and provides a route to higher education. Vocational schools have their own final qualification arrangements."},
+   {question:"Does Austria have different secondary-school pathways?",answer:"Yes. Learners may attend different academic and vocational secondary pathways. The curriculum and final qualification depend on the school type."},
+   {question:"Where can students verify Austria's curriculum and examination rules?",answer:"Consult the Federal Ministry of Education and the relevant school for current curriculum documents, Matura requirements and vocational qualification details."}
+  ]
+ }
+};
+Object.keys(seoProfiles).forEach(slug=>{d[slug]=Object.assign({},d[slug]||{},seoProfiles[slug]);});
+
 })();
