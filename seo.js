@@ -121,6 +121,64 @@ async function interactiveQuestionGradePage(req,raw,grade,label,desc,links){
  const html=page(req,grade+" CBC/CBE Interactive Practice Questions & Answers | CBE Nexus Kenya",desc,"/free-interactive-questions/"+slug(grade),label,"Practise and review "+grade+" questions online with CBE Nexus. Choose a subject and use the sample questions below before continuing to the learner portal.",links);
  return html.replace("</head>","<style>.iq-bank{margin:24px 0}.iq-question{border:1px solid #dbe3ec;border-radius:12px;padding:18px;margin:14px 0}.iq-question h3{margin:6px 0}.iq-meta{font-size:.9rem;color:#52606d;font-weight:700}.iq-options{line-height:1.8}.iq-question details{background:#f1f5f9;padding:10px 14px;border-radius:8px}.iq-question summary{cursor:pointer;font-weight:700}</style></head>").replace("</main>",section+"</main>");
 }
+async function resourceCategoryPage(req){
+ if(!supabaseConfigured)return null;
+ try{
+  const file=await fs.readFile(path.join(__dirname,"resource-category.html"),"utf8");
+  const params=new URL(req.url,"http://localhost").searchParams;
+  const grade=String(params.get("grade")||"").trim();
+  const subject=String(params.get("subject")||"").trim();
+  const type=String(params.get("type")||"").trim();
+  const country=String(params.get("country")||"").trim();
+  let query=supabase.from("resources").select("id,title,description,grade,subject,resource_type,price,discount_price,status,filename,currency,country,created_at").eq("status","approved").order("created_at",{ascending:false}).range(0,99);
+  if(grade&&grade!=="All Grades")query=query.eq("grade",grade);
+  if(subject&&subject!=="All Subjects")query=query.eq("subject",subject);
+  if(type&&type!=="All Materials"&&type!=="All Resources")query=query.eq("resource_type",type);
+  if(country.toLowerCase()==="kenya")query=query.or("country.ilike.%Kenya%,grade.ilike.%Grade%,grade.eq.PP1,grade.eq.PP2");
+  const {data,error}=await query;
+  if(error)throw error;
+  const rows=(data||[]).filter(r=>r&&r.id);
+  const escHtml=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const label=[grade,subject,type].filter(Boolean).join(" ");
+  const heading=label?label+" Resources | CBE Nexus":"Kenya CBC & CBE Learning Resources | CBE Nexus";
+  const description=("Browse approved "+(label||"Kenyan CBC and CBE")+" learning resources on CBE Nexus. Compare notes, lesson plans, schemes of work, assignments, holiday workbooks and examination materials by grade, subject and resource type.").slice(0,160);
+  const canonicalParams=new URLSearchParams();
+  if(country)canonicalParams.set("country",country);
+  if(grade)canonicalParams.set("grade",grade);
+  if(subject)canonicalParams.set("subject",subject);
+  if(type)canonicalParams.set("type",type);
+  const canonical="https://cbenexus.com/resource-category.html"+(canonicalParams.toString()?"?"+canonicalParams.toString():"");
+  const cards=rows.map(r=>{
+   const title=String(r.title||"Learning resource");
+   const gradeLabel=String(r.grade||"");
+   const subjectLabel=String(r.subject||"");
+   const kind=String(r.resource_type||"Learning Resource");
+   const currency=String(r.currency||"KES").toUpperCase();
+   const basePrice=Math.max(0,Number(r.price||0));
+   const salePrice=Math.max(0,Number(r.discount_price||0));
+   const discounted=salePrice>0&&salePrice<basePrice;
+   const current=discounted?salePrice:basePrice;
+   const price=current<=0?"Free resource":currency+" "+current.toLocaleString();
+   const raw=String(r.description||"").split(/\r?\n/).filter(line=>!/^[ \t]*(?:CBE Nexus package:|Package ID:|Academic year:|Term:|Assessment type:|Package mode:|Original filename:)/i.test(line)).join(" ").replace(/\s+/g," ").trim();
+   const short=raw.slice(0,180);
+   const href="/resource/"+encodeURIComponent(String(r.id));
+   return '<article class="card" data-resource-id="'+escHtml(r.id)+'"><div class="tags"><span class="tag">'+escHtml(gradeLabel)+'</span><span class="tag">'+escHtml(subjectLabel)+'</span><span class="tag">'+escHtml(kind)+'</span></div><h2><a href="'+href+'">'+escHtml(title)+'</a></h2><p>'+escHtml(short||("Approved "+gradeLabel+" "+subjectLabel+" "+kind+" available on CBE Nexus."))+'</p><p><strong>'+escHtml(price)+'</strong>'+(discounted?' <span>Discounted from '+escHtml(currency+" "+basePrice.toLocaleString())+'</span>':"")+'</p><p><a href="'+href+'">View resource details</a></p></article>';
+  }).join("");
+  const resultHtml=rows.length?cards:'<div class="empty">No approved resources currently match these filters. Try another grade, subject or resource type.</div>';
+  const section=/<section id="results"[^>]*>[\s\S]*?<\/section>/i;
+  if(!section.test(file))throw new Error("Resource listing section was not found in resource-category.html");
+  let html=file.replace(section,match=>match.replace(/>[\s\S]*<\/section>$/,">"+resultHtml+"</section>"));
+  html=html.replace(/<title>[\s\S]*?<\/title>/i,"<title>"+escHtml(heading)+"</title>");
+  html=html.replace(/<meta name="description" content="[^"]*">/i,'<meta name="description" content="'+escHtml(description)+'">');
+  html=html.replace(/<link rel="canonical" href="[^"]*">/i,'<link rel="canonical" href="'+escHtml(canonical)+'">');
+  html=html.replace("</head>",'<meta name="robots" content="index,follow,max-image-preview:large"><meta property="og:title" content="'+escHtml(heading)+'"><meta property="og:description" content="'+escHtml(description)+'"><meta property="og:url" content="'+escHtml(canonical)+'"></head>');
+  return html;
+ }catch(error){
+  console.warn("Server-rendered resource category unavailable:",error.message||error);
+  return null;
+ }
+}
+
 async function resourcePage(req,id){
  try{
   let r=null;
@@ -208,6 +266,7 @@ function countryOpportunityPage(req,countrySlug,kind){
 
 async function match(req){
  const p=new URL(req.url,"http://localhost").pathname.replace(/\/$/,"")||"/";
+ if(p==="/resource-category.html"){const categoryPage=await resourceCategoryPage(req);if(categoryPage)return categoryPage;}
  const countryJobs=p.match(/^\/global-teaching-jobs\/([a-z0-9-]+)$/);
  if(countryJobs)return countryOpportunityPage(req,countryJobs[1],"jobs");
  const countryOnline=p.match(/^\/online-teaching\/([a-z0-9-]+)$/);
@@ -369,9 +428,15 @@ async function sitemap(req){
  }catch(e){console.warn("SEO sitemap grade lookup failed:",e.message||e);}
  if(supabaseConfigured){
   try{
-   const {data,error}=await supabase.from("resources").select("id").eq("status","approved").limit(5000);
-   if(!error) (data||[]).forEach(r=>{if(r&&r.id) urls.push("/resource/"+encodeURIComponent(String(r.id)));});
-  }catch(e){console.warn("SEO sitemap resource lookup failed:",e.message||e);}
+   const pageSize=1000;
+   for(let offset=0,page=0;page<1000;offset+=pageSize,page++){
+    const {data,error}=await supabase.from("resources").select("id").eq("status","approved").order("id",{ascending:true}).range(offset,offset+pageSize-1);
+    if(error)throw error;
+    const rows=data||[];
+    rows.forEach(r=>{if(r&&r.id)urls.push("/resource/"+encodeURIComponent(String(r.id)));});
+    if(rows.length<pageSize)break;
+   }
+  }catch(e){console.warn("SEO sitemap paginated resource lookup failed:",e.message||e);}
   try{
    const {data,error}=await supabase.from("blog_posts").select("slug").eq("status","published").limit(5000);
    if(!error) (data||[]).forEach(p=>{if(p&&p.slug) urls.push("/blog-article.html?slug="+encodeURIComponent(String(p.slug)));});
