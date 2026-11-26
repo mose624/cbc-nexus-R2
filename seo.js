@@ -277,7 +277,7 @@ function countryOpportunityPage(req,countrySlug,kind){
  return page(req,title,description,canonical,jobs?"Teaching Jobs in "+name:"Online Teaching Opportunities in "+name,intro,links);
 }
 
-async function match(req){
+async async function match(req){
  const p=new URL(req.url,"http://localhost").pathname.replace(/\/$/,"")||"/";
  if(p==="/resource-category.html"){const categoryPage=await resourceCategoryPage(req);if(categoryPage)return categoryPage;}
  const countryJobs=p.match(/^\/global-teaching-jobs\/([a-z0-9-]+)$/);
