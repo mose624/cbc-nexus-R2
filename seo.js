@@ -18,6 +18,7 @@ for(const g of ["7","8","9"]) SUBJECTS[g]=JUNIOR_SUBJECTS;
 const KENYA_COUNTIES=["Baringo","Bomet","Bungoma","Busia","Elgeyo Marakwet","Embu","Garissa","Homa Bay","Isiolo","Kajiado","Kakamega","Kericho","Kiambu","Kilifi","Kirinyaga","Kisii","Kisumu","Kitui","Kwale","Laikipia","Lamu","Machakos","Makueni","Mandera","Marsabit","Meru","Migori","Mombasa","Murang'a","Nairobi","Nakuru","Nandi","Narok","Nyamira","Nyandarua","Nyeri","Samburu","Siaya","Taita Taveta","Tana River","Tharaka Nithi","Trans Nzoia","Turkana","Uasin Gishu","Vihiga","Wajir","West Pokot"];
 const LANDINGS={
 "/cbc-notes-kenya":["CBC Notes Kenya: Online Learning Resources, Study Notes & Revision | CBE Nexus","Explore online learning resources, CBC and CBE study notes, subject guides, revision materials and learning support for Kenyan learners and teachers. Study Mathematics, Science, English and more with CBE Nexus."],
+"/kenya-cbc-cbe-resources":["Kenya CBC & CBE Teaching Resources by Grade, Subject and Term | CBE Nexus","Browse Kenyan CBC and CBE learning resources for PP1 to Grade 12. Find available lesson plans, schemes of work, study notes, records of work, assessment papers, marking schemes, KJSEA revision and free or discounted PDF and Word downloads. Filter resources by grade, subject and material type, then check each listing for its current price and file details."],
 "/cbc-exams-kenya":["CBC Exams, Practice Tests & Marking Schemes Kenya | CBE Nexus","Prepare with CBC and CBE exam practice, online test questions, revision materials and marking schemes for Kenyan Grade 7–12 learners and teachers."],
 "/kjsea-revision":["KJSEA Revision Materials & Grade 9 Questions","Grade 9 KJSEA revision materials, questions, exams and marking schemes for learners and teachers in Kenya."],
 "/free-interactive-questions":["Free Online Quizzes, Practice Questions & Tests for Students | CBE Nexus","Practise with free online quizzes, interactive questions, school practice tests and instant feedback across grades and subjects. Explore CBC and CBE learning resources, Grade 1–12 revision and KJSEA preparation."],
@@ -266,7 +267,7 @@ async function match(req){
  const countyMatch=p.match(/^\/kenya-education-county\/([^/]+)$/);
  if(countyMatch){return countyPage(req,countyMatch[1]);}
  if(p==="/blog-article.html"){const q=new URL(req.url,"http://localhost").searchParams.get("slug");if(q)return await blogArticlePage(req,q);}
- if(p!=="/cbc-exam-generator" && LANDINGS[p]){const x=LANDINGS[p];const links=GRADES.map(g=>({url:"/grade-"+g,label:"Grade "+g+" CBC Resources"}));return page(req,x[0],x[1],p,x[0],x[1],links);}
+ if(p!=="/cbc-exam-generator" && LANDINGS[p]){const x=LANDINGS[p];const links=p==="/kenya-cbc-cbe-resources"?[{url:"/resource-category.html?type=Lesson%20Plan",label:"Browse uploaded CBC/CBE lesson plans"},{url:"/resource-category.html?type=Schemes%20of%20Work",label:"Browse schemes of work by grade and term"},{url:"/resource-category.html?type=Notes",label:"Browse CBC/CBE study notes"},{url:"/resource-category.html?type=Assessment%20Test",label:"Browse assessment tests and practice papers"},{url:"/resource-category.html?type=Records%20of%20Work",label:"Browse records of work"},{url:"/resource-category.html?type=Marking%20Schemes",label:"Browse marking schemes"},{url:"/free-resources.html",label:"Explore free learning resources"},{url:"/kjsea-revision",label:"Grade 9 KJSEA revision"},{url:"/cbc-exams-kenya",label:"Kenyan CBC and CBE exam practice"},...GRADES.map(g=>({url:"/grade-"+g,label:"Grade "+g+" CBC/CBE resources"}))]:GRADES.map(g=>({url:"/grade-"+g,label:"Grade "+g+" CBC Resources"}));return page(req,x[0],x[1],p,x[0],x[1],links);}
  const m=p.match(/^\/grade-(1|2|3|4|5|6|7|8|9|10|11|12)(?:\/([^/]+))?$/);return m?gradePage(req,m[1],m[2]):null;
 }
 async function blogArticlePage(req,slugValue){
@@ -335,7 +336,7 @@ async function sitemap(req){
   "/scholarships-opportunities.html","/international-teaching-jobs.html","/professional-cv-writing.html",
   "/ai-training.html","/school-directory.html","/international-curriculum.html","/international-subjects/igcse-chemistry.html","/international-subjects/igcse-physics.html","/cambridge-study-notes.html","/pearson-study-notes.html","/ib-comprehensive-study-guides.html","/ib-study-notes.html","/ib-myp-study-notes.html","/country-online-notes.html","/international-subjects/pearson-biology.html","/international-subjects/pearson-chemistry.html","/international-subjects/pearson-physics.html","/international-subjects/pearson-mathematics.html","/igcse.html",
   "/cambridge-international.html","/ib.html","/pearson-edexcel.html","/a-levels.html","/o-levels.html",
-  "/cbc-notes-kenya","/cbc-exams-kenya","/kjsea-revision",
+  "/cbc-notes-kenya","/cbc-exams-kenya","/kjsea-revision","/kenya-cbc-cbe-resources",
   "/free-interactive-questions","/daily-quiz","/grade-9-kjsea-revision-questions","/grade-10-cbe-practice-questions",
   "/free-cbc-online-quizzes","/mashujaa-day-kenyan-heroes-quiz","/free-ai-training",
   "/free-cv-writing","/free-international-jobs","/all-schools-in-kenya","/global-schools",
