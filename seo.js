@@ -130,11 +130,11 @@ async function resourceCategoryPage(req){
   const subject=String(params.get("subject")||"").trim();
   const type=String(params.get("type")||"").trim();
   const country=String(params.get("country")||"").trim();
-  let query=supabase.from("resources").select("id,title,description,grade,subject,resource_type,price,discount_price,status,filename,currency,country,curriculum,created_at").eq("status","approved").order("created_at",{ascending:false}).range(0,99);
+  let query=supabase.from("resources").select("id,title,description,grade,subject,resource_type,price,discount_price,status,filename,currency,country,created_at").eq("status","approved").order("created_at",{ascending:false}).range(0,99);
   if(grade&&grade!=="All Grades")query=query.eq("grade",grade);
   if(subject&&subject!=="All Subjects")query=query.eq("subject",subject);
   if(type&&type!=="All Materials"&&type!=="All Resources")query=query.eq("resource_type",type);
-  if(country.toLowerCase()==="kenya")query=query.or("country.ilike.%Kenya%,curriculum.ilike.%CBC%,curriculum.ilike.%CBE%");
+  if(country.toLowerCase()==="kenya")query=query.or("country.ilike.%Kenya%,grade.ilike.%Grade%,grade.eq.PP1,grade.eq.PP2");
   const {data,error}=await query;
   if(error)throw error;
   const rows=(data||[]).filter(r=>r&&r.id);
