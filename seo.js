@@ -124,7 +124,7 @@ async function resourcePage(req,id){
  try{
   let r=null;
   if(supabaseConfigured){
-   const {data,error}=await supabase.from("resources").select("id,title,description,grade,subject,resource_type,price,discount_price,status,created_at,filename").eq("id",id).eq("status","approved").maybeSingle();
+   const {data,error}=await supabase.from("resources").select("id,title,description,grade,subject,resource_type,price,discount_price,status,created_at,filename,currency,country").eq("id",id).eq("status","approved").maybeSingle();
    if(error)throw error;
    r=data||null;
   }
@@ -134,23 +134,44 @@ async function resourcePage(req,id){
     r=(Array.isArray(local)?local:[]).find(x=>String(x.id)===String(id)&&String(x.status||"approved").toLowerCase()==="approved")||null;
    }catch{}
   }
-  if(!r)return page(req,"Resource Not Found | CBE Nexus","The requested CBE Nexus resource could not be found or is not currently approved.","/resource/"+encodeURIComponent(String(id)),"Resource not found","This resource is unavailable or has not been approved for publication yet.",[{url:"/",label:"CBE Nexus Home"},{url:"/cbc-notes-kenya",label:"CBC Notes Kenya"},{url:"/cbc-exams-kenya",label:"CBC Exams Kenya"}]);
-  const type=r.resource_type||"Learning Resource", grade=r.grade||"CBC", subject=r.subject||"General";
-  const title=String(r.title||"").trim()||type+" for Grade "+grade+" "+subject;
-  const pageTitle=title+" | Grade "+grade+" "+subject+" | CBE Nexus Kenya";
-  const description=(String(r.description||"").trim()||"CBC/CBE learning resource for Kenyan learners and teachers.").slice(0,155);
-  const canonical="/resource/"+encodeURIComponent(String(r.id));
-  const b=base(req);
-  const json=JSON.stringify({"@context":"https://schema.org","@type":"LearningResource","name":title,"description":description,"url":b+canonical,"learningResourceType":type,"educationalLevel":grade,"inLanguage":"en","publisher":{"@type":"EducationalOrganization","name":"CBE Nexus","url":b},"about":{"@type":"Thing","name":subject}});
+  const canonical="/resource/"+encodeURIComponent(String(id));
+  if(!r)return page(req,"Resource Not Found | CBE Nexus","The requested CBE Nexus resource could not be found or is not currently approved.",canonical,"Resource not found","This resource is unavailable or has not been approved for publication yet.",[{url:"/",label:"CBE Nexus Home"},{url:"/cbc-notes-kenya",label:"CBC Notes Kenya"},{url:"/cbc-exams-kenya",label:"CBC Exams Kenya"}]);
+  const type=r.resource_type||"Learning Resource",grade=r.grade||"CBC/CBE",subject=r.subject||"General";
+  const title=String(r.title||"").trim()||type+" for "+grade+" "+subject;
+  const country=String(r.country||((/CBC|CBE/i.test(grade)||/^(?:PP1|PP2|Grade\s*(?:[1-9]|1[0-2])|Form\s*[1-4])$/i.test(grade))?"Kenya":"")).trim();
+  const currency=String(r.currency||"KES").toUpperCase();
+  const basePrice=Math.max(0,Number(r.price||0));
+  const salePrice=Math.max(0,Number(r.discount_price||0));
+  const discounted=salePrice>0&&salePrice<basePrice;
+  const currentPrice=discounted?salePrice:basePrice;
+  const isFree=currentPrice<=0;
+  const rawDescription=String(r.description||"");
+  const metaField=label=>{const match=rawDescription.match(new RegExp("^\\s*"+label+":\\s*(.+)$","im"));return match?String(match[1]).trim():"";};
+  const academicYear=metaField("Academic year"),term=metaField("Term"),assessmentType=metaField("Assessment type"),packageName=metaField("CBE Nexus package");
+  const cleanDescription=rawDescription.split(/\r?\n/).filter(line=>!/^[ \t]*(?:CBE Nexus package:|Package ID:|Academic year:|Term:|Assessment type:|Package mode:|Original filename:)/i.test(line)).join(" ").replace(/\s+/g," ").trim();
+  const fileName=String(r.filename||"");
+  const format=/\.pdf$/i.test(fileName)?"PDF":/\.(?:doc|docx)$/i.test(fileName)?"Word document":"Digital resource";
+  const description=(cleanDescription||("Explore this "+grade+" "+subject+" "+type+" on CBE Nexus. Check the file format, curriculum details and current price before ordering.")).slice(0,165);
+  const yearTerm=[academicYear,term].filter(Boolean).join(" ");
+  const keywords=[title,packageName,grade+" "+subject+" resources",grade+" "+subject+" "+type,grade+" "+subject+" "+type+" "+yearTerm,subject+" learning materials",type+" download",format+" learning resources",country+" CBC resources",country+" CBE learning materials","CBE Nexus resource library",assessmentType?grade+" "+subject+" "+assessmentType+" assessment":""].filter(Boolean);
+  if(/lesson plan|scheme of work/i.test(type))keywords.push("editable teacher lesson plans","CBC teacher planning resources");
+  if(/grade\s*9/i.test(grade))keywords.push("KJSEA Grade 9 revision resources");
+  if(/past paper|assessment|exam/i.test(type))keywords.push("CBC assessment questions","Kenya school exam revision");
+  const pageTitle=(title+" | "+grade+" "+subject+" | CBE Nexus").slice(0,70);
+  const b=base(req),absolute=b+canonical;
+  const graph={"@context":"https://schema.org","@type":"LearningResource","name":title,"description":description,"url":absolute,"learningResourceType":type,"educationalLevel":grade,"encodingFormat":format==="PDF"?"application/pdf":format==="Word document"?"application/vnd.openxmlformats-officedocument.wordprocessingml.document":"application/octet-stream","temporalCoverage":yearTerm||undefined,"inLanguage":country==="Kenya"?"en-KE":"en","keywords":[...new Set(keywords.filter(Boolean))],"isAccessibleForFree":isFree,"provider":{"@type":"Organization","name":"CBE Nexus","url":"https://cbenexus.com/"},"about":[{"@type":"Thing","name":subject},{"@type":"Thing","name":grade}],"offers":{"@type":"Offer","url":absolute,"price":String(currentPrice),"priceCurrency":currency,"availability":"https://schema.org/InStock"}};
+  if(country)graph.spatialCoverage={"@type":"Country","name":country};
+  const json=JSON.stringify(graph).replace(/</g,"\\u003c");
   let related=[];
   if(supabaseConfigured){
-   const q=await supabase.from("resources").select("id,title,grade,subject,resource_type").eq("status","approved").eq("grade",grade).eq("subject",subject).neq("id",r.id).order("created_at",{ascending:false}).limit(8);
+   const q=await supabase.from("resources").select("id,title,subject,resource_type").eq("status","approved").eq("grade",grade).eq("subject",subject).neq("id",r.id).order("created_at",{ascending:false}).limit(8);
    if(!q.error)related=q.data||[];
   }
   const relatedHtml=related.map(x=>'<li><a href="/resource/'+encodeURIComponent(String(x.id))+'">'+esc(String(x.title||"Resource"))+'</a> — '+esc(String(x.resource_type||"Learning Resource"))+'</li>').join("")||"<li>No related resources yet.</li>";
-  const gradeUrl="/grade-"+slug(grade);
-  const subjectUrl=gradeUrl+"/"+slug(subject);
-  return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(pageTitle)+'</title><meta name="description" content="'+esc(description)+'"><meta name="robots" content="index,follow"><link rel="canonical" href="'+esc(b+canonical)+'"><meta property="og:type" content="article"><meta property="og:title" content="'+esc(pageTitle)+'"><meta property="og:description" content="'+esc(description)+'"><meta property="og:url" content="'+esc(b+canonical)+'"><script type="application/ld+json">'+json+'</script><style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;max-width:1000px;margin:auto;padding:24px;line-height:1.6;color:#172033}a{color:#075985}.crumbs{font-size:.95rem;color:#52606d}.hero{padding:30px 0}.card{border:1px solid #ddd;border-radius:12px;padding:20px;margin:18px 0}.cta{display:inline-block;background:#075985;color:white;padding:12px 18px;border-radius:8px;text-decoration:none;margin:6px 6px 6px 0}</style></head><body><header><strong>CBE Nexus</strong> — Connecting learners to excellence | Kenya</header><main><p class="crumbs"><a href="/">CBE Nexus</a> / <a href="'+esc(gradeUrl)+'">Grade '+esc(grade)+'</a> / <a href="'+esc(subjectUrl)+'">'+esc(subject)+'</a> / Resource</p><section class="hero"><p>Kenyan CBC/CBE learning resource</p><h1>'+esc(title)+'</h1><p>'+esc(description)+'</p><div class="card"><strong>Grade:</strong> '+esc(grade)+'<br><strong>Subject:</strong> '+esc(subject)+'<br><strong>Resource type:</strong> '+esc(type)+'</div><a class="cta" href="'+esc(subjectUrl)+'">More Grade '+esc(grade)+' '+esc(subject)+' Resources</a><a class="cta" href="/free-resources.html">Explore Free Resources</a></section><section><h2>About this resource</h2><p>'+esc(String(r.description||"Explore this CBC/CBE resource on CBE Nexus for learning, revision and teaching support in Kenya."))+'</p></section><section><h2>Related '+esc(subject)+' resources</h2><ul>'+relatedHtml+'</ul></section></main></body></html>';
+  const gradeUrl="/grade-"+slug(grade),subjectUrl=gradeUrl+"/"+slug(subject);
+  const libraryUrl="/resource-category.html?grade="+encodeURIComponent(grade)+"&subject="+encodeURIComponent(subject)+"&type="+encodeURIComponent(type);
+  const priceHtml=isFree?"<strong>Free resource</strong>":discounted?'<strong>'+esc(currency)+" "+currentPrice.toLocaleString()+'</strong> <del>'+esc(currency)+" "+basePrice.toLocaleString()+'</del> <span>Discounted price</span>':'<strong>'+esc(currency)+" "+currentPrice.toLocaleString()+'</strong>';
+  return '<!doctype html><html lang="'+(country==="Kenya"?"en-KE":"en")+'"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(pageTitle)+'</title><meta name="description" content="'+esc(description)+'"><meta name="keywords" content="'+esc([...new Set(keywords)].join(", "))+'"><meta name="robots" content="index,follow,max-image-preview:large"><link rel="canonical" href="'+esc(absolute)+'"><meta property="og:type" content="article"><meta property="og:site_name" content="CBE Nexus"><meta property="og:title" content="'+esc(pageTitle)+'"><meta property="og:description" content="'+esc(description)+'"><meta property="og:url" content="'+esc(absolute)+'"><meta property="og:locale" content="'+(country==="Kenya"?"en_KE":"en_US")+'"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="'+esc(pageTitle)+'"><meta name="twitter:description" content="'+esc(description)+'"><script type="application/ld+json">'+json+'</script><style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;max-width:1000px;margin:auto;padding:24px;line-height:1.6;color:#172033}a{color:#075985}.crumbs{font-size:.95rem;color:#52606d}.hero{padding:30px 0}.card{border:1px solid #ddd;border-radius:12px;padding:20px;margin:18px 0}.cta{display:inline-block;background:#075985;color:white;padding:12px 18px;border-radius:8px;text-decoration:none;margin:6px 6px 6px 0}.price{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:14px;margin:16px 0}.price strong{font-size:1.4rem;color:#166534}.muted{color:#64748b}</style></head><body><header><strong>CBE Nexus</strong> — Connecting learners to excellence</header><main><p class="crumbs"><a href="/">CBE Nexus</a> / <a href="/resource-category.html">Resource Library</a> / '+esc(grade)+' / '+esc(subject)+'</p><section class="hero"><p>'+(country==="Kenya"?"Kenyan CBC/CBE learning resource":"Learning resource")+'</p><h1>'+esc(title)+'</h1><p>'+esc(description)+'</p><div class="card"><strong>Grade / level:</strong> '+esc(grade)+'<br><strong>Subject:</strong> '+esc(subject)+'<br><strong>Resource type:</strong> '+esc(type)+'<br><strong>File format:</strong> '+esc(format)+(country?'<br><strong>Country:</strong> '+esc(country):"")+(academicYear?'<br><strong>Academic year:</strong> '+esc(academicYear):"")+(term?'<br><strong>Term:</strong> '+esc(term):"")+(assessmentType&&assessmentType!=="Not applicable"?'<br><strong>Assessment:</strong> '+esc(assessmentType):"")+'</div><div class="price">'+priceHtml+'<p class="muted">Current listed price. Discounted offers are displayed before checkout.</p></div><a class="cta" href="'+esc(libraryUrl)+'">View, preview and get this resource</a><a class="cta" href="/free-resources.html">Explore free resources</a></section><section><h2>About this resource</h2><p>'+esc(cleanDescription||("Explore this "+subject+" "+type+" for "+grade+" on CBE Nexus."))+'</p><p>Check the grade, subject, material type and curriculum before using the material for classroom teaching, revision or assessment preparation.</p></section><section><h2>Related '+esc(subject)+' resources</h2><ul>'+relatedHtml+'</ul></section></main></body></html>';
  }catch(e){console.warn("SEO resource page lookup failed:",e.message||e);return null;}
 }
 
