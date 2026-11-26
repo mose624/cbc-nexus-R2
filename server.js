@@ -3124,7 +3124,7 @@ async function serveStatic(req,res,url){
     let vacancyUrls="";
     try{
       const vacancies=await getTeachingVacancies();
-      const existing=new Set([...xml.matchAll(/<loc>(.*?)<\\/loc>/g)].map(m=>m[1]));
+      const existing=new Set([...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>m[1]));
       vacancyUrls=vacancies.filter(v=>{
         const state=String(v.vacancy_status||"").toLowerCase();
         const verified=!!(v.verified_date||state==="verified"||state==="open"||state==="published"&&v.official_website_verified===true);
@@ -3237,7 +3237,7 @@ async function serveStatic(req,res,url){
     }
     return;
   }
-  const vacancyDetailMatch=req.method==="GET"&&url.pathname.match(/^\\/teaching-vacancy\\/([A-Za-z0-9_-]{1,160})\\/?$/);
+  const vacancyDetailMatch=req.method==="GET"&&url.pathname.match(/^\/teaching-vacancy\/([A-Za-z0-9_-]{1,160})\/?$/);
   if(vacancyDetailMatch){
     const vacancyId=decodeURIComponent(vacancyDetailMatch[1]);
     let vacancy=null;
@@ -3257,26 +3257,26 @@ async function serveStatic(req,res,url){
     const verified=!!(vacancy.verified_date||state==="verified"||state==="open"||state==="published"&&vacancy.official_website_verified===true);
     const officialUrl=String(vacancy.official_apply_url||vacancy.school_website_url||"").trim();
     const officialVerified=vacancy.official_website_verified===true||String(vacancy.official_website_verified).toLowerCase()==="true";
-    const safeOfficialUrl=officialVerified&&/^https:\\/\\//i.test(officialUrl)?officialUrl:"";
-    const indexable=verified&&!expired&&!!(vacancy.title&&vacancy.school&&vacancy.country&&vacancy.description&&vacancy.requirements);
+    const safeOfficialUrl=officialVerified&&/^https:\/\//i.test(officialUrl)?officialUrl:"";
+    const indexable=verified&&!expired&&officialVerified&&!!(vacancy.title&&vacancy.school&&vacancy.country&&vacancy.description&&vacancy.requirements);
     const title=String(vacancy.title||"International Teaching Vacancy")+" at "+String(vacancy.school||"School");
-    const description=String(vacancy.description||"").replace(/\\s+/g," ").trim().slice(0,155)||"Review this international teaching vacancy, employer requirements and official application information on CBE Nexus.";
+    const description=String(vacancy.description||"").replace(/\s+/g," ").trim().slice(0,155)||"Review this international teaching vacancy, employer requirements and official application information on CBE Nexus.";
     const datePosted=vacancy.date_posted||vacancy.datePosted||vacancy.created_at||"";
     const parsedPosted=datePosted?new Date(datePosted):null;
     const postedIso=parsedPosted&&!Number.isNaN(parsedPosted.getTime())?parsedPosted.toISOString():null;
     const employment=String(vacancy.employment||"").toLowerCase();
     const employmentType=/part.?time/.test(employment)?"PART_TIME":/contract/.test(employment)?"CONTRACTOR":/temporary|short.?term/.test(employment)?"TEMPORARY":"FULL_TIME";
-    const fullDescription=[vacancy.description,vacancy.requirements?"Requirements: "+vacancy.requirements:"",vacancy.salary?"Salary / package: "+vacancy.salary:"",vacancy.benefits?"Benefits: "+vacancy.benefits:"",vacancy.visa_model||vacancy.visa?"Visa / sponsorship: "+(vacancy.visa_model||vacancy.visa):"",vacancy.documents?"Application documents: "+vacancy.documents:""].filter(Boolean).join("\\n\\n");
+    const fullDescription=[vacancy.description,vacancy.requirements?"Requirements: "+vacancy.requirements:"",vacancy.salary?"Salary / package: "+vacancy.salary:"",vacancy.benefits?"Benefits: "+vacancy.benefits:"",vacancy.visa_model||vacancy.visa?"Visa / sponsorship: "+(vacancy.visa_model||vacancy.visa):"",vacancy.documents?"Application documents: "+vacancy.documents:""].filter(Boolean).join("\n\n");
     const graph=[{"@type":"WebPage","@id":canonical+"#webpage","url":canonical,"name":title+" | International Teaching Jobs | CBE Nexus","description":description,"isPartOf":{"@type":"WebSite","name":"CBE Nexus","url":"https://cbenexus.com/"},"breadcrumb":{"@id":canonical+"#breadcrumb"}}];
     if(indexable&&postedIso&&safeOfficialUrl){
-      const job={"@type":"JobPosting","title":String(vacancy.title),"description":fullDescription,"datePosted":postedIso,"employmentType":employmentType,"hiringOrganization":{"@type":"Organization","name":String(vacancy.school),"sameAs":safeOfficialUrl},"jobLocation":{"@type":"Place","address":{"@type":"PostalAddress","addressLocality":String(vacancy.region||""),"addressCountry":String(vacancy.country)}},"directApply":true};
+      const job={"@type":"JobPosting","title":String(vacancy.title),"description":fullDescription,"datePosted":postedIso,"employmentType":employmentType,"hiringOrganization":{"@type":"Organization","name":String(vacancy.school),"sameAs":safeOfficialUrl},"jobLocation":{"@type":"Place","address":{"@type":"PostalAddress","addressLocality":String(vacancy.region||""),"addressCountry":String(vacancy.country)}}};
       if(hasDeadline)job.validThrough=deadlineDate.toISOString();
       graph.push(job);
     }
     graph.push({"@type":"BreadcrumbList","@id":canonical+"#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://cbenexus.com/"},{"@type":"ListItem","position":2,"name":"International Teaching Jobs","item":"https://cbenexus.com/international-teaching-jobs.html"},{"@type":"ListItem","position":3,"name":String(vacancy.title||"Teaching Vacancy"),"item":canonical}]});
-    const schema=JSON.stringify({"@context":"https://schema.org","@graph":graph}).replace(/</g,"\\\\u003c");
+    const schema=JSON.stringify({"@context":"https://schema.org","@graph":graph}).replace(/</g,"\\u003c");
     const facts=[["Country",vacancy.country],["City / region",vacancy.region],["Subject",vacancy.subject],["Teaching level",vacancy.level],["Employment",vacancy.employment],["Salary / package",vacancy.salary],["Start date",vacancy.start_date||vacancy.startDate],["Application deadline",vacancy.deadline],["Curriculum",vacancy.curriculum||vacancy.curricula],["Visa / sponsorship",vacancy.visa_model||vacancy.visa],["Requirements",vacancy.requirements],["Documents",vacancy.documents]].filter(x=>x[1]).map(x=>'<div class="fact"><dt>'+esc(x[0])+'</dt><dd>'+esc(x[1])+'</dd></div>').join("");
-    const source=String(vacancy.source||"").split("|").map(x=>x.trim()).filter(x=>/^https:\\/\\//i.test(x));
+    const source=String(vacancy.source||"").split("|").map(x=>x.trim()).filter(x=>/^https:\/\//i.test(x));
     const sourceLinks=source.map(x=>'<a href="'+esc(x)+'" rel="nofollow noopener noreferrer" target="_blank">Employer source / further information</a>').join(" · ");
     const apply=safeOfficialUrl?'<a class="apply" href="'+esc(safeOfficialUrl)+'" target="_blank" rel="noopener noreferrer">Apply on the school’s official website</a>':'<p class="notice">The employer’s application website has not yet been independently verified for this listing. Confirm the school’s official careers page before sending personal documents.</p>';
     const statusLabel=expired?"This listing appears to have passed its stated deadline.":indexable?"Employer vacancy researched; confirm availability with the school before applying.":"Recruitment lead / details require independent confirmation. It is not presented as a verified live vacancy.";
