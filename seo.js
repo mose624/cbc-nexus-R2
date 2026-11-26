@@ -347,9 +347,8 @@ async function sitemap(req){
  }catch(e){console.warn("SEO sitemap grade lookup failed:",e.message||e);}
  if(supabaseConfigured){
   try{
-   const {data,error}=await supabase.from("resources").select("id,title,grade,subject,resource_type").eq("status","approved").limit(5000);
-   const resourceSlug=value=>String(value||"").toLowerCase().replace(/&/g," and ").replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
-   if(!error) (data||[]).forEach(r=>{if(r&&r.id){const label=[r.title,r.grade,r.subject,r.resource_type].filter(Boolean).join(" ").slice(0,150);urls.push("/learning-resources/"+(resourceSlug(label)||"learning-resource")+"--"+encodeURIComponent(String(r.id)));}});
+   const {data,error}=await supabase.from("resources").select("id").eq("status","approved").limit(5000);
+   if(!error) (data||[]).forEach(r=>{if(r&&r.id) urls.push("/resource/"+encodeURIComponent(String(r.id)));});
   }catch(e){console.warn("SEO sitemap resource lookup failed:",e.message||e);}
   try{
    const {data,error}=await supabase.from("blog_posts").select("slug").eq("status","published").limit(5000);
