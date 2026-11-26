@@ -3121,7 +3121,27 @@ async function serveStatic(req,res,url){
         return "<url><loc>"+xmlEscape(loc)+"</loc>"+(lastmod?"<lastmod>"+lastmod+"</lastmod>":"")+"</url>";
       }).join("");
     }catch(e){console.error("Education guide sitemap error:",e.message||e)}
-    res.end(xml.replace("</urlset>",guideUrls+"</urlset>"));
+    let vacancyUrls="";
+    try{
+      const vacancies=await getTeachingVacancies();
+      const existing=new Set([...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>m[1]));
+      vacancyUrls=vacancies.filter(v=>{
+        const state=String(v.vacancy_status||"").toLowerCase();
+        const verified=!!(v.verified_date||state==="verified"||state==="open"||state==="published"&&v.official_website_verified===true);
+        const official=v.official_website_verified===true||String(v.official_website_verified).toLowerCase()==="true"||v.application_email_verified===true||String(v.application_email_verified).toLowerCase()==="true";
+        const deadline=v.deadline?new Date(v.deadline):null;
+        const expired=deadline&&!Number.isNaN(deadline.getTime())&&deadline.getTime()<Date.now()-86400000;
+        return v&&v.id&&verified&&!expired&&v.title&&v.school&&v.country&&v.description&&v.requirements&&official;
+      }).map(v=>{
+        const loc=base+"/teaching-vacancy/"+encodeURIComponent(String(v.id));
+        if(existing.has(loc))return "";
+        const modified=v.updated_at||v.created_at||"";
+        const date=modified?new Date(modified):null;
+        const lastmod=date&&!Number.isNaN(date.getTime())?date.toISOString().slice(0,10):"";
+        return "<url><loc>"+xmlEscape(loc)+"</loc>"+(lastmod?"<lastmod>"+lastmod+"</lastmod>":"")+"</url>";
+      }).join("");
+    }catch(error){console.warn("Teaching vacancy sitemap generation failed:",error.message||error);}
+    res.end(xml.replace("</urlset>",guideUrls+vacancyUrls+"</urlset>"));
     return;
   }
   if(req.method==="GET" && url.pathname==="/ads.txt"){
@@ -3215,6 +3235,58 @@ async function serveStatic(req,res,url){
       res.writeHead(200,headers);
       res.end(data);
     }
+    return;
+  }
+  const vacancyDetailMatch=req.method==="GET"&&url.pathname.match(/^\/teaching-vacancy\/([A-Za-z0-9_-]{1,160})\/?$/);
+  if(vacancyDetailMatch){
+    const vacancyId=decodeURIComponent(vacancyDetailMatch[1]);
+    let vacancy=null;
+    try{vacancy=(await getTeachingVacancies()).find(v=>String(v.id)===vacancyId&&String(v.status||"published").toLowerCase()==="published");}catch(error){console.warn("Vacancy detail lookup failed:",error.message||error);}
+    const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+    const canonical=seo.base(req)+"/teaching-vacancy/"+encodeURIComponent(vacancyId);
+    if(!vacancy){
+      res.writeHead(404,{"Content-Type":"text/html; charset=utf-8","X-Robots-Tag":"noindex,follow","Cache-Control":"no-store"});
+      res.end('<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex,follow"><title>Vacancy unavailable | CBE Nexus</title></head><body><main><h1>Vacancy unavailable</h1><p>This teaching vacancy may have closed or been removed.</p><p><a href="/international-teaching-jobs.html">Browse international teaching jobs</a></p></main></body></html>');
+      return;
+    }
+    const deadlineText=String(vacancy.deadline||"").trim();
+    const deadlineDate=deadlineText?new Date(deadlineText):null;
+    const hasDeadline=deadlineDate&&!Number.isNaN(deadlineDate.getTime());
+    const expired=!!(hasDeadline&&deadlineDate.getTime()<Date.now()-86400000);
+    const state=String(vacancy.vacancy_status||"").toLowerCase();
+    const verified=!!(vacancy.verified_date||state==="verified"||state==="open"||state==="published"&&vacancy.official_website_verified===true);
+    const officialUrl=String(vacancy.official_apply_url||vacancy.school_website_url||"").trim();
+    const websiteVerified=vacancy.official_website_verified===true||String(vacancy.official_website_verified).toLowerCase()==="true";
+    const applicationEmail=String(vacancy.application_email||"").trim();
+    const applicationEmailVerified=vacancy.application_email_verified===true||String(vacancy.application_email_verified).toLowerCase()==="true";
+    const safeApplicationEmail=applicationEmailVerified&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(applicationEmail)?applicationEmail:"";
+    const safeOfficialUrl=websiteVerified&&/^https:\/\//i.test(officialUrl)?officialUrl:"";
+    const officialVerified=!!(safeOfficialUrl||safeApplicationEmail);
+    const indexable=verified&&!expired&&officialVerified&&!!(vacancy.title&&vacancy.school&&vacancy.country&&vacancy.description&&vacancy.requirements);
+    const title=String(vacancy.title||"International Teaching Vacancy")+" at "+String(vacancy.school||"School");
+    const description=String(vacancy.description||"").replace(/\s+/g," ").trim().slice(0,155)||"Review this international teaching vacancy, employer requirements and official application information on CBE Nexus.";
+    const datePosted=vacancy.date_posted||vacancy.datePosted||"";
+    const parsedPosted=datePosted?new Date(datePosted):null;
+    const postedIso=parsedPosted&&!Number.isNaN(parsedPosted.getTime())?parsedPosted.toISOString():null;
+    const employment=String(vacancy.employment||"").toLowerCase();
+    const employmentType=/part.?time/.test(employment)?"PART_TIME":/contract/.test(employment)?"CONTRACTOR":/temporary|short.?term/.test(employment)?"TEMPORARY":"FULL_TIME";
+    const fullDescription=[vacancy.description,vacancy.requirements?"Requirements: "+vacancy.requirements:"",vacancy.salary?"Salary / package: "+vacancy.salary:"",vacancy.benefits?"Benefits: "+vacancy.benefits:"",vacancy.visa_model||vacancy.visa?"Visa / sponsorship: "+(vacancy.visa_model||vacancy.visa):"",vacancy.documents?"Application documents: "+vacancy.documents:""].filter(Boolean).join("\n\n");
+    const graph=[{"@type":"WebPage","@id":canonical+"#webpage","url":canonical,"name":title+" | International Teaching Jobs | CBE Nexus","description":description,"isPartOf":{"@type":"WebSite","name":"CBE Nexus","url":"https://cbenexus.com/"},"breadcrumb":{"@id":canonical+"#breadcrumb"}}];
+    if(indexable&&postedIso&&safeOfficialUrl){
+      const job={"@type":"JobPosting","title":String(vacancy.title),"description":fullDescription,"datePosted":postedIso,"employmentType":employmentType,"hiringOrganization":{"@type":"Organization","name":String(vacancy.school),"sameAs":safeOfficialUrl},"jobLocation":{"@type":"Place","address":{"@type":"PostalAddress","addressLocality":String(vacancy.region||""),"addressCountry":String(vacancy.country)}}};
+      if(hasDeadline)job.validThrough=deadlineDate.toISOString();
+      graph.push(job);
+    }
+    graph.push({"@type":"BreadcrumbList","@id":canonical+"#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://cbenexus.com/"},{"@type":"ListItem","position":2,"name":"International Teaching Jobs","item":"https://cbenexus.com/international-teaching-jobs.html"},{"@type":"ListItem","position":3,"name":String(vacancy.title||"Teaching Vacancy"),"item":canonical}]});
+    const schema=JSON.stringify({"@context":"https://schema.org","@graph":graph}).replace(/</g,"\\u003c");
+    const facts=[["Country",vacancy.country],["City / region",vacancy.region],["Subject",vacancy.subject],["Teaching level",vacancy.level],["Employment",vacancy.employment],["Salary / package",vacancy.salary],["Start date",vacancy.start_date||vacancy.startDate],["Application deadline",vacancy.deadline],["Curriculum",vacancy.curriculum||vacancy.curricula],["Visa / sponsorship",vacancy.visa_model||vacancy.visa],["Requirements",vacancy.requirements],["Documents",vacancy.documents]].filter(x=>x[1]).map(x=>'<div class="fact"><dt>'+esc(x[0])+'</dt><dd>'+esc(x[1])+'</dd></div>').join("");
+    const source=String(vacancy.source||"").split("|").map(x=>x.trim()).filter(x=>/^https:\/\//i.test(x));
+    const sourceLinks=source.map(x=>'<a href="'+esc(x)+'" rel="nofollow noopener noreferrer" target="_blank">Employer source / further information</a>').join(" · ");
+    const apply=[safeOfficialUrl?'<a class="apply" href="'+esc(safeOfficialUrl)+'" target="_blank" rel="noopener noreferrer">Apply on the school’s official website</a>':"",safeApplicationEmail?'<a class="apply" href="mailto:'+esc(safeApplicationEmail)+'">Email your application to the verified school address</a>':""].filter(Boolean).join(" ")||'<p class="notice">No verified school application website or CV-submission email is available for this listing. Confirm the school’s official careers page before sending personal documents.</p>';
+    const statusLabel=expired?"This listing appears to have passed its stated deadline.":indexable?"Employer vacancy researched; confirm availability with the school before applying.":"Recruitment lead / details require independent confirmation. It is not presented as a verified live vacancy.";
+    const page='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(title)+' | International Teaching Jobs | CBE Nexus</title><meta name="description" content="'+esc(description)+'"><meta name="robots" content="'+(indexable?"index,follow,max-image-preview:large":"noindex,follow")+'"><link rel="canonical" href="'+esc(canonical)+'"><meta property="og:type" content="article"><meta property="og:site_name" content="CBE Nexus"><meta property="og:title" content="'+esc(title)+'"><meta property="og:description" content="'+esc(description)+'"><meta property="og:url" content="'+esc(canonical)+'"><meta name="twitter:card" content="summary"><script type="application/ld+json">'+schema+'</script><style>*{box-sizing:border-box}body{margin:0;background:#f2f7fb;color:#1b2d40;font:16px/1.7 Arial,sans-serif}header{background:#0b3459;color:#fff;padding:15px max(18px,calc((100% - 1000px)/2))}header a{color:#fff;text-decoration:none;font-weight:bold}main{max-width:1000px;margin:28px auto;padding:0 18px}.panel{background:#fff;border:1px solid #dce6ef;border-radius:14px;padding:24px;margin:16px 0;box-shadow:0 4px 14px rgba(10,40,70,.05)}h1{font-size:clamp(26px,4vw,38px);line-height:1.2;color:#12395f;margin:8px 0}h2{color:#12395f}.eyebrow{font-size:12px;font-weight:bold;letter-spacing:.12em;color:#08769b}.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.fact{padding:12px;background:#f5f9fc;border-radius:9px}.fact dt{font-size:11px;font-weight:bold;color:#52697d}.fact dd{margin:3px 0 0;white-space:pre-line}.apply{display:inline-block;padding:12px 18px;background:#0876a9;color:#fff;border-radius:8px;text-decoration:none;font-weight:bold}.notice{padding:14px;background:#fff8e6;border:1px solid #eedb9a;border-radius:9px}.muted{font-size:13px;color:#617286}footer{max-width:1000px;margin:25px auto;padding:18px;color:#617286;font-size:13px}a{color:#075985}@media(max-width:650px){main{padding:0 11px}.panel{padding:17px}.facts{grid-template-columns:1fr}}</style></head><body><header><a href="/international-teaching-jobs.html">CBE Nexus · International Teaching Jobs</a></header><main><nav class="muted" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/international-teaching-jobs.html">International teaching jobs</a> › '+esc(vacancy.country||"Vacancy")+'</nav><article class="panel"><p class="eyebrow">GLOBAL TEACHER CAREERS · '+esc(vacancy.country||"INTERNATIONAL")+'</p><h1>'+esc(vacancy.title||"Teaching Vacancy")+'</h1><p><strong>'+esc(vacancy.school||"School / Employer")+'</strong> · '+esc(vacancy.region||vacancy.country||"Location not stated")+'</p><p>'+esc(vacancy.description||"A role description has not been supplied. Confirm full details with the employer.")+'</p><p class="muted">'+esc(statusLabel)+(vacancy.verified_date?" Last researched: "+esc(vacancy.verified_date):"")+'</p>'+apply+'</article><section class="panel"><h2>Role details and teacher requirements</h2><dl class="facts">'+facts+'</dl></section><section class="panel"><h2>How to apply</h2><p>Review the employer’s original advert and confirm the vacancy is still open, the required qualifications and registration, the salary and benefits, visa eligibility and application deadline. Submit your application only through the school’s verified recruitment channel.</p>'+apply+(sourceLinks?'<p class="muted">'+sourceLinks+'</p>':"")+'</section><section class="panel"><h2>Prepare an international teacher CV</h2><p>Use the CBE Nexus CV builder to prepare a clear, role-specific CV. Include only qualifications, teaching experience, licences and achievements you can verify.</p><p><a class="apply" href="/professional-cv-writing.html">Open the international teacher CV builder</a></p></section><p class="notice">CBE Nexus is an independent vacancy discovery platform. It does not guarantee employment, qualification recognition, work permits or visas. Never pay an individual recruiter for a job offer; independently verify the school and its recruitment process.</p></main><footer><a href="/international-teaching-jobs.html">Browse all international teaching vacancies</a> · <a href="/contact.html">Contact CBE Nexus</a></footer></body></html>';
+    res.writeHead(expired?410:200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"public, max-age=300","X-Robots-Tag":indexable&&!expired?"index,follow":"noindex,follow"});
+    res.end(expired?page.replace('<meta name="robots" content="index,follow,max-image-preview:large">','<meta name="robots" content="noindex,follow">'):page);
     return;
   }
   const seoPage=await seo.match(req);
