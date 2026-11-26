@@ -3092,6 +3092,50 @@ async function injectChapterNavigation(html,pathname){
 }
 
 async function serveStatic(req,res,url){
+  const resourceMatch=url.pathname.match(/^\/learning-resources\/([^/]+)$/);
+  const oldResourceMatch=url.pathname.match(/^\/resource\/([^/]+)$/);
+  if((req.method==="GET"||req.method==="HEAD")&&(resourceMatch||oldResourceMatch)){
+    try{
+      const segment=decodeURIComponent((resourceMatch||oldResourceMatch)[1]);
+      const divider=segment.lastIndexOf("--");
+      const id=resourceMatch&&divider>=0?segment.slice(divider+2):segment;
+      let row=null;
+      if(supabaseConfigured){
+        const result=await supabase.from("resources").select("*").eq("id",id).eq("status","approved").maybeSingle();
+        if(result.error)throw result.error;
+        row=result.data;
+      }else{
+        const stored=await readJsonStore("resources.json");
+        row=stored.find(x=>String(x.id)===String(id)&&String(x.status||"approved").toLowerCase()==="approved")||null;
+      }
+      if(!row){
+        const missing='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex,follow"><title>Resource unavailable | CBE Nexus</title></head><body><h1>Resource unavailable</h1><a href="/resource-category.html">Browse resources</a></body></html>';
+        res.writeHead(404,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"no-store"});res.end(req.method==="HEAD"?"":missing);return;
+      }
+      const r=resourcePayloadFromRow(row),esc=resourceEmailEscape;
+      const clean=value=>String(value||"").split(/\r?\n/).filter(x=>!/^\s*(?:CBE Nexus package:|Package ID:|Academic year:|Term:|Assessment type:|Package mode:|Original filename:)/i.test(x)).join(" ").replace(/\s+/g," ").trim();
+      const slug=value=>String(value||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/&/g," and ").replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
+      const label=[r.title,r.grade,r.subject,r.type].filter(Boolean).join(" ").slice(0,150);
+      const path="/learning-resources/"+(slug(label)||"learning-resource")+"--"+encodeURIComponent(String(r.id));
+      const canonical="https://cbenexus.com"+path;
+      if(oldResourceMatch||url.pathname!==path){res.writeHead(301,{"Location":canonical,"Cache-Control":"public, max-age=3600"});res.end();return;}
+      const description=clean(r.description)||("Download "+[r.grade,r.subject,r.type].filter(Boolean).join(" ")+" from CBE Nexus. Check the file details and current price before ordering.");
+      const currency=String(r.currency||"KES").toUpperCase(),base=Math.max(0,Number(r.price||0)),sale=Math.max(0,Number(row.discount_price||0));
+      const discounted=sale>0&&sale<base,price=discounted?sale:base,free=price<=0;
+      const country=String(r.country|| (r.curriculum==="CBC/CBE"?"Kenya":"")).trim();
+      const filename=String(r.fileName||""),format=/\.pdf$/i.test(filename)?"PDF":/\.(doc|docx)$/i.test(filename)?"Word document":"Digital resource";
+      const keywords=[r.title,r.grade,r.subject,r.type,r.curriculum,country,"CBE Nexus","Kenyan CBC resources","Kenya CBE learning materials","download learning resources"].filter(Boolean);
+      if(String(r.grade||"").toLowerCase().includes("grade 9"))keywords.push("KJSEA revision resources");
+      const title=([r.title,r.grade,r.subject,r.type].filter(Boolean).join(" ")+" | CBE Nexus").slice(0,70);
+      const metaDescription=description.slice(0,165);
+      const library="/resource-category.html?grade="+encodeURIComponent(r.grade||"All Grades")+"&subject="+encodeURIComponent(r.subject||"All Subjects")+"&type="+encodeURIComponent(r.type||"All Materials");
+      const graph={"@context":"https://schema.org","@type":"LearningResource","name":r.title,"description":description,"url":canonical,"inLanguage":"en-KE","learningResourceType":r.type||format,"educationalLevel":r.grade||"Kenyan curriculum","keywords":keywords,"isAccessibleForFree":free,"provider":{"@type":"Organization","name":"CBE Nexus","url":"https://cbenexus.com/"},"offers":{"@type":"Offer","url":canonical,"price":String(price),"priceCurrency":currency,"availability":"https://schema.org/InStock"}};
+      const jsonld=JSON.stringify(graph).replace(/</g,"\\u003c");
+      const priceMarkup=free?"<strong>Free resource</strong>":(discounted?"<strong>"+esc(currency)+" "+price.toLocaleString()+"</strong> <del>"+esc(currency)+" "+base.toLocaleString()+"</del> <span>Discounted price</span>":"<strong>"+esc(currency)+" "+price.toLocaleString()+"</strong>");
+      const html='<!doctype html><html lang="en-KE"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(title)+'</title><meta name="description" content="'+esc(metaDescription)+'"><meta name="keywords" content="'+esc(keywords.join(", "))+'"><meta name="robots" content="index,follow,max-image-preview:large"><link rel="canonical" href="'+esc(canonical)+'"><meta property="og:type" content="article"><meta property="og:site_name" content="CBE Nexus"><meta property="og:title" content="'+esc(title)+'"><meta property="og:description" content="'+esc(metaDescription)+'"><meta property="og:url" content="'+esc(canonical)+'"><meta property="og:locale" content="en_KE"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="'+esc(title)+'"><meta name="twitter:description" content="'+esc(metaDescription)+'"><script type="application/ld+json">'+jsonld+'</script><style>body{margin:0;background:#f3f7fb;color:#172033;font:16px/1.65 Arial,sans-serif}.wrap{max-width:900px;margin:36px auto;padding:0 18px}.card{background:#fff;border:1px solid #dbe5ef;border-radius:16px;padding:clamp(20px,4vw,38px)}a{color:#075985}h1{line-height:1.2;color:#12345b}.facts{display:flex;flex-wrap:wrap;gap:9px;margin:18px 0}.facts span{background:#eef6fc;border:1px solid #d5e6f3;padding:7px 10px;border-radius:8px;font-size:13px}.price{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:16px;margin:22px 0}.price strong{font-size:24px;color:#166534}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}.btn{display:inline-block;padding:12px 17px;border-radius:8px;background:#087f5b;color:#fff;text-decoration:none;font-weight:800}.secondary{background:#eaf4fc;color:#075985}</style></head><body><main class="wrap"><nav><a href="/">CBE Nexus</a> / <a href="/resource-category.html">Resource Library</a></nav><article class="card"><p><strong>CBE Nexus · '+esc(country||"Learning resource")+'</strong></p><h1>'+esc(r.title)+'</h1><p>'+esc(description)+'</p><div class="facts"><span>'+esc(r.grade||"Curriculum resource")+'</span><span>'+esc(r.subject||"Learning material")+'</span><span>'+esc(r.type||format)+'</span><span>'+esc(format)+'</span></div><p><strong>Country:</strong> '+esc(country||"Not specified")+'</p><section class="price">'+priceMarkup+'<p>Current listed price. Any discount is shown before checkout.</p></section><h2>About this learning resource</h2><p>This '+esc(format)+' is listed in the CBE Nexus learning resource library. Confirm that the grade, subject and material type match your learning or teaching needs before ordering.</p><div class="actions"><a class="btn" href="'+esc(library)+'">View, preview and get this resource</a><a class="btn secondary" href="/free-resources.html">Browse free resources</a></div><p><small>CBE Nexus is an independent educational resource platform. Confirm current curriculum and assessment requirements.</small></p></article></main></body></html>';
+      res.writeHead(200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"public, max-age=300","X-Robots-Tag":"index, follow"});res.end(req.method==="HEAD"?"":html);return;
+    }catch(error){console.error("Uploaded resource landing page error:",error);sendJson(res,500,{ok:false,error:"Resource page is temporarily unavailable."});return;}
+  }
   if(req.method==="GET" && url.pathname==="/health"){
     res.writeHead(200,{"Content-Type":"text/plain; charset=utf-8","Cache-Control":"no-store"});
     res.end("ok");
