@@ -525,6 +525,14 @@ async function refineCvWithSmartEditor(payload){
     achievements:clean(payload.achievements,4000), skills:clean(payload.skills,3000), curriculum:clean(payload.curriculum,2500),
     certifications:clean(payload.certifications,3000), targetJob:clean(payload.targetJob,5000)
   };
+  let destinationContext={note:"No country-specific teacher registration or licensing rule has been verified in this profile. Do not invent one; direct the applicant to the recruiting employer and competent official authority."};
+  try{
+    const countries=await getGlobalCountryRegistry(),country=countries.find(item=>String(item.name||"").toLowerCase()===base.country.toLowerCase());
+    if(country){
+      const profiles=await getCountrySeoProfiles(),p=profiles[String(country.slug).toLowerCase()]||{};
+      destinationContext={country:country.name,educationAuthority:String(p.authority||"").slice(0,1000),teacherQualificationGuidance:String(p.qualificationRequirements||p.teacher_registration||"").slice(0,1600),curriculumContext:String(p.curriculum||"").slice(0,1000),officialLanguageContext:String(p.officialLanguages||"").slice(0,700),officialTeacherReferences:(Array.isArray(p.teachers)?p.teachers:[]).filter(x=>x&&x.url).slice(0,5).map(x=>({name:x.name,url:x.url,type:x.type||""})),note:"Use these as research leads, not proof of eligibility. Do not state that a licence, visa, degree recognition, sponsorship, photograph or specific CV convention is mandatory unless the supplied vacancy or verified official rule says so."};
+    }
+  }catch(error){console.warn("CV destination profile unavailable:",error.message||error);}
   const fallback={
     profile: base.jobTitle+" with relevant education, practical experience and transferable skills, presenting a clear record of responsibility, results and professional growth.",
     skills:Array.from(new Set((base.skills.split(/[,;\n]+/).map(x=>x.trim()).filter(Boolean)).concat(["Professional communication","Team collaboration","Problem solving","Time management","Digital literacy","Adaptability"]))).slice(0,14),
@@ -539,7 +547,7 @@ async function refineCvWithSmartEditor(payload){
   }
   const model=String(process.env.OPENAI_MODEL||"gpt-6-luna").trim();
   const system="You are a senior international CV editor. Rewrite candidate information into concise, truthful, employer-focused CV language. Never invent employers, qualifications, certifications, licences, dates, achievements, metrics or skills that are not supported by the candidate's information. You may identify transferable skills clearly implied by the supplied experience. Tailor terminology to the selected destination and target role. Improve grammar, clarity, hierarchy and ATS keyword alignment. Convert responsibilities into strong action-oriented statements and emphasize outcomes only when supported by the candidate's information. Never create statistics, awards or achievements. Preserve the candidate's actual facts, dates and institutions. For US and Canadian applications, keep the structure ATS-friendly and do not recommend a photograph or unnecessary personal details. For UAE applications, use a professional international CV style and allow a photo only where appropriate. Return JSON only with keys: profile (string), skills (array of strings), experience (string), achievements (string).";
-  const user=JSON.stringify(base);
+  const user=JSON.stringify({...base,destinationContext});
   const body={model,messages:[{role:"system",content:system},{role:"user",content:"Refine this candidate information for an international job application. Strengthen the profile, rewrite experience into action-and-impact bullets where the evidence permits, improve achievements, and identify relevant employer-facing skills. Target vacancy if supplied: "+user}],response_format:{type:"json_object"}};
   const https=require("https");
   const result=await new Promise((resolve,reject)=>{
@@ -1029,6 +1037,17 @@ async function handleApi(req,res,url){
       if(supabaseConfigured){const {error}=await supabase.from("school_vacancies").delete().eq("id",id);if(error)throw error;sendJson(res,200,{ok:true});return true;}
       const rows=await readJsonStore("school-vacancies.json");await fs.writeFile(path.join(DATA_DIR,"school-vacancies.json"),JSON.stringify(rows.filter(x=>String(x.id)!==id),null,2));sendJson(res,200,{ok:true});
     }catch(error){sendJson(res,400,{ok:false,error:error.message||"Vacancy deletion failed."});}return true;
+  }
+  if(req.method==="GET"&&url.pathname==="/api/career-country-profile"){
+    try{
+      const slug=String(url.searchParams.get("slug")||"").toLowerCase(),countries=await getGlobalCountryRegistry();
+      const country=countries.find(item=>String(item.slug).toLowerCase()===slug);
+      if(!country){sendJson(res,404,{ok:false,error:"Country not found."});return true;}
+      const profiles=await getCountrySeoProfiles().catch(()=>({})),p=profiles[slug]||{};
+      const cleanList=items=>(Array.isArray(items)?items:[]).filter(x=>x&&x.url&&/^https:\/\//i.test(String(x.url))).slice(0,6).map(x=>({name:String(x.name||x.label||"Official reference").slice(0,180),type:String(x.type||"").slice(0,240),url:String(x.url)}));
+      sendJson(res,200,{ok:true,country:{name:country.name,slug:country.slug},profile:{authority:String(p.authority||"").slice(0,1000),qualificationRequirements:String(p.qualificationRequirements||p.teacher_registration||"").slice(0,1600),curriculum:String(p.curriculum||"").slice(0,1000),officialLanguages:String(p.officialLanguages||"").slice(0,700),teachers:cleanList(p.teachers),jobs:cleanList(p.jobs),sources:cleanList(p.sources)}});
+    }catch(error){sendJson(res,500,{ok:false,error:"Country career guidance is temporarily unavailable."});}
+    return true;
   }
   if(req.method==="POST"&&url.pathname==="/api/cv/refine"){
     try{
@@ -3141,7 +3160,12 @@ async function serveStatic(req,res,url){
         return "<url><loc>"+xmlEscape(loc)+"</loc>"+(lastmod?"<lastmod>"+lastmod+"</lastmod>":"")+"</url>";
       }).join("");
     }catch(error){console.warn("Teaching vacancy sitemap generation failed:",error.message||error);}
-    res.end(xml.replace("</urlset>",guideUrls+vacancyUrls+"</urlset>"));
+    let destinationUrls="";
+    try{
+      const countries=await getGlobalCountryRegistry(),existing=new Set([...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>m[1]));
+      destinationUrls=countries.map(country=>{const loc=base+"/teaching-jobs-country/"+encodeURIComponent(String(country.slug));return existing.has(loc)?"":"<url><loc>"+xmlEscape(loc)+"</loc></url>";}).join("");
+    }catch(error){console.warn("Teaching destination sitemap generation failed:",error.message||error);}
+    res.end(xml.replace("</urlset>",guideUrls+vacancyUrls+destinationUrls+"</urlset>"));
     return;
   }
   if(req.method==="GET" && url.pathname==="/ads.txt"){
@@ -3236,6 +3260,31 @@ async function serveStatic(req,res,url){
       res.end(data);
     }
     return;
+  }
+  const destinationMatch=req.method==="GET"&&url.pathname.match(/^\/teaching-jobs-country\/([a-z0-9-]{2,100})\/?$/i);
+  if(destinationMatch){
+    const slug=String(destinationMatch[1]||"").toLowerCase(),countries=await getGlobalCountryRegistry();
+    const country=countries.find(item=>String(item.slug).toLowerCase()===slug);
+    if(!country){res.writeHead(404,{"Content-Type":"text/html; charset=utf-8","X-Robots-Tag":"noindex,follow"});res.end("<!doctype html><title>Country guide not found</title><h1>Country guide not found</h1>");return;}
+    const profiles=await getCountrySeoProfiles().catch(()=>({})),profile=profiles[slug]||{};
+    const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+    const name=String(country.name||slug.replace(/-/g," ")),canonical=seo.base(req)+"/teaching-jobs-country/"+slug;
+    const title="Teaching Jobs in "+name+" | International Teacher Careers & CV Guide | CBE Nexus";
+    const description="Explore teaching jobs in "+name+", school recruitment routes, teacher qualification checks and destination-focused CV preparation. Verify every vacancy with the employer.";
+    const list=arr=>Array.isArray(arr)?arr:[];
+    const authorityLinks=[...list(profile.teachers),...list(profile.jobs),...list(profile.sources)].filter((x,i,a)=>x&&x.url&&/^https:\/\//i.test(String(x.url))&&a.findIndex(y=>y&&y.url===x.url)===i).slice(0,8);
+    const authorityHtml=authorityLinks.map(x=>'<h3><a href="'+esc(x.url)+'" target="_blank" rel="noopener noreferrer">'+esc(x.name||x.label||"Official reference")+'</a></h3><p>'+esc(x.type||"Official reference")+'</p>').join("");
+    const facts=[["Education authority",profile.authority],["Teacher qualification guidance",profile.qualificationRequirements||profile.teacher_registration],["Language context",profile.officialLanguages],["Curriculum context",profile.curriculum]].filter(x=>x[1]).map(x=>'<div class="fact"><strong>'+esc(x[0])+'</strong>'+esc(x[1])+'</div>').join("");
+    const vacancies=(await getTeachingVacancies().catch(()=>[])).filter(v=>String(v.country||"").trim().toLowerCase()===name.toLowerCase()&&String(v.status||"published").toLowerCase()==="published").slice(0,30);
+    const vacancyHtml=vacancies.length?vacancies.map(v=>'<article class="job"><h3><a href="/teaching-vacancy/'+encodeURIComponent(String(v.id))+'">'+esc(v.title||"Teaching vacancy")+'</a></h3><p><strong>'+esc(v.school||"School / employer")+'</strong> · '+esc(v.region||name)+'</p><p>'+esc(String(v.description||"").slice(0,240))+'</p></article>').join(""):'<p>No published vacancies are currently listed for '+esc(name)+'. Browse the global board and check school career pages directly.</p>';
+    const intro=String(profile.seoIntro||"Teacher recruitment in "+name+" varies by school type, employer and location. Confirm qualifications, registration, language requirements and work authorisation with the recruiting employer and the competent official authority.");
+    const faq=[["Where can I find teaching vacancies in "+name+"?","Use the CBE Nexus international teaching vacancies board and confirm each role on the named school's official careers page. This guide does not imply that a live vacancy is available."],["What qualifications do I need to teach in "+name+"?","Requirements depend on the employer, role and applicable national or regional rules. Check the relevant authority and the exact vacancy before applying."],["How should I prepare a teacher CV for "+name+"?","Use a clear ATS-readable CV with genuine qualifications, subjects, age groups, curriculum experience and evidence-based achievements. Follow the employer's instructions about photographs and personal details."],["Does a teaching job in "+name+" guarantee a work visa?","No. Confirm sponsorship and immigration requirements through the employer and official government sources."]];
+    const schema={"@context":"https://schema.org","@type":"WebPage","name":title,"description":description,"url":canonical,"about":{"@type":"Country","name":name}};
+    const faqSchema={"@context":"https://schema.org","@type":"FAQPage","mainEntity":faq.map(x=>({"@type":"Question","name":x[0],"acceptedAnswer":{"@type":"Answer","text":x[1]}}))};
+    const template="<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>{{TITLE}}</title><meta name=\"description\" content=\"{{DESCRIPTION}}\"><meta name=\"keywords\" content=\"{{KEYWORDS}}\"><link rel=\"canonical\" href=\"{{CANONICAL}}\"><meta name=\"robots\" content=\"index,follow,max-image-preview:large\"><meta property=\"og:type\" content=\"website\"><meta property=\"og:title\" content=\"{{TITLE}}\"><meta property=\"og:description\" content=\"{{DESCRIPTION}}\"><meta property=\"og:url\" content=\"{{CANONICAL}}\"><script type=\"application/ld+json\">{{SCHEMA}}</script><script type=\"application/ld+json\">{{FAQ_SCHEMA}}</script><style>body{margin:0;background:#f1f7fb;color:#183247;font:16px/1.65 Arial,sans-serif}header{background:#073b5c;color:white;padding:16px max(18px,calc((100% - 1050px)/2))}header a{color:white;text-decoration:none;font-weight:bold}main{max-width:1050px;margin:25px auto;padding:0 18px}.panel{background:white;border:1px solid #d4e4ef;border-radius:14px;padding:22px;margin:16px 0}.hero{background:linear-gradient(130deg,#e4f4ff,#fff)}h1{font-size:clamp(28px,4vw,42px);line-height:1.15;color:#073b5c}h2{color:#073b5c}.btn{display:inline-block;background:#0876a9;color:white;padding:11px 15px;border-radius:8px;text-decoration:none;font-weight:bold;margin:5px 6px 5px 0}.btn.alt{background:#e0f2fe;color:#073b5c}.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.fact{padding:12px;background:#f4f9fc;border-radius:9px}.fact strong{display:block;font-size:12px;color:#31576b}.job{border-top:1px solid #e3edf3;padding:12px 0}.small{font-size:12px;color:#607487}.notice{background:#fff8e5;border:1px solid #edd98d;padding:13px;border-radius:9px;font-size:13px}@media(max-width:650px){main{padding:0 10px}.facts{grid-template-columns:1fr}.panel{padding:16px}}</style></head><body><header><a href=\"/international-teaching-jobs.html\">CBE Nexus · International Teacher Careers</a></header><main><p class=\"small\"><a href=\"/international-teaching-destinations.html\">All 196 teaching destinations</a> › {{COUNTRY}}</p><section class=\"panel hero\"><p>GLOBAL TEACHER CAREERS · {{COUNTRY_CODE}}</p><h1>Teaching Jobs in {{COUNTRY}}</h1><p>Explore international teaching jobs, school recruitment routes and teacher CV preparation for {{COUNTRY}}. Check the employer, role, qualifications, registration, work authorisation and closing date before applying.</p><a class=\"btn\" href=\"/international-teaching-jobs.html#internationalVacanciesPublic\">Search international vacancies</a><a class=\"btn alt\" href=\"/professional-cv-writing.html?country={{SLUG}}\">Build a {{COUNTRY}} teacher CV</a><a class=\"btn alt\" href=\"/global-schools/{{SLUG}}\">Explore {{COUNTRY}} education profile</a></section><section class=\"panel\"><h2>Education and teacher qualification context</h2><p>{{INTRO}}</p><div class=\"facts\">{{FACTS}}<div class=\"fact\"><strong>Important</strong>Overseas qualification recognition, teacher registration and work permission must be checked for the exact role and location.</div></div>{{OFFICIAL_LINKS}}</section><section class=\"panel\"><h2>Teaching vacancies in {{COUNTRY}}</h2>{{VACANCIES}}<a class=\"btn\" href=\"/international-teaching-jobs.html#internationalVacanciesPublic\">Browse global teaching jobs</a></section><section class=\"panel\"><h2>Prepare a teacher CV for {{COUNTRY}}</h2><ul><li>Use a readable ATS-friendly layout and standard headings.</li><li>State genuine qualifications, teaching credentials and registration status accurately.</li><li>Show subjects, age groups, curriculum experience and classroom responsibilities.</li><li>Use measurable outcomes only where supported by evidence.</li><li>Follow employer instructions on photos, references, attestation and file format.</li><li>Do not claim sponsorship or qualification recognition unless confirmed.</li></ul><a class=\"btn\" href=\"/professional-cv-writing.html?country={{SLUG}}\">Create a destination-focused teacher CV</a></section><section class=\"panel\"><h2>Frequently asked questions</h2>{{FAQ}}</section><p class=\"notice\">CBE Nexus is an independent education and careers information platform, not a government regulator or recruitment agency. Vacancy availability, salary, registration and immigration conditions can change. Confirm current information with official sources and the employer.</p></main></body></html>";
+    const replacements={"{{TITLE}}":esc(title),"{{DESCRIPTION}}":esc(description),"{{KEYWORDS}}":esc("teaching jobs "+name+", teacher vacancies "+name+", international schools "+name+", teaching careers "+name+", teacher CV "+name),"{{CANONICAL}}":esc(canonical),"{{SCHEMA}}":JSON.stringify(schema).replace(/</g,"\\u003c"),"{{FAQ_SCHEMA}}":JSON.stringify(faqSchema).replace(/</g,"\\u003c"),"{{COUNTRY}}":esc(name),"{{COUNTRY_CODE}}":esc(country.code||""),"{{SLUG}}":encodeURIComponent(slug),"{{INTRO}}":esc(intro),"{{FACTS}}":facts,"{{OFFICIAL_LINKS}}":authorityHtml?'<h3>Official education and teacher-service references</h3>'+authorityHtml:'<p class="notice">Use official government and education portals to identify the competent education, teacher-registration and immigration authorities. This page does not guess a regulator or claim that an overseas qualification is automatically recognised.</p>',"{{VACANCIES}}":vacancyHtml,"{{FAQ}}":faq.map(x=>'<details><summary><strong>'+esc(x[0])+'</strong></summary><p>'+esc(x[1])+'</p></details>').join("")};
+    let page=template;for(const [key,value] of Object.entries(replacements))page=page.replaceAll(key,String(value));
+    res.writeHead(200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"public, max-age=300","X-Robots-Tag":"index,follow"});res.end(page);return;
   }
   const vacancyDetailMatch=req.method==="GET"&&url.pathname.match(/^\/teaching-vacancy\/([A-Za-z0-9_-]{1,160})\/?$/);
   if(vacancyDetailMatch){
